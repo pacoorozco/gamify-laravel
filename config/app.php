@@ -138,6 +138,12 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Third Party Service Providers...
+         */
+        Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class, // Stapler-based file upload package
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,  // Slugs for your Eloquent models
+
+        /*
          * Application Service Providers...
          */
         Gamify\Providers\AppServiceProvider::class,

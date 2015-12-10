@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fd8992384969cf52ebd50835728495e9",
-    "content-hash": "2f51bdf07772f2e2a412c271086d447f",
+    "hash": "dae096e0f1865a44e2080dca3e6f5b84",
+    "content-hash": "f728de5590b2536c7d185f4c4468637d",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -60,6 +60,221 @@
                 "preload"
             ],
             "time": "2015-11-09 22:51:51"
+        },
+        {
+            "name": "cocur/slugify",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cocur/slugify.git",
+                "reference": "2b67d4e2b75dbaed2ebefa9eb5683e8940513847"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cocur/slugify/zipball/2b67d4e2b75dbaed2ebefa9eb5683e8940513847",
+                "reference": "2b67d4e2b75dbaed2ebefa9eb5683e8940513847",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "laravel/framework": "~4.1",
+                "latte/latte": "~2.2",
+                "mockery/mockery": "~0.9",
+                "nette/di": "~2.2",
+                "phpunit/phpunit": "~3.7",
+                "sami/sami": "~1.3",
+                "satooshi/php-coveralls": "0.6.*",
+                "silex/silex": "~1.2",
+                "symfony/dependency-injection": "~2.4",
+                "symfony/http-kernel": "~2.4",
+                "twig/twig": "~1",
+                "zendframework/zend-modulemanager": "~2.2",
+                "zendframework/zend-servicemanager": "~2.2",
+                "zendframework/zend-view": "~2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cocur\\Slugify\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivo Bathke",
+                    "email": "ivo.bathke@gmail.com"
+                },
+                {
+                    "name": "Florian Eckerstorfer",
+                    "email": "florian@eckerstorfer.co",
+                    "homepage": "https://florian.ec"
+                }
+            ],
+            "description": "Converts a string into a slug.",
+            "keywords": [
+                "slug",
+                "slugify"
+            ],
+            "time": "2015-03-18 08:21:30"
+        },
+        {
+            "name": "codesleeve/laravel-stapler",
+            "version": "v1.0.05",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CodeSleeve/laravel-stapler.git",
+                "reference": "79d644b495754c955f652fee8a6ca799f923bec6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CodeSleeve/laravel-stapler/zipball/79d644b495754c955f652fee8a6ca799f923bec6",
+                "reference": "79d644b495754c955f652fee8a6ca799f923bec6",
+                "shasum": ""
+            },
+            "require": {
+                "codesleeve/stapler": "1.0.*",
+                "laravel/framework": "4.*|5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/migrations"
+                ],
+                "psr-4": {
+                    "Codesleeve\\LaravelStapler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Travis Bennett",
+                    "email": "tandrewbennett@hotmail.com"
+                }
+            ],
+            "description": "Easy file upload management for the Laravel Framework.",
+            "keywords": [
+                "aws",
+                "file",
+                "laravel",
+                "paperclip",
+                "s3",
+                "stapler",
+                "upload"
+            ],
+            "time": "2015-09-21 00:06:39"
+        },
+        {
+            "name": "codesleeve/stapler",
+            "version": "v1.0.06",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CodeSleeve/stapler.git",
+                "reference": "76d6fa48d263b70437ba92b7c2c053b79dbb5cc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CodeSleeve/stapler/zipball/76d6fa48d263b70437ba92b7c2c053b79dbb5cc6",
+                "reference": "76d6fa48d263b70437ba92b7c2c053b79dbb5cc6",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "~1",
+                "imagine/imagine": "~0.6.2",
+                "php": ">=5.4",
+                "symfony/http-foundation": "~2.3"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "2.4.*@dev",
+                "illuminate/config": "4.*|5.*",
+                "illuminate/database": "4.*|5.*",
+                "mockery/mockery": "0.8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Codesleeve\\Stapler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Travis Bennett",
+                    "email": "tandrewbennett@hotmail.com"
+                }
+            ],
+            "description": "Elegant and simple ORM-based file upload package for php.",
+            "keywords": [
+                "aws",
+                "file",
+                "orm",
+                "paperclip",
+                "s3",
+                "upload"
+            ],
+            "time": "2015-09-19 01:27:59"
+        },
+        {
+            "name": "cviebrock/eloquent-sluggable",
+            "version": "3.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cviebrock/eloquent-sluggable.git",
+                "reference": "562a721057615660736aebd084bd22ab13d55ba8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/562a721057615660736aebd084bd22ab13d55ba8",
+                "reference": "562a721057615660736aebd084bd22ab13d55ba8",
+                "shasum": ""
+            },
+            "require": {
+                "cocur/slugify": "1.1.*",
+                "illuminate/config": "5.*",
+                "illuminate/database": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.0.*",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cviebrock\\EloquentSluggable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Viebrock",
+                    "email": "colin@viebrock.ca"
+                }
+            ],
+            "description": "Easy creation of slugs for your Eloquent models in Laravel",
+            "homepage": "https://github.com/cviebrock/eloquent-sluggable",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "slug"
+            ],
+            "time": "2015-12-07 15:40:39"
         },
         {
             "name": "danielstjules/stringy",
@@ -216,6 +431,63 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "imagine/imagine",
+            "version": "v0.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine.git",
+                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/149041d2a1b517107bfe270ca2b1a17aa341715d",
+                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "suggest": {
+                "ext-gd": "to use the GD implementation",
+                "ext-gmagick": "to use the Gmagick implementation",
+                "ext-imagick": "to use the Imagick implementation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "drawing",
+                "graphics",
+                "image manipulation",
+                "image processing"
+            ],
+            "time": "2015-09-19 16:54:05"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -796,16 +1068,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "b3cbb3782fc25f0b3154a89d896d81d99b87cfa3"
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b3cbb3782fc25f0b3154a89d896d81d99b87cfa3",
-                "reference": "b3cbb3782fc25f0b3154a89d896d81d99b87cfa3",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
                 "shasum": ""
             },
             "require": {
@@ -840,7 +1112,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-12-09 19:35:44"
+            "time": "2015-12-10 14:48:13"
         },
         {
             "name": "psr/log",

@@ -27,10 +27,12 @@ class CreateQuestionsTable extends Migration
             $table->integer('updated_by')->unsigned();
             $table->foreign('updated_by')
                 ->references('id')->on('users'); // assumes a users table
+
             $table->string('image_file_name')->nullable();
             $table->integer('image_file_size')->nullable();
             $table->string('image_content_type')->nullable();
             $table->timestamp('image_updated_at')->nullable();
+
             $table->timestamp('publish_on');
             $table->timestamp('unpublish_on');
             $table->timestamps();

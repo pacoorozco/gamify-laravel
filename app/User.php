@@ -28,12 +28,38 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = array(
+        'name',
+        'username',
+        'email',
+        'password',
+        'role'
+    );
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = array('password', 'remember_token');
+
+    // User's profile
+    public function profile()
+    {
+        return $this->hasOne('Gamify\UserProfile');
+    }
+
+    // User's answered questions
+    public function answeredQuestions()
+    {
+        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
+            ->withPivot('points', 'answers');
+    }
+
+    // User's badges
+    public function badges()
+    {
+        return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
+            ->withPivot('amount', 'completed', 'completed_on');
+    }
 }

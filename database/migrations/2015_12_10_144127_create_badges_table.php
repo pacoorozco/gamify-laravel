@@ -18,11 +18,14 @@ class CreateBadgesTable extends Migration
             $table->text('description');
             $table->integer('amount_needed')->unsigned();
             $table->boolean('active')->default(true);
+
             $table->string('image_file_name')->nullable();
             $table->integer('image_file_size')->nullable();
             $table->string('image_content_type')->nullable();
             $table->timestamp('image_updated_at')->nullable();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
