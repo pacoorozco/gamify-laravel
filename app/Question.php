@@ -16,6 +16,9 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
 // Record created_by, updated_by
 use Gamify\Traits\RecordSignature;
 
+// Theme support
+use igaster\laravelTheme\Theme;
+
 class Question extends Model implements StaplerableInterface, SluggableInterface {
 
     use SoftDeletes;
@@ -77,7 +80,7 @@ class Question extends Model implements StaplerableInterface, SluggableInterface
                 'small'  => '64x64'
             ],
             'url'         => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/img/missing_question.png'
+            'default_url' => 'images/missing_question.png'
         ]);
 
         parent::__construct($attributes);

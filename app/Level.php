@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
 
+// Theme support
+use igaster\laravelTheme\Theme;
+
 class Level extends Model implements StaplerableInterface
 {
     use SoftDeletes;
@@ -49,7 +52,7 @@ class Level extends Model implements StaplerableInterface
                 'small' => '64x64'
             ],
             'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/img/missing_level.png'
+            'default_url' => 'images/missing_level.png'
         ]);
 
         parent::__construct($attributes);

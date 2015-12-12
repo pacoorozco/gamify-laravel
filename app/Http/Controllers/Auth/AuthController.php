@@ -21,6 +21,9 @@ class AuthController extends Controller
     |
     */
 
+    // Use 'username' as identity instead 'email'
+    protected $username = 'username';
+
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
@@ -42,9 +45,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+            //'username' => 'required|max:255',
+            //'password' => 'required|confirmed|min:3',
         ]);
     }
 

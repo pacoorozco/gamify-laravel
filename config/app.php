@@ -142,6 +142,8 @@ return [
          */
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class, // Stapler-based file upload package
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,  // Slugs for your Eloquent models
+        Collective\Html\HtmlServiceProvider::class,  // HTML helpers
+        igaster\laravelTheme\themeServiceProvider::class,  // Theme support
 
         /*
          * Application Service Providers...
@@ -199,6 +201,13 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+
+        /*
+         * Third Party Alias
+         */
+        'Form'      => Collective\Html\FormFacade::class,  // HTML Form helpers
+        'HTML'      => Collective\Html\HtmlFacade::class,  // HTML helpers
+        'Theme'     => igaster\laravelTheme\Facades\Theme::class,  // Theme support
 
     ],
 

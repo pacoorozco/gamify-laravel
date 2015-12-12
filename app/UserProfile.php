@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
 
+// Theme support
+use igaster\laravelTheme\Theme;
+
 class UserProfile extends Model implements StaplerableInterface
 {
     use EloquentTrait; // Image Uploads
@@ -55,7 +58,7 @@ class UserProfile extends Model implements StaplerableInterface
                 'small' => '64x64'
             ],
             'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/img/missing_profile.png'
+            'default_url' => 'images/missing_profile.png'
         ]);
 
         parent::__construct($attributes);
