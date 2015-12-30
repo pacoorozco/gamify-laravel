@@ -6,33 +6,22 @@
 
         <!-- username -->
         <dt>{{ trans('admin/user/model.username') }}</dt>
-        <dd>{{{ $user->username }}}</dd>
+        <dd>{{ $user->username }}</dd>
         <!-- ./ username -->
 
         <!-- fullname -->
-        <dt>{{ trans('admin/user/model.fullname') }}</dt>
-        <dd>{{{ $user->fullname }}}</dd>
+        <dt>{{ trans('admin/user/model.name') }}</dt>
+        <dd>{{ $user->name }}</dd>
         <!-- ./ fullname -->
 
         <!-- email -->
         <dt>{{ trans('admin/user/model.email') }}</dt>
-        <dd>{{{ $user->email }}}</dd>
+        <dd>{{ $user->email }}</dd>
         <!-- ./ email -->
 
-        <!-- activation status -->
-        <dt>{{ trans('admin/user/model.confirm') }}</dt>
-        <dd>{{{ ($user->confirmed) ? trans('general.yes') : trans('general.no') }}}</dd>
-        <!-- ./ activation status -->
-
         <!-- roles -->
-        <dt>{{ trans('admin/user/model.roles') }}</dt>
-        <dd>
-            <ul class="list-unstyled">
-        @foreach ($roles as $role)
-        {{ ( array_search($role->id, $user->currentRoleIds()) !== false && array_search($role->id, $user->currentRoleIds()) >= 0 ? '<li>' . $role->name .'</li>' : '') }}
-        @endforeach
-            </ul>
-        </dd>
+        <dt>{{ trans('admin/user/model.role') }}</dt>
+        <dd>{{ $user->role }}</dd>
         <!-- ./ roles -->
 
         </dl>
@@ -45,11 +34,11 @@
 
         <div class="form-group">
             <div class="controls">
-                <a href="{{ route('admin.users.index') }}" class="btn btn-primary">{{ trans('button.back') }}</a>
+                <a href="{{ route('admin.users.index') }}" class="btn btn-primary">{!! trans('button.back') !!}</a>
                 @if ($action == 'show')
-                <a href="{{ URL::route('admin.users.edit', $user->id) }}" class="btn btn-primary">{{ trans('button.edit') }}</a>
+                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">{!! trans('button.edit') !!}</a>
                 @else
-                {{ Form::button(trans('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) }}
+                {!! Form::button(trans('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
                 @endif
             </div>
         </div>

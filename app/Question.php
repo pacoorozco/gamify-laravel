@@ -14,7 +14,7 @@ use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
 // Record created_by, updated_by
-use Gamify\Traits\RecordSignature;
+use Gamify\Traits\RecordSignatureTrait;
 
 // Theme support
 use igaster\laravelTheme\Theme;
@@ -22,7 +22,7 @@ use igaster\laravelTheme\Theme;
 class Question extends Model implements StaplerableInterface, SluggableInterface {
 
     use SoftDeletes;
-    use RecordSignatureTrait; // Record Signature
+    //use RecordSignatureTrait; // Record Signature
     use EloquentTrait; // Image Uploads
     use SluggableTrait; // Slugs
 

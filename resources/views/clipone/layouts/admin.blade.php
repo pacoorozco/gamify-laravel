@@ -18,18 +18,18 @@
         @yield('meta')
         <!-- end: META -->
         <!-- start: MAIN CSS -->
-        {!! Theme::css('plugins/bootstrap/css/bootstrap.min.css') !!}
-        {!! Theme::css('plugins/font-awesome/css/font-awesome.min.css') !!}
-        {!! Theme::css('fonts/style.css') !!}
-        {!! Theme::css('css/main.css') !!}
-        {!! Theme::css('css/main-responsive.css') !!}
-        {!! Theme::css('plugins/iCheck/skins/all.css') !!}
-        {!! Theme::css('plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css') !!}
-        {!! Theme::css('plugins/perfect-scrollbar/src/perfect-scrollbar.css') !!}
-        {!! Theme::css('css/theme_light.css'), array('id' => 'skin_color') !!}
-        {!! Theme::css('css/print.css'), array('media' => 'print') !!}
+        {!! HTML::style(Theme::url('plugins/bootstrap/css/bootstrap.min.css')) !!}
+        {!! HTML::style(Theme::url('plugins/font-awesome/css/font-awesome.min.css')) !!}
+        {!! HTML::style(Theme::url('fonts/style.css')) !!}
+        {!! HTML::style(Theme::url('css/main.css')) !!}
+        {!! HTML::style(Theme::url('css/main-responsive.css')) !!}
+        {!! HTML::style(Theme::url('plugins/iCheck/skins/all.css')) !!}
+        {!! HTML::style(Theme::url('plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css')) !!}
+        {!! HTML::style(Theme::url('plugins/perfect-scrollbar/src/perfect-scrollbar.css')) !!}
+        {!! HTML::style(Theme::url('css/theme_light.css'), array('id' => 'skin_color')) !!}
+        {!! HTML::style(Theme::url('css/print.css'), array('media' => 'print')) !!}
         <!--[if IE 7]>
-        {!! Theme::css('plugins/font-awesome/css/font-awesome-ie7.min.css') !!}
+        {!! HTML::style(Theme::url('plugins/font-awesome/css/font-awesome-ie7.min.css')) !!}
         <![endif]-->
         <!-- end: MAIN CSS -->
         <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
@@ -51,7 +51,7 @@
                     </button>
                     <!-- end: RESPONSIVE MENU TOGGLER -->
                     <!-- start: LOGO -->
-                    <a class="navbar-brand" href="{!! URL::route('home') !!}">
+                    <a class="navbar-brand" href="{{ route('admin-home') }}">
                         gamify v3
                     </a>
                     <!-- end: LOGO -->
@@ -65,13 +65,13 @@
                         <!-- start: USER DROPDOWN -->
                         <li class="dropdown current-user">
                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                                {{ HTML::image(Auth::user()->profile->image->url('small'), null, array('class' => 'circle-img', 'height' => '30', 'width' => '30')) }}
-                                <span class="username">{{ Auth::user()->fullname }}</span>
+                                {{-- HTML::image(auth()->user()->profile->image->url('small'), null, array('class' => 'circle-img', 'height' => '30', 'width' => '30')) --}}
+                                <span class="username">{{ auth()->user()->name }}</span>
                                 <i class="clip-chevron-down"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ URL::to('user') }}">
+                                    <a href="#">
                                         <i class="clip-user-2"></i>
                                         &nbsp; {{ trans('site.my_profile') }}
                                     </a>
@@ -84,7 +84,7 @@
                                 </li> --}}
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="{{ URL::to('user/logout') }}">
+                                    <a href="{{ route('logout') }}">
                                         <i class="clip-exit"></i>
                                         &nbsp;{{ trans('general.logout') }}
                                     </a>
@@ -110,7 +110,7 @@
         <div class="main-container">
             <div class="navbar-content">
                 <!-- start: SIDEBAR -->
-                @include('admin.sidebar')
+                @include('admin/partials.sidebar')
                 <!-- end: SIDEBAR -->
             </div>
             <!-- start: PAGE -->
@@ -141,7 +141,7 @@
         <!-- start: FOOTER -->
         <div class="footer clearfix">
             <div class="footer-inner">
-                {{ date("Y"); }} &copy; {!! HTML::link('http://pacoorozco.info', 'Paco Orozco', ['rel' => 'nofollow']) !!} - Powered by {!! HTML::link('https://github.com/pacoorozco/laravel-gamify', 'gamify v3', ['rel' => 'nofollow']) !!}
+                2014-{!! date("Y") !!} &copy; {!! HTML::link('http://pacoorozco.info', 'Paco Orozco', ['rel' => 'nofollow']) !!} - Powered by {!! HTML::link('https://github.com/pacoorozco/gamify-l5', 'gamify v3', ['rel' => 'nofollow']) !!}
             </div>
             <div class="footer-items">
                 <span class="go-top"><i class="clip-chevron-up"></i></span>
@@ -150,25 +150,25 @@
         <!-- end: FOOTER -->
         <!-- start: MAIN JAVASCRIPTS -->
         <!--[if lt IE 9]>
-        {!! Theme::js('plugins/respond.min.js')) !!}
-        {!! Theme::js('plugins/excanvas.min.js')) !!}
-        {!! Theme::js('plugins/jQuery-lib/1.10.2/jquery.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/respond.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/excanvas.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/jQuery-lib/1.10.2/jquery.min.js')) !!}
         <![endif]-->
         <!--[if gte IE 9]><!-->
-        {!! Theme::js('plugins/jQuery-lib/2.0.3/jquery.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/jQuery-lib/2.0.3/jquery.min.js')) !!}
         <!--<![endif]-->
-        {!! Theme::js('plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js')) !!}
-        {!! Theme::js('plugins/bootstrap/js/bootstrap.min.js')) !!}
-        {!! Theme::js('plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js')) !!}
-        {!! Theme::js('plugins/blockUI/jquery.blockUI.js')) !!}
-        {!! Theme::js('plugins/iCheck/jquery.icheck.min.js')) !!}
-        {!! Theme::js('plugins/perfect-scrollbar/src/jquery.mousewheel.js')) !!}
-        {!! Theme::js('plugins/perfect-scrollbar/src/perfect-scrollbar.js')) !!}
-        {!! Theme::js('plugins/less/less-1.5.0.min.js')) !!}
-        {!! Theme::js('plugins/jquery-cookie/jquery.cookie.js')) !!}
-        {!! Theme::js('plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js')) !!}
-        {!! Theme::js('plugins/jquery-cookie/jquery.cookie.js')) !!}
-        {!! Theme::js('js/main.js')) !!}
+        {!! HTML::script(Theme::url('plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/bootstrap/js/bootstrap.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/blockUI/jquery.blockUI.js')) !!}
+        {!! HTML::script(Theme::url('plugins/iCheck/jquery.icheck.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/perfect-scrollbar/src/jquery.mousewheel.js')) !!}
+        {!! HTML::script(Theme::url('plugins/perfect-scrollbar/src/perfect-scrollbar.js')) !!}
+        {!! HTML::script(Theme::url('plugins/less/less-1.5.0.min.js')) !!}
+        {!! HTML::script(Theme::url('plugins/jquery-cookie/jquery.cookie.js')) !!}
+        {!! HTML::script(Theme::url('plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js')) !!}
+        {!! HTML::script(Theme::url('plugins/jquery-cookie/jquery.cookie.js')) !!}
+        {!! HTML::script(Theme::url('js/main.js')) !!}
         <!-- end: MAIN JAVASCRIPTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         @yield('scripts')

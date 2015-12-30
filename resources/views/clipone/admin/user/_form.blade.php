@@ -1,73 +1,71 @@
 {{-- Create / Edit User Form --}}
 
 @if (isset($user))
-{{ Form::model($user, array(
+{!! Form::model($user, array(
             'route' => array('admin.users.update', $user->id),
             'method' => 'put'
-            )) }}
+            )) !!}
 @else
-{{ Form::open(array(
+{!! Form::open(array(
             'route' => array('admin.users.store'),
             'method' => 'post'
-            )) }}
+            )) !!}
 @endif
 
 <div class="row">
     <div class="col-xs-6">
 
         <!-- username -->
-        <div class="form-group {{{ $errors->has('username') ? 'has-error' : '' }}}">
-            {{ Form::label('username', trans('admin/user/model.username'), array('class' => 'control-label')) }}
+        <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
+            {!! Form::label('username', trans('admin/user/model.username'), array('class' => 'control-label')) !!}
             <div class="controls">
                 {{-- TODO: If $user->username == 'admin' this input text must be disabled --}}
                 @if ($action == 'create')
-                {{ Form::text('username', null, array('class' => 'form-control')) }}
+                {!! Form::text('username', null, array('class' => 'form-control')) !!}
                 @else
-                {{ Form::text('username', null,
-                    ($user->username == 'admin') ? array('disabled' => 'disabled', 'class' => 'form-control') : array('class' => 'form-control')
-                    ) }}
+                {!! Form::text('username', null, array('disabled' => 'disabled', 'class' => 'form-control')) !!}
                 @endif
-                <span class="help-block">{{{ $errors->first('username', ':message') }}}</span>
+                <span class="help-block">{{ $errors->first('username', ':message') }}</span>
             </div>
         </div>
         <!-- ./ username -->
 
-        <!-- fullname -->
-        <div class="form-group {{{ $errors->has('fullname') ? 'has-error' : '' }}}">
-            {{ Form::label('fullname', trans('admin/user/model.fullname'), array('class' => 'control-label')) }}
+        <!-- name -->
+        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+            {!! Form::label('name', trans('admin/user/model.name'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ Form::text('fullname', null, array('class' => 'form-control')) }}
-                <span class="help-block">{{{ $errors->first('fullname', ':message') }}}</span>
+                {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('name', ':message') }}</span>
             </div>
         </div>
-        <!-- ./ fullname -->
+        <!-- ./ name -->
 
         <!-- Email -->
-        <div class="form-group {{{ $errors->has('email') ? 'has-error' : '' }}}">
-            {{ Form::label('email', trans('admin/user/model.email'), array('class' => 'control-label')) }}
+        <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+            {!! Form::label('email', trans('admin/user/model.email'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ Form::email('email', null, array('class' => 'form-control')) }}
-                <span class="help-block">{{{ $errors->first('email', ':message') }}}</span>
+                {!! Form::email('email', null, array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('email', ':message') }}</span>
             </div>
         </div>
         <!-- ./ email -->
 
         <!-- Password -->
-        <div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
-            {{ Form::label('password', trans('admin/user/model.password'), array('class' => 'control-label')) }}
+        <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+            {!! Form::label('password', trans('admin/user/model.password'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ Form::password('password', array('class' => 'form-control')) }}
-                <span class="help-block">{{{ $errors->first('password', ':message') }}}</span>
+                {!! Form::password('password', array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('password', ':message') }}</span>
             </div>
         </div>
         <!-- ./ password -->
 
         <!-- Password Confirm -->
-        <div class="form-group {{{ $errors->has('password_confirmation') ? 'has-error' : '' }}}">
-            {{ Form::label('password_confirmation', trans('admin/user/model.password_confirmation'), array('class' => 'control-label')) }}
+        <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+            {!! Form::label('password_confirmation', trans('admin/user/model.password_confirmation'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
-                <span class="help-block">{{{ $errors->first('password_confirmation', ':message') }}}</span>
+                {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('password_confirmation', ':message') }}</span>
             </div>
         </div>
         <!-- ./ password confirm -->
@@ -75,42 +73,17 @@
     </div>
     <div class="col-xs-6">
 
-        <!-- Activation Status -->
-        <div class="form-group {{{ $errors->has('activated') || $errors->has('confirm') ? 'has-error' : '' }}}">
-            {{ Form::label('confirm', trans('admin/user/model.confirm'), array('class' => 'control-label')) }}
+        <!-- role -->
+        <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
+            {!! Form::label('role', trans('admin/user/model.role'), array('class' => 'control-label')) !!}
             <div class="controls">
-                @if ($action == 'create')
-                {{ Form::select('confirm', array('1' => trans('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control')) }}
-                @else
-                {{ Form::select('confirm', array('1' => trans('general.yes'), '0' => trans('general.no')), null,
-                    ($user->id === Confide::user()->id ? array('disabled' => 'disabled', 'class' => 'form-control') : array('class' => 'form-control'))
-                    ) }}
-                @endif
-                <span class="help-block">{{{ $errors->first('confirm', ':message') }}}</span>
-            </div>
-        </div>
-        <!-- ./ activation status -->
-
-        <!-- roles -->
-        <div class="form-group {{{ $errors->has('roles') ? 'has-error' : '' }}}">
-            {{ Form::label('roles', trans('admin/user/model.roles'), array('class' => 'control-label')) }}
-            <div class="controls">
-                <select class="form-control" name="roles[]" id="roles[]" multiple>
-                    @foreach ($roles as $role)
-                    @if ($action == 'create')
-                    <option value="{{{ $role->id }}}"{{{ ( in_array($role->id, $selectedRoles) ? ' selected="selected"' : '') }}}>{{{ $role->name }}}</option>
-                    @else
-                    <option value="{{{ $role->id }}}"{{{ ( array_search($role->id, $user->currentRoleIds()) !== false && array_search($role->id, $user->currentRoleIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $role->name }}}</option>
-                    @endif
-                    @endforeach
-                </select>
-
+                {!! Form::select('role', array('default' => 'Default', 'administrator' => 'Administrator'), null, ['class' => 'form-control']) !!}
                 <span class="help-block">
-                    {{{ trans('admin/user/messages.roles_help') }}}
+                    {{ trans('admin/user/messages.roles_help') }}
                 </span>
             </div>
         </div>
-        <!-- ./ roles -->
+        <!-- ./ role -->
 
     </div>
 </div>
@@ -121,7 +94,7 @@
         <!-- Form Actions -->
         <div class="form-group">
             <div class="controls">
-                {{ Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) }}
+                {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
             </div>
         </div>
         <!-- ./ form actions -->
@@ -129,4 +102,4 @@
     </div>
 </div>
 
-{{ Form::close() }}
+{!! Form::close() !!}

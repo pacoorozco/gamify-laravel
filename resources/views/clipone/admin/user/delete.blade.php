@@ -2,39 +2,40 @@
 
 {{-- Web site Title --}}
 @section('title')
-	{{{ $title }}} :: @parent
-@stop
+    {{ trans('admin/user/title.user_delete') }} :: @parent
+@endsection
 
 {{-- Content Header --}}
 @section('header')
-<h1>
-    {{{ $title }}} <small>{{{ $user->username }}}</small>
-</h1>
-@stop
+    <h1>
+        {{ trans('admin/user/title.user_delete') }}
+        <small>{{ $user->username }}</small>
+    </h1>
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-<li>
-    <i class="clip-bubbles-3"></i>
-    <a href="{{ URL::route('admin.users.index') }}">
-        {{ trans('admin/site.users') }}
-    </a>
-</li>
-<li class="active">
-    {{ trans('admin/user/title.user_delete') }}
-</li>
-@stop
+    <li>
+        <i class="clip-users"></i>
+        <a href="{{ route('admin.users.index') }}">
+            {{ trans('admin/site.users') }}
+        </a>
+    </li>
+    <li class="active">
+        {{ trans('admin/user/title.user_delete') }}
+    </li>
+    @endsection
 
-{{-- Content --}}
-@section('content')
+    {{-- Content --}}
+    @section('content')
 
-<!-- Notifications -->
-@include('notifications')
-<!-- ./ notifications -->
-        
-{{-- Delete User Form --}}
-{{ Form::open(array('route' => array('admin.users.destroy', $user->id), 'method' => 'delete', )) }}
-@include('admin/user/_details', compact('user'))
-{{ Form::close() }}
+            <!-- Notifications -->
+    @include('partials.notifications')
+            <!-- ./ notifications -->
 
-@stop
+    {{-- Delete User Form --}}
+    {!! Form::open(array('route' => array('admin.users.destroy', $user), 'method' => 'delete', )) !!}
+    @include('admin/user/_details', ['action' => 'delete'])
+    {!! Form::close() !!}
+
+@endsection

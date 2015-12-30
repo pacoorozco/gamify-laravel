@@ -18,16 +18,16 @@
 Route::bind('user', function($value) {
     return \Gamify\User::where('username', $value)->first();
 });
-Route::model('users', 'User');
-Route::model('badges', 'Badge');
-Route::model('levels', 'Level');
-Route::model('questions', 'Question');
-Route::model('choices', 'QuestionChoice');
+Route::model('users', '\Gamify\User');
+Route::model('badges', '\Gamify\Badge');
+Route::model('levels', '\Gamify\Level');
+Route::model('questions', '\Gamify\Question');
+Route::model('choices', '\Gamify\QuestionChoice');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 
 // Registration routes...
 //Route::get('auth/register', 'Auth\AuthController@getRegister');
@@ -41,8 +41,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
  */
 Route::group(['middleware' => 'auth'], function() {
 
-    Route::get('/',  ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
-    Route::get('/home',  ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
+    Route::get('/',  ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::get('/dashboard',  ['as' => 'dashboard', 'uses' => 'HomeController@index']);
 
     // Profiles
     Route::get('user',                  'UserController@show');
@@ -61,21 +61,21 @@ Route::group(['middleware' => 'auth'], function() {
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
-    Route::get('/', ['as' => 'admin-home', 'uses' => 'AdminQuestionController@index']);
+    Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminQuestionController@index']);
 
     /** ------------------------------------------
      *  Users
      *  ------------------------------------------
      */
     // Datatables Ajax route.
-    Route::get('users/data', ['as' => 'admin.users.data', 'uses' => 'AdminUserController@data']);
+    Route::get('users/data', ['as' => 'admin.users.data', 'uses' => 'Admin\AdminUserController@data']);
 
     // Our special delete confirmation route - uses the show/details view.
-    Route::get('users/{users}/delete', ['as' => 'admin.users.delete', 'uses' => 'AdminUserController@delete']);
+    Route::get('users/{users}/delete', ['as' => 'admin.users.delete', 'uses' => 'Admin\AdminUserController@delete']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
-    Route::resource('users',                'AdminUserController');
+    Route::resource('users',                'Admin\AdminUserController');
 
     /** ------------------------------------------
      *  Badges
@@ -119,14 +119,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
      */
 
     // DataTables Ajax route.
-    Route::get('questions/data', ['as' => 'admin.questions.data', 'uses' => 'AdminQuestionController@data']);
+    Route::get('questions/data', ['as' => 'admin.questions.data', 'uses' => 'Admin\AdminQuestionController@data']);
 
     // Our special delete confirmation route - uses the show/details view.
-    Route::get('questions/{questions}/delete', ['as' => 'admin.questions.delete', 'uses' => 'AdminQuestionController@delete']);
+    Route::get('questions/{questions}/delete', ['as' => 'admin.questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
 
-    Route::resource('questions',         'AdminQuestionController');
+    Route::resource('questions',         'Admin\AdminQuestionController');
 
     // Nest routes to deal with choices
-    Route::resource('questions.choice', 'AdminQuestionChoicesController', ['except' => array('index', 'show')]);
+    Route::resource('questions.choice', 'Admin\AdminQuestionChoicesController', ['except' => array('index', 'show')]);
 
 });

@@ -41,7 +41,7 @@
             </div>
             <div class="form-actions">
                 <label for="remember" class="checkbox-inline">
-                    {!! Form::checkbox('remember', '1', false, array('class' => 'grey remember')) !!}
+                    {!! Form::checkbox('remember', '1', false, array('class' => 'grey remember', 'id' => 'remember')) !!}
                     {{ trans('auth.remember_me') }}
                 </label>
                 <button type="submit" class="btn btn-bricky pull-right">

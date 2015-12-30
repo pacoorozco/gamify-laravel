@@ -2,36 +2,37 @@
 
 {{-- Web site Title --}}
 @section('title')
-	{{{ $title }}} :: @parent
-@stop
+    {{ trans('admin/user/title.user_update') }} :: @parent
+@endsection
 
 {{-- Content Header --}}
 @section('header')
-<h1>
-    {{{ $title }}} <small>{{{ $user->username }}}</small>
-</h1>
-@stop
+    <h1>
+        {{ trans('admin/user/title.user_update') }}
+        <small>{{{ $user->username }}}</small>
+    </h1>
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-<li>
-    <i class="clip-bubbles-3"></i>
-    <a href="{{ URL::route('admin.users.index') }}">
-        {{ trans('admin/site.users') }}
-    </a>
-</li>
-<li class="active">
-    {{ trans('admin/user/title.edit') }}
-</li>
-@stop
+    <li>
+        <i class="clip-users"></i>
+        <a href="{{ URL::route('admin.users.index') }}">
+            {{ trans('admin/site.users') }}
+        </a>
+    </li>
+    <li class="active">
+        {{ trans('admin/user/title.user_update') }}
+    </li>
+    @endsection
 
-{{-- Content --}}
-@section('content')
+    {{-- Content --}}
+    @section('content')
 
-<!-- Notifications -->
-@include('notifications')
-<!-- ./ notifications -->
+            <!-- Notifications -->
+    @include('partials.notifications')
+            <!-- ./ notifications -->
 
-@include('admin/user/_form', compact('user'))
+    @include('admin/user/_form', ['action' => 'update'])
 
-@stop
+@endsection
