@@ -3,91 +3,71 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\User;
-use Illuminate\Http\Request;
-
-use Gamify\Http\Requests;
 use Gamify\Question;
-
+use Gamify\Http\Requests\QuestionCreateRequest;
+use Gamify\Http\Requests\QuestionUpdateRequest;
 use yajra\Datatables\Datatables;
 
 
 class AdminQuestionController extends AdminController
 {
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $title = trans('admin/question/title.question_management');
-
-        $table = Datatable::table()
-            ->addColumn(
-                trans('admin/question/table.shortname'),
-                trans('admin/question/table.name'),
-                trans('admin/question/table.image'),
-                trans('admin/question/table.status'),
-                trans('admin/question/table.created_at'),
-                trans('table.actions')
-            )
-            ->setUrl(route('admin.questions.data'))
-            ->noScript();
-
-        // The list of questions will be filled later using the JSON Data method
-        // below - to populate the DataTables table.
-        return view('admin/question/index', compact('title', 'table'));
+        return view('admin/question/index');
     }
 
     /**
      * Displays the form for question creation
      *
+     *  @return \Illuminate\Http\Response
+     *
      */
     public function create()
     {
-        $title = trans('admin/question/title.create_a_new_question');
-        return view('admin/question/create', compact('title'));
+        return view('admin/question/create');
     }
 
     /**
      * Stores new question
      *
+     * @param QuestionCreateRequest $request
+     * @return \Illuminate\Http\Response
+     *
      */
-    public function store()
+    public function store(QuestionCreateRequest $request)
     {
-        $input = Input::all();
-        $validation = Validator::make($input, Question::$rules);
+        Question::create($request->all());
 
-        if ($validation->passes()) {
-            Question::create($input);
-
-            return Redirect::route('admin.questions.index')
-                ->with('success', trans('admin/question/messages.create.success'));
-        }
-
-        return Redirect::route('admin.questions.create')
-            ->withInput()
-            ->withErrors($validation);
+        return redirect()->route('admin.questions.index')
+            ->with('success', trans('admin/question/messages.create.success'));
     }
 
     /**
-     * Show a single question details page.
+     * Display the specified resource.
      *
-     * @param $question
-     * @return Response
+     * @param  Question $question
+     * @return \Illuminate\Http\Response
      */
     public function show(Question $question)
     {
-        $title = trans('admin/question/title.question_show');
-        return view('admin/question/show', compact('question', 'title'));
+        return view('admin/question/show', compact('question'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $question
-     * @return Response
+     * @param Question $question
+     * @return \Illuminate\Http\Response
      */
     public function edit(Question $question)
     {
-        $title = trans('admin/question/title.question_update');
-        return view('admin/question/edit', compact('question', 'title'));
+        return view('admin/question/edit', compact('question'));
     }
 
     /**
@@ -96,21 +76,12 @@ class AdminQuestionController extends AdminController
      * @param $question
      * @return Response
      */
-    public function update(Question $question)
+    public function update(QuestionUpdateRequest $request, Question $question)
     {
-        $input = Input::all();
-        $validation = Validator::make($input, Question::$rules);
+        $question->fill($request->all())->save();
 
-        if ($validation->passes()) {
-            $question->update($input);
-
-            return Redirect::route('admin.questions.index')
-                ->with('success', trans('admin/question/messages.update.success'));
-        }
-
-        return Redirect::route('admin.questions.edit')
-            ->withInput()
-            ->withErrors($validation);
+        return redirect()->route('admin.questions.index')
+            ->with('success', trans('admin/question/messages.update.success'));
     }
 
     /**
@@ -121,8 +92,7 @@ class AdminQuestionController extends AdminController
      */
     public function delete(Question $question)
     {
-        $title = trans('admin/question/title.question_delete');
-        return view('admin/question/delete', compact('question', 'title'));
+        return view('admin/question/delete', compact('question'));
     }
 
     /**
@@ -133,17 +103,9 @@ class AdminQuestionController extends AdminController
      */
     public function destroy(Question $question)
     {
-        $id = $question->id;
         $question->delete();
 
-        // Was the question deleted?
-        if (Question::find($id)) {
-            // There was a problem deleting the question
-            return Redirect::route('admin.questions.index')
-                ->with('error', trans('admin/question/messages.delete.error'));
-        }
-        // Redirect to the question management page
-        return Redirect::route('admin.questions.index')
+        return redirect()->route('admin.questions.index')
             ->with('success', trans('admin/question/messages.delete.success'));
     }
 
@@ -156,15 +118,11 @@ class AdminQuestionController extends AdminController
      */
     public function data(Datatables $dataTable)
     {
-        /*
-         *
-         if ( ! Request::ajax()) {
-            abort(403);
-        }
-        */
+        // TODO: Disable this query if isn't AJAX
 
-        $data = User::all();
-        return Datatables::of($data)->make(true);
+        $question = Question::select([
+            'id', 'shortname', 'name', 'status'
+        ])->orderBy('name', 'ASC');
 
         $statusLabel = array(
             'draft' => '<span class="label label-default ">' . trans('admin/question/model.draft') . '</span>',
@@ -172,24 +130,18 @@ class AdminQuestionController extends AdminController
             'unpublish' => '<span class="label label-inverse ">' . trans('admin/question/model.unpublish') . '</span>',
         );
 
-        return $dataTable->of($data)
-            ->showColumns('shortname', 'name', 'image', 'status', 'created_at', 'actions')
-            ->addColumn('image', function($model) {
-                return '<img src="' . $model->image->url('small') . '" width="64" class="img-thumbnail" />';
+        return $dataTable->of($question)
+            ->editColumn('status', function(Question $question) use ($statusLabel) {
+                return $statusLabel[$question->status];
             })
-/*            ->addColumn('actions', function($model) {
-                return view('partials.admin_actions_dd', array(
+            ->addColumn('actions', function(Question $question) {
+                return view('admin/partials.actions_dd', array(
                         'model' => 'questions',
-                        'id' => $model->id)
+                        'id' => $question->id)
                 )->render();
             })
-            ->addColumn('status', function($model) use ($statusLabel) {
-                return $statusLabel[$model->status];
-            })
-*/
-            ->searchColumns('shortname', 'name', 'status', 'created_at')
-            ->orderColumns('created_at', 'name', 'status', 'status')
-            ->make();
+            ->removeColumn('id')
+            ->make(true);
     }
 
 }

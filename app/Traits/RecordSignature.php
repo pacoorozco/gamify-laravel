@@ -2,20 +2,22 @@
 
 namespace Gamify\Traits;
 
+use Illuminate\Support\Facades\Auth;
+
 // Record who create an object, who update an object
-trait RecordSignatureTrait
+trait RecordSignature
 {
-    protected static function boot()
+    public static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
-            $model->created_by = Auth::user()->id;
-            $model->updated_by = Auth::user()->id;
+            $model->created_by = Auth::id;
+            $model->updated_by = Auth::id;
         });
 
         static::updating(function ($model) {
-            $model->updated_by = Auth::user()->id;
+            $model->updated_by = Auth::id;
         });
     }
 }

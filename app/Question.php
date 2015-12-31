@@ -14,15 +14,13 @@ use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
 // Record created_by, updated_by
-use Gamify\Traits\RecordSignatureTrait;
+use Gamify\Traits\RecordSignature;
 
-// Theme support
-use igaster\laravelTheme\Theme;
 
 class Question extends Model implements StaplerableInterface, SluggableInterface {
 
     use SoftDeletes;
-    //use RecordSignatureTrait; // Record Signature
+    use RecordSignature; // Record Signature
     use EloquentTrait; // Image Uploads
     use SluggableTrait; // Slugs
 
@@ -41,18 +39,6 @@ class Question extends Model implements StaplerableInterface, SluggableInterface
     );
 
     protected $dates = array('deleted_at');
-
-    /**
-     * The validation rules for this model.
-     */
-    public static $rules = array(
-        'name'     => 'required',
-        'question' => 'required',
-        'solution' => '',
-        'type'     => 'required|in:single,multi',
-        'hidden'   => 'required|boolean',
-        'status'   => 'required|in:draft,publish,unpublish'
-    );
 
     /**
      * The Question slug in order to implement permanent URL to questions
