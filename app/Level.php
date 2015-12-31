@@ -32,17 +32,6 @@ class Level extends Model implements StaplerableInterface
 
     protected $dates = array('deleted_at');
 
-    /**
-     * The validation rules for this model.
-     *
-     * @var string
-     */
-    public static $rules = array(
-        'name' => 'required',
-        'amount_needed' => 'required|integer|min:1',
-        'active' => 'required|boolean'
-    );
-
     public function __construct(array $attributes = array())
     {
         $this->hasAttachedFile('image', [

@@ -3,14 +3,14 @@
 {{-- Web site Title --}}
 @section('title')
 	{{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>{{{ $role->name }}}</small>
 </h1>
-@stop
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -23,7 +23,7 @@
 <li class="active">
     {{ trans('admin/role/title.edit') }}
 </li>
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -33,4 +33,4 @@
 <!-- ./ notifications -->
 
 @include('admin/role/_form', compact('role', 'permissions'))
-@stop
+@endsection

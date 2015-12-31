@@ -3,14 +3,14 @@
 {{-- Web site Title --}}
 @section('title')
 	{{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>create a new question</small>
 </h1>
-@stop
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -23,7 +23,7 @@
 <li class="active">
     {{ trans('admin/question/title.create_a_new_question') }}
 </li>
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -33,4 +33,4 @@
 <!-- ./ notifications -->
 
 @include('admin/question/_form')
-@stop
+@endsection

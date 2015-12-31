@@ -4,19 +4,19 @@
 @section('styles')
 {{ HTML::style(Theme::asset('plugins/select2/select2.css')) }}
 {{ HTML::style(Theme::asset('plugins/DataTables/media/css/DT_bootstrap.css')) }}
-@stop
+@endsection
 
 {{-- Web site Title --}}
 @section('title')
     {{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>create and edit questions</small>
 </h1>
-@stop
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -29,7 +29,7 @@
 <li class="active">
     {{ trans('admin/question/title.question_management') }}
 </li>
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-@stop
+@endsection
 
 {{-- Scripts --}}
 @section('scripts')
@@ -67,4 +67,4 @@
         'aoColumnDefs' => array('aTargets' => array(2, -1), 'bSortable' => false)
     ))
     ->script('partials.datatables') }}
-@stop
+@endsection

@@ -3,7 +3,7 @@
 {{-- Web site Title --}}
 @section('title')
     {{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -28,4 +28,4 @@
         {{ Form::close() }}
     </div>
 </div>
-@stop
+@endsection

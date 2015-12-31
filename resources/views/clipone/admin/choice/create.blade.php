@@ -3,14 +3,14 @@
 {{-- Web site Title --}}
 @section('title')
 	{{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>add a answer choice</small>
 </h1>
-@stop
+@endsection
 
 
 {{-- Content --}}
@@ -22,4 +22,4 @@
 
 @include('admin/choice/_form')
 
-@stop
+@endsection

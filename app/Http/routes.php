@@ -84,16 +84,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /badges/{badge_id}
-    Route::get('badges/data', ['as' => 'admin.badges.data', 'uses' => 'AdminBadgeController@data']);
+    Route::get('badges/data', ['as' => 'admin.badges.data', 'uses' => 'Admin\AdminBadgeController@data']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
-    Route::resource('badges',                'AdminBadgeController');
+    Route::resource('badges',                'Admin\AdminBadgeController');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural paramameter {badges} needs
     // to be used.
-    Route::get('badges/{badges}/delete', ['as' => 'admin.badges.delete', 'uses' => 'AdminBadgeController@delete']);
+    Route::get('badges/{badges}/delete', ['as' => 'admin.badges.delete', 'uses' => 'Admin\AdminBadgeController@delete']);
 
     /** ------------------------------------------
      *  Levels
@@ -102,16 +102,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /levels/{level_id}
-    Route::get('levels/data', ['as' => 'admin.levels.data', 'uses' => 'AdminLevelController@data']);
+    Route::get('levels/data', ['as' => 'admin.levels.data', 'uses' => 'Admin\AdminLevelController@data']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
-    Route::resource('levels',                'AdminLevelController');
+    Route::resource('levels',                'Admin\AdminLevelController');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural paramameter {badges} needs
     // to be used.
-    Route::get('levels/{levels}/delete', ['as' => 'admin.levels.delete', 'uses' => 'AdminLevelController@delete']);
+    Route::get('levels/{levels}/delete', ['as' => 'admin.levels.delete', 'uses' => 'Admin\AdminLevelController@delete']);
 
     /** ------------------------------------------
      *  Question management

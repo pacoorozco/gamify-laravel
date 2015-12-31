@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
 
-// Theme support
-use igaster\laravelTheme\Theme;
 
 class Badge extends Model implements StaplerableInterface
 {
@@ -33,18 +31,6 @@ class Badge extends Model implements StaplerableInterface
     );
 
     protected $dates = array('deleted_at');
-
-    /**
-     * The validation rules for this model.
-     *
-     * @var string
-     */
-    public static $rules = array(
-        'name'          => 'required',
-        'description'   => 'required',
-        'amount_needed' => 'required|integer|min:1',
-        'active'        => 'required|boolean'
-    );
 
     public function __construct(array $attributes = array())
     {

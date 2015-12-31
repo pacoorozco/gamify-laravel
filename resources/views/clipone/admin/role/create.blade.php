@@ -3,14 +3,14 @@
 {{-- Web site Title --}}
 @section('title')
 	{{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>create a new role</small>
 </h1>
-@stop
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -23,7 +23,7 @@
 <li class="active">
     {{ trans('admin/role/title.create_a_new_role') }}
 </li>
-@stop
+@endsection
 
 
 {{-- Content --}}
@@ -34,4 +34,4 @@
 <!-- ./ notifications -->
 
 @include('admin/role/_form', compact('permissions', 'selectedPermissions'))
-@stop
+@endsection

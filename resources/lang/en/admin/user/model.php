@@ -8,6 +8,5 @@ return [
     'role'                  => 'Role',
     'password'              => 'Password',
     'password_confirmation' => 'Password Confirmation',
-    'actions'               => 'Actions',
 
 ];

@@ -3,14 +3,14 @@
 {{-- Web site Title --}}
 @section('title')
 	{{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>{{{ $question->name }}}</small>
 </h1>
-@stop
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -23,7 +23,7 @@
 <li class="active">
     {{ trans('admin/question/title.edit') }}
 </li>
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -33,4 +33,4 @@
 <!-- ./ notifications -->
 
 @include('admin/question/_form', compact('question'))
-@stop
+@endsection

@@ -2,36 +2,37 @@
 
 {{-- Web site Title --}}
 @section('title')
-	{{{ $title }}} :: @parent
-@stop
+    {{ trans('admin/level/title.create_a_new_level') }} :: @parent
+@endsection
 
 {{-- Content Header --}}
 @section('header')
-<h1>
-    {{{ $title }}} <small>create a new level</small>
-</h1>
-@stop
+    <h1>
+        {{ trans('admin/level/title.create_a_new_level') }}
+        <small>create a new level</small>
+    </h1>
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-<li>
-    <i class="clip-bubbles-3"></i>
-    <a href="{{ URL::route('admin.levels.index') }}">
-        {{ trans('admin/site.levels') }}
-    </a>
-</li>
-<li class="active">
-    {{ trans('admin/level/title.create_a_new_level') }}
-</li>
-@stop
+    <li>
+        <i class="fa fa-graduation-cap"></i>
+        <a href="{{ route('admin.levels.index') }}">
+            {{ trans('admin/site.levels') }}
+        </a>
+    </li>
+    <li class="active">
+        {{ trans('admin/level/title.create_a_new_level') }}
+    </li>
+    @endsection
 
-{{-- Content --}}
-@section('content')
+    {{-- Content --}}
+    @section('content')
 
-<!-- Notifications -->
-@include('notifications')
-<!-- ./ notifications -->
+            <!-- Notifications -->
+    @include('partials.notifications')
+            <!-- ./ notifications -->
 
-@include('admin/level/_form')
+    @include('admin/level/_form')
 
-@stop
+@endsection

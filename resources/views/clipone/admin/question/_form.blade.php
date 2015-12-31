@@ -186,7 +186,7 @@
 @section('styles')
 <!-- File Input -->
 {{ HTML::style(Theme::asset('plugins/bootstrap-fileupload/bootstrap-fileupload.min.css')) }}
-@stop
+@endsection
 
 {{-- Scripts --}}
 @section('scripts')
@@ -210,4 +210,4 @@
         toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
     });
 </script>
-@stop
+@endsection

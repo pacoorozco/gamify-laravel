@@ -12,5 +12,7 @@ return array(
     'edit'   => 'Edit',
     'delete' => 'Delete',
     'search' => 'Search',
+    'actions' => 'Actions',
+    'back' => 'Back',
 
 );

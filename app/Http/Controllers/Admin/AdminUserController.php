@@ -7,17 +7,9 @@ use Gamify\Http\Requests\UserDeleteRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
-use Illuminate\Support\Facades\Gate;
 use yajra\Datatables\Datatables;
 
 class AdminUserController extends AdminController {
-
-    public function __construct()
-    {
-        if (Gate::denies('manage-users')) {
-            abort(403);
-        }
-    }
 
     /**
      * Display a listing of the resource.

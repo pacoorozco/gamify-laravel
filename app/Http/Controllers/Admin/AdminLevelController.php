@@ -1,0 +1,143 @@
+<?php
+
+namespace Gamify\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+
+use Gamify\Http\Requests;
+
+use Gamify\Http\Requests\LevelUpdateRequest;
+use Gamify\Http\Requests\LevelCreateRequest;
+use Gamify\Level;
+use yajra\Datatables\Datatables;
+
+
+class AdminLevelController extends AdminController
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('admin/level/index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin/level/create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  LevelCreateRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(LevelCreateRequest $request)
+    {
+        Level::create($request->all());
+
+        return redirect()->route('admin.levels.index')
+            ->with('success', trans('admin/level/messages.create.success'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Level $level
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Level $level)
+    {
+        return view('admin/level/show', compact('level'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Level $level
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Level $level)
+    {
+        return view('admin/level/edit', compact('level'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  LevelUpdateRequest  $request
+     * @param  Level $level
+     * @return \Illuminate\Http\Response
+     */
+    public function update(LevelUpdateRequest $request, Level $level)
+    {
+        $level->fill($request->all())->save();
+
+        return redirect()->route('admin.levels.index')
+            ->with('success', trans('admin/level/messages.update.success'));
+    }
+
+    /**
+     * Remove level page.
+     *
+     * @param Level $level
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Level $level)
+    {
+        return view('admin/level/delete', compact('level'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Level $level
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Level $level)
+    {
+        $level->delete();
+
+        return redirect()->route('admin.levels.index')
+            ->with('success', trans('admin/level/messages.delete.success'));
+    }
+
+    /**
+     * Show a list of all the levels formatted for Datatables.
+     *
+     * @param Datatables $dataTable
+     * @return Datatables JSON
+     */
+    public function data(Datatables $dataTable)
+    {
+        // TODO: Disable this query if isn't AJAX
+
+        $levels = Level::select([
+            'id', 'name', 'amount_needed', 'active'
+        ])->orderBy('amount_needed', 'ASC');
+
+        return $dataTable::of($levels)
+            ->addColumn('image', function(Level $level) {
+                return '<img src="' . $level->image->url('small') . '" width="64" class="img-thumbnail" />';
+            })
+            ->editColumn('active', function(Level $level) {
+                return ($level->active) ? trans('general.yes') : trans('general.no');
+            })
+            ->addColumn('actions', function(Level $level) {
+                return view('admin/partials.actions_dd', array(
+                    'model' => 'levels',
+                    'id' => $level->id
+                ))->render();
+            })
+            ->removeColumn('id')
+            ->make(true);
+    }
+}

@@ -3,7 +3,7 @@
 {{-- Web site Title --}}
 @section('title')
     {{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -29,4 +29,4 @@
     </div>
 </div>
     
-@stop
+@endsection

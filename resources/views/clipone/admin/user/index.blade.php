@@ -58,7 +58,7 @@
                     <th class="col-md-4">{{ trans('admin/user/model.name') }}</th>
                     <th class="col-md-3">{{ trans('admin/user/model.email') }}</th>
                     <th class="col-md-1">{{ trans('admin/user/model.role') }}</th>
-                    <th class="col-md-2">{{ trans('admin/user/model.actions') }}</th>
+                    <th class="col-md-2">{{ trans('general.actions') }}</th>
                 </tr>
                 </thead>
             </table>

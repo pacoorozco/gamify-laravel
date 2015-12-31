@@ -2,39 +2,40 @@
 
 {{-- Web site Title --}}
 @section('title')
-	{{{ $title }}} :: @parent
-@stop
+    {{ trans('admin/level/title.level_delete') }} :: @parent
+@endsection
 
 {{-- Content Header --}}
 @section('header')
-<h1>
-    {{{ $title }}} <small>{{{ $level->name }}}</small>
-</h1>
-@stop
+    <h1>
+        {{ trans('admin/level/title.level_delete') }}
+        <small>{{ $level->name }}</small>
+    </h1>
+@endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-<li>
-    <i class="clip-bubbles-3"></i>
-    <a href="{{ URL::route('admin.levels.index') }}">
-        {{ trans('admin/site.levels') }}
-    </a>
-</li>
-<li class="active">
-    {{ trans('admin/level/title.level_delete') }}
-</li>
-@stop
+    <li>
+        <i class="fa fa-graduation-cap"></i>
+        <a href="{{ route('admin.levels.index') }}">
+            {{ trans('admin/site.levels') }}
+        </a>
+    </li>
+    <li class="active">
+        {{ trans('admin/level/title.level_delete') }}
+    </li>
+    @endsection
 
-{{-- Content --}}
-@section('content')
+    {{-- Content --}}
+    @section('content')
 
-<!-- Notifications -->
-@include('notifications')
-<!-- ./ notifications -->
-        
-{{-- Delete Level Form --}}
-{{ Form::open(array('route' => array('admin.levels.destroy', $level->id), 'method' => 'delete', )) }}
-@include('admin/level/_details', compact('level'))
-{{ Form::close() }}
+            <!-- Notifications -->
+    @include('partials.notifications')
+            <!-- ./ notifications -->
 
-@stop
+    {{-- Delete Level Form --}}
+    {!! Form::open(array('route' => array('admin.levels.destroy', $level), 'method' => 'delete', )) !!}
+    @include('admin/level/_details', ['action' => 'delete'])
+    {!! Form::close() !!}
+
+@endsection

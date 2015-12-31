@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
 
-// Theme support
-use igaster\laravelTheme\Theme;
-
 class UserProfile extends Model implements StaplerableInterface
 {
     use EloquentTrait; // Image Uploads

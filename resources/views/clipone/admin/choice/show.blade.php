@@ -3,14 +3,14 @@
 {{-- Web site Title --}}
 @section('title')
 	{{{ $title }}} :: @parent
-@stop
+@endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
     {{{ $title }}} <small>{{{ $question->name }}}</small>
 </h1>
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -21,4 +21,4 @@
 
 @include('admin/choice/_details', compact('question', 'choice'))
 
-@stop
+@endsection
