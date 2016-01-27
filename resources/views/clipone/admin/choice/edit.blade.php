@@ -2,13 +2,14 @@
 
 {{-- Web site Title --}}
 @section('title')
-	{{{ $title }}} :: @parent
+	{{ trans('admin/choice/title.question_update') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
 <h1>
-    {{{ $title }}} <small>{{{ $question->name }}}</small>
+    {{ trans('admin/choice/title.question_update') }}
+    <small>{{ $question->name }}</small>
 </h1>
 @endsection
 
@@ -16,9 +17,9 @@
 @section('content')
 
 <!-- Notifications -->
-@include('notifications')
+@include('partials.notifications')
 <!-- ./ notifications -->
 
-@include('admin/choice/_form', compact('question', 'choice'))
+@include('admin/choice/_form')
 
 @endsection

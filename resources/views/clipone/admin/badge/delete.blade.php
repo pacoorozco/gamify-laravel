@@ -33,7 +33,7 @@
     @include('partials.notifications')
             <!-- ./ notifications -->
 
-    {{-- Delete User Form --}}
+    {{-- Delete Form --}}
     {!! Form::open(array('route' => array('admin.badges.destroy', $badge), 'method' => 'delete', )) !!}
     @include('admin/badge/_details', ['action' => 'delete'])
     {!! Form::close() !!}

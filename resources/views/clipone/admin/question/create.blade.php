@@ -33,5 +33,5 @@
     @include('partials.notifications')
             <!-- ./ notifications -->
 
-    @include('admin/question/_form')
+    @include('admin/question/_form', ['action' => 'create'])
 @endsection

@@ -127,6 +127,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::resource('questions',         'Admin\AdminQuestionController');
 
     // Nest routes to deal with choices
-    Route::resource('questions.choice', 'Admin\AdminQuestionChoicesController', ['except' => array('index', 'show')]);
+    Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => array('index', 'show')]);
 
 });

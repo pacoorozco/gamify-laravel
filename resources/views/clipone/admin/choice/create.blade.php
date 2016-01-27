@@ -2,24 +2,25 @@
 
 {{-- Web site Title --}}
 @section('title')
-	{{{ $title }}} :: @parent
+    {{ trans('admin/question/title.question_show') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-<h1>
-    {{{ $title }}} <small>add a answer choice</small>
-</h1>
-@endsection
+    <h1>
+        {{ trans('admin/question/title.question_show') }}
+        <small>add a answer choice</small>
+    </h1>
+    @endsection
 
 
-{{-- Content --}}
-@section('content')
+    {{-- Content --}}
+    @section('content')
 
-<!-- Notifications -->
-@include('notifications')
-<!-- ./ notifications -->
+            <!-- Notifications -->
+    @include('partials.notifications')
+            <!-- ./ notifications -->
 
-@include('admin/choice/_form')
+    @include('admin/choice/_form')
 
 @endsection

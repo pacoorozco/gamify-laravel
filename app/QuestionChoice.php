@@ -22,17 +22,6 @@ class QuestionChoice extends Model
     );
 
     /**
-     * The validation rules for this model.
-     *
-     * @var string
-     */
-    public static $rules = array(
-        'text'            => 'required',
-        'correct'           => 'required|boolean',
-        'points'            => 'required|integer'
-    );
-
-    /**
      * Every time we modify a choice we need to touch the question
      */
     protected $touches = array('question');

@@ -33,6 +33,6 @@
     @include('partials.notifications')
             <!-- /.notifications -->
 
-    @include('admin/question/_details'. ['action' => 'show'])
+    @include('admin/question/_details', ['action' => 'show'])
 
 @endsection

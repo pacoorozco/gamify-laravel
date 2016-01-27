@@ -2,26 +2,29 @@
 
 namespace Gamify;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Gamify\Traits\RecordSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// TODO: #1 Can't use EloquentTrait with RecordSignature
 // Image uploads
-use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait;
+// use Codesleeve\Stapler\ORM\StaplerableInterface;
+// use Codesleeve\Stapler\ORM\EloquentTrait;
 
 // Slugs for Eloquent Models
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
 
 // Record created_by, updated_by
-use Gamify\Traits\RecordSignature;
 
-
-class Question extends Model implements StaplerableInterface, SluggableInterface {
+// TODO: #1 Can't use EloquentTrait with RecordSignature
+// class Question extends Model implements StaplerableInterface, SluggableInterface {
+class Question extends Model implements SluggableInterface {
 
     use SoftDeletes;
     use RecordSignature; // Record Signature
-    use EloquentTrait; // Image Uploads
+    // TODO: #1 Can't use EloquentTrait with RecordSignature
+    // use EloquentTrait; // Image Uploads
     use SluggableTrait; // Slugs
 
     /**
@@ -57,20 +60,21 @@ class Question extends Model implements StaplerableInterface, SluggableInterface
         return $this->hasMany('Gamify\QuestionChoice');
     }
 
-    public function __construct(array $attributes = array())
-    {
-        $this->hasAttachedFile('image', [
-            'styles'      => [
-                'big'    => '220x220',
-                'medium' => '128x128',
-                'small'  => '64x64'
-            ],
-            'url'         => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => 'images/missing_question.png'
-        ]);
-
-        parent::__construct($attributes);
-    }
+    // TODO: #1 Can't use EloquentTrait with RecordSignature
+//    public function __construct(array $attributes = array())
+//    {
+//        $this->hasAttachedFile('image', [
+//            'styles'      => [
+//                'big'    => '220x220',
+//                'medium' => '128x128',
+//                'small'  => '64x64'
+//            ],
+//            'url'         => '/uploads/:class/:id_partition/:style/:filename',
+//            'default_url' => 'images/missing_question.png'
+//        ]);
+//
+//        parent::__construct($attributes);
+//    }
 
     public function scopePublished($query)
     {

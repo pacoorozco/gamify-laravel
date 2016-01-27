@@ -12,12 +12,16 @@ trait RecordSignature
         parent::boot();
 
         static::creating(function ($model) {
-            $model->created_by = Auth::id;
-            $model->updated_by = Auth::id;
+
+            $user = Auth::user();
+            $model->created_by = $user->id;
+            $model->updated_by = $user->id;
         });
 
         static::updating(function ($model) {
-            $model->updated_by = Auth::id;
+
+            $user = Auth::user();
+            $model->updated_by = $user->id;
         });
     }
 }

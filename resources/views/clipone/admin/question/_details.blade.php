@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
 
-        <img src="{{ $question->image->url('small') }}" width="64" class="img-thumbnail"/>
+        {{-- <img src="{{ $question->image->url('small') }}" width="64" class="img-thumbnail"/> --}}
         <h2>{{ $question->name }}
             <span class="badge">{{ $question->status }}</span>
             @if ($question->hidden)
@@ -20,11 +20,13 @@
         <!-- choices -->
         <p>{!! Form::label('choices', trans('admin/question/model.choices'), array('class' => 'control-label')) !!}</p>
         <ul>
-            @forelse ($question->choices as $option)
-                <li>{{ $option->text }}</li>
-            @empty
+            @if(empty($question->choices))
                 <li>There isn't any choice available</li>
-            @endforelse
+            @else
+                @foreach ($question->choices as $option)
+                    <li>{{ $option->text }}</li>
+                @endforeach
+            @endif
         </ul>
         <!-- ./ choices -->
 
@@ -44,7 +46,7 @@
                     <a href="{{ route('admin.questions.edit', $question->id) }}"
                        class="btn btn-primary">{{ trans('button.edit') }}</a>
                 @else
-                    {!! Form::button(trans('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+                    {!! Form::button('<i class="fa fa-trash-o"></i>' . trans('general.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
                 @endif
             </div>
         </div>

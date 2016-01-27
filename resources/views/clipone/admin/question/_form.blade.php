@@ -87,6 +87,7 @@
             </div>
             <div class="panel-body">
                 <!-- status -->
+                @if (isset($question))
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     {!! Form::label('status', trans('admin/question/model.status'), array('class' => 'control-label')) !!}
                     <div class="controls">
@@ -94,6 +95,9 @@
                         {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
+                @else
+                    {!! Form::hidden('status','draft') !!}
+                @endif
                 <!-- ./ status -->
 
                 <!-- hidden -->
@@ -130,6 +134,8 @@
                 </div>
             </div>
             <div class="panel-body">
+                <p>TODO: Not yet implemented!</p>
+                {{--
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
                     {!! Form::label('image', trans('admin/question/model.image'), array('class' => 'control-label')) !!}
                     <div class="controls">
@@ -157,6 +163,7 @@
                         <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                     </div>
                 </div>
+                --}}
             </div><!-- ./ panel-body -->
         </div><!-- ./ panel -->
         <!-- ./ image -->

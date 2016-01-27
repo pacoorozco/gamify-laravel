@@ -121,6 +121,7 @@ class AdminBadgeController extends AdminController {
 
         return $dataTable->of($badges)
             ->addColumn('image', function (Badge $badge) {
+                $badge = Badge::find($badge->id);
                 return '<img src="' . $badge->image->url('small') . '" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Badge $badge) {
