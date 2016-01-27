@@ -75,6 +75,6 @@ class AdminQuestionChoiceController extends AdminController
         $choice->delete();
 
         return redirect()->route('admin.questions.edit', $question)
-            ->with('error', trans('admin/choice/messages.delete.error'));
+            ->with('success', trans('admin/choice/messages.delete.success'));
     }
 }

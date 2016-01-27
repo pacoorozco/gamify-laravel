@@ -1,5 +1,12 @@
 {{-- Create / Edit Question Form --}}
 
+@section('meta')
+        <!-- Unobtrusive JavaScript -->
+        <meta name="csrf-token" content="{!! csrf_token() !!}" />
+        <meta name="csrf-param" content="_token" />
+@endsection
+
+
 @if (isset($question))
     {!! Form::model($question, array(
                 'route' => array('admin.questions.update', $question),
@@ -206,7 +213,7 @@
         <!-- TinyMCE -->
 {!! HTML::script('//tinymce.cachefly.net/4.0/tinymce.min.js') !!}
         <!-- jQuery UJS -->
-{!! HTML::script(Theme::url('js/jquery-ujs/rails.js')) !!}
+{!! HTML::script(Theme::url('plugins/jquery-ujs/rails.js')) !!}
         <!-- File Input -->
 {!! HTML::script(Theme::url('plugins/bootstrap-fileupload/bootstrap-fileupload.min.js')) !!}
 <script type="text/javascript">

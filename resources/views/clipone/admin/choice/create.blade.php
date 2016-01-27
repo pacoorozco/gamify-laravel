@@ -8,7 +8,7 @@
 {{-- Content Header --}}
 @section('header')
     <h1>
-        {{ trans('admin/question/title.question_show') }}
+        {{ $question->name }}
         <small>add a answer choice</small>
     </h1>
     @endsection

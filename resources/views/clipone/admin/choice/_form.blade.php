@@ -3,14 +3,12 @@
 @if (isset($choice))
 {!! Form::model($choice, array(
             'route' => array('admin.questions.choices.update', $question, $choice),
-            'method' => 'put',
-            'files' => true
+            'method' => 'put'
             )) !!}
 @else
 {!! Form::open(array(
             'route' => array('admin.questions.choices.store', $question),
-            'method' => 'post',
-            'files' => true
+            'method' => 'post'
             )) !!}
 @endif
 
@@ -56,7 +54,7 @@
         <!-- Form Actions -->
         <div class="form-group">
             <div class="controls">
-                <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary">{{ trans('button.back') }}</a>
+                <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('general.back') }}</a>
                 {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
             </div>
         </div>

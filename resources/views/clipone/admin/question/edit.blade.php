@@ -2,13 +2,13 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/question/title.question_update') }} :: @parent
+    {{ trans('admin/question/title.question_edit') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
     <h1>
-        {{ trans('admin/question/title.question_update') }}
+        {{ trans('admin/question/title.question_edit') }}
         <small>{{ $question->name }}</small>
     </h1>
 @endsection
@@ -22,7 +22,7 @@
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/question/title.edit') }}
+        {{ trans('admin/question/title.question_edit') }}
     </li>
     @endsection
 

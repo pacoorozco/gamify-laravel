@@ -41,7 +41,7 @@
 
         <div class="form-group">
             <div class="controls">
-                <a href="{{ route('admin.questions.index') }}" class="btn btn-primary">{{ trans('button.back') }}</a>
+                <a href="{{ route('admin.questions.index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('general.back') }}</a>
                 @if ($action == 'show')
                     <a href="{{ route('admin.questions.edit', $question->id) }}"
                        class="btn btn-primary">{{ trans('button.edit') }}</a>
