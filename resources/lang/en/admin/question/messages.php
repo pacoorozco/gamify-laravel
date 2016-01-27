@@ -4,6 +4,9 @@ return array(
     'already_exists' => 'Question already exists!',
     'does_not_exist' => 'Question does not exist.',
     'name_required' => 'The name field is required',
+    'publish' => array(
+        'error' => 'This question can\'t be published. You must give two or more answer choices and at least one of them must be correct.',
+    ),
     
     'create' => array(
         'error' => 'Question was not created, please try again.',

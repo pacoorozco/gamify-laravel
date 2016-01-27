@@ -80,4 +80,18 @@ class Question extends Model implements SluggableInterface {
     {
         return $query->where('status', '=', 'publish');
     }
+
+    /**
+     * Return if a question can be published.
+     * 1. Has at least one correct answer
+     *
+     * @return bool
+     */
+    public function canBePublished()
+    {
+        $answers_count = $this->choices()->count();
+        $answers_correct_count = $this->choices()->where('correct', true)->count();
+
+        return (($answers_count > 1) && ($answers_correct_count > 0));
+    }
 }

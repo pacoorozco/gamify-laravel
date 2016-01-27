@@ -98,7 +98,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     {!! Form::label('status', trans('admin/question/model.status'), array('class' => 'control-label')) !!}
                     <div class="controls">
-                        {!! Form::select('status', array('draft' => trans('admin/question/model.draft'), 'publish' => trans('admin/question/model.publish'), 'unpublish' => trans('admin/question/model.unpublish')), 'draft', array('class' => 'form-control')) !!}
+                        {!! Form::select('status', array('draft' => trans('admin/question/model.draft'), 'publish' => trans('admin/question/model.publish'), 'unpublish' => trans('admin/question/model.unpublish')), null, array('class' => 'form-control')) !!}
                         {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>

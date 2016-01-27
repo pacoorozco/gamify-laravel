@@ -78,11 +78,11 @@ class AdminQuestionController extends AdminController
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
-        // when a question is published you must have:
-        // 1. some answer choices
-        // 2. at least one correct question
         if($request->status == 'publish') {
-            dd($question->choices());
+            if (! $question->canBePublished()) {
+                return redirect()->back()
+                    ->with('error', trans('admin/question/messages.publish.error'));
+            }
         }
         $question->fill($request->all())->save();
 
