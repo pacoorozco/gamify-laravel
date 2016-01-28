@@ -2,18 +2,19 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\QuestionChoice;
-use Gamify\Question;
 use Gamify\Http\Requests\QuestionChoiceCreateRequest;
 use Gamify\Http\Requests\QuestionChoiceUpdateRequest;
+use Gamify\Question;
+use Gamify\QuestionChoice;
+use Illuminate\Http\Response;
 
-class AdminQuestionChoiceController extends AdminController
-{
+class AdminQuestionChoiceController extends AdminController {
+
     /**
      * Show the form for creating a new resource.
      *
      * @param Question $question
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create(Question $question)
     {
@@ -25,7 +26,7 @@ class AdminQuestionChoiceController extends AdminController
      *
      * @param  Question $question
      * @param  QuestionChoiceCreateRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Question $question, QuestionChoiceCreateRequest $request)
     {
@@ -40,7 +41,7 @@ class AdminQuestionChoiceController extends AdminController
      *
      * @param  Question $question
      * @param  QuestionChoice $choice
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Question $question, QuestionChoice $choice)
     {
@@ -51,9 +52,9 @@ class AdminQuestionChoiceController extends AdminController
      * Update the specified resource in storage.
      *
      * @param Question $question
-     * @param  QuestionChoiceUpdateRequest  $request
+     * @param  QuestionChoiceUpdateRequest $request
      * @param  QuestionChoice $choice
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Question $question, QuestionChoiceUpdateRequest $request, QuestionChoice $choice)
     {
@@ -68,7 +69,7 @@ class AdminQuestionChoiceController extends AdminController
      *
      * @param Question $question
      * @param  QuestionChoice $choice
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Question $question, QuestionChoice $choice)
     {

@@ -6,7 +6,7 @@
 <!--<![endif]-->
     <!-- start: HEAD -->
     <head>
-        <title>@yield('title', 'Administration Dashboard')</title>
+        <title>@yield('title', 'Administration Dashboard') gamify v3</title>
         <!-- start: META -->
         <meta charset="utf-8" />
         <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->

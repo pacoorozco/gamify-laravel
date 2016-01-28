@@ -2,18 +2,15 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
-use Gamify\Http\Requests;
-
-use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Http\Requests\LevelCreateRequest;
+use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
+use Illuminate\Http\Request;
 use yajra\Datatables\Datatables;
 
 
-class AdminLevelController extends AdminController
-{
+class AdminLevelController extends AdminController {
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +34,7 @@ class AdminLevelController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  LevelCreateRequest  $request
+     * @param  LevelCreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(LevelCreateRequest $request)
@@ -73,7 +70,7 @@ class AdminLevelController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  LevelUpdateRequest  $request
+     * @param  LevelUpdateRequest $request
      * @param  Level $level
      * @return \Illuminate\Http\Response
      */
@@ -113,29 +110,34 @@ class AdminLevelController extends AdminController
     /**
      * Show a list of all the levels formatted for Datatables.
      *
+     * @param Request $request
      * @param Datatables $dataTable
-     * @return Datatables JSON
+     * @return Datatables JsonResponse
      */
-    public function data(Datatables $dataTable)
+    public function data(Request $request, Datatables $dataTable)
     {
-        // TODO: Disable this query if isn't AJAX
+        // Disable this query if isn't AJAX
+        if ( ! $request->ajax()) {
+            abort(400);
+        }
 
         $levels = Level::select([
             'id', 'name', 'amount_needed', 'active'
         ])->orderBy('amount_needed', 'ASC');
 
         return $dataTable::of($levels)
-            ->addColumn('image', function(Level $level) {
+            ->addColumn('image', function (Level $level) {
                 $level = Level::find($level->id);
+
                 return '<img src="' . $level->image->url('small') . '" width="64" class="img-thumbnail" />';
             })
-            ->editColumn('active', function(Level $level) {
+            ->editColumn('active', function (Level $level) {
                 return ($level->active) ? trans('general.yes') : trans('general.no');
             })
-            ->addColumn('actions', function(Level $level) {
+            ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd', array(
                     'model' => 'levels',
-                    'id' => $level->id
+                    'id'    => $level->id
                 ))->render();
             })
             ->removeColumn('id')

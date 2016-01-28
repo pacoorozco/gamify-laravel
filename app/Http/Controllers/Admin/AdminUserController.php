@@ -3,10 +3,13 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Http\Requests\UserCreateRequest;
-use Gamify\Http\Requests\UserDeleteRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use yajra\Datatables\Datatables;
 
 class AdminUserController extends AdminController {
@@ -14,7 +17,7 @@ class AdminUserController extends AdminController {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -24,7 +27,7 @@ class AdminUserController extends AdminController {
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -35,7 +38,7 @@ class AdminUserController extends AdminController {
      * Store a newly created resource in storage.
      *
      * @param  UserCreateRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(UserCreateRequest $request)
     {
@@ -53,7 +56,7 @@ class AdminUserController extends AdminController {
      * Display the specified resource.
      *
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(User $user)
     {
@@ -64,7 +67,7 @@ class AdminUserController extends AdminController {
      * Show the form for editing the specified resource.
      *
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -76,7 +79,7 @@ class AdminUserController extends AdminController {
      *
      * @param  UserUpdateRequest $request
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UserUpdateRequest $request, User $user)
     {
@@ -90,7 +93,7 @@ class AdminUserController extends AdminController {
      * Remove user.
      *
      * @param User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function delete(User $user)
     {
@@ -101,10 +104,16 @@ class AdminUserController extends AdminController {
      * Remove the specified resource from storage.
      *
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy(UserDeleteRequest $request, User $user)
+    public function destroy(User $user)
     {
+        // Can't remove myself
+        if ($user->id == Auth::user()->id) {
+            return redirect()->route('admin.users.index')
+                ->with('error', trans('admin/user/messages.delete.error'));
+        }
+
         $user->delete();
 
         return redirect()->route('admin.users.index')
@@ -114,11 +123,16 @@ class AdminUserController extends AdminController {
     /**
      * Show a list of all the users formatted for Datatables.
      *
-     * @return Datatables JSON
+     * @param Request $request
+     * @param Datatables $dataTable
+     * @return JsonResponse
      */
-    public function data(Datatables $dataTable)
+    public function data(Request $request, Datatables $dataTable)
     {
-        // TODO: Disable this query if isn't AJAX
+        // Disable this query if isn't AJAX
+        if ( ! $request->ajax()) {
+            abort(400);
+        }
 
         $users = User::select([
             'id', 'name', 'username', 'email', 'role'

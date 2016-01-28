@@ -5,6 +5,7 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Badge;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
+use Illuminate\Http\Request;
 use yajra\Datatables\Datatables;
 
 class AdminBadgeController extends AdminController {
@@ -108,12 +109,16 @@ class AdminBadgeController extends AdminController {
     /**
      * Show a list of all badges formatted for Datatables.
      *
+     * @param Request $request
      * @param Datatables $dataTable
-     * @return Datatables JSON
+     * @return Datatables JsonResponse
      */
-    public function data(Datatables $dataTable)
+    public function data(Request $request, Datatables $dataTable)
     {
-        // TODO: Disable this query if isn't AJAX
+        // Disable this query if isn't AJAX
+        if ( ! $request->ajax()) {
+            abort(400);
+        }
 
         $badges = Badge::select([
             'id', 'name', 'amount_needed', 'active'
@@ -122,6 +127,7 @@ class AdminBadgeController extends AdminController {
         return $dataTable->of($badges)
             ->addColumn('image', function (Badge $badge) {
                 $badge = Badge::find($badge->id);
+
                 return '<img src="' . $badge->image->url('small') . '" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Badge $badge) {

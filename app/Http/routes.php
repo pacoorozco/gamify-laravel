@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Routing\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,7 +17,7 @@
  *  Route model binding
  *  ------------------------------------------
  */
-Route::bind('user', function($value) {
+Route::bind('user', function ($value) {
     return \Gamify\User::where('username', $value)->first();
 });
 Route::model('users', '\Gamify\User');
@@ -39,15 +41,15 @@ Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getL
  * Routes that need to be authenticated
  *  ------------------------------------------
  */
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/',  ['as' => 'home', 'uses' => 'HomeController@index']);
-    Route::get('/dashboard',  ['as' => 'dashboard', 'uses' => 'HomeController@index']);
+    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
 
     // Profiles
-    Route::get('user',                  'UserController@show');
+    Route::get('user', 'UserController@show');
     Route::get('user/{user}', ['as' => 'profile', 'uses' => 'UserController@show']);
-    Route::post('user/{user}',         'UserController@update');
+    Route::post('user/{user}', 'UserController@update');
 
     Route::get('question', 'QuestionController@index');
 });
@@ -59,7 +61,7 @@ Route::group(['middleware' => 'auth'], function() {
  * Routes that User needs to be administrator
  *  ------------------------------------------
  */
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminQuestionController@index']);
 
@@ -75,7 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
-    Route::resource('users',                'Admin\AdminUserController');
+    Route::resource('users', 'Admin\AdminUserController');
 
     /** ------------------------------------------
      *  Badges
@@ -88,7 +90,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
-    Route::resource('badges',                'Admin\AdminBadgeController');
+    Route::resource('badges', 'Admin\AdminBadgeController');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural paramameter {badges} needs
@@ -106,7 +108,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
-    Route::resource('levels',                'Admin\AdminLevelController');
+    Route::resource('levels', 'Admin\AdminLevelController');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural paramameter {badges} needs
@@ -124,7 +126,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     // Our special delete confirmation route - uses the show/details view.
     Route::get('questions/{questions}/delete', ['as' => 'admin.questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
 
-    Route::resource('questions',         'Admin\AdminQuestionController');
+    Route::resource('questions', 'Admin\AdminQuestionController');
 
     // Nest routes to deal with choices
     Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => array('index', 'show')]);
