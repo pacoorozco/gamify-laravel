@@ -17,7 +17,12 @@ class AdminQuestionActionController extends AdminController {
      */
     public function create(Question $question)
     {
-        return view('admin/action/create', compact('question'));
+        // get actions that hasn't not been used
+        foreach($question->getAvailableActions() as $action) {
+            $availableActions[$action->id] = $action->name;
+        }
+
+        return view('admin/action/create', compact('question', 'availableActions'));
     }
 
     /**
@@ -38,6 +43,8 @@ class AdminQuestionActionController extends AdminController {
     /**
      * Show the form for editing the specified resource.
      *
+     * TODO - Not implemented on routes.php
+     *
      * @param  Question $question
      * @param  QuestionAction $action
      * @return \Illuminate\Http\Response
@@ -49,6 +56,8 @@ class AdminQuestionActionController extends AdminController {
 
     /**
      * Update the specified resource in storage.
+     *
+     * TODO - Not implemented on routes.php
      *
      * @param  Question $question
      * @param  QuestionActionUpdateRequest $request

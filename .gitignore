@@ -4,4 +4,5 @@
 /.vagrant
 Homestead.yaml
 Homestead.json
+public/uploads/
 .env

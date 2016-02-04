@@ -1,16 +1,9 @@
-{{-- Create / Edit Question Action Form --}}
+{{-- Create Question Action Form --}}
 
-@if (isset($action))
-{!! Form::model($action, array(
-            'route' => array('admin.questions.actions.update', $question, $action),
-            'method' => 'put'
-            )) !!}
-@else
 {!! Form::open(array(
             'route' => array('admin.questions.actions.store', $question),
             'method' => 'post'
             )) !!}
-@endif
 
 <div class="row">
     <div class="col-xs-12">
@@ -19,7 +12,7 @@
         <div class="form-group {{ $errors->has('badge_id') ? 'has-error' : '' }}">
             {!! Form::label('points', trans('admin/action/model.action'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {!! Form::select('badge_id', $question->getAvailableActions(), null, array('class' => 'form-control')) !!}
+                {!! Form::select('badge_id', $availableActions, null, array('class' => 'form-control')) !!}
                 <span class="help-block">{{ $errors->first('badge_id', ':message') }}</span>
             </div>
         </div>
@@ -29,12 +22,11 @@
         <div class="form-group {{ $errors->has('when') ? 'has-error' : '' }}">
             {!! Form::label('when', trans('admin/action/model.when'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {!! Form::select('when', array('always' => 'Always', 'correct' => 'Correct', 'incorrect' => 'Incorrect'), null, array('class' => 'form-control')) !!}
+                {!! Form::select('when', trans('admin/action/model.when_values'), null, array('class' => 'form-control')) !!}
                 {{ $errors->first('when', '<span class="help-inline">:message</span>') }}
             </div>
         </div>
         <!-- ./ when -->
-
 
     </div>
 </div>

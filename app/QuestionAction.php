@@ -12,6 +12,7 @@ class QuestionAction extends Model
 
     protected $fillable = array(
         'when',
+        'badge_id'
     );
 
     /**
@@ -25,5 +26,10 @@ class QuestionAction extends Model
     public function question()
     {
         return $this->belongsTo('Gamify\Question');
+    }
+
+    public function getName() {
+        $badge = Badge::find($this->badge_id);
+        return $badge->name;
     }
 }

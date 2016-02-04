@@ -70,11 +70,8 @@ class Question extends Model implements SluggableInterface {
 
     public function getAvailableActions()
     {
-        $actions = [];
-        foreach (Badge::all() as $badge) {
-            $actions[$badge->id] = $badge->name;
-        }
-        return $actions;
+        $selectedActions = $this->actions()->lists('badge_id')->toArray();
+        return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
     // TODO: #1 Can't use EloquentTrait with RecordSignature
