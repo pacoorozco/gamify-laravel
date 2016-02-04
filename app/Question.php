@@ -60,6 +60,23 @@ class Question extends Model implements SluggableInterface {
         return $this->hasMany('Gamify\QuestionChoice');
     }
 
+    /**
+     * A question will have some actions
+     */
+    public function actions()
+    {
+        return $this->hasMany('Gamify\QuestionAction');
+    }
+
+    public function getAvailableActions()
+    {
+        $actions = [];
+        foreach (Badge::all() as $badge) {
+            $actions[$badge->id] = $badge->name;
+        }
+        return $actions;
+    }
+
     // TODO: #1 Can't use EloquentTrait with RecordSignature
 //    public function __construct(array $attributes = array())
 //    {

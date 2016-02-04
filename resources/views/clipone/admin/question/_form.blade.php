@@ -176,26 +176,14 @@
         <!-- ./ image -->
 
         <!-- actions -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-external-link-square"></i>
-                {{ trans('admin/question/model.actions') }}
-                <div class="panel-tools">
-                    <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
-                    </a>
-                </div>
+        @if (isset($question))
+            @include('admin/question/_form_actions')
+        @else
+            <div class="alert alert-warning">
+                <span class="label label-warning">NOTE!</span>
+                After saving this question you will be able to add some actions.
             </div>
-            <div class="panel-body">
-                @if (isset($question))
-                    <p>TODO: Not yet implemented!</p>
-                @else
-                    <div class="alert alert-warning">
-                        <span class="label label-warning">NOTE!</span>
-                        After saving this question you will be able to add some actions.
-                    </div>
-                @endif
-            </div><!-- ./ panel-body -->
-        </div><!-- ./ panel -->
+        @endif
         <!-- ./ actions -->
     </div>
 </div><!-- ./ row -->

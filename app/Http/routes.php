@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Routing\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -25,6 +23,7 @@ Route::model('badges', '\Gamify\Badge');
 Route::model('levels', '\Gamify\Level');
 Route::model('questions', '\Gamify\Question');
 Route::model('choices', '\Gamify\QuestionChoice');
+Route::model('actions', '\Gamify\QuestionAction');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -130,5 +129,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     // Nest routes to deal with choices
     Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => array('index', 'show')]);
+
+    // Nest routes to deal with actions
+    Route::resource('questions.actions', 'Admin\AdminQuestionActionController', ['except' => array('index', 'show')]);
 
 });
