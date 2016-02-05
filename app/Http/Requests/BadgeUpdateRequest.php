@@ -30,7 +30,7 @@ class BadgeUpdateRequest extends Request
             'description'   => 'required',
             'amount_needed' => 'required|integer|min:1',
             'active'        => 'required|boolean',
-            'image'         => 'required|image',
+            'image'         => 'image',
         ];
     }
 }
