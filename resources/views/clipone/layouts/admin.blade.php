@@ -84,7 +84,7 @@
                                 </li> --}}
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="{{ route('logout') }}">
+                                    <a href="{{ url('auth/logout') }}">
                                         <i class="clip-exit"></i>
                                         &nbsp;{{ trans('general.logout') }}
                                     </a>

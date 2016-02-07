@@ -18,6 +18,11 @@
 Route::bind('user', function ($value) {
     return \Gamify\User::where('username', $value)->first();
 });
+
+Route::bind('question', function ($value) {
+    return \Gamify\Question::where('shortname', $value)->first();
+});
+
 Route::model('users', '\Gamify\User');
 Route::model('badges', '\Gamify\Badge');
 Route::model('levels', '\Gamify\Level');
@@ -28,7 +33,7 @@ Route::model('actions', '\Gamify\QuestionAction');
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...
 //Route::get('auth/register', 'Auth\AuthController@getRegister');
@@ -50,7 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('user/{user}', ['as' => 'profile', 'uses' => 'UserController@show']);
     Route::post('user/{user}', 'UserController@update');
 
-    Route::get('question', 'QuestionController@index');
+    Route::get('questions', ['as' => 'questions.index', 'uses' => 'QuestionController@index']);
+    Route::get('questions/{question}', ['as' => 'questions.show', 'uses' => 'QuestionController@show']);
+    Route::post('questions/{question}', ['as' => 'questions.store', 'uses' => 'QuestionController@store']);
 });
 
 

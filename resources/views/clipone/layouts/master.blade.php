@@ -49,19 +49,19 @@
             @include('user.sidebar')
             <!-- end: SIDEBAR -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ $user->name }}<b class="caret"></b></a>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-content">
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <img src="{{ $user->profile->avatar->url() }}" alt="{{ trans('user/profile.avatar') }}" class="img-thumbnail img-responsive">
+                                        <img src="{{ Auth::user()->profile->avatar->url() }}" alt="{{ trans('user/profile.avatar') }}" class="img-thumbnail img-responsive">
                                         <p class="small"></p>
                                     </div>
                                     <div class="col-md-7">
-                                        <p class="text-muted small">{{ $user->email }}</p>
+                                        <p class="text-muted small">{{ Auth::user()->email }}</p>
                                         <div class="divider"></div>
-                                        <a href="{{ route('profile', array('user' => $user)) }}" title="{{ trans('site.my_profile') }}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-user"></span> {{ trans('site.my_profile') }}</a>
+                                        <a href="{{ route('profile', array('user' => Auth::user())) }}" title="{{ trans('site.my_profile') }}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-user"></span> {{ trans('site.my_profile') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                                     <div class="row">
                                         <div class="col-md-6"></div>
                                         <div class="col-md-6">
-                                            <a href="{{ route('logout') }}" title="{{ trans('auth.logout') }}" class="btn btn-danger btn-sm pull-right"><span class="glyphicon glyphicon-log-out"></span> {{ trans('auth.logout') }}</a>
+                                            <a href="{{ url('auth/logout') }}" title="{{ trans('auth.logout') }}" class="btn btn-danger btn-sm pull-right"><span class="glyphicon glyphicon-log-out"></span> {{ trans('auth.logout') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
 </nav>
     <!-- end: FIXED NAVBAR -->
 
-<div class="container">
+<div class="container" role="main">
 
     <!-- start: PAGE CONTENT -->
     @yield('content')
