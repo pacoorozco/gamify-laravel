@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('questions', ['as' => 'questions.index', 'uses' => 'QuestionController@index']);
     Route::get('questions/{question}', ['as' => 'questions.show', 'uses' => 'QuestionController@show']);
-    Route::post('questions/{question}', ['as' => 'questions.store', 'uses' => 'QuestionController@store']);
+    Route::post('questions/{question}', ['as' => 'questions.answer', 'uses' => 'QuestionController@answer']);
 });
 
 

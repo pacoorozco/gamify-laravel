@@ -8,7 +8,7 @@
         </div>
         <div class="panel-body">
             <h4>{!! $question->question !!}</h4>
-            {!! Form::open(array('route' => ['questions.store', $question->shortname])) !!}
+            {!! Form::open(array('route' => ['questions.answer', $question->shortname])) !!}
             <ul class="list-group">
                 @foreach($question->choices as $choice)
                     <li class="list-group-item">

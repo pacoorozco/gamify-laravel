@@ -6,6 +6,7 @@ use Gamify\Question;
 use Illuminate\Http\Request;
 
 use Gamify\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -17,27 +18,59 @@ class QuestionController extends Controller
     public function index()
     {
         // TODO: Add an scope to only index questions (published and not answered and not hidden)
-        $questions = Question::all();
+        $answeredQuestions = Auth::user()->answeredQuestions()->lists('question_id')->toArray();
+        $questions = Question::whereNotIn('id', $answeredQuestions)->get();
 
         return view('question.index', compact('questions'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     *
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  Question $question
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Question $question)
+    public function answer(Request $request, Question $question)
     {
         // TODO: If question has been answered can't answer again
 
-        // 1. Answer question, obtain how many xp will add
-        // 2. Add XP to user
-        // 3. Obtain any related question action
-        // 4. Increment actions
-        // 5. Add notifications and return view
+        // TODO: Validate
+
+        // TODO: AI. Global Badges
+
+        // AI. Obtain how many points has its answer obtained
+        $points = 0;
+        $success = false;
+
+        foreach($request->choices as $answer) {
+            $choice = $question->choices()->find($answer);
+            $points += $choice->points;
+            $success = $success || $choice->correct;
+        }
+        // minimun points for answer is '1'
+        if ($points < 1) {
+            $points = 1;
+        }
+
+        // AI. Add XP to user
+        // Gamify::give($points)
+
+        // AI. Specific Badges
+        if($success) {
+            $answerStatus = 'correct';
+        } else {
+            $answerStatus = 'incorrect';
+        }
+        $badges = $question->actions()
+            ->whereIn('when', ['always', $answerStatus])
+            ->lists('id')->toArray();
+
+        // AI. Increment actions
+        // Gamify::increment($badges)
+
+        // AI. Add notifications and return view
+        $this->show($question);
     }
 
     /**
