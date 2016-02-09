@@ -12,7 +12,7 @@ As much as possible, we have tried to keep a clean code to work everywhere out o
 
 ## Disclaimer
 
-This is not, yet, **production code**. I'm working in order to finish ASAP, in my personal free time so, be patient or contact me in order to help me. Thanks!
+This is not, yet, **production code**. I'm working in order to finish ASAP, in my personal free time, so be patient or contact me in order to give me your help. If you need a production ready app see [gamify](https://github.com/pacoorozco/gamify).
 
 ## Changelog
 
