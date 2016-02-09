@@ -10,6 +10,10 @@ It's a Laravel 5 application, based on the PHP5 & mysql original [gamify](https:
 
 As much as possible, we have tried to keep a clean code to work everywhere out of the box. You are not obliged to use our tools and are free to change the code in order to use it at your own feeling.
 
+## Disclaimer
+
+This is not, yet, **production code**. I'm working in order to finish ASAP, in my personal free time so, be patient or contact me in order to help me. Thanks!
+
 ## Changelog
 
 See [CHANGELOG](https://github.com/pacoorozco/gamify-l5/blob/master/CHANGELOG) file in order to know what changes are implemented in every version.
