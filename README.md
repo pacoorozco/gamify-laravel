@@ -1,5 +1,9 @@
 # gamify - A gamification platform to implement any serious game mechanic. The core of Game of Work!
 
+[![Build Status](https://img.shields.io/scrutinizer/g/pacoorozco/gamify-l5.svg)](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5/)
+[![Laravel Version](https://img.shields.io/badge/Laravel-5.1-orange.svg)](https://laravel.com/docs/5.1)
+[![License](https://img.shields.io/github/license/pacoorozco/gamify-l5.svg)](https://github.com/pacoorozco/gamify-l5/blob/master/LICENSE)
+
 ## Presentation
 
 gamify is the core of [Game of Work](https://gow.upcnet.es) application. It's a gamification platform created by **Emilio Ampudia** (eampudia _at_ gmail.com) and **Paco Orozco** (paco _at_ pacoorozco.info). 
@@ -10,9 +14,9 @@ It's a Laravel 5 application, based on the PHP5 & mysql original [gamify](https:
 
 As much as possible, we have tried to keep a clean code to work everywhere out of the box. You are not obliged to use our tools and are free to change the code in order to use it at your own feeling.
 
-## Disclaimer
+## Disclaimer - NOT ready for production
 
-This is not, yet, **production code**. I'm working in order to finish ASAP, in my personal free time, so be patient or contact me in order to give me your help. If you need a production ready app see [gamify](https://github.com/pacoorozco/gamify).
+> This is not, yet, **production code**. I'm working in order to finish ASAP, in my personal free time, so be patient or contact me in order to give me your help. If you need a production ready app see [gamify](https://github.com/pacoorozco/gamify).
 
 ## Changelog
 
