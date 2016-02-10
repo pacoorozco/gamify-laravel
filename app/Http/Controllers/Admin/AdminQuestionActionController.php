@@ -17,6 +17,8 @@ class AdminQuestionActionController extends AdminController {
      */
     public function create(Question $question)
     {
+        $availableActions = array();
+
         // get actions that hasn't not been used
         foreach($question->getAvailableActions() as $action) {
             $availableActions[$action->id] = $action->name;
