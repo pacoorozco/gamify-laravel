@@ -36,7 +36,7 @@
     @section('content')
 
             <!-- Notifications -->
-    @include('partials.notifications')
+    @include('admin.partials.notifications')
             <!-- ./ notifications -->
 
     <!-- actions -->

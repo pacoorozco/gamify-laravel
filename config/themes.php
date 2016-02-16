@@ -5,7 +5,7 @@ return [
     | Switch this package on/off. Usefull for testing...
     |--------------------------------------------------------------------------
     */
-    'enabled' => true,
+    'enabled' => false,
     /*
     |--------------------------------------------------------------------------
     | Set the Active Theme. Can be set at runtime with:

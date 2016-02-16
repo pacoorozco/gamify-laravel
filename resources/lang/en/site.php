@@ -20,4 +20,6 @@ return array(
     'play'            => 'Play',
     'admin_area'      => 'Go to admin area',
 
+    'dataTablesLang'  => 'English',
+
 );

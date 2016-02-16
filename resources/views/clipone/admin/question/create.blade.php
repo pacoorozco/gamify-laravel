@@ -30,7 +30,7 @@
     @section('content')
 
             <!-- notifications -->
-    @include('partials.notifications')
+    @include('admin.partials.notifications')
             <!-- ./ notifications -->
 
     @include('admin/question/_form', ['action' => 'create'])

@@ -16,7 +16,7 @@
     </div>
 
     <!-- Notifications -->
-    @include('partials.notifications')
+    @include('admin.partials.notifications')
     <!-- ./ notifications -->
     <form class="bf" role="form" method="post" action="{{ URL::to('user/' . $user->id . '/update') }}"  autocomplete="off">   
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />

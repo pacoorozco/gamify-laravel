@@ -1,0 +1,35 @@
+{
+  "name": "gamify-l5",
+  "homepage": "https://github.com/pacoorozco/gamify-l5",
+  "authors": [
+    "Paco Orozco <paco@pacoorozco.info>"
+  ],
+  "description": "Gamification platform based on Laravel 5",
+  "main": "",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "gamification",
+    "GoW",
+    "gamify",
+    "game",
+    "platform",
+    "serious",
+    "games",
+    "laravel"
+  ],
+  "license": "GPL-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.2",
+    "jquery-ujs": "^1.2.0"
+  }
+}
