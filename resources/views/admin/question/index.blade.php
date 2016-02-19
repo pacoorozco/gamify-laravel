@@ -36,38 +36,35 @@
     @include('partials.notifications')
             <!-- /.notifications -->
 
-
-            <!-- actions -->
-            <div class="row">
-                <div class="col-md-2">
-                    <a href="{{ route('admin.questions.create') }}">
-                        <button type="button" class="btn btn-block btn-success margin-bottom">
-                        {{ trans('admin/question/title.create_a_new_question') }}
-                        </button>
-                    </a>
-                </div>
-                <div class="col-md-10"></div>
-            </div>
-            <!-- /.actions -->
+    <!-- actions -->
+    <a href="{{ route('admin.questions.create') }}">
+        <button type="button" class="btn btn-success margin-bottom">
+            <i class="fa fa-plus"></i> {{ trans('admin/question/title.create_a_new_question') }}
+        </button>
+    </a>
+    <!-- /.actions -->
     <div class="box">
         <div class="box-body">
-            <div class="row">
-                <div class="col-xs-12">
-                    <table id="questions" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
-                            <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
-                            <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
-                            <th class="col-md-2">{{ trans('general.actions') }}</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
+            <table id="questions" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
+                    <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
+                    <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
+                    <th class="col-md-2">{{ trans('general.actions') }}</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
+                    <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
+                    <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
+                    <th class="col-md-2">{{ trans('general.actions') }}</th>
+                </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
-
 @endsection
 
 {{-- Scripts --}}

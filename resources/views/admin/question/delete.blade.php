@@ -7,30 +7,27 @@
 
 {{-- Content Header --}}
 @section('header')
-    <h1>
-        {{ trans('admin/question/title.question_delete') }}
-        <small>{{ $question->name }}</small>
-    </h1>
+    {{ trans('admin/question/title.question_delete') }}
+    <small>{{ $question->name }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <i class="clip-bubbles-3"></i>
         <a href="{{ route('admin.questions.index') }}">
-            {{ trans('admin/site.questions') }}
+            <i class="fa fa-comments"></i> {{ trans('admin/site.questions') }}
         </a>
     </li>
     <li class="active">
         {{ trans('admin/question/title.question_delete') }}
     </li>
-@endsection
+    @endsection
 
-{{-- Content --}}
-@section('content')
+    {{-- Content --}}
+    @section('content')
 
             <!-- Notifications -->
-    @include('admin.partials.notifications')
+    @include('partials.notifications')
             <!-- ./ notifications -->
 
     {{-- Delete Question Form --}}

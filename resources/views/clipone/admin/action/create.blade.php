@@ -21,6 +21,6 @@
     @include('admin.partials.notifications')
             <!-- ./ notifications -->
 
-    @include('admin/action/_form')
+    @include('clipone.admin.action._form')
 
 @endsection

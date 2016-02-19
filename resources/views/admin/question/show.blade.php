@@ -7,18 +7,15 @@
 
 {{-- Content Header --}}
 @section('header')
-    <h1>
         {{ trans('admin/question/title.question_show') }}
         <small>{{ $question->name }}</small>
-    </h1>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <i class="clip-bubbles-3"></i>
         <a href="{{ route('admin.questions.index') }}">
-            {{ trans('admin/site.questions') }}
+            <i class="fa fa-comments"></i> {{ trans('admin/site.questions') }}
         </a>
     </li>
     <li class="active">
@@ -30,7 +27,7 @@
     @section('content')
 
             <!-- Notifications -->
-    @include('admin.partials.notifications')
+    @include('partials.notifications')
             <!-- /.notifications -->
 
     @include('admin/question/_details', ['action' => 'show'])

@@ -120,25 +120,28 @@
                         </div>
                     </div>
                     <!-- ./ hidden -->
+            </div>
+            <div class="box-footer">
+                <!-- form actions -->
+                <a href="{{ route('admin.questions.index') }}">
+                    <button type="button" class="btn btn-primary">
+                        <i class="fa fa-arrow-left"></i> {{ trans('general.back') }}
+                    </button>
+                </a>
+                {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
+                        <!-- ./ form actions -->
+            </div>
 
-                    <!-- form Actions -->
-                    <div class="form-group">
-                        <div class="controls">
-                            {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
-                        </div>
-                    </div>
-                    <!-- ./ form actions -->
-            </div><!-- ./ box-body -->
         </div><!-- ./ box -->
         <!-- ./ publish -->
 
         <!-- image -->
-        <div class="box box-solid">
+        <div class="box box-solid collapsed-box">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('admin/question/model.image') }}</h3>
 
                 <div class="box-tools">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                     </button>
                 </div>
             </div>
@@ -188,18 +191,18 @@
                 </div>
             </div>
             <div class="box-body">
-        @if (isset($question))
-            @include('admin/question/_form_actions')
-        @else
-            <div class="callout callout-info">
-                <h4>NOTE!</h4>
+                @if (isset($question))
+                    @include('admin/question/_form_actions')
+                @else
+                    <div class="callout callout-info">
+                        <h4>NOTE!</h4>
 
-                <p>After saving this question you will be able to add some actions.</p>
-            </div>
-            @endif
+                        <p>After saving this question you will be able to add some actions.</p>
                     </div>
+                @endif
             </div>
-                    <!-- ./ actions -->
+        </div>
+        <!-- ./ actions -->
     </div>
 </div><!-- ./ row -->
 

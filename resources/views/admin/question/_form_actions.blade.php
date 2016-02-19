@@ -25,11 +25,12 @@
                         <td>{{ trans('admin/action/table.when_values.' . $action->when) }}</td>
                         <td>
                             <a href="{{ route('admin.questions.actions.destroy', array($question, $action)) }}"
-                               rel='nofollow'
-                               data-method='delete' data-confirm='{{ trans('admin/action/messages.confirm_delete') }}'
-                               class="btn btn-xs btn-bricky tooltips" data-placement="top"
-                               data-original-title="{{ trans('general.delete') }}">
-                                <i class="fa fa-times fa fa-white"></i>
+                               rel="nofollow" data-method="delete"
+                               data-confirm="{{ trans('admin/action/messages.confirm_delete') }}">
+                                <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip"
+                                        data-placement="top" title="{{ trans('general.delete') }}">
+                                    <i class="fa fa-times fa fa-white"></i>
+                                </button>
                             </a>
                         </td>
                     </tr>

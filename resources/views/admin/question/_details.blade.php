@@ -1,55 +1,77 @@
-<div class="row">
-    <div class="col-xs-12">
-
-        {{-- <img src="{{ $question->image->url('small') }}" width="64" class="img-thumbnail"/> --}}
-        <h2>{{ $question->name }}
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">{{ $question->name }}
             <span class="badge">{{ $question->status }}</span>
             @if ($question->hidden)
                 <span class="badge">hidden</span>
             @endif
-        </h2>
-
-
-        {{ $question->question }}
-
-        <p>
-            {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label')) !!}
-            {{ $question->type }}
-        </p>
-
-        <!-- choices -->
-        <p>{!! Form::label('choices', trans('admin/question/model.choices'), array('class' => 'control-label')) !!}</p>
-        <ul>
-            @if(empty($question->choices))
-                <li>There isn't any choice available</li>
-            @else
-                @foreach ($question->choices as $option)
-                    <li>{{ $option->text }}</li>
-                @endforeach
-            @endif
-        </ul>
-        <!-- ./ choices -->
-
-        {{ $question->solution }}
-
+        </h3>
     </div>
-</div>
-
-</div>
-<div class="row">
-    <div class="col-xs-12">
-
-        <div class="form-group">
-            <div class="controls">
-                <a href="{{ route('admin.questions.index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('general.back') }}</a>
-                @if ($action == 'show')
-                    <a href="{{ route('admin.questions.edit', $question->id) }}"
-                       class="btn btn-primary">{{ trans('button.edit') }}</a>
-                @else
-                    {!! Form::button('<i class="fa fa-trash-o"></i>' . trans('general.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
-                @endif
+    <div class="box-body">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ trans('admin/question/model.question') }}
+            </div>
+            <div class="panel-body">
+                {!! $question->question !!}
             </div>
         </div>
 
+        <!-- choices -->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ trans('admin/choice/title.current_choices') }}
+            </div><!-- ./ panel-header -->
+            <div class="panel-body">
+                @if (count($question->choices) > 0)
+                    {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label')) !!}
+                    {{ $question->type }}
+                    <table class="table table-hover">
+                        <tr>
+                            <th>{{ trans('admin/choice/table.text') }}</th>
+                            <th>{{ trans('admin/choice/table.points') }}</th>
+                            <th>{{ trans('admin/choice/table.correct') }}</th>
+                        </tr>
+                        @foreach ($question->choices as $choice)
+                            <tr>
+                                <td>{{ $choice->text }}</td>
+                                <td>{{ $choice->points }}</td>
+                                <td>{{ $choice->correct ? trans('general.yes') : trans('general.no') }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                @else
+                    No choices
+                @endif
+            </div>
+        </div>
+        <!-- ./ choices -->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                {{ trans('admin/question/model.solution') }}
+            </div>
+            <div class="panel-body">
+                {!! $question->solution !!}
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <a href="{{ route('admin.questions.index') }}">
+            <button type="button" class="btn btn-primary">
+                <i class="fa fa-arrow-left"></i> {{ trans('general.back') }}
+            </button>
+        </a>
+        @if ($action == 'show')
+            <a href="{{ route('admin.questions.edit', $question) }}">
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-pencil"></i> {{ trans('general.edit') }}
+                </button>
+            </a>
+        @else
+            {!! Form::button('<i class="fa fa-trash-o"></i>' . trans('general.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+        @endif
     </div>
 </div>
