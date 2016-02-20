@@ -28,7 +28,6 @@
     "laravel/framework": "5.1.*",
     "codesleeve/laravel-stapler": "^1.0",
     "cviebrock/eloquent-sluggable": "^3.1",
-    "igaster/laravel-theme": "^1.0",
     "laravelcollective/html": "^5.1",
     "yajra/laravel-datatables-oracle": "~5.0"
   },

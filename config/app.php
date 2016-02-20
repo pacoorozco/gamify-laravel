@@ -143,7 +143,6 @@ return [
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class, // Stapler-based file upload package
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,  // Slugs for your Eloquent models
         Collective\Html\HtmlServiceProvider::class,  // HTML helpers
-        igaster\laravelTheme\themeServiceProvider::class,  // Theme support
         yajra\Datatables\DatatablesServiceProvider::class, // Datatables support
 
         /*
@@ -208,7 +207,6 @@ return [
          */
         'Form'      => Collective\Html\FormFacade::class,  // HTML Form helpers
         'HTML'      => Collective\Html\HtmlFacade::class,  // HTML helpers
-        'Theme'     => igaster\laravelTheme\Facades\Theme::class,  // Theme support
         'Datatables' => yajra\Datatables\Datatables::class, // Datatables support
 
     ],

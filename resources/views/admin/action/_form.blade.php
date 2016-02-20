@@ -5,8 +5,8 @@
             'method' => 'post'
             )) !!}
 
-<div class="row">
-    <div class="col-xs-12">
+<div class="box box-solid">
+    <div class="box-body">
 
         <!-- action -->
         <div class="form-group {{ $errors->has('badge_id') ? 'has-error' : '' }}">
@@ -29,17 +29,14 @@
         <!-- ./ when -->
 
     </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12">
+    <div class="box-footer">
         <!-- Form Actions -->
-        <div class="form-group">
-            <div class="controls">
-                <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('general.back') }}</a>
+                <a href="{{ route('admin.questions.edit', $question) }}">
+                    <button type="button" class="btn btn-primary">
+                        <i class="fa fa-arrow-left"></i> {{ trans('general.back') }}
+                    </button>
+                </a>
                 {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
-            </div>
-        </div>
         <!-- ./ form actions -->
     </div>
 </div>
