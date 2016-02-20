@@ -43,38 +43,6 @@ class AdminQuestionActionController extends AdminController {
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * TODO - Not implemented on routes.php
-     *
-     * @param  Question $question
-     * @param  QuestionAction $action
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question, QuestionAction $action)
-    {
-        return view('admin/action/edit', compact('question', 'action'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * TODO - Not implemented on routes.php
-     *
-     * @param  Question $question
-     * @param  QuestionActionUpdateRequest $request
-     * @param  QuestionAction $action
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Question $question, QuestionActionUpdateRequest $request, QuestionAction $action)
-    {
-        $action->update($request->all());
-
-        return redirect()->route('admin.questions.edit', $question)
-            ->with('success', trans('admin/action/messages.create.success'));
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  Question $question
