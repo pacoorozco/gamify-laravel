@@ -41,7 +41,7 @@ class Badge extends Model implements StaplerableInterface
                 'small' => '64x64'
             ],
             'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => 'images/missing_badge.png'
+            'default_url' => '/images/missing_badge.png'
         ]);
 
         parent::__construct($attributes);

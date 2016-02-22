@@ -55,7 +55,7 @@ class UserProfile extends Model implements StaplerableInterface
                 'small' => '64x64'
             ],
             'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => 'images/missing_profile.png'
+            'default_url' => '/images/missing_profile.png'
         ]);
 
         parent::__construct($attributes);

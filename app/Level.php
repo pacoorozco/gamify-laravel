@@ -41,7 +41,7 @@ class Level extends Model implements StaplerableInterface
                 'small' => '64x64'
             ],
             'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => 'images/missing_level.png'
+            'default_url' => '/images/missing_level.png'
         ]);
 
         parent::__construct($attributes);
