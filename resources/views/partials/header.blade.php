@@ -75,7 +75,7 @@
                                 <img src="{{ auth()->user()->profile->avatar->url() }}" class="img-circle"
                                      alt="{{ trans('user/profile.avatar') }}"/>
                                 <p>
-                                    {{ auth()->user()->name }} - Level
+                                    {{ auth()->user()->name }} - User Level
                                     <small>Member since Nov. 2012</small>
                                 </p>
                             </li>
@@ -88,7 +88,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ route('profile', array('user' => Auth::user())) }}" class="btn btn-default btn-flat">
+                                    <a href="{{ route('profile', array('user' => Auth::user()->username)) }}" class="btn btn-default btn-flat">
                                         {{ trans('site.my_profile') }}
                                     </a>
                                 </div>

@@ -74,4 +74,15 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
             ->withPivot('amount', 'completed', 'completed_on');
     }
+
+    public function level()
+    {
+        return 'User Level';
+    }
+
+    public function points()
+    {
+        return '0';
+    }
+
 }

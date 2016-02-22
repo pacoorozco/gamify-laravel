@@ -2,7 +2,7 @@
 
 {{-- Web site Title --}}
 @section('title')
-{{ trans('user/user.settings') }} ::
+    {{ trans('user/user.settings') }} :: @parent
 @parent
 @stop
 

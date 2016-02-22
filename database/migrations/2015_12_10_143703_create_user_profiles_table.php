@@ -29,7 +29,6 @@ class CreateUserProfilesTable extends Migration
             $table->string('googleplus')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
-            $table->string('skype')->nullable();
 
             $table->string('avatar_file_name')->nullable();
             $table->integer('avatar_file_size')->nullable();

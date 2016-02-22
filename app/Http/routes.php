@@ -15,7 +15,7 @@
  *  Route model binding
  *  ------------------------------------------
  */
-Route::bind('user', function ($value) {
+Route::bind('username', function ($value) {
     return \Gamify\User::where('username', $value)->first();
 });
 
@@ -51,9 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
 
     // Profiles
-    Route::get('user', 'UserController@show');
-    Route::get('user/{user}', ['as' => 'profile', 'uses' => 'UserController@show']);
-    Route::post('user/{user}', 'UserController@update');
+    // Route::get('user', 'UserController@index');
+    Route::get('user/{username}', ['as' => 'profile', 'uses' => 'UserController@show']);
+    Route::post('user/{username}', 'UserController@update');
 
     Route::get('questions', ['as' => 'questions.index', 'uses' => 'QuestionController@index']);
     Route::get('questions/{question}', ['as' => 'questions.show', 'uses' => 'QuestionController@show']);
