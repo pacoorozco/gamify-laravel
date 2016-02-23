@@ -2,23 +2,11 @@
 
 namespace Gamify\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Gamify\User;
-
-use Gamify\Http\Requests;
+use Gamify\Http\Requests\UserProfileUpdateRequest;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -31,25 +19,17 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  UserProfileUpdateRequest  $request
+     * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserProfileUpdateRequest $request, User $user)
     {
-        //
+        $user->profile->fill($request->all())->save();
+
+        return redirect()->route('profiles.show', $user->username)
+            ->with('success', trans('user/messages.settings_updated'));
     }
 }

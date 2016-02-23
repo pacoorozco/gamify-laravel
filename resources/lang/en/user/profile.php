@@ -10,6 +10,7 @@ return array(
     |
     */
 
+    'title'         => 'User Profile',
     'overview'        => 'Overview',
     'edit_account'    => 'Edit Account',
     'badges'          => 'Badges',
@@ -43,7 +44,6 @@ return array(
     'googleplus' => 'Google Plus',
     'linkedin'   => 'Linkedin',
     'github'     => 'Github',
-    'skype'      => 'Skype',
 
     'level' => 'Level',
     'rank'  => 'Position',

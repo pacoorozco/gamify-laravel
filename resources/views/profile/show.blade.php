@@ -2,23 +2,23 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('user/user.settings') }} :: @parent
+    {{ trans('user/profile.title') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    User Profile
+    {{ trans('user/profile.title') }}
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> Home
+            <i class="fa fa-dashboard"></i> {{ trans('site.home') }}
         </a>
     </li>
     <li class="active">
-        User Profile
+        {{ trans('user/profile.title') }}
     </li>
 @endsection
 
@@ -59,6 +59,8 @@
 
         </div>
         <div class="col-md-8">
+            <!-- notifications -->
+            @include('partials.notifications')
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active">

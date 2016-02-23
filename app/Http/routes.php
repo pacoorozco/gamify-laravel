@@ -52,8 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Profiles
     // Route::get('user', 'UserController@index');
-    Route::get('user/{username}', ['as' => 'profile', 'uses' => 'UserController@show']);
-    Route::post('user/{username}', 'UserController@update');
+    Route::get('user/{username}', ['as' => 'profiles.show', 'uses' => 'UserController@show']);
+    Route::post('user/{username}', ['as' => 'profiles.update', 'uses' => 'UserController@update']);
 
     Route::get('questions', ['as' => 'questions.index', 'uses' => 'QuestionController@index']);
     Route::get('questions/{question}', ['as' => 'questions.show', 'uses' => 'QuestionController@show']);
