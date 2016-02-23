@@ -1,4 +1,4 @@
-<p>{{ $user->profile->bio or Nothing }}</p>
+<p>{{ $user->profile->bio or 'Nothing' }}</p>
 
 Badges
 

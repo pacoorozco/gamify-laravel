@@ -48,7 +48,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ route('profiles.show', array('user' => Auth::user()->username)) }}" class="btn btn-default btn-flat">
+                                <a href="{{ route('profiles.show', Auth::user()->username) }}" class="btn btn-default btn-flat">
                                     {{ trans('site.my_profile') }}
                                 </a>
                             </div>
