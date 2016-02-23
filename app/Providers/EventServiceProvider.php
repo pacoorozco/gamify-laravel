@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'Gamify\Events\SomeEvent' => [
             'Gamify\Listeners\EventListener',
         ],
+        'auth.login' => [
+            'Gamify\Listeners\UserEventLoginListener',
+        ],
     ];
 
     /**

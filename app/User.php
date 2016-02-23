@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class User extends Model implements AuthenticatableContract,
     AuthorizableContract,
@@ -75,12 +76,21 @@ class User extends Model implements AuthenticatableContract,
             ->withPivot('amount', 'completed', 'completed_on');
     }
 
-    public function level()
+    public function getLastLoggedDate()
+    {
+        if (!$this->last_login) {
+            return 'Never';
+        }
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login);
+        return $date->diffInMonths() >= 1 ? $date->format('j M Y , g:ia') : $date->diffForHumans();
+    }
+
+    public function getLevel()
     {
         return 'User Level';
     }
 
-    public function points()
+    public function getPoints()
     {
         return '0';
     }

@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Controllers;
 
+use Carbon\Carbon;
 use Gamify\User;
 use Gamify\Http\Requests\UserProfileUpdateRequest;
 

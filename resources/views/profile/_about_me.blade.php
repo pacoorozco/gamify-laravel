@@ -111,11 +111,11 @@
             <tbody>
             <tr>
                 <td>{{ trans('user/profile.level') }}:</td>
-                <td>TODO UI Designer</td>
+                <td>{{ $user->getLevel() }}</td>
             </tr>
             <tr>
                 <td>{{ trans('user/profile.rank') }}:</td>
-                <td>TODO</td>
+                <td>{{ $user->getPoints() }}</td>
             </tr>
             <tr>
                 <td>{{ trans('user/profile.user_since') }}:</td>
@@ -124,7 +124,7 @@
 
             <tr>
                 <td>{{ trans('user/profile.last_logged') }}:</td>
-                <td>TODO min</td>
+                <td>{{ $user->getLastLoggedDate() }}</td>
             </tr>
             <tr>
                 <td>{{ trans('user/profile.roles') }}:</td>
