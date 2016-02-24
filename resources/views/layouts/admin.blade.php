@@ -31,7 +31,7 @@
 </head>
 <!-- end: HEAD -->
 <!-- start: BODY -->
-<body class="skin-blue">
+<body class="skin-blue sidebar-mini">
     <!-- start: MAIN CONTAINER -->
     <div class="wrapper">
 
