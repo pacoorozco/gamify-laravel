@@ -15,9 +15,7 @@
 
             <!-- start: TOP LEFT NAVIGATION MENU -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-                <ul class="nav navbar-nav">
-                    @include('partials.sidebar')
-                </ul>
+                @include('partials.sidebar')
             </div>
             <!-- end: TOP LEFT NAVIGATION MENU -->
             <!-- start: TOP RIGHT NAVIGATION MENU -->
@@ -46,7 +44,7 @@
                                      alt="{{ trans('user/profile.avatar') }}"/>
                                 <p>
                                     {{ auth()->user()->name }} - {{ auth()->user()->getLevel() }}
-                                    <small>Member since {{ date("M Y", strtotime($user->created_at)) }}</small>
+                                    <small>Member since {{ date("M Y", strtotime(auth()->user()->created_at)) }}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -58,7 +56,8 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ route('profiles.show', Auth::user()->username) }}" class="btn btn-default btn-flat">
+                                    <a href="{{ route('profiles.show', Auth::user()->username) }}"
+                                       class="btn btn-default btn-flat">
                                         {{ trans('site.my_profile') }}
                                     </a>
                                 </div>

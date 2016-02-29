@@ -108,4 +108,24 @@ class Question extends Model implements SluggableInterface {
 
         return (($answers_count > 1) && ($answers_correct_count > 0));
     }
+
+    /**
+     * Return the excerpt of the question text.
+     * @param int $length
+     * @param string $trailing
+     * @return string
+     */
+    public function excerpt($length = 55, $trailing = '...')
+    {
+        $text = strip_tags($this->question);
+
+        if (str_word_count($text, 0) > $length) {
+            // string exceeded length, truncate and add trailing dots
+            $words = str_word_count($text, 2);
+            $pos = array_keys($words);
+            $text = substr($text, 0, $pos[$length]) . $trailing;
+        }
+        // string was already short enough, return the string
+        return '<p>' . $text . '</p>';
+    }
 }
