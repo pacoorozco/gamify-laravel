@@ -1,7 +1,12 @@
 <header class="main-header">
 
     <!-- start: LOGO -->
-    <a href="{{ route('admin-home') }}" class="logo"><b>gamify</b> v3</a>
+    <a href="{{ route('admin-home') }}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>g</b>v3</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>gamify</b> v3</span>
+    </a>
     <!-- end: LOGO -->
 
     <!-- Header Navbar -->
