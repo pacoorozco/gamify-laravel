@@ -135,51 +135,6 @@
         </div><!-- ./ box -->
         <!-- ./ publish -->
 
-        <!-- image -->
-        <div class="box box-solid collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ trans('admin/question/model.image') }}</h3>
-
-                <div class="box-tools">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="box-body">
-                <p>TODO: Not yet implemented!</p>
-                {{--
-                <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                    {!! Form::label('image', trans('admin/question/model.image'), array('class' => 'control-label')) !!}
-                    <div class="controls">
-                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                            <div class="fileupload-new thumbnail" style="width: 150px; height: 150px;">
-                                @if (isset($question))
-                                    <img src='{{ $question->image->url('big') }}' class='file-preview-image'/>
-                                @endif
-                            </div>
-                            <div class="fileupload-preview fileupload-exists thumbnail"
-                                 style="max-width: 150px; max-height: 150px; line-height: 20px;"></div>
-                            <div>
-                                <span class="btn btn-light-grey btn-file"><span class="fileupload-new"><i
-                                                class="fa fa-picture-o"></i> {{ trans('button.pick_image') }}</span><span
-                                            class="fileupload-exists"><i
-                                                class="fa fa-picture-o"></i> {{ trans('button.upload_image') }}</span>
-                                    {!! Form::file('image') !!}
-                                </span>
-                                <a href="#" class="btn fileupload-exists btn-light-grey" data-dismiss="fileupload">
-                                    <i class="fa fa-times"></i> {{ trans('button.delete_image') }}
-                                </a>
-                            </div>
-                        </div>
-                        <span class="help-block"><i class="fa fa-info-circle"></i> Image will be used as 220px, 128px and 64px squared sizes.</span>
-                        <span class="help-block">{{ $errors->first('image', ':message') }}</span>
-                    </div>
-                </div>
-                --}}
-            </div><!-- ./ box-body -->
-        </div><!-- ./ box -->
-        <!-- ./ image -->
-
         <!-- actions -->
         <div class="box box-solid">
             <div class="box-header with-border">
@@ -208,20 +163,13 @@
 
 {!! Form::close() !!}
 
-{{-- Styles --}}
-@section('styles')
-        <!-- File Input -->
-{{-- HTML::style(Theme::url('plugins/bootstrap-fileupload/bootstrap-fileupload.min.css')) --}}
-@endsection
-
 {{-- Scripts --}}
 @section('scripts')
         <!-- TinyMCE -->
 {!! HTML::script('//tinymce.cachefly.net/4.0/tinymce.min.js') !!}
         <!-- jQuery UJS -->
 {!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
-        <!-- File Input -->
-{{-- HTML::script(Theme::url('plugins/bootstrap-fileupload/bootstrap-fileupload.min.js')) --}}
+
 <script type="text/javascript">
     tinymce.init({
         selector: "textarea.tinymce",
