@@ -146,17 +146,8 @@
                 </div>
             </div>
             <div class="box-body">
-                @if (isset($question))
-                    {!! Form::select('tags[]',
-                        \Gamify\Question::existingTags()->pluck('name', 'slug'),
-                        $question->tagged->lists('tag_slug')->all(),
-                        ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
-                @else
-                    {!! Form::select('tags[]',
-                        \Gamify\Question::existingTags()->pluck('name', 'slug'),
-                        null,
-                        ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
-                @endif
+                {!! Form::label('tag_list', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
             </div>
         </div>
         <!-- ./ tags -->
@@ -209,11 +200,45 @@
     $(function () {
         $(".tags-input").select2({
             tags: true,
-            theme: "bootstrap"
+            placeholder: 'Put your tags here',
+            tokenSeparators: [','],
+            allowClear: true,
+            theme: "bootstrap",
+            matcher: function(params, data) {
+                // If there are no search terms, return all of the data
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+
+                // `params.term` should be the term that is used for searching
+                // `data.text` is the text that is displayed for the data object
+                if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                    return data;
+                }
+
+                // Return `null` if the term should not be displayed
+                return null;
+            },
+            createTag: function(params) {
+                var term = $.trim(params.term);
+                if(term === "") { return null; }
+
+                var optionsMatch = false;
+
+                this.$element.find("option").each(function() {
+                    if(this.value.toLowerCase().indexOf(term.toLowerCase()) > -1) {
+                        optionsMatch = true;
+                    }
+                });
+
+                if(optionsMatch) {
+                    return null;
+                }
+                return {id: term, text: term};
+            }
         });
     });
 </script>
-
 
 <script>
     tinymce.init({

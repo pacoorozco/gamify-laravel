@@ -31,7 +31,9 @@ class AdminQuestionController extends AdminController {
      */
     public function create()
     {
-        return view('admin/question/create');
+        $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+
+        return view('admin/question/create', compact('availableTags'));
     }
 
     /**
@@ -45,8 +47,8 @@ class AdminQuestionController extends AdminController {
     {
         $question = Question::create($request->all());
 
-        if ($request->tags) {
-            $question->tag($request->tags);
+        if (count($request->tag_list)) {
+            $question->tag($request->tag_list);
         }
 
         return redirect()->route('admin.questions.index')
@@ -72,7 +74,9 @@ class AdminQuestionController extends AdminController {
      */
     public function edit(Question $question)
     {
-        return view('admin/question/edit', compact('question'));
+        $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+
+        return view('admin/question/edit', compact('question','availableTags'));
     }
 
     /**
@@ -84,8 +88,8 @@ class AdminQuestionController extends AdminController {
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
-        if ($request->tags) {
-            $question->retag($request->tags);
+        if (count($request->tag_list)) {
+            $question->retag($request->tag_list);
         } else {
             $question->untag();
         }

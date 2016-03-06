@@ -68,6 +68,16 @@ class Question extends Model implements SluggableInterface {
     }
 
     /**
+     * Get a list of tags ids associated with the current Question
+     *
+     * @return array
+     */
+    public function getTagListAttribute()
+    {
+        return $this->tagged->lists('tag_slug')->all();
+    }
+
+    /**
      * Return if a question can be published.
      * 1. Has at least one correct answer
      *

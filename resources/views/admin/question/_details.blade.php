@@ -57,6 +57,20 @@
                 {!! $question->solution !!}
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                {{ trans('admin/question/model.tags') }}
+            </div>
+            <div class="panel-body">
+                <ul>
+                    @foreach($question->tagList as $tag)
+                        <li>{{ $tag }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="box-footer">
         <a href="{{ route('admin.questions.index') }}">
