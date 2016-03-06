@@ -144,7 +144,7 @@ return [
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,  // Slugs for your Eloquent models
         Collective\Html\HtmlServiceProvider::class,  // HTML helpers
         yajra\Datatables\DatatablesServiceProvider::class, // Datatables support
-        Conner\Tagging\Providers\TaggingServiceProvider::class, // Tags support
+        Conner\Tagging\Providers\TaggingServiceProvider::class, // Tags
 
         /*
          * Application Service Providers...

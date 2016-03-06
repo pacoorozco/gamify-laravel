@@ -2,6 +2,7 @@
 
 namespace Gamify;
 
+use Conner\Tagging\Taggable;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Gamify\Traits\RecordSignature;
@@ -13,6 +14,7 @@ class Question extends Model implements SluggableInterface {
     use SoftDeletes;
     use RecordSignature; // Record Signature
     use SluggableTrait; // Slugs
+    use Taggable; // Tags
 
     /**
      * The database table used by the model.

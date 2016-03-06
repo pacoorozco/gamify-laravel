@@ -135,6 +135,32 @@
         </div><!-- ./ box -->
         <!-- ./ publish -->
 
+        <!-- tags -->
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ trans('admin/question/model.tags') }}</h3>
+
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                @if (isset($question))
+                    {!! Form::select('tags[]',
+                        \Gamify\Question::existingTags()->pluck('name', 'slug'),
+                        $question->tagged->lists('tag_slug')->all(),
+                        ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
+                @else
+                    {!! Form::select('tags[]',
+                        \Gamify\Question::existingTags()->pluck('name', 'slug'),
+                        null,
+                        ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
+                @endif
+            </div>
+        </div>
+        <!-- ./ tags -->
+
         <!-- actions -->
         <div class="box box-solid">
             <div class="box-header with-border">
@@ -163,14 +189,33 @@
 
 {!! Form::close() !!}
 
+{{-- Styles --}}
+@section('styles')
+        <!-- Select2 -->
+{!! HTML::style('vendor/select2/dist/css/select2.min.css') !!}
+{!! HTML::style('vendor/select2-bootstrap-theme/dist/select2-bootstrap.min.css') !!}
+@endsection
+
 {{-- Scripts --}}
 @section('scripts')
         <!-- TinyMCE -->
 {!! HTML::script('//tinymce.cachefly.net/4.0/tinymce.min.js') !!}
         <!-- jQuery UJS -->
 {!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
+        <!-- Select2 -->
+{!! HTML::script('vendor/select2/dist/js/select2.min.js') !!}
 
-<script type="text/javascript">
+<script>
+    $(function () {
+        $(".tags-input").select2({
+            tags: true,
+            theme: "bootstrap"
+        });
+    });
+</script>
+
+
+<script>
     tinymce.init({
         selector: "textarea.tinymce",
         width: '100%',

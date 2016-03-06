@@ -43,7 +43,11 @@ class AdminQuestionController extends AdminController {
      */
     public function store(QuestionCreateRequest $request)
     {
-        Question::create($request->all());
+        $question = Question::create($request->all());
+
+        if ($request->tags) {
+            $question->tag($request->tags);
+        }
 
         return redirect()->route('admin.questions.index')
             ->with('success', trans('admin/question/messages.create.success'));
@@ -80,6 +84,12 @@ class AdminQuestionController extends AdminController {
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
+        if ($request->tags) {
+            $question->retag($request->tags);
+        } else {
+            $question->untag();
+        }
+
         if ($request->status == 'publish') {
             if ( ! $question->canBePublished()) {
                 return redirect()->back()

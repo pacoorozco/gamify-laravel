@@ -16,4 +16,5 @@ return array(
     'publish'    => 'Published',
     'unpublish'  => 'Retired',
     'actions'    => 'Actions',
+    'tags'       => 'Tags',
 );
