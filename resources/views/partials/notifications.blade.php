@@ -66,3 +66,27 @@
         @endif
     </div>
 @endif
+
+@if ($message = Session::get('message_point'))
+    <div class="callout callout-info">
+        @if(is_array($message))
+            @foreach ($message as $m)
+                {{ $m }}
+            @endforeach
+        @else
+            {{ $message }}
+        @endif
+    </div>
+@endif
+
+@if ($message = Session::get('message_badge'))
+    <div class="callout callout-info">
+        @if(is_array($message))
+            @foreach ($message as $m)
+                {{ $m }}
+            @endforeach
+        @else
+            {{ $message }}
+        @endif
+    </div>
+@endif

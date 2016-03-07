@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LevelsTableSeeder extends Seeder
+class BadgesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,13 +11,13 @@ class LevelsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('levels')->delete();
+        DB::table('badges')->delete();
 
         foreach (range(0, 5) as $index) {
             \Gamify\Level::create([
                 'name' => 'Level ' . $index,
                 'amount_needed' => ($index * 10),
             ]);
-        }
+
     }
 }

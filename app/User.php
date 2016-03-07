@@ -85,14 +85,24 @@ class User extends Model implements AuthenticatableContract,
         return $date->diffInMonths() >= 1 ? $date->format('j M Y , g:ia') : $date->diffForHumans();
     }
 
+    public function points()
+    {
+        return $this->hasMany('Gamify\Point');
+
+    }
+
     public function getLevel()
     {
-        return 'User Level';
+        $experience = $this->getPoints();
+
+        dd(Level::where('amount_needed', '>', $experience));
+
+
     }
 
     public function getPoints()
     {
-        return '0';
+        return $this->points->sum('points');
     }
 
 }

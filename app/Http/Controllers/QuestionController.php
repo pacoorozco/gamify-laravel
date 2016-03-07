@@ -54,7 +54,7 @@ class QuestionController extends Controller
         }
 
         // AI. Add XP to user
-        // Gamify::give($points)
+        Game::giveXP(Auth::user(), $points, 'has earned ' . $points .' points.');
 
         // AI. Specific Badges
         if($success) {
@@ -67,10 +67,10 @@ class QuestionController extends Controller
             ->lists('id')->toArray();
 
         // AI. Increment actions
-        // Gamify::increment($badges)
+        Game::incrementBadges(Auth::user(), $badges);
 
         // AI. Add notifications and return view
-        $this->show($question);
+        return $this->show($question);
     }
 
     /**
