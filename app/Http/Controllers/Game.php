@@ -37,7 +37,7 @@ class Game extends Controller
 
         if ($level_after != $level_before) {
             // User has been level up!
-            Session::flash('message_level', 'You have reached a new level');
+            Session::flash('messages', 'You have reached a new level');
         }
 
         return true;
@@ -47,7 +47,7 @@ class Game extends Controller
     {
         $user->badges()->save($badge);
 
-        Session::flash('message_badge', array('Bagde incremented'));
+        Session::flash('messages', array('Badge incremented'));
         return true;
     }
 }

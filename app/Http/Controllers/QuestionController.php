@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Gamify\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class QuestionController extends Controller
 {
@@ -27,7 +28,7 @@ class QuestionController extends Controller
     /**
      *
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param  Question $question
      * @return \Illuminate\Http\Response
      */
@@ -43,7 +44,7 @@ class QuestionController extends Controller
         $points = 0;
         $success = false;
 
-        foreach($request->choices as $answer) {
+        foreach ($request->choices as $answer) {
             $choice = $question->choices()->find($answer);
             $points += $choice->points;
             $success = $success || $choice->correct;
@@ -54,20 +55,21 @@ class QuestionController extends Controller
         }
 
         // AI. Add XP to user
-        Game::giveXP(Auth::user(), $points, 'has earned ' . $points .' points.');
+        Game::addExperience(Auth::user(), $points, 'has earned ' . $points . ' points.');
 
         // AI. Specific Badges
-        if($success) {
+        if ($success) {
             $answerStatus = 'correct';
         } else {
             $answerStatus = 'incorrect';
         }
         $badges = $question->actions()
-            ->whereIn('when', ['always', $answerStatus])
-            ->lists('id')->toArray();
+            ->whereIn('when', ['always', $answerStatus]);
 
         // AI. Increment actions
-        Game::incrementBadges(Auth::user(), $badges);
+        foreach ($badges as $badge) {
+            Game::incrementBadge(Auth::user(), $badge);
+        }
 
         // AI. Add notifications and return view
         return $this->show($question);

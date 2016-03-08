@@ -2,7 +2,6 @@
 
 namespace Gamify\Http\Controllers;
 
-use Carbon\Carbon;
 use Gamify\User;
 use Gamify\Http\Requests\UserProfileUpdateRequest;
 
@@ -22,9 +21,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserProfileUpdateRequest  $request
-     * @param  User  $user
-     * @return \Illuminate\Http\Response
+     * @param  UserProfileUpdateRequest $request
+     * @param  User $user
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserProfileUpdateRequest $request, User $user)
     {

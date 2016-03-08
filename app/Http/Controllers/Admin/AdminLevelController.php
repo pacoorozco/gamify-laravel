@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use yajra\Datatables\Datatables;
 
 
-class AdminLevelController extends AdminController {
+class AdminLevelController extends AdminController
+{
 
     /**
      * Display a listing of the resource.
@@ -117,7 +118,7 @@ class AdminLevelController extends AdminController {
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if ( ! $request->ajax()) {
+        if (!$request->ajax()) {
             abort(400);
         }
 
@@ -137,10 +138,12 @@ class AdminLevelController extends AdminController {
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd', array(
                     'model' => 'levels',
-                    'id'    => $level->id
+                    'id' => $level->id
                 ))->render();
             })
             ->removeColumn('id')
             ->make(true);
+
+        return View::make()->render();
     }
 }

@@ -9,7 +9,8 @@ use Gamify\Traits\RecordSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Question extends Model implements SluggableInterface {
+class Question extends Model implements SluggableInterface
+{
 
     use SoftDeletes;
     use RecordSignature; // Record Signature
@@ -35,8 +36,8 @@ class Question extends Model implements SluggableInterface {
      * The Question slug in order to implement permanent URL to questions
      */
     protected $sluggable = array(
-        'build_from'      => 'name',
-        'save_to'         => 'shortname',
+        'build_from' => 'name',
+        'save_to' => 'shortname',
         'include_trashed' => true,
     );
 

@@ -4,8 +4,6 @@ namespace Gamify\Listeners;
 
 use Carbon\Carbon;
 use Gamify\User;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UserEventLoginListener
 {
