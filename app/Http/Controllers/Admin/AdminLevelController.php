@@ -123,7 +123,10 @@ class AdminLevelController extends AdminController
         }
 
         $levels = Level::select([
-            'id', 'name', 'amount_needed', 'active'
+            'id',
+            'name',
+            'amount_needed',
+            'active'
         ])->orderBy('amount_needed', 'ASC');
 
         return $dataTable::of($levels)

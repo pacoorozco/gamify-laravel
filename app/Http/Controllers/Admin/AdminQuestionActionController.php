@@ -7,7 +7,8 @@ use Gamify\Http\Requests\QuestionActionUpdateRequest;
 use Gamify\Question;
 use Gamify\QuestionAction;
 
-class AdminQuestionActionController extends AdminController {
+class AdminQuestionActionController extends AdminController
+{
 
     /**
      * Show the form for creating a new resource.
@@ -20,7 +21,7 @@ class AdminQuestionActionController extends AdminController {
         $availableActions = array();
 
         // get actions that hasn't not been used
-        foreach($question->getAvailableActions() as $action) {
+        foreach ($question->getAvailableActions() as $action) {
             $availableActions[$action->id] = $action->name;
         }
 

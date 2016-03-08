@@ -2,7 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
-class BadgeCreateRequest extends Request {
+class BadgeCreateRequest extends Request
+{
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +23,11 @@ class BadgeCreateRequest extends Request {
     public function rules()
     {
         return [
-            'name'          => 'required|unique:badges,name',
-            'description'   => 'required',
+            'name' => 'required|unique:badges,name',
+            'description' => 'required',
             'amount_needed' => 'required|integer|min:1',
-            'active'        => 'required|boolean',
-            'image'         => 'required|image',
+            'active' => 'required|boolean',
+            'image' => 'required|image',
         ];
     }
 }

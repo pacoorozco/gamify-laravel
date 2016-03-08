@@ -24,14 +24,14 @@ class UserProfileUpdateRequest extends Request
     public function rules()
     {
         return [
-            'url'      => 'url',
+            'url' => 'url',
             'date_of_birth' => 'date',
-            'gender'  => 'required|in:male,female,unspecified',
-            'twitter'  => 'url',
-            'facebook'  => 'url',
-            'googleplus'  => 'url',
-            'linkedin'  => 'url',
-            'github'  => 'url',
+            'gender' => 'required|in:male,female,unspecified',
+            'twitter' => 'url',
+            'facebook' => 'url',
+            'googleplus' => 'url',
+            'linkedin' => 'url',
+            'github' => 'url',
         ];
     }
 }

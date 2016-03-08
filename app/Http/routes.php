@@ -101,7 +101,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural paramameter {badges} needs
     // to be used.
-    Route::get('badges/{badges}/delete', ['as' => 'admin.badges.delete', 'uses' => 'Admin\AdminBadgeController@delete']);
+    Route::get('badges/{badges}/delete',
+        ['as' => 'admin.badges.delete', 'uses' => 'Admin\AdminBadgeController@delete']);
 
     /** ------------------------------------------
      *  Levels
@@ -119,7 +120,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural paramameter {badges} needs
     // to be used.
-    Route::get('levels/{levels}/delete', ['as' => 'admin.levels.delete', 'uses' => 'Admin\AdminLevelController@delete']);
+    Route::get('levels/{levels}/delete',
+        ['as' => 'admin.levels.delete', 'uses' => 'Admin\AdminLevelController@delete']);
 
     /** ------------------------------------------
      *  Question management
@@ -130,7 +132,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('questions/data', ['as' => 'admin.questions.data', 'uses' => 'Admin\AdminQuestionController@data']);
 
     // Our special delete confirmation route - uses the show/details view.
-    Route::get('questions/{questions}/delete', ['as' => 'admin.questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
+    Route::get('questions/{questions}/delete',
+        ['as' => 'admin.questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
 
     Route::resource('questions', 'Admin\AdminQuestionController');
 
@@ -138,6 +141,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => array('index', 'show')]);
 
     // Nest routes to deal with actions
-    Route::resource('questions.actions', 'Admin\AdminQuestionActionController', ['only' => array('create', 'store', 'destroy')]);
+    Route::resource('questions.actions', 'Admin\AdminQuestionActionController',
+        ['only' => array('create', 'store', 'destroy')]);
 
 });

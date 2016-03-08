@@ -24,9 +24,9 @@ class QuestionChoiceCreateRequest extends Request
     public function rules()
     {
         return [
-                'text'            => 'required',
-                'correct'           => 'required|boolean',
-                'points'            => 'required|integer'
+            'text' => 'required',
+            'correct' => 'required|boolean',
+            'points' => 'required|integer'
         ];
     }
 }

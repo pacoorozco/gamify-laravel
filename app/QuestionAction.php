@@ -28,7 +28,8 @@ class QuestionAction extends Model
         return $this->belongsTo('Gamify\Question');
     }
 
-    public function getName() {
+    public function getName()
+    {
         $badge = Badge::find($this->badge_id);
         return $badge->name;
     }

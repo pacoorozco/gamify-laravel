@@ -8,7 +8,8 @@ use Gamify\Question;
 use Gamify\QuestionChoice;
 use Illuminate\Http\Response;
 
-class AdminQuestionChoiceController extends AdminController {
+class AdminQuestionChoiceController extends AdminController
+{
 
     /**
      * Show the form for creating a new resource.

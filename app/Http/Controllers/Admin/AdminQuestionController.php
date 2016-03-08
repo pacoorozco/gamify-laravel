@@ -11,7 +11,8 @@ use Illuminate\Http\Response;
 use yajra\Datatables\Datatables;
 
 
-class AdminQuestionController extends AdminController {
+class AdminQuestionController extends AdminController
+{
 
     /**
      * Display a listing of the resource.
@@ -76,7 +77,7 @@ class AdminQuestionController extends AdminController {
     {
         $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
 
-        return view('admin/question/edit', compact('question','availableTags'));
+        return view('admin/question/edit', compact('question', 'availableTags'));
     }
 
     /**
@@ -95,7 +96,7 @@ class AdminQuestionController extends AdminController {
         }
 
         if ($request->status == 'publish') {
-            if ( ! $question->canBePublished()) {
+            if (!$question->canBePublished()) {
                 return redirect()->back()
                     ->with('error', trans('admin/question/messages.publish.error'));
             }
@@ -141,17 +142,20 @@ class AdminQuestionController extends AdminController {
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if ( ! $request->ajax()) {
+        if (!$request->ajax()) {
             abort(400);
         }
 
         $question = Question::select([
-            'id', 'shortname', 'name', 'status'
+            'id',
+            'shortname',
+            'name',
+            'status'
         ])->orderBy('name', 'ASC');
 
         $statusLabel = array(
-            'draft'     => '<span class="label label-default">' . trans('admin/question/model.draft') . '</span>',
-            'publish'   => '<span class="label label-success">' . trans('admin/question/model.publish') . '</span>',
+            'draft' => '<span class="label label-default">' . trans('admin/question/model.draft') . '</span>',
+            'publish' => '<span class="label label-success">' . trans('admin/question/model.publish') . '</span>',
             'unpublish' => '<span class="label label-warning">' . trans('admin/question/model.unpublish') . '</span>',
         );
 
@@ -162,7 +166,8 @@ class AdminQuestionController extends AdminController {
             ->addColumn('actions', function (Question $question) {
                 return view('admin/partials.actions_dd', array(
                         'model' => 'questions',
-                        'id'    => $question->id)
+                        'id' => $question->id
+                    )
                 )->render();
             })
             ->removeColumn('id')

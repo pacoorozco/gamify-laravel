@@ -8,7 +8,8 @@ use Gamify\Http\Requests\BadgeUpdateRequest;
 use Illuminate\Http\Request;
 use yajra\Datatables\Datatables;
 
-class AdminBadgeController extends AdminController {
+class AdminBadgeController extends AdminController
+{
 
     /**
      * Display a listing of the resource.
@@ -116,12 +117,15 @@ class AdminBadgeController extends AdminController {
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if ( ! $request->ajax()) {
+        if (!$request->ajax()) {
             abort(400);
         }
 
         $badges = Badge::select([
-            'id', 'name', 'amount_needed', 'active'
+            'id',
+            'name',
+            'amount_needed',
+            'active'
         ])->orderBy('name', 'ASC');
 
         return $dataTable->of($badges)
@@ -136,7 +140,7 @@ class AdminBadgeController extends AdminController {
             ->addColumn('actions', function (Badge $badge) {
                 return view('admin/partials.actions_dd', array(
                     'model' => 'badges',
-                    'id'    => $badge->id
+                    'id' => $badge->id
                 ))->render();
             })
             ->removeColumn('id')

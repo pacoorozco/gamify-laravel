@@ -12,7 +12,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use yajra\Datatables\Datatables;
 
-class AdminUserController extends AdminController {
+class AdminUserController extends AdminController
+{
 
     /**
      * Display a listing of the resource.
@@ -130,19 +131,23 @@ class AdminUserController extends AdminController {
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if ( ! $request->ajax()) {
+        if (!$request->ajax()) {
             abort(400);
         }
 
         $users = User::select([
-            'id', 'name', 'username', 'email', 'role'
+            'id',
+            'name',
+            'username',
+            'email',
+            'role'
         ])->orderBy('username', 'ASC');
 
         return $dataTable->of($users)
             ->addColumn('actions', function (User $user) {
                 return view('admin/partials.actions_dd', array(
                     'model' => 'users',
-                    'id'    => $user->id
+                    'id' => $user->id
                 ))->render();
             })
             ->removeColumn('id')
