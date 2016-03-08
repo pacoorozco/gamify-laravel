@@ -111,11 +111,11 @@
             <tbody>
             <tr>
                 <td>{{ trans('user/profile.level') }}:</td>
-                <td>{{ $user->getLevel() }}</td>
+                <td>{{ $user->getLevelName() }}</td>
             </tr>
             <tr>
                 <td>{{ trans('user/profile.rank') }}:</td>
-                <td>{{ $user->getPoints() }}</td>
+                <td>{{ $user->getExperiencePoints() }}</td>
             </tr>
             <tr>
                 <td>{{ trans('user/profile.user_since') }}:</td>

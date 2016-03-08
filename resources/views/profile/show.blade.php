@@ -35,11 +35,11 @@
 
                     <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
-                    <p class="text-muted text-center">{{ $user->getLevel() }}</p>
+                    <p class="text-muted text-center">{{ $user->getLevelName() }}</p>
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Points</b> <a class="pull-right">{{ $user->getPoints() }}</a>
+                            <b>Points</b> <a class="pull-right">{{ $user->getExperiencePoints() }}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Questions</b> <a class="pull-right">{{ count($user->answeredQuestions) }}</a>
