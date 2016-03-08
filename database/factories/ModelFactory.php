@@ -20,3 +20,20 @@ $factory->define(Gamify\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+/*
+ * Badges Factory
+ *
+ * Create a badge with the name of a color :-D
+ *
+ */
+$factory->define(\Gamify\Badge::class, function (Faker\Generator $faker) {
+
+    $color = $faker->unique()->safeColorName;
+
+    return [
+        'name' => $color,
+        'description' => 'This badge is for people who thinks in ' . $color . ' :D',
+        'amount_needed' => 5,
+    ];
+});
+

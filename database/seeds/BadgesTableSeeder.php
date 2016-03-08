@@ -13,11 +13,6 @@ class BadgesTableSeeder extends Seeder
     {
         DB::table('badges')->delete();
 
-        foreach (range(0, 5) as $index) {
-            \Gamify\Level::create([
-                'name' => 'Level ' . $index,
-                'amount_needed' => ($index * 10),
-            ]);
-
+        factory(\Gamify\Badge::class, 5)->create();
     }
 }
