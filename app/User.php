@@ -91,18 +91,30 @@ class User extends Model implements AuthenticatableContract,
 
     }
 
-    public function getLevel()
+    /**
+     * Get current Level name for this user
+     *
+     * @return string
+     */
+    public function getLevelName()
     {
-        $experience = $this->getPoints();
-
-        dd(Level::where('amount_needed', '>', $experience));
-
-
+        $experience = $this->getExperiencePoints();
+        $level = Level::where('amount_needed', '<=', $experience)->orderBy('amount_needed')->first();
+        return $level->name;
     }
 
-    public function getPoints()
+    /**
+     * Get current Experience points for this user
+     *
+     * @return integer
+     */
+    public function getExperiencePoints()
     {
         return $this->points->sum('points');
     }
 
+    public function isBadgeCompleted(Badge $badge)
+    {
+        return true;
+    }
 }

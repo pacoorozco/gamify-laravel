@@ -13,7 +13,6 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next'     => 'Next &raquo;',
+    'unknown_reason' => 'some unknown reason',
 
 ];
