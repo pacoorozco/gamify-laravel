@@ -147,7 +147,7 @@ charts or filled areas).
                             newpoints.push(points[i + m]);
                         
                         // we might be able to interpolate a point below,
-                        // this can give us a better y
+                        // this can reward us a better y
                         if (withlines && j > 0 && otherpoints[j - otherps] != null)
                             bottom = qy + (otherpoints[j - otherps + accumulateOffset] - qy) * (px - qx) / (otherpoints[j - otherps + keyOffset] - qx);
 

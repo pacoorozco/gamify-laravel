@@ -13,7 +13,7 @@
     </li>
     <li {!! (Request::is('admin/badges*') ? ' class="active"' : '') !!}>
         <a href="{{ route('admin.badges.index') }}">
-            <i class="fa fa-gift"></i><span>{{ trans('admin/site.badges') }}</span>
+            <i class="fa fa-trophy"></i><span>{{ trans('admin/site.badges') }}</span>
         </a>
     </li>
     <li {!! (Request::is('admin/levels*') ? ' class="active"' : '') !!}>
@@ -24,6 +24,11 @@
     <li {!! (Request::is('admin/questions*') ? ' class="active"' : '') !!}>
         <a href="{{ route('admin.questions.index') }}">
             <i class="fa fa-comments"></i><span>{{ trans('admin/site.questions') }}</span>
+        </a>
+    </li>
+    <li {!! (Request::is('admin/rewards*') ? ' class="active"' : '') !!}>
+        <a href="{{ route('admin.rewards.index') }}">
+            <i class="fa fa-bank"></i><span>{{ trans('admin/site.rewards') }}</span>
         </a>
     </li>
     <li class="header">PLAY AREA</li>

@@ -7,6 +7,7 @@ return array(
     'badges'    => 'Badges',
     'levels'    => 'Levels',
     'questions' => 'Questions',
+    'rewards'   => 'Rewards',
     'play_area' => 'Return to play area',
 
 );

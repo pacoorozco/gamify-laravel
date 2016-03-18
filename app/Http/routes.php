@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
-    Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminQuestionController@index']);
+    Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminDashboardController@index']);
 
     /** ------------------------------------------
      *  Users
@@ -144,4 +144,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('questions.actions', 'Admin\AdminQuestionActionController',
         ['only' => array('create', 'store', 'destroy')]);
 
+    /** ------------------------------------------
+     *  Give Experience / Badge
+     *  ------------------------------------------
+     */
+    Route::get('rewards', ['as' => 'admin.rewards.index', 'uses' => 'Admin\AdminRewardController@index']);
+    Route::post('rewards/experience',
+        ['as' => 'admin.rewards.experience', 'uses' => 'Admin\AdminRewardController@giveExperience']);
+    Route::post('rewards/badge',
+        ['as' => 'admin.rewards.badge', 'uses' => 'Admin\AdminRewardController@giveBadge']);
+
 });
+
+Route::get('ranking', 'Game@getRanking');
