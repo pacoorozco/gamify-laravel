@@ -2,7 +2,9 @@
 
 namespace Gamify;
 
+use Gamify\Traits\GamificationTrait;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -16,7 +18,7 @@ class User extends Model implements AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable, Authorizable, CanResetPassword, GamificationTrait;
 
     /**
      * The database table used by the model.
@@ -45,7 +47,6 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = array('password', 'remember_token');
 
-
     /**
      * Mutator to hash the password automatically
      *
@@ -56,26 +57,21 @@ class User extends Model implements AuthenticatableContract,
         $this->attributes['password'] = Hash::make($password);
     }
 
-    // User's profile
+    /**
+     * Users have one user "profile"
+     *
+     * @return Model
+     */
     public function profile()
     {
         return $this->hasOne('Gamify\UserProfile');
     }
 
-    // User's answered questions
-    public function answeredQuestions()
-    {
-        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
-            ->withPivot('points', 'answers');
-    }
-
-    // User's badges
-    public function badges()
-    {
-        return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
-            ->withPivot('amount', 'completed', 'completed_on');
-    }
-
+    /**
+     * Returns last logged in date
+     *
+     * @return string
+     */
     public function getLastLoggedDate()
     {
         if (!$this->last_login) {
@@ -85,36 +81,14 @@ class User extends Model implements AuthenticatableContract,
         return $date->diffInMonths() >= 1 ? $date->format('j M Y , g:ia') : $date->diffForHumans();
     }
 
-    public function points()
-    {
-        return $this->hasMany('Gamify\Point');
-
-    }
-
     /**
-     * Get current Level name for this user
+     * Returns a collection of users that are "Members"
      *
-     * @return string
+     * @param $query
+     * @return Collection
      */
-    public function getLevelName()
+    public function scopeMember($query)
     {
-        $experience = $this->getExperiencePoints();
-        $level = Level::where('amount_needed', '<=', $experience)->orderBy('amount_needed')->first();
-        return $level->name;
-    }
-
-    /**
-     * Get current Experience points for this user
-     *
-     * @return integer
-     */
-    public function getExperiencePoints()
-    {
-        return $this->points->sum('points');
-    }
-
-    public function isBadgeCompleted(Badge $badge)
-    {
-        return true;
+        return $query->where('role', '=', 'default');
     }
 }
