@@ -23,25 +23,13 @@ class Game extends Controller
             $message = trans('messages.unknown_reason');
         }
 
-        // get the current user's level
-        $level_before = $user->getLevelName();
-
         // add experience points to this user
         $point_entry = new Point([
             'points' => $points,
             'description' => $message,
         ]);
-        $user->points()->save($point_entry);
 
-        // get user's level after experience is added
-        $level_after = $user->getLevelName();
-
-        if ($level_after != $level_before) {
-            // User has been level up!
-            Session::flash('messages', 'You have reached a new level');
-        }
-
-        return true;
+        return is_null($user->points()->save($point_entry)) ? false : true;
     }
 
     /**
@@ -53,10 +41,7 @@ class Game extends Controller
      */
     public static function incrementBadge(User $user, Badge $badge)
     {
-        $user->badges()->save($badge);
-
-        Session::flash('messages', array('Badge incremented'));
-        return true;
+        return is_null($user->badges()->save($badge)) ? false : true;
     }
 
     public static function getRanking($limitTopUsers = 10)

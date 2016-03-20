@@ -25,14 +25,23 @@ class AdminRewardController extends AdminController
         $points = $request->input('points');
         $message = $request->input('message');
 
-        Game::addExperience($user, $points, $message);
+        if (Game::addExperience($user, $points, $message)) {
+            return redirect()->route('admin.rewards.index')
+                ->with('success',
+                    trans('admin/reward/messages.experience_given.success', [
+                        'username' => $user->username,
+                        'points' => $points
+                    ]));
+        } else {
+            return redirect()->route('admin.rewards.index')
+                ->with('error',
+                    trans('admin/reward/messages.experience_given.error', [
+                        'username' => $user->username,
+                        'points' => $points
+                    ]));
+        }
 
-        return redirect()->route('admin.rewards.index')
-            ->with('success',
-                trans('admin/reward/messages.experience_given.success', [
-                    'username' => $user->username,
-                    'points' => $points
-                ]));
+
     }
 
     public function giveBadge(RewardBadgeRequest $request)
@@ -49,7 +58,7 @@ class AdminRewardController extends AdminController
                     ]));
         } else {
             return redirect()->route('admin.rewards.index')
-                ->with('success',
+                ->with('error',
                     trans('admin/reward/messages.badge_given.error', [
                         'username' => $user->username
                     ]));
