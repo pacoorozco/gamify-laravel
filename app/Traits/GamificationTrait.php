@@ -97,7 +97,7 @@ trait GamificationTrait
     public function experienceUntilLevel(Level $level)
     {
         $experience = $this->getExperiencePoints();
-        return (integer)($level->amount_needed - $experience);
+        return ($level->amount_needed - $experience);
     }
 
     /**
@@ -107,7 +107,7 @@ trait GamificationTrait
      */
     public function getExperiencePoints()
     {
-        return $this->points->sum('points');
+        return $this->points()->sum('points');
     }
 
     /**
