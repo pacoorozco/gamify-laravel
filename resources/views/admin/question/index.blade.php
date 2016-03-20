@@ -19,13 +19,14 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin.questions.index') }}">
-            <i class="fa fa-comments"></i>
-            {{ trans('admin/site.questions') }}
+        <a href="{{ route('admin-home') }}">
+            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/question/title.question_management') }}
+        <a href="{{ route('admin.questions.index') }}">
+            {{ trans('admin/site.questions') }}
+        </a>
     </li>
     @endsection
 

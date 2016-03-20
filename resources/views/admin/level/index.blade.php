@@ -19,12 +19,14 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{route('admin.levels.index') }}">
-            <i class="fa fa-graduation-cap"></i> {{ trans('admin/site.levels') }}
+        <a href="{{ route('admin-home') }}">
+            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/level/title.level_management') }}
+        <a href="{{route('admin.levels.index') }}">
+            {{ trans('admin/site.levels') }}
+        </a>
     </li>
     @endsection
 

@@ -19,12 +19,12 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin.badges.index') }}">
-            <i class="fa fa-gift"></i> {{ trans('admin/site.badges') }}
+        <a href="{{ route('admin-home') }}">
+            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/badge/title.badge_management') }}
+        {{ trans('admin/site.badges') }}
     </li>
     @endsection
 

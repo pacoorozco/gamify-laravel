@@ -14,8 +14,13 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
+        <a href="{{ route('admin-home') }}">
+            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+        </a>
+    </li>
+    <li>
         <a href="{{ route('admin.users.index') }}">
-            <i class="fa fa-users"></i> {{ trans('admin/site.users') }}
+            {{ trans('admin/site.users') }}
         </a>
     </li>
     <li class="active">

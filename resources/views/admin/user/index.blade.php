@@ -19,14 +19,15 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin.users.index') }}">
-            <i class="fa fa-users"></i> {{ trans('admin/site.users') }}
+        <a href="{{ route('admin-home') }}">
+            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/user/title.user_management') }}
+        <a href="{{ route('admin.users.index') }}">
+            {{ trans('admin/site.users') }}
+        </a>
     </li>
-
     @endsection
 
     {{-- Content --}}
