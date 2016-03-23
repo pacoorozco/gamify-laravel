@@ -2,13 +2,12 @@
 
 namespace Gamify\Http\Controllers;
 
+use Gamify\Badge;
 use Gamify\Point;
 use Gamify\User;
-use Gamify\Badge;
-use Illuminate\Support\Facades\Session;
 
-class Game extends Controller
-{
+class Game extends Controller {
+
     /**
      * Add experience to an user
      *
@@ -25,7 +24,7 @@ class Game extends Controller
 
         // add experience points to this user
         $point_entry = new Point([
-            'points' => $points,
+            'points'      => $points,
             'description' => $message,
         ]);
 
@@ -41,7 +40,46 @@ class Game extends Controller
      */
     public static function incrementBadge(User $user, Badge $badge)
     {
-        return is_null($user->badges()->save($badge)) ? false : true;
+        if ($userBadge = $user->badges()->find($badge->id)) {
+            // this badge was initiated before
+            $userBadge->pivot->amount++;
+            $userBadge->pivot->completed = ($userBadge->pivot->amount >= $badge->amount_needed);
+            $saved = $userBadge->pivot->save();
+        } else {
+            // this is the first occurrence of this badge for this user
+            $user->badges()->attach($badge->id, ['amount' => '1']);
+            $saved = true;
+        }
+        return $saved;
+    }
+
+    /**
+     * Give a completed Badge for an User
+     *
+     * @param User $user
+     * @param Badge $badge
+     * @return bool
+     */
+    public static function addBadge(User $user, Badge $badge)
+    {
+        if ($user->hasBadgeCompleted($badge)) {
+            return true;
+        }
+
+        $data = [
+            'amount' => $badge->amount_needed,
+            'completed' => true
+        ];
+
+        if ($userBadge = $user->badges()->find($badge->id)) {
+            // this badge was initiated before
+            $saved = $userBadge->pivot->save($data);
+        } else {
+            // this is the first occurrence of this badge for this user
+            $user->badges()->attach($badge->id, $data);
+            $saved = true;
+        }
+        return $saved;
     }
 
     public static function getRanking($limitTopUsers = 10)
@@ -49,8 +87,8 @@ class Game extends Controller
         $ranking = User::Member()->with('points')->get();
 
         $prova = [];
-        $i=0;
-        foreach($ranking as $user) {
+        $i = 0;
+        foreach ($ranking as $user) {
             $prova[$i]['user'] = $user->name;
             $prova[$i]['points'] = $user->getExperiencePoints();
             $i++;

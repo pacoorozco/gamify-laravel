@@ -118,6 +118,7 @@ trait GamificationTrait
      */
     public function hasBadgeCompleted(Badge $badge)
     {
-        return true;
+        $userBadge = $this->badges()->find($badge->id);
+        return $userBadge->pivot->completed;
     }
 }
