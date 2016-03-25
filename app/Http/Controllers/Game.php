@@ -82,6 +82,12 @@ class Game extends Controller {
         return $saved;
     }
 
+    /**
+     * Get a collection with members ordered by Experice Points
+     * 
+     * @param int $limitTopUsers
+     * @return mixed
+     */
     public static function getRanking($limitTopUsers = 10)
     {
         $users = User::Member()->with('points')->get();
