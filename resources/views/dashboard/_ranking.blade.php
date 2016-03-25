@@ -7,12 +7,14 @@
         <th class="col-md-2">Points</th>
     </tr>
     </thead>
-    <tr>
-        <td>1</td>
-        <td><a href="{{ route('profiles.show', 'user') }}">User</a></td>
-        <td>User Level</td>
-        <td>1000</td>
-    </tr>
+    @foreach($usersInRanking as $index => $userInRank)
+        <tr>
+            <td>{{ $index+1 }}</td>
+            <td><a href="{{ route('profiles.show', $userInRank->username) }}">{{ $userInRank->name }}</a></td>
+            <td>{{ $userInRank->getLevelName() }}</td>
+            <td>{{ $userInRank->getExperiencePoints() }}</td>
+        </tr>
+    @endforeach
     <tfoot>
     <tr>
         <th class="col-md-1">#</th>

@@ -26,7 +26,6 @@ trait GamificationTrait
         return $this->hasMany('Gamify\Point')
             ->selectRaw('sum(points) as sum, user_id')
             ->groupBy('user_id');
-
     }
 
     /**

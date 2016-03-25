@@ -2,3 +2,10 @@
 
 Badges
 
+
+@foreach($user->badges as $badge)
+    <img class=img-responsive" src="{{ $badge->image->url() }}"
+             alt="">
+    @endforeach
+
+

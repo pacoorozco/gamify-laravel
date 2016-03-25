@@ -84,16 +84,12 @@ class Game extends Controller {
 
     public static function getRanking($limitTopUsers = 10)
     {
-        $ranking = User::Member()->with('points')->get();
+        $users = User::Member()->with('points')->get();
 
-        $prova = [];
-        $i = 0;
-        foreach ($ranking as $user) {
-            $prova[$i]['user'] = $user->name;
-            $prova[$i]['points'] = $user->getExperiencePoints();
-            $i++;
-        }
+        $users = $users->sortByDesc(function ($user) {
+            return $user->getExperiencePoints();
+        })->take($limitTopUsers);
 
-        dd($prova);
+        return $users;
     }
 }
