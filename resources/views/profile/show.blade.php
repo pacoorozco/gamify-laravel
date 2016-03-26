@@ -69,9 +69,11 @@
                     <li>
                         <a href="#timeline" data-toggle="tab">Timeline</a>
                     </li>
+                    @if ($user->username == Auth::user()->username)
                     <li>
                         <a href="#settings" data-toggle="tab">{{ trans('user/profile.edit_account') }}</a>
                     </li>
+                    @endif
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="overview">
@@ -80,9 +82,11 @@
                     <div class="tab-pane" id="timeline">
                         @include('profile._timeline')
                     </div>
+                    @if ($user->username == Auth::user()->username)
                     <div class="tab-pane" id="settings">
                         @include('profile._settings')
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

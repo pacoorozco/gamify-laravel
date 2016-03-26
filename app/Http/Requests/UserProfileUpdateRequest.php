@@ -13,7 +13,8 @@ class UserProfileUpdateRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        $user = $this->route('username');
+        return ($user->username == auth()->user()->username);
     }
 
     /**
