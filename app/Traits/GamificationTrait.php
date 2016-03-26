@@ -4,23 +4,52 @@ namespace Gamify\Traits;
 
 use Gamify\Badge;
 use Gamify\Level;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait GamificationTrait
 {
-    // User's answered questions
+
+    /**
+     * These are the User's answered Questions
+     *
+     * It uses a pivot table with these values:
+     *
+     * points: int - how many points was obtained
+     * answers: string - which answers was supplied
+     *
+     * @return Relation
+     */
     public function answeredQuestions()
     {
         return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
             ->withPivot('points', 'answers');
     }
 
-    // User's badges
+
+    /**
+     * These are the User's Badges relationship
+     *
+     * It uses a pivot table with these values:
+     *
+     * amount: int - how many actions has completed
+     * completed: bool - true if User's has own this badge
+     * completed_on: Datetime - where it was completed
+     *
+     * @return Relation
+     */
     public function badges()
     {
         return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
             ->withPivot('amount', 'completed', 'completed_on');
     }
 
+    /**
+     * These are the User's Points relationship
+     *
+     * Results are grouped by user_is and it selects the sum of all points
+     *
+     * @return Relation
+     */
     public function points()
     {
         return $this->hasMany('Gamify\Point')
@@ -123,7 +152,7 @@ trait GamificationTrait
 
     /**
      * Returns a Collection of completed Badges for this user
-     * 
+     *
      * @return mixed
      */
     public function getCompletedBadges()
