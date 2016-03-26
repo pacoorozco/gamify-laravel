@@ -155,5 +155,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ['as' => 'admin.rewards.badge', 'uses' => 'Admin\AdminRewardController@giveBadge']);
 
 });
-
-Route::get('ranking', 'Game@getRanking');

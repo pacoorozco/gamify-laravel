@@ -32,6 +32,10 @@
         </a>
     </li>
     <li class="header">PLAY AREA</li>
-    <li><a href="#">Questions</a></li>
+    <li>
+        <a href="{{ route('home') }}">
+            <i class="fa fa-gamepad"></i><span>{{ trans('admin/site.play_area') }}</span>
+        </a>
+    </li>
 </ul>
 <!-- end: MAIN NAVIGATION MENU -->

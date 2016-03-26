@@ -8,6 +8,6 @@ return array(
     'levels'    => 'Levels',
     'questions' => 'Questions',
     'rewards'   => 'Rewards',
-    'play_area' => 'Return to play area',
+    'play_area' => 'Go to play area',
 
 );
