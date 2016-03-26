@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Controllers;
 
+use Carbon\Carbon;
 use Gamify\Badge;
 use Gamify\Point;
 use Gamify\User;
@@ -43,7 +44,10 @@ class Game extends Controller {
         if ($userBadge = $user->badges()->find($badge->id)) {
             // this badge was initiated before
             $userBadge->pivot->amount++;
-            $userBadge->pivot->completed = ($userBadge->pivot->amount >= $badge->amount_needed);
+            if ($userBadge->pivot->amount == $badge->amount_needed) {
+                $userBadge->pivot->completed = true;
+                $userBadge->pivot->completed_on = Carbon::now();
+            }
             $saved = $userBadge->pivot->save();
         } else {
             // this is the first occurrence of this badge for this user
@@ -68,7 +72,8 @@ class Game extends Controller {
 
         $data = [
             'amount' => $badge->amount_needed,
-            'completed' => true
+            'completed' => true,
+            'completed_on' => Carbon::now(),
         ];
 
         if ($userBadge = $user->badges()->find($badge->id)) {
