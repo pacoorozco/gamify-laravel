@@ -47,6 +47,8 @@ return array(
 
     'level' => 'Level',
     'rank'  => 'Position',
+    'badge' => 'Badge',
+    'badge_completed' => 'completed',
 
 
 );

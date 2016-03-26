@@ -120,4 +120,14 @@ trait GamificationTrait
         $userBadge = $this->badges()->find($badge->id);
         return $userBadge->pivot->completed;
     }
+
+    /**
+     * Returns a Collection of completed Badges for this user
+     * 
+     * @return mixed
+     */
+    public function getCompletedBadges()
+    {
+        return $this->badges()->wherePivot('completed', true)->get();
+    }
 }

@@ -14,5 +14,6 @@ return array(
     'search' => 'Search',
     'actions' => 'Actions',
     'back' => 'Back',
+    'close' => 'Close',
 
 );

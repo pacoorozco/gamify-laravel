@@ -45,7 +45,7 @@
                             <b>Questions</b> <a class="pull-right">{{ count($user->answeredQuestions) }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Badges</b> <a class="pull-right">{{ count($user->badges) }}</a>
+                            <b>Badges</b> <a class="pull-right">{{ count($user->getCompletedBadges()) }}</a>
                         </li>
                     </ul>
                 </div>
