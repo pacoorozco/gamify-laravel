@@ -83,7 +83,7 @@ class Game extends Controller {
     }
 
     /**
-     * Get a collection with members ordered by Experice Points
+     * Get a collection with members ordered by Experience Points
      * 
      * @param int $limitTopUsers
      * @return mixed
