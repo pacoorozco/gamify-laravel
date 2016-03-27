@@ -63,9 +63,26 @@ class Question extends Model implements SluggableInterface
         return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
+    /**
+     * Returns published Questions, including hidden ones
+     * 
+     * @param $query
+     * @return mixed
+     */
     public function scopePublished($query)
     {
         return $query->where('status', '=', 'publish');
+    }
+
+    /**
+     * Returns published Questions, only visible ones
+     * 
+     * @param $query
+     * @return mixed
+     */
+    public function scopePublishedAndVisible($query)
+    {
+        return $query->where('status', '=', 'publish')->where('hidden', false);
     }
 
     /**

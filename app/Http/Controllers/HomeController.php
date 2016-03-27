@@ -16,10 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-
-        // TODO: Add an scope to only index questions (published and not answered and not hidden)
-        $answeredQuestions = Auth::user()->answeredQuestions()->lists('question_id')->toArray();
-        $questions = Question::whereNotIn('id', $answeredQuestions)->get();
+        $questions = $user->getPendingQuestions()->take(3);
         $usersInRanking = Game::getRanking();
 
         return view('dashboard.index', compact('user', 'questions', 'usersInRanking'));

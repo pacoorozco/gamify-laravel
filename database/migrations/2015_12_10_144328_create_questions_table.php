@@ -20,7 +20,7 @@ class CreateQuestionsTable extends Migration
             $table->text('solution')->nullable();
             $table->enum('type', array('single', 'multi'));
             $table->boolean('hidden')->default(false);
-            $table->enum('status', array('draft', 'publish', 'unpublish'))->default('draft');
+            $table->enum('status', array('draft', 'publish', 'pending', 'private'))->default('draft');
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')
                 ->references('id')->on('users');

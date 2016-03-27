@@ -4,6 +4,7 @@ namespace Gamify\Traits;
 
 use Gamify\Badge;
 use Gamify\Level;
+use Gamify\Question;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait GamificationTrait
@@ -158,5 +159,12 @@ trait GamificationTrait
     public function getCompletedBadges()
     {
         return $this->badges()->wherePivot('completed', true)->get();
+    }
+    
+    public function getPendingQuestions()
+    {
+        // TODO: Add an scope to only index questions (published and not answered and not hidden)
+        $answeredQuestions = $this->answeredQuestions()->lists('question_id')->toArray();
+        return Question::PublishedAndVisible()->whereNotIn('id', $answeredQuestions)->get();
     }
 }

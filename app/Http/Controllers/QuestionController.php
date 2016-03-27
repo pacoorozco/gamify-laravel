@@ -18,10 +18,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        // TODO: Add an scope to only index questions (published and not answered and not hidden)
-        $answeredQuestions = Auth::user()->answeredQuestions()->lists('question_id')->toArray();
-        $questions = Question::whereNotIn('id', $answeredQuestions)->get();
-
+        $questions = Auth::user()->getPendingQuestions();
         return view('question.index', compact('questions'));
     }
 
