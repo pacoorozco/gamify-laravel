@@ -16,6 +16,7 @@ class AdminDashboardController extends AdminController
      */
     public function index()
     {
+        $data = array();
         $data['badges'] = Badge::all()->count();
         $data['questions'] = Question::published()->count();
         $data['answers'] = User::Member()->with('answeredQuestions')->count();
