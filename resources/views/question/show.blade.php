@@ -32,6 +32,8 @@
 
     @include('partials.notifications')
 
+
+
     {!! Form::open(array('route' => ['questions.answer', $question->shortname])) !!}
     <div class="box">
         <div class="box-header with-border">
