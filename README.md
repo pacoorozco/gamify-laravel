@@ -10,13 +10,13 @@ gamify is the core of [Game of Work](https://gow.upcnet.es) application. It's a 
 
 This project was born while we were creating **Game of Work**, _aka GoW!_, a gamification platform to implement a levels & badge game at [UPCnet](http://www.upcnet.es). We wanted to teach, learn and share some fun with our colleagues, so we created a game work based on questions about our organization (process, services, teams...).
 
-It's a Laravel 5 application, based on the PHP5 & mysql original [gamify](https://github.com/pacoorozco/gamify) version.
+It's a Laravel 5.1 application, based on the PHP5 & mysql original [gamify](https://github.com/pacoorozco/gamify) version.
 
 As much as possible, we have tried to keep a clean code to work everywhere out of the box. You are not obliged to use our tools and are free to change the code in order to use it at your own feeling.
 
-## Disclaimer - NOT ready for production
+## Disclaimer - It's working but NOT ready for production
 
-> This is not, yet, **production code**. I'm working in order to finish ASAP, in my personal free time, so be patient or contact me in order to give me your help. If you need a production ready app see [gamify](https://github.com/pacoorozco/gamify).
+> This is not, yet, **production code**. It's fully working and you can play with it, but some features are not yet included. I'm working in order to finish ASAP, in my personal free time, so be patient or contact me in order to give me your help.
 
 ## Changelog
 
@@ -62,7 +62,9 @@ Then enjoy !
 
 If you have issues with **gamify**, you can report them with the [GitHub issues module](https://github.com/pacoorozco/gamify/issues).
 
-Please remember to provide as much information as you can.
+## Contibuting
+
+Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-l5/blob/master/CONTRIBUTE.md) for details.
 
 ## License
 
