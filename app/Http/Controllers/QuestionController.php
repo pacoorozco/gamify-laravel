@@ -37,7 +37,7 @@ class QuestionController extends Controller
 
         // TODO: AI. Global Badges
 
-        // AI. Obtain how many points has its answer obtained
+        // Obtain how many points has its answer obtained
         $points = 0;
         $success = false;
 
@@ -51,10 +51,16 @@ class QuestionController extends Controller
             $points = 1;
         }
 
-        // AI. Add XP to user
+        // Create relation between User and Question
+        Auth::user()->answeredQuestions()->attach($question, [
+            'points' => $points,
+            'answers' => implode(',', $request->choices),
+        ]);
+
+        // Add XP to user
         Game::addExperience(Auth::user(), $points, 'has earned ' . $points . ' points.');
 
-        // AI. Specific Badges
+        // Deal with Question specific Badges
         if ($success) {
             $answerStatus = 'correct';
         } else {
@@ -69,7 +75,7 @@ class QuestionController extends Controller
         }
 
         // AI. Add notifications and return view
-        return $this->show($question);
+        return redirect()->route('questions.show', $question->shortname);
     }
 
     /**
@@ -81,7 +87,11 @@ class QuestionController extends Controller
     public function show(Question $question)
     {
         // TODO: If question has been answered, not show form
-
+        if ($answer = Auth::user()->answeredQuestions()->find($question->id)) {
+            // User has answered this question
+            return view('question.show-answered', compact('answer', 'question'));
+        }
+        
         return view('question.show', compact('question'));
     }
 }
