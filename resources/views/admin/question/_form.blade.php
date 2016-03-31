@@ -190,7 +190,7 @@
 {{-- Scripts --}}
 @section('scripts')
         <!-- TinyMCE -->
-{!! HTML::script('//tinymce.cachefly.net/4.0/tinymce.min.js') !!}
+{!! HTML::script('//cdn.tinymce.com/4/tinymce.min.js') !!}
         <!-- jQuery UJS -->
 {!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
         <!-- Select2 -->
