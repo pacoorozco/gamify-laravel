@@ -190,7 +190,7 @@
 {{-- Scripts --}}
 @section('scripts')
         <!-- TinyMCE -->
-{!! HTML::script('//tinymce.cachefly.net/4.0/tinymce.min.js') !!}
+{!! HTML::script('//cdn.tinymce.com/4/tinymce.min.js') !!}
         <!-- jQuery UJS -->
 {!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
         <!-- Select2 -->
@@ -237,21 +237,6 @@
                 return {id: term, text: term};
             }
         });
-    });
-</script>
-
-<script>
-    tinymce.init({
-        selector: "textarea.tinymce",
-        width: '100%',
-        height: 270,
-        statusbar: false,
-        menubar: false,
-        plugins: [
-            "link",
-            "code"
-        ],
-        toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
     });
 </script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Badge;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
@@ -33,8 +34,14 @@ class AdminQuestionController extends AdminController
     public function create()
     {
         $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+        $availableActions = array();
 
-        return view('admin/question/create', compact('availableTags'));
+        // get actions that hasn't not been used
+        foreach (Badge::all() as $action) {
+            $availableActions[$action->id] = $action->name;
+        }
+
+        return view('admin/question/create', compact('availableTags', 'availableActions'));
     }
 
     /**
@@ -76,8 +83,14 @@ class AdminQuestionController extends AdminController
     public function edit(Question $question)
     {
         $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+        $availableActions = array();
 
-        return view('admin/question/edit', compact('question', 'availableTags'));
+        // get actions that hasn't not been used
+        foreach ($question->getAvailableActions() as $action) {
+            $availableActions[$action->id] = $action->name;
+        }
+
+        return view('admin/question/edit', compact('question', 'availableTags', 'availableActions'));
     }
 
     /**
