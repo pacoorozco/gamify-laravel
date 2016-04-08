@@ -95,6 +95,12 @@ class AdminQuestionController extends AdminController
             $question->untag();
         }
 
+        // TODO: Save choices
+        // Que passa amb les que ja existien?
+        // $question->choices()->delete();
+        dd("Hola");
+        // $question->choices()->create($request->all());
+
         if ($request->status == 'publish') {
             if (!$question->canBePublished()) {
                 return redirect()->back()

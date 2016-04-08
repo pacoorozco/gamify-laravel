@@ -254,4 +254,28 @@
         toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
     });
 </script>
+
+<script>
+    $( document ).on( 'click', '.btn-add', function ( event ) {
+        event.preventDefault();
+
+        var field = $(this).closest( '.cloneable' );
+        var field_new = field.clone();
+
+        $(this)
+                .toggleClass( 'btn-primary' )
+                .toggleClass( 'btn-add' )
+                .toggleClass( 'btn-danger' )
+                .toggleClass( 'btn-remove' )
+                .html( '<i class="fa fa-times fa fa-white"></i>' );
+
+        field_new.find( 'input' ).val( '' );
+        field_new.insertAfter( field );
+    } );
+
+    $( document ).on( 'click', '.btn-remove', function ( event ) {
+        event.preventDefault();
+        $(this).closest( '.cloneable' ).remove();
+    } );
+</script>
 @endsection
