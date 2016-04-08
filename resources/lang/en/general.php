@@ -13,6 +13,8 @@ return array(
     'delete' => 'Delete',
     'search' => 'Search',
     'actions' => 'Actions',
+    'add' => 'Add',
+    'remove' => 'Remove',
     'back' => 'Back',
     'close' => 'Close',
 
