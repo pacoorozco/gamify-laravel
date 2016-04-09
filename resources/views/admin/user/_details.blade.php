@@ -32,7 +32,7 @@
         <div class="form-group">
             {!! Form::label('roles', trans('admin/user/model.role'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ $user->role }}
+                {{ trans('admin/user/model.roles_list.' . $user->role) }}
             </div>
         </div>
         <!-- ./ roles -->

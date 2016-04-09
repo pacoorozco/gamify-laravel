@@ -18,13 +18,12 @@
 
                 <!-- username -->
                 <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-                    {!! Form::label('username', trans('admin/user/model.username'), array('class' => 'control-label')) !!}
+                    {!! Form::label('username', trans('admin/user/model.username'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {{-- TODO: If $user->username == 'admin' this input text must be disabled --}}
                         @if ($action == 'create')
-                            {!! Form::text('username', null, array('class' => 'form-control')) !!}
+                            {!! Form::text('username', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         @else
-                            {!! Form::text('username', null, array('disabled' => 'disabled', 'class' => 'form-control')) !!}
+                            {!! Form::text('username', null, array('class' => 'form-control', 'disabled' => 'disabled')) !!}
                         @endif
                         <span class="help-block">{{ $errors->first('username', ':message') }}</span>
                     </div>
@@ -33,9 +32,9 @@
 
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    {!! Form::label('name', trans('admin/user/model.name'), array('class' => 'control-label')) !!}
+                    {!! Form::label('name', trans('admin/user/model.name'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                        {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -43,9 +42,9 @@
 
                 <!-- Email -->
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                    {!! Form::label('email', trans('admin/user/model.email'), array('class' => 'control-label')) !!}
+                    {!! Form::label('email', trans('admin/user/model.email'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::email('email', null, array('class' => 'form-control')) !!}
+                        {!! Form::email('email', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         <span class="help-block">{{ $errors->first('email', ':message') }}</span>
                     </div>
                 </div>
@@ -76,12 +75,10 @@
 
                 <!-- role -->
                 <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
-                    {!! Form::label('role', trans('admin/user/model.role'), array('class' => 'control-label')) !!}
+                    {!! Form::label('role', trans('admin/user/model.role'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::select('role', array('default' => 'Default', 'administrator' => 'Administrator'), null, ['class' => 'form-control']) !!}
-                        <span class="help-block">
-                    {{ trans('admin/user/messages.roles_help') }}
-                </span>
+                        {!! Form::select('role', trans('admin/user/model.roles_list'), null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        <p class="text-muted">{{ trans('admin/user/messages.roles_help') }}</p>
                     </div>
                 </div>
                 <!-- ./ role -->

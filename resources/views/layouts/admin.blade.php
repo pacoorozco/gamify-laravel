@@ -17,6 +17,7 @@
     {!! HTML::style('//code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css') !!}
     {!! HTML::style('vendor/AdminLTE/dist/css/AdminLTE.min.css') !!}
     {!! HTML::style('vendor/AdminLTE/dist/css/skins/skin-blue.min.css') !!}
+    {!! HTML::style('css/gamify.css') !!}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
