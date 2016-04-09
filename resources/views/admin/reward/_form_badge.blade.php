@@ -8,10 +8,10 @@
     <div class="box-body">
         <!-- username -->
         <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-            {!! Form::label('username', trans('admin/reward/messages.username'), array('class' => 'control-label')) !!}
+            {!! Form::label('username', trans('admin/reward/messages.username'), array('class' => 'control-label required')) !!}
             <div class="controls">
                 {!! Form::select('username', $users, null,
-                array('class' => 'form-control username-input', 'placeholder' => '')) !!}
+                array('class' => 'form-control username-input', 'placeholder' => '', 'required' => 'required')) !!}
                 <span class="help-block">{{ $errors->first('username', ':message') }}</span>
             </div>
         </div>
@@ -19,10 +19,10 @@
 
         <!-- badges -->
         <div class="form-group {{ $errors->has('badge') ? 'has-error' : '' }}">
-            {!! Form::label('badge', trans('admin/reward/messages.badge'), array('class' => 'control-label')) !!}
+            {!! Form::label('badge', trans('admin/reward/messages.badge'), array('class' => 'control-label required')) !!}
             <div class="controls">
                 {!! Form::select('badge', $badges,
-                null, array('class' => 'form-control badge-input', 'placeholder' => '')) !!}
+                null, array('class' => 'form-control badge-input', 'placeholder' => '', 'required' => 'required')) !!}
                 <span class="help-block">{{ $errors->first('badge', ':message') }}</span>
             </div>
         </div>

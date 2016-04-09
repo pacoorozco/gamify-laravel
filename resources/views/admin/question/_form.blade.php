@@ -28,9 +28,9 @@
             <div class="box-body">
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    {!! Form::label('name', trans('admin/question/model.name'), array('class' => 'control-label')) !!}
+                    {!! Form::label('name', trans('admin/question/model.name'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                        {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -38,9 +38,9 @@
 
                 <!-- question -->
                 <div class="form-group {{ $errors->has('question') ? 'has-error' : '' }}">
-                    {!! Form::label('question', trans('admin/question/model.question'), array('class' => 'control-label')) !!}
+                    {!! Form::label('question', trans('admin/question/model.question'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::textarea('question', null, array('class' => 'form-control tinymce')) !!}
+                        {!! Form::textarea('question', null, array('class' => 'form-control tinymce', 'required' => 'required')) !!}
                         <span class="help-block"><i
                                     class="fa fa-info-circle"></i> Users will see this text as a question.</span>
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
@@ -51,9 +51,9 @@
 
                 <!-- type -->
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label')) !!}
+                    {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::select('type', array('single' => trans('admin/question/model.single'), 'multi' => trans('admin/question/model.multi')), 'single', array('class' => 'form-control')) !!}
+                        {!! Form::select('type', array('single' => trans('admin/question/model.single'), 'multi' => trans('admin/question/model.multi')), null, array('class' => 'form-control', 'required' => 'required')) !!}
                         {{ $errors->first('type', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
@@ -97,9 +97,9 @@
                 <!-- status -->
                 @if (isset($question))
                     <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                        {!! Form::label('status', trans('admin/question/model.status'), array('class' => 'control-label')) !!}
+                        {!! Form::label('status', trans('admin/question/model.status'), array('class' => 'control-label required')) !!}
                         <div class="controls">
-                            {!! Form::select('status', array('draft' => trans('admin/question/model.draft'), 'publish' => trans('admin/question/model.publish'), 'unpublish' => trans('admin/question/model.unpublish')), null, array('class' => 'form-control')) !!}
+                            {!! Form::select('status', array('draft' => trans('admin/question/model.draft'), 'publish' => trans('admin/question/model.publish'), 'unpublish' => trans('admin/question/model.unpublish')), null, array('class' => 'form-control', 'required' => 'required')) !!}
                             {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
@@ -110,10 +110,10 @@
 
                     <!-- hidden -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
-                        {!! Form::label('hidden', trans('admin/question/model.hidden'), array('class' => 'control-label')) !!}
+                        {!! Form::label('hidden', trans('admin/question/model.hidden'), array('class' => 'control-label required')) !!}
                         <div class="controls">
-                            {!! Form::select('hidden', array('0' => trans('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')), null, array('class' => 'form-control')) !!}
-                            <p class="help-block">Hidden questions will not be visible on question's list.<br/>They only
+                            {!! Form::select('hidden', array('0' => trans('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')), null, array('class' => 'form-control', 'required' => 'required')) !!}
+                            <p class="text-muted">Hidden questions will not be visible on question's list.<br/>They only
                                 can
                                 access via direct URL.</p>
                             {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
@@ -146,7 +146,7 @@
                 </div>
             </div>
             <div class="box-body">
-                {!! Form::label('tag_list', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                {!! Form::label('tag_list[]', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
                 {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
             </div>
         </div>

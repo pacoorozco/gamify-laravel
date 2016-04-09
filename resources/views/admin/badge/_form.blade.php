@@ -20,9 +20,9 @@
             <div class="col-xs-6">
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    {!! Form::label('name', trans('admin/badge/model.name'), array('class' => 'control-label')) !!}
+                    {!! Form::label('name', trans('admin/badge/model.name'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                        {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -30,9 +30,9 @@
 
                 <!-- description -->
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                    {!! Form::label('description', trans('admin/badge/model.description'), array('class' => 'control-label')) !!}
+                    {!! Form::label('description', trans('admin/badge/model.description'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::textarea('description', null, array('class' => 'form-control')) !!}
+                        {!! Form::textarea('description', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         <span class="help-block">{{ $errors->first('description', ':message') }}</span>
                     </div>
                 </div>
@@ -40,10 +40,10 @@
 
                 <!-- amount_needed -->
                 <div class="form-group {{ $errors->has('amount_needed') ? 'has-error' : '' }}">
-                    {!! Form::label('amount_needed', trans('admin/badge/model.amount_needed'), array('class' => 'control-label')) !!}
+                    {!! Form::label('amount_needed', trans('admin/badge/model.amount_needed'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::number('amount_needed', null, array('class' => 'form-control')) !!}
-                        <p class='help-block'>{{ trans('admin/badge/model.amount_needed_help') }}</p>
+                        {!! Form::number('amount_needed', null, array('class' => 'form-control', 'required' => 'required', 'min' => '1')) !!}
+                        <p class="text-muted">{{ trans('admin/badge/model.amount_needed_help') }}</p>
                         <span class="help-block">{{ $errors->first('amount_needed', ':message') }}</span>
 
                     </div>
@@ -55,8 +55,8 @@
 
                 <!-- image -->
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                    {!! Form::label('image', trans('admin/badge/model.image'), array('class' => 'control-label')) !!}
-                    <p class='help-block'>{{ trans('admin/badge/model.image_help') }}</p>
+                    {!! Form::label('image', trans('admin/badge/model.image'), array('class' => 'control-label required')) !!}
+                    <p class="text-muted">{{ trans('admin/badge/model.image_help') }}</p>
                     <div class="controls">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput"
@@ -85,9 +85,9 @@
 
                 <!-- activation status -->
                 <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                    {!! Form::label('active', trans('admin/badge/model.active'), array('class' => 'control-label')) !!}
+                    {!! Form::label('active', trans('admin/badge/model.active'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::select('active', array('1' => trans('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control')) !!}
+                        {!! Form::select('active', array('1' => trans('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) !!}
                         {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
