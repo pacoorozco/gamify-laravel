@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -10,7 +10,7 @@ return array(
     |
     */
 
-    'title'         => 'User Profile',
+    'title'           => 'User Profile',
     'overview'        => 'Overview',
     'edit_account'    => 'Edit Account',
     'badges'          => 'Badges',
@@ -45,10 +45,9 @@ return array(
     'linkedin'   => 'Linkedin',
     'github'     => 'Github',
 
-    'level' => 'Level',
-    'rank'  => 'Position',
-    'badge' => 'Badge',
+    'level'           => 'Level',
+    'rank'            => 'Position',
+    'badge'           => 'Badge',
     'badge_completed' => 'completed',
 
-
-);
+];

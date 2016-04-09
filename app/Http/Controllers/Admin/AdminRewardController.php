@@ -4,10 +4,9 @@ namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
 use Gamify\Http\Controllers\Game;
-use Gamify\User;
-use Gamify\Http\Requests;
-use Gamify\Http\Requests\RewardExperienceRequest;
 use Gamify\Http\Requests\RewardBadgeRequest;
+use Gamify\Http\Requests\RewardExperienceRequest;
+use Gamify\User;
 
 class AdminRewardController extends AdminController
 {
@@ -30,18 +29,16 @@ class AdminRewardController extends AdminController
                 ->with('success',
                     trans('admin/reward/messages.experience_given.success', [
                         'username' => $user->username,
-                        'points' => $points
+                        'points'   => $points,
                     ]));
         } else {
             return redirect()->route('admin.rewards.index')
                 ->with('error',
                     trans('admin/reward/messages.experience_given.error', [
                         'username' => $user->username,
-                        'points' => $points
+                        'points'   => $points,
                     ]));
         }
-
-
     }
 
     public function giveBadge(RewardBadgeRequest $request)
@@ -54,15 +51,14 @@ class AdminRewardController extends AdminController
                 ->with('success',
                     trans('admin/reward/messages.badge_given.success', [
                         'username' => $user->username,
-                        'badge' => $badge->name
+                        'badge'    => $badge->name,
                     ]));
         } else {
             return redirect()->route('admin.rewards.index')
                 ->with('error',
                     trans('admin/reward/messages.badge_given.error', [
-                        'username' => $user->username
+                        'username' => $user->username,
                     ]));
         }
     }
-
 }

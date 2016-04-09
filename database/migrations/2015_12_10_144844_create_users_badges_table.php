@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateUsersBadgesTable extends Migration
 {
@@ -23,7 +23,7 @@ class CreateUsersBadgesTable extends Migration
                 ->references('id')->on('users'); // assumes a users table
             $table->foreign('badge_id')
                 ->references('id')->on('badges');
-            $table->primary(array('user_id', 'badge_id'));
+            $table->primary(['user_id', 'badge_id']);
         });
     }
 

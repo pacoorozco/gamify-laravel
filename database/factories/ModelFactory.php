@@ -13,9 +13,9 @@
 
 $factory->define(Gamify\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'name'           => $faker->name,
+        'email'          => $faker->email,
+        'password'       => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
     ];
 });
@@ -31,9 +31,8 @@ $factory->define(\Gamify\Badge::class, function (Faker\Generator $faker) {
     $color = $faker->unique()->safeColorName;
 
     return [
-        'name' => $color,
-        'description' => 'This badge is for people who thinks in ' . $color . ' :D',
+        'name'          => $color,
+        'description'   => 'This badge is for people who thinks in '.$color.' :D',
         'amount_needed' => 5,
     ];
 });
-

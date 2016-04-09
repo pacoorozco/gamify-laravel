@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model implements SluggableInterface
 {
-
     use SoftDeletes;
     use RecordSignature; // Record Signature
     use SluggableTrait; // Slugs
@@ -21,28 +20,28 @@ class Question extends Model implements SluggableInterface
      * The database table used by the model.
      */
     protected $table = 'questions';
-    protected $fillable = array(
+    protected $fillable = [
         'name',
         'question',
         'solution',
         'type',
         'hidden',
-        'status'
-    );
+        'status',
+    ];
 
-    protected $dates = array('deleted_at');
+    protected $dates = ['deleted_at'];
 
     /**
-     * The Question slug in order to implement permanent URL to questions
+     * The Question slug in order to implement permanent URL to questions.
      */
-    protected $sluggable = array(
-        'build_from' => 'name',
-        'save_to' => 'shortname',
+    protected $sluggable = [
+        'build_from'      => 'name',
+        'save_to'         => 'shortname',
         'include_trashed' => true,
-    );
+    ];
 
     /**
-     * A question will have some choices
+     * A question will have some choices.
      */
     public function choices()
     {
@@ -50,7 +49,7 @@ class Question extends Model implements SluggableInterface
     }
 
     /**
-     * A question will have some actions
+     * A question will have some actions.
      */
     public function actions()
     {
@@ -60,13 +59,15 @@ class Question extends Model implements SluggableInterface
     public function getAvailableActions()
     {
         $selectedActions = $this->actions()->lists('badge_id')->toArray();
+
         return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
     /**
-     * Returns published Questions, including hidden ones
-     * 
+     * Returns published Questions, including hidden ones.
+     *
      * @param $query
+     *
      * @return mixed
      */
     public function scopePublished($query)
@@ -75,9 +76,10 @@ class Question extends Model implements SluggableInterface
     }
 
     /**
-     * Returns published Questions, only visible ones
-     * 
+     * Returns published Questions, only visible ones.
+     *
      * @param $query
+     *
      * @return mixed
      */
     public function scopePublishedAndVisible($query)
@@ -86,7 +88,7 @@ class Question extends Model implements SluggableInterface
     }
 
     /**
-     * Get a list of tags ids associated with the current Question
+     * Get a list of tags ids associated with the current Question.
      *
      * @return array
      */
@@ -97,7 +99,7 @@ class Question extends Model implements SluggableInterface
 
     /**
      * Return if a question can be published.
-     * 1. Has at least one correct answer
+     * 1. Has at least one correct answer.
      *
      * @return bool
      */
@@ -106,13 +108,15 @@ class Question extends Model implements SluggableInterface
         $answers_count = $this->choices()->count();
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
-        return (($answers_count > 1) && ($answers_correct_count > 0));
+        return ($answers_count > 1) && ($answers_correct_count > 0);
     }
 
     /**
      * Return the excerpt of the question text.
-     * @param int $length
+     *
+     * @param int    $length
      * @param string $trailing
+     *
      * @return string
      */
     public function excerpt($length = 55, $trailing = '...')
@@ -123,9 +127,9 @@ class Question extends Model implements SluggableInterface
             // string exceeded length, truncate and add trailing dots
             $words = str_word_count($text, 2);
             $pos = array_keys($words);
-            $text = substr($text, 0, $pos[$length]) . $trailing;
+            $text = substr($text, 0, $pos[$length]).$trailing;
         }
         // string was already short enough, return the string
-        return '<p>' . $text . '</p>';
+        return '<p>'.$text.'</p>';
     }
 }

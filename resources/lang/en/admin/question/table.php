@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'shortname'  => 'Short Name',
     'name'       => 'Name',
     'question'   => 'Question',
@@ -11,4 +11,4 @@ return array(
     'created_at' => 'Created at',
     'updated_at' => 'Updated at',
 
-);
+];

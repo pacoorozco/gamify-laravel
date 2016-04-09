@@ -10,7 +10,8 @@ class UserEventLoginListener
     /**
      * Handle the event.
      *
-     * @param  User $user
+     * @param User $user
+     *
      * @return void
      */
     public function handle(User $user, $remember)

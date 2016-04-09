@@ -2,19 +2,20 @@
 
 namespace Gamify;
 
+use Carbon\Carbon;
 use Gamify\Traits\GamificationTrait;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 
-class User extends Model implements AuthenticatableContract,
+class User extends Model implements
+AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
@@ -32,23 +33,23 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = array(
+    protected $fillable = [
         'name',
         'username',
         'email',
         'password',
-        'role'
-    );
+        'role',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = array('password', 'remember_token');
+    protected $hidden = ['password', 'remember_token'];
 
     /**
-     * Mutator to hash the password automatically
+     * Mutator to hash the password automatically.
      *
      * @param $password
      */
@@ -58,7 +59,7 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
-     * Users have one user "profile"
+     * Users have one user "profile".
      *
      * @return Model
      */
@@ -68,7 +69,7 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
-     * Returns last logged in date
+     * Returns last logged in date.
      *
      * @return string
      */
@@ -78,13 +79,15 @@ class User extends Model implements AuthenticatableContract,
             return 'Never';
         }
         $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login);
+
         return $date->diffInMonths() >= 1 ? $date->format('j M Y , g:ia') : $date->diffForHumans();
     }
 
     /**
-     * Returns a collection of users that are "Members"
+     * Returns a collection of users that are "Members".
      *
      * @param $query
+     *
      * @return Collection
      */
     public function scopeMember($query)

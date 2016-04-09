@@ -22,12 +22,12 @@ class QuestionUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name'     => 'required',
             'question' => 'required',
             'solution' => '',
-            'type' => 'required|in:single,multi',
-            'hidden' => 'required|boolean',
-            'status' => 'required|in:draft,publish,unpublish'
+            'type'     => 'required|in:single,multi',
+            'hidden'   => 'required|boolean',
+            'status'   => 'required|in:draft,publish,unpublish',
         ];
     }
 }

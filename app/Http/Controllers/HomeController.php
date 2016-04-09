@@ -2,9 +2,7 @@
 
 namespace Gamify\Http\Controllers;
 
-use Gamify\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use Gamify\Question;
 
 class HomeController extends Controller
 {
@@ -21,5 +19,4 @@ class HomeController extends Controller
 
         return view('dashboard.index', compact('user', 'questions', 'usersInRanking'));
     }
-
 }

@@ -6,5 +6,4 @@ use Gamify\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-
 }

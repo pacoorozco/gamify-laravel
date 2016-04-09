@@ -2,8 +2,6 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Http\Requests\Request;
-
 class BadgeUpdateRequest extends Request
 {
     /**
@@ -26,11 +24,11 @@ class BadgeUpdateRequest extends Request
         $badge = $this->route('badges');
 
         return [
-            'name' => 'required|unique:badges,name,' . $badge->id,
-            'description' => 'required',
+            'name'          => 'required|unique:badges,name,'.$badge->id,
+            'description'   => 'required',
             'amount_needed' => 'required|integer|min:1',
-            'active' => 'required|boolean',
-            'image' => 'image',
+            'active'        => 'required|boolean',
+            'image'         => 'image',
         ];
     }
 }
