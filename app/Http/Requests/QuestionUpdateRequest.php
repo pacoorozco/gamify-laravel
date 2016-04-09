@@ -31,12 +31,12 @@ class QuestionUpdateRequest extends Request
         ];
 
         // validate dynamic choices
-        foreach ($this->request->get('text') as $key => $val) {
-            if (!empty($val)) {
-                $rules['text.' . $key] = 'required';
-                $rules['points.' . $key] = 'required|integer';
-            }
-        }
+//        foreach ($this->request->get('choice_text') as $key => $val) {
+//            if (!empty($val)) {
+//                $rules['choice_text.' . $key] = 'required';
+//                $rules['choice_points.' . $key] = 'required|integer';
+//            }
+//        }
 
         return $rules;
     }

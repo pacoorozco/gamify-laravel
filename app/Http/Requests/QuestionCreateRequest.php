@@ -21,7 +21,7 @@ class QuestionCreateRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required',
             'question' => 'required',
             'solution' => '',
@@ -29,5 +29,15 @@ class QuestionCreateRequest extends Request
             'hidden' => 'required|boolean',
             'status' => 'required|in:draft,publish,unpublish'
         ];
+
+        // validate dynamic choices
+//        foreach ($this->request->get('choice_text') as $key => $val) {
+//            if (!empty($val)) {
+//                $rules['choice_text.' . $key] = 'required';
+//                $rules['choice_points.' . $key] = 'required|integer';
+//            }
+//        }
+        
+        return $rules;
     }
 }

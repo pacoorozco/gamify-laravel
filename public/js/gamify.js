@@ -36,11 +36,11 @@ Gamify = {
             var field_new = field.clone();
 
             $(this)
-                .toggleClass('btn-default')
+                .toggleClass('btn-primary')
                 .toggleClass('btn-add')
                 .toggleClass('btn-danger')
                 .toggleClass('btn-remove')
-                .html('<i class="fa fa-minus"></i>');
+                .html('<i class="fa fa-times"></i>');
 
             field_new.find('input').val('');
             field_new.insertAfter(field);

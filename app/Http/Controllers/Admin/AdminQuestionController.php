@@ -33,7 +33,7 @@ class AdminQuestionController extends AdminController
      */
     public function create()
     {
-        $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+        $availableTags = Question::existingTags()->pluck('name', 'slug');
         $availableActions = array();
 
         // get actions that hasn't not been used
@@ -53,10 +53,23 @@ class AdminQuestionController extends AdminController
      */
     public function store(QuestionCreateRequest $request)
     {
-        $question = Question::create($request->all());
+        $question = Question::create($request->only(['name', 'question', 'solution', 'type', 'hidden']));
 
+        // Save Question Tags
         if (count($request->tag_list)) {
             $question->tag($request->tag_list);
+        }
+
+        // Save Question Choices
+        for ($i=0; $i < count($request->choice_text); $i++) {
+            if (empty($request->choice_text[$i])) {
+                continue;
+            }
+            $question->choices()->create([
+                'text' => $request->choice_text[$i],
+                'points' =>  $request->choice_points[$i],
+                'correct' => ($request->choice_points[$i] > 0),
+            ]);
         }
 
         return redirect()->route('admin.questions.index')
@@ -102,25 +115,36 @@ class AdminQuestionController extends AdminController
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
+        // Save Question Tags
         if (count($request->tag_list)) {
             $question->retag($request->tag_list);
         } else {
             $question->untag();
         }
 
-        // TODO: Save choices
-        // Que passa amb les que ja existien?
-        // $question->choices()->delete();
-        dd("Hola");
-        // $question->choices()->create($request->all());
+        // Save Question Choices
+        // 1st. Deletes the old ones
+        $question->choices()->delete();
+        // 2nd. Adds the new ones
+        for ($i=0; $i < count($request->choice_text); $i++) {
+            if (empty($request->choice_text[$i])) {
+                continue;
+            }
+            $question->choices()->create([
+                'text' => $request->choice_text[$i],
+                'points' =>  $request->choice_points[$i],
+                'correct' => ($request->choice_points[$i] > 0),
+            ]);
+        }
 
+        // Are you trying to publish a question?
         if ($request->status == 'publish') {
             if (!$question->canBePublished()) {
                 return redirect()->back()
                     ->with('error', trans('admin/question/messages.publish.error'));
             }
         }
-        $question->fill($request->all())->save();
+        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']))->save();
 
         return redirect()->route('admin.questions.index')
             ->with('success', trans('admin/question/messages.update.success'));

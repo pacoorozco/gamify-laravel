@@ -1,12 +1,4 @@
 {{-- Create / Edit Question Form --}}
-
-@section('meta')
-        <!-- Unobtrusive JavaScript -->
-<meta name="csrf-token" content="{!! csrf_token() !!}">
-<meta name="csrf-param" content="_token">
-@endsection
-
-
 @if (isset($question))
     {!! Form::model($question, array(
                 'route' => array('admin.questions.update', $question),
@@ -48,7 +40,6 @@
                 </div>
                 <!-- ./ question -->
 
-
                 <!-- type -->
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label')) !!}
@@ -60,27 +51,19 @@
                 <!-- ./ type -->
 
                 <!-- answers -->
-                @if (isset($question))
-                    @include('admin/question/_form_choices')
-                @else
-                    <div class="callout callout-info">
-                        <h4>NOTE!</h4>
+                @include('admin/question/_form_choices')
+                <!-- ./ answers -->
 
-                        <p>After saving this question you will be able to add some answer choices.</p>
+                <!-- solution -->
+                <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
+                    {!! Form::label('solution', trans('admin/question/model.solution'), array('class' => 'control-label')) !!}
+                    <div class="controls">
+                        {!! Form::textarea('solution', null, array('class' => 'form-control tinymce')) !!}
+                        <span class="help-block"><i class="fa fa-info-circle"></i> Users will see this text once they have answered.</span>
+                        <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                     </div>
-                    @endif
-                            <!-- ./ answers -->
-
-                    <!-- solution -->
-                    <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
-                        {!! Form::label('solution', trans('admin/question/model.solution'), array('class' => 'control-label')) !!}
-                        <div class="controls">
-                            {!! Form::textarea('solution', null, array('class' => 'form-control tinymce')) !!}
-                            <span class="help-block"><i class="fa fa-info-circle"></i> Users will see this text once they have answered.</span>
-                            <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ solution -->
+                </div>
+                <!-- ./ solution -->
             </div>
         </div>
     </div>
@@ -103,10 +86,10 @@
                             {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
-                    @else
+                @else
                     {!! Form::hidden('status','draft') !!}
-                    @endif
-                            <!-- ./ status -->
+                @endif
+                <!-- ./ status -->
 
                     <!-- hidden -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
@@ -191,90 +174,6 @@
 @section('scripts')
         <!-- TinyMCE -->
 {!! HTML::script('//cdn.tinymce.com/4/tinymce.min.js') !!}
-        <!-- jQuery UJS -->
-{!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
         <!-- Select2 -->
 {!! HTML::script('vendor/select2/dist/js/select2.min.js') !!}
-
-<script>
-    $(function () {
-        $(".tags-input").select2({
-            tags: true,
-            placeholder: 'Put your tags here',
-            tokenSeparators: [','],
-            allowClear: true,
-            theme: "bootstrap",
-            matcher: function(params, data) {
-                // If there are no search terms, return all of the data
-                if ($.trim(params.term) === '') {
-                    return data;
-                }
-
-                // `params.term` should be the term that is used for searching
-                // `data.text` is the text that is displayed for the data object
-                if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
-                    return data;
-                }
-
-                // Return `null` if the term should not be displayed
-                return null;
-            },
-            createTag: function(params) {
-                var term = $.trim(params.term);
-                if(term === "") { return null; }
-
-                var optionsMatch = false;
-
-                this.$element.find("option").each(function() {
-                    if(this.value.toLowerCase().indexOf(term.toLowerCase()) > -1) {
-                        optionsMatch = true;
-                    }
-                });
-
-                if(optionsMatch) {
-                    return null;
-                }
-                return {id: term, text: term};
-            }
-        });
-    });
-</script>
-<script>
-    tinymce.init({
-        selector: "textarea.tinymce",
-        width: '100%',
-        height: 270,
-        statusbar: false,
-        menubar: false,
-        plugins: [
-            "link",
-            "code"
-        ],
-        toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
-    });
-</script>
-
-<script>
-    $( document ).on( 'click', '.btn-add', function ( event ) {
-        event.preventDefault();
-
-        var field = $(this).closest( '.cloneable' );
-        var field_new = field.clone();
-
-        $(this)
-                .toggleClass( 'btn-primary' )
-                .toggleClass( 'btn-add' )
-                .toggleClass( 'btn-danger' )
-                .toggleClass( 'btn-remove' )
-                .html( '<i class="fa fa-times fa fa-white"></i>' );
-
-        field_new.find( 'input' ).val( '' );
-        field_new.insertAfter( field );
-    } );
-
-    $( document ).on( 'click', '.btn-remove', function ( event ) {
-        event.preventDefault();
-        $(this).closest( '.cloneable' ).remove();
-    } );
-</script>
 @endsection
