@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'action'      => 'Badge',
     'when'        => 'Fired',
     'when_values' => [
@@ -9,4 +9,4 @@ return array(
         'incorrect' => 'On Failed',
     ],
     'actions'     => 'Delete',
-);
+];

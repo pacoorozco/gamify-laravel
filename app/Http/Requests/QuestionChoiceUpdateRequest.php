@@ -2,8 +2,6 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Http\Requests\Request;
-
 class QuestionChoiceUpdateRequest extends Request
 {
     /**
@@ -24,9 +22,9 @@ class QuestionChoiceUpdateRequest extends Request
     public function rules()
     {
         return [
-            'text' => 'required',
+            'text'    => 'required',
             'correct' => 'required|boolean',
-            'points' => 'required|integer'
+            'points'  => 'required|integer',
         ];
     }
 }

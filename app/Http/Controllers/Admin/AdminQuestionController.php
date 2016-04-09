@@ -10,10 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use yajra\Datatables\Datatables;
 
-
 class AdminQuestionController extends AdminController
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -25,10 +23,9 @@ class AdminQuestionController extends AdminController
     }
 
     /**
-     * Displays the form for question creation
+     * Displays the form for question creation.
      *
      * @return \Illuminate\Http\Response
-     *
      */
     public function create()
     {
@@ -38,11 +35,11 @@ class AdminQuestionController extends AdminController
     }
 
     /**
-     * Stores new question
+     * Stores new question.
      *
      * @param QuestionCreateRequest $request
-     * @return \Illuminate\Http\Response
      *
+     * @return \Illuminate\Http\Response
      */
     public function store(QuestionCreateRequest $request)
     {
@@ -59,7 +56,8 @@ class AdminQuestionController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  Question $question
+     * @param Question $question
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Question $question)
@@ -71,6 +69,7 @@ class AdminQuestionController extends AdminController
      * Show the form for editing the specified resource.
      *
      * @param Question $question
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Question $question)
@@ -85,6 +84,7 @@ class AdminQuestionController extends AdminController
      *
      * @param QuestionUpdateRequest $request
      * @param $question
+     *
      * @return Response
      */
     public function update(QuestionUpdateRequest $request, Question $question)
@@ -111,6 +111,7 @@ class AdminQuestionController extends AdminController
      * Remove question page.
      *
      * @param $question
+     *
      * @return Response
      */
     public function delete(Question $question)
@@ -122,6 +123,7 @@ class AdminQuestionController extends AdminController
      * Remove the specified question from storage.
      *
      * @param $question
+     *
      * @return Response
      */
     public function destroy(Question $question)
@@ -135,8 +137,9 @@ class AdminQuestionController extends AdminController
     /**
      * Show a list of all the questions formatted for Datatables.
      *
-     * @param Request $request
+     * @param Request    $request
      * @param Datatables $dataTable
+     *
      * @return JsonResponse
      */
     public function data(Request $request, Datatables $dataTable)
@@ -150,28 +153,27 @@ class AdminQuestionController extends AdminController
             'id',
             'shortname',
             'name',
-            'status'
+            'status',
         ])->orderBy('name', 'ASC');
 
-        $statusLabel = array(
-            'draft' => '<span class="label label-default">' . trans('admin/question/model.draft') . '</span>',
-            'publish' => '<span class="label label-success">' . trans('admin/question/model.publish') . '</span>',
-            'unpublish' => '<span class="label label-warning">' . trans('admin/question/model.unpublish') . '</span>',
-        );
+        $statusLabel = [
+            'draft'     => '<span class="label label-default">'.trans('admin/question/model.draft').'</span>',
+            'publish'   => '<span class="label label-success">'.trans('admin/question/model.publish').'</span>',
+            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.unpublish').'</span>',
+        ];
 
         return $dataTable->of($question)
             ->editColumn('status', function (Question $question) use ($statusLabel) {
                 return $statusLabel[$question->status];
             })
             ->addColumn('actions', function (Question $question) {
-                return view('admin/partials.actions_dd', array(
+                return view('admin/partials.actions_dd', [
                         'model' => 'questions',
-                        'id' => $question->id
-                    )
+                        'id'    => $question->id,
+                    ]
                 )->render();
             })
             ->removeColumn('id')
             ->make(true);
     }
-
 }

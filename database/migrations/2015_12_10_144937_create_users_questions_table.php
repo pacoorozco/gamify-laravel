@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateUsersQuestionsTable extends Migration
 {
@@ -22,7 +22,7 @@ class CreateUsersQuestionsTable extends Migration
                 ->references('id')->on('users');
             $table->foreign('question_id')
                 ->references('id')->on('questions');
-            $table->primary(array('user_id', 'question_id'));
+            $table->primary(['user_id', 'question_id']);
         });
     }
 

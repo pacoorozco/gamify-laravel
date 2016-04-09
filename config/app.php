@@ -206,8 +206,8 @@ return [
         /*
          * Third Party Alias
          */
-        'Form'      => Collective\Html\FormFacade::class,  // HTML Form helpers
-        'HTML'      => Collective\Html\HtmlFacade::class,  // HTML helpers
+        'Form'       => Collective\Html\FormFacade::class,  // HTML Form helpers
+        'HTML'       => Collective\Html\HtmlFacade::class,  // HTML helpers
         'Datatables' => yajra\Datatables\Datatables::class, // Datatables support
 
     ],

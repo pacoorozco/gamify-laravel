@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
 {
-
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /*

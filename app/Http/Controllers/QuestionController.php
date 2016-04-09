@@ -4,10 +4,7 @@ namespace Gamify\Http\Controllers;
 
 use Gamify\Question;
 use Illuminate\Http\Request;
-
-use Gamify\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class QuestionController extends Controller
 {
@@ -19,14 +16,14 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = Auth::user()->getPendingQuestions();
+
         return view('question.index', compact('questions'));
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @param Question                 $question
      *
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Question $question
      * @return \Illuminate\Http\Response
      */
     public function answer(Request $request, Question $question)
@@ -53,12 +50,12 @@ class QuestionController extends Controller
 
         // Create relation between User and Question
         Auth::user()->answeredQuestions()->attach($question, [
-            'points' => $points,
+            'points'  => $points,
             'answers' => implode(',', $request->choices),
         ]);
 
         // Add XP to user
-        Game::addExperience(Auth::user(), $points, 'has earned ' . $points . ' points.');
+        Game::addExperience(Auth::user(), $points, 'has earned '.$points.' points.');
 
         // Deal with Question specific Badges
         if ($success) {
@@ -81,7 +78,8 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Question $question
+     * @param Question $question
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Question $question)
@@ -91,7 +89,7 @@ class QuestionController extends Controller
             // User has answered this question
             return view('question.show-answered', compact('answer', 'question'));
         }
-        
+
         return view('question.show', compact('question'));
     }
 }

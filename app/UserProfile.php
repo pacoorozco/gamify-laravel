@@ -2,11 +2,10 @@
 
 namespace Gamify;
 
-use Illuminate\Database\Eloquent\Model;
-
+use Codesleeve\Stapler\ORM\EloquentTrait;
 // Image uploads
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class UserProfile extends Model implements StaplerableInterface
 {
@@ -16,7 +15,7 @@ class UserProfile extends Model implements StaplerableInterface
      * The database table used by the model.
      */
     protected $table = 'user_profiles';
-    protected $fillable = array(
+    protected $fillable = [
         'avatar',
         'bio',
         'url',
@@ -29,18 +28,18 @@ class UserProfile extends Model implements StaplerableInterface
         'googleplus',
         'linkedin',
         'github',
-    );
+    ];
 
-    public function __construct(array $attributes = array())
+    public function __construct(array $attributes = [])
     {
         $this->hasAttachedFile('avatar', [
             'styles' => [
-                'big' => '220x220',
+                'big'    => '220x220',
                 'medium' => '150x150',
-                'small' => '64x64'
+                'small'  => '64x64',
             ],
-            'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/images/missing_profile.png'
+            'url'         => '/uploads/:class/:id_partition/:style/:filename',
+            'default_url' => '/images/missing_profile.png',
         ]);
 
         parent::__construct($attributes);
