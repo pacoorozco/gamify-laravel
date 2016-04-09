@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'yes'        => 'Yes',
     'no'         => 'No',
@@ -8,12 +8,12 @@ return array(
     'logout'     => 'Sign out',
     'all'        => 'All',
 
-    'show'   => 'Show',
-    'edit'   => 'Edit',
-    'delete' => 'Delete',
-    'search' => 'Search',
+    'show'    => 'Show',
+    'edit'    => 'Edit',
+    'delete'  => 'Delete',
+    'search'  => 'Search',
     'actions' => 'Actions',
-    'back' => 'Back',
-    'close' => 'Close',
+    'back'    => 'Back',
+    'close'   => 'Close',
 
-);
+];

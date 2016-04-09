@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'shortname'  => 'Short Name',
     'name'       => 'Name',
     'question'   => 'Question Text',
@@ -17,4 +17,4 @@ return array(
     'unpublish'  => 'Retired',
     'actions'    => 'Actions',
     'tags'       => 'Tags',
-);
+];

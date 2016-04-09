@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'dashboard' => 'Dashboard',
     'users'     => 'Users',
     'roles'     => 'Roles',
@@ -10,4 +10,4 @@ return array(
     'rewards'   => 'Rewards',
     'play_area' => 'Go to play area',
 
-);
+];

@@ -7,14 +7,15 @@ use Gamify\Badge;
 use Gamify\Point;
 use Gamify\User;
 
-class Game extends Controller {
-
+class Game extends Controller
+{
     /**
-     * Add experience to an user
+     * Add experience to an user.
      *
      * @param User $user
-     * @param int $points
+     * @param int  $points
      * @param null $message
+     *
      * @return bool
      */
     public static function addExperience(User $user, $points = 5, $message = null)
@@ -33,10 +34,11 @@ class Game extends Controller {
     }
 
     /**
-     * Give one more action towards a Badge for an User
+     * Give one more action towards a Badge for an User.
      *
-     * @param User $user
+     * @param User  $user
      * @param Badge $badge
+     *
      * @return bool
      */
     public static function incrementBadge(User $user, Badge $badge)
@@ -54,14 +56,16 @@ class Game extends Controller {
             $user->badges()->attach($badge->id, ['amount' => '1']);
             $saved = true;
         }
+
         return $saved;
     }
 
     /**
-     * Give a completed Badge for an User
+     * Give a completed Badge for an User.
      *
-     * @param User $user
+     * @param User  $user
      * @param Badge $badge
+     *
      * @return bool
      */
     public static function addBadge(User $user, Badge $badge)
@@ -71,8 +75,8 @@ class Game extends Controller {
         }
 
         $data = [
-            'amount' => $badge->amount_needed,
-            'completed' => true,
+            'amount'       => $badge->amount_needed,
+            'completed'    => true,
             'completed_on' => Carbon::now(),
         ];
 
@@ -84,13 +88,15 @@ class Game extends Controller {
             $user->badges()->attach($badge->id, $data);
             $saved = true;
         }
+
         return $saved;
     }
 
     /**
-     * Get a collection with members ordered by Experience Points
-     * 
+     * Get a collection with members ordered by Experience Points.
+     *
      * @param int $limitTopUsers
+     *
      * @return mixed
      */
     public static function getRanking($limitTopUsers = 10)

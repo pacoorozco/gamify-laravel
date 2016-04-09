@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateQuestionsTable extends Migration
 {
@@ -18,9 +18,9 @@ class CreateQuestionsTable extends Migration
             $table->string('name');
             $table->text('question');
             $table->text('solution')->nullable();
-            $table->enum('type', array('single', 'multi'));
+            $table->enum('type', ['single', 'multi']);
             $table->boolean('hidden')->default(false);
-            $table->enum('status', array('draft', 'publish', 'pending', 'private'))->default('draft');
+            $table->enum('status', ['draft', 'publish', 'pending', 'private'])->default('draft');
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')
                 ->references('id')->on('users');

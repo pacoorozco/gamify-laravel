@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateQuestionsBadgesTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateQuestionsBadgesTable extends Migration
             $table->foreign('badge_id')
                 ->references('id')->on('badges')
                 ->onDelete('cascade');
-            $table->enum('when', array('success', 'fail', 'always'));
+            $table->enum('when', ['success', 'fail', 'always']);
             $table->index('question_id');
         });
     }

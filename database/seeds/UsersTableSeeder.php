@@ -13,36 +13,36 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->delete();
 
-        $users = array(
-            array(
+        $users = [
+            [
                 'username' => 'admin',
-                'name' => 'Administrator',
-                'email' => 'admin@example.org',
+                'name'     => 'Administrator',
+                'email'    => 'admin@example.org',
                 'password' => 'admin',
-                'role' => 'administrator',
-            ),
-            array(
+                'role'     => 'administrator',
+            ],
+            [
                 'username' => 'user',
-                'name' => 'User',
-                'email' => 'user@example.org',
+                'name'     => 'User',
+                'email'    => 'user@example.org',
                 'password' => 'user',
-                'role' => 'default',
-            )
-        );
+                'role'     => 'default',
+            ],
+        ];
 
         foreach ($users as $data) {
             $user = \Gamify\User::create([
                 'username' => $data['username'],
-                'name' => $data['name'],
-                'email' => $data['email'],
+                'name'     => $data['name'],
+                'email'    => $data['email'],
                 'password' => $data['password'],
-                'role' => $data['role']
+                'role'     => $data['role'],
             ]);
 
             $profile = new \Gamify\UserProfile(['gender' => 'female']);
             $user->profile()->save($profile);
 
-            Log::info('Created user ' . $data['username']);
+            Log::info('Created user '.$data['username']);
         }
     }
 }

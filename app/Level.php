@@ -2,15 +2,13 @@
 
 namespace Gamify;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-// Image uploads
-use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
-
-// Theme support
+use Codesleeve\Stapler\ORM\StaplerableInterface;
+// Image uploads
 use igaster\laravelTheme\Theme;
+use Illuminate\Database\Eloquent\Model;
+// Theme support
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Level extends Model implements StaplerableInterface
 {
@@ -23,25 +21,25 @@ class Level extends Model implements StaplerableInterface
      * @var string
      */
     protected $table = 'levels';
-    protected $fillable = array(
+    protected $fillable = [
         'name',
         'image',
         'amount_needed',
-        'active'
-    );
+        'active',
+    ];
 
-    protected $dates = array('deleted_at');
+    protected $dates = ['deleted_at'];
 
-    public function __construct(array $attributes = array())
+    public function __construct(array $attributes = [])
     {
         $this->hasAttachedFile('image', [
             'styles' => [
-                'big' => '220x220',
+                'big'    => '220x220',
                 'medium' => '128x128',
-                'small' => '64x64'
+                'small'  => '64x64',
             ],
-            'url' => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/images/missing_level.png'
+            'url'         => '/uploads/:class/:id_partition/:style/:filename',
+            'default_url' => '/images/missing_level.png',
         ]);
 
         parent::__construct($attributes);

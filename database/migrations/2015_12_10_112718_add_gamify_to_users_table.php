@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class AddGamifyToUsersTable extends Migration
 {
@@ -15,7 +15,7 @@ class AddGamifyToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->unique()->after('email');
             $table->integer('level_id')->unsigned();
-            $table->enum('role', array('default', 'administrator'))->default('default');
+            $table->enum('role', ['default', 'administrator'])->default('default');
             $table->timestamp('last_login')->nullable();
         });
     }
@@ -28,7 +28,7 @@ class AddGamifyToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(array('username', 'role', 'last_login', 'level_id'));
+            $table->dropColumn(['username', 'role', 'last_login', 'level_id']);
         });
     }
 }

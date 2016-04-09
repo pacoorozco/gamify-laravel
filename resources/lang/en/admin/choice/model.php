@@ -1,7 +1,7 @@
 <?php
 
-return array(
-	'text'  => 'Answer Text',
+return [
+    'text'            => 'Answer Text',
         'points'      => 'Points',
-	'correct'  => 'Is correct?',
-);
+    'correct'         => 'Is correct?',
+];

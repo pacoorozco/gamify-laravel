@@ -2,8 +2,6 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Http\Requests\Request;
-
 class UserProfileUpdateRequest extends Request
 {
     /**
@@ -14,7 +12,8 @@ class UserProfileUpdateRequest extends Request
     public function authorize()
     {
         $user = $this->route('username');
-        return ($user->username == $this->user()->username);
+
+        return $user->username == $this->user()->username;
     }
 
     /**
@@ -25,14 +24,14 @@ class UserProfileUpdateRequest extends Request
     public function rules()
     {
         return [
-            'url' => 'url',
+            'url'           => 'url',
             'date_of_birth' => 'date',
-            'gender' => 'required|in:male,female,unspecified',
-            'twitter' => 'url',
-            'facebook' => 'url',
-            'googleplus' => 'url',
-            'linkedin' => 'url',
-            'github' => 'url',
+            'gender'        => 'required|in:male,female,unspecified',
+            'twitter'       => 'url',
+            'facebook'      => 'url',
+            'googleplus'    => 'url',
+            'linkedin'      => 'url',
+            'github'        => 'url',
         ];
     }
 }
