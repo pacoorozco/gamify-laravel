@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateUserProfilesTable extends Migration
 {
@@ -22,7 +22,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->enum('gender', array('male', 'female', 'unspecified'))->default('unspecified');
+            $table->enum('gender', ['male', 'female', 'unspecified'])->default('unspecified');
 
             $table->string('twitter')->nullable();
             $table->string('facebook')->nullable();

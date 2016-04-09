@@ -10,7 +10,6 @@ use yajra\Datatables\Datatables;
 
 class AdminBadgeController extends AdminController
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +33,8 @@ class AdminBadgeController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  BadgeCreateRequest $request
+     * @param BadgeCreateRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(BadgeCreateRequest $request)
@@ -48,7 +48,8 @@ class AdminBadgeController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  Badge $badge
+     * @param Badge $badge
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Badge $badge)
@@ -59,7 +60,8 @@ class AdminBadgeController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Badge $badge
+     * @param Badge $badge
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Badge $badge)
@@ -70,8 +72,9 @@ class AdminBadgeController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  BadgeUpdateRequest $request
-     * @param  Badge $badge
+     * @param BadgeUpdateRequest $request
+     * @param Badge              $badge
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(BadgeUpdateRequest $request, Badge $badge)
@@ -86,6 +89,7 @@ class AdminBadgeController extends AdminController
      * Remove badge page.
      *
      * @param Badge $badge
+     *
      * @return \Illuminate\Http\Response
      */
     public function delete(Badge $badge)
@@ -96,7 +100,8 @@ class AdminBadgeController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Badge $badge
+     * @param Badge $badge
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Badge $badge)
@@ -110,8 +115,9 @@ class AdminBadgeController extends AdminController
     /**
      * Show a list of all badges formatted for Datatables.
      *
-     * @param Request $request
+     * @param Request    $request
      * @param Datatables $dataTable
+     *
      * @return Datatables JsonResponse
      */
     public function data(Request $request, Datatables $dataTable)
@@ -125,23 +131,23 @@ class AdminBadgeController extends AdminController
             'id',
             'name',
             'amount_needed',
-            'active'
+            'active',
         ])->orderBy('name', 'ASC');
 
         return $dataTable->of($badges)
             ->addColumn('image', function (Badge $badge) {
                 $badge = Badge::find($badge->id);
 
-                return '<img src="' . $badge->image->url('small') . '" width="64" class="img-thumbnail" />';
+                return '<img src="'.$badge->image->url('small').'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Badge $badge) {
                 return ($badge->active) ? trans('general.yes') : trans('general.no');
             })
             ->addColumn('actions', function (Badge $badge) {
-                return view('admin/partials.actions_dd', array(
+                return view('admin/partials.actions_dd', [
                     'model' => 'badges',
-                    'id' => $badge->id
-                ))->render();
+                    'id'    => $badge->id,
+                ])->render();
             })
             ->removeColumn('id')
             ->make(true);

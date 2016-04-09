@@ -2,8 +2,6 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Http\Requests\Request;
-
 class RewardExperienceRequest extends Request
 {
     /**

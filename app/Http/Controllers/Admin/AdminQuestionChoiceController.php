@@ -10,11 +10,11 @@ use Illuminate\Http\Response;
 
 class AdminQuestionChoiceController extends AdminController
 {
-
     /**
      * Show the form for creating a new resource.
      *
      * @param Question $question
+     *
      * @return Response
      */
     public function create(Question $question)
@@ -25,8 +25,9 @@ class AdminQuestionChoiceController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Question $question
-     * @param  QuestionChoiceCreateRequest $request
+     * @param Question                    $question
+     * @param QuestionChoiceCreateRequest $request
+     *
      * @return Response
      */
     public function store(Question $question, QuestionChoiceCreateRequest $request)
@@ -40,8 +41,9 @@ class AdminQuestionChoiceController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Question $question
-     * @param  QuestionChoice $choice
+     * @param Question       $question
+     * @param QuestionChoice $choice
+     *
      * @return Response
      */
     public function edit(Question $question, QuestionChoice $choice)
@@ -52,9 +54,10 @@ class AdminQuestionChoiceController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param Question $question
-     * @param  QuestionChoiceUpdateRequest $request
-     * @param  QuestionChoice $choice
+     * @param Question                    $question
+     * @param QuestionChoiceUpdateRequest $request
+     * @param QuestionChoice              $choice
+     *
      * @return Response
      */
     public function update(Question $question, QuestionChoiceUpdateRequest $request, QuestionChoice $choice)
@@ -68,8 +71,9 @@ class AdminQuestionChoiceController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Question $question
-     * @param  QuestionChoice $choice
+     * @param Question       $question
+     * @param QuestionChoice $choice
+     *
      * @return Response
      */
     public function destroy(Question $question, QuestionChoice $choice)

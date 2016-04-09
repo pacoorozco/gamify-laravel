@@ -10,18 +10,18 @@ class QuestionAction extends Model
 
     public $timestamps = false;
 
-    protected $fillable = array(
+    protected $fillable = [
         'when',
-        'badge_id'
-    );
+        'badge_id',
+    ];
 
     /**
-     * Every time we modify an action we need to touch the question
+     * Every time we modify an action we need to touch the question.
      */
-    protected $touches = array('question');
+    protected $touches = ['question'];
 
     /**
-     * A question action belongs to a question
+     * A question action belongs to a question.
      */
     public function question()
     {
@@ -31,6 +31,7 @@ class QuestionAction extends Model
     public function getName()
     {
         $badge = Badge::find($this->badge_id);
+
         return $badge->name;
     }
 }

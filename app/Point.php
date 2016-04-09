@@ -8,10 +8,10 @@ class Point extends Model
 {
     protected $table = 'points';
 
-    protected $fillable = array(
+    protected $fillable = [
         'points',
-        'description'
-    );
+        'description',
+    ];
 
     public function user()
     {

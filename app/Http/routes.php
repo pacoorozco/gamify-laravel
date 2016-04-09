@@ -13,7 +13,7 @@
 
 /** ------------------------------------------
  *  Route model binding
- *  ------------------------------------------
+ *  ------------------------------------------.
  */
 Route::bind('username', function ($value) {
     return \Gamify\User::where('username', $value)->first();
@@ -39,7 +39,7 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 //Route::get('auth/register', 'Auth\AuthController@getRegister');
 //Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-/** ------------------------------------------
+/* ------------------------------------------
  * Authenticated routes
  *
  * Routes that need to be authenticated
@@ -60,8 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('questions/{question}', ['as' => 'questions.answer', 'uses' => 'QuestionController@answer']);
 });
 
-
-/** ------------------------------------------
+/* ------------------------------------------
  * Admin routes
  *
  * Routes that User needs to be administrator
@@ -71,7 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminDashboardController@index']);
 
-    /** ------------------------------------------
+    /* ------------------------------------------
      *  Users
      *  ------------------------------------------
      */
@@ -85,7 +84,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // show, edit, update, destroy
     Route::resource('users', 'Admin\AdminUserController');
 
-    /** ------------------------------------------
+    /* ------------------------------------------
      *  Badges
      *  ------------------------------------------
      */
@@ -104,7 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('badges/{badges}/delete',
         ['as' => 'admin.badges.delete', 'uses' => 'Admin\AdminBadgeController@delete']);
 
-    /** ------------------------------------------
+    /* ------------------------------------------
      *  Levels
      *  ------------------------------------------
      */
@@ -123,7 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('levels/{levels}/delete',
         ['as' => 'admin.levels.delete', 'uses' => 'Admin\AdminLevelController@delete']);
 
-    /** ------------------------------------------
+    /* ------------------------------------------
      *  Question management
      *  ------------------------------------------
      */
@@ -138,13 +137,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('questions', 'Admin\AdminQuestionController');
 
     // Nest routes to deal with choices
-    Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => array('index', 'show')]);
+    Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => ['index', 'show']]);
 
     // Nest routes to deal with actions
     Route::resource('questions.actions', 'Admin\AdminQuestionActionController',
-        ['only' => array('create', 'store', 'destroy')]);
+        ['only' => ['create', 'store', 'destroy']]);
 
-    /** ------------------------------------------
+    /* ------------------------------------------
      *  Give Experience / Badge
      *  ------------------------------------------
      */

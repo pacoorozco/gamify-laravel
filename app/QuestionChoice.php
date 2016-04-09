@@ -15,19 +15,19 @@ class QuestionChoice extends Model
 
     public $timestamps = false;
 
-    protected $fillable = array(
+    protected $fillable = [
         'text',
         'correct',
-        'points'
-    );
+        'points',
+    ];
 
     /**
-     * Every time we modify a choice we need to touch the question
+     * Every time we modify a choice we need to touch the question.
      */
-    protected $touches = array('question');
+    protected $touches = ['question'];
 
     /**
-     * A question choice belongs to a question
+     * A question choice belongs to a question.
      */
     public function question()
     {

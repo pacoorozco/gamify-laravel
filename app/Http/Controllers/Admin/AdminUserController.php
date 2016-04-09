@@ -14,7 +14,6 @@ use yajra\Datatables\Datatables;
 
 class AdminUserController extends AdminController
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +37,8 @@ class AdminUserController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserCreateRequest $request
+     * @param UserCreateRequest $request
+     *
      * @return Response
      */
     public function store(UserCreateRequest $request)
@@ -56,7 +56,8 @@ class AdminUserController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  User $user
+     * @param User $user
+     *
      * @return Response
      */
     public function show(User $user)
@@ -67,7 +68,8 @@ class AdminUserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  User $user
+     * @param User $user
+     *
      * @return Response
      */
     public function edit(User $user)
@@ -78,8 +80,9 @@ class AdminUserController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
-     * @param  User $user
+     * @param UserUpdateRequest $request
+     * @param User              $user
+     *
      * @return Response
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -94,6 +97,7 @@ class AdminUserController extends AdminController
      * Remove user.
      *
      * @param User $user
+     *
      * @return Response
      */
     public function delete(User $user)
@@ -104,7 +108,8 @@ class AdminUserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  User $user
+     * @param User $user
+     *
      * @return Response
      */
     public function destroy(User $user)
@@ -124,8 +129,9 @@ class AdminUserController extends AdminController
     /**
      * Show a list of all the users formatted for Datatables.
      *
-     * @param Request $request
+     * @param Request    $request
      * @param Datatables $dataTable
+     *
      * @return JsonResponse
      */
     public function data(Request $request, Datatables $dataTable)
@@ -140,15 +146,15 @@ class AdminUserController extends AdminController
             'name',
             'username',
             'email',
-            'role'
+            'role',
         ])->orderBy('username', 'ASC');
 
         return $dataTable->of($users)
             ->addColumn('actions', function (User $user) {
-                return view('admin/partials.actions_dd', array(
+                return view('admin/partials.actions_dd', [
                     'model' => 'users',
-                    'id' => $user->id
-                ))->render();
+                    'id'    => $user->id,
+                ])->render();
             })
             ->removeColumn('id')
             ->make(true);

@@ -26,8 +26,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Gamify\Http\Middleware\Authenticate::class,
+        'auth'       => \Gamify\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \Gamify\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest'      => \Gamify\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }
