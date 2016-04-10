@@ -27,7 +27,6 @@ Route::model('users', '\Gamify\User');
 Route::model('badges', '\Gamify\Badge');
 Route::model('levels', '\Gamify\Level');
 Route::model('questions', '\Gamify\Question');
-Route::model('choices', '\Gamify\QuestionChoice');
 Route::model('actions', '\Gamify\QuestionAction');
 
 // Authentication routes...
@@ -135,9 +134,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ['as' => 'admin.questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
 
     Route::resource('questions', 'Admin\AdminQuestionController');
-
-    // Nest routes to deal with choices
-    Route::resource('questions.choices', 'Admin\AdminQuestionChoiceController', ['except' => ['index', 'show']]);
 
     // Nest routes to deal with actions
     Route::resource('questions.actions', 'Admin\AdminQuestionActionController',
