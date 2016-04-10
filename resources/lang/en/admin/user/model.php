@@ -8,5 +8,9 @@ return [
     'role'                  => 'Role',
     'password'              => 'Password',
     'password_confirmation' => 'Password Confirmation',
+    'roles_list'            => [
+        'default'       => 'Member',
+        'administrator' => 'Administrator',
+    ],
 
 ];

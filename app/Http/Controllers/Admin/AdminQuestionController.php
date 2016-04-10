@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Badge;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
@@ -29,9 +30,15 @@ class AdminQuestionController extends AdminController
      */
     public function create()
     {
-        $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+        $availableTags = Question::existingTags()->pluck('name', 'slug');
+        $availableActions = [];
 
-        return view('admin/question/create', compact('availableTags'));
+        // get actions that hasn't not been used
+        foreach (Badge::all() as $action) {
+            $availableActions[$action->id] = $action->name;
+        }
+
+        return view('admin/question/create', compact('availableTags', 'availableActions'));
     }
 
     /**
@@ -43,10 +50,23 @@ class AdminQuestionController extends AdminController
      */
     public function store(QuestionCreateRequest $request)
     {
-        $question = Question::create($request->all());
+        $question = Question::create($request->only(['name', 'question', 'solution', 'type', 'hidden']));
 
+        // Save Question Tags
         if (count($request->tag_list)) {
             $question->tag($request->tag_list);
+        }
+
+        // Save Question Choices
+        for ($i = 0; $i < count($request->choice_text); $i++) {
+            if (empty($request->choice_text[$i])) {
+                continue;
+            }
+            $question->choices()->create([
+                'text'    => $request->choice_text[$i],
+                'points'  => $request->choice_points[$i],
+                'correct' => ($request->choice_points[$i] > 0),
+            ]);
         }
 
         return redirect()->route('admin.questions.index')
@@ -75,8 +95,14 @@ class AdminQuestionController extends AdminController
     public function edit(Question $question)
     {
         $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+        $availableActions = [];
 
-        return view('admin/question/edit', compact('question', 'availableTags'));
+        // get actions that hasn't not been used
+        foreach ($question->getAvailableActions() as $action) {
+            $availableActions[$action->id] = $action->name;
+        }
+
+        return view('admin/question/edit', compact('question', 'availableTags', 'availableActions'));
     }
 
     /**
@@ -89,19 +115,36 @@ class AdminQuestionController extends AdminController
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
+        // Save Question Tags
         if (count($request->tag_list)) {
             $question->retag($request->tag_list);
         } else {
             $question->untag();
         }
 
+        // Save Question Choices
+        // 1st. Deletes the old ones
+        $question->choices()->delete();
+        // 2nd. Adds the new ones
+        for ($i = 0; $i < count($request->choice_text); $i++) {
+            if (empty($request->choice_text[$i])) {
+                continue;
+            }
+            $question->choices()->create([
+                'text'    => $request->choice_text[$i],
+                'points'  => $request->choice_points[$i],
+                'correct' => ($request->choice_points[$i] > 0),
+            ]);
+        }
+
+        // Are you trying to publish a question?
         if ($request->status == 'publish') {
             if (!$question->canBePublished()) {
                 return redirect()->back()
                     ->with('error', trans('admin/question/messages.publish.error'));
             }
         }
-        $question->fill($request->all())->save();
+        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']))->save();
 
         return redirect()->route('admin.questions.index')
             ->with('success', trans('admin/question/messages.update.success'));
