@@ -1,4 +1,8 @@
-<p>{{ $user->profile->bio }}</p>
+<div class="row">
+    <div class="col-xs-12">
+        {{ strip_tags($user->profile->bio) }}
+    </div>
+</div>
 
 <h3>{{ trans('user/profile.badges') }}</h3>
 

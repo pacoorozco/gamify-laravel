@@ -38,6 +38,7 @@ return [
     'user_since'            => 'User since',
     'last_logged'           => 'Last Logged In',
     'roles'                 => 'Status',
+    'bio'                   => 'Tell us about you',
 
     'twitter'    => 'Twitter',
     'facebook'   => 'Facebook',
