@@ -4,7 +4,6 @@ namespace Gamify\Http\Requests;
 
 class QuestionCreateRequest extends Request
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,7 +27,7 @@ class QuestionCreateRequest extends Request
             'solution' => '',
             'type'     => 'required|in:single,multi',
             'hidden'   => 'required|boolean',
-            'status'   => 'required|in:draft,publish,unpublish'
+            'status'   => 'required|in:draft,publish,unpublish',
         ];
 
         // TODO: validate dynamic choices

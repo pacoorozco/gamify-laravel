@@ -20,5 +20,5 @@ return [
     'tags'          => 'Tags',
     'choice_text'   => 'Answer Text',
     'choice_points' => 'Points',
-    
+
 ];

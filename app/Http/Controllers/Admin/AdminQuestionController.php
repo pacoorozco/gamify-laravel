@@ -31,7 +31,7 @@ class AdminQuestionController extends AdminController
     public function create()
     {
         $availableTags = Question::existingTags()->pluck('name', 'slug');
-        $availableActions = array();
+        $availableActions = [];
 
         // get actions that hasn't not been used
         foreach (Badge::all() as $action) {
@@ -58,13 +58,13 @@ class AdminQuestionController extends AdminController
         }
 
         // Save Question Choices
-        for ($i=0; $i < count($request->choice_text); $i++) {
+        for ($i = 0; $i < count($request->choice_text); $i++) {
             if (empty($request->choice_text[$i])) {
                 continue;
             }
             $question->choices()->create([
-                'text' => $request->choice_text[$i],
-                'points' =>  $request->choice_points[$i],
+                'text'    => $request->choice_text[$i],
+                'points'  => $request->choice_points[$i],
                 'correct' => ($request->choice_points[$i] > 0),
             ]);
         }
@@ -95,7 +95,7 @@ class AdminQuestionController extends AdminController
     public function edit(Question $question)
     {
         $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
-        $availableActions = array();
+        $availableActions = [];
 
         // get actions that hasn't not been used
         foreach ($question->getAvailableActions() as $action) {
@@ -126,13 +126,13 @@ class AdminQuestionController extends AdminController
         // 1st. Deletes the old ones
         $question->choices()->delete();
         // 2nd. Adds the new ones
-        for ($i=0; $i < count($request->choice_text); $i++) {
+        for ($i = 0; $i < count($request->choice_text); $i++) {
             if (empty($request->choice_text[$i])) {
                 continue;
             }
             $question->choices()->create([
-                'text' => $request->choice_text[$i],
-                'points' =>  $request->choice_points[$i],
+                'text'    => $request->choice_text[$i],
+                'points'  => $request->choice_points[$i],
                 'correct' => ($request->choice_points[$i] > 0),
             ]);
         }
