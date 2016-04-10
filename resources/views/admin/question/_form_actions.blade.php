@@ -1,44 +1,32 @@
 <!-- actions -->
-<div class="row">
-    <div class="col-xs-7">
-        {{ trans('admin/action/table.action') }}
-    </div>
-    <div class="col-xs-4">
-        {{ trans('admin/action/table.when') }}
-    </div>
-    <div class="col-xs-1">
-    </div>
-</div>
-{{-- Print fields for added actions --}}
-@foreach ($question->actions as $action)
-    <div class="row">
-        <div class="col-xs-7">
-            {!! Form::select('badge_id[]', $availableActions, $action->id, array('class' => 'form-control')) !!}
-        </div>
-        <div class="col-xs-4">
-            {!! Form::select('when[]', trans('admin/action/model.when_values'), $action->when, array('class' => 'form-control')) !!}
-        </div>
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-xs btn-danger btn-remove"
-                    data-toggle="tooltip" data-placement="top" title="{{ trans('general.remove') }}"><i
-                        class="fa fa-minus"></i>
-            </button>
-        </div>
-    </div>
-@endforeach
-{{-- Print fields for a new action --}}
-<div class="row">
-    <div class="col-xs-7">
-        {!! Form::select('badge_id[]', $availableActions, null, array('class' => 'form-control')) !!}
-    </div>
-    <div class="col-xs-4">
-        {!! Form::select('when[]', trans('admin/action/model.when_values'), null, array('class' => 'form-control')) !!}
-    </div>
-    <div class="col-xs-1">
-        <button type="button" class="btn btn-xs btn-primary"
-                data-toggle="tooltip" data-placement="top" title="{{ trans('general.add') }}"><i
-                    class="fa fa-plus"></i>
-        </button>
-    </div>
-</div>
+@if(count($question->getAvailableActions()) > 0)
+    <a href="{{ route('admin.questions.actions.create', $question) }}" class="btn btn-primary">
+        <i class="fa fa-plus"></i> {{ trans('admin/action/title.create_new') }}
+    </a>
+
+
+    <table class="table table-hover">
+        <tr>
+            <th>{{ trans('admin/action/table.action') }}</th>
+            <th>{{ trans('admin/action/table.when') }}</th>
+            <th>{{ trans('admin/action/table.actions') }}</th>
+        </tr>
+        @foreach ($question->actions as $action)
+            <tr>
+                <td>{!! Form::select('badge_id[]', $availableActions, $action->id, array('class' => 'form-control')) !!}</td>
+                <td>{{ trans('admin/action/table.when_values.' . $action->when) }}</td>
+                <td>
+                    <a href="{{ route('admin.questions.actions.destroy', array($question, $action)) }}"
+                       rel="nofollow" data-method="delete"
+                       data-confirm="{{ trans('admin/action/messages.confirm_delete') }}">
+                        <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip"
+                                data-placement="top" title="{{ trans('general.delete') }}">
+                            <i class="fa fa-times fa fa-white"></i>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        @endforeach
+    </table>
+    @endif
 <!-- ./ actions -->

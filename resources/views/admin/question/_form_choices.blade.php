@@ -1,10 +1,10 @@
 <!-- choices -->
 <div class="row form-group">
     <div class="col-sm-9">
-        {!! Form::label('choice_text[]', trans('admin/choice/model.text'), array('class' => 'control-label')) !!}
+        {!! Form::label('choice_text[]', trans('admin/question/model.choice_text'), array('class' => 'control-label')) !!}
     </div>
     <div class="col-sm-3">
-        {!! Form::label('choice_points[]', trans('admin/choice/model.points'), array('class' => 'control-label')) !!}
+        {!! Form::label('choice_points[]', trans('admin/question/model.choice_points'), array('class' => 'control-label')) !!}
     </div>
 </div>
 

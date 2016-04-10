@@ -1,4 +1,11 @@
 {{-- Create / Edit Question Form --}}
+
+@section('meta')
+        <!-- Unobtrusive JavaScript -->
+<meta name="csrf-token" content="{!! csrf_token() !!}">
+<meta name="csrf-param" content="_token">
+@endsection
+
 @if (isset($question))
     {!! Form::model($question, array(
                 'route' => array('admin.questions.update', $question),
@@ -176,4 +183,6 @@
 {!! HTML::script('//cdn.tinymce.com/4/tinymce.min.js') !!}
         <!-- Select2 -->
 {!! HTML::script('vendor/select2/dist/js/select2.min.js') !!}
+        <!-- jQuery UJS -->
+{!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
 @endsection
