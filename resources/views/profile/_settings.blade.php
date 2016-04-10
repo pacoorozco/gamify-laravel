@@ -198,6 +198,18 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="form-group {{ $errors->has('bio') ? 'has-error' : '' }}">
+            {!! Form::label('bio', trans('user/profile.bio'), array('class' => 'control-label')) !!}
+            <div class="controls">
+                {!! Form::textarea('bio', null, array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('question', ':message') }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
         {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
     </div>
 </div>
@@ -217,11 +229,4 @@
 {!! HTML::script('vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') !!}
         <!-- File Input -->
 {!! HTML::script('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') !!}
-
-<script type="text/javascript">
-    $('.date-picker').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    });
-</script>
 @endsection

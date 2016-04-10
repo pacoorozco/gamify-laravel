@@ -95,6 +95,11 @@ Gamify = {
             });
         });
 
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+
         tinymce.init({
             selector: "textarea.tinymce",
             width: '100%',

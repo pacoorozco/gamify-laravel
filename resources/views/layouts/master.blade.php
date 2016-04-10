@@ -74,10 +74,16 @@
 {!! HTML::script('vendor/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js') !!}
 {!! HTML::script('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') !!}
 {!! HTML::script('vendor/AdminLTE/dist/js/app.min.js') !!}
+{!! HTML::script('js/gamify.js') !!}
         <!-- end: MAIN JAVASCRIPTS -->
 <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 @yield('scripts')
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+<script>
+    (function () {
+        Gamify.init();
+    })();
+</script>
 </body>
 <!-- end: BODY -->
 </html>
