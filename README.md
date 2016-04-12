@@ -14,9 +14,9 @@ It's a Laravel 5.1 application, based on the PHP5 & mysql original [gamify](http
 
 As much as possible, we have tried to keep a clean code to work everywhere out of the box. You are not obliged to use our tools and are free to change the code in order to use it at your own feeling.
 
-## Disclaimer - It's working but NOT ready for production
+## Disclaimer - It's ready for production, but no doc
 
-> This is not, yet, **production code**. It's fully working and you can play with it, but some features are not yet included. I'm working in order to finish ASAP, in my personal free time, so be patient or contact me in order to give me your help.
+> It's fully working and you can play with it, but it lacks of some documentation. I'm working in order to improve it, in my personal free time, so be patient or contact me in order to give me your help.
 
 ## Changelog
 
