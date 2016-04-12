@@ -50,68 +50,6 @@ Gamify = {
             event.preventDefault();
             $(this).closest('.cloneable').remove();
         });
-
-        $(function () {
-            $(".tags-input").select2({
-                tags: true,
-                placeholder: 'Put your tags here',
-                tokenSeparators: [','],
-                allowClear: true,
-                theme: "bootstrap",
-                matcher: function (params, data) {
-                    // If there are no search terms, return all of the data
-                    if ($.trim(params.term) === '') {
-                        return data;
-                    }
-
-                    // `params.term` should be the term that is used for searching
-                    // `data.text` is the text that is displayed for the data object
-                    if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
-                        return data;
-                    }
-
-                    // Return `null` if the term should not be displayed
-                    return null;
-                },
-                createTag: function (params) {
-                    var term = $.trim(params.term);
-                    if (term === "") {
-                        return null;
-                    }
-
-                    var optionsMatch = false;
-
-                    this.$element.find("option").each(function () {
-                        if (this.value.toLowerCase().indexOf(term.toLowerCase()) > -1) {
-                            optionsMatch = true;
-                        }
-                    });
-
-                    if (optionsMatch) {
-                        return null;
-                    }
-                    return {id: term, text: term};
-                }
-            });
-        });
-
-        $('.date-picker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true
-        });
-
-        tinymce.init({
-            selector: "textarea.tinymce",
-            width: '100%',
-            height: 270,
-            statusbar: false,
-            menubar: false,
-            plugins: [
-                "link",
-                "code"
-            ],
-            toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
-        });
     }
 };
 
