@@ -23,13 +23,23 @@
 <div class="row">
     <div class="col-xs-8">
 
+        <!-- general section -->
         <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ trans('admin/question/title.general_section') }}</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
             <div class="box-body">
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     {!! Form::label('name', trans('admin/question/model.name'), array('class' => 'control-label required')) !!}
                     <div class="controls">
                         {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                        <span class="text-muted"><i
+                                    class="fa fa-info-circle"></i> {{ trans('admin/question/model.name_help') }}</span>
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -40,8 +50,8 @@
                     {!! Form::label('question', trans('admin/question/model.question'), array('class' => 'control-label required')) !!}
                     <div class="controls">
                         {!! Form::textarea('question', null, array('class' => 'form-control tinymce', 'required' => 'required')) !!}
-                        <span class="help-block"><i
-                                    class="fa fa-info-circle"></i> Users will see this text as a question.</span>
+                        <span class="text-muted"><i
+                                    class="fa fa-info-circle"></i> {{ trans('admin/question/model.question_help') }}</span>
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                     </div>
                 </div>
@@ -51,7 +61,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::select('type', array('single' => trans('admin/question/model.single'), 'multi' => trans('admin/question/model.multi')), null, array('class' => 'form-control', 'required' => 'required')) !!}
+                        {!! Form::select('type', trans('admin/question/model.type_list'), null, array('class' => 'form-control')) !!}
                         {{ $errors->first('type', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
@@ -59,29 +69,30 @@
 
                 <!-- answers -->
                 @include('admin/question/_form_choices')
-                <!-- ./ answers -->
+                        <!-- ./ answers -->
 
                 <!-- solution -->
                 <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
                     {!! Form::label('solution', trans('admin/question/model.solution'), array('class' => 'control-label')) !!}
                     <div class="controls">
                         {!! Form::textarea('solution', null, array('class' => 'form-control tinymce')) !!}
-                        <span class="help-block"><i class="fa fa-info-circle"></i> Users will see this text once they have answered.</span>
+                        <span class="text-muted"><i
+                                    class="fa fa-info-circle"></i> {{ trans('admin/question/model.solution_help') }}</span>
                         <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                     </div>
                 </div>
                 <!-- ./ solution -->
             </div>
         </div>
+        <!-- ./ general section -->
+
     </div>
-
-
     <div class="col-xs-4">
 
-        <!-- publish -->
+        <!-- publish section -->
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">Publish</h3>
+                <h3 class="box-title">{{ trans('admin/question/title.publish_section') }}</h3>
             </div>
             <div class="box-body">
                 <!-- status -->
@@ -89,7 +100,7 @@
                     <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                         {!! Form::label('status', trans('admin/question/model.status'), array('class' => 'control-label required')) !!}
                         <div class="controls">
-                            {!! Form::select('status', array('draft' => trans('admin/question/model.draft'), 'publish' => trans('admin/question/model.publish'), 'unpublish' => trans('admin/question/model.unpublish')), null, array('class' => 'form-control', 'required' => 'required')) !!}
+                            {!! Form::select('status', trans('admin/question/model.status_list'), null, array('class' => 'form-control')) !!}
                             {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
@@ -97,19 +108,18 @@
                     {!! Form::hidden('status','draft') !!}
                 @endif
                 <!-- ./ status -->
-
-                    <!-- hidden -->
+                <!-- hidden -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                         {!! Form::label('hidden', trans('admin/question/model.hidden'), array('class' => 'control-label required')) !!}
                         <div class="controls">
-                            {!! Form::select('hidden', array('0' => trans('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')), null, array('class' => 'form-control', 'required' => 'required')) !!}
-                            <p class="text-muted">Hidden questions will not be visible on question's list.<br/>They only
-                                can
-                                access via direct URL.</p>
+                            {!! Form::select('hidden', array('0' => trans('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')), null, array('class' => 'form-control')) !!}
+                            <span class="text-muted"><i
+                                        class="fa fa-info-circle"></i> {{ trans('admin/question/model.hidden_help') }}
+                            </span>
                             {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
-                    <!-- ./ hidden -->
+                <!-- ./ hidden -->
             </div>
             <div class="box-footer">
                 <!-- form actions -->
@@ -119,35 +129,16 @@
                     </button>
                 </a>
                 {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
-                        <!-- ./ form actions -->
+                <!-- ./ form actions -->
             </div>
 
-        </div><!-- ./ box -->
-        <!-- ./ publish -->
-
-        <!-- tags -->
-        <div class="box box-solid">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ trans('admin/question/model.tags') }}</h3>
-
-                <div class="box-tools">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="box-body">
-                {!! Form::label('tag_list[]', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
-                {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
-            </div>
         </div>
-        <!-- ./ tags -->
-
-        <!-- actions -->
+        <!-- ./ publish section -->
+        <!-- badges section -->
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ trans('admin/question/model.actions') }}</h3>
-
-                <div class="box-tools">
+                <h3 class="box-title">{{ trans('admin/question/title.badges_section') }}</h3>
+                <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
                 </div>
@@ -164,9 +155,44 @@
                 @endif
             </div>
         </div>
-        <!-- ./ actions -->
+        <!-- ./ badges section -->
+        <!-- tags section -->
+        <div class="box box-solid collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ trans('admin/question/title.tags_section') }}</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                    <div class="form-group">
+                        {!! Form::label('tag_list[]', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                        {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
+                    </div>
+            </div>
+        </div>
+        <!-- ./ tags section -->
+
+        @if (isset($question))
+                <!-- other information section -->
+        <div class="box box-solid collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ trans('admin/question/title.other_section') }}</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <p>{{ trans('admin/question/model.created_by', ['who' => $question->created_by, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
+                <p>{{ trans('admin/question/model.updated_by', ['who' => $question->updated_by, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
+            </div>
+        </div>
+        <!-- ./ other information section -->
+        @endif
     </div>
-</div><!-- ./ row -->
+</div>
 
 {!! Form::close() !!}
 
