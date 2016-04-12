@@ -12,7 +12,7 @@
     @foreach ($question->choices as $choice)
         <div class="row form-group cloneable">
             <div class="col-sm-9">
-                {!! Form::text('choice_text[]', $choice->text, array('class' => 'form-control')) !!}
+                {!! Form::text('choice_text[]', $choice->text, array('class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help'))) !!}
             </div>
             <div class="col-sm-3">
                 <div class="input-group">
@@ -30,7 +30,7 @@
 
 <div class="row form-group cloneable">
     <div class="col-sm-9">
-        {!! Form::text('choice_text[]', null, array('class' => 'form-control')) !!}
+        {!! Form::text('choice_text[]', null, array('class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help'))) !!}
     </div>
     <div class="col-sm-3">
         <div class="input-group">
@@ -42,5 +42,9 @@
             </span>
         </div>
     </div>
+</div>
+
+<div class="form-group">
+    <span class="text-muted"><i class="fa fa-info-circle"></i> {{ trans('admin/question/model.choice_points_help') }}</span>
 </div>
 <!-- ./ choices -->

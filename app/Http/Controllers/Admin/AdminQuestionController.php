@@ -200,9 +200,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">'.trans('admin/question/model.draft').'</span>',
-            'publish'   => '<span class="label label-success">'.trans('admin/question/model.publish').'</span>',
-            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.unpublish').'</span>',
+            'draft'     => '<span class="label label-default">'.trans('admin/question/model.status_list.draft').'</span>',
+            'publish'   => '<span class="label label-success">'.trans('admin/question/model.status_list.publish').'</span>',
+            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.status_list.unpublish').'</span>',
         ];
 
         return $dataTable->of($question)
