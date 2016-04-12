@@ -229,4 +229,11 @@
 {!! HTML::script('vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') !!}
         <!-- File Input -->
 {!! HTML::script('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') !!}
+
+<script>
+    $('.date-picker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    });
+</script>
 @endsection
