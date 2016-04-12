@@ -104,11 +104,11 @@
                             {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
-                @else
+                    @else
                     {!! Form::hidden('status','draft') !!}
-                @endif
-                <!-- ./ status -->
-                <!-- hidden -->
+                    @endif
+                            <!-- ./ status -->
+                    <!-- hidden -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                         {!! Form::label('hidden', trans('admin/question/model.hidden'), array('class' => 'control-label required')) !!}
                         <div class="controls">
@@ -119,7 +119,7 @@
                             {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
-                <!-- ./ hidden -->
+                    <!-- ./ hidden -->
             </div>
             <div class="box-footer">
                 <!-- form actions -->
@@ -129,7 +129,7 @@
                     </button>
                 </a>
                 {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
-                <!-- ./ form actions -->
+                        <!-- ./ form actions -->
             </div>
 
         </div>
@@ -166,10 +166,10 @@
                 </div>
             </div>
             <div class="box-body">
-                    <div class="form-group">
-                        {!! Form::label('tag_list[]', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
-                        {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
-                    </div>
+                <div class="form-group">
+                    {!! Form::label('tag_list[]', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                    {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
+                </div>
             </div>
         </div>
         <!-- ./ tags section -->
@@ -211,4 +211,27 @@
 {!! HTML::script('vendor/select2/dist/js/select2.min.js') !!}
         <!-- jQuery UJS -->
 {!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
+
+<script>
+    $(".tags-input").select2({
+        tags: true,
+        placeholder: '{{ trans('admin/question/model.tags_help') }}',
+        tokenSeparators: [','],
+        allowClear: true,
+        theme: "bootstrap",
+    });
+
+    tinymce.init({
+        selector: "textarea.tinymce",
+        width: '100%',
+        height: 270,
+        statusbar: false,
+        menubar: false,
+        plugins: [
+            "link",
+            "code"
+        ],
+        toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
+    });
+</script>
 @endsection
