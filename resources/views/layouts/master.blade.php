@@ -11,23 +11,25 @@
     <meta content="Paco Orozco" name="author">
     @yield('meta')
             <!-- end: META -->
-    <!-- start: MAIN CSS -->
+    <!-- start: GLOBAL CSS -->
     {!! HTML::style('vendor/AdminLTE/bootstrap/css/bootstrap.min.css') !!}
-    {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') !!}
-    {!! HTML::style('//code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css') !!}
+    {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') !!}
+    {!! HTML::style('//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css') !!}
+            <!-- end: GLOBAL CSS -->
+    <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+    @yield('styles')
+    <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: MAIN CSS -->
     {!! HTML::style('vendor/AdminLTE/dist/css/AdminLTE.min.css') !!}
     {!! HTML::style('vendor/AdminLTE/dist/css/skins/skin-blue.min.css') !!}
     {!! HTML::style('css/gamify.css') !!}
-            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     {!! HTML::script('//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js') !!}
     {!! HTML::script('//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js') !!}
     <![endif]-->
     <!-- end: MAIN CSS -->
-    <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
-    @yield('styles')
-            <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 </head>
 <!-- end: HEAD -->
@@ -70,20 +72,22 @@
             <!-- end: FOOTER -->
 </div>
 <!-- end: MAIN CONTAINER -->
-<!-- start: MAIN JAVASCRIPTS -->
+<!-- start: GLOBAL JAVASCRIPT -->
 {!! HTML::script('vendor/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js') !!}
 {!! HTML::script('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') !!}
+<!-- end: GLOBAL JAVASCRIPT -->
+<!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
+@yield('scripts')
+<!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
+<!-- start: MAIN JAVASCRIPT -->
 {!! HTML::script('vendor/AdminLTE/dist/js/app.min.js') !!}
 {!! HTML::script('js/gamify.js') !!}
-        <!-- end: MAIN JAVASCRIPTS -->
-<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
-@yield('scripts')
-        <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 <script>
-    (function () {
+    (function() {
         Gamify.init();
     })();
 </script>
+<!-- end: MAIN JAVASCRIPT -->
 </body>
 <!-- end: BODY -->
 </html>
