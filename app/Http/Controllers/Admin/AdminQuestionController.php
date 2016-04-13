@@ -94,7 +94,7 @@ class AdminQuestionController extends AdminController
      */
     public function edit(Question $question)
     {
-        $availableTags = \Gamify\Question::existingTags()->pluck('name', 'slug');
+        $availableTags = Question::existingTags()->pluck('name', 'slug');
         $availableActions = [];
 
         // get actions that hasn't not been used
