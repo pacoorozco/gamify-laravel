@@ -167,8 +167,8 @@
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    {!! Form::label('tag_list[]', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
-                    {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple']) !!}
+                    {!! Form::label('tag_list', trans('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                    {!! Form::select('tag_list[]', $availableTags, null, ['class' => 'form-control tags-input', 'multiple' => 'multiple', 'id' => 'tag_list']) !!}
                 </div>
             </div>
         </div>
@@ -198,27 +198,22 @@
 
 {{-- Styles --}}
 @section('styles')
-        <!-- Select2 -->
-{!! HTML::style('vendor/select2/dist/css/select2.min.css') !!}
-{!! HTML::style('vendor/select2-bootstrap-theme/dist/select2-bootstrap.min.css') !!}
+{!! HTML::style('vendor/AdminLTE/plugins/select2/select2.min.css') !!}
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
-        <!-- TinyMCE -->
 {!! HTML::script('//cdn.tinymce.com/4/tinymce.min.js') !!}
-        <!-- Select2 -->
-{!! HTML::script('vendor/select2/dist/js/select2.min.js') !!}
+{!! HTML::script('vendor/AdminLTE/plugins/select2/select2.full.min.js') !!}
         <!-- jQuery UJS -->
 {!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
 
 <script>
-    $(".tags-input").select2({
+    $("#tag_list").select2({
         tags: true,
         placeholder: '{{ trans('admin/question/model.tags_help') }}',
-        tokenSeparators: [','],
-        allowClear: true,
-        theme: "bootstrap",
+        tokenSeparators: [',', ' '],
+        allowClear: true
     });
 
     tinymce.init({

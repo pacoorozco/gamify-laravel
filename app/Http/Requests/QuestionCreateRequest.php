@@ -4,6 +4,7 @@ namespace Gamify\Http\Requests;
 
 class QuestionCreateRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
