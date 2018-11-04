@@ -3,17 +3,16 @@
 namespace Gamify;
 
 use Conner\Tagging\Taggable;
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
 use Gamify\Traits\RecordSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Cviebrock\EloquentSluggable\Sluggable;
 
-class Question extends Model implements SluggableInterface
+class Question extends Model
 {
     use SoftDeletes;
     use RecordSignature; // Record Signature
-    use SluggableTrait; // Slugs
+    use Sluggable; // Slugs
     use Taggable; // Tags
 
     /**
@@ -32,13 +31,19 @@ class Question extends Model implements SluggableInterface
     protected $dates = ['deleted_at'];
 
     /**
-     * The Question slug in order to implement permanent URL to questions.
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
      */
-    protected $sluggable = [
-        'build_from'      => 'name',
-        'save_to'         => 'shortname',
-        'include_trashed' => true,
-    ];
+    public function sluggable()
+    {
+        return [
+            'shortname' => [
+                'source' => 'name'
+            ],
+            'includeTrashed' => true
+        ];
+    }
 
     /**
      * A question will have some choices.
@@ -58,7 +63,7 @@ class Question extends Model implements SluggableInterface
 
     public function getAvailableActions()
     {
-        $selectedActions = $this->actions()->lists('badge_id')->toArray();
+        $selectedActions = $this->actions()->pluck('badge_id')->toArray();
 
         return Badge::whereNotIn('id', $selectedActions)->get();
     }
@@ -94,7 +99,7 @@ class Question extends Model implements SluggableInterface
      */
     public function getTagListAttribute()
     {
-        return $this->tagged->lists('tag_slug')->all();
+        return $this->tagged->pluck('tag_slug')->all();
     }
 
     /**

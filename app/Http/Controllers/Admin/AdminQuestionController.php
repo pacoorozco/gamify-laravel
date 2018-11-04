@@ -9,7 +9,7 @@ use Gamify\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use yajra\Datatables\Datatables;
+use Yajra\Datatables\Datatables;
 
 class AdminQuestionController extends AdminController
 {

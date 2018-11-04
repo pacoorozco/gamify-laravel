@@ -6,7 +6,7 @@ use Gamify\Http\Requests\LevelCreateRequest;
 use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
 use Illuminate\Http\Request;
-use yajra\Datatables\Datatables;
+use Yajra\Datatables\Datatables;
 
 class AdminLevelController extends AdminController
 {

@@ -1,7 +1,16 @@
 <?php
-
 return [
-
+    /*
+    |--------------------------------------------------------------------------
+    | Application Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the "environment" your application is currently
+    | running in. This may determine how you prefer to configure various
+    | services your application utilizes. Set this in your ".env" file.
+    |
+    */
+    'env' => env('APP_ENV', 'production'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -12,9 +21,7 @@ return [
     | application. If disabled, a simple generic error page is shown.
     |
     */
-
     'debug' => env('APP_DEBUG', false),
-
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -25,9 +32,7 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-
-    'url' => 'http://localhost',
-
+    'url' => env('APP_URL', 'http://localhost'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -38,9 +43,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
     'timezone' => 'UTC',
-
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -51,9 +54,7 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-
     'locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -64,9 +65,7 @@ return [
     | the language folders that are provided through your application.
     |
     */
-
     'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -77,11 +76,8 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-
-    'key' => env('APP_KEY', 'SomeRandomString'),
-
+    'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
-
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -94,9 +90,8 @@ return [
     | Available Settings: "single", "daily", "syslog", "errorlog"
     |
     */
-
-    'log' => 'single',
-
+    'log' => env('APP_LOG', 'single'),
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
     /*
     |--------------------------------------------------------------------------
     | Gamify Version
@@ -105,9 +100,7 @@ return [
     | This is the application version
     |
     */
-
     'version' => '0.2.2',
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -118,19 +111,15 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
-        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -147,14 +136,13 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
-         * Third Party Service Providers...
+         * Package Service Providers...
          */
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class, // Stapler-based file upload package
-        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,  // Slugs for your Eloquent models
+        Cviebrock\EloquentSluggable\ServiceProvider::class,  // Slugs for your Eloquent models
         Collective\Html\HtmlServiceProvider::class,  // HTML helpers
-        yajra\Datatables\DatatablesServiceProvider::class, // Datatables support
+        Yajra\Datatables\DatatablesServiceProvider::class, // Datatables support
         Conner\Tagging\Providers\TaggingServiceProvider::class, // Tags
 
         /*
@@ -180,46 +168,43 @@ return [
 
     'aliases' => [
 
-        'App'        => Illuminate\Support\Facades\App::class,
-        'Artisan'    => Illuminate\Support\Facades\Artisan::class,
-        'Auth'       => Illuminate\Support\Facades\Auth::class,
-        'Blade'      => Illuminate\Support\Facades\Blade::class,
-        'Bus'        => Illuminate\Support\Facades\Bus::class,
-        'Cache'      => Illuminate\Support\Facades\Cache::class,
-        'Config'     => Illuminate\Support\Facades\Config::class,
-        'Cookie'     => Illuminate\Support\Facades\Cookie::class,
-        'Crypt'      => Illuminate\Support\Facades\Crypt::class,
-        'DB'         => Illuminate\Support\Facades\DB::class,
-        'Eloquent'   => Illuminate\Database\Eloquent\Model::class,
-        'Event'      => Illuminate\Support\Facades\Event::class,
-        'File'       => Illuminate\Support\Facades\File::class,
-        'Gate'       => Illuminate\Support\Facades\Gate::class,
-        'Hash'       => Illuminate\Support\Facades\Hash::class,
-        'Input'      => Illuminate\Support\Facades\Input::class,
-        'Inspiring'  => Illuminate\Foundation\Inspiring::class,
-        'Lang'       => Illuminate\Support\Facades\Lang::class,
-        'Log'        => Illuminate\Support\Facades\Log::class,
-        'Mail'       => Illuminate\Support\Facades\Mail::class,
-        'Password'   => Illuminate\Support\Facades\Password::class,
-        'Queue'      => Illuminate\Support\Facades\Queue::class,
-        'Redirect'   => Illuminate\Support\Facades\Redirect::class,
-        'Redis'      => Illuminate\Support\Facades\Redis::class,
-        'Request'    => Illuminate\Support\Facades\Request::class,
-        'Response'   => Illuminate\Support\Facades\Response::class,
-        'Route'      => Illuminate\Support\Facades\Route::class,
-        'Schema'     => Illuminate\Support\Facades\Schema::class,
-        'Session'    => Illuminate\Support\Facades\Session::class,
-        'Storage'    => Illuminate\Support\Facades\Storage::class,
-        'URL'        => Illuminate\Support\Facades\URL::class,
-        'Validator'  => Illuminate\Support\Facades\Validator::class,
-        'View'       => Illuminate\Support\Facades\View::class,
+        'App' => Illuminate\Support\Facades\App::class,
+        'Artisan' => Illuminate\Support\Facades\Artisan::class,
+        'Auth' => Illuminate\Support\Facades\Auth::class,
+        'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Cache' => Illuminate\Support\Facades\Cache::class,
+        'Config' => Illuminate\Support\Facades\Config::class,
+        'Cookie' => Illuminate\Support\Facades\Cookie::class,
+        'Crypt' => Illuminate\Support\Facades\Crypt::class,
+        'DB' => Illuminate\Support\Facades\DB::class,
+        'Eloquent' => Illuminate\Database\Eloquent\Model::class,
+        'Event' => Illuminate\Support\Facades\Event::class,
+        'File' => Illuminate\Support\Facades\File::class,
+        'Gate' => Illuminate\Support\Facades\Gate::class,
+        'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Lang' => Illuminate\Support\Facades\Lang::class,
+        'Log' => Illuminate\Support\Facades\Log::class,
+        'Mail' => Illuminate\Support\Facades\Mail::class,
+        'Password' => Illuminate\Support\Facades\Password::class,
+        'Queue' => Illuminate\Support\Facades\Queue::class,
+        'Redirect' => Illuminate\Support\Facades\Redirect::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+        'Request' => Illuminate\Support\Facades\Request::class,
+        'Response' => Illuminate\Support\Facades\Response::class,
+        'Route' => Illuminate\Support\Facades\Route::class,
+        'Schema' => Illuminate\Support\Facades\Schema::class,
+        'Session' => Illuminate\Support\Facades\Session::class,
+        'Storage' => Illuminate\Support\Facades\Storage::class,
+        'URL' => Illuminate\Support\Facades\URL::class,
+        'Validator' => Illuminate\Support\Facades\Validator::class,
+        'View' => Illuminate\Support\Facades\View::class,
 
         /*
          * Third Party Alias
          */
-        'Form'       => Collective\Html\FormFacade::class,  // HTML Form helpers
-        'HTML'       => Collective\Html\HtmlFacade::class,  // HTML helpers
-        'Datatables' => yajra\Datatables\Datatables::class, // Datatables support
+        'Form' => Collective\Html\FormFacade::class,  // HTML Form helpers
+        'HTML' => Collective\Html\HtmlFacade::class,  // HTML helpers
+        'Datatables' => Yajra\Datatables\Datatables::class, // Datatables support
 
     ],
 

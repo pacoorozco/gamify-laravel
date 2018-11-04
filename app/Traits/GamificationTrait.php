@@ -170,7 +170,7 @@ trait GamificationTrait
     public function getPendingQuestions()
     {
         // TODO: Add an scope to only index questions (published and not answered and not hidden)
-        $answeredQuestions = $this->answeredQuestions()->lists('question_id')->toArray();
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
 
         return Question::PublishedAndVisible()->whereNotIn('id', $answeredQuestions)->get();
     }

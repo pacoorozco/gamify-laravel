@@ -12,8 +12,8 @@ class AdminRewardController extends AdminController
 {
     public function index()
     {
-        $users = User::Member()->lists('username', 'id');
-        $badges = Badge::all()->lists('name', 'id');
+        $users = User::Member()->pluck('username', 'id');
+        $badges = Badge::all()->pluck('name', 'id');
 
         return view('admin.reward.index', compact('users', 'badges'));
     }

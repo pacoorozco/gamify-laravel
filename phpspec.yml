@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: Gamify
-        psr4_prefix: Gamify
-        src_path: app

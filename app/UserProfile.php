@@ -3,9 +3,10 @@
 namespace Gamify;
 
 use Codesleeve\Stapler\ORM\EloquentTrait;
-// Image uploads
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Illuminate\Database\Eloquent\Model;
+
+// Image uploads
 
 class UserProfile extends Model implements StaplerableInterface
 {
@@ -34,11 +35,11 @@ class UserProfile extends Model implements StaplerableInterface
     {
         $this->hasAttachedFile('avatar', [
             'styles' => [
-                'big'    => '220x220',
+                'big' => '220x220',
                 'medium' => '150x150',
-                'small'  => '64x64',
+                'small' => '64x64',
             ],
-            'url'         => '/uploads/:class/:id_partition/:style/:filename',
+            'url' => '/uploads/:class/:id_partition/:style/:filename',
             'default_url' => '/images/missing_profile.png',
         ]);
 

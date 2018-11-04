@@ -6,7 +6,7 @@ use Gamify\Badge;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
 use Illuminate\Http\Request;
-use yajra\Datatables\Datatables;
+use Yajra\Datatables\Datatables;
 
 class AdminBadgeController extends AdminController
 {
