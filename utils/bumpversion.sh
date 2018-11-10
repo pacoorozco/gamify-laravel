@@ -77,7 +77,7 @@ print_finish_release_note()
     #
     # Get last commit messages
     #
-    local _last_commits; _last_commits=$(git log --pretty=short "v${current_version}.." | git shortlog | cat)
+    local _last_commits; _last_commits=$(git log "v${current_version}..HEAD" --pretty=format:'* %B' --no-merges --reverse| cat)
 
     cat <<-EndFinishReleaseNote
     Remember to:
