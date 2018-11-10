@@ -15,3 +15,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Removed
 - Removed [Homestead](https://laravel.com/docs/5.2/homestead) support in favor of docker containers. If you still want to use it, please follow [this instructions](https://laravel.com/docs/5.2/homestead).
+- Removed cached item that were present in `.gitignore`.
