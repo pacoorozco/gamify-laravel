@@ -20,8 +20,8 @@
     @yield('styles')
             <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
     <!-- start: MAIN CSS -->
-    {!! HTML::style('vendor/AdminLTE/dist/css/AdminLTE.min.css') !!}
-    {!! HTML::style('vendor/AdminLTE/dist/css/skins/skin-blue.min.css') !!}
+    {!! HTML::style('vendor/AdminLTE/css/adminlte.min.css') !!}
+    {!! HTML::style('vendor/AdminLTE/css/skins/skin-blue.min.css') !!}
     {!! HTML::style('css/gamify.css') !!}
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,14 +52,14 @@
 </div>
 
 <!-- start: GLOBAL JAVASCRIPT -->
-{!! HTML::script('vendor/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js') !!}
+{!! HTML::script('vendor/AdminLTE/jquery/jquery.min.js') !!}
 {!! HTML::script('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') !!}
         <!-- end: GLOBAL JAVASCRIPT -->
 <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 @yield('scripts')
         <!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 <!-- start: MAIN JAVASCRIPT -->
-{!! HTML::script('vendor/AdminLTE/dist/js/app.min.js') !!}
+{!! HTML::script('vendor/AdminLTE/js/adminlte.min.js') !!}
 <!-- end: MAIN JAVASCRIPT -->
 </body>
 <!-- end: BODY -->

@@ -35,8 +35,8 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.copyDirectory('node_modules/admin-lte/dist', 'public/vendor/AdminLTE/dist');
+mix.copyDirectory('node_modules/admin-lte/dist', 'public/vendor/AdminLTE');
 mix.copyDirectory('node_modules/admin-lte/plugins', 'public/vendor/AdminLTE/plugins');
-mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap/dist', 'public/vendor/AdminLTE/bootstrap/dist');
-mix.copyDirectory('node_modules/admin-lte/bower_components/jquery/dist', 'public/vendor/AdminLTE/jquery/dist');
+mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap/dist', 'public/vendor/AdminLTE/bootstrap');
+mix.copyDirectory('node_modules/admin-lte/bower_components/jquery/dist', 'public/vendor/AdminLTE/jquery');
 

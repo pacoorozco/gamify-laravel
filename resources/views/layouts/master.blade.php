@@ -12,7 +12,7 @@
     @yield('meta')
             <!-- end: META -->
     <!-- start: GLOBAL CSS -->
-    {!! HTML::style('vendor/AdminLTE/bootstrap/dist/css/bootstrap.min.css') !!}
+    {!! HTML::style('vendor/AdminLTE/bootstrap/css/bootstrap.min.css') !!}
     {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') !!}
     {!! HTML::style('//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css') !!}
             <!-- end: GLOBAL CSS -->
@@ -20,8 +20,8 @@
     @yield('styles')
     <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
     <!-- start: MAIN CSS -->
-    {!! HTML::style('vendor/AdminLTE/dist/css/AdminLTE.min.css') !!}
-    {!! HTML::style('vendor/AdminLTE/dist/css/skins/skin-blue.min.css') !!}
+    {!! HTML::style('vendor/AdminLTE/css/AdminLTE.min.css') !!}
+    {!! HTML::style('vendor/AdminLTE/css/skins/skin-blue.min.css') !!}
     {!! HTML::style('css/gamify.css') !!}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,14 +73,14 @@
 </div>
 <!-- end: MAIN CONTAINER -->
 <!-- start: GLOBAL JAVASCRIPT -->
-{!! HTML::script('vendor/AdminLTE/jquery/dist/jquery.min.js') !!}
-{!! HTML::script('vendor/AdminLTE/bootstrap/dist/js/bootstrap.min.js') !!}
+{!! HTML::script('vendor/AdminLTE/jquery/jquery.min.js') !!}
+{!! HTML::script('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') !!}
 <!-- end: GLOBAL JAVASCRIPT -->
 <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 @yield('scripts')
 <!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 <!-- start: MAIN JAVASCRIPT -->
-{!! HTML::script('vendor/AdminLTE/dist/js/adminlte.min.js') !!}
+{!! HTML::script('vendor/AdminLTE/js/adminlte.min.js') !!}
 {!! HTML::script('js/gamify.js') !!}
 <script>
     (function() {
