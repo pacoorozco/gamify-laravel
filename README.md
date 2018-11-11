@@ -129,7 +129,7 @@ Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-l5/blob/master/CONT
 
 ## License
 
-**gamify** is released as free software under [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html)
+**gamify** is released as free software under [GNU GPL v3.0 or later](https://spdx.org/licenses/GPL-3.0-or-later.html)
 
 ## Authors
 

@@ -9,10 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Docker support to be able to run this application in containers. **DO NOT USE THIS CONTAINERS IN PRODUCTION.**
 
 ### Changed
-- Application has been migrated to [Laravel 5.2](https://laravel.com/docs/5.2/).
+- **IMPORTANT**: Application has been migrated to [Laravel 5.5](https://laravel.com/docs/5.5/). 
 - Travis is using PHP 7.1 image to do the builds.
-- `README` has been updated adding information about the project, authors and "how to run this application".
+- `README` has been updated adding information about the project, authors and _"how to run this application"_.
 
 ### Removed
-- Removed [Homestead](https://laravel.com/docs/5.2/homestead) support in favor of docker containers. If you still want to use it, please follow [this instructions](https://laravel.com/docs/5.2/homestead).
+- Removed [Homestead](https://laravel.com/docs/5.5/homestead) support in favor of docker containers. If you still want to use it, please follow [this instructions](https://laravel.com/docs/5.5/homestead).
 - Removed cached item that were present in `.gitignore`.

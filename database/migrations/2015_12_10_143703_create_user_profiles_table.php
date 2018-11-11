@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -19,21 +20,15 @@ class CreateUserProfilesTable extends Migration
 
             $table->text('bio')->nullable();
             $table->string('url')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('phone')->nullable();
-            $table->string('mobile')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->enum('gender', ['male', 'female', 'unspecified'])->default('unspecified');
 
             $table->string('twitter')->nullable();
             $table->string('facebook')->nullable();
-            $table->string('googleplus')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
-
-            $table->string('avatar_file_name')->nullable();
-            $table->integer('avatar_file_size')->nullable();
-            $table->string('avatar_content_type')->nullable();
-            $table->timestamp('avatar_updated_at')->nullable();
 
             $table->timestamps();
         });

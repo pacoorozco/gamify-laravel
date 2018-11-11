@@ -1,67 +1,53 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This file is part of some open source application.
+ *
+ * Licensed under GNU General Public License 3.0.
+ * Some rights reserved. See LICENSE, AUTHORS.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify;
 
 use Carbon\Carbon;
-use Gamify\Traits\GamificationTrait;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model implements
-AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+/**
+ * User model, represents a Gamify user.
+ *
+ * @property  int    $id                      The object unique id.
+ * @property  string $name                    The name of this user.
+ * @property  string $email                   The email address of this user.
+ * @property  string $password                Encrypted password of this user.
+ * @property  string $role                    Role of the user ['user', 'editor', 'administrator'].
+ */
+class User extends Authenticatable
 {
-    use Authenticatable, Authorizable, CanResetPassword, GamificationTrait;
+    use Notifiable;
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'users';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'password',
-        'role',
+        'name', 'email', 'password', 'role',
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * Mutator to hash the password automatically.
-     *
-     * @param $password
-     */
-    public function setPasswordAttribute($password)
-    {
-        $this->attributes['password'] = Hash::make($password);
-    }
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
     /**
      * Users have one user "profile".
      *
-     * @return Model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function profile()
     {
@@ -69,29 +55,20 @@ AuthenticatableContract,
     }
 
     /**
-     * Returns last logged in date.
+     * Returns last logged in date in "x ago" format if it has passed less than a month.
      *
      * @return string
      */
-    public function getLastLoggedDate()
+    public function getLastLoggedDate(): string
     {
-        if (!$this->last_login) {
+        if (!$this->last_login_at) {
             return 'Never';
         }
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login);
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login_at);
 
-        return $date->diffInMonths() >= 1 ? $date->format('j M Y , g:ia') : $date->diffForHumans();
-    }
-
-    /**
-     * Returns a collection of users that are "Members".
-     *
-     * @param $query
-     *
-     * @return Collection
-     */
-    public function scopeMember($query)
-    {
-        return $query->where('role', '=', 'default');
+        if ($date->diffInMonths() >= 1) {
+            return $date->format('j M Y , g:ia');
+        }
+        return $date->diffForHumans();
     }
 }

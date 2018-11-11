@@ -2,7 +2,7 @@
 
 namespace Gamify\Providers;
 
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -13,24 +13,19 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Gamify\Events\SomeEvent' => [
-            'Gamify\Listeners\EventListener',
-        ],
-        'auth.login' => [
-            'Gamify\Listeners\UserEventLoginListener',
+        'Illuminate\Auth\Events\Login' => [
+            'Gamify\Listeners\LogSuccessfulLogin',
         ],
     ];
 
     /**
-     * Register any other events for your application.
-     *
-     * @param \Illuminate\Contracts\Events\Dispatcher $events
+     * Register any events for your application.
      *
      * @return void
      */
-    public function boot(DispatcherContract $events)
+    public function boot()
     {
-        parent::boot($events);
+        parent::boot();
 
         //
     }

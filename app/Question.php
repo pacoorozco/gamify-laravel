@@ -1,23 +1,38 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This file is part of some open source application.
+ *
+ * Licensed under GNU General Public License 3.0.
+ * Some rights reserved. See LICENSE, AUTHORS.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify;
 
-use Conner\Tagging\Taggable;
-use Gamify\Traits\RecordSignature;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentTaggable\Taggable;
+use Gamify\Traits\RecordAuthorSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class Question extends Model
 {
     use SoftDeletes;
-    use RecordSignature; // Record Signature
+    use RecordAuthorSignature; // Record Signature
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
 
-    /**
-     * The database table used by the model.
-     */
     protected $table = 'questions';
     protected $fillable = [
         'name',
@@ -28,7 +43,11 @@ class Question extends Model
         'status',
     ];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'deleted_at',
+        'publication_date',
+        'expiration_date',
+    ];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -38,29 +57,18 @@ class Question extends Model
     public function sluggable()
     {
         return [
-            'shortname' => [
-                'source' => 'name'
+            'short_name' => [
+                'source' => 'name',
             ],
-            'includeTrashed' => true
+            'includeTrashed' => true,
         ];
     }
 
     /**
-     * A question will have some choices.
+     * Get the list of actions that has not been selected yet.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function choices()
-    {
-        return $this->hasMany('Gamify\QuestionChoice');
-    }
-
-    /**
-     * A question will have some actions.
-     */
-    public function actions()
-    {
-        return $this->hasMany('Gamify\QuestionAction');
-    }
-
     public function getAvailableActions()
     {
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
@@ -69,11 +77,21 @@ class Question extends Model
     }
 
     /**
+     * A question will have some actions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function actions()
+    {
+        return $this->hasMany('Gamify\QuestionAction');
+    }
+
+    /**
      * Returns published Questions, including hidden ones.
      *
      * @param $query
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function scopePublished($query)
     {
@@ -85,21 +103,11 @@ class Question extends Model
      *
      * @param $query
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function scopePublishedAndVisible($query)
     {
         return $query->where('status', '=', 'publish')->where('hidden', false);
-    }
-
-    /**
-     * Get a list of tags ids associated with the current Question.
-     *
-     * @return array
-     */
-    public function getTagListAttribute()
-    {
-        return $this->tagged->pluck('tag_slug')->all();
     }
 
     /**
@@ -108,12 +116,22 @@ class Question extends Model
      *
      * @return bool
      */
-    public function canBePublished()
+    public function canBePublished(): bool
     {
-        $answers_count = $this->choices()->count();
+        $answers_count         = $this->choices()->count();
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
+    }
+
+    /**
+     * A question will have some choices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function choices()
+    {
+        return $this->hasMany('Gamify\QuestionChoice');
     }
 
     /**
@@ -124,17 +142,17 @@ class Question extends Model
      *
      * @return string
      */
-    public function excerpt($length = 55, $trailing = '...')
+    public function excerpt($length = 55, $trailing = '...'): string
     {
         $text = strip_tags($this->question);
 
         if (str_word_count($text, 0) > $length) {
             // string exceeded length, truncate and add trailing dots
             $words = str_word_count($text, 2);
-            $pos = array_keys($words);
-            $text = substr($text, 0, $pos[$length]).$trailing;
+            $pos   = array_keys($words);
+            $text  = substr($text, 0, $pos[$length]) . $trailing;
         }
         // string was already short enough, return the string
-        return '<p>'.$text.'</p>';
+        return '<p>' . $text . '</p>';
     }
 }

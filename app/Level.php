@@ -1,47 +1,52 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This file is part of some open source application.
+ *
+ * Licensed under GNU General Public License 3.0.
+ * Some rights reserved. See LICENSE, AUTHORS.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify;
 
-use Codesleeve\Stapler\ORM\EloquentTrait;
-use Codesleeve\Stapler\ORM\StaplerableInterface;
-// Image uploads
-use igaster\laravelTheme\Theme;
 use Illuminate\Database\Eloquent\Model;
-// Theme support
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Level extends Model implements StaplerableInterface
+/**
+ * Model that represents a badge
+ *
+ * @property int     $id                    Object unique id.
+ * @property string  $name                  Name of the level..
+ * @property integer $required_points       How many points do you need to achieve it.
+ * @property string  image_url              URL of the level's image
+ * @property boolean active                 Is this level enabled?
+ */
+class Level extends Model
 {
     use SoftDeletes;
-    use EloquentTrait; // Image Uploads
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'levels';
     protected $fillable = [
         'name',
-        'image',
-        'amount_needed',
+        'required_points',
+        'image_url',
         'active',
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
-    public function __construct(array $attributes = [])
-    {
-        $this->hasAttachedFile('image', [
-            'styles' => [
-                'big'    => '220x220',
-                'medium' => '128x128',
-                'small'  => '64x64',
-            ],
-            'url'         => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/images/missing_level.png',
-        ]);
-
-        parent::__construct($attributes);
-    }
 }
