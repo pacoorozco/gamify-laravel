@@ -30,7 +30,7 @@ class AdminQuestionController extends AdminController
      */
     public function create()
     {
-        $availableTags = Question::existingTags()->pluck('name', 'slug');
+        $availableTags    = Question::existingTags()->pluck('name', 'slug');
         $availableActions = [];
 
         // get actions that hasn't not been used
@@ -94,7 +94,7 @@ class AdminQuestionController extends AdminController
      */
     public function edit(Question $question)
     {
-        $availableTags = Question::existingTags()->pluck('name', 'slug');
+        $availableTags    = Question::existingTags()->pluck('name', 'slug');
         $availableActions = [];
 
         // get actions that hasn't not been used
@@ -109,7 +109,7 @@ class AdminQuestionController extends AdminController
      * Update the specified resource in storage.
      *
      * @param QuestionUpdateRequest $request
-     * @param $question
+     * @param                       $question
      *
      * @return Response
      */
@@ -200,9 +200,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">'.trans('admin/question/model.status_list.draft').'</span>',
-            'publish'   => '<span class="label label-success">'.trans('admin/question/model.status_list.publish').'</span>',
-            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.status_list.unpublish').'</span>',
+            'draft'     => '<span class="label label-default">' . trans('admin/question/model.status_list.draft') . '</span>',
+            'publish'   => '<span class="label label-success">' . trans('admin/question/model.status_list.publish') . '</span>',
+            'unpublish' => '<span class="label label-warning">' . trans('admin/question/model.status_list.unpublish') . '</span>',
         ];
 
         return $dataTable->of($question)

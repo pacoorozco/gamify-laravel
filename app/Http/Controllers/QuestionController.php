@@ -35,12 +35,12 @@ class QuestionController extends Controller
         // TODO: AI. Global Badges
 
         // Obtain how many points has its answer obtained
-        $points = 0;
+        $points  = 0;
         $success = false;
 
         foreach ($request->choices as $answer) {
-            $choice = $question->choices()->find($answer);
-            $points += $choice->points;
+            $choice  = $question->choices()->find($answer);
+            $points  += $choice->points;
             $success = $success || $choice->correct;
         }
         // minimun points for answer is '1'
@@ -55,7 +55,7 @@ class QuestionController extends Controller
         ]);
 
         // Add XP to user
-        Game::addExperience(Auth::user(), $points, 'has earned '.$points.' points.');
+        Game::addExperience(Auth::user(), $points, 'has earned ' . $points . ' points.');
 
         // Deal with Question specific Badges
         if ($success) {

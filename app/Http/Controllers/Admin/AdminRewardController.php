@@ -12,7 +12,7 @@ class AdminRewardController extends AdminController
 {
     public function index()
     {
-        $users = User::Member()->pluck('username', 'id');
+        $users  = User::Member()->pluck('username', 'id');
         $badges = Badge::all()->pluck('name', 'id');
 
         return view('admin.reward.index', compact('users', 'badges'));
@@ -20,8 +20,8 @@ class AdminRewardController extends AdminController
 
     public function giveExperience(RewardExperienceRequest $request)
     {
-        $user = User::findOrFail($request->input('username'));
-        $points = $request->input('points');
+        $user    = User::findOrFail($request->input('username'));
+        $points  = $request->input('points');
         $message = $request->input('message');
 
         if (Game::addExperience($user, $points, $message)) {
@@ -43,7 +43,7 @@ class AdminRewardController extends AdminController
 
     public function giveBadge(RewardBadgeRequest $request)
     {
-        $user = User::findOrFail($request->input('username'));
+        $user  = User::findOrFail($request->input('username'));
         $badge = Badge::findOrFail($request->input('badge'));
 
         if (Game::incrementBadge($user, $badge)) {

@@ -57,7 +57,7 @@ class Question extends Model
     public function sluggable()
     {
         return [
-            'short_name' => [
+            'short_name'     => [
                 'source' => 'name',
             ],
             'includeTrashed' => true,

@@ -15,11 +15,11 @@ class AdminDashboardController extends AdminController
      */
     public function index()
     {
-        $data = [];
-        $data['badges'] = Badge::all()->count();
+        $data              = [];
+        $data['badges']    = Badge::all()->count();
         $data['questions'] = Question::published()->count();
-        $data['answers'] = User::Member()->with('answeredQuestions')->count();
-        $data['members'] = User::Member()->count();
+        $data['answers']   = User::Member()->with('answeredQuestions')->count();
+        $data['members']   = User::Member()->count();
 
         return view('admin.dashboard.index', compact('data'));
     }

@@ -25,7 +25,7 @@ class UserUpdateRequest extends Request
 
         return [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users,email,'.$user->id,
+            'email'    => 'required|email|unique:users,email,' . $user->id,
             'password' => 'between:4,11|confirmed',
             'role'     => 'required|in:default,administrator',
         ];

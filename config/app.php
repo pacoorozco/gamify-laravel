@@ -238,6 +238,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Third Party Alias
+         */
         'Form' => Collective\Html\FormFacade::class, // Forms
         'Html' => Collective\Html\HtmlFacade::class, // HTML
 

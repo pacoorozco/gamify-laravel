@@ -47,7 +47,7 @@ class Game extends Controller
             // this badge was initiated before
             $userBadge->pivot->amount++;
             if ($userBadge->pivot->amount == $badge->amount_needed) {
-                $userBadge->pivot->completed = true;
+                $userBadge->pivot->completed    = true;
                 $userBadge->pivot->completed_on = Carbon::now();
             }
             $saved = $userBadge->pivot->save();

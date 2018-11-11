@@ -138,7 +138,7 @@ class AdminLevelController extends AdminController
             ->addColumn('image', function (Level $level) {
                 $level = Level::find($level->id);
 
-                return '<img src="'.$level->image->url('small').'" width="64" class="img-thumbnail" />';
+                return '<img src="' . $level->image->url('small') . '" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
                 return ($level->active) ? trans('general.yes') : trans('general.no');
