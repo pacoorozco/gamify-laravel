@@ -198,15 +198,15 @@
 
 {{-- Styles --}}
 @section('styles')
-{!! HTML::style('vendor/AdminLTE/plugins/select2/select2.min.css') !!}
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/select2.min.css') }}">
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
-{!! HTML::script('//cdn.tinymce.com/4/tinymce.min.js') !!}
-{!! HTML::script('vendor/AdminLTE/plugins/select2/select2.full.min.js') !!}
+<script type="text/javascript" src="{{ asset('//cdn.tinymce.com/4/tinymce.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
         <!-- jQuery UJS -->
-{!! HTML::script('vendor/jquery-ujs/src/rails.js') !!}
+<script type="text/javascript" src="{{ asset('vendor/jquery-ujs/src/rails.js') }}"></script>
 
 <script>
     $("#tag_list").select2({

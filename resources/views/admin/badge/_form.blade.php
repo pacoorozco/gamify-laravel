@@ -111,11 +111,11 @@
 {{-- Styles --}}
 @section('styles')
         <!-- File Input -->
-{!! HTML::style('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') !!}
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}">
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
         <!-- File Input -->
-{!! HTML::script('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') !!}
+<script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
 @endsection

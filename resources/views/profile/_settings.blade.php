@@ -218,17 +218,17 @@
 
 @section('styles')
         <!-- Date Picker -->
-{!! HTML::style('vendor/AdminLTE/plugins/datepicker/datepicker3.css') !!}
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/datepicker/datepicker3.css') }}">
         <!-- File Input -->
-{!! HTML::style('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') !!}
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}">
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
         <!-- Date Picker -->
-{!! HTML::script('vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') !!}
+<script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
         <!-- File Input -->
-{!! HTML::script('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') !!}
+<script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
 
 <script>
     $('.date-picker').datepicker({

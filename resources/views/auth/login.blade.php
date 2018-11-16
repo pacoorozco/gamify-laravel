@@ -4,7 +4,7 @@
 @section('title'){{ trans('auth.login') }}@endsection
 
 @section('styles')
-    {!! HTML::style('vendor/AdminLTE/plugins/iCheck/square/blue.css') !!}
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
 @endsection
 
 {{-- Content --}}
@@ -58,7 +58,7 @@
 @endsection
 
 @section('scripts')
-    {!! HTML::script('vendor/AdminLTE/plugins/iCheck/icheck.min.js') !!}
+    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
     <script>
         $(function () {
             $('input').iCheck({
