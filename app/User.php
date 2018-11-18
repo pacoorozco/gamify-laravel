@@ -12,8 +12,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify;
@@ -77,6 +77,7 @@ class User extends Authenticatable
         if ($date->diffInMonths() >= 1) {
             return $date->format('j M Y , g:ia');
         }
+
         return $date->diffForHumans();
     }
 

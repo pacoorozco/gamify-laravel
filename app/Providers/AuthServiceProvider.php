@@ -12,8 +12,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Providers;
@@ -54,7 +54,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role === 'administrator';
         });
         Gate::define('manage-questions', function ($user) {
-            return ($user->role === 'editor' || $user->role === 'administrator');
+            return $user->role === 'editor' || $user->role === 'administrator';
         });
         Gate::define('manage-badges', function ($user) {
             return $user->role === 'administrator';

@@ -19,8 +19,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Http\Controllers\Admin;
@@ -125,8 +125,9 @@ class AdminBadgeController extends AdminController
      *
      * @param \Gamify\Badge $badge
      *
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Badge $badge)
     {
@@ -142,8 +143,9 @@ class AdminBadgeController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -163,7 +165,7 @@ class AdminBadgeController extends AdminController
             ->addColumn('image', function (Badge $badge) {
                 $badge = Badge::find($badge->id);
 
-                return '<img src="' . $badge->image_url . '" width="64" class="img-thumbnail" />';
+                return '<img src="'.$badge->image_url.'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Badge $badge) {
                 return ($badge->active) ? trans('general.yes') : trans('general.no');

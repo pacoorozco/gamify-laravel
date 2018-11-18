@@ -19,8 +19,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Http\Controllers\Admin;
@@ -38,7 +38,7 @@ class AdminRewardController extends AdminController
      */
     public function index()
     {
-        $users  = User::Member()->pluck('username', 'id');
+        $users = User::Member()->pluck('username', 'id');
         $badges = Badge::all()->pluck('name', 'id');
 
         return view('admin.reward.index', compact('users', 'badges'));
@@ -51,8 +51,8 @@ class AdminRewardController extends AdminController
      */
     public function giveExperience(RewardExperienceRequest $request)
     {
-        $user    = User::findOrFail($request->input('username'));
-        $points  = $request->input('points');
+        $user = User::findOrFail($request->input('username'));
+        $points = $request->input('points');
         $message = $request->input('message');
 
         if (Game::addExperience($user, $points, $message)) {
@@ -79,7 +79,7 @@ class AdminRewardController extends AdminController
      */
     public function giveBadge(RewardBadgeRequest $request)
     {
-        $user  = User::findOrFail($request->input('username'));
+        $user = User::findOrFail($request->input('username'));
         $badge = Badge::findOrFail($request->input('badge'));
 
         if (Game::incrementBadge($user, $badge)) {

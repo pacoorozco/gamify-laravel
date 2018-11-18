@@ -12,14 +12,13 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
-use Gamify\Role;
 use Gamify\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
@@ -59,7 +58,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -75,7 +74,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return \Gamify\User
      */

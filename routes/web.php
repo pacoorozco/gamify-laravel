@@ -12,8 +12,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 /*
@@ -62,7 +62,6 @@ Auth::routes();
  *  ------------------------------------------
  */
 Route::group(['middleware' => 'auth'], function () {
-
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
 
@@ -83,7 +82,6 @@ Route::group(['middleware' => 'auth'], function () {
  *  ------------------------------------------
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-
     Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminDashboardController@index']);
 
     /* ------------------------------------------

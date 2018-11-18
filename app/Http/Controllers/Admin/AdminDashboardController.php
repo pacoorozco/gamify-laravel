@@ -19,8 +19,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Http\Controllers\Admin;
@@ -38,11 +38,11 @@ class AdminDashboardController extends AdminController
      */
     public function index()
     {
-        $data              = [];
-        $data['badges']    = Badge::all()->count();
+        $data = [];
+        $data['badges'] = Badge::all()->count();
         $data['questions'] = Question::published()->count();
-        $data['answers']   = User::Member()->with('answeredQuestions')->count();
-        $data['members']   = User::Member()->count();
+        $data['answers'] = User::Member()->with('answeredQuestions')->count();
+        $data['members'] = User::Member()->count();
 
         return view('admin.dashboard.index', compact('data'));
     }
