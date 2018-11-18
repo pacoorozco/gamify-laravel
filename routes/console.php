@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Gamify - Gamification platform to implement any serious game mechanic.
  *
  * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>

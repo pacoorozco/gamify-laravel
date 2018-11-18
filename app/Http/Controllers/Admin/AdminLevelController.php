@@ -19,8 +19,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Http\Controllers\Admin;
@@ -125,8 +125,9 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Level $level)
     {
@@ -149,8 +150,9 @@ class AdminLevelController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -170,7 +172,7 @@ class AdminLevelController extends AdminController
             ->addColumn('image', function (Level $level) {
                 $level = Level::find($level->id);
 
-                return '<img src="' . $level->image->url('small') . '" width="64" class="img-thumbnail" />';
+                return '<img src="'.$level->image->url('small').'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
                 return ($level->active) ? trans('general.yes') : trans('general.no');

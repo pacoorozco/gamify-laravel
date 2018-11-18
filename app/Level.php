@@ -12,8 +12,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify;
@@ -22,13 +22,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Model that represents a badge
+ * Model that represents a badge.
  *
  * @property int     $id                    Object unique id.
  * @property string  $name                  Name of the level..
- * @property integer $required_points       How many points do you need to achieve it.
+ * @property int $required_points       How many points do you need to achieve it.
  * @property string  image_url              URL of the level's image
- * @property boolean active                 Is this level enabled?
+ * @property bool active                 Is this level enabled?
  */
 class Level extends Model
 {
@@ -48,5 +48,4 @@ class Level extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-
 }

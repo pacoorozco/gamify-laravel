@@ -19,8 +19,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Traits;
@@ -112,7 +112,7 @@ trait GamificationTrait
      */
     public function atLeastLevel(Level $level)
     {
-        $experience           = $this->getExperiencePoints();
+        $experience = $this->getExperiencePoints();
         $experienceUntilLevel = $level->required_points - $experience;
 
         return $experienceUntilLevel <= 0;

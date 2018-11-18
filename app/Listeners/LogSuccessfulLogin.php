@@ -12,8 +12,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Listeners;
@@ -36,13 +36,13 @@ class LogSuccessfulLogin
     /**
      * Handle the event.
      *
-     * @param  Login $event
+     * @param Login $event
      *
      * @return void
      */
     public function handle(Login $event)
     {
-        $user                = $event->user;
+        $user = $event->user;
         $user->last_login_at = Carbon::now()->toDateTimeString();
         $user->save();
     }

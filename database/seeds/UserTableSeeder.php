@@ -12,10 +12,9 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
-
 use Gamify\User;
 use Illuminate\Database\Seeder;
 
@@ -29,12 +28,12 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         // Creates a normal user
-        $user           = new User();
-        $user->name     = 'User';
+        $user = new User();
+        $user->name = 'User';
         $user->username = 'user';
-        $user->email    = 'user@example.com';
+        $user->email = 'user@example.com';
         $user->password = bcrypt('user');
-        $user->role     = 'user';
+        $user->role = 'user';
         $user->save();
 
         // Attach a, UserProfile
@@ -42,12 +41,12 @@ class UserTableSeeder extends Seeder
         $user->profile()->save($profile);
 
         // Create an administrator user
-        $user           = new User();
-        $user->name     = 'Administrator';
+        $user = new User();
+        $user->name = 'Administrator';
         $user->username = 'admin';
-        $user->email    = 'admin@example.com';
+        $user->email = 'admin@example.com';
         $user->password = bcrypt('admin');
-        $user->role     = 'administrator';
+        $user->role = 'administrator';
         $user->save();
 
         // Attach a, UserProfile

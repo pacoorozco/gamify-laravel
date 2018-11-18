@@ -19,8 +19,8 @@
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
 
 namespace Gamify\Http\Controllers\Admin;
@@ -51,7 +51,7 @@ class AdminQuestionController extends AdminController
      */
     public function create()
     {
-        $availableTags    = Question::existingTags()->pluck('name', 'slug');
+        $availableTags = Question::existingTags()->pluck('name', 'slug');
         $availableActions = [];
 
         // get actions that hasn't not been used
@@ -116,7 +116,7 @@ class AdminQuestionController extends AdminController
      */
     public function edit(Question $question)
     {
-        $availableTags    = Question::existingTags()->pluck('name', 'slug');
+        $availableTags = Question::existingTags()->pluck('name', 'slug');
         $availableActions = [];
 
         // get actions that hasn't not been used
@@ -190,8 +190,9 @@ class AdminQuestionController extends AdminController
      *
      * @param Question $question
      *
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Question $question)
     {
@@ -207,8 +208,9 @@ class AdminQuestionController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -225,9 +227,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">' . trans('admin/question/model.status_list.draft') . '</span>',
-            'publish'   => '<span class="label label-success">' . trans('admin/question/model.status_list.publish') . '</span>',
-            'unpublish' => '<span class="label label-warning">' . trans('admin/question/model.status_list.unpublish') . '</span>',
+            'draft'     => '<span class="label label-default">'.trans('admin/question/model.status_list.draft').'</span>',
+            'publish'   => '<span class="label label-success">'.trans('admin/question/model.status_list.publish').'</span>',
+            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.status_list.unpublish').'</span>',
         ];
 
         return $dataTable->of($question)

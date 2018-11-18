@@ -19,10 +19,9 @@
  * @author         Paco Orozco <paco@pacoorozco.info>
  * @copyright   2018 Paco Orozco
  * @license         GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- * @link               https://github.com/pacoorozco/gamify-l5
  *
+ * @link               https://github.com/pacoorozco/gamify-l5
  */
-
 use Illuminate\Database\Seeder;
 
 class LevelsTableSeeder extends Seeder
@@ -40,7 +39,7 @@ class LevelsTableSeeder extends Seeder
 
         foreach (range(0, 4) as $index) {
             \Gamify\Level::create([
-                'name'          => 'Level '.$index,
+                'name'            => 'Level '.$index,
                 'required_points' => ($index * 10),
             ]);
         }
