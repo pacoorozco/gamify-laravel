@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Added [Laravel Mix](https://github.com/JeffreyWay/laravel-mix) to build assets in this application.
 - Added folder structure to begin application testing support.
 - Added [Scrutinizer](https://scrutinizer-ci.com) code style checks and test coverage.
+- Added [StyleCI](https://styleci.io/) to automatically merge any style fixes into the application repository. This allows us to focus on the content of the contribution and not the code style.
+
 
 ### Changed
 - Composer versions to be compliant with [Laravel 5.5](https://laravel.com/docs/5.5/). 
