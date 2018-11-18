@@ -5,6 +5,9 @@ language: php
 php:
   - 7.2
 
+env:
+  - APP_ENV=testing
+
 notifications:
   email: false
 
