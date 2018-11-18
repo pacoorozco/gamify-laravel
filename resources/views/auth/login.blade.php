@@ -12,7 +12,7 @@
     <!-- start: LOGIN BOX -->
     <p class="login-box-msg">{{ trans('auth.sign_title') }}</p>
 
-    {!! Form::open(array('url' => 'auth/login')) !!}
+    {!! Form::open(['route' => 'login']) !!}
     <div class="form-group has-feedback">
         {!! Form::text('email', null, array(
                     'class' => 'form-control',
