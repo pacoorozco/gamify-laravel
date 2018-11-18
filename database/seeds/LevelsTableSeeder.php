@@ -41,7 +41,7 @@ class LevelsTableSeeder extends Seeder
         foreach (range(0, 4) as $index) {
             \Gamify\Level::create([
                 'name'          => 'Level '.$index,
-                'amount_needed' => ($index * 10),
+                'required_points' => ($index * 10),
             ]);
         }
     }

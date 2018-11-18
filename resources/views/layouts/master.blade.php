@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <!-- start: HEAD -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title', 'Play Area ::') gamify v3</title>
     <!-- start: META -->
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content="gamify v3: A Gamification Platform - Administration" name="description">
     <meta content="Paco Orozco" name="author">
     @yield('meta')
@@ -73,15 +72,15 @@
 </div>
 <!-- end: MAIN CONTAINER -->
 <!-- start: GLOBAL JAVASCRIPT -->
-<script type="text/javascript" src="{{ asset('vendor/AdminLTE/jquery/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/AdminLTE/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- end: GLOBAL JAVASCRIPT -->
 <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 @yield('scripts')
 <!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 <!-- start: MAIN JAVASCRIPT -->
-<script type="text/javascript" src="{{ asset('vendor/AdminLTE/js/adminlte.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/gamify.js') }}"></script>
+<script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('js/gamify.js') }}"></script>
 <script>
     (function() {
         Gamify.init();

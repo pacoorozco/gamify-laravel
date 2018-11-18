@@ -5,7 +5,7 @@
         <div class="container">
             <div class="navbar-header">
                 <!-- start: LOGO -->
-                <a href="{{ route('home') }}" class="navbar-brand"><b>gamify</b> v3</a>
+                <a href="{{ route('home') }}" class="navbar-brand"><strong>gamify</strong> v3</a>
                 <!-- end: LOGO -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
@@ -32,19 +32,19 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ auth()->user()->profile->avatar->url() }}" class="user-image"
+                            <img src="{{ Auth()->user()->profile->avatar }}" class="user-image"
                                  alt="{{ trans('user/profile.avatar') }}"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{ auth()->user()->name }}</span>
+                            <span class="hidden-xs">{{ Auth()->user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ auth()->user()->profile->avatar->url() }}" class="img-circle"
+                                <img src="{{ Auth()->user()->profile->avatar }}" class="img-circle"
                                      alt="{{ trans('user/profile.avatar') }}"/>
                                 <p>
-                                    {{ auth()->user()->name }} - {{ auth()->user()->getLevelName() }}
-                                    <small>Member since {{ date("M Y", strtotime(auth()->user()->created_at)) }}</small>
+                                    {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}
+                                    <small>Member since {{ date("M Y", strtotime(Auth()->user()->created_at)) }}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -62,9 +62,9 @@
                                     </a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat">
-                                        {{ trans('general.logout') }}
-                                    </a>
+                                    {!! Form::open(['route' => 'logout']) !!}
+                                    {!! Form::button(trans('auth.logout'), ['type' => 'submit', 'class' => 'btn btn-default btn-flat']) !!}
+                                    {!! Form::close() !!}
                                 </div>
                             </li>
                         </ul>

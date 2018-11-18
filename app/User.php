@@ -19,6 +19,7 @@
 namespace Gamify;
 
 use Carbon\Carbon;
+use Gamify\Traits\GamificationTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -34,6 +35,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use GamificationTrait;
 
     protected $table = 'users';
     protected $fillable = [
@@ -74,5 +76,17 @@ class User extends Authenticatable
             return $date->format('j M Y , g:ia');
         }
         return $date->diffForHumans();
+    }
+
+    /**
+     * Returns a collection of users that are "Members".
+     *
+     * @param $query
+     *
+     * @return Collection
+     */
+    public function scopeMember($query)
+    {
+        return $query->where('role', '=', 'user');
     }
 }

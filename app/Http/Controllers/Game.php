@@ -46,7 +46,7 @@ class Game extends Controller
         if ($userBadge = $user->badges()->find($badge->id)) {
             // this badge was initiated before
             $userBadge->pivot->amount++;
-            if ($userBadge->pivot->amount == $badge->amount_needed) {
+            if ($userBadge->pivot->amount == $badge->required_repetitions) {
                 $userBadge->pivot->completed    = true;
                 $userBadge->pivot->completed_on = Carbon::now();
             }
@@ -75,7 +75,7 @@ class Game extends Controller
         }
 
         $data = [
-            'amount'       => $badge->amount_needed,
+            'amount'       => $badge->required_repetitions,
             'completed'    => true,
             'completed_on' => Carbon::now(),
         ];

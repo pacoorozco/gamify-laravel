@@ -88,7 +88,7 @@ trait GamificationTrait
     {
         $experience = $this->getExperiencePoints();
 
-        return Level::where('amount_needed', '<=', $experience)->orderBy('amount_needed')->first();
+        return Level::where('required_points', '<=', $experience)->orderBy('required_points')->first();
     }
 
     /**
@@ -113,7 +113,7 @@ trait GamificationTrait
     public function atLeastLevel(Level $level)
     {
         $experience           = $this->getExperiencePoints();
-        $experienceUntilLevel = $level->ammount_needed - $experience;
+        $experienceUntilLevel = $level->required_points - $experience;
 
         return $experienceUntilLevel <= 0;
     }
@@ -127,7 +127,7 @@ trait GamificationTrait
     {
         $experience = $this->getExperiencePoints();
 
-        return Level::where('amount_needed', '>', $experience)->orderBy('amount_needed')->first();
+        return Level::where('required_points', '>', $experience)->orderBy('required_points')->first();
     }
 
     /**
@@ -153,7 +153,7 @@ trait GamificationTrait
     {
         $experience = $this->getExperiencePoints();
 
-        return $level->amount_needed - $experience;
+        return $level->required_points - $experience;
     }
 
     /**
