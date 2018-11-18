@@ -16,34 +16,40 @@
  *
  * Some rights reserved. See LICENSE and AUTHORS files.
  *
- * @author             Paco Orozco <paco@pacoorozco.info>
- * @copyright          2018 Paco Orozco
- * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @author         Paco Orozco <paco@pacoorozco.info>
+ * @copyright   2018 Paco Orozco
+ * @license         GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  * @link               https://github.com/pacoorozco/gamify-l5
  *
  */
 
-namespace Gamify\Http\Controllers\Admin;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Gamify\Badge;
-use Gamify\Question;
-use Gamify\User;
-
-class AdminDashboardController extends AdminController
+class AddRoleToUsersTable extends Migration
 {
     /**
-     * Display a listing of the resource.
+     * Run the migrations.
      *
-     * @return \Illuminate\View\View
+     * @return void
      */
-    public function index()
+    public function up()
     {
-        $data              = [];
-        $data['badges']    = Badge::all()->count();
-        $data['questions'] = Question::published()->count();
-        $data['answers']   = User::Member()->with('answeredQuestions')->count();
-        $data['members']   = User::Member()->count();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('username')->unique();
+        });
+    }
 
-        return view('admin.dashboard.index', compact('data'));
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['username']);
+        });
     }
 }

@@ -1,4 +1,27 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify\Http\Controllers\Admin;
 
@@ -6,9 +29,7 @@ use Gamify\Badge;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Yajra\Datatables\Datatables;
 
 class AdminQuestionController extends AdminController
@@ -16,7 +37,7 @@ class AdminQuestionController extends AdminController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -26,7 +47,7 @@ class AdminQuestionController extends AdminController
     /**
      * Displays the form for question creation.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -46,7 +67,7 @@ class AdminQuestionController extends AdminController
      *
      * @param QuestionCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(QuestionCreateRequest $request)
     {
@@ -58,7 +79,8 @@ class AdminQuestionController extends AdminController
         }
 
         // Save Question Choices
-        for ($i = 0; $i < count($request->choice_text); $i++) {
+        $numberOfChoices = count($request->choice_text);
+        for ($i = 0; $i < $numberOfChoices; $i++) {
             if (empty($request->choice_text[$i])) {
                 continue;
             }
@@ -78,7 +100,7 @@ class AdminQuestionController extends AdminController
      *
      * @param Question $question
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Question $question)
     {
@@ -90,7 +112,7 @@ class AdminQuestionController extends AdminController
      *
      * @param Question $question
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Question $question)
     {
@@ -109,9 +131,9 @@ class AdminQuestionController extends AdminController
      * Update the specified resource in storage.
      *
      * @param QuestionUpdateRequest $request
-     * @param                       $question
+     * @param Question              $question
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
@@ -126,7 +148,8 @@ class AdminQuestionController extends AdminController
         // 1st. Deletes the old ones
         $question->choices()->delete();
         // 2nd. Adds the new ones
-        for ($i = 0; $i < count($request->choice_text); $i++) {
+        $numberOfChoices = count($request->choice_text);
+        for ($i = 0; $i < $numberOfChoices; $i++) {
             if (empty($request->choice_text[$i])) {
                 continue;
             }
@@ -153,9 +176,9 @@ class AdminQuestionController extends AdminController
     /**
      * Remove question page.
      *
-     * @param $question
+     * @param Question $question
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function delete(Question $question)
     {
@@ -165,9 +188,10 @@ class AdminQuestionController extends AdminController
     /**
      * Remove the specified question from storage.
      *
-     * @param $question
+     * @param Question $question
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Question $question)
     {
@@ -180,10 +204,11 @@ class AdminQuestionController extends AdminController
     /**
      * Show a list of all the questions formatted for Datatables.
      *
-     * @param Request    $request
-     * @param Datatables $dataTable
+     * @param \Illuminate\Http\Request     $request
+     * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @return JsonResponse
+     * @return mixed
+     * @throws \Exception
      */
     public function data(Request $request, Datatables $dataTable)
     {

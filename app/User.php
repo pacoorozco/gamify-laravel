@@ -28,6 +28,7 @@ use Illuminate\Notifications\Notifiable;
  *
  * @property  int    $id                      The object unique id.
  * @property  string $name                    The name of this user.
+ * @property  string $username                The username of this user.
  * @property  string $email                   The email address of this user.
  * @property  string $password                Encrypted password of this user.
  * @property  string $role                    Role of the user ['user', 'editor', 'administrator'].
@@ -40,6 +41,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'role',

@@ -1,4 +1,27 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify\Http\Controllers\Admin;
 
@@ -13,7 +36,7 @@ class AdminBadgeController extends AdminController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -23,7 +46,7 @@ class AdminBadgeController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -35,7 +58,7 @@ class AdminBadgeController extends AdminController
      *
      * @param BadgeCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(BadgeCreateRequest $request)
     {
@@ -50,7 +73,7 @@ class AdminBadgeController extends AdminController
      *
      * @param Badge $badge
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Badge $badge)
     {
@@ -62,7 +85,7 @@ class AdminBadgeController extends AdminController
      *
      * @param Badge $badge
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Badge $badge)
     {
@@ -75,7 +98,7 @@ class AdminBadgeController extends AdminController
      * @param BadgeUpdateRequest $request
      * @param Badge              $badge
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(BadgeUpdateRequest $request, Badge $badge)
     {
@@ -90,7 +113,7 @@ class AdminBadgeController extends AdminController
      *
      * @param Badge $badge
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function delete(Badge $badge)
     {
@@ -100,9 +123,10 @@ class AdminBadgeController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Badge $badge
+     * @param \Gamify\Badge $badge
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Badge $badge)
     {
@@ -115,10 +139,11 @@ class AdminBadgeController extends AdminController
     /**
      * Show a list of all badges formatted for Datatables.
      *
-     * @param Request    $request
-     * @param Datatables $dataTable
+     * @param \Illuminate\Http\Request     $request
+     * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @return Datatables JsonResponse
+     * @return mixed
+     * @throws \Exception
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -138,7 +163,7 @@ class AdminBadgeController extends AdminController
             ->addColumn('image', function (Badge $badge) {
                 $badge = Badge::find($badge->id);
 
-                return '<img src="' . $badge->image->url('small') . '" width="64" class="img-thumbnail" />';
+                return '<img src="' . $badge->image_url . '" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Badge $badge) {
                 return ($badge->active) ? trans('general.yes') : trans('general.no');

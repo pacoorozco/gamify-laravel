@@ -7,7 +7,7 @@ build:
 
 filter:
   paths: ["app/*"]
-  
+
 checks:
   php:
     code_rating: true

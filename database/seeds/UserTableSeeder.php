@@ -31,6 +31,7 @@ class UserTableSeeder extends Seeder
         // Creates a normal user
         $user           = new User();
         $user->name     = 'User';
+        $user->username = 'user';
         $user->email    = 'user@example.com';
         $user->password = bcrypt('user');
         $user->role     = 'user';
@@ -43,6 +44,7 @@ class UserTableSeeder extends Seeder
         // Create an administrator user
         $user           = new User();
         $user->name     = 'Administrator';
+        $user->username = 'admin';
         $user->email    = 'admin@example.com';
         $user->password = bcrypt('admin');
         $user->role     = 'administrator';

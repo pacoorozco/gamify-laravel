@@ -1,4 +1,27 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify\Http\Controllers\Admin;
 
@@ -6,9 +29,7 @@ use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 
@@ -17,7 +38,7 @@ class AdminUserController extends AdminController
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -27,7 +48,7 @@ class AdminUserController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -37,9 +58,9 @@ class AdminUserController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserCreateRequest $request
+     * @param \Gamify\Http\Requests\UserCreateRequest $request
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserCreateRequest $request)
     {
@@ -56,9 +77,9 @@ class AdminUserController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param \Gamify\User $user
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function show(User $user)
     {
@@ -68,9 +89,9 @@ class AdminUserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $user
+     * @param \Gamify\User $user
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function edit(User $user)
     {
@@ -80,10 +101,10 @@ class AdminUserController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param UserUpdateRequest $request
-     * @param User              $user
+     * @param \Gamify\Http\Requests\UserUpdateRequest $request
+     * @param \Gamify\User                            $user
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserUpdateRequest $request, User $user)
     {
@@ -96,9 +117,9 @@ class AdminUserController extends AdminController
     /**
      * Remove user.
      *
-     * @param User $user
+     * @param \Gamify\User $user
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function delete(User $user)
     {
@@ -108,9 +129,10 @@ class AdminUserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
+     * @param \Gamify\User $user
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(User $user)
     {
@@ -129,10 +151,11 @@ class AdminUserController extends AdminController
     /**
      * Show a list of all the users formatted for Datatables.
      *
-     * @param Request    $request
-     * @param Datatables $dataTable
+     * @param \Illuminate\Http\Request     $request
+     * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @return JsonResponse
+     * @return mixed
+     * @throws \Exception
      */
     public function data(Request $request, Datatables $dataTable)
     {

@@ -1,4 +1,27 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ * @link               https://github.com/pacoorozco/gamify-l5
+ *
+ */
 
 namespace Gamify\Http\Controllers\Admin;
 
@@ -13,7 +36,7 @@ class AdminLevelController extends AdminController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -23,7 +46,7 @@ class AdminLevelController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -35,7 +58,7 @@ class AdminLevelController extends AdminController
      *
      * @param LevelCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LevelCreateRequest $request)
     {
@@ -50,7 +73,7 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Level $level)
     {
@@ -62,7 +85,7 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Level $level)
     {
@@ -75,7 +98,7 @@ class AdminLevelController extends AdminController
      * @param LevelUpdateRequest $request
      * @param Level              $level
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
@@ -90,7 +113,7 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function delete(Level $level)
     {
@@ -102,7 +125,8 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Level $level)
     {
@@ -119,6 +143,14 @@ class AdminLevelController extends AdminController
      * @param Datatables $dataTable
      *
      * @return Datatables JsonResponse
+     */
+
+    /**
+     * @param \Illuminate\Http\Request     $request
+     * @param \Yajra\Datatables\Datatables $dataTable
+     *
+     * @return mixed
+     * @throws \Exception
      */
     public function data(Request $request, Datatables $dataTable)
     {
