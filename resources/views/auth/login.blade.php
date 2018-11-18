@@ -41,17 +41,17 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">
+            <button type="submit" class="btn btn-primary btn-block btn-flat" id="loginButton">
                 {{ trans('auth.login') }}
             </button>
         </div>
         <!-- /.col -->
     </div>
     {!! Form::close() !!}
-    <a href="{{ url('auth/forgot_password') }}">
+    <a href="{{ route('password.request') }}">
         {{ trans('auth.forgot_password') }}
     </a><br>
-    <a href="{{ url('auth/register') }}" class="text-center">
+    <a href="{{ route('register') }}" class="text-center">
         {{ trans('auth.create_account') }}
     </a>
     <!-- end: LOGIN BOX -->
