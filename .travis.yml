@@ -1,5 +1,5 @@
 dist: xenial
-sudo: required
+sudo: false
 
 language: php
 php:
@@ -8,17 +8,12 @@ php:
 notifications:
   email: false
 
-env:
-  - APP_ENV=testing
-
-
-## Cache composer
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_script:
-  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist --no-suggest
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
