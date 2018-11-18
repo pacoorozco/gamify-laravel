@@ -27,23 +27,10 @@ checks:
     fix_doc_comments: true
 
 tools:
+  # https://scrutinizer-ci.com/docs/tools/external-code-coverage/
   external_code_coverage:
     timeout: 600
 
   php_analyzer: true
   php_code_coverage: true
-  php_code_sniffer:
-    config:
-      standard: "PSR2"
 
-  # PHP CS Fixer (http://http://cs.sensiolabs.org/).
-  php_cs_fixer:
-    enabled: true
-    config:
-      level: psr2
-
-  # Analyzes the size and structure of a PHP project.
-  php_loc: true
-
-  # Security Advisory Checker
-  sensiolabs_security_checker: true
