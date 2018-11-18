@@ -25,13 +25,13 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Http\Requests\UserCreateRequest;
-use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Auth;
+use Gamify\Http\Requests\UserCreateRequest;
+use Gamify\Http\Requests\UserUpdateRequest;
 
 class AdminUserController extends AdminController
 {
@@ -162,7 +162,7 @@ class AdminUserController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             abort(400);
         }
 

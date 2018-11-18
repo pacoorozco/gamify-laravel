@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Http\Requests\LevelCreateRequest;
-use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Gamify\Http\Requests\LevelCreateRequest;
+use Gamify\Http\Requests\LevelUpdateRequest;
 
 class AdminLevelController extends AdminController
 {
@@ -157,7 +157,7 @@ class AdminLevelController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             abort(400);
         }
 

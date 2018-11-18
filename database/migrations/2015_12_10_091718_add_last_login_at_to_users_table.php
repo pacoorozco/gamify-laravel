@@ -15,9 +15,9 @@
  *
  * @link               https://github.com/pacoorozco/gamify-l5
  */
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AddLastLoginAtToUsersTable extends Migration
 {
