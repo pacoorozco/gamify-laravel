@@ -2,8 +2,8 @@
 
 namespace Gamify\Http\Controllers;
 
-use Gamify\Http\Requests\UserProfileUpdateRequest;
 use Gamify\User;
+use Gamify\Http\Requests\UserProfileUpdateRequest;
 
 class UserController extends Controller
 {

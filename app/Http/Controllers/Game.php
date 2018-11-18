@@ -2,10 +2,10 @@
 
 namespace Gamify\Http\Controllers;
 
-use Carbon\Carbon;
+use Gamify\User;
 use Gamify\Badge;
 use Gamify\Point;
-use Gamify\User;
+use Carbon\Carbon;
 
 class Game extends Controller
 {

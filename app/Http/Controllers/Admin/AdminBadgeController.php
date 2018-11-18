@@ -26,10 +26,10 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
-use Gamify\Http\Requests\BadgeCreateRequest;
-use Gamify\Http\Requests\BadgeUpdateRequest;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Gamify\Http\Requests\BadgeCreateRequest;
+use Gamify\Http\Requests\BadgeUpdateRequest;
 
 class AdminBadgeController extends AdminController
 {
@@ -150,7 +150,7 @@ class AdminBadgeController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             abort(400);
         }
 

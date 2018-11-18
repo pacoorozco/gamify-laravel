@@ -26,11 +26,11 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
-use Gamify\Http\Requests\QuestionCreateRequest;
-use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Gamify\Http\Requests\QuestionCreateRequest;
+use Gamify\Http\Requests\QuestionUpdateRequest;
 
 class AdminQuestionController extends AdminController
 {
@@ -162,7 +162,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->status == 'publish') {
-            if (!$question->canBePublished()) {
+            if (! $question->canBePublished()) {
                 return redirect()->back()
                     ->with('error', trans('admin/question/messages.publish.error'));
             }
@@ -215,7 +215,7 @@ class AdminQuestionController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             abort(400);
         }
 
