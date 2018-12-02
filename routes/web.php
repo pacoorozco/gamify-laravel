@@ -45,15 +45,13 @@ Route::model('levels', '\Gamify\Level');
 Route::model('questions', '\Gamify\Question');
 Route::model('actions', '\Gamify\QuestionAction');
 
-// Authentication routes...
+/* ------------------------------------------
+ * Authentication routes
+ *
+ * Routes to be authenticated
+ *  ------------------------------------------
+ */
 Auth::routes();
-//Route::get('auth/login', 'Auth\AuthController@getLogin');
-//Route::post('auth/login', 'Auth\AuthController@postLogin');
-//Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-// Registration routes...
-//Route::get('auth/register', 'Auth\AuthController@getRegister');
-//Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 /* ------------------------------------------
  * Authenticated routes
@@ -81,15 +79,15 @@ Route::group(['middleware' => 'auth'], function () {
  * Routes that User needs to be administrator
  *  ------------------------------------------
  */
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminDashboardController@index']);
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
+    Route::get('/', ['as' => 'home', 'uses' => 'Admin\AdminDashboardController@index']);
 
     /* ------------------------------------------
      *  Users
      *  ------------------------------------------
      */
     // Datatables Ajax route.
-    Route::get('users/data', ['as' => 'admin.users.data', 'uses' => 'Admin\AdminUserController@data']);
+    Route::get('users/data', ['as' => 'users.data', 'uses' => 'Admin\AdminUserController@data']);
 
     // Our special delete confirmation route - uses the show/details view.
     Route::get('users/{users}/delete', ['as' => 'admin.users.delete', 'uses' => 'Admin\AdminUserController@delete']);
@@ -105,17 +103,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /badges/{badge_id}
-    Route::get('badges/data', ['as' => 'admin.badges.data', 'uses' => 'Admin\AdminBadgeController@data']);
+    Route::get('badges/data', ['as' => 'badges.data', 'uses' => 'Admin\AdminBadgeController@data']);
+
+    // Our special delete confirmation route - uses the show/details view.
+    // NOTE: For model biding above to work - the plural parameter {badges} needs
+    // to be used.
+    Route::get('badges/{badges}/delete',
+        ['as' => 'badges.delete', 'uses' => 'Admin\AdminBadgeController@delete']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
     Route::resource('badges', 'Admin\AdminBadgeController');
-
-    // Our special delete confirmation route - uses the show/details view.
-    // NOTE: For model biding above to work - the plural paramameter {badges} needs
-    // to be used.
-    Route::get('badges/{badges}/delete',
-        ['as' => 'admin.badges.delete', 'uses' => 'Admin\AdminBadgeController@delete']);
 
     /* ------------------------------------------
      *  Levels
@@ -124,17 +122,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /levels/{level_id}
-    Route::get('levels/data', ['as' => 'admin.levels.data', 'uses' => 'Admin\AdminLevelController@data']);
+    Route::get('levels/data', ['as' => 'levels.data', 'uses' => 'Admin\AdminLevelController@data']);
+
+    // Our special delete confirmation route - uses the show/details view.
+    // NOTE: For model biding above to work - the plural parameter {badges} needs
+    // to be used.
+    Route::get('levels/{levels}/delete',
+        ['as' => 'levels.delete', 'uses' => 'Admin\AdminLevelController@delete']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
     Route::resource('levels', 'Admin\AdminLevelController');
-
-    // Our special delete confirmation route - uses the show/details view.
-    // NOTE: For model biding above to work - the plural paramameter {badges} needs
-    // to be used.
-    Route::get('levels/{levels}/delete',
-        ['as' => 'admin.levels.delete', 'uses' => 'Admin\AdminLevelController@delete']);
 
     /* ------------------------------------------
      *  Question management
@@ -142,25 +140,29 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
      */
 
     // DataTables Ajax route.
-    Route::get('questions/data', ['as' => 'admin.questions.data', 'uses' => 'Admin\AdminQuestionController@data']);
+    Route::get('questions/data', ['as' => 'questions.data', 'uses' => 'Admin\AdminQuestionController@data']);
 
     // Our special delete confirmation route - uses the show/details view.
+    // NOTE: For model biding above to work - the plural parameter {questions} needs
+    // to be used.
     Route::get('questions/{questions}/delete',
-        ['as' => 'admin.questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
-
-    Route::resource('questions', 'Admin\AdminQuestionController');
+        ['as' => 'questions.delete', 'uses' => 'Admin\AdminQuestionController@delete']);
 
     // Nest routes to deal with actions
     Route::resource('questions.actions', 'Admin\AdminQuestionActionController',
         ['only' => ['create', 'store', 'destroy']]);
 
+    // Pre-baked resource controller actions for index, create, store,
+    // show, edit, update, destroy
+    Route::resource('questions', 'Admin\AdminQuestionController');
+
     /* ------------------------------------------
      *  Give Experience / Badge
      *  ------------------------------------------
      */
-    Route::get('rewards', ['as' => 'admin.rewards.index', 'uses' => 'Admin\AdminRewardController@index']);
+    Route::get('rewards', ['as' => 'rewards.index', 'uses' => 'Admin\AdminRewardController@index']);
     Route::post('rewards/experience',
-        ['as' => 'admin.rewards.experience', 'uses' => 'Admin\AdminRewardController@giveExperience']);
+        ['as' => 'rewards.experience', 'uses' => 'Admin\AdminRewardController@giveExperience']);
     Route::post('rewards/badge',
-        ['as' => 'admin.rewards.badge', 'uses' => 'Admin\AdminRewardController@giveBadge']);
+        ['as' => 'rewards.badge', 'uses' => 'Admin\AdminRewardController@giveBadge']);
 });

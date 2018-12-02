@@ -1,7 +1,7 @@
 <header class="main-header">
 
     <!-- start: LOGO -->
-    <a href="{{ route('admin-home') }}" class="logo">
+    <a href="{{ route('admin.home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><strong>g</strong>v3</span>
         <!-- logo for regular state and mobile devices -->
@@ -10,7 +10,7 @@
     <!-- end: LOGO -->
 
     <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-static-top">
         <!-- start: RESPONSIVE MENU TOGGLER -->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -32,7 +32,7 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="{{ Auth()->user()->profile->avatar->url() }}" class="user-image"
+                        <img src="{{ Auth()->user()->profile->avatar }}" class="user-image"
                              alt="{{ trans('user/profile.avatar') }}"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ Auth()->user()->name }}</span>
@@ -40,7 +40,7 @@
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="{{ Auth()->user()->profile->avatar->url() }}" class="img-circle"
+                            <img src="{{ Auth()->user()->profile->avatar }}" class="img-circle"
                                  alt="{{ trans('user/profile.avatar') }}"/>
                             <p>
                                 {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}
@@ -61,9 +61,9 @@
                                 </a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat">
-                                    {{ trans('general.logout') }}
-                                </a>
+                                {!! Form::open(['route' => 'logout']) !!}
+                                {!! Form::button(trans('auth.logout'), ['type' => 'submit', 'class' => 'btn btn-default btn-flat']) !!}
+                                {!! Form::close() !!}
                             </div>
                         </li>
                     </ul>
@@ -74,4 +74,3 @@
         </div>
     </nav>
 </header>
-
