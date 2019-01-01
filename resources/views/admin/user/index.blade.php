@@ -2,7 +2,7 @@
 
 {{-- Styles --}}
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.css') }}">
 @endsection
 
 {{-- Web site Title --}}
@@ -19,7 +19,7 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin-home') }}">
+        <a href="{{ route('admin.home') }}">
             <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>

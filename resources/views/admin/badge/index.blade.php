@@ -19,7 +19,7 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin-home') }}">
+        <a href="{{ route('admin.home') }}">
             <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>

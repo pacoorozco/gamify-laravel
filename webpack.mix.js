@@ -39,4 +39,8 @@ mix.copyDirectory('node_modules/admin-lte/dist', 'public/vendor/AdminLTE');
 mix.copyDirectory('node_modules/admin-lte/plugins', 'public/vendor/AdminLTE/plugins');
 mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap/dist', 'public/vendor/AdminLTE/bootstrap');
 mix.copyDirectory('node_modules/admin-lte/bower_components/jquery/dist', 'public/vendor/AdminLTE/jquery');
+mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net/js', 'public/vendor/AdminLTE/plugins/datatables');
+mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/js', 'public/vendor/AdminLTE/plugins/datatables');
+mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/css', 'public/vendor/AdminLTE/plugins/datatables');
+
 
