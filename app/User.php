@@ -20,8 +20,9 @@ namespace Gamify;
 
 use Carbon\Carbon;
 use Gamify\Traits\GamificationTrait;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * User model, represents a Gamify user.
@@ -44,7 +45,6 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'role',
     ];
 
     protected $hidden = [
@@ -63,13 +63,23 @@ class User extends Authenticatable
     }
 
     /**
+     * Add a mutator to ensure hashed passwords
+     *
+     * @param string $password
+     */
+    public function setPasswordAttribute(string $password)
+    {
+        $this->attributes['password'] = Hash::make($password);
+    }
+
+    /**
      * Returns last logged in date in "x ago" format if it has passed less than a month.
      *
      * @return string
      */
     public function getLastLoggedDate(): string
     {
-        if (! $this->last_login_at) {
+        if (!$this->last_login_at) {
             return 'Never';
         }
         $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login_at);

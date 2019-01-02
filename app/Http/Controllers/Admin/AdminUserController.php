@@ -64,7 +64,18 @@ class AdminUserController extends AdminController
      */
     public function store(UserCreateRequest $request)
     {
-        $user = User::create($request->all());
+        // Create User
+        $user           = new User();
+        $user->username = $request->input('username');
+        $user->name     = $request->input('name');
+        $user->email    = $request->input('email');
+        $user->role     = $request->input('role');
+        $user->password = $request->input('password');
+
+        if (!$user->save()) {
+            return redirect()->route('admin.users.index')
+                ->with('success', trans('admin/user/messages.create.error'));
+        }
 
         // Insert related models
         $profile = new UserProfile();
@@ -108,10 +119,22 @@ class AdminUserController extends AdminController
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $user->fill($request->all())->save();
+        // Update User
+        $user->name  = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role  = $request->input('role');
+
+        if (!empty($request->input('password'))) {
+            $user->password = $request->input('password');
+        }
+
+        if ($user->save()) {
+            return redirect()->route('admin.users.edit', $user)
+                ->with('success', trans('admin/user/messages.edit.success'));
+        }
 
         return redirect()->route('admin.users.edit', $user)
-            ->with('success', trans('admin/user/messages.edit.success'));
+            ->with('success', trans('admin/user/messages.edit.error'));
     }
 
     /**
@@ -138,15 +161,18 @@ class AdminUserController extends AdminController
     public function destroy(User $user)
     {
         // Can't remove myself
-        if ($user->id == Auth::user()->id) {
+        if ($user->id === Auth::user()->id) {
             return redirect()->route('admin.users.index')
-                ->with('error', trans('admin/user/messages.delete.error'));
+                ->with('error', trans('admin/user/messages.delete.impossible'));
         }
 
-        $user->delete();
+        if ($user->delete()) {
+            return redirect()->route('admin.users.index')
+                ->with('success', trans('admin/user/messages.delete.success'));
+        }
 
         return redirect()->route('admin.users.index')
-            ->with('success', trans('admin/user/messages.delete.success'));
+            ->with('error', trans('admin/user/messages.delete.error'));
     }
 
     /**
