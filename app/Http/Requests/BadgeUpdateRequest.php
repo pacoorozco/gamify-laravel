@@ -24,7 +24,7 @@ class BadgeUpdateRequest extends Request
         $badge = $this->route('badges');
 
         return [
-            'name'                 => 'required|unique:badges,name,' . $badge->id,
+            'name'                 => 'required|unique:badges,name,'.$badge->id,
             'description'          => 'required',
             'required_repetitions' => 'required|integer|min:1',
             'active'               => 'required|boolean',
