@@ -32,7 +32,7 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ Auth()->user()->profile->avatar }}" class="user-image"
+                            <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="user-image"
                                  alt="{{ trans('user/profile.avatar') }}"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth()->user()->name }}</span>
@@ -40,7 +40,7 @@
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ Auth()->user()->profile->avatar }}" class="img-circle"
+                                <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="img-circle"
                                      alt="{{ trans('user/profile.avatar') }}"/>
                                 <p>
                                     {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}

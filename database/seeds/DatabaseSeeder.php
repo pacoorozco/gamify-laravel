@@ -15,6 +15,7 @@
  *
  * @link               https://github.com/pacoorozco/gamify-l5
  */
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,7 +28,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UserTableSeeder::class);
-        $this->call(UserProfilesTableSeeder::class);
         $this->call(BadgesTableSeeder::class);
         $this->call(LevelsTableSeeder::class);
     }

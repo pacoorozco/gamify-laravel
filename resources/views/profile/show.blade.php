@@ -30,7 +30,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive" src="{{ $user->profile->avatar->url() }}"
+                    <img class="profile-user-img img-responsive" src="{{ $user->profile->getAvatarURL() }}"
                          alt="User profile picture">
 
                     <h3 class="profile-username text-center">{{ $user->name }}</h3>

@@ -24,18 +24,18 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Role model, represents a role.
  *
- * @property int    $id                  The object unique id.
- * @property string $bio                 Short bio information.
- * @property string $url                 Homepage.
- * @property string $avatar              URL of the avatar.
- * @property string $phone               Phone number.
- * @property Carbon $date_of_birth       Date of Birth.
- * @property string $gender              Gender, could be 'male', 'female' or 'unspecified'.
- * @property string $twitter             Twitter username
- * @property string $facebook            Facebook username
- * @property string linkedin             LinkedIn username
- * @property string github               GitHub username
- * @property User   user                 User wo belongs to.
+ * @property int    $id                   The object unique id.
+ * @property string $bio                  Short bio information.
+ * @property string $url                  Homepage.
+ * @property string $avatar               URL of the avatar.
+ * @property string $phone                Phone number.
+ * @property Carbon $date_of_birth        Date of Birth.
+ * @property string $gender               Gender, could be 'male', 'female' or 'unspecified'.
+ * @property string $twitter              Twitter username
+ * @property string $facebook             Facebook username
+ * @property string $linkedin             LinkedIn username
+ * @property string $github               GitHub username
+ * @property User   $user                 User wo belongs to.
  */
 class UserProfile extends Model
 {
@@ -51,6 +51,15 @@ class UserProfile extends Model
         'linkedin',
         'github',
     ];
+
+    /**
+     * Returns avatar URL
+     *
+     * @return string
+     */
+    public function getAvatarURL(): string {
+        return asset('images/missing_profile.png');
+    }
 
     /**
      * UserProfile are attached to every User.
