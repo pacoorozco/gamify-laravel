@@ -22,7 +22,6 @@
  *
  * @link               https://github.com/pacoorozco/gamify-l5
  */
-
 use Illuminate\Database\Seeder;
 
 class LevelsTableSeeder extends Seeder
@@ -40,7 +39,7 @@ class LevelsTableSeeder extends Seeder
 
         foreach (range(0, 4) as $index) {
             \Gamify\Level::create([
-                'name'            => 'Level ' . $index,
+                'name'            => 'Level '.$index,
                 'required_points' => ($index * 10),
             ]);
         }
