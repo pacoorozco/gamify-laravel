@@ -25,13 +25,13 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Http\Requests\UserCreateRequest;
+use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
-use Gamify\Http\Requests\UserCreateRequest;
-use Gamify\Http\Requests\UserUpdateRequest;
+use Yajra\Datatables\Datatables;
 
 class AdminUserController extends AdminController
 {
@@ -157,13 +157,13 @@ class AdminUserController extends AdminController
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            abort(400);
+        if (!$request->ajax()) {
+            return response('Forbidden.', 403);
         }
 
         $users = User::select([
@@ -176,11 +176,12 @@ class AdminUserController extends AdminController
 
         return $dataTable->of($users)
             ->addColumn('actions', function (User $user) {
-                return view('admin/partials.actions_dd', [
-                    'model' => 'users',
-                    'id'    => $user->id,
-                ])->render();
+                return view('admin/partials.actions_dd')
+                    ->with('model', 'users')
+                    ->with('id', $user->id)
+                    ->render();
             })
+            ->rawColumns(['actions'])
             ->removeColumn('id')
             ->make(true);
     }

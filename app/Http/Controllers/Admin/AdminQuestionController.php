@@ -216,7 +216,7 @@ class AdminQuestionController extends AdminController
     {
         // Disable this query if isn't AJAX
         if (! $request->ajax()) {
-            abort(400);
+            return response('Forbidden.', 403);
         }
 
         $question = Question::select([
