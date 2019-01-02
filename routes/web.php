@@ -90,7 +90,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::get('users/data', ['as' => 'users.data', 'uses' => 'Admin\AdminUserController@data']);
 
     // Our special delete confirmation route - uses the show/details view.
-    Route::get('users/{users}/delete', ['as' => 'admin.users.delete', 'uses' => 'Admin\AdminUserController@delete']);
+    Route::get('users/{users}/delete', ['as' => 'users.delete', 'uses' => 'Admin\AdminUserController@delete']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
