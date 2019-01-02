@@ -25,13 +25,13 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Http\Requests\UserCreateRequest;
-use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Auth;
+use Gamify\Http\Requests\UserCreateRequest;
+use Gamify\Http\Requests\UserUpdateRequest;
 
 class AdminUserController extends AdminController
 {
@@ -65,14 +65,14 @@ class AdminUserController extends AdminController
     public function store(UserCreateRequest $request)
     {
         // Create User
-        $user           = new User();
+        $user = new User();
         $user->username = $request->input('username');
-        $user->name     = $request->input('name');
-        $user->email    = $request->input('email');
-        $user->role     = $request->input('role');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role = $request->input('role');
         $user->password = $request->input('password');
 
-        if (!$user->save()) {
+        if (! $user->save()) {
             return redirect()->route('admin.users.index')
                 ->with('success', trans('admin/user/messages.create.error'));
         }
@@ -120,11 +120,11 @@ class AdminUserController extends AdminController
     public function update(UserUpdateRequest $request, User $user)
     {
         // Update User
-        $user->name  = $request->input('name');
+        $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->role  = $request->input('role');
+        $user->role = $request->input('role');
 
-        if (!empty($request->input('password'))) {
+        if (! empty($request->input('password'))) {
             $user->password = $request->input('password');
         }
 
@@ -188,7 +188,7 @@ class AdminUserController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response('Forbidden.', 403);
         }
 

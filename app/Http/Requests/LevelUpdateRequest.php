@@ -24,7 +24,7 @@ class LevelUpdateRequest extends Request
         $level = $this->route('levels');
 
         return [
-            'name'            => 'required|unique:levels,name,' . $level->id,
+            'name'            => 'required|unique:levels,name,'.$level->id,
             'required_points' => 'required|integer|min:1',
             'image'           => 'image',
             'active'          => 'required|boolean',
