@@ -22,10 +22,10 @@ class LevelCreateRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|unique:levels,name',
-            'amount_needed' => 'required|integer|min:1',
-            'image'         => 'required|image',
-            'active'        => 'required|boolean',
+            'name'            => 'required|unique:levels,name',
+            'required_points' => 'required|integer|min:1',
+            'image'           => 'required|image',
+            'active'          => 'required|boolean',
         ];
     }
 }

@@ -22,11 +22,11 @@ class BadgeCreateRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|unique:badges,name',
-            'description'   => 'required',
-            'amount_needed' => 'required|integer|min:1',
-            'active'        => 'required|boolean',
-            'image'         => 'required|image',
+            'name'                 => 'required|unique:badges,name',
+            'description'          => 'required',
+            'required_repetitions' => 'required|integer|min:1',
+            'active'               => 'required|boolean',
+            'image'                => 'required|image',
         ];
     }
 }

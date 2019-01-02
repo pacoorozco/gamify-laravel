@@ -62,7 +62,7 @@ trait GamificationTrait
     public function badges()
     {
         return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
-            ->withPivot('amount', 'completed', 'completed_on');
+            ->withPivot('repetitions', 'completed', 'completed_on');
     }
 
     /**

@@ -22,14 +22,14 @@
                 </div>
                 <!-- ./ description -->
 
-                <!-- amount_needed -->
+                <!-- required_repetitions -->
                 <div class="form-group">
-                    {!! Form::label('amount_needed', trans('admin/badge/model.amount_needed'), array('class' => 'control-label')) !!}
+                    {!! Form::label('required_repetitions', trans('admin/badge/model.required_repetitions'), array('class' => 'control-label')) !!}
                     <div class="controls">
-                        {{ $badge->amount_needed }}
+                        {{ $badge->required_repetitions }}
                     </div>
                 </div>
-                <!-- ./ amount_needed -->
+                <!-- ./ required_repetitions -->
 
                 <!-- Activation Status -->
                 <div class="form-group">

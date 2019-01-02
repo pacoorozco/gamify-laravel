@@ -2,10 +2,10 @@
 
 namespace Gamify\Http\Controllers;
 
-use Gamify\User;
+use Carbon\Carbon;
 use Gamify\Badge;
 use Gamify\Point;
-use Carbon\Carbon;
+use Gamify\User;
 
 class Game extends Controller
 {
@@ -45,15 +45,15 @@ class Game extends Controller
     {
         if ($userBadge = $user->badges()->find($badge->id)) {
             // this badge was initiated before
-            $userBadge->pivot->amount++;
-            if ($userBadge->pivot->amount == $badge->required_repetitions) {
-                $userBadge->pivot->completed = true;
+            $userBadge->pivot->repetitions++;
+            if ($userBadge->pivot->repetitions == $badge->required_repetitions) {
+                $userBadge->pivot->completed    = true;
                 $userBadge->pivot->completed_on = Carbon::now();
             }
             $saved = $userBadge->pivot->save();
         } else {
             // this is the first occurrence of this badge for this user
-            $user->badges()->attach($badge->id, ['amount' => '1']);
+            $user->badges()->attach($badge->id, ['repetitions' => '1']);
             $saved = true;
         }
 
@@ -75,7 +75,7 @@ class Game extends Controller
         }
 
         $data = [
-            'amount'       => $badge->required_repetitions,
+            'repetitions'  => $badge->required_repetitions,
             'completed'    => true,
             'completed_on' => Carbon::now(),
         ];

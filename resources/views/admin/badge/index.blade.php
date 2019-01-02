@@ -49,7 +49,7 @@
                 <tr>
                     <th class="col-md-4">{{ trans('admin/badge/model.name') }}</th>
                     <th class="col-md-4">{{ trans('admin/badge/model.image') }}</th>
-                    <th class="col-md-1">{{ trans('admin/badge/model.amount_needed') }}</th>
+                    <th class="col-md-1">{{ trans('admin/badge/model.required_repetitions') }}</th>
                     <th class="col-md-1">{{ trans('admin/badge/model.active') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
                 </tr>
@@ -58,7 +58,7 @@
                 <tr>
                     <th class="col-md-4">{{ trans('admin/badge/model.name') }}</th>
                     <th class="col-md-4">{{ trans('admin/badge/model.image') }}</th>
-                    <th class="col-md-1">{{ trans('admin/badge/model.amount_needed') }}</th>
+                    <th class="col-md-1">{{ trans('admin/badge/model.required_repetitions') }}</th>
                     <th class="col-md-1">{{ trans('admin/badge/model.active') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
                 </tr>
@@ -84,7 +84,7 @@
                 "columns": [
                     {data: "name"},
                     {data: "image", "orderable": false, "searchable": false},
-                    {data: "amount_needed"},
+                    {data: "required_repetitions"},
                     {data: "active"},
                     {data: "actions", "orderable": false, "searchable": false}
                 ],

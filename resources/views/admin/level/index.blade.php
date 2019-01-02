@@ -52,7 +52,7 @@
                 <tr>
                     <th class="col-md-4">{{ trans('admin/level/model.name') }}</th>
                     <th class="col-md-4">{{ trans('admin/level/model.image') }}</th>
-                    <th class="col-md-1">{{ trans('admin/level/model.amount_needed') }}</th>
+                    <th class="col-md-1">{{ trans('admin/level/model.required_points') }}</th>
                     <th class="col-md-1">{{ trans('admin/level/model.active') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
                 </tr>
@@ -61,7 +61,7 @@
                 <tr>
                     <th class="col-md-4">{{ trans('admin/level/model.name') }}</th>
                     <th class="col-md-4">{{ trans('admin/level/model.image') }}</th>
-                    <th class="col-md-1">{{ trans('admin/level/model.amount_needed') }}</th>
+                    <th class="col-md-1">{{ trans('admin/level/model.required_points') }}</th>
                     <th class="col-md-1">{{ trans('admin/level/model.active') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
                 </tr>
@@ -86,7 +86,7 @@
                 "columns": [
                     {data: "name"},
                     {data: "image", "orderable": false, "searchable": false},
-                    {data: "amount_needed"},
+                    {data: "required_points"},
                     {data: "active"},
                     {data: "actions", "orderable": false, "searchable": false}
                 ],
