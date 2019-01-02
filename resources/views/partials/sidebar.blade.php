@@ -17,7 +17,7 @@
     </li>
     @can('admin')
     <li>
-        <a href="{{ route('admin-home') }}" title="{{ trans('site.admin_area') }}">
+        <a href="{{ route('admin.home') }}" title="{{ trans('site.admin_area') }}">
             <i class="fa fa-gears"></i> {{ trans('site.admin_area') }}
         </a>
     </li>
