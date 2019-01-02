@@ -53,11 +53,12 @@ class UserProfile extends Model
     ];
 
     /**
-     * Returns avatar URL
+     * Returns avatar URL.
      *
      * @return string
      */
-    public function getAvatarURL(): string {
+    public function getAvatarURL(): string
+    {
         return asset('images/missing_profile.png');
     }
 
