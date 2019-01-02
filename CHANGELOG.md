@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 
 ### Changed
+- CI has been migrated to [Travis CI COM](https://travis-ci.com/).
 - Some fields has been renamed:
   - Model: Badge, `amount` is now `required_repetitions`.
   - Model: Level, `amount` is now `required_points`.
