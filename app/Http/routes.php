@@ -45,7 +45,6 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
  *  ------------------------------------------
  */
 Route::group(['middleware' => 'auth'], function () {
-
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
 
@@ -66,7 +65,6 @@ Route::group(['middleware' => 'auth'], function () {
  *  ------------------------------------------
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-
     Route::get('/', ['as' => 'admin-home', 'uses' => 'Admin\AdminDashboardController@index']);
 
     /* ------------------------------------------
@@ -148,5 +146,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ['as' => 'admin.rewards.experience', 'uses' => 'Admin\AdminRewardController@giveExperience']);
     Route::post('rewards/badge',
         ['as' => 'admin.rewards.badge', 'uses' => 'Admin\AdminRewardController@giveBadge']);
-
 });

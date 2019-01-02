@@ -27,7 +27,6 @@ $factory->define(Gamify\User::class, function (Faker\Generator $faker) {
  *
  */
 $factory->define(\Gamify\Badge::class, function (Faker\Generator $faker) {
-
     $color = $faker->unique()->safeColorName;
 
     return [
