@@ -15,9 +15,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Added folder structure to begin application testing support.
 - Added [Scrutinizer](https://scrutinizer-ci.com) code style checks and test coverage.
 - Added [StyleCI](https://styleci.io/) to automatically merge any style fixes into the application repository. This allows us to focus on the content of the contribution and not the code style.
+- Added [Laravel IDE Helper](https://github.com/barryvdh/laravel-ide-helper) to allow auto-completion on IDE.
 
 
 ### Changed
+- Some fields has been renamed:
+  - Model: Badge, `amount` is now `required_repetitions`.
+  - Model: Level, `amount` is now `required_points`.
+  - Pivot tables: `Badge-Users`, `amount` is now `repetitions`.
+- Move DataTables to `public/vendor`.
 - Composer versions to be compliant with [Laravel 5.5](https://laravel.com/docs/5.5/). 
 - Travis is using PHP 7.2 image to do the builds.
 - `README` has been updated adding information about the project, authors and _"how to run this application"_.
