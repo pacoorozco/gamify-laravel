@@ -70,7 +70,8 @@ class AdminBadgeController extends AdminController
         $badge->active               = $request->input('active');
 
         if (!$badge->save()) {
-            return redirect()->route('admin.badges.index')
+            return redirect()->back()
+                ->withInput()
                 ->with('error', trans('admin/badge/messages.create.error'));
         }
 
@@ -119,7 +120,8 @@ class AdminBadgeController extends AdminController
         $badge->active               = $request->input('active');
 
         if (!$badge->save()) {
-            return redirect()->route('admin.badges.index')
+            return redirect()->back()
+                ->withInput()
                 ->with('error', trans('admin/badge/messages.update.error'));
         }
 
@@ -151,7 +153,7 @@ class AdminBadgeController extends AdminController
     public function destroy(Badge $badge)
     {
         if (!$badge->delete()) {
-            return redirect()->route('admin.badges.index')
+            return redirect()->back()
                 ->with('error', trans('admin/badge/messages.delete.error'));
         }
 
