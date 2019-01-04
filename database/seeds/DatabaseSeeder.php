@@ -15,7 +15,6 @@
  *
  * @link               https://github.com/pacoorozco/gamify-l5
  */
-
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
