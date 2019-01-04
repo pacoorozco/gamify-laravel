@@ -25,13 +25,13 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Http\Requests\UserCreateRequest;
+use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
-use Gamify\Http\Requests\UserCreateRequest;
-use Gamify\Http\Requests\UserUpdateRequest;
+use Yajra\Datatables\Datatables;
 
 class AdminUserController extends AdminController
 {
@@ -65,16 +65,17 @@ class AdminUserController extends AdminController
     public function store(UserCreateRequest $request)
     {
         // Create User
-        $user = new User();
+        $user           = new User();
         $user->username = $request->input('username');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->role = $request->input('role');
+        $user->name     = $request->input('name');
+        $user->email    = $request->input('email');
+        $user->role     = $request->input('role');
         $user->password = $request->input('password');
 
-        if (! $user->save()) {
-            return redirect()->route('admin.users.index')
-                ->with('success', trans('admin/user/messages.create.error'));
+        if (!$user->save()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', trans('admin/user/messages.create.error'));
         }
 
         // Insert related models
@@ -120,21 +121,22 @@ class AdminUserController extends AdminController
     public function update(UserUpdateRequest $request, User $user)
     {
         // Update User
-        $user->name = $request->input('name');
+        $user->name  = $request->input('name');
         $user->email = $request->input('email');
-        $user->role = $request->input('role');
+        $user->role  = $request->input('role');
 
-        if (! empty($request->input('password'))) {
+        if (!empty($request->input('password'))) {
             $user->password = $request->input('password');
         }
 
-        if ($user->save()) {
-            return redirect()->route('admin.users.edit', $user)
-                ->with('success', trans('admin/user/messages.edit.success'));
+        if (!$user->save()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', trans('admin/user/messages.edit.error'));
         }
 
         return redirect()->route('admin.users.edit', $user)
-            ->with('success', trans('admin/user/messages.edit.error'));
+            ->with('success', trans('admin/user/messages.edit.success'));
     }
 
     /**
@@ -166,13 +168,13 @@ class AdminUserController extends AdminController
                 ->with('error', trans('admin/user/messages.delete.impossible'));
         }
 
-        if ($user->delete()) {
-            return redirect()->route('admin.users.index')
-                ->with('success', trans('admin/user/messages.delete.success'));
+        if (!$user->delete()) {
+            return redirect()->back()
+                ->with('error', trans('admin/user/messages.delete.error'));
         }
 
         return redirect()->route('admin.users.index')
-            ->with('error', trans('admin/user/messages.delete.error'));
+            ->with('success', trans('admin/user/messages.delete.success'));
     }
 
     /**
@@ -188,7 +190,7 @@ class AdminUserController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
+        if (!$request->ajax()) {
             return response('Forbidden.', 403);
         }
 
