@@ -26,10 +26,10 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
-use Gamify\Http\Requests\BadgeCreateRequest;
-use Gamify\Http\Requests\BadgeUpdateRequest;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Gamify\Http\Requests\BadgeCreateRequest;
+use Gamify\Http\Requests\BadgeUpdateRequest;
 
 class AdminBadgeController extends AdminController
 {
@@ -63,14 +63,14 @@ class AdminBadgeController extends AdminController
     public function store(BadgeCreateRequest $request)
     {
         // Create Badge
-        $badge                       = new Badge();
-        $badge->name                 = $request->input('name');
-        $badge->description          = $request->input('description');
+        $badge = new Badge();
+        $badge->name = $request->input('name');
+        $badge->description = $request->input('description');
         $badge->required_repetitions = $request->input('required_repetitions');
         //$badge->image_url = $request->input('image');
         $badge->active = $request->input('active');
 
-        if (!$badge->save()) {
+        if (! $badge->save()) {
             return redirect()->route('admin.badges.index')
                 ->with('success', trans('admin/badge/messages.create.error'));
         }
@@ -114,13 +114,13 @@ class AdminBadgeController extends AdminController
     public function update(BadgeUpdateRequest $request, Badge $badge)
     {
         // Update Badge
-        $badge->name                 = $request->input('name');
-        $badge->description          = $request->input('description');
+        $badge->name = $request->input('name');
+        $badge->description = $request->input('description');
         $badge->required_repetitions = $request->input('required_repetitions');
         //$badge->image_url = $request->input('image');
         $badge->active = $request->input('active');
 
-        if (!$badge->save()) {
+        if (! $badge->save()) {
             return redirect()->route('admin.badges.index')
                 ->with('success', trans('admin/badge/messages.update.error'));
         }
@@ -152,7 +152,7 @@ class AdminBadgeController extends AdminController
      */
     public function destroy(Badge $badge)
     {
-        if (!$badge->delete()) {
+        if (! $badge->delete()) {
             return redirect()->route('admin.badges.index')
                 ->with('success', trans('admin/badge/messages.delete.error'));
         }
@@ -174,7 +174,7 @@ class AdminBadgeController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response('Forbidden.', 403);
         }
 
@@ -187,8 +187,8 @@ class AdminBadgeController extends AdminController
 
         return $dataTable->of($badges)
             ->addColumn('image', function (Badge $badge) {
-                 return '<img src="' . $badge->getImageURL() . '" width="64" class="img-thumbnail" />';
-             })
+                return '<img src="'.$badge->getImageURL().'" width="64" class="img-thumbnail" />';
+            })
             ->editColumn('active', function (Badge $badge) {
                 return ($badge->active) ? trans('general.yes') : trans('general.no');
             })
