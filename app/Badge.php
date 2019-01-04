@@ -52,11 +52,12 @@ class Badge extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Returns Image URL
+     * Returns Image URL.
      *
      * @return string
      */
-    public function getImageURL(): string {
+    public function getImageURL(): string
+    {
         return asset('images/missing_badge.png');
     }
 }
