@@ -43,6 +43,7 @@ mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net/js', '
 mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/js', 'public/vendor/AdminLTE/plugins/datatables');
 mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/css', 'public/vendor/AdminLTE/plugins/datatables');
 mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap-datepicker/dist', 'public/vendor/AdminLTE/plugins/bootstrap-datepicker');
+mix.copyDirectory('node_modules/admin-lte/bower_components/select2/dist', 'public/vendor/AdminLTE/plugins/select2');
 
 
 
