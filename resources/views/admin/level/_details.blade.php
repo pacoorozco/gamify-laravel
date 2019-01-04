@@ -39,7 +39,7 @@
                     {!! Form::label('image', trans('admin/level/model.image'), array('class' => 'control-label')) !!}
                     <div class="controls">
                         @if (isset($level))
-                            <img src="{{ $level->image->url('big') }}" class="img-thumbnail" alt="Big size">
+                            <img src="{{ $level->getImageURL() }}" class="img-thumbnail" alt="Big size">
                         @endif
                     </div>
                 </div>

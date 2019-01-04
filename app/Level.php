@@ -48,4 +48,13 @@ class Level extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Returns Image URL
+     *
+     * @return string
+     */
+    public function getImageURL(): string {
+        return asset('images/missing_level.png');
+    }
 }

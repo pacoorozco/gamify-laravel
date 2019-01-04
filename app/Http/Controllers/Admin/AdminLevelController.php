@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Http\Requests\LevelCreateRequest;
+use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use Gamify\Http\Requests\LevelCreateRequest;
-use Gamify\Http\Requests\LevelUpdateRequest;
 
 class AdminLevelController extends AdminController
 {
@@ -62,7 +62,16 @@ class AdminLevelController extends AdminController
      */
     public function store(LevelCreateRequest $request)
     {
-        Level::create($request->all());
+        $level                  = new Level();
+        $level->name            = $request->input('name');
+        $level->required_points = $request->input('required_points');
+        $level->active          = $request->input('active');
+
+        if (!$level->save()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', trans('admin/level/messages.create.error'));
+        }
 
         return redirect()->route('admin.levels.index')
             ->with('success', trans('admin/level/messages.create.success'));
@@ -102,7 +111,15 @@ class AdminLevelController extends AdminController
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
-        $level->fill($request->all())->save();
+        $level->name            = $request->input('name');
+        $level->required_points = $request->input('required_points');
+        $level->active          = $request->input('active');
+
+        if (!$level->save()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', trans('admin/level/messages.update.error'));
+        }
 
         return redirect()->route('admin.levels.index')
             ->with('success', trans('admin/level/messages.update.success'));
@@ -131,7 +148,10 @@ class AdminLevelController extends AdminController
      */
     public function destroy(Level $level)
     {
-        $level->delete();
+        if (!$level->delete()) {
+            return redirect()->back()
+                ->with('error', trans('admin/level/messages.delete.error'));
+        }
 
         return redirect()->route('admin.levels.index')
             ->with('success', trans('admin/level/messages.delete.success'));
@@ -152,40 +172,37 @@ class AdminLevelController extends AdminController
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
+        if (!$request->ajax()) {
             return response('Forbidden.', 403);
         }
 
         $levels = Level::select([
             'id',
             'name',
-            'amount_needed',
+            'required_points',
             'active',
-        ])->orderBy('amount_needed', 'ASC');
+        ])->orderBy('required_points', 'ASC');
 
         return $dataTable::of($levels)
             ->addColumn('image', function (Level $level) {
-                $level = Level::find($level->id);
-
-                return '<img src="'.$level->image->url('small').'" width="64" class="img-thumbnail" />';
+                return '<img src="' . $level->getImageURL() . '" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
                 return ($level->active) ? trans('general.yes') : trans('general.no');
             })
             ->addColumn('actions', function (Level $level) {
-                return view('admin/partials.actions_dd', [
-                    'model' => 'levels',
-                    'id'    => $level->id,
-                ])->render();
+                return view('admin/partials.actions_dd')
+                    ->with('model', 'levels')
+                    ->with('id', $level->id)
+                    ->render();
             })
+            ->rawColumns(['actions', 'image'])
             ->removeColumn('id')
             ->make(true);
-
-        return View::make()->render();
     }
 }
