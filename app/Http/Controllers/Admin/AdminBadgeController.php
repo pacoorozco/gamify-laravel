@@ -66,7 +66,7 @@ class AdminBadgeController extends AdminController
         $badge                       = new Badge();
         $badge->name                 = $request->input('name');
         $badge->description          = $request->input('description');
-        $badge->required_repetitions = $request->input('required_repetitions')
+        $badge->required_repetitions = $request->input('required_repetitions');
         $badge->active               = $request->input('active');
 
         if (!$badge->save()) {
