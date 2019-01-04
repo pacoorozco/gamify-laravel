@@ -24,12 +24,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Model that represents a badge.
  *
- * @property int      $id                    Object unique id.
- * @property string   $name                  Name of this badge.
- * @property string   $description           Description of the badge.
- * @property  int $required_repetitions  How many times you need to request the badge to achieve it.
- * @property string   image_url              URL of the badge's image
- * @property bool  active                 Is this badge enabled?
+ * @property int    $id                    Object unique id.
+ * @property string $name                  Name of this badge.
+ * @property string $description           Description of the badge.
+ * @property int    $required_repetitions  How many times you need to request the badge to achieve it.
+ * @property string image_url              URL of the badge's image
+ * @property bool   active                 Is this badge enabled?
  */
 class Badge extends Model
 {
@@ -50,4 +50,13 @@ class Badge extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Returns Image URL
+     *
+     * @return string
+     */
+    public function getImageURL(): string {
+        return asset('images/missing_badge.png');
+    }
 }

@@ -54,6 +54,7 @@
             <div class="col-xs-6">
 
                 <!-- image -->
+                {{--
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
                     {!! Form::label('image', trans('admin/badge/model.image'), array('class' => 'control-label required')) !!}
                     <p class="text-muted">{{ trans('admin/badge/model.image_help') }}</p>
@@ -81,6 +82,7 @@
                     </div>
                     <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                 </div>
+                --}}
                 <!-- ./ image -->
 
                 <!-- activation status -->
@@ -111,11 +113,11 @@
 {{-- Styles --}}
 @section('styles')
         <!-- File Input -->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
         <!-- File Input -->
-<script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
 @endsection

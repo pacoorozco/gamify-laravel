@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class BadgeCreateRequest extends Request
 {
     /**
@@ -22,11 +24,11 @@ class BadgeCreateRequest extends Request
     public function rules()
     {
         return [
-            'name'                 => 'required|unique:badges,name',
-            'description'          => 'required',
-            'required_repetitions' => 'required|integer|min:1',
-            'active'               => 'required|boolean',
-            'image'                => 'required|image',
+            'name'                 => ['required', 'string', Rule::unique('badges')],
+            'description'          => ['required'],
+            'required_repetitions' => ['required', 'integer', 'min:1'],
+            'active'               => ['required', 'boolean'],
+            //'image'                => ['required', 'string'],
         ];
     }
 }
