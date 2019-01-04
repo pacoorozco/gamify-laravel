@@ -66,13 +66,12 @@ class AdminBadgeController extends AdminController
         $badge                       = new Badge();
         $badge->name                 = $request->input('name');
         $badge->description          = $request->input('description');
-        $badge->required_repetitions = $request->input('required_repetitions');
-        //$badge->image_url = $request->input('image');
-        $badge->active = $request->input('active');
+        $badge->required_repetitions = $request->input('required_repetitions')
+        $badge->active               = $request->input('active');
 
         if (!$badge->save()) {
             return redirect()->route('admin.badges.index')
-                ->with('success', trans('admin/badge/messages.create.error'));
+                ->with('error', trans('admin/badge/messages.create.error'));
         }
 
         return redirect()->route('admin.badges.index')
@@ -117,12 +116,11 @@ class AdminBadgeController extends AdminController
         $badge->name                 = $request->input('name');
         $badge->description          = $request->input('description');
         $badge->required_repetitions = $request->input('required_repetitions');
-        //$badge->image_url = $request->input('image');
-        $badge->active = $request->input('active');
+        $badge->active               = $request->input('active');
 
         if (!$badge->save()) {
             return redirect()->route('admin.badges.index')
-                ->with('success', trans('admin/badge/messages.update.error'));
+                ->with('error', trans('admin/badge/messages.update.error'));
         }
 
         return redirect()->route('admin.badges.index')
@@ -154,7 +152,7 @@ class AdminBadgeController extends AdminController
     {
         if (!$badge->delete()) {
             return redirect()->route('admin.badges.index')
-                ->with('success', trans('admin/badge/messages.delete.error'));
+                ->with('error', trans('admin/badge/messages.delete.error'));
         }
 
         return redirect()->route('admin.badges.index')
@@ -187,8 +185,8 @@ class AdminBadgeController extends AdminController
 
         return $dataTable->of($badges)
             ->addColumn('image', function (Badge $badge) {
-                 return '<img src="' . $badge->getImageURL() . '" width="64" class="img-thumbnail" />';
-             })
+                return '<img src="' . $badge->getImageURL() . '" width="64" class="img-thumbnail" />';
+            })
             ->editColumn('active', function (Badge $badge) {
                 return ($badge->active) ? trans('general.yes') : trans('general.no');
             })
