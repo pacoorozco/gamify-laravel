@@ -26,11 +26,11 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
+use Gamify\Http\Requests\QuestionCreateRequest;
+use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use Gamify\Http\Requests\QuestionCreateRequest;
-use Gamify\Http\Requests\QuestionUpdateRequest;
 
 class AdminQuestionController extends AdminController
 {
@@ -51,15 +51,17 @@ class AdminQuestionController extends AdminController
      */
     public function create()
     {
-        $availableTags = Question::existingTags()->pluck('name', 'slug');
-        $availableActions = [];
+        $availableTagArray = Question::allTags();
+        $availableTags     = array_combine($availableTagArray, $availableTagArray);
+        $selectedTags      = [];
 
+        $availableActions = [];
         // get actions that hasn't not been used
         foreach (Badge::all() as $action) {
             $availableActions[$action->id] = $action->name;
         }
 
-        return view('admin/question/create', compact('availableTags', 'availableActions'));
+        return view('admin/question/create', compact('availableTags', 'selectedTags', 'availableActions'));
     }
 
     /**
@@ -71,24 +73,41 @@ class AdminQuestionController extends AdminController
      */
     public function store(QuestionCreateRequest $request)
     {
-        $question = Question::create($request->only(['name', 'question', 'solution', 'type', 'hidden']));
+        $question = new Question();
+        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden']));
+
+        if (!$question->save()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', trans('admin/question/messages.create.error'));
+        }
 
         // Save Question Tags
-        if (count($request->tag_list)) {
-            $question->tag($request->tag_list);
+        if (is_array($request->input('tag_list'))) {
+            $question->tag($request->input('tag_list'));
         }
 
         // Save Question Choices
-        $numberOfChoices = count($request->choice_text);
-        for ($i = 0; $i < $numberOfChoices; $i++) {
-            if (empty($request->choice_text[$i])) {
-                continue;
+        if (is_array($request->input('choice_text'))) {
+            $choice_texts  = $request->input('choice_text');
+            $choice_scores = $request->input('choice_score');
+
+            $numberOfChoices = count($choice_texts);
+            for ($i = 0; $i < $numberOfChoices; $i++) {
+                if (empty($choice_texts[$i])) {
+                    continue;
+                }
+
+                if (is_null($choice_scores[$i])) {
+                    $choice_scores[$i] = 0;
+                }
+
+                $question->choices()->create([
+                    'text'    => $choice_texts[$i],
+                    'score'   => $choice_scores[$i],
+                    'correct' => ($choice_scores[$i] > 0),
+                ]);
             }
-            $question->choices()->create([
-                'text'    => $request->choice_text[$i],
-                'points'  => $request->choice_points[$i],
-                'correct' => ($request->choice_points[$i] > 0),
-            ]);
         }
 
         return redirect()->route('admin.questions.index')
@@ -116,15 +135,18 @@ class AdminQuestionController extends AdminController
      */
     public function edit(Question $question)
     {
-        $availableTags = Question::existingTags()->pluck('name', 'slug');
-        $availableActions = [];
+        $availableTagArray = Question::allTags();
+        $availableTags     = array_combine($availableTagArray, $availableTagArray);
+        $selectedTagsArray = $question->tagArray;
+        $selectedTags      = array_combine($selectedTagsArray, $selectedTagsArray);
 
+        $availableActions = [];
         // get actions that hasn't not been used
         foreach ($question->getAvailableActions() as $action) {
             $availableActions[$action->id] = $action->name;
         }
 
-        return view('admin/question/edit', compact('question', 'availableTags', 'availableActions'));
+        return view('admin/question/edit', compact('question', 'availableTags', 'selectedTags', 'availableActions'));
     }
 
     /**
@@ -138,36 +160,54 @@ class AdminQuestionController extends AdminController
     public function update(QuestionUpdateRequest $request, Question $question)
     {
         // Save Question Tags
-        if (count($request->tag_list)) {
-            $question->retag($request->tag_list);
+        if (is_array($request->input('tag_list'))) {
+            $question->retag($request->input('tag_list'));
         } else {
-            $question->untag();
+            $question->detag();
         }
 
         // Save Question Choices
         // 1st. Deletes the old ones
         $question->choices()->delete();
         // 2nd. Adds the new ones
-        $numberOfChoices = count($request->choice_text);
-        for ($i = 0; $i < $numberOfChoices; $i++) {
-            if (empty($request->choice_text[$i])) {
-                continue;
+
+        if (is_array($request->input('choice_text'))) {
+            $choice_texts  = $request->input('choice_text');
+            $choice_scores = $request->input('choice_score');
+
+            $numberOfChoices = count($choice_texts);
+            for ($i = 0; $i < $numberOfChoices; $i++) {
+                if (empty($choice_texts[$i])) {
+                    continue;
+                }
+
+                if (is_null($choice_scores[$i])) {
+                    $choice_scores[$i] = 0;
+                }
+
+                $question->choices()->create([
+                    'text'    => $choice_texts[$i],
+                    'score'   => $choice_scores[$i],
+                    'correct' => ($choice_scores[$i] > 0),
+                ]);
             }
-            $question->choices()->create([
-                'text'    => $request->choice_text[$i],
-                'points'  => $request->choice_points[$i],
-                'correct' => ($request->choice_points[$i] > 0),
-            ]);
         }
 
         // Are you trying to publish a question?
-        if ($request->status == 'publish') {
-            if (! $question->canBePublished()) {
+        if ($request->input('status') == 'publish') {
+            if (!$question->canBePublished()) {
                 return redirect()->back()
+                    ->withInput()
                     ->with('error', trans('admin/question/messages.publish.error'));
             }
         }
-        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']))->save();
+        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
+
+        if (!$question->save()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', trans('admin/question/messages.update.error'));
+        }
 
         return redirect()->route('admin.questions.index')
             ->with('success', trans('admin/question/messages.update.success'));
@@ -196,7 +236,10 @@ class AdminQuestionController extends AdminController
      */
     public function destroy(Question $question)
     {
-        $question->delete();
+        if (!$question->delete()) {
+            return redirect()->back()
+                ->with('error', trans('admin/question/messages.delete.error'));
+        }
 
         return redirect()->route('admin.questions.index')
             ->with('success', trans('admin/question/messages.delete.success'));
@@ -210,26 +253,26 @@ class AdminQuestionController extends AdminController
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
+        if (!$request->ajax()) {
             return response('Forbidden.', 403);
         }
 
         $question = Question::select([
             'id',
-            'shortname',
+            'short_name',
             'name',
             'status',
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">'.trans('admin/question/model.status_list.draft').'</span>',
-            'publish'   => '<span class="label label-success">'.trans('admin/question/model.status_list.publish').'</span>',
-            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.status_list.unpublish').'</span>',
+            'draft'     => '<span class="label label-default">' . trans('admin/question/model.status_list.draft') . '</span>',
+            'publish'   => '<span class="label label-success">' . trans('admin/question/model.status_list.publish') . '</span>',
+            'unpublish' => '<span class="label label-warning">' . trans('admin/question/model.status_list.unpublish') . '</span>',
         ];
 
         return $dataTable->of($question)
@@ -237,12 +280,12 @@ class AdminQuestionController extends AdminController
                 return $statusLabel[$question->status];
             })
             ->addColumn('actions', function (Question $question) {
-                return view('admin/partials.actions_dd', [
-                        'model' => 'questions',
-                        'id'    => $question->id,
-                    ]
-                )->render();
+                return view('admin/partials.actions_dd')
+                    ->with('model', 'questions')
+                    ->with('id', $question->id)
+                    ->render();
             })
+            ->rawColumns(['actions', 'status'])
             ->removeColumn('id')
             ->make(true);
     }

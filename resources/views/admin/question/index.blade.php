@@ -49,7 +49,7 @@
             <table id="questions" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
+                    <th class="col-md-4">{{ trans('admin/question/model.short_name') }}</th>
                     <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
                     <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
@@ -57,7 +57,7 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
+                    <th class="col-md-4">{{ trans('admin/question/model.short_name') }}</th>
                     <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
                     <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
@@ -81,7 +81,7 @@
                 },
                 "ajax": "{{ route('admin.questions.data') }}",
                 "columns": [
-                    {data: "shortname"},
+                    {data: "short_name"},
                     {data: "name"},
                     {data: "status"},
                     {data: "actions", "orderable": false, "searchable": false}

@@ -1,10 +1,10 @@
 <!-- choices -->
 <div class="row form-group">
     <div class="col-sm-9">
-        {!! Form::label('choice_text[]', trans('admin/question/model.choice_text'), array('class' => 'control-label')) !!}
+        {!! Form::label('choice_text[]', trans('admin/question/model.choice_text'), ['class' => 'control-label']) !!}
     </div>
     <div class="col-sm-3">
-        {!! Form::label('choice_points[]', trans('admin/question/model.choice_points'), array('class' => 'control-label')) !!}
+        {!! Form::label('choice_score[]', trans('admin/question/model.choice_score'), ['class' => 'control-label']) !!}
     </div>
 </div>
 
@@ -12,11 +12,11 @@
     @foreach ($question->choices as $choice)
         <div class="row form-group cloneable">
             <div class="col-sm-9">
-                {!! Form::text('choice_text[]', $choice->text, array('class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help'))) !!}
+                {!! Form::text('choice_text[]', $choice->text, ['class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help')]) !!}
             </div>
             <div class="col-sm-3">
                 <div class="input-group">
-                    {!! Form::number('choice_points[]', $choice->points, array('class' => 'form-control')) !!}
+                    {!! Form::number('choice_score[]', $choice->score, ['class' => 'form-control']) !!}
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-danger btn-remove">
                         <i class="fa fa-times fa fa-white"></i>
@@ -30,11 +30,11 @@
 
 <div class="row form-group cloneable">
     <div class="col-sm-9">
-        {!! Form::text('choice_text[]', null, array('class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help'))) !!}
+        {!! Form::text('choice_text[]', null, ['class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help')]) !!}
     </div>
     <div class="col-sm-3">
         <div class="input-group">
-            {!! Form::number('choice_points[]', null, array('class' => 'form-control')) !!}
+            {!! Form::number('choice_score[]', null, ['class' => 'form-control']) !!}
             <span class="input-group-btn">
                 <button type="button" class="btn btn-primary btn-add">
                     <i class="fa fa-plus fa fa-white"></i>
@@ -45,6 +45,6 @@
 </div>
 
 <div class="form-group">
-    <span class="text-muted"><i class="fa fa-info-circle"></i> {{ trans('admin/question/model.choice_points_help') }}</span>
+    <span class="text-muted"><i class="fa fa-info-circle"></i> {{ trans('admin/question/model.choice_score_help') }}</span>
 </div>
 <!-- ./ choices -->

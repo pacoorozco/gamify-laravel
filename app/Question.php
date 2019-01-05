@@ -18,17 +18,19 @@
 
 namespace Gamify;
 
-use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Traits\RecordAuthorSignature;
-use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
 {
     use SoftDeletes;
     use RecordAuthorSignature; // Record Signature
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
 
     protected $table = 'questions';
@@ -58,7 +60,6 @@ class Question extends Model
             'short_name'     => [
                 'source' => 'name',
             ],
-            'includeTrashed' => true,
         ];
     }
 
@@ -116,7 +117,7 @@ class Question extends Model
      */
     public function canBePublished(): bool
     {
-        $answers_count = $this->choices()->count();
+        $answers_count         = $this->choices()->count();
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
@@ -147,10 +148,22 @@ class Question extends Model
         if (str_word_count($text, 0) > $length) {
             // string exceeded length, truncate and add trailing dots
             $words = str_word_count($text, 2);
-            $pos = array_keys($words);
-            $text = substr($text, 0, $pos[$length]).$trailing;
+            $pos   = array_keys($words);
+            $text  = substr($text, 0, $pos[$length]) . $trailing;
         }
         // string was already short enough, return the string
-        return '<p>'.$text.'</p>';
+        return '<p>' . $text . '</p>';
     }
+
+    /**
+     * Returns Image URL
+     *
+     * @return string
+     */
+    public function getImageURL(): string
+    {
+        return asset('images/missing_question.png');
+    }
+
+
 }

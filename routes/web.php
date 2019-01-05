@@ -35,9 +35,9 @@ Route::bind('username', function ($value) {
     return \Gamify\User::where('username', $value)->first();
 });
 
-Route::bind('question', function ($value) {
-    return \Gamify\Question::where('shortname', $value)->first();
-});
+/*Route::bind('question', function ($value) {
+    return \Gamify\Question::where('short_name', $value)->first();
+});*/
 
 Route::model('users', '\Gamify\User');
 Route::model('badges', '\Gamify\Badge');

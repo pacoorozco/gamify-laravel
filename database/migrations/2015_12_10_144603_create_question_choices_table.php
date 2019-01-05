@@ -21,7 +21,7 @@ class CreateQuestionChoicesTable extends Migration
                 ->onDelete('cascade');
             $table->string('text', 512);
             $table->boolean('correct')->default(false);
-            $table->integer('points');
+            $table->integer('score');
             $table->index('question_id');
         });
     }

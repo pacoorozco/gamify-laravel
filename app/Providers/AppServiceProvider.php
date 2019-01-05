@@ -25,8 +25,9 @@
 
 namespace Gamify\Providers;
 
-use Laravel\Dusk\DuskServiceProvider;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Dusk\DuskServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,7 +38,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /**
+         * Transpose a Collection.
+         */
+        Collection::macro('transpose', function () {
+            $items = array_map(function (...$items) {
+                return $items;
+            }, ...$this->values());
+
+            return new static($items);
+        });
     }
 
     /**
