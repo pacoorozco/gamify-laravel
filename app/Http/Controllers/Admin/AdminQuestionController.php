@@ -26,11 +26,11 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
-use Gamify\Http\Requests\QuestionCreateRequest;
-use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Gamify\Http\Requests\QuestionCreateRequest;
+use Gamify\Http\Requests\QuestionUpdateRequest;
 
 class AdminQuestionController extends AdminController
 {
@@ -52,8 +52,8 @@ class AdminQuestionController extends AdminController
     public function create()
     {
         $availableTagArray = Question::allTags();
-        $availableTags     = array_combine($availableTagArray, $availableTagArray);
-        $selectedTags      = [];
+        $availableTags = array_combine($availableTagArray, $availableTagArray);
+        $selectedTags = [];
 
         $availableActions = [];
         // get actions that hasn't not been used
@@ -76,7 +76,7 @@ class AdminQuestionController extends AdminController
         $question = new Question();
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', trans('admin/question/messages.create.error'));
@@ -89,7 +89,7 @@ class AdminQuestionController extends AdminController
 
         // Save Question Choices
         if (is_array($request->input('choice_text'))) {
-            $choice_texts  = $request->input('choice_text');
+            $choice_texts = $request->input('choice_text');
             $choice_scores = $request->input('choice_score');
 
             $numberOfChoices = count($choice_texts);
@@ -136,9 +136,9 @@ class AdminQuestionController extends AdminController
     public function edit(Question $question)
     {
         $availableTagArray = Question::allTags();
-        $availableTags     = array_combine($availableTagArray, $availableTagArray);
+        $availableTags = array_combine($availableTagArray, $availableTagArray);
         $selectedTagsArray = $question->tagArray;
-        $selectedTags      = array_combine($selectedTagsArray, $selectedTagsArray);
+        $selectedTags = array_combine($selectedTagsArray, $selectedTagsArray);
 
         $availableActions = [];
         // get actions that hasn't not been used
@@ -172,7 +172,7 @@ class AdminQuestionController extends AdminController
         // 2nd. Adds the new ones
 
         if (is_array($request->input('choice_text'))) {
-            $choice_texts  = $request->input('choice_text');
+            $choice_texts = $request->input('choice_text');
             $choice_scores = $request->input('choice_score');
 
             $numberOfChoices = count($choice_texts);
@@ -195,7 +195,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
-            if (!$question->canBePublished()) {
+            if (! $question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
                     ->with('error', trans('admin/question/messages.publish.error'));
@@ -203,7 +203,7 @@ class AdminQuestionController extends AdminController
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', trans('admin/question/messages.update.error'));
@@ -236,7 +236,7 @@ class AdminQuestionController extends AdminController
      */
     public function destroy(Question $question)
     {
-        if (!$question->delete()) {
+        if (! $question->delete()) {
             return redirect()->back()
                 ->with('error', trans('admin/question/messages.delete.error'));
         }
@@ -258,7 +258,7 @@ class AdminQuestionController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response('Forbidden.', 403);
         }
 
@@ -270,9 +270,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">' . trans('admin/question/model.status_list.draft') . '</span>',
-            'publish'   => '<span class="label label-success">' . trans('admin/question/model.status_list.publish') . '</span>',
-            'unpublish' => '<span class="label label-warning">' . trans('admin/question/model.status_list.unpublish') . '</span>',
+            'draft'     => '<span class="label label-default">'.trans('admin/question/model.status_list.draft').'</span>',
+            'publish'   => '<span class="label label-success">'.trans('admin/question/model.status_list.publish').'</span>',
+            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.status_list.unpublish').'</span>',
         ];
 
         return $dataTable->of($question)

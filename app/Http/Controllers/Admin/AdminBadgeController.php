@@ -67,9 +67,9 @@ class AdminBadgeController extends AdminController
         $badge->name = $request->input('name');
         $badge->description = $request->input('description');
         $badge->required_repetitions = $request->input('required_repetitions');
-        $badge->active               = $request->input('active');
+        $badge->active = $request->input('active');
 
-        if (!$badge->save()) {
+        if (! $badge->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', trans('admin/badge/messages.create.error'));
@@ -117,9 +117,9 @@ class AdminBadgeController extends AdminController
         $badge->name = $request->input('name');
         $badge->description = $request->input('description');
         $badge->required_repetitions = $request->input('required_repetitions');
-        $badge->active               = $request->input('active');
+        $badge->active = $request->input('active');
 
-        if (!$badge->save()) {
+        if (! $badge->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', trans('admin/badge/messages.update.error'));
@@ -152,7 +152,7 @@ class AdminBadgeController extends AdminController
      */
     public function destroy(Badge $badge)
     {
-        if (!$badge->delete()) {
+        if (! $badge->delete()) {
             return redirect()->back()
                 ->with('error', trans('admin/badge/messages.delete.error'));
         }
