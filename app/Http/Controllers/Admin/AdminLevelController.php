@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Http\Requests\LevelCreateRequest;
-use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Gamify\Http\Requests\LevelCreateRequest;
+use Gamify\Http\Requests\LevelUpdateRequest;
 
 class AdminLevelController extends AdminController
 {
@@ -62,12 +62,12 @@ class AdminLevelController extends AdminController
      */
     public function store(LevelCreateRequest $request)
     {
-        $level                  = new Level();
-        $level->name            = $request->input('name');
+        $level = new Level();
+        $level->name = $request->input('name');
         $level->required_points = $request->input('required_points');
-        $level->active          = $request->input('active');
+        $level->active = $request->input('active');
 
-        if (!$level->save()) {
+        if (! $level->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', trans('admin/level/messages.create.error'));
@@ -111,11 +111,11 @@ class AdminLevelController extends AdminController
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
-        $level->name            = $request->input('name');
+        $level->name = $request->input('name');
         $level->required_points = $request->input('required_points');
-        $level->active          = $request->input('active');
+        $level->active = $request->input('active');
 
-        if (!$level->save()) {
+        if (! $level->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', trans('admin/level/messages.update.error'));
@@ -148,7 +148,7 @@ class AdminLevelController extends AdminController
      */
     public function destroy(Level $level)
     {
-        if (!$level->delete()) {
+        if (! $level->delete()) {
             return redirect()->back()
                 ->with('error', trans('admin/level/messages.delete.error'));
         }
@@ -177,7 +177,7 @@ class AdminLevelController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response('Forbidden.', 403);
         }
 
@@ -190,7 +190,7 @@ class AdminLevelController extends AdminController
 
         return $dataTable::of($levels)
             ->addColumn('image', function (Level $level) {
-                return '<img src="' . $level->getImageURL() . '" width="64" class="img-thumbnail" />';
+                return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
                 return ($level->active) ? trans('general.yes') : trans('general.no');
