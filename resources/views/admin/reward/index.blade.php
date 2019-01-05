@@ -43,22 +43,19 @@
 {{-- Styles --}}
 @section('styles')
             <!-- Select2 -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2-bootstrap-theme/dist/select2-bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
             <!-- Select2 -->
-    <script type="text/javascript" src="{{ asset('vendor/select2/dist/js/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {
             $(".username-input").select2({
-                theme: "bootstrap",
                 placeholder: "{{ trans('admin/reward/messages.pick_user') }}",
             });
             $(".badge-input").select2({
-                theme: "bootstrap",
                 placeholder: "{{ trans('admin/reward/messages.pick_badge') }}",
             });
         });

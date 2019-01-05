@@ -22,7 +22,10 @@ class RewardExperienceRequest extends Request
     public function rules()
     {
         return [
-            //
+            'username' => ['required', 'string', 'exists:users,id'],
+            'points'   => ['required', 'integer'],
+            'message'  => ['nullable', 'string'],
+
         ];
     }
 }
