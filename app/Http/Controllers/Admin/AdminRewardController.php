@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\User;
 use Gamify\Badge;
 use Gamify\Http\Controllers\Game;
 use Gamify\Http\Requests\RewardBadgeRequest;
 use Gamify\Http\Requests\RewardExperienceRequest;
-use Gamify\User;
 
 class AdminRewardController extends AdminController
 {
@@ -38,7 +38,7 @@ class AdminRewardController extends AdminController
      */
     public function index()
     {
-        $users  = User::Member()->pluck('username', 'id');
+        $users = User::Member()->pluck('username', 'id');
         $badges = Badge::all()->pluck('name', 'id');
 
         return view('admin.reward.index', compact('users', 'badges'));
@@ -51,11 +51,11 @@ class AdminRewardController extends AdminController
      */
     public function giveExperience(RewardExperienceRequest $request)
     {
-        $user    = User::findOrFail($request->input('username'));
-        $points  = $request->input('points');
+        $user = User::findOrFail($request->input('username'));
+        $points = $request->input('points');
         $message = $request->input('message');
 
-        if (!Game::addExperience($user, $points, $message)) {
+        if (! Game::addExperience($user, $points, $message)) {
             return redirect()->back()
                 ->withInput()
                 ->with('error',
@@ -79,10 +79,10 @@ class AdminRewardController extends AdminController
      */
     public function giveBadge(RewardBadgeRequest $request)
     {
-        $user  = User::findOrFail($request->input('badge_username'));
+        $user = User::findOrFail($request->input('badge_username'));
         $badge = Badge::findOrFail($request->input('badge'));
 
-        if (!Game::incrementBadge($user, $badge)) {
+        if (! Game::incrementBadge($user, $badge)) {
             return redirect()->back()
                 ->withInput()
                 ->with('error',
@@ -90,6 +90,7 @@ class AdminRewardController extends AdminController
                         'username' => $user->username,
                     ]));
         }
+
         return redirect()->route('admin.rewards.index')
             ->with('success',
                 trans('admin/reward/messages.badge_given.success', [
