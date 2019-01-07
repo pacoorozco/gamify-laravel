@@ -38,22 +38,23 @@
                 </div>
                 <!-- ./ description -->
 
-                <!-- amount_needed -->
-                <div class="form-group {{ $errors->has('amount_needed') ? 'has-error' : '' }}">
-                    {!! Form::label('amount_needed', trans('admin/badge/model.amount_needed'), array('class' => 'control-label required')) !!}
+                <!-- required_repetitions -->
+                <div class="form-group {{ $errors->has('required_repetitions') ? 'has-error' : '' }}">
+                    {!! Form::label('required_repetitions', trans('admin/badge/model.required_repetitions'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::number('amount_needed', null, array('class' => 'form-control', 'required' => 'required', 'min' => '1')) !!}
-                        <p class="text-muted">{{ trans('admin/badge/model.amount_needed_help') }}</p>
-                        <span class="help-block">{{ $errors->first('amount_needed', ':message') }}</span>
+                        {!! Form::number('required_repetitions', null, array('class' => 'form-control', 'required' => 'required', 'min' => '1')) !!}
+                        <p class="text-muted">{{ trans('admin/badge/model.required_repetitions_help') }}</p>
+                        <span class="help-block">{{ $errors->first('required_repetitions', ':message') }}</span>
 
                     </div>
                 </div>
-                <!-- ./ amount_needed -->
+                <!-- ./ required_repetitions -->
 
             </div>
             <div class="col-xs-6">
 
                 <!-- image -->
+                {{--
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
                     {!! Form::label('image', trans('admin/badge/model.image'), array('class' => 'control-label required')) !!}
                     <p class="text-muted">{{ trans('admin/badge/model.image_help') }}</p>
@@ -81,6 +82,7 @@
                     </div>
                     <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                 </div>
+                --}}
                 <!-- ./ image -->
 
                 <!-- activation status -->
@@ -111,11 +113,11 @@
 {{-- Styles --}}
 @section('styles')
         <!-- File Input -->
-{!! HTML::style('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') !!}
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
         <!-- File Input -->
-{!! HTML::script('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') !!}
+{{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
 @endsection

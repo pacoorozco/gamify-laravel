@@ -18,7 +18,7 @@ class QuestionChoice extends Model
     protected $fillable = [
         'text',
         'correct',
-        'points',
+        'score',
     ];
 
     /**

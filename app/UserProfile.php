@@ -1,50 +1,72 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This file is part of some open source application.
+ *
+ * Licensed under GNU General Public License 3.0.
+ * Some rights reserved. See LICENSE, AUTHORS.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-l5
+ */
 
 namespace Gamify;
 
-use Codesleeve\Stapler\ORM\EloquentTrait;
-// Image uploads
-use Codesleeve\Stapler\ORM\StaplerableInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class UserProfile extends Model implements StaplerableInterface
+/**
+ * Role model, represents a role.
+ *
+ * @property int    $id                   The object unique id.
+ * @property string $bio                  Short bio information.
+ * @property string $url                  Homepage.
+ * @property string $avatar               URL of the avatar.
+ * @property string $phone                Phone number.
+ * @property Carbon $date_of_birth        Date of Birth.
+ * @property string $gender               Gender, could be 'male', 'female' or 'unspecified'.
+ * @property string $twitter              Twitter username
+ * @property string $facebook             Facebook username
+ * @property string $linkedin             LinkedIn username
+ * @property string $github               GitHub username
+ * @property User   $user                 User wo belongs to.
+ */
+class UserProfile extends Model
 {
-    use EloquentTrait; // Image Uploads
-
-    /**
-     * The database table used by the model.
-     */
     protected $table = 'user_profiles';
     protected $fillable = [
-        'avatar',
         'bio',
         'url',
         'phone',
-        'mobile',
         'date_of_birth',
         'gender',
         'twitter',
         'facebook',
-        'googleplus',
         'linkedin',
         'github',
     ];
 
-    public function __construct(array $attributes = [])
+    /**
+     * Returns avatar URL.
+     *
+     * @return string
+     */
+    public function getAvatarURL(): string
     {
-        $this->hasAttachedFile('avatar', [
-            'styles' => [
-                'big'    => '220x220',
-                'medium' => '150x150',
-                'small'  => '64x64',
-            ],
-            'url'         => '/uploads/:class/:id_partition/:style/:filename',
-            'default_url' => '/images/missing_profile.png',
-        ]);
-
-        parent::__construct($attributes);
+        return asset('images/missing_profile.png');
     }
 
+    /**
+     * UserProfile are attached to every User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo('Gamify\User');

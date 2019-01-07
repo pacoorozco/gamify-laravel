@@ -28,7 +28,7 @@
         <div class="box-body">
             <ul class="list-group">
                 @foreach($questions as $question)
-                    <li class="list-group-item"><a href="{{ route('questions.show', $question->shortname) }}">{{ $question->name }}</a></li>
+                    <li class="list-group-item"><a href="{{ route('questions.show', $question->short_name) }}">{{ $question->name }}</a></li>
                 @endforeach
             </ul>
         </div>

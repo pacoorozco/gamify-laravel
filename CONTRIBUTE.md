@@ -1,4 +1,4 @@
-# Code contibution to this app
+# Code contribution to this app
 
 Contributions are **welcomed** and will be fully **credited**.
 
@@ -44,8 +44,8 @@ Before you submit your pull request consider the following guidelines:
     ```shell
     git checkout -b my-fix-branch master
     ```
-* **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - The easiest way to apply the conventions is to install [PHP Code Sniffer](http://pear.php.net/package/PHP_CodeSniffer).
-* Consider our release cycle. We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
+* Don't worry if your code styling isn't perfect! [StyleCI](https://styleci.io/) will automatically merge any style fixes into the application repository after pull requests are merged.
+* Consider our release cycle. We try to follow [SemVer v2.0.0](https://semver.org/). Randomly breaking public APIs is not an option.
 * Create your patch, **including appropriate test cases**.
 * Commit your changes using a descriptive commit message that follows our
   [commit message conventions](#commit-message-format). Adherence to the [commit message conventions](#commit-message-format)
@@ -161,6 +161,5 @@ Closed bugs should be listed on a separate line in the footer prefixed with "Clo
 or in case of multiple issues:
 
 ```Closes #123, #245, #992```
-
 
 [github]: https://github.com/pacoorozco/gamify-l5

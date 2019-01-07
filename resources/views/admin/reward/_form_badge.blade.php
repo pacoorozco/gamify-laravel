@@ -1,4 +1,4 @@
-{!! Form::open(array('route' => array('admin.rewards.badge'), 'method' => 'post')) !!}
+{!! Form::open(['route' => ['admin.rewards.badge'], 'method' => 'post']) !!}
 
 <div class="box box-solid">
     <div class="box-header">
@@ -7,29 +7,29 @@
     </div>
     <div class="box-body">
         <!-- username -->
-        <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-            {!! Form::label('username', trans('admin/reward/messages.username'), array('class' => 'control-label required')) !!}
+        <div class="form-group {{ $errors->has('badge_username') ? 'has-error' : '' }}">
+            {!! Form::label('badge_username', trans('admin/reward/messages.username'), ['class' => 'control-label required']) !!}
             <div class="controls">
-                {!! Form::select('username', $users, null,
-                array('class' => 'form-control username-input', 'placeholder' => '', 'required' => 'required')) !!}
-                <span class="help-block">{{ $errors->first('username', ':message') }}</span>
+                {!! Form::select('badge_username', $users, null,
+                ['class' => 'form-control username-input', 'placeholder' => '', 'required' => 'required']) !!}
+                <span class="help-block">{{ $errors->first('badge_username', ':message') }}</span>
             </div>
         </div>
         <!-- ./ username -->
 
         <!-- badges -->
         <div class="form-group {{ $errors->has('badge') ? 'has-error' : '' }}">
-            {!! Form::label('badge', trans('admin/reward/messages.badge'), array('class' => 'control-label required')) !!}
+            {!! Form::label('badge', trans('admin/reward/messages.badge'),['class' => 'control-label required']) !!}
             <div class="controls">
                 {!! Form::select('badge', $badges,
-                null, array('class' => 'form-control badge-input', 'placeholder' => '', 'required' => 'required')) !!}
+                null, ['class' => 'form-control badge-input', 'placeholder' => '', 'required' => 'required']) !!}
                 <span class="help-block">{{ $errors->first('badge', ':message') }}</span>
             </div>
         </div>
         <!-- ./ badges -->
     </div>
     <div class="box-footer">
-        {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
+        {!! Form::button(trans('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
     </div>
 </div>
 

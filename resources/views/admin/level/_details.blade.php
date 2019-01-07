@@ -13,14 +13,14 @@
                 </div>
                 <!-- ./ name -->
 
-                <!-- amount_needed -->
+                <!-- required_points -->
                 <div class="form-group">
-                    {!! Form::label('amount_needed', trans('admin/level/model.amount_needed'), array('class' => 'control-label')) !!}
+                    {!! Form::label('required_points', trans('admin/level/model.required_points'), array('class' => 'control-label')) !!}
                     <div class="controls">
-                        {{ $level->amount_needed }}
+                        {{ $level->required_points }}
                     </div>
                 </div>
-                <!-- ./ amount_needed -->
+                <!-- ./ required_points -->
 
                 <!-- Activation Status -->
                 <div class="form-group">
@@ -39,7 +39,7 @@
                     {!! Form::label('image', trans('admin/level/model.image'), array('class' => 'control-label')) !!}
                     <div class="controls">
                         @if (isset($level))
-                            <img src="{{ $level->image->url('big') }}" class="img-thumbnail" alt="Big size">
+                            <img src="{{ $level->getImageURL() }}" class="img-thumbnail" alt="Big size">
                         @endif
                     </div>
                 </div>

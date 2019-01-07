@@ -1,4 +1,4 @@
-{!! Form::open(array('route' => array('admin.rewards.experience'), 'method' => 'post')) !!}
+{!! Form::open(['route' => ['admin.rewards.experience'], 'method' => 'post']) !!}
 
 <div class="box box-solid">
     <div class="box-header">
@@ -9,10 +9,10 @@
 
         <!-- username -->
         <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-            {!! Form::label('username', trans('admin/reward/messages.username'), array('class' => 'control-label required')) !!}
+            {!! Form::label('username', trans('admin/reward/messages.username'), ['class' => 'control-label required']) !!}
             <div class="controls">
                 {!! Form::select('username', $users, null,
-                array('class' => 'form-control username-input', 'placeholder' => '', 'required' => 'required')) !!}
+                ['class' => 'form-control username-input', 'placeholder' => '', 'required' => 'required']) !!}
                 <span class="help-block">{{ $errors->first('username', ':message') }}</span>
             </div>
         </div>
@@ -22,11 +22,11 @@
         <div class="form-group {{ $errors->has('points') ? 'has-error' : '' }}">
             {!! Form::label('points', trans('admin/reward/messages.points'), array('class' => 'control-label required')) !!}
             <div class="controls">
-                {!! Form::select('points', array(
+                {!! Form::select('points', [
                 '5' => trans('admin/reward/messages.points_value', ['points' => '5']),
                 '10' => trans('admin/reward/messages.points_value', ['points' => '10']),
                 '25' => trans('admin/reward/messages.points_value', ['points' => '25']),
-                ), null, array('class' => 'form-control', 'required' => 'required')) !!}
+                ], null, ['class' => 'form-control', 'required' => 'required']) !!}
                 <span class="help-block">{{ $errors->first('points', ':message') }}</span>
             </div>
         </div>
@@ -34,16 +34,16 @@
 
         <!-- message -->
         <div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
-            {!! Form::label('name', trans('admin/reward/messages.why_u_reward'), array('class' => 'control-label')) !!}
+            {!! Form::label('message', trans('admin/reward/messages.why_u_reward'), ['class' => 'control-label']) !!}
             <div class="controls">
-                {!! Form::textarea('message', null, array('class' => 'form-control', 'rows' => '3')) !!}
+                {!! Form::textarea('message', null, ['class' => 'form-control', 'rows' => '3']) !!}
                 <span class="help-block">{{ $errors->first('message', ':message') }}</span>
             </div>
         </div>
         <!-- ./ message -->
     </div>
     <div class="box-footer">
-        {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
+        {!! Form::button(trans('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
     </div>
 </div>
 

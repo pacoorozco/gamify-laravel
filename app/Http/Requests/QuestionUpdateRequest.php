@@ -22,19 +22,19 @@ class QuestionUpdateRequest extends Request
     public function rules()
     {
         $rules = [
-            'name'     => 'required',
-            'question' => 'required',
-            'solution' => '',
-            'type'     => 'required|in:single,multi',
-            'hidden'   => 'required|boolean',
-            'status'   => 'required|in:draft,publish,unpublish',
+            'name'     => ['required'],
+            'question' => ['required'],
+            'solution' => [''],
+            'type'     => ['required', 'in:single,multi'],
+            'hidden'   => ['required', 'boolean'],
+            'status'   => ['required', 'in:draft,publish,unpublish'],
         ];
 
         // TODO: validate dynamic choices
 //        foreach ($this->request->get('choice_text') as $key => $val) {
 //            if (!empty($val)) {
 //                $rules['choice_text.' . $key] = 'required';
-//                $rules['choice_points.' . $key] = 'required|integer';
+//                $rules['choice_score.' . $key] = 'required|integer';
 //            }
 //        }
 

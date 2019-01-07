@@ -1,24 +1,36 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This file is part of some open source application.
+ *
+ * Licensed under GNU General Public License 3.0.
+ * Some rights reserved. See LICENSE, AUTHORS.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-l5
+ */
 
 namespace Gamify;
 
-use Conner\Tagging\Taggable;
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
-use Gamify\Traits\RecordSignature;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentTaggable\Taggable;
+use Gamify\Traits\RecordAuthorSignature;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Question extends Model implements SluggableInterface
+class Question extends Model
 {
     use SoftDeletes;
-    use RecordSignature; // Record Signature
-    use SluggableTrait; // Slugs
+    use RecordAuthorSignature; // Record Signature
+    use Sluggable; // Slugs
     use Taggable; // Tags
 
-    /**
-     * The database table used by the model.
-     */
     protected $table = 'questions';
     protected $fillable = [
         'name',
@@ -29,38 +41,46 @@ class Question extends Model implements SluggableInterface
         'status',
     ];
 
-    protected $dates = ['deleted_at'];
-
-    /**
-     * The Question slug in order to implement permanent URL to questions.
-     */
-    protected $sluggable = [
-        'build_from'      => 'name',
-        'save_to'         => 'shortname',
-        'include_trashed' => true,
+    protected $dates = [
+        'deleted_at',
+        'publication_date',
+        'expiration_date',
     ];
 
     /**
-     * A question will have some choices.
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
      */
-    public function choices()
+    public function sluggable()
     {
-        return $this->hasMany('Gamify\QuestionChoice');
+        return [
+            'short_name'     => [
+                'source' => 'name',
+            ],
+        ];
+    }
+
+    /**
+     * Get the list of actions that has not been selected yet.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAvailableActions()
+    {
+        $selectedActions = $this->actions()->pluck('badge_id')->toArray();
+
+        return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
     /**
      * A question will have some actions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function actions()
     {
         return $this->hasMany('Gamify\QuestionAction');
-    }
-
-    public function getAvailableActions()
-    {
-        $selectedActions = $this->actions()->lists('badge_id')->toArray();
-
-        return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
     /**
@@ -68,7 +88,7 @@ class Question extends Model implements SluggableInterface
      *
      * @param $query
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function scopePublished($query)
     {
@@ -80,21 +100,11 @@ class Question extends Model implements SluggableInterface
      *
      * @param $query
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function scopePublishedAndVisible($query)
     {
         return $query->where('status', '=', 'publish')->where('hidden', false);
-    }
-
-    /**
-     * Get a list of tags ids associated with the current Question.
-     *
-     * @return array
-     */
-    public function getTagListAttribute()
-    {
-        return $this->tagged->lists('tag_slug')->all();
     }
 
     /**
@@ -103,12 +113,22 @@ class Question extends Model implements SluggableInterface
      *
      * @return bool
      */
-    public function canBePublished()
+    public function canBePublished(): bool
     {
         $answers_count = $this->choices()->count();
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
+    }
+
+    /**
+     * A question will have some choices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function choices()
+    {
+        return $this->hasMany('Gamify\QuestionChoice');
     }
 
     /**
@@ -119,7 +139,7 @@ class Question extends Model implements SluggableInterface
      *
      * @return string
      */
-    public function excerpt($length = 55, $trailing = '...')
+    public function excerpt($length = 55, $trailing = '...'): string
     {
         $text = strip_tags($this->question);
 
@@ -131,5 +151,15 @@ class Question extends Model implements SluggableInterface
         }
         // string was already short enough, return the string
         return '<p>'.$text.'</p>';
+    }
+
+    /**
+     * Returns Image URL.
+     *
+     * @return string
+     */
+    public function getImageURL(): string
+    {
+        return asset('images/missing_question.png');
     }
 }

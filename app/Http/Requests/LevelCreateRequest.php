@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class LevelCreateRequest extends Request
 {
     /**
@@ -22,10 +24,10 @@ class LevelCreateRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|unique:levels,name',
-            'amount_needed' => 'required|integer|min:1',
-            'image'         => 'required|image',
-            'active'        => 'required|boolean',
+            'name'            => ['required', 'string', Rule::unique('levels')],
+            'required_points' => ['required', 'integer', 'min:1', Rule::unique('levels')],
+            //'image'           => 'required|image',
+            'active'          => ['required', 'boolean'],
         ];
     }
 }

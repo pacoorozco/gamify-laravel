@@ -9,7 +9,7 @@ return [
     'password'              => 'Password',
     'password_confirmation' => 'Password Confirmation',
     'roles_list'            => [
-        'default'       => 'Member',
+        'user'          => 'Member',
         'administrator' => 'Administrator',
     ],
 

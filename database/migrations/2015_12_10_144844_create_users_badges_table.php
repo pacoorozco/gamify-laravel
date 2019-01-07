@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersBadgesTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateUsersBadgesTable extends Migration
         Schema::create('users_badges', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->integer('badge_id')->unsigned();
-            $table->integer('amount')->unsigned();
+            $table->integer('repetitions')->unsigned();
             $table->boolean('completed')->default(false);
             $table->timestamp('completed_on');
             $table->timestamps();

@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateQuestionsTable extends Migration
 {
@@ -14,7 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('shortname')->unique();
+            $table->string('short_name')->unique();
             $table->string('name');
             $table->text('question');
             $table->text('solution')->nullable();
@@ -26,10 +27,10 @@ class CreateQuestionsTable extends Migration
                 ->references('id')->on('users');
             $table->integer('updated_by')->unsigned();
             $table->foreign('updated_by')
-                ->references('id')->on('users'); // assumes a users table
+                ->references('id')->on('users');
 
-            $table->timestamp('publish_on');
-            $table->timestamp('unpublish_on');
+            $table->timestamp('publication_date')->nullable();
+            $table->timestamp('expiration_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -42,6 +43,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('questions');
+        Schema::dropIfExists('questions');
     }
 }

@@ -3,7 +3,7 @@
 return [
 
     // General
-    'shortname'     => 'Short name',
+    'short_name'     => 'Short name',
     'name'          => 'Question name',
     'name_help'     => 'This is an internal name, users will never see this name.',
     'question'      => 'Question text',
@@ -38,8 +38,8 @@ return [
     // Answers
     'choice_text'        => 'Answer Text',
     'choice_text_help'   => 'Put here the text of this choice',
-    'choice_points'      => 'Points',
-    'choice_points_help' => 'Choices with positive points are considered as correct.',
+    'choice_score'      => 'Points',
+    'choice_score_help' => 'Choices with positive points are considered as correct.',
     'choice_correct'     => 'Is correct?',
 
     // Created / last saved

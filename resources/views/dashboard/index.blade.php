@@ -27,7 +27,7 @@
             <!-- Welcome -->
             <div class="box box-solid">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-rocket"></i> Welcome to <b>gamify</b> v3</h3>
+                    <h3 class="box-title"><i class="fa fa-rocket"></i> Welcome to <strong>gamify</strong> v3</h3>
                 </div>
                 <div class="box-body">
                     <p>Mauris pulvinar sollicitudin ligula, eu auctor mi iaculis vel. Mauris a nulla eleifend,
@@ -82,6 +82,7 @@
             <!-- ./ranking -->
 
             <!-- Activity stream -->
+            {{--
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="fa fa-comments"></i> Activity stream</h3>
@@ -90,6 +91,7 @@
                     @include('dashboard._activity')
                 </div>
             </div>
+            --}}
             <!-- ./activity stream -->
 
         </div>

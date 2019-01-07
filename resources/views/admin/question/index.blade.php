@@ -2,7 +2,7 @@
 
 {{-- Styles --}}
 @section('styles')
-    {!! HTML::style('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') !!}
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
 @endsection
 
 {{-- Web site Title --}}
@@ -19,7 +19,7 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin-home') }}">
+        <a href="{{ route('admin.home') }}">
             <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>
@@ -49,7 +49,7 @@
             <table id="questions" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
+                    <th class="col-md-4">{{ trans('admin/question/model.short_name') }}</th>
                     <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
                     <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
@@ -57,7 +57,7 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ trans('admin/question/model.shortname') }}</th>
+                    <th class="col-md-4">{{ trans('admin/question/model.short_name') }}</th>
                     <th class="col-md-4">{{ trans('admin/question/model.name') }}</th>
                     <th class="col-md-2">{{ trans('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ trans('general.actions') }}</th>
@@ -70,8 +70,8 @@
 
 {{-- Scripts --}}
 @section('scripts')
-    {!! HTML::script('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') !!}
-    {!! HTML::script('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') !!}
+    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -81,7 +81,7 @@
                 },
                 "ajax": "{{ route('admin.questions.data') }}",
                 "columns": [
-                    {data: "shortname"},
+                    {data: "short_name"},
                     {data: "name"},
                     {data: "status"},
                     {data: "actions", "orderable": false, "searchable": false}

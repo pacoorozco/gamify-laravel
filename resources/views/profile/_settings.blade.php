@@ -94,13 +94,14 @@
         </div>
         <!-- /.gender -->
         <!-- avatar -->
+        {{--
         <div class="form-group {{ $errors->has('avatar') ? 'has-error' : '' }}">
             {!! Form::label('avatar', trans('user/profile.image'), array('class' => 'control-label')) !!}
             <div class="controls">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                          style="width: 150px; height: 150px;">
-                        <img src="{{ $user->profile->avatar->url('medium') }}">
+                        <img src="{{ $user->profile->getAvatarURL() }}">
                     </div>
                     <p>
                     <span class="btn btn-default btn-file">
@@ -119,6 +120,7 @@
                 </div>
             </div>
         </div>
+        --}}
         <!-- /.avatar -->
     </div>
 </div>
@@ -155,18 +157,6 @@
             </div>
         </div>
         <!-- /.facebook -->
-        <!-- googleplus -->
-        <div class="form-group {{ $errors->has('googleplus') ? 'has-error' : '' }}">
-            {!! Form::label('googleplus', trans('user/profile.googleplus'), array('class' => 'control-label')) !!}
-            <div class="controls">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-google-plus"></i></span>
-                    {!! Form::text('googleplus', null, array('class' => 'form-control')) !!}
-                </div>
-                <span class="help-block">{{ $errors->first('googleplus', ':message') }}</span>
-            </div>
-        </div>
-        <!-- /.googleplus -->
     </div>
     <div class="col-md-6">
         <!-- linkedin -->
@@ -218,17 +208,17 @@
 
 @section('styles')
         <!-- Date Picker -->
-{!! HTML::style('vendor/AdminLTE/plugins/datepicker/datepicker3.css') !!}
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
         <!-- File Input -->
-{!! HTML::style('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') !!}
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
         <!-- Date Picker -->
-{!! HTML::script('vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') !!}
+<script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
         <!-- File Input -->
-{!! HTML::script('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') !!}
+{{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
 
 <script>
     $('.date-picker').datepicker({

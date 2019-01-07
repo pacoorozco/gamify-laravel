@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateBadgesTable extends Migration
 {
@@ -16,14 +17,9 @@ class CreateBadgesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->integer('amount_needed')->unsigned();
+            $table->string('image_url')->nullable();
+            $table->integer('required_repetitions')->unsigned();
             $table->boolean('active')->default(true);
-
-            $table->string('image_file_name')->nullable();
-            $table->integer('image_file_size')->nullable();
-            $table->string('image_content_type')->nullable();
-            $table->timestamp('image_updated_at')->nullable();
-
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +32,6 @@ class CreateBadgesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('badges');
+        Schema::dropIfExists('badges');
     }
 }

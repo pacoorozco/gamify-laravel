@@ -2,7 +2,7 @@
 <ul class="sidebar-menu">
     <li class="header">ADMIN NAVIGATION</li>
     <li {!! (Request::is('admin') ? ' class="active"' : '') !!}>
-        <a href="{{ route('admin-home') }}">
+        <a href="{{ route('admin.home') }}">
             <i class="fa fa-dashboard"></i><span>{{ trans('admin/site.dashboard') }}</span>
         </a>
     </li>

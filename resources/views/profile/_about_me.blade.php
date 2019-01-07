@@ -35,16 +35,6 @@
                     <i class="fa fa-linkedin"></i>
                 </button>
             @endif
-            @if (!empty($user->profile->googleplus))
-                <a class="btn btn-social-icon btn-google" href="{{ $user->profile->googleplus }}"
-                   rel="nofollow">
-                    <i class="fa fa-google-plus"></i>
-                </a>
-            @else
-                <button type="button" class="btn btn-social-icon btn-google disabled">
-                    <i class="fa fa-google-plus"></i>
-                </button>
-            @endif
             @if (!empty($user->profile->github))
                 <a class="btn btn-social-icon btn-github" href="{{ $user->profile->github }}"
                    rel="nofollow">

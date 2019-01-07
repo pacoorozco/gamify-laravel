@@ -1,23 +1,22 @@
-language: php
-
-php:
-  - 7.1
-
-# This triggers builds to run on the new TravisCI infrastructure.
-# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+dist: xenial
 sudo: false
+
+language: php
+php:
+  - 7.2
+
+env:
+  - APP_ENV=testing
 
 notifications:
   email: false
 
-## Cache composer
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover

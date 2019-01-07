@@ -13,10 +13,10 @@
         </tr>
         @foreach ($question->actions as $action)
             <tr>
-                <td>{!! Form::select('badge_id[]', $availableActions, $action->id, array('class' => 'form-control')) !!}</td>
+                <td>{!! Form::select('badge_id[]', $availableActions, $action->id, ['class' => 'form-control']) !!}</td>
                 <td>{{ trans('admin/action/table.when_values.' . $action->when) }}</td>
                 <td>
-                    <a href="{{ route('admin.questions.actions.destroy', array($question, $action)) }}"
+                    <a href="{{ route('admin.questions.actions.destroy', [$question, $action]) }}"
                        rel="nofollow" data-method="delete"
                        data-confirm="{{ trans('admin/action/messages.confirm_delete') }}">
                         <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip"

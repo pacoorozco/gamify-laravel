@@ -65,11 +65,11 @@
 
                         @if($choice->points > 0)
                             <span class="label label-success pull-right">
-                                {{ trans('question/messages.choice_points', ['points' => $choice->points]) }}
+                                {{ trans('question/messages.choice_score', ['points' => $choice->points]) }}
                             </span>
                         @else
                             <span class="label label-danger pull-right">
-                                {{ trans('question/messages.choice_points', ['points' => $choice->points]) }}
+                                {{ trans('question/messages.choice_score', ['points' => $choice->points]) }}
                             </span>
                         @endif
                         {{ $choice->text }}

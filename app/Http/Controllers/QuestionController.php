@@ -72,7 +72,7 @@ class QuestionController extends Controller
         }
 
         // AI. Add notifications and return view
-        return redirect()->route('questions.show', $question->shortname);
+        return redirect()->route('questions.show', $question->short_name);
     }
 
     /**

@@ -34,7 +34,7 @@
 
 
 
-    {!! Form::open(array('route' => ['questions.answer', $question->shortname])) !!}
+    {!! Form::open(array('route' => ['questions.answer', $question->short_name])) !!}
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">{{ $question->name }}</h3>

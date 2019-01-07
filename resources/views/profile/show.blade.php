@@ -30,7 +30,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive" src="{{ $user->profile->avatar->url() }}"
+                    <img class="profile-user-img img-responsive" src="{{ $user->profile->getAvatarURL() }}"
                          alt="User profile picture">
 
                     <h3 class="profile-username text-center">{{ $user->name }}</h3>
@@ -39,13 +39,13 @@
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Points</b> <a class="pull-right">{{ $user->getExperiencePoints() }}</a>
+                            <strong>Points</strong> <a class="pull-right">{{ $user->getExperiencePoints() }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Questions</b> <a class="pull-right">{{ count($user->answeredQuestions) }}</a>
+                            <strong>Questions</strong> <a class="pull-right">{{ count($user->answeredQuestions) }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Badges</b> <a class="pull-right">{{ count($user->getCompletedBadges()) }}</a>
+                            <strong>Badges</strong> <a class="pull-right">{{ count($user->getCompletedBadges()) }}</a>
                         </li>
                     </ul>
                 </div>

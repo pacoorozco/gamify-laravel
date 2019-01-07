@@ -1,4 +1,27 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-l5
+ */
 
 namespace Gamify\Traits;
 
@@ -39,7 +62,7 @@ trait GamificationTrait
     public function badges()
     {
         return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
-            ->withPivot('amount', 'completed', 'completed_on');
+            ->withPivot('repetitions', 'completed', 'completed_on');
     }
 
     /**
@@ -65,7 +88,7 @@ trait GamificationTrait
     {
         $experience = $this->getExperiencePoints();
 
-        return Level::where('amount_needed', '<=', $experience)->orderBy('amount_needed')->first();
+        return Level::where('required_points', '<=', $experience)->orderBy('required_points')->first();
     }
 
     /**
@@ -90,7 +113,7 @@ trait GamificationTrait
     public function atLeastLevel(Level $level)
     {
         $experience = $this->getExperiencePoints();
-        $experienceUntilLevel = $level->ammount_needed - $experience;
+        $experienceUntilLevel = $level->required_points - $experience;
 
         return $experienceUntilLevel <= 0;
     }
@@ -104,7 +127,7 @@ trait GamificationTrait
     {
         $experience = $this->getExperiencePoints();
 
-        return Level::where('amount_needed', '>', $experience)->orderBy('amount_needed')->first();
+        return Level::where('required_points', '>', $experience)->orderBy('required_points')->first();
     }
 
     /**
@@ -130,7 +153,7 @@ trait GamificationTrait
     {
         $experience = $this->getExperiencePoints();
 
-        return $level->amount_needed - $experience;
+        return $level->required_points - $experience;
     }
 
     /**
@@ -170,7 +193,7 @@ trait GamificationTrait
     public function getPendingQuestions()
     {
         // TODO: Add an scope to only index questions (published and not answered and not hidden)
-        $answeredQuestions = $this->answeredQuestions()->lists('question_id')->toArray();
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
 
         return Question::PublishedAndVisible()->whereNotIn('id', $answeredQuestions)->get();
     }

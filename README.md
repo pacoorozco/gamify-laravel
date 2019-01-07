@@ -1,11 +1,11 @@
 # gamify - A gamification platform to implement any serious game mechanic
 
-[![Build Status](https://travis-ci.org/pacoorozco/gamify-l5.svg)](https://travis-ci.org/pacoorozco/gamify-l5)
+[![Build Status](https://travis-ci.com/pacoorozco/gamify-l5.svg)](https://travis-ci.com/pacoorozco/gamify-l5)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5)
 [![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5)
 [![License](https://img.shields.io/github/license/pacoorozco/gamify-l5.svg)](https://github.com/pacoorozco/gamify-l5/blob/master/LICENSE)
-[![Laravel Version](https://img.shields.io/badge/Laravel-5.1-orange.svg)](https://laravel.com/docs/5.1)
-[![GitHub release](https://img.shields.io/github/release/pacoorozco/probind.svg?style=flat-square)](https://github.com/pacoorozco/probind/releases)
+[![Laravel Version](https://img.shields.io/badge/Laravel-5.5-orange.svg)](https://laravel.com/docs/5.5)
+[![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-l5.svg?style=flat-square)](https://github.com/pacoorozco/gamify-l5/releases)
 
 ## Presentation
 
@@ -77,7 +77,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin/secret`.
+   > **NOTE**: Default credentials are `admin/admin` or `user/user`.
 
 ### Local server method
 
@@ -103,7 +103,7 @@ Prior this installation, you **need to have installed** this software:
     ```
 
 1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-l5/blob/master/.env.example) to `.env` and modify its contents to reflect your local environment.
-1. [Run database migrations](http://laravel.com/docs/5.1/migrations#running-migrations). If you want to include seed data, add a `--seed` flag.
+1. [Run database migrations](http://laravel.com/docs). If you want to include seed data, add a `--seed` flag.
 
     ```bash
     php artisan migrate --env=local
@@ -117,7 +117,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost:8000`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin/secret`.
+   > **NOTE**: Default credentials are `admin/admin` or `user/user`.
 
 ## Reporting issues
 
@@ -129,7 +129,7 @@ Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-l5/blob/master/CONT
 
 ## License
 
-**gamify** is released as free software under [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html)
+**gamify** is released as free software under [GNU GPL v3.0 or later](https://spdx.org/licenses/GPL-3.0-or-later.html)
 
 ## Authors
 

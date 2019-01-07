@@ -24,18 +24,18 @@
             </div><!-- ./ panel-header -->
             <div class="panel-body">
                 @if (count($question->choices) > 0)
-                    {!! Form::label('type', trans('admin/question/model.type'), array('class' => 'control-label')) !!}
+                    {!! Form::label('type', trans('admin/question/model.type'), ['class' => 'control-label']) !!}
                     {{ trans('admin/question/model.type_list.' . $question->type) }}
                     <table class="table table-hover">
                         <tr>
                             <th>{{ trans('admin/question/model.choice_text') }}</th>
-                            <th>{{ trans('admin/question/model.choice_points') }}</th>
+                            <th>{{ trans('admin/question/model.choice_score') }}</th>
                             <th>{{ trans('admin/question/model.choice_correct') }}</th>
                         </tr>
                         @foreach ($question->choices as $choice)
                             <tr>
                                 <td>{{ $choice->text }}</td>
-                                <td>{{ $choice->points }}</td>
+                                <td>{{ $choice->score }}</td>
                                 <td>{{ $choice->correct ? trans('general.yes') : trans('general.no') }}</td>
                             </tr>
                         @endforeach
@@ -61,8 +61,8 @@
                 {{ trans('admin/question/title.tags_section') }}
             </div>
             <div class="panel-body">
-                @forelse($question->tagList as $tag)
-                    <span class="label label-info">#{{ $tag }}</span>
+                @forelse($question->tagArray as $tag)
+                    <span class="label label-info">{{ $tag }}</span>
                 @empty
                     {{ trans('admin/question/model.tags_none') }}
                 @endforelse
@@ -93,7 +93,7 @@
                 </button>
             </a>
         @else
-            {!! Form::button('<i class="fa fa-trash-o"></i>' . trans('general.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+            {!! Form::button('<i class="fa fa-trash-o"></i>' . trans('general.delete'), ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
         @endif
     </div>
 </div>

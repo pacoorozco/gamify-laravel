@@ -22,8 +22,8 @@ class RewardBadgeRequest extends Request
     public function rules()
     {
         return [
-//            'username' => 'required|exists:users,username',
-//            'badge' => 'required|exists:badges,id'
+            'badge_username' => ['required', 'string', 'exists:users,id'],
+            'badge'          => ['required', 'integer', 'exists:badges,id'],
         ];
     }
 }

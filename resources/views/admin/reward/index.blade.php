@@ -14,7 +14,7 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
-        <a href="{{ route('admin-home') }}">
+        <a href="{{ route('admin.home') }}">
             <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
         </a>
     </li>
@@ -43,22 +43,19 @@
 {{-- Styles --}}
 @section('styles')
             <!-- Select2 -->
-    {!! HTML::style('vendor/select2/dist/css/select2.min.css') !!}
-    {!! HTML::style('vendor/select2-bootstrap-theme/dist/select2-bootstrap.min.css') !!}
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
 @endsection
 
 {{-- Scripts --}}
 @section('scripts')
             <!-- Select2 -->
-    {!! HTML::script('vendor/select2/dist/js/select2.min.js') !!}
+    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {
             $(".username-input").select2({
-                theme: "bootstrap",
                 placeholder: "{{ trans('admin/reward/messages.pick_user') }}",
             });
             $(".badge-input").select2({
-                theme: "bootstrap",
                 placeholder: "{{ trans('admin/reward/messages.pick_badge') }}",
             });
         });

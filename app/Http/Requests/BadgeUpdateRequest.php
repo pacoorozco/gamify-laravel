@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class BadgeUpdateRequest extends Request
 {
     /**
@@ -21,14 +23,14 @@ class BadgeUpdateRequest extends Request
      */
     public function rules()
     {
-        $badge = $this->route('badges');
+        $badge = $this->route('badge');
 
         return [
-            'name'          => 'required|unique:badges,name,'.$badge->id,
-            'description'   => 'required',
-            'amount_needed' => 'required|integer|min:1',
-            'active'        => 'required|boolean',
-            'image'         => 'image',
+            'name'                 => ['required', 'string', Rule::unique('badges')->ignore($badge->id)],
+            'description'          => ['required'],
+            'required_repetitions' => ['required', 'integer', 'min:1'],
+            'active'               => ['required', 'boolean'],
+            //'image'                => ['required', 'string'],
         ];
     }
 }

@@ -9,7 +9,7 @@
     </li>
     <li {!! (Request::is('questions*') ? ' class="active"' : '') !!}>
         <a href="{{ route('questions.index') }}" title="{{ trans('site.play') }}">
-            {{ trans('site.play') }} <span class="badge">{{ auth()->user()->getPendingQuestions()->count() }}</span>
+            {{ trans('site.play') }} <span class="badge">{{ Auth()->user()->getPendingQuestions()->count() }}</span>
             @if(Request::is('questions*'))
                 <span class="sr-only">(current)</span>
             @endif
@@ -17,7 +17,7 @@
     </li>
     @can('admin')
     <li>
-        <a href="{{ route('admin-home') }}" title="{{ trans('site.admin_area') }}">
+        <a href="{{ route('admin.home') }}" title="{{ trans('site.admin_area') }}">
             <i class="fa fa-gears"></i> {{ trans('site.admin_area') }}
         </a>
     </li>

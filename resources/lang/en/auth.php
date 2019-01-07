@@ -17,6 +17,7 @@ return [
     'login'                        => 'Login',
     'logout'                       => 'Logout',
     'username'                     => 'Username',
+    'email'                        => 'E-mail',
     'password'                     => 'Password',
     'forgot_password'              => 'I forgot my password',
     'forgot_password_title'        => 'Forget Password?',

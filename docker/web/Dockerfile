@@ -2,8 +2,6 @@ FROM nginx:alpine
 
 MAINTAINER Paco Orozco <paco@pacoorozco.info>
 
-COPY ./docker/web/nginx.conf /etc/nginx/
-
 RUN apk update \
     && apk upgrade \
     && apk add --no-cache bash \
@@ -11,6 +9,8 @@ RUN apk update \
 
 ARG PHP_UPSTREAM_CONTAINER=app
 ARG PHP_UPSTREAM_PORT=9000
+
+COPY ./docker/web/nginx.conf /etc/nginx/
 
 # Set upstream conf and remove the default conf
 RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREAM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
