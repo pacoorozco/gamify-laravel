@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
  * Routes that User needs to be administrator
  *  ------------------------------------------
  */
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'Admin\AdminDashboardController@index']);
 
