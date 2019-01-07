@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 1.0.0 - 2019-01-07
+
+This is a **major update**, so it has changes that breaks compatibility with previous versions. 
+
 > **IMPORTANT**: Application has been migrated to [Laravel 5.5](https://laravel.com/docs/5.5/).
 
 ### Added
@@ -16,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Added [Scrutinizer](https://scrutinizer-ci.com) code style checks and test coverage.
 - Added [StyleCI](https://styleci.io/) to automatically merge any style fixes into the application repository. This allows us to focus on the content of the contribution and not the code style.
 - Added [Laravel IDE Helper](https://github.com/barryvdh/laravel-ide-helper) to allow auto-completion on IDE.
-
+- Added Laravel Dusk for testing.
 
 ### Changed
 - CI has been migrated to [Travis CI COM](https://travis-ci.com/).
@@ -28,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Composer versions to be compliant with [Laravel 5.5](https://laravel.com/docs/5.5/). 
 - Travis is using PHP 7.2 image to do the builds.
 - `README` has been updated adding information about the project, authors and _"how to run this application"_.
+- Move al CSS and JS to `public/vendor`, so now it's part of this code.
 - Update CSS and JS paths in `views` to use new `public/vendor` folder.
 - Updated `LICENSE` to [GNU GPL v3.0 or later](https://spdx.org/licenses/GPL-3.0-or-later.html).
 
