@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
  *  ------------------------------------------
  */
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'can:access-dashboard'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'Admin\AdminDashboardController@index']);
 
     /* ------------------------------------------
