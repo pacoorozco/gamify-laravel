@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 1.0.1 - 2019-03-02
+
+### Added
+- Add issue templates to make issue submitting easier.
+
+### Fixed
+- Fix sidebar toggle button
+- Fix issue #39. **Authorisation was broken**. 
+
 ## 1.0.0 - 2019-01-07
 
 This is a **major update**, so it has changes that breaks compatibility with previous versions. 
