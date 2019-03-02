@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Gamify\Model' => 'Gamify\Policies\ModelPolicy',
+        // 'Gamify\Model' => 'Gamify\Policies\ModelPolicy',
     ];
 
     /**
@@ -40,27 +40,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $this->registerGamifyPolicies();
+        $this->registerGamifyAbilities();
     }
 
     /**
-     * Register custom Gamify authentication / authorization services.
+     * Register custom Gamify authorization abilities.
      *
      * @return void
      */
-    public function registerGamifyPolicies()
+    protected function registerGamifyAbilities()
     {
-        Gate::define('manage-users', function ($user) {
-            return $user->role === 'administrator';
-        });
-        Gate::define('manage-questions', function ($user) {
-            return $user->role === 'editor' || $user->role === 'administrator';
-        });
-        Gate::define('manage-badges', function ($user) {
-            return $user->role === 'administrator';
-        });
-        Gate::define('manage-levels', function ($user) {
-            return $user->role === 'administrator';
+        Gate::define('access-dashboard', function ($user) {
+            return $user->isAdmin();
         });
     }
 }

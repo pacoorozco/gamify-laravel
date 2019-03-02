@@ -22,8 +22,10 @@
  *
  * @link               https://github.com/pacoorozco/gamify-l5
  */
+
 use Faker\Generator as Faker;
 
+// To create a user with fake information
 $factory->define(Gamify\User::class, function (Faker $faker) {
     return [
         'name'           => $faker->name,
@@ -34,3 +36,8 @@ $factory->define(Gamify\User::class, function (Faker $faker) {
         'last_login_at'  => $faker->dateTime,
     ];
 });
+
+// To create a user with 'administrator' role.
+$factory->state(Gamify\User::class, 'admin', [
+    'role' => 'administrator',
+]);
