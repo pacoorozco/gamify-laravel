@@ -103,13 +103,13 @@ class User extends Authenticatable
         return $query->where('role', '=', 'user');
     }
 
-
     /**
      * Return true if user has 'administrator' role.
      *
      * @return bool
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->role === 'administrator';
     }
 }
