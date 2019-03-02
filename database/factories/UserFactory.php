@@ -22,7 +22,6 @@
  *
  * @link               https://github.com/pacoorozco/gamify-l5
  */
-
 use Faker\Generator as Faker;
 
 // To create a user with fake information

@@ -20,15 +20,14 @@
  * @copyright          2019 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  * @link               https://github.com/pacoorozco/gamify-l5
- *
  */
 
 namespace Tests\Feature;
 
 use Gamify\User;
+use Tests\TestCase;
 use Gamify\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class RoleAccessTest extends TestCase
 {
@@ -42,7 +41,7 @@ class RoleAccessTest extends TestCase
 
     public function testAdminRoleCanAccessToAdminDashboard()
     {
-        $user    = factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->states('admin')->create();
         $profile = factory(UserProfile::class)->make();
         $user->profile()->save($profile);
 
@@ -54,7 +53,7 @@ class RoleAccessTest extends TestCase
 
     public function testMemberRoleCanNotAccessToAdminDashboard()
     {
-        $user    = factory(User::class)->create();
+        $user = factory(User::class)->create();
         $profile = factory(UserProfile::class)->make();
         $user->profile()->save($profile);
 
