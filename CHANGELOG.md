@@ -4,8 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 1.0.1 - 2019-03-02
+
 ### Added
 - Add issue templates to make issue submitting easier.
+
+### Fixed
+- Fix sidebar toggle button
+- Fix issue #39. **Authorisation was broken**. 
 
 ## 1.0.0 - 2019-01-07
 
