@@ -2,10 +2,10 @@
 
 namespace Gamify\Http\Controllers;
 
-use Carbon\Carbon;
+use Gamify\User;
 use Gamify\Badge;
 use Gamify\Point;
-use Gamify\User;
+use Carbon\Carbon;
 
 class Game extends Controller
 {
@@ -18,7 +18,7 @@ class Game extends Controller
      *
      * @return bool
      */
-    public static function addExperience(User $user, $points = 5, $message = "")
+    public static function addExperience(User $user, $points = 5, $message = '')
     {
         if (empty($message)) {
             $message = trans('messages.unknown_reason');
@@ -47,7 +47,7 @@ class Game extends Controller
             // this badge was initiated before
             $userBadge->pivot->repetitions++;
             if ($userBadge->pivot->repetitions == $badge->required_repetitions) {
-                $userBadge->pivot->completed    = true;
+                $userBadge->pivot->completed = true;
                 $userBadge->pivot->completed_on = Carbon::now();
             }
             $saved = $userBadge->pivot->save();
