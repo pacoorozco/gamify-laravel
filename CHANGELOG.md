@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Fixed
 - Fix default credentials documentation (#44)
+- Bump version documentation updated
 
 ## 1.0.1 - 2019-03-02
 
