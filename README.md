@@ -23,7 +23,7 @@ As much as possible, I've tried to keep a clean code to work everywhere out of t
 
 ## Changelog
 
-See [CHANGELOG](https://github.com/pacoorozco/gamify-l5/blob/master/CHANGELOG) file in order to know what changes are implemented in every version.
+See [CHANGELOG](CHANGELOG.md) file in order to know what changes are implemented in every version.
 
 ## How to run gamify
 
@@ -77,7 +77,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`.
+   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`
 
 ### Local server method
 
@@ -117,7 +117,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost:8000`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`.
+   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`
 
 ## Reporting issues
 
