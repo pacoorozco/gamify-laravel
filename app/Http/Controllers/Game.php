@@ -12,13 +12,13 @@ class Game extends Controller
     /**
      * Add experience to an user.
      *
-     * @param User $user
-     * @param int  $points
-     * @param null $message
+     * @param User   $user
+     * @param int    $points
+     * @param string $message
      *
      * @return bool
      */
-    public static function addExperience(User $user, $points = 5, $message = null)
+    public static function addExperience(User $user, $points = 5, $message = '')
     {
         if (empty($message)) {
             $message = trans('messages.unknown_reason');

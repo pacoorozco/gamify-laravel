@@ -152,7 +152,7 @@ class AdminBadgeController extends AdminController
      */
     public function destroy(Badge $badge)
     {
-        if (! $badge->delete()) {
+        if ($badge->delete() !== true) {
             return redirect()->back()
                 ->with('error', trans('admin/badge/messages.delete.error'));
         }

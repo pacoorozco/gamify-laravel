@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 1.0.2 - 2019-06-15
+
+### Fixed
+- Fix default credentials documentation (#44)
+
 ## 1.0.1 - 2019-03-02
 
 ### Added

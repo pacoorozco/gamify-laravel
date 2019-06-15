@@ -148,7 +148,7 @@ class AdminLevelController extends AdminController
      */
     public function destroy(Level $level)
     {
-        if (! $level->delete()) {
+        if ($level->delete() !== true) {
             return redirect()->back()
                 ->with('error', trans('admin/level/messages.delete.error'));
         }
