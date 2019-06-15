@@ -28,17 +28,11 @@
 */
 
 /** ------------------------------------------
- *  Route model binding
+ *  Route model binding.
+ *
+ *  See RouteServiceProvider for {username} and {questioname}
  *  ------------------------------------------.
  */
-Route::bind('username', function ($value) {
-    return \Gamify\User::where('username', $value)->first();
-});
-
-/*Route::bind('question', function ($value) {
-    return \Gamify\Question::where('short_name', $value)->first();
-});*/
-
 Route::model('users', '\Gamify\User');
 Route::model('badges', '\Gamify\Badge');
 Route::model('levels', '\Gamify\Level');
@@ -65,12 +59,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Profiles
     // Route::get('user', 'UserController@index');
-    Route::get('user/{username}', ['as' => 'profiles.show', 'uses' => 'UserController@show']);
-    Route::post('user/{username}', ['as' => 'profiles.update', 'uses' => 'UserController@update']);
+    Route::get('users/{username}', ['as' => 'profiles.show', 'uses' => 'UserController@show']);
+    Route::post('users/{username}', ['as' => 'profiles.update', 'uses' => 'UserController@update']);
 
     Route::get('questions', ['as' => 'questions.index', 'uses' => 'QuestionController@index']);
-    Route::get('questions/{question}', ['as' => 'questions.show', 'uses' => 'QuestionController@show']);
-    Route::post('questions/{question}', ['as' => 'questions.answer', 'uses' => 'QuestionController@answer']);
+    Route::get('questions/{questionname}', ['as' => 'questions.show', 'uses' => 'QuestionController@show']);
+    Route::post('questions/{questionname}', ['as' => 'questions.answer', 'uses' => 'QuestionController@answer']);
 });
 
 /* ------------------------------------------

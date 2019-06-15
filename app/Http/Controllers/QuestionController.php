@@ -40,7 +40,7 @@ class QuestionController extends Controller
 
         foreach ($request->choices as $answer) {
             $choice = $question->choices()->find($answer);
-            $points += $choice->points;
+            $points += $choice->score;
             $success = $success || $choice->correct;
         }
         // minimun points for answer is '1'

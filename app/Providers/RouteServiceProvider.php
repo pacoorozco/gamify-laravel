@@ -26,6 +26,14 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind('username', function ($value) {
+            return \Gamify\User::where('username', $value)->first() ?? abort(404);
+        });
+
+        Route::bind('questionname', function ($value) {
+            return \Gamify\Question::where('short_name', $value)->first() ?? abort(404);
+        });
     }
 
     /**

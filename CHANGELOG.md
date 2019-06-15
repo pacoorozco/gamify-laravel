@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 1.0.3 - 2019-06-15
+
+### Fixed
+- Fix routing problem affecting answering questions (#45)
+
+### Changed
+- Change the URL verb from `/user/` to `/users/`, to make it coherent with the rest.
+
 ## 1.0.2 - 2019-06-15
 
 ### Fixed
