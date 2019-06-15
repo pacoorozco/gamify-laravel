@@ -168,7 +168,7 @@ class AdminUserController extends AdminController
                 ->with('error', trans('admin/user/messages.delete.impossible'));
         }
 
-        if (! $user->delete()) {
+        if ($user->delete() !== true) {
             return redirect()->back()
                 ->with('error', trans('admin/user/messages.delete.error'));
         }

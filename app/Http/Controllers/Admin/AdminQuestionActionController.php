@@ -36,7 +36,7 @@ class AdminQuestionActionController extends AdminController
      *
      * @param Question $question
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\View\View
      */
     public function create(Question $question)
     {

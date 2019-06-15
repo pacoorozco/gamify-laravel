@@ -12,7 +12,7 @@ class UserController extends Controller
      *
      * @param User $user
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(User $user)
     {

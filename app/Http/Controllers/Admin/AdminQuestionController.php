@@ -236,7 +236,7 @@ class AdminQuestionController extends AdminController
      */
     public function destroy(Question $question)
     {
-        if (! $question->delete()) {
+        if ($question->delete() !== true) {
             return redirect()->back()
                 ->with('error', trans('admin/question/messages.delete.error'));
         }
