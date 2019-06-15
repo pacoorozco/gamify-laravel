@@ -77,7 +77,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin/admin` or `user/user`.
+   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`.
 
 ### Local server method
 
@@ -117,7 +117,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost:8000`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin/admin` or `user/user`.
+   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`.
 
 ## Reporting issues
 
