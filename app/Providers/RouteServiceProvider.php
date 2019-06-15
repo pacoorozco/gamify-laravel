@@ -5,7 +5,8 @@ namespace Gamify\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
-class RouteServiceProvider extends ServiceProvider
+class
+RouteServiceProvider extends ServiceProvider
 {
     /**
      * This namespace is applied to your controller routes.
@@ -26,6 +27,14 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind('username', function ($value) {
+            return \Gamify\User::where('username', $value)->first() ?? abort(404);
+        });
+
+        Route::bind('questionname', function ($value) {
+            return \Gamify\Question::where('short_name', $value)->first() ?? abort(404);
+        });
     }
 
     /**

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Fixed
+- Fix routing problem affecting answering questions (#45)
+
+### Changed
+- Change the URL verb from `/user/` to `/users/`, to make it coherent with the rest.
 
 ## 1.0.2 - 2019-06-15
 
