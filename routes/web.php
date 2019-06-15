@@ -28,12 +28,11 @@
 */
 
 /** ------------------------------------------
- *  Route model binding
+ *  Route model binding.
  *
  *  See RouteServiceProvider for {username} and {questioname}
  *  ------------------------------------------.
  */
-
 Route::model('users', '\Gamify\User');
 Route::model('badges', '\Gamify\Badge');
 Route::model('levels', '\Gamify\Level');
