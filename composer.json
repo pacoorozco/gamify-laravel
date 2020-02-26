@@ -1,5 +1,5 @@
 {
-    "name": "pacoorozco/gamify-l5",
+    "name": "pacoorozco/gamify-laravel",
     "description": "Gamification platform implementing a serious game mechanic.",
     "keywords": [
         "gamification",
@@ -9,7 +9,7 @@
         "serious games",
         "laravel"
     ],
-    "homepage": "https://github.com/pacoorozco/gamify-l5",
+    "homepage": "https://github.com/pacoorozco/gamify-laravel",
     "license": "GPL-3.0-or-later",
     "type": "project",
     "authors": [
@@ -21,7 +21,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/pacoorozco/gamify-l5/issues"
+        "issues": "https://github.com/pacoorozco/gamify-laravel/issues"
     },
     "require": {
         "php": ">=7.2.0",

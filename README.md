@@ -1,11 +1,11 @@
 # gamify - A gamification platform to implement any serious game mechanic
 
-[![Build Status](https://travis-ci.com/pacoorozco/gamify-l5.svg)](https://travis-ci.com/pacoorozco/gamify-l5)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5)
-[![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-l5)
-[![License](https://img.shields.io/github/license/pacoorozco/gamify-l5.svg)](https://github.com/pacoorozco/gamify-l5/blob/master/LICENSE)
+[![Build Status](https://travis-ci.com/pacoorozco/gamify-laravel.svg)](https://travis-ci.com/pacoorozco/gamify-laravel)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
+[![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
+[![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](https://github.com/pacoorozco/gamify-laravel/blob/master/LICENSE)
 [![Laravel Version](https://img.shields.io/badge/Laravel-5.5-orange.svg)](https://laravel.com/docs/5.5)
-[![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-l5.svg?style=flat-square)](https://github.com/pacoorozco/gamify-l5/releases)
+[![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-laravel.svg?style=flat-square)](https://github.com/pacoorozco/gamify-laravel/releases)
 
 ## Presentation
 
@@ -43,7 +43,7 @@ Prior this installation, you **need to have installed** this software:
 1. Clone the repository locally
 
     ```bash
-    $ git clone https://github.com/pacoorozco/gamify-l5.git gamify
+    $ git clone https://github.com/pacoorozco/gamify-laravel.git gamify
     $ cd gamify
     ```
 1. Install PHP dependencies with:
@@ -57,7 +57,7 @@ Prior this installation, you **need to have installed** this software:
           composer install
     ```
 
-1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-l5/blob/master/.env.example) to `.env`.
+1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-laravel/blob/master/.env.example) to `.env`.
 
     > **NOTE**: You don't need to touch anything from this file. It works with default settings.
 
@@ -92,7 +92,7 @@ Prior this installation, you **need to have installed** this software:
 1. Clone the repository locally
 
     ```bash
-    $ git clone https://github.com/pacoorozco/gamify-l5.git gamify
+    $ git clone https://github.com/pacoorozco/gamify-laravel.git gamify
     ```
 
 1. [Install dependencies](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) with: 
@@ -102,7 +102,7 @@ Prior this installation, you **need to have installed** this software:
     $ composer install
     ```
 
-1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-l5/blob/master/.env.example) to `.env` and modify its contents to reflect your local environment.
+1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-laravel/blob/master/.env.example) to `.env` and modify its contents to reflect your local environment.
 1. [Run database migrations](http://laravel.com/docs). If you want to include seed data, add a `--seed` flag.
 
     ```bash
@@ -121,11 +121,11 @@ Prior this installation, you **need to have installed** this software:
 
 ## Reporting issues
 
-If you have issues with **gamify**, you can report them with the [GitHub issues module](https://github.com/pacoorozco/gamify-l5/issues).
+If you have issues with **gamify**, you can report them with the [GitHub issues module](https://github.com/pacoorozco/gamify-laravel/issues).
 
 ## Contributing
 
-Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-l5/blob/master/CONTRIBUTE.md) for details.
+Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-laravel/blob/master/CONTRIBUTE.md) for details.
 
 ## License
 
@@ -135,5 +135,5 @@ Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-l5/blob/master/CONT
 
 **gamify** was originally developed by Emilio Ampudia and [Paco Orozco](https://pacoorozco.info) as part of a game in UPCnet. Later, the [original version](https://github.com/pacoorozco/gamify) was migrated to Laravel.
 
-See [contributor list](https://github.com/pacoorozco/gamify-l5/graphs/contributors) for a complete list of contributors.
+See [contributor list](https://github.com/pacoorozco/gamify-laravel/graphs/contributors) for a complete list of contributors.
 
