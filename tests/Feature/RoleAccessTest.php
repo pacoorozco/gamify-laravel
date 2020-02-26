@@ -25,9 +25,9 @@
 namespace Tests\Feature;
 
 use Gamify\User;
-use Tests\TestCase;
 use Gamify\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class RoleAccessTest extends TestCase
 {

@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Http\Requests\LevelCreateRequest;
+use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use Gamify\Http\Requests\LevelCreateRequest;
-use Gamify\Http\Requests\LevelUpdateRequest;
 
 class AdminLevelController extends AdminController
 {

@@ -26,11 +26,11 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
+use Gamify\Http\Requests\QuestionCreateRequest;
+use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use Gamify\Http\Requests\QuestionCreateRequest;
-use Gamify\Http\Requests\QuestionUpdateRequest;
 
 class AdminQuestionController extends AdminController
 {

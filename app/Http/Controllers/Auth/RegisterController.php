@@ -18,10 +18,10 @@
 
 namespace Gamify\Http\Controllers\Auth;
 
-use Gamify\User;
 use Gamify\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Gamify\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
