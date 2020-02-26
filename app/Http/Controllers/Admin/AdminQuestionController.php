@@ -20,17 +20,17 @@
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
- * @link               https://github.com/pacoorozco/gamify-l5
+ * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
+use Gamify\Http\Requests\QuestionCreateRequest;
+use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use Gamify\Http\Requests\QuestionCreateRequest;
-use Gamify\Http\Requests\QuestionUpdateRequest;
 
 class AdminQuestionController extends AdminController
 {

@@ -20,18 +20,18 @@
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
- * @link               https://github.com/pacoorozco/gamify-l5
+ * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Http\Requests\UserCreateRequest;
+use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
 use Gamify\UserProfile;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
-use Gamify\Http\Requests\UserCreateRequest;
-use Gamify\Http\Requests\UserUpdateRequest;
+use Yajra\Datatables\Datatables;
 
 class AdminUserController extends AdminController
 {

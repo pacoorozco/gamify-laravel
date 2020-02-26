@@ -13,16 +13,16 @@
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
- * @link               https://github.com/pacoorozco/gamify-l5
+ * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
 namespace Gamify;
 
 use Carbon\Carbon;
 use Gamify\Traits\GamificationTrait;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * User model, represents a Gamify user.

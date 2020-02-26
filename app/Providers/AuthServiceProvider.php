@@ -13,13 +13,13 @@
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
- * @link               https://github.com/pacoorozco/gamify-l5
+ * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
 namespace Gamify\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

@@ -20,16 +20,16 @@
  * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
- * @link               https://github.com/pacoorozco/gamify-l5
+ * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\User;
 use Gamify\Badge;
 use Gamify\Http\Controllers\Game;
 use Gamify\Http\Requests\RewardBadgeRequest;
 use Gamify\Http\Requests\RewardExperienceRequest;
+use Gamify\User;
 
 class AdminRewardController extends AdminController
 {

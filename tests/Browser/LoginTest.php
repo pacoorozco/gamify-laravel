@@ -3,8 +3,8 @@
 namespace Tests\Browser;
 
 use Gamify\User;
-use Tests\DuskTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\DuskTestCase;
 
 class LoginTest extends DuskTestCase
 {

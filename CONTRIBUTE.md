@@ -37,7 +37,7 @@ chances of your issue being dealt with quickly:
 ### Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
-* Search [GitHub](https://github.com/pacoorozco/gamify-l5/pulls) for an open or closed Pull Request
+* Search [GitHub](https://github.com/pacoorozco/gamify-laravel/pulls) for an open or closed Pull Request
   that relates to your submission. You don't want to duplicate effort.
 * Make your changes in a new git branch.  Don't ask us to pull from your master branch:
 
@@ -162,4 +162,4 @@ or in case of multiple issues:
 
 ```Closes #123, #245, #992```
 
-[github]: https://github.com/pacoorozco/gamify-l5
+[github]: https://github.com/pacoorozco/gamify-laravel

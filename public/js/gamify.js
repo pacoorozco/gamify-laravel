@@ -24,7 +24,7 @@
  * @package    Gamify JavaScript
  * @author     Paco Orozco <paco_@_pacoorozco.info>
  * @license    http://www.gnu.org/licenses/gpl-2.0.html (GPL v2)
- * @link       https://github.com/pacoorozco/gamify-l5
+ * @link       https://github.com/pacoorozco/gamify-laravel
  */
 
 Gamify = {
