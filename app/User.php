@@ -20,9 +20,9 @@ namespace Gamify;
 
 use Carbon\Carbon;
 use Gamify\Traits\GamificationTrait;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * User model, represents a Gamify user.

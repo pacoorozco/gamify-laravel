@@ -26,10 +26,10 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
-use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class AdminBadgeController extends AdminController
 {

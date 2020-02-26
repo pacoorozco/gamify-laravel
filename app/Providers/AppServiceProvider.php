@@ -26,8 +26,8 @@
 namespace Gamify\Providers;
 
 use Illuminate\Support\Collection;
-use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Dusk\DuskServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
