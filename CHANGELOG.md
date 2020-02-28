@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Unreleased
 ### Changed
 - Repository name has been changed to `gamify-laravel`, current URL is https://github.com/pacoorozco/gamify-laravel.
+### Removed
+- Dusk tests. They were not working properly.
 
 ## 1.0.3 - 2019-06-15
 
