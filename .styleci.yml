@@ -1,8 +1,13 @@
-php:
-  preset: laravel
-  disabled:
-    - unused_use
-  finder:
-    not-name:
-      - index.php
-      - server.php
+preset: laravel
+
+disabled:
+  - unused_use
+
+finder:
+  exclude:
+    - storage
+    - vendor
+  not-name:
+    - index.php
+    - server.php
+    - "*.blade.php"
