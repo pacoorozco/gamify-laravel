@@ -14,7 +14,6 @@
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
- *
  */
 
 namespace Gamify;

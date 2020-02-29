@@ -14,7 +14,6 @@
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
- *
  */
 
 namespace Tests\Unit;
@@ -85,7 +84,7 @@ class UserTest extends ModelTestCase
         $test_data = [
             'secret',
             'verysecret',
-            '$2y$04$pmfLKo7TAgmh.JyUT7iSneUCqwowvTvkmV1CO5tHGhue2L1viNvTW'
+            '$2y$04$pmfLKo7TAgmh.JyUT7iSneUCqwowvTvkmV1CO5tHGhue2L1viNvTW',
         ];
 
         foreach ($test_data as $input) {
