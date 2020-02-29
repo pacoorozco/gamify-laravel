@@ -5,7 +5,7 @@ namespace Gamify;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class QuestionChoice
+ * Class QuestionChoice.
  *
  * @property  string $text    The text of this choice.
  * @property  bool   $correct Is this choice correct?.

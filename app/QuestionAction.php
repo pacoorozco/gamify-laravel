@@ -5,7 +5,7 @@ namespace Gamify;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class QuestionAction
+ * Class QuestionAction.
  *
  * @property  string $when     This is when this action will be triggered ['success', 'fail', 'always'].
  * @property  int    $badge_id This Badge will be associated once you complete the action.
