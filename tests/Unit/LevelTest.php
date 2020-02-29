@@ -3,11 +3,9 @@
 namespace Tests\Unit;
 
 use Gamify\Level;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ModelTestCase;
 
-class LevelTest extends TestCase
+class LevelTest extends ModelTestCase
 {
     public function test_contains_valid_fillable_properties()
     {
