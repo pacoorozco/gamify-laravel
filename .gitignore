@@ -9,12 +9,7 @@ package-lock.json
 public/storage
 public/hot
 storage/*.key
-.env.*.php
-.env.php
 .env
-
-# Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
-.rocketeer/
 
 # Homestead deployment. https://laravel.com/docs/master/homestead
 Homestead.yaml
