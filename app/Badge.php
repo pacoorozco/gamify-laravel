@@ -35,13 +35,37 @@ class Badge extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'badges';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'description',
         'required_repetitions',
         'image_url',
         'active',
+    ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'int',
+        'name' => 'string',
+        'description' => 'string',
+        'required_repetitions' => 'int',
+        'image_url' => 'string',
+        'active' => 'boolean',
     ];
 
     /**
