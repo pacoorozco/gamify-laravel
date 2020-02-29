@@ -26,9 +26,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 /**
- * Class Question
+ * Class Question.
  *
- * @package Gamify
  *
  * @property  int    $id         The object unique id.
  * @property  string $name       The name of the question.
@@ -43,9 +42,7 @@ class Question extends Model
 {
     use SoftDeletes;
     use RecordAuthorSignature; // Record Signature
-
     use Sluggable; // Slugs
-
     use Taggable; // Tags
 
     /**

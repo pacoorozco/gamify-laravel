@@ -5,9 +5,8 @@ namespace Gamify;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Point
+ * Class Point.
  *
- * @package Gamify
  *
  * @property  int    $id           Object unique id..
  * @property  int    $points       How many points has been given.
