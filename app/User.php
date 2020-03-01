@@ -95,6 +95,53 @@ class User extends Authenticatable
     }
 
     /**
+     * This is answered Questions relation.
+     *
+     * It uses a pivot table with these values:
+     *
+     * points: int - how many points was obtained
+     * answers: string - which answers was supplied
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function answeredQuestions()
+    {
+        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
+            ->withPivot('points', 'answers');
+    }
+
+    /**
+     * This is Badges relation.
+     *
+     * It uses a pivot table with these values:
+     *
+     * amount: int - how many actions has completed
+     * completed: bool - true if User's has own this badge
+     * completed_on: Datetime - where it was completed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function badges()
+    {
+        return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
+            ->withPivot('repetitions', 'completed', 'completed_on');
+    }
+
+    /**
+     * This is Points relation.
+     *
+     * Results are grouped by user_is and it selects the sum of all points
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function points()
+    {
+        return $this->hasMany('Gamify\Point')
+            ->selectRaw('sum(points) as sum, user_id')
+            ->groupBy('user_id');
+    }
+
+    /**
      * Set the username attribute to lowercase.
      *
      * @param string $value
@@ -131,6 +178,26 @@ class User extends Authenticatable
         }
 
         return $date->diffForHumans();
+    }
+
+    /**
+     * Get current Experience points for this user.
+     *
+     * @return int
+     */
+    protected function getExperiencePoints(): int
+    {
+        return $this->points()->sum('points');
+    }
+
+    /**
+     * Returns a Collection of completed Badges for this user.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getCompletedBadges()
+    {
+        return $this->badges()->wherePivot('completed', true)->get();
     }
 
     /**

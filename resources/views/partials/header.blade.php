@@ -43,7 +43,7 @@
                                 <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="img-circle"
                                      alt="{{ trans('user/profile.avatar') }}"/>
                                 <p>
-                                    {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}
+                                    {{ Auth()->user()->name }} - {{ Auth()->user()->getCurrentLevelName() }}
                                     <small>Member since {{ date("M Y", strtotime(Auth()->user()->created_at)) }}</small>
                                 </p>
                             </li>

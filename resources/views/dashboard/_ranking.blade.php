@@ -11,7 +11,7 @@
         <tr>
             <td>{{ $index+1 }}</td>
             <td><a href="{{ route('profiles.show', $userInRank->username) }}">{{ $userInRank->name }}</a></td>
-            <td>{{ $userInRank->getLevelName() }}</td>
+            <td>{{ $userInRank->getCurrentLevelName() }}</td>
             <td>{{ $userInRank->getExperiencePoints() }}</td>
         </tr>
     @endforeach

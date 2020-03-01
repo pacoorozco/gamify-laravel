@@ -28,79 +28,17 @@ namespace Gamify\Traits;
 use Gamify\Badge;
 use Gamify\Level;
 use Gamify\Question;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait GamificationTrait
 {
-    /**
-     * These are the User's answered Questions.
-     *
-     * It uses a pivot table with these values:
-     *
-     * points: int - how many points was obtained
-     * answers: string - which answers was supplied
-     *
-     * @return Relation
-     */
-    public function answeredQuestions()
-    {
-        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
-            ->withPivot('points', 'answers');
-    }
-
-    /**
-     * These are the User's Badges relationship.
-     *
-     * It uses a pivot table with these values:
-     *
-     * amount: int - how many actions has completed
-     * completed: bool - true if User's has own this badge
-     * completed_on: Datetime - where it was completed
-     *
-     * @return Relation
-     */
-    public function badges()
-    {
-        return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
-            ->withPivot('repetitions', 'completed', 'completed_on');
-    }
-
-    /**
-     * These are the User's Points relationship.
-     *
-     * Results are grouped by user_is and it selects the sum of all points
-     *
-     * @return Relation
-     */
-    public function points()
-    {
-        return $this->hasMany('Gamify\Point')
-            ->selectRaw('sum(points) as sum, user_id')
-            ->groupBy('user_id');
-    }
-
-    /**
-     * Get current Level (object) for this user.
-     *
-     * @return Level
-     */
-    public function getLevel()
-    {
-        $experience = $this->getExperiencePoints();
-
-        return Level::where('required_points', '<=', $experience)->orderBy('required_points')->first();
-    }
-
     /**
      * Get current Level name for this user.
      *
      * @return string
      */
-    public function getLevelName()
+    public function getCurrentLevelName()
     {
-        $level = $this->getLevel();
-
-        return $level->name;
+        return Level::fromExperience($this->getExperiencePoints())->name;
     }
 
     /**
@@ -125,9 +63,7 @@ trait GamificationTrait
      */
     public function getNextLevel()
     {
-        $experience = $this->getExperiencePoints();
-
-        return Level::where('required_points', '>', $experience)->orderBy('required_points')->first();
+        return Level::nextFromExperience($this->getExperiencePoints());
     }
 
     /**
@@ -157,16 +93,6 @@ trait GamificationTrait
     }
 
     /**
-     * Get current Experience points for this user.
-     *
-     * @return int
-     */
-    public function getExperiencePoints()
-    {
-        return $this->points()->sum('points');
-    }
-
-    /**
      * Checks if user has the given Badge.
      *
      * @param Badge $badge
@@ -178,16 +104,6 @@ trait GamificationTrait
         $userBadge = $this->badges()->find($badge->id);
 
         return $userBadge->pivot->completed;
-    }
-
-    /**
-     * Returns a Collection of completed Badges for this user.
-     *
-     * @return mixed
-     */
-    public function getCompletedBadges()
-    {
-        return $this->badges()->wherePivot('completed', true)->get();
     }
 
     public function getPendingQuestions()

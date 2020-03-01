@@ -101,7 +101,7 @@
             <tbody>
             <tr>
                 <td>{{ trans('user/profile.level') }}:</td>
-                <td>{{ $user->getLevelName() }}</td>
+                <td>{{ $user->getCurrentLevelName() }}</td>
             </tr>
             <tr>
                 <td>{{ trans('user/profile.rank') }}:</td>

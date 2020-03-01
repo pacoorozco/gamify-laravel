@@ -24,11 +24,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Model that represents a badge.
  *
- * @property int     $id                    Object unique id.
- * @property string  $name                  Name of the level..
- * @property int $required_points       How many points do you need to achieve it.
- * @property string  image_url              URL of the level's image
- * @property bool active                 Is this level enabled?
+ * @property int    $id                    Object unique id.
+ * @property string $name                  Name of the level..
+ * @property int    $required_points       How many points do you need to achieve it.
+ * @property string image_url              URL of the level's image
+ * @property bool   active                 Is this level enabled?
  */
 class Level extends Model
 {
@@ -81,5 +81,43 @@ class Level extends Model
     public function getImageURL(): string
     {
         return asset('images/missing_level.png');
+    }
+
+    /**
+     * Get current Level (object) for the given experience.
+     *
+     * @param int $experience
+     *
+     * @return \Gamify\Level
+     */
+    public static function fromExperience(int $experience)
+    {
+        return Level::where('required_points', '<=', $experience)->orderBy('required_points')->first();
+    }
+
+    /**
+     * Return the next Level (object) for the given experience.
+     *
+     * @param int $experience
+     *
+     * @return \Gamify\Level
+     */
+    public static function nextFromExperience(int $experience)
+    {
+        return Level::where('required_points', '>', $experience)->orderBy('required_points')->first();
+    }
+
+    /**
+     * Returns how many Experience Points until next Level.
+     *
+     * @param int $experience
+     *
+     * @return int
+     */
+    public static function experienceUntilNextLevel(int $experience): int
+    {
+        $nextLevel = self::nextFromExperience($experience);
+
+        return (($nextLevel->required_points - $experience) > 0) ?: 0;
     }
 }
