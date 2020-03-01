@@ -92,7 +92,7 @@ class Level extends Model
      */
     public static function fromExperience(int $experience)
     {
-        return Level::where('required_points', '<=', $experience)->orderBy('required_points')->first();
+        return self::where('required_points', '<=', $experience)->orderBy('required_points')->first();
     }
 
     /**
@@ -104,7 +104,7 @@ class Level extends Model
      */
     public static function nextFromExperience(int $experience)
     {
-        return Level::where('required_points', '>', $experience)->orderBy('required_points')->first();
+        return self::where('required_points', '>', $experience)->orderBy('required_points')->first();
     }
 
     /**
