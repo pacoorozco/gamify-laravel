@@ -39,7 +39,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserProfile extends Model
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'user_profiles';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'bio',
         'url',
@@ -53,14 +64,22 @@ class UserProfile extends Model
     ];
 
     /**
-     * Returns avatar URL.
+     * The attributes that should be cast to native types.
      *
-     * @return string
+     * @var array
      */
-    public function getAvatarURL(): string
-    {
-        return asset('images/missing_profile.png');
-    }
+    protected $casts = [
+        'id' => 'int',
+        'bio' => 'string',
+        'url' => 'string',
+        'phone' => 'string',
+        'date_of_birth' => 'string',
+        'gender' => 'string',
+        'twitter' => 'string',
+        'facebook' => 'string',
+        'linkedin' => 'string',
+        'github' => 'string',
+    ];
 
     /**
      * UserProfile are attached to every User.
@@ -70,5 +89,15 @@ class UserProfile extends Model
     public function user()
     {
         return $this->belongsTo('Gamify\User');
+    }
+
+    /**
+     * Returns avatar URL.
+     *
+     * @return string
+     */
+    public function getAvatarURL(): string
+    {
+        return asset('images/missing_profile.png');
     }
 }

@@ -23,7 +23,21 @@ use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Traits\RecordAuthorSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
+/**
+ * Class Question.
+ *
+ *
+ * @property  int    $id         The object unique id.
+ * @property  string $name       The name of the question.
+ * @property  string $short_name The slugged name of the question.
+ * @property  string $question   The text for the question.
+ * @property  string $solution   The test for the solution.
+ * @property  string $type       The question type ['single'. 'multi'].
+ * @property  bool   $hidden     The visibility of the question.
+ * @property  string $status     The status of the question ['draft', 'publish', 'pending', 'private'].
+ */
 class Question extends Model
 {
     use SoftDeletes;
@@ -31,7 +45,18 @@ class Question extends Model
     use Sluggable; // Slugs
     use Taggable; // Tags
 
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'questions';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'question',
@@ -48,6 +73,22 @@ class Question extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'int',
+        'name' => 'string',
+        'short_name' => 'string',
+        'question' => 'string',
+        'solution' => 'string',
+        'type' => 'string',
+        'hidden' => 'bool',
+        'status' => 'string',
+    ];
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -55,10 +96,43 @@ class Question extends Model
     public function sluggable()
     {
         return [
-            'short_name'     => [
+            'short_name' => [
                 'source' => 'name',
             ],
         ];
+    }
+
+    /**
+     * A question will have some actions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function actions()
+    {
+        return $this->hasMany('Gamify\QuestionAction');
+    }
+
+    /**
+     * A question will have some choices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function choices()
+    {
+        return $this->hasMany('Gamify\QuestionChoice');
+    }
+
+    /**
+     * Return the excerpt of the question text.
+     *
+     * @param int    $length
+     * @param string $trailing
+     *
+     * @return string
+     */
+    public function excerpt($length = 55, $trailing = '...'): string
+    {
+        return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
     }
 
     /**
@@ -71,16 +145,6 @@ class Question extends Model
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
 
         return Badge::whereNotIn('id', $selectedActions)->get();
-    }
-
-    /**
-     * A question will have some actions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function actions()
-    {
-        return $this->hasMany('Gamify\QuestionAction');
     }
 
     /**
@@ -119,38 +183,6 @@ class Question extends Model
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
-    }
-
-    /**
-     * A question will have some choices.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function choices()
-    {
-        return $this->hasMany('Gamify\QuestionChoice');
-    }
-
-    /**
-     * Return the excerpt of the question text.
-     *
-     * @param int    $length
-     * @param string $trailing
-     *
-     * @return string
-     */
-    public function excerpt($length = 55, $trailing = '...'): string
-    {
-        $text = strip_tags($this->question);
-
-        if (str_word_count($text, 0) > $length) {
-            // string exceeded length, truncate and add trailing dots
-            $words = str_word_count($text, 2);
-            $pos = array_keys($words);
-            $text = substr($text, 0, $pos[$length]).$trailing;
-        }
-        // string was already short enough, return the string
-        return '<p>'.$text.'</p>';
     }
 
     /**

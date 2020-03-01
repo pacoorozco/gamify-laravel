@@ -34,12 +34,36 @@ class Level extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'levels';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'required_points',
         'image_url',
         'active',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'int',
+        'name' => 'string',
+        'required_points' => 'int',
+        'image_url' => 'string',
+        'active' => 'boolean',
     ];
 
     /**

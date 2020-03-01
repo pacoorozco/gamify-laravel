@@ -4,6 +4,13 @@ namespace Gamify;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class QuestionChoice.
+ *
+ * @property  string $text    The text of this choice.
+ * @property  bool   $correct Is this choice correct?.
+ * @property  int    $score   How many points are added by this choice.
+ */
 class QuestionChoice extends Model
 {
     /**
@@ -13,8 +20,18 @@ class QuestionChoice extends Model
      */
     protected $table = 'question_choices';
 
+    /**
+     * Disable the timestamps on this model.
+     *
+     * @var bool
+     */
     public $timestamps = false;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'text',
         'correct',
@@ -22,15 +39,29 @@ class QuestionChoice extends Model
     ];
 
     /**
-     * Every time we modify a choice we need to touch the question.
+     * The attributes that should be cast to native types.
+     *
+     * @var array
      */
-    protected $touches = ['question'];
+    protected $casts = [
+        'id' => 'int',
+        'text' => 'string',
+        'correct' => 'bool',
+        'score' => 'int',
+    ];
 
     /**
      * A question choice belongs to a question.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function question()
     {
         return $this->belongsTo('Gamify\Question');
     }
+
+    /**
+     * Every time we modify a choice we need to touch the question.
+     */
+    protected $touches = ['question'];
 }
