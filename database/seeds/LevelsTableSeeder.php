@@ -42,7 +42,7 @@ class LevelsTableSeeder extends Seeder
 
         foreach (range(0, 4) as $index) {
             Level::create([
-                'name' => 'Level ' . $index,
+                'name' => 'Level '.$index,
                 'required_points' => ($index * 10),
             ]);
         }
