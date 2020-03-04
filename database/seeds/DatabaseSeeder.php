@@ -15,6 +15,7 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

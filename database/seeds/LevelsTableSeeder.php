@@ -22,7 +22,10 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
+
+use Gamify\Level;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class LevelsTableSeeder extends Seeder
 {
@@ -38,8 +41,8 @@ class LevelsTableSeeder extends Seeder
         DB::table('levels')->delete();
 
         foreach (range(0, 4) as $index) {
-            \Gamify\Level::create([
-                'name'            => 'Level '.$index,
+            Level::create([
+                'name' => 'Level ' . $index,
                 'required_points' => ($index * 10),
             ]);
         }
