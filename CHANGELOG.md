@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Unreleased
 ### Changed
 - Repository name has been changed to `gamify-laravel`, current URL is https://github.com/pacoorozco/gamify-laravel.
+### Fixed
+- `docker-compose build` was throwing an error, so docker was not working. ([#61][i61])
+
+[i61]: https://github.com/pacoorozco/gamify-laravel/issues/61
+
+
 ### Removed
 - Dusk tests. They were not working properly.
 
