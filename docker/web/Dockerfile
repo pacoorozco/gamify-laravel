@@ -5,7 +5,7 @@ MAINTAINER Paco Orozco <paco@pacoorozco.info>
 RUN apk update \
     && apk upgrade \
     && apk add --no-cache bash \
-    && adduser -D -H -u 1000 -s /bin/bash www-data
+    && adduser -D -H -u 1000 -s /bin/bash -G www-data www-data
 
 ARG PHP_UPSTREAM_CONTAINER=app
 ARG PHP_UPSTREAM_PORT=9000
