@@ -42,8 +42,26 @@ class Question extends Model
 {
     use SoftDeletes;
     use RecordAuthorSignature; // Record Signature
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
+
+    /**
+     * Defines question's statuses.
+     */
+    const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
+    const PUBLISH_STATUS = 'publish'; // Viewable by everyone.
+    const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
+    const PRIVATE_STATUS = 'private'; // Viewable only to administrators.
+    const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
+    const TRASH_STATUS = 'trash'; // Removed questions are assigned the trash status.
+
+    /**
+     * Defines question's types.
+     */
+    const SINGLE_RESPONSE_TYPE = 'single'; // Only one answer is correct.
+    const MULTI_RESPONSE_TYPE = 'multi'; // Multiple answers are correct.
 
     /**
      * The database table used by the model.
@@ -156,7 +174,7 @@ class Question extends Model
      */
     public function scopePublished($query)
     {
-        return $query->where('status', '=', 'publish');
+        return $query->where('status', '=', self::PUBLISH_STATUS);
     }
 
     /**
@@ -168,7 +186,7 @@ class Question extends Model
      */
     public function scopePublishedAndVisible($query)
     {
-        return $query->where('status', '=', 'publish')->where('hidden', false);
+        return $query->where('status', '=', self::PUBLISH_STATUS)->where('hidden', false);
     }
 
     /**
