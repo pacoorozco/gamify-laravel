@@ -20,10 +20,10 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
-use Gamify\Traits\RecordAuthorSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
  * Class Question.
@@ -36,12 +36,13 @@ use Illuminate\Support\Str;
  * @property  string $solution   The test for the solution.
  * @property  string $type       The question type ['single'. 'multi'].
  * @property  bool   $hidden     The visibility of the question.
- * @property  string $status     The status of the question ['draft', 'publish', 'pending', 'private'].
+ * @property  string $status     The status of the question ['draft', 'publish', 'pending', 'private', 'future].
  */
 class Question extends Model
 {
     use SoftDeletes;
-    use RecordAuthorSignature; // Record Signature
+
+    use BlameableTrait; // Record author, updater and deleter
 
     use Sluggable; // Slugs
 
@@ -55,7 +56,6 @@ class Question extends Model
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
     const PRIVATE_STATUS = 'private'; // Viewable only to administrators.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
-    const TRASH_STATUS = 'trash'; // Removed questions are assigned the trash status.
 
     /**
      * Defines question's types.
