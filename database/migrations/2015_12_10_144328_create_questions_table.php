@@ -21,7 +21,8 @@ class CreateQuestionsTable extends Migration
             $table->text('solution')->nullable();
             $table->enum('type', ['single', 'multi']);
             $table->boolean('hidden')->default(false);
-            $table->enum('status', ['draft', 'publish', 'pending', 'private'])->default('draft');
+            $table->enum('status', ['draft', 'publish', 'pending', 'private', 'future', 'trash'])->default('draft');
+
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')
                 ->references('id')->on('users');
