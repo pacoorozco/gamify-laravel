@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "043ad3b4448500a344b666a8ba4b0dc6",
+    "content-hash": "1802674f3566ccbdca061ec3a5d10f24",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1585,6 +1585,67 @@
                 "uuid"
             ],
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "richan-fongdasen/eloquent-blameable",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richan-fongdasen/eloquent-blameable.git",
+                "reference": "be65fdefa738d58f1300dad9790933682a2b09a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richan-fongdasen/eloquent-blameable/zipball/be65fdefa738d58f1300dad9790933682a2b09a0",
+                "reference": "be65fdefa738d58f1300dad9790933682a2b09a0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mockery/mockery": "~1.0",
+                "orchestra/database": "~3.5",
+                "orchestra/testbench": "~3.5",
+                "phpunit/phpunit": "^8.0 || ~7.0 || ~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RichanFongdasen\\EloquentBlameable\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RichanFongdasen\\EloquentBlameable\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richan Fongdasen",
+                    "email": "richan.fongdasen@gmail.com"
+                }
+            ],
+            "description": "Blameable behavior implementation for your Eloquent Model in Laravel",
+            "homepage": "https://github.com/richan-fongdasen/eloquent-blameable",
+            "keywords": [
+                "Blameable",
+                "eloquent",
+                "laravel"
+            ],
+            "time": "2019-02-28T06:16:36+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

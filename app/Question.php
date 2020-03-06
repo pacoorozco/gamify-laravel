@@ -20,10 +20,10 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
-use Gamify\Traits\RecordAuthorSignature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
  * Class Question.
@@ -36,14 +36,29 @@ use Illuminate\Support\Str;
  * @property  string $solution   The test for the solution.
  * @property  string $type       The question type ['single'. 'multi'].
  * @property  bool   $hidden     The visibility of the question.
- * @property  string $status     The status of the question ['draft', 'publish', 'pending', 'private'].
+ * @property  string $status     The status of the question ['draft', 'publish', 'pending', 'private', 'future].
  */
 class Question extends Model
 {
     use SoftDeletes;
-    use RecordAuthorSignature; // Record Signature
+    use BlameableTrait; // Record author, updater and deleter
     use Sluggable; // Slugs
     use Taggable; // Tags
+
+    /**
+     * Defines question's statuses.
+     */
+    const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
+    const PUBLISH_STATUS = 'publish'; // Viewable by everyone.
+    const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
+    const PRIVATE_STATUS = 'private'; // Viewable only to administrators.
+    const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
+
+    /**
+     * Defines question's types.
+     */
+    const SINGLE_RESPONSE_TYPE = 'single'; // Only one answer is correct.
+    const MULTI_RESPONSE_TYPE = 'multi'; // Multiple answers are correct.
 
     /**
      * The database table used by the model.
@@ -156,19 +171,19 @@ class Question extends Model
      */
     public function scopePublished($query)
     {
-        return $query->where('status', '=', 'publish');
+        return $query->where('status', '=', self::PUBLISH_STATUS);
     }
 
     /**
-     * Returns published Questions, only visible ones.
+     * Returns visible Questions, not hidden ones.
      *
      * @param $query
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function scopePublishedAndVisible($query)
+    public function scopeVisible($query)
     {
-        return $query->where('status', '=', 'publish')->where('hidden', false);
+        return $query->where('hidden', false);
     }
 
     /**

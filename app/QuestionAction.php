@@ -13,6 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 class QuestionAction extends Model
 {
     /**
+     * Defines values for 'when'.
+     */
+    const ON_SUCCESS = 'success';
+    const ON_FAILURE = 'fail';
+    const ON_ANY_CASE = 'always';
+
+    /**
      * The database table used by the model.
      *
      * @var string
