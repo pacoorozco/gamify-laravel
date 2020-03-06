@@ -19,6 +19,8 @@
 namespace Tests\Unit;
 
 use Gamify\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -132,5 +134,26 @@ class UserTest extends ModelTestCase
         $m = new User();
         $r = $m->profile();
         $this->assertInstanceOf(HasOne::class, $r);
+    }
+
+    public function test_answeredQuestions_relation()
+    {
+        $m = new User();
+        $r = $m->answeredQuestions();
+        $this->assertInstanceOf(BelongsToMany::class, $r);
+    }
+
+    public function test_badges_relation()
+    {
+        $m = new User();
+        $r = $m->badges();
+        $this->assertInstanceOf(BelongsToMany::class, $r);
+    }
+
+    public function test_points_relation()
+    {
+        $m = new User();
+        $r = $m->points();
+        $this->assertInstanceOf(HasMany::class, $r);
     }
 }

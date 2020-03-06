@@ -25,6 +25,8 @@
 
 namespace Gamify\Http\Controllers;
 
+use Gamify\Question;
+use Gamify\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -36,8 +38,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $questions = $user->getPendingQuestions()->take(3);
+        $user = User::find(Auth::id());
+        $questions = $user->pendingQuestions(3);
         $usersInRanking = Game::getRanking();
 
         return view('dashboard.index', compact('user', 'questions', 'usersInRanking'));

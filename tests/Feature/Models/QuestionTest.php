@@ -3,8 +3,6 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Question;
-use Gamify\QuestionAction;
-use Gamify\QuestionChoice;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
