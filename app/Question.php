@@ -178,15 +178,15 @@ class Question extends Model
     }
 
     /**
-     * Returns published Questions, only visible ones.
+     * Returns visible Questions, not hidden ones.
      *
      * @param $query
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function scopePublishedAndVisible($query)
+    public function scopeVisible($query)
     {
-        return $query->where('status', '=', self::PUBLISH_STATUS)->where('hidden', false);
+        return $query->where('hidden', false);
     }
 
     /**
