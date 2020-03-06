@@ -33,6 +33,6 @@ $factory->define(QuestionAction::class, function (Faker $faker) {
         'when' => $faker->randomElement([QuestionAction::ON_ANY_CASE, QuestionAction::ON_SUCCESS, QuestionAction::ON_FAILURE]),
         'badge_id' => function () {
             return factory(Badge::class)->create()->id;
-        }
+        },
     ];
 });
