@@ -41,6 +41,13 @@ class User extends Authenticatable
     use GamificationTrait;
 
     /**
+     * Define User's roles
+     */
+    const USER_ROLE = 'user';
+    const EDITOR_ROLE = 'editor';
+    const ADMIN_ROLE = 'administrator';
+
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -140,7 +147,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'administrator';
+        return $this->role === self::ADMIN_ROLE;
     }
 
     /**
@@ -152,6 +159,6 @@ class User extends Authenticatable
      */
     public function scopeMember($query)
     {
-        return $query->where('role', '=', 'user');
+        return $query->where('role', '=', self::USER_ROLE);
     }
 }

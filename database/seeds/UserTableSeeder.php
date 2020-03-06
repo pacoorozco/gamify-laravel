@@ -15,6 +15,9 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
+
+use Gamify\User;
+use Gamify\UserProfile;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
@@ -26,49 +29,28 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        // Creates a normal user
-        $user = new \Gamify\User();
-        $user->name = 'User';
-        $user->username = 'user';
-        $user->email = 'user@example.com';
-        $user->password = 'user';
-        $user->role = 'user';
-        $user->save();
 
-        // Attach a UserProfile for user
-        $profile = factory(\Gamify\UserProfile::class)->make();
-        $profile->date_of_birth = \Carbon\Carbon::createFromDate(1975, 8, 7)->toDateTimeString();
-        $profile->url = 'http://www.example.org/user';
-        $profile->gender = 'male';
-        $profile->twitter = 'https://twitter.com/emilisho';
-        $profile->facebook = 'https://www.facebook.com/eampudia';
-        $profile->linkedin = 'https://www.linkedin.com/in/emilioa';
-        $profile->github = '';
-        $user->profile()->save($profile);
+        $user = User::create([
+            'name' => 'User',
+            'username' => 'user',
+            'email' => 'user@example.com',
+            'password' => 'user',
+            'role' => User::USER_ROLE,
+        ]);
+        $user->profile()->save(factory(UserProfile::class)->make());
 
-        // Create an administrator user
-        $user = new \Gamify\User();
-        $user->name = 'Administrator';
-        $user->username = 'admin';
-        $user->email = 'admin@example.com';
-        $user->password = 'admin';
-        $user->role = 'administrator';
-        $user->save();
-
-        // Attach a UserProfile for admin
-        $profile = factory(\Gamify\UserProfile::class)->make();
-        $profile->date_of_birth = \Carbon\Carbon::createFromDate(1977, 1, 28)->toDateTimeString();
-        $profile->url = 'https://pacoorozco.info';
-        $profile->gender = 'male';
-        $profile->twitter = 'https://twitter.com/pakusland';
-        $profile->facebook = 'https://www.facebook.com/paco.orozco';
-        $profile->linkedin = 'https://www.linkedin.com/in/pacoorozco';
-        $profile->github = 'https://github.com/pacoorozco';
-        $user->profile()->save($profile);
+        $admin = User::create([
+            'name' => 'Administrator',
+            'username' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => 'admin',
+            'role' => User::ADMIN_ROLE,
+        ]);
+        $admin->profile()->save(factory(UserProfile::class)->make());
 
         // And finally creates 15 normal users with his/her profile
-        factory(\Gamify\User::class, 15)->create()->each(function ($u) {
-            $u->profile()->save(factory(\Gamify\UserProfile::class)->make());
+        factory(User::class, 15)->create()->each(function ($u) {
+            $u->profile()->save(factory(UserProfile::class)->make());
         });
     }
 }
