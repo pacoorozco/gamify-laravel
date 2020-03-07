@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
-> **Note**: This is a **MAJOR RELEASE**, the application has been updated to use [Laravel 6.x](https://laravel.com/docs). Due to it, there's not backwards compatible. You will need to migrate your database manually.
+> **Note**: This application has been updated to use [Laravel 6.x](https://laravel.com/docs). It's still backwards compatibility, but database needs to be updated too.
 
 ### Changed
 - **Important**: This application has been upgraded to [Laravel 6](https://laravel.com/docs). A lot of refactors has been done in order to adopt Laravel 6.x best practices. 

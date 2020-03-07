@@ -14,11 +14,11 @@ class CreateBadgesTable extends Migration
     public function up()
     {
         Schema::create('badges', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->text('description');
             $table->string('image_url')->nullable();
-            $table->integer('required_repetitions')->unsigned();
+            $table->unsignedInteger('required_repetitions');
             $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();

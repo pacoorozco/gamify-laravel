@@ -14,12 +14,12 @@ class CreateQuestionActionsTable extends Migration
     public function up()
     {
         Schema::create('question_actions', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('question_id');
+            $table->increments('id');
+            $table->unsignedInteger('question_id');
             $table->foreign('question_id')
                 ->references('id')->on('questions')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('badge_id');
+            $table->unsignedInteger('badge_id');
             $table->foreign('badge_id')
                 ->references('id')->on('badges')
                 ->onDelete('cascade');

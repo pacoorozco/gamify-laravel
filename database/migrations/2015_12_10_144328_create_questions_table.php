@@ -14,7 +14,7 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('short_name')->unique();
             $table->string('name');
             $table->text('question');
@@ -23,13 +23,13 @@ class CreateQuestionsTable extends Migration
             $table->boolean('hidden')->default(false);
             $table->enum('status', ['draft', 'publish', 'pending', 'private', 'future'])->default('draft');
 
-            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
             $table->foreign('created_by')
                 ->references('id')->on('users');
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
             $table->foreign('updated_by')
                 ->references('id')->on('users');
-            $table->unsignedBigInteger('deleted_by')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
             $table->foreign('deleted_by')
                 ->references('id')->on('users');
 

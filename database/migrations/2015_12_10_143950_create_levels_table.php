@@ -14,9 +14,9 @@ class CreateLevelsTable extends Migration
     public function up()
     {
         Schema::create('levels', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
-            $table->integer('required_points')->unsigned();
+            $table->unsignedInteger('required_points');
             $table->boolean('active')->default(true);
             $table->string('image_url')->nullable();
 

@@ -14,15 +14,16 @@ class CreateUsersQuestionsTable extends Migration
     public function up()
     {
         Schema::create('users_questions', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('question_id');
-            $table->integer('points')->unsigned();
-            $table->string('answers');
-            $table->timestamps();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
-                ->references('id')->on('users');
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+            $table->unsignedInteger('question_id');
             $table->foreign('question_id')
                 ->references('id')->on('questions');
+            $table->unsignedInteger('points');
+            $table->string('answers');
+            $table->timestamps();
             $table->primary(['user_id', 'question_id']);
         });
     }
