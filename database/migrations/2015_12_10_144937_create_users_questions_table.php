@@ -14,8 +14,8 @@ class CreateUsersQuestionsTable extends Migration
     public function up()
     {
         Schema::create('users_questions', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('question_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('question_id');
             $table->integer('points')->unsigned();
             $table->string('answers');
             $table->timestamps();

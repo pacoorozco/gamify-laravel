@@ -2,12 +2,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/question/title.create_a_new_question') }} :: @parent
+    {{ __('admin/question/title.create_a_new_question') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/question/title.create_a_new_question') }}
+    {{ __('admin/question/title.create_a_new_question') }}
     <small>create a new question</small>
 @endsection
 
@@ -15,16 +15,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.questions.index') }}">
-            {{ trans('admin/site.questions') }}
+            {{ __('admin/site.questions') }}
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/question/title.create_a_new_question') }}
+        {{ __('admin/question/title.create_a_new_question') }}
     </li>
     @endsection
 

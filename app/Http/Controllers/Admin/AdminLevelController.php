@@ -70,11 +70,11 @@ class AdminLevelController extends AdminController
         if (! $level->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/level/messages.create.error'));
+                ->with('error', __('admin/level/messages.create.error'));
         }
 
         return redirect()->route('admin.levels.index')
-            ->with('success', trans('admin/level/messages.create.success'));
+            ->with('success', __('admin/level/messages.create.success'));
     }
 
     /**
@@ -118,11 +118,11 @@ class AdminLevelController extends AdminController
         if (! $level->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/level/messages.update.error'));
+                ->with('error', __('admin/level/messages.update.error'));
         }
 
         return redirect()->route('admin.levels.index')
-            ->with('success', trans('admin/level/messages.update.success'));
+            ->with('success', __('admin/level/messages.update.success'));
     }
 
     /**
@@ -150,11 +150,11 @@ class AdminLevelController extends AdminController
     {
         if ($level->delete() !== true) {
             return redirect()->back()
-                ->with('error', trans('admin/level/messages.delete.error'));
+                ->with('error', __('admin/level/messages.delete.error'));
         }
 
         return redirect()->route('admin.levels.index')
-            ->with('success', trans('admin/level/messages.delete.success'));
+            ->with('success', __('admin/level/messages.delete.success'));
     }
 
     /**
@@ -193,7 +193,7 @@ class AdminLevelController extends AdminController
                 return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
-                return ($level->active) ? trans('general.yes') : trans('general.no');
+                return ($level->active) ? __('general.yes') : trans('general.no');
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')

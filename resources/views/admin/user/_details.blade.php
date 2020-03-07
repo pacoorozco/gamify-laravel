@@ -3,7 +3,7 @@
 
         <!-- username -->
         <div class="form-group">
-            {!! Form::label('username', trans('admin/user/model.username'), array('class' => 'control-label')) !!}
+            {!! Form::label('username', __('admin/user/model.username'), array('class' => 'control-label')) !!}
             <div class="controls">
                 {{ $user->username }}
             </div>
@@ -12,7 +12,7 @@
 
         <!-- fullname -->
         <div class="form-group">
-            {!! Form::label('fullname', trans('admin/user/model.name'), array('class' => 'control-label')) !!}
+            {!! Form::label('fullname', __('admin/user/model.name'), array('class' => 'control-label')) !!}
             <div class="controls">
                 {{ $user->name }}
             </div>
@@ -21,7 +21,7 @@
 
         <!-- email -->
         <div class="form-group">
-            {!! Form::label('email', trans('admin/user/model.email'), array('class' => 'control-label')) !!}
+            {!! Form::label('email', __('admin/user/model.email'), array('class' => 'control-label')) !!}
             <div class="controls">
                 {{ $user->email }}
             </div>
@@ -30,9 +30,9 @@
 
         <!-- roles -->
         <div class="form-group">
-            {!! Form::label('roles', trans('admin/user/model.role'), array('class' => 'control-label')) !!}
+            {!! Form::label('roles', __('admin/user/model.role'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ trans('admin/user/model.roles_list.' . $user->role) }}
+                {{ __('admin/user/model.roles_list.' . $user->role) }}
             </div>
         </div>
         <!-- ./ roles -->
@@ -40,17 +40,17 @@
     <div class="box-footer">
         <a href="{{ route('admin.users.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> {{ trans('general.back') }}
+                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
             </button>
         </a>
         @if ($action == 'show')
             <a href="{{ route('admin.users.edit', $user) }}">
                 <button type="button" class="btn btn-primary">
-                    <i class="fa fa-pencil"></i> {{ trans('general.edit') }}
+                    <i class="fa fa-pencil"></i> {{ __('general.edit') }}
                 </button>
             </a>
         @else
-            {!! Form::button(trans('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+            {!! Form::button(__('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
         @endif
     </div>
 </div>

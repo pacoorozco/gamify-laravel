@@ -2,7 +2,7 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/question/title.question_show') }} :: @parent
+    {{ __('admin/question/title.question_show') }} :: @parent
 @endsection
 
 {{-- Content Header --}}

@@ -2,12 +2,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/user/title.create_a_new_user') }} :: @parent
+    {{ __('admin/user/title.create_a_new_user') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/user/title.create_a_new_user') }}
+    {{ __('admin/user/title.create_a_new_user') }}
     <small>add a new user</small>
 @endsection
 
@@ -15,16 +15,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.users.index') }}">
-            {{ trans('admin/site.users') }}
+            {{ __('admin/site.users') }}
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/user/title.create_a_new_user') }}
+        {{ __('admin/user/title.create_a_new_user') }}
     </li>
     @endsection
 

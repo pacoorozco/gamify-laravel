@@ -23,13 +23,13 @@ class CreateQuestionsTable extends Migration
             $table->boolean('hidden')->default(false);
             $table->enum('status', ['draft', 'publish', 'pending', 'private', 'future'])->default('draft');
 
-            $table->integer('created_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')
                 ->references('id')->on('users');
-            $table->integer('updated_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('updated_by')
                 ->references('id')->on('users');
-            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->foreign('deleted_by')
                 ->references('id')->on('users');
 

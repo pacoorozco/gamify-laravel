@@ -3,12 +3,12 @@
 <div class="box box-solid">
     <div class="box-header">
         <i class="fa fa-gift"></i>
-        <h3 class="box-title">{{ trans('admin/reward/messages.give_badge') }}</h3>
+        <h3 class="box-title">{{ __('admin/reward/messages.give_badge') }}</h3>
     </div>
     <div class="box-body">
         <!-- username -->
         <div class="form-group {{ $errors->has('badge_username') ? 'has-error' : '' }}">
-            {!! Form::label('badge_username', trans('admin/reward/messages.username'), ['class' => 'control-label required']) !!}
+            {!! Form::label('badge_username', __('admin/reward/messages.username'), ['class' => 'control-label required']) !!}
             <div class="controls">
                 {!! Form::select('badge_username', $users, null,
                 ['class' => 'form-control username-input', 'placeholder' => '', 'required' => 'required']) !!}
@@ -19,7 +19,7 @@
 
         <!-- badges -->
         <div class="form-group {{ $errors->has('badge') ? 'has-error' : '' }}">
-            {!! Form::label('badge', trans('admin/reward/messages.badge'),['class' => 'control-label required']) !!}
+            {!! Form::label('badge', __('admin/reward/messages.badge'),['class' => 'control-label required']) !!}
             <div class="controls">
                 {!! Form::select('badge', $badges,
                 null, ['class' => 'form-control badge-input', 'placeholder' => '', 'required' => 'required']) !!}
@@ -29,7 +29,7 @@
         <!-- ./ badges -->
     </div>
     <div class="box-footer">
-        {!! Form::button(trans('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+        {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
     </div>
 </div>
 

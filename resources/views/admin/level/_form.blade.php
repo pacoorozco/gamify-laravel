@@ -23,7 +23,7 @@
 
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    {!! Form::label('name', trans('admin/level/model.name'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('name', __('admin/level/model.name'), array('class' => 'control-label required')) !!}
                     <div class="controls">
                         {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
@@ -33,7 +33,7 @@
 
                 <!-- required_points -->
                 <div class="form-group {{ $errors->has('required_points') ? 'has-error' : '' }}">
-                    {!! Form::label('required_points', trans('admin/level/model.required_points'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('required_points', __('admin/level/model.required_points'), array('class' => 'control-label required')) !!}
                     <div class="controls">
                         {!! Form::number('required_points', null, array('class' => 'form-control', 'required' => 'required', 'min' => '1')) !!}
                         <span class="help-block">{{ $errors->first('required_points', ':message') }}</span>
@@ -43,9 +43,9 @@
 
                 <!-- activation status -->
                 <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                    {!! Form::label('active', trans('admin/level/model.active'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('active', __('admin/level/model.active'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::select('active', array('1' => trans('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) !!}
+                        {!! Form::select('active', array('1' => __('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) !!}
                         {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
@@ -57,8 +57,8 @@
                 <!-- image -->
                 {{--
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                    {!! Form::label('image', trans('admin/level/model.image'), array('class' => 'control-label required')) !!}
-                    <p class="text-muted">{{ trans('admin/level/model.image_help') }}</p>
+                    {!! Form::label('image', __('admin/level/model.image'), array('class' => 'control-label required')) !!}
+                    <p class="text-muted">{{ __('admin/level/model.image_help') }}</p>
                     <div class="controls">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput"
@@ -70,13 +70,13 @@
                             <p>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new"><i
-                                            class="fa fa-picture-o"></i> {{ trans('button.pick_image') }}</span>
+                                            class="fa fa-picture-o"></i> {{ __('button.pick_image') }}</span>
                                 <span class="fileinput-exists"><i
-                                            class="fa fa-picture-o"></i> {{ trans('button.upload_image') }}</span>
+                                            class="fa fa-picture-o"></i> {{ __('button.upload_image') }}</span>
                                 {!! Form::file('image') !!}
                             </span>
                                 <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
-                                    <i class="fa fa-times"></i> {{ trans('button.delete_image') }}
+                                    <i class="fa fa-times"></i> {{ __('button.delete_image') }}
                                 </a>
                             </p>
                         </div>
@@ -94,10 +94,10 @@
         <!-- Form Actions -->
         <a href="{{ route('admin.levels.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> {{ trans('general.back') }}
+                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
             </button>
         </a>
-        {!! Form::button(trans('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
+        {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
                 <!-- ./ form actions -->
     </div>
 </div>

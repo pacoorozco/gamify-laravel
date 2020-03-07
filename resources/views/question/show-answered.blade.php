@@ -2,24 +2,24 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('site.play') }} :: @parent
+    {{ __('site.play') }} :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('site.play') }}
+    {{ __('site.play') }}
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('site.home') }}
+            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
         </a>
     </li>
     <li>
         <a href="{{ route('questions.index') }}">
-            {{ trans('site.play') }}
+            {{ __('site.play') }}
         </a>
     </li>
     <li class="active">
@@ -41,16 +41,16 @@
 
             @if($question->solution)
                 <div class="callout callout-success">
-                    <h4>{{ trans('question/messages.explained_answer') }}</h4>
+                    <h4>{{ __('question/messages.explained_answer') }}</h4>
                     {!! $question->solution !!}
                 </div>
             @endif
 
             <h4>
                 @if($question->type == 'single')
-                    {{ trans('question/messages.single_choice') }}
+                    {{ __('question/messages.single_choice') }}
                 @else
-                    {{ trans('question/messages.multiple_choices') }}
+                    {{ __('question/messages.multiple_choices') }}
                 @endif
             </h4>
 
@@ -69,7 +69,7 @@
                             </span>
                         @else
                             <span class="label label-danger pull-right">
-                                {{ trans('question/messages.choice_score', ['points' => $choice->score]) }}
+                                {{ __('question/messages.choice_score', ['points' => $choice->score]) }}
                             </span>
                         @endif
                         {{ $choice->text }}
@@ -78,7 +78,7 @@
             </ul>
 
             <div class="callout callout-info">
-                {!! trans('question/messages.obtained_points', ['points' => $answer->pivot->points]) !!}
+                {!! __('question/messages.obtained_points', ['points' => $answer->pivot->points]) !!}
             </div>
         </div>
     </div>

@@ -21,7 +21,7 @@ class Game extends Controller
     public static function addExperience(User $user, $points = 5, $message = '')
     {
         if (empty($message)) {
-            $message = trans('messages.unknown_reason');
+            $message = __('messages.unknown_reason');
         }
 
         // add experience points to this user

@@ -15,11 +15,11 @@ class CreateQuestionActionsTable extends Migration
     {
         Schema::create('question_actions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('question_id')->unsigned();
+            $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')
                 ->references('id')->on('questions')
                 ->onDelete('cascade');
-            $table->integer('badge_id')->unsigned();
+            $table->unsignedBigInteger('badge_id');
             $table->foreign('badge_id')
                 ->references('id')->on('badges')
                 ->onDelete('cascade');

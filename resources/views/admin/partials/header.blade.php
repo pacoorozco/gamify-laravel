@@ -30,7 +30,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
                         <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="user-image"
-                             alt="{{ trans('user/profile.avatar') }}"/>
+                             alt="{{ __('user/profile.avatar') }}"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ Auth()->user()->name }}</span>
                     </a>
@@ -38,7 +38,7 @@
                         <!-- The user image in the menu -->
                         <li class="user-header">
                             <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="img-circle"
-                                 alt="{{ trans('user/profile.avatar') }}"/>
+                                 alt="{{ __('user/profile.avatar') }}"/>
                             <p>
                                 {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}
                                 <small>Member since {{ date("M Y", strtotime(Auth()->user()->created_at)) }}</small>
@@ -47,19 +47,19 @@
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="col-xs-12 text-center">
-                                <a href="#">{{ trans('site.my_achievements') }}</a>
+                                <a href="#">{{ __('site.my_achievements') }}</a>
                             </div>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="{{ route('profiles.show', Auth::user()->username) }}" class="btn btn-default btn-flat">
-                                    {{ trans('site.my_profile') }}
+                                    {{ __('site.my_profile') }}
                                 </a>
                             </div>
                             <div class="pull-right">
                                 {!! Form::open(['route' => 'logout']) !!}
-                                {!! Form::button(trans('auth.logout'), ['type' => 'submit', 'class' => 'btn btn-default btn-flat']) !!}
+                                {!! Form::button(__('auth.logout'), ['type' => 'submit', 'class' => 'btn btn-default btn-flat']) !!}
                                 {!! Form::close() !!}
                             </div>
                         </li>

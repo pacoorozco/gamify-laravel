@@ -72,11 +72,11 @@ class AdminBadgeController extends AdminController
         if (! $badge->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/badge/messages.create.error'));
+                ->with('error', __('admin/badge/messages.create.error'));
         }
 
         return redirect()->route('admin.badges.index')
-            ->with('success', trans('admin/badge/messages.create.success'));
+            ->with('success', __('admin/badge/messages.create.success'));
     }
 
     /**
@@ -122,11 +122,11 @@ class AdminBadgeController extends AdminController
         if (! $badge->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/badge/messages.update.error'));
+                ->with('error', __('admin/badge/messages.update.error'));
         }
 
         return redirect()->route('admin.badges.index')
-            ->with('success', trans('admin/badge/messages.update.success'));
+            ->with('success', __('admin/badge/messages.update.success'));
     }
 
     /**
@@ -154,11 +154,11 @@ class AdminBadgeController extends AdminController
     {
         if ($badge->delete() !== true) {
             return redirect()->back()
-                ->with('error', trans('admin/badge/messages.delete.error'));
+                ->with('error', __('admin/badge/messages.delete.error'));
         }
 
         return redirect()->route('admin.badges.index')
-            ->with('success', trans('admin/badge/messages.delete.success'));
+            ->with('success', __('admin/badge/messages.delete.success'));
     }
 
     /**
@@ -190,7 +190,7 @@ class AdminBadgeController extends AdminController
                 return '<img src="'.$badge->getImageURL().'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Badge $badge) {
-                return ($badge->active) ? trans('general.yes') : trans('general.no');
+                return ($badge->active) ? __('general.yes') : trans('general.no');
             })
             ->addColumn('actions', function (Badge $badge) {
                 return view('admin/partials.actions_dd')
