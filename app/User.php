@@ -41,7 +41,7 @@ class User extends Authenticatable
     use GamificationTrait;
 
     /**
-     * Define User's roles
+     * Define User's roles.
      */
     const USER_ROLE = 'user';
     const EDITOR_ROLE = 'editor';
@@ -220,6 +220,7 @@ class User extends Authenticatable
     public function pendingQuestions(int $limit = 5)
     {
         $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
         return Question::published()->visible()
             ->whereNotIn('id', $answeredQuestions)->get()->take($limit);
     }

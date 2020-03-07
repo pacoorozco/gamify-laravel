@@ -29,7 +29,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-
         $user = User::create([
             'name' => 'User',
             'username' => 'user',
