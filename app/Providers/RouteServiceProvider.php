@@ -2,6 +2,11 @@
 
 namespace Gamify\Providers;
 
+use Gamify\Badge;
+use Gamify\Level;
+use Gamify\Question;
+use Gamify\QuestionAction;
+use Gamify\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -17,22 +22,33 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'Gamify\Http\Controllers';
 
     /**
+     * The path to the "home" route for your application.
+     *
+     * @var string
+     */
+    public const HOME = '/home';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        //
-
         parent::boot();
 
+        Route::model('users', User::class);
+        Route::model('badges', Badge::class);
+        Route::model('levels', Level::class);
+        Route::model('questions', Question::class);
+        Route::model('actions', QuestionAction::class);
+
         Route::bind('username', function ($value) {
-            return \Gamify\User::where('username', $value)->first() ?? abort(404);
+            return User::where('username', $value)->firstOrFail();
         });
 
         Route::bind('questionname', function ($value) {
-            return \Gamify\Question::where('short_name', $value)->first() ?? abort(404);
+            return Question::where('short_name', $value)->firstOrFail();
         });
     }
 

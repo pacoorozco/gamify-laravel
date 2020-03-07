@@ -28,13 +28,11 @@ class Handler extends ExceptionHandler
 
     /**
      * Report or log an exception.
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param \Exception $exception
      *
-     * @throws Exception
-     *
      * @return void
+     * @throws \Exception
      */
     public function report(Exception $exception)
     {
@@ -48,6 +46,7 @@ class Handler extends ExceptionHandler
      * @param \Exception               $exception
      *
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function render($request, Exception $exception)
     {

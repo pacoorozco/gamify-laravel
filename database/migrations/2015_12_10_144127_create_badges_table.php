@@ -14,7 +14,7 @@ class CreateBadgesTable extends Migration
     public function up()
     {
         Schema::create('badges', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
             $table->string('image_url')->nullable();

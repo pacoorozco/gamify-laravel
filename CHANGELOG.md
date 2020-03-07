@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+> **Note**: This is a **MAJOR RELEASE**, the application has been updated to use [Laravel 6.x](https://laravel.com/docs). Due to it, there's not backwards compatible. You will need to migrate your database manually.
+
 ### Changed
+- **Important**: This application has been upgraded to [Laravel 6](https://laravel.com/docs). A lot of refactors has been done in order to adopt Laravel 6.x best practices. 
+([#66][i66])
 - Repository name has been changed to `gamify-laravel`, current URL is https://github.com/pacoorozco/gamify-laravel.
 ### Fixed
 - `docker-compose build` was throwing an error, so docker was not working. ([#61][i61])
 
 [i61]: https://github.com/pacoorozco/gamify-laravel/issues/61
+[i66]: https://github.com/pacoorozco/gamify-laravel/issues/66
 
 
 ### Removed

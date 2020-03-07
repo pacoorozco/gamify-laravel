@@ -23,6 +23,8 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
 use Faker\Generator as Faker;
 use Gamify\QuestionChoice;
 

@@ -14,7 +14,7 @@ class CreateQuestionChoicesTable extends Migration
     public function up()
     {
         Schema::create('question_choices', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')
                 ->references('id')->on('questions')
