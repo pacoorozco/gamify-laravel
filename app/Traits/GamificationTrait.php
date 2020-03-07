@@ -32,8 +32,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait GamificationTrait
 {
-
-
     /**
      * Get current Level (object) for this user.
      *
@@ -134,7 +132,4 @@ trait GamificationTrait
 
         return $userBadge->pivot->completed;
     }
-
-
-
 }

@@ -2,8 +2,8 @@
 
 namespace Gamify\Http\Middleware;
 
-use Gamify\Providers\RouteServiceProvider;
 use Closure;
+use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated

@@ -43,9 +43,7 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
-
     use Sluggable; // Slugs
-
     use Taggable; // Tags
 
     /**
