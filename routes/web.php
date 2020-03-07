@@ -37,7 +37,6 @@ use Illuminate\Support\Facades\Route;
  *  ------------------------------------------.
  */
 
-
 /* ------------------------------------------
  * Authentication routes
  *
