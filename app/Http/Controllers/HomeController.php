@@ -25,7 +25,7 @@
 
 namespace Gamify\Http\Controllers;
 
-use Gamify\Question;
+use Gamify\Libs\Game\Game;
 use Gamify\User;
 use Illuminate\Support\Facades\Auth;
 

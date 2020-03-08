@@ -1,5 +1,6 @@
 <?php
 
+use Gamify\Level;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +24,13 @@ class CreateLevelsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        // Insert default Level (this level could not be deleted).
+        factory(Level::class)->create([
+            'name' => 'Level 0',
+            'required_points' => 0,
+            'active' => true,
+        ]);
     }
 
     /**

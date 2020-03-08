@@ -18,10 +18,9 @@
 
 namespace Gamify;
 
-use Carbon\Carbon;
-use Gamify\Traits\GamificationTrait;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -37,9 +36,6 @@ use Illuminate\Support\Facades\Hash;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
-    use GamificationTrait;
-
     /**
      * Define User's roles.
      */
@@ -201,9 +197,9 @@ class User extends Authenticatable
     /**
      * Returns a collection of users that are "Members".
      *
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeMember($query)
     {
@@ -223,5 +219,33 @@ class User extends Authenticatable
 
         return Question::published()->visible()
             ->whereNotIn('id', $answeredQuestions)->get()->take($limit);
+    }
+
+    /**
+     * Get current Experience points for this user.
+     *
+     * @return int
+     */
+    public function getExperiencePoints(): int
+    {
+        return $this->points()->sum('points');
+    }
+
+    /**
+     * Checks if user has completed the given Badge.
+     *
+     * @param \Gamify\Badge $badge
+     *
+     * @return bool
+     */
+    public function hasBadgeCompleted(Badge $badge): bool
+    {
+        try {
+            $userBadge = $this->badges()->findOrFail($badge->id);
+        } catch (ModelNotFoundException $exception) {
+            return false;
+        }
+
+        return $userBadge->pivot->completed;
     }
 }

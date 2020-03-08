@@ -24,11 +24,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Model that represents a badge.
  *
- * @property int     $id                    Object unique id.
- * @property string  $name                  Name of the level..
- * @property int $required_points       How many points do you need to achieve it.
- * @property string  image_url              URL of the level's image
- * @property bool active                 Is this level enabled?
+ * @property int    $id                    Object unique id.
+ * @property string $name                  Name of the level..
+ * @property int    $required_points       How many points do you need to achieve it.
+ * @property string image_url              URL of the level's image
+ * @property bool   active                 Is this level enabled?
  */
 class Level extends Model
 {
@@ -81,5 +81,50 @@ class Level extends Model
     public function getImageURL(): string
     {
         return asset('images/missing_level.png');
+    }
+
+    /**
+     * Returns a collection of active Level.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
+
+    /**
+     * Returns Level (object) for the specified experience.
+     *
+     * @param int $experience
+     *
+     * @return \Gamify\Level
+     */
+    public static function findByExperience(int $experience)
+    {
+        return self::active()
+            ->where('required_points', '<=', $experience)
+            ->orderBy('required_points', 'desc')
+            ->first();
+    }
+
+    /**
+     * Return the upcoming Level (object) for the specified experience.
+     *
+     * Throws an exception in case that this is the highest possible level.
+     *
+     * @param int $experience
+     *
+     * @return \Gamify\Level
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function findNextByExperience(int $experience)
+    {
+        return self::active()
+            ->where('required_points', '>', $experience)
+            ->orderBy('required_points', 'asc')
+            ->firstOrFail();
     }
 }
