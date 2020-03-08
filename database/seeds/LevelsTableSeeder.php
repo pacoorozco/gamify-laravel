@@ -42,8 +42,8 @@ class LevelsTableSeeder extends Seeder
 
         foreach (range(1, 4) as $index) {
             factory(Level::class)->create([
-                'name' => 'Level ' . $index,
-                'required_points' => ($index * 10)
+                'name' => 'Level '.$index,
+                'required_points' => ($index * 10),
             ]);
         }
     }
