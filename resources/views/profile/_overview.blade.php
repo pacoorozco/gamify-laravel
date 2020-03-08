@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<h3>{{ __('user/profile.badges') }}</h3>
+<h3>@lang('user/profile.badges')</h3>
 
 <div class="row">
     @foreach($user->badges as $badge)
@@ -25,13 +25,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
-                                aria-label="{{ __('general.close') }}">
+                                aria-label="@lang('general.close')">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title" id="badge-{{ $badge->name }}Label">
-                            {{ __('user/profile.badge') }}: {{ $badge->name }}
+                            @lang('user/profile.badge'): {{ $badge->name }}
                             @if ($badge->pivot->completed)
-                                <span class="label label-success">{{ __('user/profile.badge_completed') }}</span>
+                                <span class="label label-success">@lang('user/profile.badge_completed')</span>
                             @endif
                         </h4>
                     </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">{{ __('general.close') }}</button>
+                                data-dismiss="modal">@lang('general.close')</button>
                     </div>
                 </div>
             </div>

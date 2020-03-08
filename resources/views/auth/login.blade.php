@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 {{-- Web site Title --}}
-@section('title'){{ __('auth.login') }}@endsection
+@section('title')@lang('auth.login')@endsection
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
@@ -10,7 +10,7 @@
 {{-- Content --}}
 @section('content')
     <!-- start: LOGIN BOX -->
-    <p class="login-box-msg">{{ __('auth.sign_title') }}</p>
+    <p class="login-box-msg">@lang('auth.sign_title')</p>
 
     {!! Form::open(['route' => 'login']) !!}
     <div class="form-group has-feedback">
@@ -37,24 +37,24 @@
             <div class="checkbox icheck">
                 <label>
                     {!! Form::checkbox('remember', '1', false) !!}
-                    {{ __('auth.remember_me') }}
+                    @lang('auth.remember_me')
                 </label>
             </div>
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
             <button type="submit" class="btn btn-primary btn-block btn-flat" id="loginButton" dusk="login-button">
-                {{ __('auth.login') }}
+                @lang('auth.login')
             </button>
         </div>
         <!-- /.col -->
     </div>
     {!! Form::close() !!}
     <a href="{{ route('password.request') }}">
-        {{ __('auth.forgot_password') }}
+        @lang('auth.forgot_password')
     </a><br>
     <a href="{{ route('register') }}" class="text-center">
-        {{ __('auth.create_account') }}
+        @lang('auth.create_account')
     </a>
     <!-- end: LOGIN BOX -->
 @endsection

@@ -78,7 +78,7 @@
                     {!! Form::label('role', __('admin/user/model.role'), array('class' => 'control-label required')) !!}
                     <div class="controls">
                         {!! Form::select('role', __('admin/user/model.roles_list'), null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        <p class="text-muted">{{ __('admin/user/messages.roles_help') }}</p>
+                        <p class="text-muted">@lang('admin/user/messages.roles_help')</p>
                     </div>
                 </div>
                 <!-- ./ role -->
@@ -90,7 +90,7 @@
         <!-- Form Actions -->
         <a href="{{ route('admin.users.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
+                <i class="fa fa-arrow-left"></i> @lang('general.back')
             </button>
         </a>
         {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}

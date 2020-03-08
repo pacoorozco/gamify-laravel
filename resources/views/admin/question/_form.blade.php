@@ -28,7 +28,7 @@
         <!-- general section -->
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ __('admin/question/title.general_section') }}</h3>
+                <h3 class="box-title">@lang('admin/question/title.general_section')</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -41,7 +41,7 @@
                     <div class="controls">
                         {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         <span class="text-muted"><i
-                                    class="fa fa-info-circle"></i> {{ __('admin/question/model.name_help') }}</span>
+                                    class="fa fa-info-circle"></i> @lang('admin/question/model.name_help')</span>
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <div class="controls">
                         {!! Form::textarea('question', null, ['class' => 'form-control tinymce']) !!}
                         <span class="text-muted"><i
-                                    class="fa fa-info-circle"></i> {{ __('admin/question/model.question_help') }}</span>
+                                    class="fa fa-info-circle"></i> @lang('admin/question/model.question_help')</span>
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     <div class="controls">
                         {!! Form::textarea('solution', null, ['class' => 'form-control tinymce']) !!}
                         <span class="text-muted"><i
-                                    class="fa fa-info-circle"></i> {{ __('admin/question/model.solution_help') }}</span>
+                                    class="fa fa-info-circle"></i> @lang('admin/question/model.solution_help')</span>
                         <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
         <!-- publish section -->
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ __('admin/question/title.publish_section') }}</h3>
+                <h3 class="box-title">@lang('admin/question/title.publish_section')</h3>
             </div>
             <div class="box-body">
                 <!-- status -->
@@ -116,7 +116,7 @@
                         <div class="controls">
                             {!! Form::select('hidden', ['0' => __('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')], null, ['class' => 'form-control']) !!}
                             <span class="text-muted"><i
-                                        class="fa fa-info-circle"></i> {{ __('admin/question/model.hidden_help') }}
+                                        class="fa fa-info-circle"></i> @lang('admin/question/model.hidden_help')
                             </span>
                             {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
                         </div>
@@ -126,7 +126,7 @@
             <div class="box-footer">
                 <!-- form actions -->
                 <a href="{{ route('admin.questions.index') }}" class="btn btn-primary">
-                        <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
+                        <i class="fa fa-arrow-left"></i> @lang('general.back')
                 </a>
                 {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
                         <!-- ./ form actions -->
@@ -137,7 +137,7 @@
         <!-- badges section -->
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
+                <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -159,7 +159,7 @@
         <!-- tags section -->
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ __('admin/question/title.tags_section') }}</h3>
+                <h3 class="box-title">@lang('admin/question/title.tags_section')</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -180,7 +180,7 @@
                 <!-- other information section -->
         <div class="box box-solid collapsed-box">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ __('admin/question/title.other_section') }}</h3>
+                <h3 class="box-title">@lang('admin/question/title.other_section')</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                     </button>
@@ -213,7 +213,7 @@
 <script>
     $("#tag_list").select2({
         tags: true,
-        placeholder: '{{ __('admin/question/model.tags_help') }}',
+        placeholder: '@lang('admin/question/model.tags_help')',
         tokenSeparators: [',', ' '],
         allowClear: true,
         width: '100%'

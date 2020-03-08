@@ -7,12 +7,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('admin/question/title.question_management') }} @parent
+    @lang('admin/question/title.question_management') @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('admin/question/title.question_management') }}
+    @lang('admin/question/title.question_management')
     <small>create and edit questions</small>
 @endsection
 
@@ -20,12 +20,12 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li class="active">
         <a href="{{ route('admin.questions.index') }}">
-            {{ __('admin/site.questions') }}
+            @lang('admin/site.questions')
         </a>
     </li>
     @endsection
@@ -40,7 +40,7 @@
     <!-- actions -->
     <a href="{{ route('admin.questions.create') }}">
         <button type="button" class="btn btn-success margin-bottom">
-            <i class="fa fa-plus"></i> {{ __('admin/question/title.create_a_new_question') }}
+            <i class="fa fa-plus"></i> @lang('admin/question/title.create_a_new_question')
         </button>
     </a>
     <!-- /.actions -->
@@ -49,18 +49,18 @@
             <table id="questions" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/question/model.short_name') }}</th>
-                    <th class="col-md-4">{{ __('admin/question/model.name') }}</th>
-                    <th class="col-md-2">{{ __('admin/question/model.status') }}</th>
-                    <th class="col-md-2">{{ __('general.actions') }}</th>
+                    <th class="col-md-4">@lang('admin/question/model.short_name')</th>
+                    <th class="col-md-4">@lang('admin/question/model.name')</th>
+                    <th class="col-md-2">@lang('admin/question/model.status')</th>
+                    <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/question/model.short_name') }}</th>
-                    <th class="col-md-4">{{ __('admin/question/model.name') }}</th>
-                    <th class="col-md-2">{{ __('admin/question/model.status') }}</th>
-                    <th class="col-md-2">{{ __('general.actions') }}</th>
+                    <th class="col-md-4">@lang('admin/question/model.short_name')</th>
+                    <th class="col-md-4">@lang('admin/question/model.name')</th>
+                    <th class="col-md-2">@lang('admin/question/model.status')</th>
+                    <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </tfoot>
             </table>
@@ -77,7 +77,7 @@
         $(document).ready(function () {
             oTable = $('#questions').DataTable({
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/{{ __('site.dataTablesLang') }}.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/@lang('site.dataTablesLang').json"
                 },
                 "ajax": "{{ route('admin.questions.data') }}",
                 "columns": [
@@ -88,7 +88,7 @@
                 ],
                 "aLengthMenu": [
                     [5, 10, 15, 20, -1],
-                    [5, 10, 15, 20, "{{ __('general.all') }}"]
+                    [5, 10, 15, 20, "@lang('general.all')"]
                 ],
                 // set the initial value
                 "iDisplayLength": 10

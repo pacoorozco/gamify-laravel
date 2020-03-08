@@ -7,12 +7,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('admin/badge/title.badge_management') }} :: @parent
+    @lang('admin/badge/title.badge_management') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('admin/badge/title.badge_management') }}
+    @lang('admin/badge/title.badge_management')
     <small>create and edit badges</small>
 @endsection
 
@@ -20,11 +20,11 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li class="active">
-        {{ __('admin/site.badges') }}
+        @lang('admin/site.badges')
     </li>
     @endsection
 
@@ -38,7 +38,7 @@
     <!-- actions -->
     <a href="{{ route('admin.badges.create') }}">
         <button type="button" class="btn btn-success margin-bottom">
-            <i class="fa fa-plus"></i> {{ __('admin/badge/title.create_a_new_badge') }}
+            <i class="fa fa-plus"></i> @lang('admin/badge/title.create_a_new_badge')
         </button>
     </a>
     <!-- /.actions -->
@@ -47,20 +47,20 @@
             <table id="badges" class="table table-striped table-bordered table-hover table-full-width">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/badge/model.name') }}</th>
-                    <th class="col-md-4">{{ __('admin/badge/model.image') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.required_repetitions') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.active') }}</th>
-                    <th class="col-md-2">{{ __('general.actions') }}</th>
+                    <th class="col-md-4">@lang('admin/badge/model.name')</th>
+                    <th class="col-md-4">@lang('admin/badge/model.image')</th>
+                    <th class="col-md-1">@lang('admin/badge/model.required_repetitions')</th>
+                    <th class="col-md-1">@lang('admin/badge/model.active')</th>
+                    <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/badge/model.name') }}</th>
-                    <th class="col-md-4">{{ __('admin/badge/model.image') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.required_repetitions') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.active') }}</th>
-                    <th class="col-md-2">{{ __('general.actions') }}</th>
+                    <th class="col-md-4">@lang('admin/badge/model.name')</th>
+                    <th class="col-md-4">@lang('admin/badge/model.image')</th>
+                    <th class="col-md-1">@lang('admin/badge/model.required_repetitions')</th>
+                    <th class="col-md-1">@lang('admin/badge/model.active')</th>
+                    <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </tfoot>
             </table>
@@ -78,7 +78,7 @@
         $(document).ready(function () {
             oTable = $('#badges').DataTable({
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/{{ __('site.dataTablesLang') }}.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/@lang('site.dataTablesLang').json"
                 },
                 "ajax": "{{ route('admin.badges.data') }}",
                 "columns": [
@@ -90,7 +90,7 @@
                 ],
                 "aLengthMenu": [
                     [5, 10, 15, 20, -1],
-                    [5, 10, 15, 20, "{{ __('general.all') }}"]
+                    [5, 10, 15, 20, "@lang('general.all')"]
                 ],
                 // set the initial value
                 "iDisplayLength": 10

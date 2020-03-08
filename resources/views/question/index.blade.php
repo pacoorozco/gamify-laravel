@@ -2,23 +2,23 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('site.play') }} :: @parent
+    @lang('site.play') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('site.play') }}
+    @lang('site.play')
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
+            <i class="fa fa-dashboard"></i> @lang('site.home')
         </a>
     </li>
     <li class="active">
-        {{ __('site.play') }}
+        @lang('site.play')
     </li>
 @endsection
 

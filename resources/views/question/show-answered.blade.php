@@ -2,24 +2,24 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('site.play') }} :: @parent
+    @lang('site.play') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('site.play') }}
+    @lang('site.play')
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
+            <i class="fa fa-dashboard"></i> @lang('site.home')
         </a>
     </li>
     <li>
         <a href="{{ route('questions.index') }}">
-            {{ __('site.play') }}
+            @lang('site.play')
         </a>
     </li>
     <li class="active">
@@ -41,16 +41,16 @@
 
             @if($question->solution)
                 <div class="callout callout-success">
-                    <h4>{{ __('question/messages.explained_answer') }}</h4>
+                    <h4>@lang('question/messages.explained_answer')</h4>
                     {!! $question->solution !!}
                 </div>
             @endif
 
             <h4>
                 @if($question->type == 'single')
-                    {{ __('question/messages.single_choice') }}
+                    @lang('question/messages.single_choice')
                 @else
-                    {{ __('question/messages.multiple_choices') }}
+                    @lang('question/messages.multiple_choices')
                 @endif
             </h4>
 

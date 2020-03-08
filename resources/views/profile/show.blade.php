@@ -2,23 +2,23 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('user/profile.title') }} :: @parent
+    @lang('user/profile.title') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('user/profile.title') }}
+    @lang('user/profile.title')
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
+            <i class="fa fa-dashboard"></i> @lang('site.home')
         </a>
     </li>
     <li class="active">
-        {{ __('user/profile.title') }}
+        @lang('user/profile.title')
     </li>
 @endsection
 
@@ -64,14 +64,14 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a href="#overview" data-toggle="tab">{{ __('user/profile.overview') }}</a>
+                        <a href="#overview" data-toggle="tab">@lang('user/profile.overview')</a>
                     </li>
                     <li>
                         <a href="#timeline" data-toggle="tab">Timeline</a>
                     </li>
                     @if ($user->username == Auth::user()->username)
                     <li>
-                        <a href="#settings" data-toggle="tab">{{ __('user/profile.edit_account') }}</a>
+                        <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>
                     </li>
                     @endif
                 </ul>

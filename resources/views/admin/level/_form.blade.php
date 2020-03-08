@@ -58,7 +58,7 @@
                 {{--
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
                     {!! Form::label('image', __('admin/level/model.image'), array('class' => 'control-label required')) !!}
-                    <p class="text-muted">{{ __('admin/level/model.image_help') }}</p>
+                    <p class="text-muted">@lang('admin/level/model.image_help')</p>
                     <div class="controls">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput"
@@ -70,13 +70,13 @@
                             <p>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new"><i
-                                            class="fa fa-picture-o"></i> {{ __('button.pick_image') }}</span>
+                                            class="fa fa-picture-o"></i> @lang('button.pick_image')</span>
                                 <span class="fileinput-exists"><i
-                                            class="fa fa-picture-o"></i> {{ __('button.upload_image') }}</span>
+                                            class="fa fa-picture-o"></i> @lang('button.upload_image')</span>
                                 {!! Form::file('image') !!}
                             </span>
                                 <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
-                                    <i class="fa fa-times"></i> {{ __('button.delete_image') }}
+                                    <i class="fa fa-times"></i> @lang('button.delete_image')
                                 </a>
                             </p>
                         </div>
@@ -94,7 +94,7 @@
         <!-- Form Actions -->
         <a href="{{ route('admin.levels.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
+                <i class="fa fa-arrow-left"></i> @lang('general.back')
             </button>
         </a>
         {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}

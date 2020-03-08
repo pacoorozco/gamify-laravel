@@ -2,18 +2,18 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('site.home') }} :: @parent
+    @lang('site.home') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('site.home') }}
+    @lang('site.home')
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li class="active">
-        <i class="fa fa-dashboard"></i> {{ __('site.home') }}
+        <i class="fa fa-dashboard"></i> @lang('site.home')
     </li>
 @endsection
 

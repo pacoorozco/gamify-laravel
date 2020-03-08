@@ -30,7 +30,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
                         <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="user-image"
-                             alt="{{ __('user/profile.avatar') }}"/>
+                             alt="@lang('user/profile.avatar')"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ Auth()->user()->name }}</span>
                     </a>
@@ -38,7 +38,7 @@
                         <!-- The user image in the menu -->
                         <li class="user-header">
                             <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="img-circle"
-                                 alt="{{ __('user/profile.avatar') }}"/>
+                                 alt="@lang('user/profile.avatar')"/>
                             <p>
                                 {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}
                                 <small>Member since {{ date("M Y", strtotime(Auth()->user()->created_at)) }}</small>
@@ -47,14 +47,14 @@
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="col-xs-12 text-center">
-                                <a href="#">{{ __('site.my_achievements') }}</a>
+                                <a href="#">@lang('site.my_achievements')</a>
                             </div>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="{{ route('profiles.show', Auth::user()->username) }}" class="btn btn-default btn-flat">
-                                    {{ __('site.my_profile') }}
+                                    @lang('site.my_profile')
                                 </a>
                             </div>
                             <div class="pull-right">

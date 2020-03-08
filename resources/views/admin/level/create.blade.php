@@ -2,12 +2,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ __('admin/level/title.create_a_new_level') }} :: @parent
+    @lang('admin/level/title.create_a_new_level') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('admin/level/title.create_a_new_level') }}
+    @lang('admin/level/title.create_a_new_level')
     <small>create a new level</small>
 @endsection
 
@@ -15,16 +15,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li>
         <a href="{{ route('admin.levels.index') }}">
-            {{ __('admin/site.levels') }}
+            @lang('admin/site.levels')
         </a>
     </li>
     <li class="active">
-        {{ __('admin/level/title.create_a_new_level') }}
+        @lang('admin/level/title.create_a_new_level')
     </li>
     @endsection
 

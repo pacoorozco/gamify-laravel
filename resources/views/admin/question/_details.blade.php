@@ -10,7 +10,7 @@
     <div class="box-body">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{ __('admin/question/model.question') }}
+                @lang('admin/question/model.question')
             </div>
             <div class="panel-body">
                 {!! $question->question !!}
@@ -20,7 +20,7 @@
         <!-- choices -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{ __('admin/question/title.answer_section') }}
+                @lang('admin/question/title.answer_section')
             </div><!-- ./ panel-header -->
             <div class="panel-body">
                 @if (count($question->choices) > 0)
@@ -28,9 +28,9 @@
                     {{ __('admin/question/model.type_list.' . $question->type) }}
                     <table class="table table-hover">
                         <tr>
-                            <th>{{ __('admin/question/model.choice_text') }}</th>
-                            <th>{{ __('admin/question/model.choice_score') }}</th>
-                            <th>{{ __('admin/question/model.choice_correct') }}</th>
+                            <th>@lang('admin/question/model.choice_text')</th>
+                            <th>@lang('admin/question/model.choice_score')</th>
+                            <th>@lang('admin/question/model.choice_correct')</th>
                         </tr>
                         @foreach ($question->choices as $choice)
                             <tr>
@@ -49,7 +49,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{ __('admin/question/model.solution') }}
+                @lang('admin/question/model.solution')
             </div>
             <div class="panel-body">
                 {!! $question->solution !!}
@@ -58,20 +58,20 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{ __('admin/question/title.tags_section') }}
+                @lang('admin/question/title.tags_section')
             </div>
             <div class="panel-body">
                 @forelse($question->tagArray as $tag)
                     <span class="label label-info">{{ $tag }}</span>
                 @empty
-                    {{ __('admin/question/model.tags_none') }}
+                    @lang('admin/question/model.tags_none')
                 @endforelse
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{ __('admin/question/title.other_section') }}
+                @lang('admin/question/title.other_section')
             </div>
             <div class="panel-body">
                 <p>{{ __('admin/question/model.created_by', ['who' => $question->created_by, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
@@ -83,13 +83,13 @@
     <div class="box-footer">
         <a href="{{ route('admin.questions.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
+                <i class="fa fa-arrow-left"></i> @lang('general.back')
             </button>
         </a>
         @if ($action == 'show')
             <a href="{{ route('admin.questions.edit', $question) }}">
                 <button type="button" class="btn btn-primary">
-                    <i class="fa fa-pencil"></i> {{ __('general.edit') }}
+                    <i class="fa fa-pencil"></i> @lang('general.edit')
                 </button>
             </a>
         @else

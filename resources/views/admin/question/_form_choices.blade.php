@@ -45,6 +45,6 @@
 </div>
 
 <div class="form-group">
-    <span class="text-muted"><i class="fa fa-info-circle"></i> {{ __('admin/question/model.choice_score_help') }}</span>
+    <span class="text-muted"><i class="fa fa-info-circle"></i> @lang('admin/question/model.choice_score_help')</span>
 </div>
 <!-- ./ choices -->

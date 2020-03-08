@@ -80,15 +80,15 @@
             <div>
                 <label class="radio-inline">
                     {!! Form::radio('gender', 'female', null) !!}
-                    {{ __('user/profile.gender_female') }}
+                    @lang('user/profile.gender_female')
                 </label>
                 <label class="radio-inline">
                     {!! Form::radio('gender', 'male', null) !!}
-                    {{ __('user/profile.gender_male') }}
+                    @lang('user/profile.gender_male')
                 </label>
                 <label class="radio-inline">
                     {!! Form::radio('gender', 'unspecified', null) !!}
-                    {{ __('user/profile.gender_unspecified') }}
+                    @lang('user/profile.gender_unspecified')
                 </label>
             </div>
         </div>
@@ -106,15 +106,15 @@
                     <p>
                     <span class="btn btn-default btn-file">
                         <span class="fileinput-new">
-                            <i class="fa fa-picture-o"></i> {{ __('button.pick_image') }}
+                            <i class="fa fa-picture-o"></i> @lang('button.pick_image')
                         </span>
                         <span class="fileinput-exists">
-                            <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
+                            <i class="fa fa-picture-o"></i> @lang('button.upload_image')
                         </span>
                         {!! Form::file('avatar') !!}
                     </span>
                         <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
-                            <i class="fa fa-times"></i> {{ __('button.delete_image') }}
+                            <i class="fa fa-times"></i> @lang('button.delete_image')
                         </a>
                     </p>
                 </div>
@@ -127,7 +127,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3>{{ __('user/profile.additional_info') }}</h3>
+        <h3>@lang('user/profile.additional_info')</h3>
         <hr>
     </div>
 </div>
