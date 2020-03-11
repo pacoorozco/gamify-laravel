@@ -25,9 +25,12 @@
 
 namespace Gamify\Http\Controllers;
 
+use Gamify\Level;
 use Gamify\Libs\Game\Game;
 use Gamify\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class HomeController extends Controller
 {
@@ -43,5 +46,34 @@ class HomeController extends Controller
         $usersInRanking = Game::getRanking();
 
         return view('dashboard.index', compact('user', 'questions', 'usersInRanking'));
+    }
+
+    /**
+     * Return the ranking..
+     *
+     * @param \Illuminate\Http\Request     $request
+     * @param \Yajra\Datatables\Datatables $dataTable
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     *
+     */
+    public function data(Request $request, Datatables $dataTable)
+    {
+        $users = User::select([
+            'username',
+            'name',
+        ])
+            //->with('points')
+            //->sortbyDesc(function (User $user) {
+            //  return $user->getExperiencePoints();
+//            })
+            ->take(10);
+
+        return $dataTable->eloquent($users)
+            ->addColumn('level', function (User $user) {
+                return "level 0";
+            })
+            ->toJson();
     }
 }
