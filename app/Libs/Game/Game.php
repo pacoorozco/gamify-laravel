@@ -6,6 +6,7 @@ use Gamify\Badge;
 use Gamify\Level;
 use Gamify\Point;
 use Gamify\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
 
 class Game
@@ -31,7 +32,7 @@ class Game
             'description' => $message,
         ]);
 
-        return is_null($user->points()->save($point_entry)) ? false : true;
+        return ($user->points()->save($point_entry) === false) ?: true;
     }
 
     /**
@@ -42,23 +43,27 @@ class Game
      *
      * @return bool
      */
-    public static function incrementBadge(User $user, Badge $badge)
+    public static function incrementBadge(User $user, Badge $badge): bool
     {
-        if ($userBadge = $user->badges()->find($badge->id)) {
-            // this badge was initiated before
-            $userBadge->pivot->repetitions++;
-            if ($userBadge->pivot->repetitions == $badge->required_repetitions) {
-                $userBadge->pivot->completed = true;
-                $userBadge->pivot->completed_on = Carbon::now();
-            }
-            $saved = $userBadge->pivot->save();
-        } else {
+        try {
+            $userBadge = $user->badges()->findOrFail($badge->id);
+        } catch (ModelNotFoundException $exception) {
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, ['repetitions' => '1']);
-            $saved = true;
+            return true;
         }
 
-        return $saved;
+        if ($user->hasBadgeCompleted($badge)) {
+            return true;
+        }
+
+        // this badge was initiated before
+        $userBadge->pivot->repetitions++;
+        if ($userBadge->pivot->repetitions === $badge->required_repetitions) {
+            $userBadge->pivot->completed = true;
+            $userBadge->pivot->completed_on = Carbon::now();
+        }
+        return ($userBadge->pivot->save() === false) ?: true;
     }
 
     /**
@@ -69,7 +74,7 @@ class Game
      *
      * @return bool
      */
-    public static function addBadge(User $user, Badge $badge)
+    public static function addBadge(User $user, Badge $badge): bool
     {
         if ($user->hasBadgeCompleted($badge)) {
             return true;
@@ -81,16 +86,15 @@ class Game
             'completed_on' => Carbon::now(),
         ];
 
-        if ($userBadge = $user->badges()->find($badge->id)) {
+        try {
+            $userBadge = $user->badges()->findOrFail($badge->id);
             // this badge was initiated before
-            $saved = $userBadge->pivot->save($data);
-        } else {
+            return ($userBadge->pivot->save($data) === false) ?: true;
+        } catch (ModelNotFoundException $exception) {
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, $data);
-            $saved = true;
+            return true;
         }
-
-        return $saved;
     }
 
     /**
@@ -98,7 +102,7 @@ class Game
      *
      * @param int $limitTopUsers
      *
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
     public static function getRanking($limitTopUsers = 10)
     {
@@ -114,7 +118,7 @@ class Game
                 'username' => $user->username,
                 'name' => $user->name,
                 'experience' => $experience,
-                'level' => Level::findByExperience($experience)->name
+                'level' => (empty(Level::findByExperience($experience))) ? 'Null' : Level::findByExperience($experience)->name,
             ];
         });
 

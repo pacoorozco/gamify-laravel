@@ -23,7 +23,7 @@ class CreateUsersBadgesTable extends Migration
                 ->references('id')->on('badges');
             $table->unsignedInteger('repetitions');
             $table->boolean('completed')->default(false);
-            $table->timestamp('completed_on');
+            $table->timestamp('completed_on')->nullable();
             $table->timestamps();
             $table->primary(['user_id', 'badge_id']);
         });
