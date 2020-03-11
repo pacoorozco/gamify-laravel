@@ -9,6 +9,7 @@ package-lock.json
 /public/storage
 /public/hot
 /storage/*.key
+/storage/debugbar
 .env
 .env.backup
 .phpunit.result.cache
