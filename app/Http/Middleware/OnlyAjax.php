@@ -17,7 +17,7 @@ class OnlyAjax
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response(view('errors.403'), ResponseCode::HTTP_FORBIDDEN);
         }
 
