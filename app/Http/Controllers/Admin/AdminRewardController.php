@@ -26,7 +26,7 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
-use Gamify\Http\Controllers\Game;
+use Gamify\Libs\Game\Game;
 use Gamify\Http\Requests\RewardBadgeRequest;
 use Gamify\Http\Requests\RewardExperienceRequest;
 use Gamify\User;

@@ -66,9 +66,11 @@
                     <li class="active">
                         <a href="#overview" data-toggle="tab">@lang('user/profile.overview')</a>
                     </li>
+                    {{--
                     <li>
                         <a href="#timeline" data-toggle="tab">Timeline</a>
                     </li>
+                    --}}
                     @if ($user->username == Auth::user()->username)
                     <li>
                         <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>

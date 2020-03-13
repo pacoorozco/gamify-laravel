@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Controllers;
 
+use Gamify\Libs\Game\Game;
 use Gamify\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -18,6 +18,7 @@
 
 namespace Gamify;
 
+use Gamify\Libs\Game\Game;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
@@ -219,6 +220,21 @@ class User extends Authenticatable
 
         return Question::published()->visible()
             ->whereNotIn('id', $answeredQuestions)->get()->take($limit);
+    }
+
+    public function getLevelName(): string
+    {
+        return Level::findByExperience($this->getExperiencePoints())->name;
+    }
+
+    /**
+     * Returns a Collection of completed Badges for this user.
+     *
+     * @return mixed
+     */
+    public function getCompletedBadges()
+    {
+        return $this->badges()->wherePivot('completed', true)->get();
     }
 
     /**
