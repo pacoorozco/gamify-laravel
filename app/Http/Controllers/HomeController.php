@@ -56,7 +56,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     *
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -72,7 +71,7 @@ class HomeController extends Controller
 
         return $dataTable->eloquent($users)
             ->addColumn('level', function (User $user) {
-                return "level 0";
+                return 'level 0';
             })
             ->toJson();
     }

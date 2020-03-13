@@ -50,6 +50,7 @@ class Game
         } catch (ModelNotFoundException $exception) {
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, ['repetitions' => '1']);
+
             return true;
         }
 
@@ -63,6 +64,7 @@ class Game
             $userBadge->pivot->completed = true;
             $userBadge->pivot->completed_on = Carbon::now();
         }
+
         return ($userBadge->pivot->save() === false) ?: true;
     }
 
@@ -93,6 +95,7 @@ class Game
         } catch (ModelNotFoundException $exception) {
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, $data);
+
             return true;
         }
     }

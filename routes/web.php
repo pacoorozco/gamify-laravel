@@ -57,8 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('dashboard', 'HomeController@index')->name('dashboard');
     Route::get('rankings/', 'HomeController@data')->name('ranking');
-        //->middleware('ajax');
-
+    //->middleware('ajax');
 
     // Profiles
     Route::get('users/{username}', 'UserController@show')->name('profiles.show');
