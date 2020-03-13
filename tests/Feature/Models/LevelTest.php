@@ -15,7 +15,7 @@ class LevelTest extends TestCase
     {
         for ($i = 1; $i <= $number; $i++) {
             factory(Level::class)->create([
-                'name' => 'Level ' . $i,
+                'name' => 'Level '.$i,
                 'required_points' => $i * $distance,
                 'active' => true,
             ]);
@@ -43,7 +43,6 @@ class LevelTest extends TestCase
                 sprintf("Test case: experience='%d', want='%s'", $input, $want)
             );
         }
-
     }
 
     public function test_findNextByExperience_method_returns_a_level()

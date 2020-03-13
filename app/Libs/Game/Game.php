@@ -114,6 +114,7 @@ class Game
 
         $rank = $users->map(function ($user) {
             $experience = $user->getExperiencePoints();
+
             return [
                 'username' => $user->username,
                 'name' => $user->name,
