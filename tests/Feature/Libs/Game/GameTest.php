@@ -67,11 +67,9 @@ class GameTest extends TestCase
 
         $got = Game::getRanking(5);
 
-        foreach ($users as $item)
-        {
+        foreach ($users as $item) {
             $this->assertTrue($got->contains('username', $item->username));
             $this->assertTrue($got->contains('name', $item->name));
         }
-
     }
 }
