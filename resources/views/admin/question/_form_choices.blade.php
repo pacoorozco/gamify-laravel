@@ -1,10 +1,10 @@
 <!-- choices -->
 <div class="row form-group">
     <div class="col-sm-9">
-        {!! Form::label('choice_text[]', trans('admin/question/model.choice_text'), ['class' => 'control-label']) !!}
+        {!! Form::label('choice_text[]', __('admin/question/model.choice_text'), ['class' => 'control-label']) !!}
     </div>
     <div class="col-sm-3">
-        {!! Form::label('choice_score[]', trans('admin/question/model.choice_score'), ['class' => 'control-label']) !!}
+        {!! Form::label('choice_score[]', __('admin/question/model.choice_score'), ['class' => 'control-label']) !!}
     </div>
 </div>
 
@@ -12,7 +12,7 @@
     @foreach ($question->choices as $choice)
         <div class="row form-group cloneable">
             <div class="col-sm-9">
-                {!! Form::text('choice_text[]', $choice->text, ['class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help')]) !!}
+                {!! Form::text('choice_text[]', $choice->text, ['class' => 'form-control', 'placeholder' => __('admin/question/model.choice_text_help')]) !!}
             </div>
             <div class="col-sm-3">
                 <div class="input-group">
@@ -30,7 +30,7 @@
 
 <div class="row form-group cloneable">
     <div class="col-sm-9">
-        {!! Form::text('choice_text[]', null, ['class' => 'form-control', 'placeholder' => trans('admin/question/model.choice_text_help')]) !!}
+        {!! Form::text('choice_text[]', null, ['class' => 'form-control', 'placeholder' => __('admin/question/model.choice_text_help')]) !!}
     </div>
     <div class="col-sm-3">
         <div class="input-group">
@@ -45,6 +45,6 @@
 </div>
 
 <div class="form-group">
-    <span class="text-muted"><i class="fa fa-info-circle"></i> {{ trans('admin/question/model.choice_score_help') }}</span>
+    <span class="text-muted"><i class="fa fa-info-circle"></i> @lang('admin/question/model.choice_score_help')</span>
 </div>
 <!-- ./ choices -->

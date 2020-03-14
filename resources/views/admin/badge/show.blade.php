@@ -2,12 +2,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/badge/title.badge_show') }} :: @parent
+    @lang('admin/badge/title.badge_show') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-        {{ trans('admin/badge/title.badge_show') }}
+        @lang('admin/badge/title.badge_show')
         <small>{{ $badge->name }}</small>
 @endsection
 
@@ -15,16 +15,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li>
         <a href="{{ route('admin.badges.index') }}">
-            {{ trans('admin/site.badges') }}
+            @lang('admin/site.badges')
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/badge/title.badge_show') }}
+        @lang('admin/badge/title.badge_show')
     </li>
     @endsection
 

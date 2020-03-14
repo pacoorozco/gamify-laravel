@@ -1,26 +1,12 @@
 <?php
-/**
- * Gamify - Gamification platform to implement any serious game mechanic.
- *
- * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
- *
- * This file is part of some open source application.
- *
- * Licensed under GNU General Public License 3.0.
- * Some rights reserved. See LICENSE, AUTHORS.
- *
- * @author             Paco Orozco <paco@pacoorozco.info>
- * @copyright          2018 Paco Orozco
- * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- *
- * @link               https://github.com/pacoorozco/gamify-laravel
- */
 
 namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
+use Gamify\Providers\RouteServiceProvider;
 use Gamify\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -43,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -58,32 +44,30 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return \Gamify\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => bcrypt($data['password']),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
     }
 }

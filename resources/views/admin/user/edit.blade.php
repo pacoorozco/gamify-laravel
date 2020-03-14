@@ -2,12 +2,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/user/title.user_update') }} :: @parent
+    @lang('admin/user/title.user_update') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/user/title.user_update') }}
+    @lang('admin/user/title.user_update')
     <small>{{ $user->username }}</small>
 @endsection
 
@@ -15,16 +15,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li>
         <a href="{{ route('admin.users.index') }}">
-            {{ trans('admin/site.users') }}
+            @lang('admin/site.users')
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/user/title.user_update') }}
+        @lang('admin/user/title.user_update')
     </li>
     @endsection
 

@@ -32,6 +32,6 @@ class UserController extends Controller
         $user->profile->fill($request->all())->save();
 
         return redirect()->route('profiles.show', $user->username)
-            ->with('success', trans('user/messages.settings_updated'));
+            ->with('success', __('user/messages.settings_updated'));
     }
 }

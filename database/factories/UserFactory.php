@@ -22,21 +22,21 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
-use Faker\Generator as Faker;
 
-// To create a user with fake information
-$factory->define(Gamify\User::class, function (Faker $faker) {
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use Faker\Generator as Faker;
+use Gamify\User;
+use Illuminate\Support\Str;
+
+$factory->define(User::class, function (Faker $faker) {
     return [
-        'name'           => $faker->name,
-        'username'       => $faker->userName,
-        'email'          => $faker->unique()->safeEmail,
-        'password'       => bcrypt('secret'),
-        'remember_token' => str_random(10),
-        'last_login_at'  => $faker->dateTime,
+        'name' => $faker->name,
+        'username' => $faker->userName,
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt('secret'),
+        'remember_token' => Str::random(10),
+        'email_verified_at' => now(),
+        'role' => User::USER_ROLE,
     ];
 });
-
-// To create a user with 'administrator' role.
-$factory->state(Gamify\User::class, 'admin', [
-    'role' => 'administrator',
-]);

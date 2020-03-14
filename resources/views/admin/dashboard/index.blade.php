@@ -2,18 +2,18 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/site.dashboard') }} :: @parent
+    @lang('admin/site.dashboard') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/site.dashboard') }}
+    @lang('admin/site.dashboard')
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li class="active">
-        <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+        <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
     </li>
 @endsection
 

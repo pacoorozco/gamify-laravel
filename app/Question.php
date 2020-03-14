@@ -20,6 +20,7 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -165,23 +166,23 @@ class Question extends Model
     /**
      * Returns published Questions, including hidden ones.
      *
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePublished($query)
+    public function scopePublished(Builder $query)
     {
-        return $query->where('status', '=', self::PUBLISH_STATUS);
+        return $query->where('status', self::PUBLISH_STATUS);
     }
 
     /**
      * Returns visible Questions, not hidden ones.
      *
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisible($query)
+    public function scopeVisible(Builder $query)
     {
         return $query->where('hidden', false);
     }

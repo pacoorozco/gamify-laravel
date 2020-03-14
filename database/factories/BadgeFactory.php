@@ -1,13 +1,16 @@
 <?php
 
-use Faker\Generator as Faker;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-$factory->define(Gamify\Badge::class, function (Faker $faker) {
+use Faker\Generator as Faker;
+use Gamify\Badge;
+
+$factory->define(Badge::class, function (Faker $faker) {
     $color = $faker->unique()->safeColorName;
 
     return [
-        'name'                 => $color,
-        'description'          => 'This badge is for people who thinks in '.$color.' :D',
+        'name' => $color,
+        'description' => 'This badge is for people who thinks in '.$color.' :D',
         'required_repetitions' => 5,
     ];
 });

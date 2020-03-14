@@ -18,6 +18,7 @@
 
 namespace Gamify\Providers;
 
+use Gamify\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -48,9 +49,9 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerGamifyAbilities()
+    protected function registerGamifyAbilities(): void
     {
-        Gate::define('access-dashboard', function ($user) {
+        Gate::define('access-dashboard', function (User $user) {
             return $user->isAdmin();
         });
     }

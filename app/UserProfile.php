@@ -18,8 +18,8 @@
 
 namespace Gamify;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * Role model, represents a role.

@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">{{ trans('user/profile.about_me') }}</h3>
+        <h3 class="box-title">@lang('user/profile.about_me')</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -50,12 +50,12 @@
         <table class="table table-condensed table-hover">
             <thead>
             <tr>
-                <th colspan="2">{{ trans('user/profile.contact_info') }}</th>
+                <th colspan="2">@lang('user/profile.contact_info')</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>{{ trans('user/profile.url') }}:</td>
+                <td>@lang('user/profile.url'):</td>
                 <td>
                     @if (!empty($user->profile->url))
                         <a href="{{ $user->profile->url }}" rel="nofollow">{{ $user->profile->url }}</a>
@@ -64,7 +64,7 @@
 
             </tr>
             <tr>
-                <td>{{ trans('user/profile.email') }}:</td>
+                <td>@lang('user/profile.email'):</td>
                 <td>
                     <a href="mailto:{{ $user->email }}" rel="nofollow">
                         {{ $user->email }}
@@ -72,7 +72,7 @@
                 </td>
             </tr>
             <tr>
-                <td>{{ trans('user/profile.phone') }}:</td>
+                <td>@lang('user/profile.phone'):</td>
                 <td>
                     @if (!empty($user->profile->phone))
                         <a href="tel:{{ $user->profile->phone }}"
@@ -81,7 +81,7 @@
                 </td>
             </tr>
             <tr>
-                <td>{{ trans('user/profile.mobile') }}:</td>
+                <td>@lang('user/profile.mobile'):</td>
                 <td>
                     @if (!empty($user->profile->mobile))
                         <a href="tel:{{ $user->profile->mobile }}"
@@ -95,29 +95,29 @@
         <table class="table table-condensed table-hover">
             <thead>
             <tr>
-                <th colspan="2">{{ trans('user/profile.general_info') }}</th>
+                <th colspan="2">@lang('user/profile.general_info')</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>{{ trans('user/profile.level') }}:</td>
+                <td>@lang('user/profile.level'):</td>
                 <td>{{ $user->getLevelName() }}</td>
             </tr>
             <tr>
-                <td>{{ trans('user/profile.rank') }}:</td>
+                <td>@lang('user/profile.rank'):</td>
                 <td>{{ $user->getExperiencePoints() }}</td>
             </tr>
             <tr>
-                <td>{{ trans('user/profile.user_since') }}:</td>
+                <td>@lang('user/profile.user_since'):</td>
                 <td>{{ date("M Y", strtotime($user->created_at)) }}</td>
             </tr>
 
             <tr>
-                <td>{{ trans('user/profile.last_logged') }}:</td>
+                <td>@lang('user/profile.last_logged'):</td>
                 <td>{{ $user->getLastLoggedDate() }}</td>
             </tr>
             <tr>
-                <td>{{ trans('user/profile.roles') }}:</td>
+                <td>@lang('user/profile.roles'):</td>
                 <td>
                     <span class="label label-sm label-info">TODO: User</span></td>
             </tr>
@@ -127,12 +127,12 @@
         <table class="table table-condensed table-hover">
             <thead>
             <tr>
-                <th colspan="2">{{ trans('user/profile.additional_info') }}</th>
+                <th colspan="2">@lang('user/profile.additional_info')</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>{{ trans('user/profile.birth') }}</td>
+                <td>@lang('user/profile.birth')</td>
                 <td>
                     @if (isset($user->profile->date_of_birth))
                         {{ date("d F Y", strtotime($user->profile->date_of_birth)) }}
@@ -140,11 +140,11 @@
                 </td>
             </tr>
             <tr>
-                <td>{{ trans('user/profile.gender') }}</td>
+                <td>@lang('user/profile.gender')</td>
                 <td>
                     @if (isset($user->profile->gender))
                         <i class="fa fa-{{ $user->profile->gender }}"></i>
-                        {{ trans('user/profile.gender_' . $user->profile->gender) }}
+                        {{ __('user/profile.gender_' . $user->profile->gender) }}
                     @endif
                 </td>
             </tr>

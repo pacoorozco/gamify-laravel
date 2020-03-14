@@ -2,12 +2,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/level/title.level_update') }} :: @parent
+    @lang('admin/level/title.level_update') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/level/title.level_update') }}
+    @lang('admin/level/title.level_update')
     <small>{{ $level->name }}</small>
 @endsection
 
@@ -15,16 +15,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li>
         <a href="{{ route('admin.levels.index') }}">
-            {{ trans('admin/site.levels') }}
+            @lang('admin/site.levels')
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/level/title.level_edit') }}
+        @lang('admin/level/title.level_edit')
     </li>
     @endsection
 

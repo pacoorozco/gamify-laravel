@@ -2,24 +2,24 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/reward/messages.title') }} :: @parent
+    @lang('admin/reward/messages.title') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/reward/messages.title') }}
-    <small>{{ trans('admin/reward/messages.header') }}</small>
+    @lang('admin/reward/messages.title')
+    <small>@lang('admin/reward/messages.header')</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li class="active">
-        {{ trans('admin/site.rewards') }}
+        @lang('admin/site.rewards')
     </li>
 @endsection
 
@@ -53,10 +53,10 @@
     <script>
         $(function () {
             $(".username-input").select2({
-                placeholder: "{{ trans('admin/reward/messages.pick_user') }}",
+                placeholder: "@lang('admin/reward/messages.pick_user')",
             });
             $(".badge-input").select2({
-                placeholder: "{{ trans('admin/reward/messages.pick_badge') }}",
+                placeholder: "@lang('admin/reward/messages.pick_badge')",
             });
         });
     </script>

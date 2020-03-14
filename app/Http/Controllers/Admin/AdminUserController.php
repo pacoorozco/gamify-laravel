@@ -75,7 +75,7 @@ class AdminUserController extends AdminController
         if (! $user->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/user/messages.create.error'));
+                ->with('error', __('admin/user/messages.create.error'));
         }
 
         // Insert related models
@@ -83,7 +83,7 @@ class AdminUserController extends AdminController
         $user->profile()->save($profile);
 
         return redirect()->route('admin.users.index')
-            ->with('success', trans('admin/user/messages.create.success'));
+            ->with('success', __('admin/user/messages.create.success'));
     }
 
     /**
@@ -132,11 +132,11 @@ class AdminUserController extends AdminController
         if (! $user->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/user/messages.edit.error'));
+                ->with('error', __('admin/user/messages.edit.error'));
         }
 
         return redirect()->route('admin.users.edit', $user)
-            ->with('success', trans('admin/user/messages.edit.success'));
+            ->with('success', __('admin/user/messages.edit.success'));
     }
 
     /**
@@ -165,16 +165,16 @@ class AdminUserController extends AdminController
         // Can't remove myself
         if ($user->id === Auth::user()->id) {
             return redirect()->route('admin.users.index')
-                ->with('error', trans('admin/user/messages.delete.impossible'));
+                ->with('error', __('admin/user/messages.delete.impossible'));
         }
 
         if ($user->delete() !== true) {
             return redirect()->back()
-                ->with('error', trans('admin/user/messages.delete.error'));
+                ->with('error', __('admin/user/messages.delete.error'));
         }
 
         return redirect()->route('admin.users.index')
-            ->with('success', trans('admin/user/messages.delete.success'));
+            ->with('success', __('admin/user/messages.delete.success'));
     }
 
     /**

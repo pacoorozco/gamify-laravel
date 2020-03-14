@@ -15,19 +15,23 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
-use Faker\Generator as Faker;
 
-$factory->define(Gamify\UserProfile::class, function (Faker $faker) {
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use Faker\Generator as Faker;
+use Gamify\UserProfile;
+
+$factory->define(UserProfile::class, function (Faker $faker) {
     return [
-        'bio'           => $faker->text,
-        'url'           => $faker->url,
-        'avatar'        => $faker->imageUrl($width = 640, $height = 480, 'cats'),
-        'phone'         => $faker->e164PhoneNumber,
+        'bio' => $faker->text,
+        'url' => $faker->url,
+        'avatar' => $faker->imageUrl($width = 640, $height = 480, 'cats'),
+        'phone' => $faker->e164PhoneNumber,
         'date_of_birth' => $faker->dateTime,
-        'gender'        => $faker->randomElement(['male', 'female', 'unspecified']),
-        'twitter'       => $faker->url,
-        'facebook'      => $faker->url,
-        'linkedin'      => $faker->url,
-        'github'        => $faker->url,
+        'gender' => $faker->randomElement(['male', 'female', 'unspecified']),
+        'twitter' => $faker->url,
+        'facebook' => $faker->url,
+        'linkedin' => $faker->url,
+        'github' => $faker->url,
     ];
 });

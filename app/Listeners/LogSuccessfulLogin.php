@@ -18,8 +18,8 @@
 
 namespace Gamify\Listeners;
 
-use Carbon\Carbon;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Carbon;
 
 class LogSuccessfulLogin
 {
@@ -36,11 +36,11 @@ class LogSuccessfulLogin
     /**
      * Handle the event.
      *
-     * @param Login $event
+     * @param \Illuminate\Auth\Events\Login $event
      *
      * @return void
      */
-    public function handle(Login $event)
+    public function handle(Login $event): void
     {
         $user = $event->user;
         $user->last_login_at = Carbon::now()->toDateTimeString();

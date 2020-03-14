@@ -15,7 +15,7 @@ class CreateQuestionChoicesTable extends Migration
     {
         Schema::create('question_choices', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('question_id')->unsigned();
+            $table->unsignedInteger('question_id');
             $table->foreign('question_id')
                 ->references('id')->on('questions')
                 ->onDelete('cascade');

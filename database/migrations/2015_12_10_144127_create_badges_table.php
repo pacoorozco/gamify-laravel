@@ -18,7 +18,7 @@ class CreateBadgesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('image_url')->nullable();
-            $table->integer('required_repetitions')->unsigned();
+            $table->unsignedInteger('required_repetitions');
             $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();

@@ -15,10 +15,10 @@ class CreatePointsTable extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')->on('users');
-            $table->integer('points')->unsigned();
+            $table->unsignedInteger('points');
             $table->string('description');
             $table->index('user_id');
             $table->timestamps();

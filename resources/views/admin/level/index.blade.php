@@ -7,12 +7,12 @@
 
 {{-- Web site Title --}}
 @section('title')
-    {{ trans('admin/level/title.level_management') }} :: @parent
+    @lang('admin/level/title.level_management') :: @parent
 @endsection
 
 {{-- Content Header --}}
 @section('header')
-    {{ trans('admin/level/title.level_management') }}
+    @lang('admin/level/title.level_management')
     <small>create and edit levels</small>
 @endsection
 
@@ -20,12 +20,12 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ trans('admin/site.dashboard') }}
+            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
         </a>
     </li>
     <li class="active">
         <a href="{{route('admin.levels.index') }}">
-            {{ trans('admin/site.levels') }}
+            @lang('admin/site.levels')
         </a>
     </li>
     @endsection
@@ -41,7 +41,7 @@
     <!-- actions -->
     <a href="{{ route('admin.levels.create') }}">
         <button type="button" class="btn btn-success margin-bottom">
-            <i class="fa fa-plus"></i> {{ trans('admin/level/title.create_a_new_level') }}
+            <i class="fa fa-plus"></i> @lang('admin/level/title.create_a_new_level')
         </button>
     </a>
     <!-- /.actions -->
@@ -50,20 +50,20 @@
             <table id="levels" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ trans('admin/level/model.name') }}</th>
-                    <th class="col-md-4">{{ trans('admin/level/model.image') }}</th>
-                    <th class="col-md-1">{{ trans('admin/level/model.required_points') }}</th>
-                    <th class="col-md-1">{{ trans('admin/level/model.active') }}</th>
-                    <th class="col-md-2">{{ trans('general.actions') }}</th>
+                    <th class="col-md-4">@lang('admin/level/model.name')</th>
+                    <th class="col-md-4">@lang('admin/level/model.image')</th>
+                    <th class="col-md-1">@lang('admin/level/model.required_points')</th>
+                    <th class="col-md-1">@lang('admin/level/model.active')</th>
+                    <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ trans('admin/level/model.name') }}</th>
-                    <th class="col-md-4">{{ trans('admin/level/model.image') }}</th>
-                    <th class="col-md-1">{{ trans('admin/level/model.required_points') }}</th>
-                    <th class="col-md-1">{{ trans('admin/level/model.active') }}</th>
-                    <th class="col-md-2">{{ trans('general.actions') }}</th>
+                    <th class="col-md-4">@lang('admin/level/model.name')</th>
+                    <th class="col-md-4">@lang('admin/level/model.image')</th>
+                    <th class="col-md-1">@lang('admin/level/model.required_points')</th>
+                    <th class="col-md-1">@lang('admin/level/model.active')</th>
+                    <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </tfoot>
             </table>
@@ -80,7 +80,7 @@
         $(document).ready(function () {
             oTable = $('#levels').DataTable({
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/{{ trans('site.dataTablesLang') }}.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/@lang('site.dataTablesLang').json"
                 },
                 "ajax": "{{ route('admin.levels.data') }}",
                 "columns": [
@@ -92,7 +92,7 @@
                 ],
                 "aLengthMenu": [
                     [5, 10, 15, 20, -1],
-                    [5, 10, 15, 20, "{{ trans('general.all') }}"]
+                    [5, 10, 15, 20, "@lang('general.all')"]
                 ],
                 // set the initial value
                 "iDisplayLength": 10

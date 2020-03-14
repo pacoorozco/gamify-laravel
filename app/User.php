@@ -18,10 +18,10 @@
 
 namespace Gamify;
 
-use Carbon\Carbon;
-use Gamify\Traits\GamificationTrait;
+use Gamify\Libs\Game\Game;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -37,8 +37,12 @@ use Illuminate\Support\Facades\Hash;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
-    use GamificationTrait;
+    /**
+     * Define User's roles.
+     */
+    const USER_ROLE = 'user';
+    const EDITOR_ROLE = 'editor';
+    const ADMIN_ROLE = 'administrator';
 
     /**
      * The database table used by the model.
@@ -82,6 +86,7 @@ class User extends Authenticatable
         'password' => 'string',
         'role' => 'string',
         'last_login_at' => 'datetime',
+        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -92,6 +97,53 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne('Gamify\UserProfile');
+    }
+
+    /**
+     * These are the User's answered Questions.
+     *
+     * It uses a pivot table with these values:
+     *
+     * points: int - how many points was obtained
+     * answers: string - which answers was supplied
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function answeredQuestions()
+    {
+        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
+            ->withPivot('points', 'answers');
+    }
+
+    /**
+     * These are the User's Badges relationship.
+     *
+     * It uses a pivot table with these values:
+     *
+     * amount: int - how many actions has completed
+     * completed: bool - true if User's has own this badge
+     * completed_on: Datetime - where it was completed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function badges()
+    {
+        return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
+            ->withPivot('repetitions', 'completed', 'completed_on');
+    }
+
+    /**
+     * These are the User's Points relationship.
+     *
+     * Results are grouped by user_is and it selects the sum of all points
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function points()
+    {
+        return $this->hasMany('Gamify\Point')
+            ->selectRaw('sum(points) as sum, user_id')
+            ->groupBy('user_id');
     }
 
     /**
@@ -140,18 +192,76 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'administrator';
+        return $this->role === self::ADMIN_ROLE;
     }
 
     /**
      * Returns a collection of users that are "Members".
      *
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeMember($query)
     {
-        return $query->where('role', '=', 'user');
+        return $query->where('role', self::USER_ROLE);
+    }
+
+    /**
+     * Returns a Collection of pending Questions.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function pendingQuestions(int $limit = 5)
+    {
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
+        return Question::published()->visible()
+            ->whereNotIn('id', $answeredQuestions)->get()->take($limit);
+    }
+
+    public function getLevelName(): string
+    {
+        return Level::findByExperience($this->getExperiencePoints())->name;
+    }
+
+    /**
+     * Returns a Collection of completed Badges for this user.
+     *
+     * @return mixed
+     */
+    public function getCompletedBadges()
+    {
+        return $this->badges()->wherePivot('completed', true)->get();
+    }
+
+    /**
+     * Get current Experience points for this user.
+     *
+     * @return int
+     */
+    public function getExperiencePoints(): int
+    {
+        return $this->points()->sum('points');
+    }
+
+    /**
+     * Checks if user has completed the given Badge.
+     *
+     * @param \Gamify\Badge $badge
+     *
+     * @return bool
+     */
+    public function hasBadgeCompleted(Badge $badge): bool
+    {
+        try {
+            $userBadge = $this->badges()->findOrFail($badge->id);
+        } catch (ModelNotFoundException $exception) {
+            return false;
+        }
+
+        return $userBadge->pivot->completed;
     }
 }

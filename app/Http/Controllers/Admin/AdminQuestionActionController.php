@@ -63,7 +63,7 @@ class AdminQuestionActionController extends AdminController
         $question->actions()->create($request->all());
 
         return redirect()->route('admin.questions.edit', $question)
-            ->with('success', trans('admin/action/messages.create.success'));
+            ->with('success', __('admin/action/messages.create.success'));
     }
 
     /**
@@ -81,6 +81,6 @@ class AdminQuestionActionController extends AdminController
         $action->delete();
 
         return redirect()->route('admin.questions.edit', $question)
-            ->with('success', trans('admin/action/messages.delete.success'));
+            ->with('success', __('admin/action/messages.delete.success'));
     }
 }

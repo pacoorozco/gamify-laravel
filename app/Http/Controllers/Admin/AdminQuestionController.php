@@ -79,7 +79,7 @@ class AdminQuestionController extends AdminController
         if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/question/messages.create.error'));
+                ->with('error', __('admin/question/messages.create.error'));
         }
 
         // Save Question Tags
@@ -111,7 +111,7 @@ class AdminQuestionController extends AdminController
         }
 
         return redirect()->route('admin.questions.index')
-            ->with('success', trans('admin/question/messages.create.success'));
+            ->with('success', __('admin/question/messages.create.success'));
     }
 
     /**
@@ -198,7 +198,7 @@ class AdminQuestionController extends AdminController
             if (! $question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', trans('admin/question/messages.publish.error'));
+                    ->with('error', __('admin/question/messages.publish.error'));
             }
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
@@ -206,11 +206,11 @@ class AdminQuestionController extends AdminController
         if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', trans('admin/question/messages.update.error'));
+                ->with('error', __('admin/question/messages.update.error'));
         }
 
         return redirect()->route('admin.questions.index')
-            ->with('success', trans('admin/question/messages.update.success'));
+            ->with('success', __('admin/question/messages.update.success'));
     }
 
     /**
@@ -238,11 +238,11 @@ class AdminQuestionController extends AdminController
     {
         if ($question->delete() !== true) {
             return redirect()->back()
-                ->with('error', trans('admin/question/messages.delete.error'));
+                ->with('error', __('admin/question/messages.delete.error'));
         }
 
         return redirect()->route('admin.questions.index')
-            ->with('success', trans('admin/question/messages.delete.success'));
+            ->with('success', __('admin/question/messages.delete.success'));
     }
 
     /**
@@ -270,9 +270,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">'.trans('admin/question/model.status_list.draft').'</span>',
-            'publish'   => '<span class="label label-success">'.trans('admin/question/model.status_list.publish').'</span>',
-            'unpublish' => '<span class="label label-warning">'.trans('admin/question/model.status_list.unpublish').'</span>',
+            'draft'     => '<span class="label label-default">'.__('admin/question/model.status_list.draft').'</span>',
+            'publish'   => '<span class="label label-success">'.__('admin/question/model.status_list.publish').'</span>',
+            'unpublish' => '<span class="label label-warning">'.__('admin/question/model.status_list.unpublish').'</span>',
         ];
 
         return $dataTable->of($question)

@@ -14,16 +14,17 @@ class CreateUsersBadgesTable extends Migration
     public function up()
     {
         Schema::create('users_badges', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('badge_id')->unsigned();
-            $table->integer('repetitions')->unsigned();
-            $table->boolean('completed')->default(false);
-            $table->timestamp('completed_on');
-            $table->timestamps();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
-                ->references('id')->on('users'); // assumes a users table
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+            $table->unsignedInteger('badge_id');
             $table->foreign('badge_id')
                 ->references('id')->on('badges');
+            $table->unsignedInteger('repetitions');
+            $table->boolean('completed')->default(false);
+            $table->timestamp('completed_on')->nullable();
+            $table->timestamps();
             $table->primary(['user_id', 'badge_id']);
         });
     }
