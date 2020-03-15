@@ -47,7 +47,7 @@
                 <div class="form-group {{ $errors->has('question') ? 'has-error' : '' }}">
                     {!! Form::label('question', __('admin/question/model.question'), ['class' => 'control-label required']) !!}
                     <div class="controls">
-                        {!! Form::textarea('question', null, ['class' => 'form-control tinymce']) !!}
+                        {!! Form::textarea('question', null, ['class' => 'form-control editor']) !!}
                         <span class="text-muted"><i
                                 class="fa fa-info-circle"></i> @lang('admin/question/model.question_help')</span>
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
@@ -73,7 +73,7 @@
                 <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
                     {!! Form::label('solution', __('admin/question/model.solution'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {!! Form::textarea('solution', null, ['class' => 'form-control tinymce']) !!}
+                        {!! Form::textarea('solution', null, ['class' => 'form-control editor']) !!}
                         <span class="text-muted"><i
                                 class="fa fa-info-circle"></i> @lang('admin/question/model.solution_help')</span>
                         <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
@@ -197,12 +197,14 @@
 {{-- Styles --}}
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-    <script src="{{ asset('//cdn.tinymce.com/4/tinymce.min.js') }}"></script>
     <script src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 
     <script>
         $(function () {
@@ -214,18 +216,11 @@
                 width: '100%'
             });
 
-            tinymce.init({
-                selector: "textarea.tinymce",
-                width: '100%',
-                height: 270,
-                statusbar: false,
-                menubar: false,
-                plugins: [
-                    "link",
-                    "code"
-                ],
-                toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
-            });
+            $('.editor').wysihtml5({
+                toolbar: {
+                    "font-styles": false,
+                },
+            })
         });
     </script>
 @endpush
