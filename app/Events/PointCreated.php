@@ -10,10 +10,10 @@ class PointCreated
 {
     use Dispatchable, SerializesModels;
 
-    /** @var \Gamify\User $user */
+    /** @var \Gamify\User */
     public $user;
 
-    /** @var int $points */
+    /** @var int */
     public $points;
 
     /**

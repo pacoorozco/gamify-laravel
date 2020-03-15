@@ -27,6 +27,6 @@ class AddReputation
     public function handle(QuestionAnswered $event)
     {
         // Add XP to user
-        Game::addReputation($event->user, $event->points, 'has earned ' . $event->points . ' points.');
+        Game::addReputation($event->user, $event->points, 'has earned '.$event->points.' points.');
     }
 }
