@@ -55,7 +55,7 @@ class AdminRewardController extends AdminController
         $points = $request->input('points');
         $message = $request->input('message');
 
-        if (! Game::addExperience($user, $points, $message)) {
+        if (! Game::addReputation($user, $points, $message)) {
             return redirect()->back()
                 ->withInput()
                 ->with('error',

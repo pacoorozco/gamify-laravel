@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Controllers;
 
+use Gamify\Events\QuestionAnswered;
 use Gamify\Libs\Game\Game;
 use Gamify\Question;
 use Illuminate\Http\Request;
@@ -37,12 +38,12 @@ class QuestionController extends Controller
 
         // Obtain how many points has its answer obtained
         $points = 0;
-        $success = false;
+        $answerCorrectness = false;
 
         foreach ($request->choices as $answer) {
             $choice = $question->choices()->find($answer);
             $points += $choice->score;
-            $success = $success || $choice->correct;
+            $answerCorrectness = $answerCorrectness || $choice->correct;
         }
         // minimun points for answer is '1'
         if ($points < 1) {
@@ -55,11 +56,11 @@ class QuestionController extends Controller
             'answers' => implode(',', $request->choices),
         ]);
 
-        // Add XP to user
-        Game::addExperience(Auth::user(), $points, 'has earned '.$points.' points.');
+        // Trigger an event that will update XP, badges...
+        event(new QuestionAnswered(Auth::user(), $question, $answerCorrectness, $points));
 
         // Deal with Question specific Badges
-        if ($success) {
+        if ($answerCorrectness) {
             $answerStatus = 'correct';
         } else {
             $answerStatus = 'incorrect';

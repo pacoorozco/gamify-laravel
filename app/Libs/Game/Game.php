@@ -6,6 +6,7 @@ use Gamify\Badge;
 use Gamify\Level;
 use Gamify\Point;
 use Gamify\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
 
@@ -20,19 +21,28 @@ class Game
      *
      * @return bool
      */
-    public static function addExperience(User $user, $points = 5, $message = '')
+    public static function addReputation(User $user, $points = 5, $message = '')
     {
-        if (empty($message)) {
-            $message = __('messages.unknown_reason');
-        }
-
         // add experience points to this user
         $point_entry = new Point([
             'points' => $points,
-            'description' => $message,
+            'description' => (!empty($message)) ?: __('messages.unknown_reason'),
         ]);
 
         return ($user->points()->save($point_entry) === false) ?: true;
+    }
+
+    /**
+     * Add more repetitions towards a collection of Badges.
+     *
+     * @param \Gamify\User                             $user
+     * @param \Illuminate\Database\Eloquent\Collection $badges
+     */
+    public static function incrementManyBadges(User $user, Collection $badges): void
+    {
+        foreach ($badges as $badge) {
+            self::incrementBadge($user, $badge);
+        }
     }
 
     /**
@@ -109,11 +119,15 @@ class Game
      */
     public static function getRanking($limitTopUsers = 10)
     {
-        $users = User::Member()->with('points')->get();
-
-        $users = $users->sortByDesc(function ($user) {
-            return $user->getExperiencePoints();
-        })->take($limitTopUsers);
+        $users = User::Member()
+            ->select([
+                'name',
+                'username',
+                'experience',
+            ])
+            ->orderBy('experience', 'DESC')
+            ->take($limitTopUsers)
+            ->get();
 
         $rank = $users->map(function ($user) {
             $experience = $user->getExperiencePoints();

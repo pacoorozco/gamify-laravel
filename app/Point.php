@@ -2,6 +2,7 @@
 
 namespace Gamify;
 
+use Gamify\Events\PointCreated;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -40,6 +41,15 @@ class Point extends Model
         'id' => 'int',
         'points' => 'int',
         'description' => 'string',
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => PointCreated::class,
     ];
 
     /**

@@ -2,7 +2,10 @@
 
 namespace Tests\Feature\Models;
 
+use Gamify\Badge;
 use Gamify\Question;
+use Gamify\QuestionAction;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -44,5 +47,21 @@ class QuestionTest extends TestCase
         $got = Question::visible()->get();
 
         $this->assertCount(2, $got);
+    }
+
+    public function test_getActionableBadgesForCorrectness_method()
+    {
+        $question = factory(Question::class)->create();
+        $badge = factory(Badge::class)->create();
+
+        $question->actions()->create([
+            'when' => QuestionAction::ON_ANY_CASE,
+            'badge_id' => $badge->id,
+        ]);
+
+        $got = $question->getActionableBadgesForCorrectness(true);
+
+        $this->assertInstanceOf(Collection::class, $got);
+        $this->assertCount(1, $got);
     }
 }

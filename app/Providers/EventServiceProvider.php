@@ -2,7 +2,12 @@
 
 namespace Gamify\Providers;
 
+use Gamify\Events\PointCreated;
+use Gamify\Events\QuestionAnswered;
+use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\LogSuccessfulLogin;
+use Gamify\Listeners\UpdateBadgeRepetitions;
+use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -16,6 +21,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Login::class => [
             LogSuccessfulLogin::class,
+        ],
+        QuestionAnswered::class => [
+            AddReputation::class,
+            UpdateBadgeRepetitions::class,
+        ],
+        PointCreated::class => [
+            UpdateExperience::class,
         ],
     ];
 

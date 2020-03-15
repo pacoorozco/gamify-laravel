@@ -36,4 +36,14 @@ class UserTest extends TestCase
 
         $this->assertCount($limit, $u->pendingQuestions($limit));
     }
+
+    public function test_addExperience_method()
+    {
+        $u = factory(User::class)->create();
+
+        $want = 15;
+        $u->addExperience($want);
+
+        $this->assertEquals($want, $u->experience);
+    }
 }
