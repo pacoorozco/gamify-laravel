@@ -11,16 +11,16 @@ class QuestionAnswered
 {
     use Dispatchable, SerializesModels;
 
-    /** @var \Gamify\User $user */
+    /** @var \Gamify\User */
     public $user;
 
-    /** @var \Gamify\Question $question */
+    /** @var \Gamify\Question */
     public $question;
 
-    /** @var int $points */
+    /** @var int */
     public $points;
 
-    /** @var bool $answerCorrectness */
+    /** @var bool */
     public $answerCorrectness;
 
     /**
