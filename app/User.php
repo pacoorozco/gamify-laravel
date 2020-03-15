@@ -18,7 +18,6 @@
 
 namespace Gamify;
 
-use Gamify\Libs\Game\Game;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
@@ -34,6 +33,7 @@ use Illuminate\Support\Facades\Hash;
  * @property  string $password                Encrypted password of this user.
  * @property  string $role                    Role of the user ['user', 'editor', 'administrator'].
  * @property  string $last_login_at           Time when the user last logged in.
+ * @property  int    $experience              The reputation of the user.
  */
 class User extends Authenticatable
 {
@@ -87,6 +87,7 @@ class User extends Authenticatable
         'role' => 'string',
         'last_login_at' => 'datetime',
         'email_verified_at' => 'datetime',
+        'experience' => 'int',
     ];
 
     /**
@@ -219,7 +220,9 @@ class User extends Authenticatable
         $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
 
         return Question::published()->visible()
-            ->whereNotIn('id', $answeredQuestions)->get()->take($limit);
+            ->whereNotIn('id', $answeredQuestions)
+            ->take($limit)
+            ->get();
     }
 
     public function getLevelName(): string
@@ -244,7 +247,21 @@ class User extends Authenticatable
      */
     public function getExperiencePoints(): int
     {
-        return $this->points()->sum('points');
+        return $this->experience;
+    }
+
+    /**
+     * Add experience to the user.
+     *
+     * Trigger ExperienceChanged event.
+     *
+     * @param int $points
+     */
+    public function addExperience(int $points = 1): void
+    {
+        $this->increment('experience', $points);
+
+        // TODO: Dispatch event ReputationChanged
     }
 
     /**

@@ -13,11 +13,11 @@ class GameTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_addExperience_method()
+    public function test_addReputation_method()
     {
         $user = factory(User::class)->create();
 
-        $this->assertTrue(Game::addExperience($user, 5, 'test'));
+        $this->assertTrue(Game::addReputation($user, 5, 'test'));
         $this->assertEquals(5, $user->points()->sum('points'));
     }
 

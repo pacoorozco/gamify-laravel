@@ -60,6 +60,7 @@ class UserTest extends ModelTestCase
             'role' => 'string',
             'last_login_at' => 'datetime',
             'email_verified_at' => 'datetime',
+            'experience' => 'int',
         ], $m->getCasts());
     }
 

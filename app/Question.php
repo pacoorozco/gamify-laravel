@@ -21,6 +21,7 @@ namespace Gamify;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -209,5 +210,25 @@ class Question extends Model
     public function getImageURL(): string
     {
         return asset('images/missing_question.png');
+    }
+
+    /**
+     * Returns the Badges that can be actionable depending if the answer was correct or not.
+     *
+     * @param bool $correctness
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
+    {
+        $filter = ($correctness === true) ? QuestionAction::ON_SUCCESS : QuestionAction::ON_FAILURE;
+
+        $actionable_actions = $this->actions()
+            ->whereIn('when', [QuestionAction::ON_ANY_CASE, $filter])
+            ->pluck('badge_id')
+            ->toArray();
+
+        return Badge::whereIn('id', $actionable_actions)
+            ->get();
     }
 }
