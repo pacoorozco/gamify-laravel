@@ -1,11 +1,7 @@
 {{-- Create / Edit Question Form --}}
 
 @section('meta')
-        <!-- Unobtrusive JavaScript -->
-{{--
-<meta name="csrf-token" content="{!! csrf_token() !!}">
-<meta name="csrf-param" content="_token">
---}}
+
 @endsection
 
 @if (isset($question))
@@ -41,7 +37,7 @@
                     <div class="controls">
                         {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         <span class="text-muted"><i
-                                    class="fa fa-info-circle"></i> @lang('admin/question/model.name_help')</span>
+                                class="fa fa-info-circle"></i> @lang('admin/question/model.name_help')</span>
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -53,7 +49,7 @@
                     <div class="controls">
                         {!! Form::textarea('question', null, ['class' => 'form-control tinymce']) !!}
                         <span class="text-muted"><i
-                                    class="fa fa-info-circle"></i> @lang('admin/question/model.question_help')</span>
+                                class="fa fa-info-circle"></i> @lang('admin/question/model.question_help')</span>
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                     </div>
                 </div>
@@ -70,8 +66,8 @@
                 <!-- ./ type -->
 
                 <!-- answers -->
-                @include('admin/question/_form_choices')
-                <!-- ./ answers -->
+            @include('admin/question/_form_choices')
+            <!-- ./ answers -->
 
                 <!-- solution -->
                 <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
@@ -79,7 +75,7 @@
                     <div class="controls">
                         {!! Form::textarea('solution', null, ['class' => 'form-control tinymce']) !!}
                         <span class="text-muted"><i
-                                    class="fa fa-info-circle"></i> @lang('admin/question/model.solution_help')</span>
+                                class="fa fa-info-circle"></i> @lang('admin/question/model.solution_help')</span>
                         <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                     </div>
                 </div>
@@ -106,30 +102,30 @@
                             {{ $errors->first('status', '<span class="help-inline">:message</span>') }}
                         </div>
                     </div>
-                    @else
-                    {!! Form::hidden('status','draft') !!}
-                    @endif
-                            <!-- ./ status -->
-                    <!-- hidden -->
-                    <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
-                        {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::select('hidden', ['0' => __('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')], null, ['class' => 'form-control']) !!}
-                            <span class="text-muted"><i
-                                        class="fa fa-info-circle"></i> @lang('admin/question/model.hidden_help')
+            @else
+                {!! Form::hidden('status','draft') !!}
+            @endif
+            <!-- ./ status -->
+                <!-- hidden -->
+                <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
+                    {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
+                    <div class="controls">
+                        {!! Form::select('hidden', ['0' => __('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')], null, ['class' => 'form-control']) !!}
+                        <span class="text-muted"><i
+                                class="fa fa-info-circle"></i> @lang('admin/question/model.hidden_help')
                             </span>
-                            {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
-                        </div>
+                        {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
                     </div>
-                    <!-- ./ hidden -->
+                </div>
+                <!-- ./ hidden -->
             </div>
             <div class="box-footer">
                 <!-- form actions -->
                 <a href="{{ route('admin.questions.index') }}" class="btn btn-primary">
-                        <i class="fa fa-arrow-left"></i> @lang('general.back')
+                    <i class="fa fa-arrow-left"></i> @lang('general.back')
                 </a>
-                {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-                        <!-- ./ form actions -->
+            {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+            <!-- ./ form actions -->
             </div>
 
         </div>
@@ -176,22 +172,22 @@
         </div>
         <!-- ./ tags section -->
 
-        @if (isset($question))
-                <!-- other information section -->
-        <div class="box box-solid collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title">@lang('admin/question/title.other_section')</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                    </button>
+    @if (isset($question))
+        <!-- other information section -->
+            <div class="box box-solid collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('admin/question/title.other_section')</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <p>{{ __('admin/question/model.created_by', ['who' => $question->created_by, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
+                    <p>{{ __('admin/question/model.updated_by', ['who' => $question->updated_by, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
                 </div>
             </div>
-            <div class="box-body">
-                <p>{{ __('admin/question/model.created_by', ['who' => $question->created_by, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
-                <p>{{ __('admin/question/model.updated_by', ['who' => $question->updated_by, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
-            </div>
-        </div>
-        <!-- ./ other information section -->
+            <!-- ./ other information section -->
         @endif
     </div>
 </div>
@@ -199,37 +195,37 @@
 {!! Form::close() !!}
 
 {{-- Styles --}}
-@section('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
-@endsection
+@push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
+@endpush
 
 {{-- Scripts --}}
-@section('scripts')
-<script src="{{ asset('//cdn.tinymce.com/4/tinymce.min.js') }}"></script>
-<script src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
-        <!-- jQuery UJS -->
-{{-- <script src="{{ asset('vendor/jquery-ujs/src/rails.js') }}"></script> --}}
+@push('scripts')
+    <script src="{{ asset('//cdn.tinymce.com/4/tinymce.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 
-<script>
-    $("#tag_list").select2({
-        tags: true,
-        placeholder: '@lang('admin/question/model.tags_help')',
-        tokenSeparators: [',', ' '],
-        allowClear: true,
-        width: '100%'
-    });
+    <script>
+        $(function () {
+            $("#tag_list").select2({
+                tags: true,
+                placeholder: '@lang('admin/question/model.tags_help')',
+                tokenSeparators: [',', ' '],
+                allowClear: true,
+                width: '100%'
+            });
 
-    tinymce.init({
-        selector: "textarea.tinymce",
-        width: '100%',
-        height: 270,
-        statusbar: false,
-        menubar: false,
-        plugins: [
-            "link",
-            "code"
-        ],
-        toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
-    });
-</script>
-@endsection
+            tinymce.init({
+                selector: "textarea.tinymce",
+                width: '100%',
+                height: 270,
+                statusbar: false,
+                menubar: false,
+                plugins: [
+                    "link",
+                    "code"
+                ],
+                toolbar: "bold italic underline strikethrough | removeformat | undo redo | bullist numlist | link code"
+            });
+        });
+    </script>
+@endpush
