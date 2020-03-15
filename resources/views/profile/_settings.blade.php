@@ -206,15 +206,15 @@
 {!! Form::close() !!}
 
 
-@section('styles')
+@push('styles')
         <!-- Date Picker -->
 <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
         <!-- File Input -->
 {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
-@endsection
+@endpush
 
 {{-- Scripts --}}
-@section('scripts')
+@push('scripts')
         <!-- Date Picker -->
 <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
         <!-- File Input -->
@@ -226,4 +226,4 @@
         autoclose: true
     });
 </script>
-@endsection
+@endpush

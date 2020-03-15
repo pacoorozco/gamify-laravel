@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 
 {{-- Styles --}}
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.css') }}">
-@endsection
+@push('styles')
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.css') }}">
+@endpush
 
 {{-- Web site Title --}}
 @section('title')
@@ -28,14 +29,14 @@
             @lang('admin/site.users')
         </a>
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     <!-- actions -->
     <a href="{{ route('admin.users.create') }}">
@@ -71,13 +72,15 @@
 @endsection
 
 {{-- Scripts --}}
-@section('scripts')
-    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+@push('scripts')
+    <script type="text/javascript"
+            src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
-            oTable = $('#users').DataTable({
+        $(function () {
+            $('#users').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/@lang('site.dataTablesLang').json"
                 },
@@ -98,4 +101,4 @@
             });
         });
     </script>
-@endsection
+@endpush

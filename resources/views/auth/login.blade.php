@@ -3,9 +3,9 @@
 {{-- Web site Title --}}
 @section('title')@lang('auth.login')@endsection
 
-@section('styles')
+@push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
-@endsection
+@endpush
 
 {{-- Content --}}
 @section('content')
@@ -59,7 +59,7 @@
     <!-- end: LOGIN BOX -->
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script src="{{ asset('vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
     <script>
         $(function () {
@@ -70,4 +70,4 @@
             });
         });
     </script>
-@endsection
+@endpush

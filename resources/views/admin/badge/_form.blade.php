@@ -111,13 +111,13 @@
 {!! Form::close() !!}
 
 {{-- Styles --}}
-@section('styles')
+@push('styles')
         <!-- File Input -->
 {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
-@endsection
+@endpush
 
 {{-- Scripts --}}
-@section('scripts')
+@push('scripts')
         <!-- File Input -->
 {{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
-@endsection
+@endpush

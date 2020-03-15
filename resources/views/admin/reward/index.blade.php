@@ -26,9 +26,9 @@
 {{-- Content --}}
 @section('content')
 
-            <!-- notifications -->
+    <!-- notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     <div class="row">
         <div class="col-xs-6">
@@ -41,14 +41,14 @@
 @endsection
 
 {{-- Styles --}}
-@section('styles')
-            <!-- Select2 -->
+@push('styles')
+    <!-- Select2 -->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
-@endsection
+@endpush
 
 {{-- Scripts --}}
-@section('scripts')
-            <!-- Select2 -->
+@push('scripts')
+    <!-- Select2 -->
     <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {
@@ -60,4 +60,4 @@
             });
         });
     </script>
-@endsection
+@endpush
