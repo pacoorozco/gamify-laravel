@@ -9,11 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Changed
 - **Important**: This application has been upgraded to [Laravel 6](https://laravel.com/docs). A lot of refactors has been done in order to adopt Laravel 6.x best practices. 
 ([#66][i66])
+- Change the editor from TinyMCE to [Bootstrap-wysihtml5](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg). ([#36][i36]) 
 - Reputation is handled by Events. Added `experience` attribute to the User model. ([#72][i72], [#73][i73])
 - Repository name has been changed to `gamify-laravel`, current URL is https://github.com/pacoorozco/gamify-laravel.
 ### Fixed
 - `docker-compose build` was throwing an error, so docker was not working. ([#61][i61])
 
+[i36]: https://github.com/pacoorozco/gamify-laravel/issues/36
 [i61]: https://github.com/pacoorozco/gamify-laravel/issues/61
 [i66]: https://github.com/pacoorozco/gamify-laravel/issues/66
 [i72]: https://github.com/pacoorozco/gamify-laravel/issues/72
