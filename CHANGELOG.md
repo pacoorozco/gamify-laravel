@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Reputation is handled by Events. Added `experience` attribute to the User model. ([#72][i72], [#73][i73])
 - Repository name has been changed to `gamify-laravel`, current URL is https://github.com/pacoorozco/gamify-laravel.
 ### Fixed
+- Database migration / seed on fresh installation. ([#77][i77])
 - `docker-compose build` was throwing an error, so docker was not working. ([#61][i61])
 
 [i36]: https://github.com/pacoorozco/gamify-laravel/issues/36
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 [i66]: https://github.com/pacoorozco/gamify-laravel/issues/66
 [i72]: https://github.com/pacoorozco/gamify-laravel/issues/72
 [i73]: https://github.com/pacoorozco/gamify-laravel/issues/73
+[i77]: https://github.com/pacoorozco/gamify-laravel/issues/77
 
 ### Removed
 - Dusk tests. They were not working properly.
