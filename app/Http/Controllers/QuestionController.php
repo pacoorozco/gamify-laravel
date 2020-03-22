@@ -17,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Auth::user()->getPendingQuestions();
+        $questions = Auth::user()->pendingQuestions();
 
         return view('question.index', compact('questions'));
     }
