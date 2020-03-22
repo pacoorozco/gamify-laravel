@@ -19,7 +19,6 @@
                     'placeholder' => __('auth.email'),
                     'required' => 'required',
                     'autofocus' => 'autofocus',
-                    'dusk' => 'login-email-input'
                     ]) !!}
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
     </div>
@@ -28,7 +27,6 @@
                     'class' => 'form-control password',
                     'placeholder' => __('auth.password'),
                     'required' => 'required',
-                    'dusk' => 'login-password-input'
                     ]) !!}
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
     </div>
@@ -43,9 +41,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat" id="loginButton" dusk="login-button">
-                @lang('auth.login')
-            </button>
+            {!! Form::submit(__('auth.login'), ['class' => 'btn btn-primary btn-block btn-flat', 'id' => 'loginButton']) !!}
         </div>
         <!-- /.col -->
     </div>

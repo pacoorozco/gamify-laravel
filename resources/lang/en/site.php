@@ -13,13 +13,15 @@ return [
     |
     */
 
-    'home'            => 'Home',
-    'my_profile'      => 'My Profile',
-    'user_profile'    => 'User Profile',
+    'title' => 'gamify',
+    'name' => 'gamify',
+    'home' => 'Home',
+    'my_profile' => 'My Profile',
+    'user_profile' => 'User Profile',
     'my_achievements' => 'My Achievements',
-    'play'            => 'Play',
-    'admin_area'      => 'Go to admin area',
+    'play' => 'Play',
+    'admin_area' => 'Go to admin area',
 
-    'dataTablesLang'  => 'English',
+    'dataTablesLang' => 'English',
 
 ];

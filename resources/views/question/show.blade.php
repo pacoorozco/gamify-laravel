@@ -42,14 +42,18 @@
         <div class="box-body">
             {!! $question->question !!}
 
-            <fieldset>
+            <fieldset id="choicesGroup">
                 <h4>@lang('question/messages.choices')</h4>
                 @foreach($question->choices as $choice)
                     <div class="form-group">
                         @if($question->type == 'single')
-                            <label>{!! Form::radio('choices[]', $choice->id,  false, ['required' => 'required']) !!} {{ $choice->text }}</label>
+                            <div class="radio">
+                                <label>{!! Form::radio('choices[]', $choice->id,  false) !!} {{ $choice->text }}</label>
+                            </div>
                         @else
-                            <label>{!! Form::checkbox('choices[]', $choice->id,  false, ['required' => 'required']) !!} {{ $choice->text }}</label>
+                            <div class="checkbox">
+                                <label>{!! Form::checkbox('choices[]', $choice->id,  false) !!} {{ $choice->text }}</label>
+                            </div>
                         @endif
                     </div>
                 @endforeach
@@ -57,9 +61,24 @@
 
         </div>
         <div class="box-footer">
-            {!! Form::submit(__('question/messages.send'), ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit(__('question/messages.send'), ['class' => 'btn btn-primary', 'id' => 'btnSubmit']) !!}
         </div>
     </div>
     {!! Form::close() !!}
 
 @endsection
+
+{{-- Scripts --}}
+@push('scripts')
+    <script>
+        $(function () {
+            $("#btnSubmit").click(function () {
+                let checked = $("#choicesGroup input[type=checkbox]:checked").length;
+                let isValid = checked > 0;
+
+                let errorMessage = isValid ? '' : 'At least one checkbox must be selected.';
+                $('input:checkbox:first').setCustomValidity(errorMessage);
+            });
+        });
+    </script>
+@endpush
