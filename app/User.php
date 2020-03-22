@@ -221,6 +221,7 @@ class User extends Authenticatable
 
         return Question::published()->visible()
             ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
             ->take($limit)
             ->get();
     }
