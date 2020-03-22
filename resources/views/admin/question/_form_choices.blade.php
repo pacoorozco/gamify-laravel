@@ -48,3 +48,29 @@
     <span class="text-muted"><i class="fa fa-info-circle"></i> @lang('admin/question/model.choice_score_help')</span>
 </div>
 <!-- ./ choices -->
+
+@push('scripts')
+    <script>
+        $(document).on('click', '.btn-add', function (event) {
+            event.preventDefault();
+
+            let field = $(this).closest('.cloneable');
+            let field_new = field.clone();
+
+            $(this)
+                .toggleClass('btn-primary')
+                .toggleClass('btn-add')
+                .toggleClass('btn-danger')
+                .toggleClass('btn-remove')
+                .html('<i class="fa fa-times"></i>');
+
+            field_new.find('input').val('');
+            field_new.insertAfter(field);
+        });
+
+        $(document).on('click', '.btn-remove', function (event) {
+            event.preventDefault();
+            $(this).closest('.cloneable').remove();
+        });
+    </script>
+@endpush
