@@ -42,19 +42,22 @@
         <div class="box-body">
             {!! $question->question !!}
 
+            <fieldset>
+                <h4>@lang('question/messages.choices')</h4>
                 @foreach($question->choices as $choice)
-                <div class="form-group">
-                    @if($question->type == 'single')
-                        <label>{!! Form::radio('choices[]', $choice->id,  null) !!} {{ $choice->text }}</label>
-                    @else
-                        <label>{!! Form::checkbox('choices[]', $choice->id,  null) !!} {{ $choice->text }}</label>
-                    @endif
-                </div>
+                    <div class="form-group">
+                        @if($question->type == 'single')
+                            <label>{!! Form::radio('choices[]', $choice->id,  false, ['required' => 'required']) !!} {{ $choice->text }}</label>
+                        @else
+                            <label>{!! Form::checkbox('choices[]', $choice->id,  false, ['required' => 'required']) !!} {{ $choice->text }}</label>
+                        @endif
+                    </div>
                 @endforeach
+            </fieldset>
 
         </div>
         <div class="box-footer">
-            {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit(__('question/messages.send'), ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
     {!! Form::close() !!}
