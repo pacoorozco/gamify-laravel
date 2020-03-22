@@ -41,7 +41,7 @@ class AddEmailVerifiedAtToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['last_login_at']);
+            $table->dropColumn(['email_verified_at']);
         });
     }
 }
