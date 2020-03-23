@@ -3,9 +3,9 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
+use Gamify\Http\Requests\QuestionAnswerRequest;
 use Gamify\Libs\Game\Game;
 use Gamify\Question;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
@@ -23,18 +23,17 @@ class QuestionController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param Question                 $question
+     * @param QuestionAnswerRequest $request
+     * @param Question              $question
      *
      * @return \Illuminate\Http\Response
      */
-    public function answer(Request $request, Question $question)
+    public function answer(QuestionAnswerRequest $request, Question $question)
     {
         // TODO: If question has been answered can't answer again
 
-        // TODO: Validate
-
         // TODO: AI. Global Badges
+        dd();
 
         // Obtain how many points has its answer obtained
         $points = 0;
@@ -52,7 +51,7 @@ class QuestionController extends Controller
 
         // Create relation between User and Question
         Auth::user()->answeredQuestions()->attach($question, [
-            'points'  => $points,
+            'points' => $points,
             'answers' => implode(',', $request->choices),
         ]);
 

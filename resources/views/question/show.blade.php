@@ -32,8 +32,6 @@
 
     @include('partials.notifications')
 
-
-
     {!! Form::open(array('route' => ['questions.answer', $question->short_name])) !!}
     <div class="box">
         <div class="box-header with-border">
@@ -43,15 +41,15 @@
             {!! $question->question !!}
 
             <fieldset id="choicesGroup">
-                <h4>@lang('question/messages.choices')</h4>
+                <p>@lang('question/messages.choices')</p>
                 @foreach($question->choices as $choice)
                     <div class="form-group">
                         @if($question->type == 'single')
-                            <div class="radio">
+                            <div class="radio icheck">
                                 <label>{!! Form::radio('choices[]', $choice->id,  false) !!} {{ $choice->text }}</label>
                             </div>
                         @else
-                            <div class="checkbox">
+                            <div class="checkbox icheck">
                                 <label>{!! Form::checkbox('choices[]', $choice->id,  false) !!} {{ $choice->text }}</label>
                             </div>
                         @endif
@@ -65,19 +63,20 @@
         </div>
     </div>
     {!! Form::close() !!}
-
 @endsection
 
-{{-- Scripts --}}
+@push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
+@endpush
+
 @push('scripts')
+    <script src="{{ asset('vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
     <script>
         $(function () {
-            $("#btnSubmit").click(function () {
-                let checked = $("#choicesGroup input[type=checkbox]:checked").length;
-                let isValid = checked > 0;
-
-                let errorMessage = isValid ? '' : 'At least one checkbox must be selected.';
-                $('input:checkbox:first').setCustomValidity(errorMessage);
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
             });
         });
     </script>
