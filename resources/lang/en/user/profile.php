@@ -35,7 +35,7 @@ return [
     'gender_male'           => 'Male',
     'gender_unspecified'    => 'Unspecified',
     'image'                 => 'Image Upload',
-    'user_since'            => 'User since',
+    'user_since'            => 'Member since',
     'last_logged'           => 'Last Logged In',
     'roles'                 => 'Status',
     'bio'                   => 'Tell us about you',

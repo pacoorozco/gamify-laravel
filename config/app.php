@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -183,9 +183,10 @@ return [
          */
         Gamify\Providers\AppServiceProvider::class,
         Gamify\Providers\AuthServiceProvider::class,
-        // Gamify\Providers\BroadcastServiceProvider::class,
+        Gamify\Providers\BroadcastServiceProvider::class,
         Gamify\Providers\EventServiceProvider::class,
         Gamify\Providers\RouteServiceProvider::class,
+        Gamify\Providers\ViewServiceProvider::class,
 
     ],
 

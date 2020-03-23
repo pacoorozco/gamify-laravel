@@ -2,7 +2,7 @@
 
 {{-- Web site Title --}}
 @section('title')
-    @lang('site.home') :: @parent
+    @lang('site.home')
 @endsection
 
 {{-- Content Header --}}

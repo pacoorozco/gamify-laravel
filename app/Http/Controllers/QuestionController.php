@@ -33,7 +33,6 @@ class QuestionController extends Controller
         // TODO: If question has been answered can't answer again
 
         // TODO: AI. Global Badges
-        dd();
 
         // Obtain how many points has its answer obtained
         $points = 0;
