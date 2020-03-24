@@ -76,7 +76,7 @@ class AdminQuestionController extends AdminController
         $question = new Question();
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
@@ -103,7 +103,7 @@ class AdminQuestionController extends AdminController
      */
     private function prepareQuestionChoices(Request $request): array
     {
-        if (!is_array($request->input('choice_text'))) {
+        if (! is_array($request->input('choice_text'))) {
             return [];
         }
 
@@ -187,7 +187,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
-            if (!$question->canBePublished()) {
+            if (! $question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
@@ -195,7 +195,7 @@ class AdminQuestionController extends AdminController
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));
@@ -224,7 +224,6 @@ class AdminQuestionController extends AdminController
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
-     *
      */
     public function destroy(Question $question)
     {
@@ -245,12 +244,11 @@ class AdminQuestionController extends AdminController
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     *
      */
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response('Forbidden.', 403);
         }
 
@@ -262,9 +260,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft' => '<span class="label label-default">' . strval(__('admin/question/model.status_list.draft')) . '</span>',
-            'publish' => '<span class="label label-success">' . strval(__('admin/question/model.status_list.publish')) . '</span>',
-            'unpublish' => '<span class="label label-warning">' . strval(__('admin/question/model.status_list.unpublish')) . '</span>',
+            'draft' => '<span class="label label-default">'.strval(__('admin/question/model.status_list.draft')).'</span>',
+            'publish' => '<span class="label label-success">'.strval(__('admin/question/model.status_list.publish')).'</span>',
+            'unpublish' => '<span class="label label-warning">'.strval(__('admin/question/model.status_list.unpublish')).'</span>',
         ];
 
         return $dataTable->of($question)
