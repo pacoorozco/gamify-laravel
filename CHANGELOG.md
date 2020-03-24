@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 - Ensure that users select at least one answer before proceeding. ([#79][i79]) 
+- Two composer commands: `test` and `test-coverage`.
 
 [i79]: https://github.com/pacoorozco/gamify-laravel/issues/79
 
