@@ -18,6 +18,7 @@
 
 namespace Gamify\Listeners;
 
+use Gamify\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Carbon;
 
@@ -42,8 +43,9 @@ class LogSuccessfulLogin
      */
     public function handle(Login $event): void
     {
-        $user = $event->user;
-        $user->last_login_at = Carbon::now()->toDateTimeString();
-        $user->save();
+        $user = User::findOrFail($event->user->getAuthIdentifier());
+        $user->save([
+            'last_login' => Carbon::now()->toDateTimeString(),
+        ]);
     }
 }
