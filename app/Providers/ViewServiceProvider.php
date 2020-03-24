@@ -2,7 +2,7 @@
 
 namespace Gamify\Providers;
 
-use Gamify\Http\View\Composers\UserDropdownComposer;
+use Gamify\Http\View\Composers\UserHeaderComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +26,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'partials.user_dropdown', UserDropdownComposer::class
+            'partials.header', UserHeaderComposer::class
         );
     }
 }

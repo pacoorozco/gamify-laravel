@@ -101,11 +101,11 @@
             <tbody>
             <tr>
                 <td>@lang('user/profile.level'):</td>
-                <td>{{ $user->getLevelName() }}</td>
+                <td>{{ $user->level }}</td>
             </tr>
             <tr>
-                <td>@lang('user/profile.rank'):</td>
-                <td>{{ $user->getExperiencePoints() }}</td>
+                <td>@lang('user/profile.experience'):</td>
+                <td>{{ $user->experience }}</td>
             </tr>
             <tr>
                 <td>@lang('user/profile.user_since'):</td>

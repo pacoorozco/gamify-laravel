@@ -1,34 +1,39 @@
 <header class="main-header">
-
-    <!-- start: LOGO -->
-    <a href="{{ route('admin.home') }}" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><strong>g</strong>v3</span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><strong>gamify</strong> v3</span>
-    </a>
-    <!-- end: LOGO -->
-
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top">
-        <!-- start: RESPONSIVE MENU TOGGLER -->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
-        <!-- end: RESPONSIVE MENU TOGGLER -->
-        <div class="navbar-custom-menu">
-            <!-- start: TOP NAVIGATION MENU -->
-            <ul class="nav navbar-nav">
+        <!-- start: CONTAINER -->
+        <div class="container">
+            <div class="navbar-header">
+                <!-- start: LOGO -->
+                <a href="{{ route('home') }}" class="navbar-brand"><strong>gamify</strong> v3</a>
+                <!-- end: LOGO -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
 
-                <!-- start: NOTIFICATION DROPDOWN -->
-                <!-- TODO -->
-                <!-- end: NOTIFICATION DROPDOWN -->
+            <!-- start: TOP LEFT NAVIGATION MENU -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                @include('partials.sidebar')
+            </div>
+            <!-- end: TOP LEFT NAVIGATION MENU -->
+            <!-- start: TOP RIGHT NAVIGATION MENU -->
+            <div class="navbar-custom-menu">
+                <!-- start: TOP NAVIGATION MENU -->
+                <ul class="nav navbar-nav">
 
-                <!-- start: USER DROPDOWN -->
-            @include('partials.user_dropdown')
-            <!-- end: USER DROPDOWN -->
-            </ul>
-            <!-- end: TOP NAVIGATION MENU -->
+                    <!-- start: NOTIFICATION DROPDOWN -->
+                    <!-- TODO -->
+                    <!-- end: NOTIFICATION DROPDOWN -->
+
+                    <!-- start: USER DROPDOWN -->
+                @include('partials.user_dropdown')
+                <!-- end: USER DROPDOWN -->
+                </ul>
+                <!-- end: TOP RIGHT NAVIGATION MENU -->
+            </div>
         </div>
+        <!-- end: CONTAINER -->
     </nav>
 </header>

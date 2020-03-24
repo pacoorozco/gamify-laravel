@@ -2,12 +2,11 @@
 
 namespace Gamify\Http\View\Composers;
 
-use Gamify\Level;
 use Gamify\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class UserDropdownComposer
+class UserHeaderComposer
 {
     /** @var int */
     private $user_id;
