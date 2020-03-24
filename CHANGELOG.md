@@ -6,9 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Unreleased
 > **Note**: This application has been updated to use [Laravel 6.x](https://laravel.com/docs). It's still backwards compatibility, but database needs to be updated too. Some tests have been added but coverage is still very low.
 
+### Added
+- Ensure that users select at least one answer before proceeding. ([#79][i79]) 
+
+[i79]: https://github.com/pacoorozco/gamify-laravel/issues/79
+
 ### Changed
 - **Important**: This application has been upgraded to [Laravel 6](https://laravel.com/docs). A lot of refactors has been done in order to adopt Laravel 6.x best practices. 
 ([#66][i66])
+- Refactors to reduce the number of queries. 
 - Change the editor from TinyMCE to [Bootstrap-wysihtml5](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg). ([#36][i36]) 
 - Reputation is handled by Events. Added `experience` attribute to the User model. ([#72][i72], [#73][i73])
 - Repository name has been changed to `gamify-laravel`, current URL is https://github.com/pacoorozco/gamify-laravel.
