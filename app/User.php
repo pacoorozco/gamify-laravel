@@ -169,7 +169,6 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
-
     /**
      * Add Level name to attributes (see $appends).
      *
