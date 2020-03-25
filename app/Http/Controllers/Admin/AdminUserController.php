@@ -163,7 +163,7 @@ class AdminUserController extends AdminController
     public function destroy(User $user)
     {
         // Can't remove myself
-        if ($user->id === Auth::user()->id) {
+        if ($user->id === Auth::id()) {
             return redirect()->route('admin.users.index')
                 ->with('error', __('admin/user/messages.delete.impossible'));
         }

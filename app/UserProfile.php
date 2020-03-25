@@ -79,6 +79,7 @@ class UserProfile extends Model
         'facebook' => 'string',
         'linkedin' => 'string',
         'github' => 'string',
+        'avatar' => 'string',
     ];
 
     /**

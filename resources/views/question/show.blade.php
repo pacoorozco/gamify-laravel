@@ -32,8 +32,6 @@
 
     @include('partials.notifications')
 
-
-
     {!! Form::open(array('route' => ['questions.answer', $question->short_name])) !!}
     <div class="box">
         <div class="box-header with-border">
@@ -42,21 +40,44 @@
         <div class="box-body">
             {!! $question->question !!}
 
+            <fieldset id="choicesGroup">
+                <p>@lang('question/messages.choices')</p>
                 @foreach($question->choices as $choice)
-                <div class="form-group">
-                    @if($question->type == 'single')
-                        <label>{!! Form::radio('choices[]', $choice->id,  null) !!} {{ $choice->text }}</label>
-                    @else
-                        <label>{!! Form::checkbox('choices[]', $choice->id,  null) !!} {{ $choice->text }}</label>
-                    @endif
-                </div>
+                    <div class="form-group">
+                        @if($question->type == 'single')
+                            <div class="radio icheck">
+                                <label>{!! Form::radio('choices[]', $choice->id,  false) !!} {{ $choice->text }}</label>
+                            </div>
+                        @else
+                            <div class="checkbox icheck">
+                                <label>{!! Form::checkbox('choices[]', $choice->id,  false) !!} {{ $choice->text }}</label>
+                            </div>
+                        @endif
+                    </div>
                 @endforeach
+            </fieldset>
 
         </div>
         <div class="box-footer">
-            {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit(__('question/messages.send'), ['class' => 'btn btn-primary', 'id' => 'btnSubmit']) !!}
         </div>
     </div>
     {!! Form::close() !!}
-
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
+@endpush

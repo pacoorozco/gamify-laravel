@@ -21,51 +21,12 @@
             <ul class="nav navbar-nav">
 
                 <!-- start: NOTIFICATION DROPDOWN -->
-                    <!-- TODO -->
+                <!-- TODO -->
                 <!-- end: NOTIFICATION DROPDOWN -->
 
                 <!-- start: USER DROPDOWN -->
-                <li class="dropdown user user-menu">
-                    <!-- Menu Toggle Button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <!-- The user image in the navbar-->
-                        <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="user-image"
-                             alt="@lang('user/profile.avatar')"/>
-                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">{{ Auth()->user()->name }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- The user image in the menu -->
-                        <li class="user-header">
-                            <img src="{{ Auth()->user()->profile->getAvatarURL() }}" class="img-circle"
-                                 alt="@lang('user/profile.avatar')"/>
-                            <p>
-                                {{ Auth()->user()->name }} - {{ Auth()->user()->getLevelName() }}
-                                <small>Member since {{ date("M Y", strtotime(Auth()->user()->created_at)) }}</small>
-                            </p>
-                        </li>
-                        <!-- Menu Body -->
-                        <li class="user-body">
-                            <div class="col-xs-12 text-center">
-                                <a href="#">@lang('site.my_achievements')</a>
-                            </div>
-                        </li>
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="{{ route('profiles.show', Auth::user()->username) }}" class="btn btn-default btn-flat">
-                                    @lang('site.my_profile')
-                                </a>
-                            </div>
-                            <div class="pull-right">
-                                {!! Form::open(['route' => 'logout']) !!}
-                                {!! Form::button(__('auth.logout'), ['type' => 'submit', 'class' => 'btn btn-default btn-flat']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <!-- end: USER DROPDOWN -->
+            @include('partials.user_dropdown')
+            <!-- end: USER DROPDOWN -->
             </ul>
             <!-- end: TOP NAVIGATION MENU -->
         </div>

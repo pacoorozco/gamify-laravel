@@ -1,14 +1,10 @@
 @extends('layouts.master')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('site.home') :: @parent
-@endsection
+@section('title', __('site.home'))
 
 {{-- Content Header --}}
-@section('header')
-    @lang('site.home')
-@endsection
+@section('header', __('site.home'))
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -21,8 +17,8 @@
     <div class="row">
         <div class="col-md-6">
             <!-- Carousel -->
-            @include('dashboard._carousel')
-            <!-- ./carousel -->
+        @include('dashboard._carousel')
+        <!-- ./carousel -->
 
             <!-- Welcome -->
             <div class="box box-solid">
@@ -80,19 +76,6 @@
                 </div>
             </div>
             <!-- ./ranking -->
-
-            <!-- Activity stream -->
-            {{--
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-comments"></i> Activity stream</h3>
-                </div>
-                <div class="box-body">
-                    @include('dashboard._activity')
-                </div>
-            </div>
-            --}}
-            <!-- ./activity stream -->
 
         </div>
     </div>

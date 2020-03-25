@@ -88,30 +88,43 @@ class AdminQuestionController extends AdminController
         }
 
         // Save Question Choices
-        if (is_array($request->input('choice_text'))) {
-            $choice_texts = $request->input('choice_text');
-            $choice_scores = $request->input('choice_score');
-
-            $numberOfChoices = count($choice_texts);
-            for ($i = 0; $i < $numberOfChoices; $i++) {
-                if (empty($choice_texts[$i])) {
-                    continue;
-                }
-
-                if (is_null($choice_scores[$i])) {
-                    $choice_scores[$i] = 0;
-                }
-
-                $question->choices()->create([
-                    'text'    => $choice_texts[$i],
-                    'score'   => $choice_scores[$i],
-                    'correct' => ($choice_scores[$i] > 0),
-                ]);
-            }
-        }
+        $question->choices()->createMany($this->prepareQuestionChoices($request));
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.create.success'));
+    }
+
+    /**
+     * Return an array of choices to be associated to a Question.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array
+     */
+    private function prepareQuestionChoices(Request $request): array
+    {
+        if (! is_array($request->input('choice_text'))) {
+            return [];
+        }
+
+        $choice_texts = $request->input('choice_text');
+        $choice_scores = $request->input('choice_score');
+
+        $numberOfChoices = count($choice_texts);
+        $choices = [];
+        for ($i = 0; $i < $numberOfChoices; $i++) {
+            if (empty($choice_texts[$i])) {
+                continue;
+            }
+
+            array_push($choices, [
+                'text' => $choice_texts[$i],
+                'score' => is_numeric($choice_scores[$i]) ? $choice_scores[$i] : 0,
+                'correct' => ($choice_scores[$i] > 0),
+            ]);
+        }
+
+        return $choices;
     }
 
     /**
@@ -170,28 +183,7 @@ class AdminQuestionController extends AdminController
         // 1st. Deletes the old ones
         $question->choices()->delete();
         // 2nd. Adds the new ones
-
-        if (is_array($request->input('choice_text'))) {
-            $choice_texts = $request->input('choice_text');
-            $choice_scores = $request->input('choice_score');
-
-            $numberOfChoices = count($choice_texts);
-            for ($i = 0; $i < $numberOfChoices; $i++) {
-                if (empty($choice_texts[$i])) {
-                    continue;
-                }
-
-                if (is_null($choice_scores[$i])) {
-                    $choice_scores[$i] = 0;
-                }
-
-                $question->choices()->create([
-                    'text'    => $choice_texts[$i],
-                    'score'   => $choice_scores[$i],
-                    'correct' => ($choice_scores[$i] > 0),
-                ]);
-            }
-        }
+        $question->choices()->createMany($this->prepareQuestionChoices($request));
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
@@ -230,9 +222,8 @@ class AdminQuestionController extends AdminController
      *
      * @param Question $question
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Question $question)
     {
@@ -251,9 +242,8 @@ class AdminQuestionController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -270,9 +260,9 @@ class AdminQuestionController extends AdminController
         ])->orderBy('name', 'ASC');
 
         $statusLabel = [
-            'draft'     => '<span class="label label-default">'.__('admin/question/model.status_list.draft').'</span>',
-            'publish'   => '<span class="label label-success">'.__('admin/question/model.status_list.publish').'</span>',
-            'unpublish' => '<span class="label label-warning">'.__('admin/question/model.status_list.unpublish').'</span>',
+            'draft' => '<span class="label label-default">'.strval(__('admin/question/model.status_list.draft')).'</span>',
+            'publish' => '<span class="label label-success">'.strval(__('admin/question/model.status_list.publish')).'</span>',
+            'unpublish' => '<span class="label label-warning">'.strval(__('admin/question/model.status_list.unpublish')).'</span>',
         ];
 
         return $dataTable->of($question)

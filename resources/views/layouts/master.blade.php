@@ -4,23 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title', 'Play Area ::') gamify v3</title>
+    <title>@yield('title', 'Play Area') :: @lang('site.title')</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- start: META -->
-    <meta content="gamify v3: A Gamification Platform - Administration" name="description">
+    <meta content="gamify v3: A Gamification Platform" name="description">
     <meta content="Paco Orozco" name="author">
     @yield('meta')
-            <!-- end: META -->
+    <!-- end: META -->
     <!-- start: GLOBAL CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') }}">
-            <!-- end: GLOBAL CSS -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') }}">
+    <!-- end: GLOBAL CSS -->
     <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
-    @yield('styles')
+    @stack('styles')
     <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
     <!-- start: MAIN CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/css/skins/skin-blue.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/gamify.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -38,7 +40,7 @@
 
     <!-- start: HEADER -->
     @include('partials.header')
-            <!-- end: HEADER -->
+    <!-- end: HEADER -->
 
     <!-- start: PAGE -->
     <div class="content-wrapper">
@@ -67,7 +69,7 @@
 
     <!-- start: FOOTER -->
     @include('partials.footer')
-            <!-- end: FOOTER -->
+    <!-- end: FOOTER -->
 </div>
 <!-- end: MAIN CONTAINER -->
 <!-- start: GLOBAL JAVASCRIPT -->
@@ -75,18 +77,11 @@
 <script src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- end: GLOBAL JAVASCRIPT -->
 <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
-@yield('scripts')
+@stack('scripts')
 <!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 <!-- start: MAIN JAVASCRIPT -->
 <script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js') }}"></script>
-<script src="{{ asset('js/gamify.js') }}"></script>
-<script>
-    (function() {
-        Gamify.init();
-    })();
-</script>
 <!-- end: MAIN JAVASCRIPT -->
 </body>
 <!-- end: BODY -->
 </html>
-

@@ -73,6 +73,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['level'];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -168,6 +170,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Add Level name to attributes (see $appends).
+     *
+     * @return string
+     */
+    public function getLevelAttribute(): string
+    {
+        return Level::findByExperience($this->experience)->name;
+    }
+
+    /**
      * Returns last logged in date in "x ago" format if it has passed less than a month.
      *
      * @return string
@@ -221,13 +233,9 @@ class User extends Authenticatable
 
         return Question::published()->visible()
             ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
             ->take($limit)
             ->get();
-    }
-
-    public function getLevelName(): string
-    {
-        return Level::findByExperience($this->getExperiencePoints())->name;
     }
 
     /**

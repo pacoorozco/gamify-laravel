@@ -10,6 +10,7 @@ package-lock.json
 /public/hot
 /storage/*.key
 /storage/debugbar
+/test-coverage
 .env
 .env.backup
 .phpunit.result.cache

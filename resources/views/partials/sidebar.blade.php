@@ -1,25 +1,29 @@
 <ul class="nav navbar-nav">
-    <li {!! (Request::is('dashboard') ? ' class="active"' : '') !!}>
-        <a href="{{ route('dashboard') }}" title="@lang('site.home')">
+
+    <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
+        <a href="{{ route('dashboard') }}">
             @lang('site.home')
-            @if(Request::is('dashboard'))
+            @if( request()->is('dashboard'))
                 <span class="sr-only">(current)</span>
             @endif
         </a>
     </li>
-    <li {!! (Request::is('questions*') ? ' class="active"' : '') !!}>
-        <a href="{{ route('questions.index') }}" title="@lang('site.play')">
+
+    <li class="{{ request()->is('questions*') ? 'active' : '' }}">
+        <a href="{{ route('questions.index') }}">
             @lang('site.play') <span class="badge">{{ Auth()->user()->pendingQuestions()->count() }}</span>
-            @if(Request::is('questions*'))
+            @if( request()->is('questions*'))
                 <span class="sr-only">(current)</span>
             @endif
         </a>
     </li>
+
     @can('admin')
-    <li>
-        <a href="{{ route('admin.home') }}" title="@lang('site.admin_area')">
-            <i class="fa fa-gears"></i> @lang('site.admin_area')
-        </a>
-    </li>
+        <li>
+            <a href="{{ route('admin.home') }}" title="@lang('site.admin_area')">
+                <i class="fa fa-gears"></i> @lang('site.admin_area')
+            </a>
+        </li>
     @endcan
+
 </ul>

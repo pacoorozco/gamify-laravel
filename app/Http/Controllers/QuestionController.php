@@ -3,9 +3,10 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
+use Gamify\Http\Requests\QuestionAnswerRequest;
 use Gamify\Libs\Game\Game;
 use Gamify\Question;
-use Illuminate\Http\Request;
+use Gamify\User;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
@@ -13,26 +14,25 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        $questions = Auth::user()->getPendingQuestions();
+        $user = User::findOrFail(Auth::id());
+        $questions = $user->pendingQuestions();
 
         return view('question.index', compact('questions'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param Question                 $question
+     * @param QuestionAnswerRequest $request
+     * @param Question              $question
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function answer(Request $request, Question $question)
+    public function answer(QuestionAnswerRequest $request, Question $question)
     {
         // TODO: If question has been answered can't answer again
-
-        // TODO: Validate
 
         // TODO: AI. Global Badges
 
@@ -51,13 +51,14 @@ class QuestionController extends Controller
         }
 
         // Create relation between User and Question
-        Auth::user()->answeredQuestions()->attach($question, [
-            'points'  => $points,
+        $user = User::findOrFail(Auth::id());
+        $user->answeredQuestions()->attach($question, [
+            'points' => $points,
             'answers' => implode(',', $request->choices),
         ]);
 
         // Trigger an event that will update XP, badges...
-        event(new QuestionAnswered(Auth::user(), $question, $answerCorrectness, $points));
+        event(new QuestionAnswered($user, $question, $answerCorrectness, $points));
 
         // Deal with Question specific Badges
         if ($answerCorrectness) {
@@ -70,7 +71,7 @@ class QuestionController extends Controller
 
         // AI. Increment actions
         foreach ($badges as $badge) {
-            Game::incrementBadge(Auth::user(), $badge);
+            Game::incrementBadge($user, $badge);
         }
 
         // AI. Add notifications and return view
@@ -82,12 +83,13 @@ class QuestionController extends Controller
      *
      * @param Question $question
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Question $question)
     {
         // TODO: If question has been answered, not show form
-        if ($answer = Auth::user()->answeredQuestions()->find($question->id)) {
+        $user = User::findOrFail(Auth::id());
+        if ($answer = $user->answeredQuestions()->find($question->id)) {
             // User has answered this question
             return view('question.show-answered', compact('answer', 'question'));
         }
