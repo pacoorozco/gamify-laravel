@@ -2,10 +2,23 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class PrepareUsersTableForSocialAuthentication extends Migration
 {
+    /**
+     * PrepareUsersTableForSocialAuthentication constructor.
+     *
+     * Forces Doctrine to treat enum columns as string.
+     */
+    public function __construct()
+    {
+        DB::getDoctrineSchemaManager()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('enum', 'string');
+    }
+
     /**
      * Run the migrations.
      *
