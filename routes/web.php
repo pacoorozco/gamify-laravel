@@ -48,6 +48,13 @@ Auth::routes();
 // Auth::routes(['register' => false]);
 
 /* ------------------------------------------
+ * Social authentication routes
+ *  ------------------------------------------
+ */
+Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');
+
+/* ------------------------------------------
  * Authenticated routes
  *
  * Routes that need to be authenticated
@@ -56,8 +63,6 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('dashboard', 'HomeController@index')->name('dashboard');
-    Route::get('rankings/', 'HomeController@data')->name('ranking');
-    //->middleware('ajax');
 
     // Profiles
     Route::get('users/{username}', 'UserController@show')->name('profiles.show');

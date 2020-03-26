@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class, // Forms & HTML
+        Laravel\Socialite\SocialiteServiceProvider::class, // Social Login
 
         /*
          * Application Service Providers...
@@ -244,6 +245,7 @@ return [
          */
         'Form' => Collective\Html\FormFacade::class, // Forms
         'Html' => Collective\Html\HtmlFacade::class, // HTML
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class, // Socialite
 
     ],
 

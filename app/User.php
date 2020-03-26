@@ -289,4 +289,13 @@ class User extends Authenticatable
 
         return $userBadge->pivot->completed;
     }
+
+    /**
+     * Linked Social Accounts (facebook, twitter, github...).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function accounts(){
+        return $this->hasMany('Gamify\LinkedSocialAccount');
+    }
 }
