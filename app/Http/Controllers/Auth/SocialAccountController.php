@@ -4,7 +4,7 @@ namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
 use Gamify\Providers\RouteServiceProvider;
-use Gamify\Repositories\SocialAccountRepository;
+use Gamify\Services\SocialAccountService;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAccountController extends Controller
@@ -24,12 +24,12 @@ class SocialAccountController extends Controller
     /**
      * Obtain the user information
      *
-     * @param \Gamify\Repositories\SocialAccountRepository $accountRepository
-     * @param string                                       $provider
+     * @param \Gamify\Services\SocialAccountService $accountRepository
+     * @param string                                $provider
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function handleProviderCallback(SocialAccountRepository $accountRepository, string $provider)
+    public function handleProviderCallback(SocialAccountService $accountRepository, string $provider)
     {
 
         try {
