@@ -295,7 +295,8 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function accounts(){
+    public function accounts()
+    {
         return $this->hasMany('Gamify\LinkedSocialAccount');
     }
 }
