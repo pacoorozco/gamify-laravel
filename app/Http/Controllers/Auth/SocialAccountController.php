@@ -22,7 +22,7 @@ class SocialAccountController extends Controller
     }
 
     /**
-     * Obtain the user information
+     * Obtain the user information.
      *
      * @param \Gamify\Services\SocialAccountService $accountRepository
      * @param string                                $provider
@@ -31,7 +31,6 @@ class SocialAccountController extends Controller
      */
     public function handleProviderCallback(SocialAccountService $accountRepository, string $provider)
     {
-
         try {
             $user = Socialite::with($provider)->user();
         } catch (\Exception $e) {
