@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes([
     'register' => false,  // User registration
     'verify' => false, // E-mail verification
-    'reset' => false // Reset password
+    'reset' => false, // Reset password
 ]);
 
 /* ------------------------------------------
