@@ -34,7 +34,7 @@ return [
         'client_id' => env('OKTA_KEY'),
         'client_secret' => env('OKTA_SECRET'),
         'redirect' => env('OKTA_REDIRECT_URI'),
-        'base_url' => env('OKTA_BASE_URL')
+        'base_url' => env('OKTA_BASE_URL'),
     ],
 
     'facebook' => [
