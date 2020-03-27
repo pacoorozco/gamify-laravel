@@ -14,6 +14,8 @@
     <!-- end: META -->
     <!-- start: GLOBAL CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') }}">
     <!-- end: GLOBAL CSS -->
     <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
     @stack('styles')

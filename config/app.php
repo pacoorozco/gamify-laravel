@@ -177,7 +177,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class, // Forms & HTML
-        Laravel\Socialite\SocialiteServiceProvider::class, // Social Login
+        SocialiteProviders\Manager\ServiceProvider::class, // Socialite Providers
 
         /*
          * Application Service Providers...

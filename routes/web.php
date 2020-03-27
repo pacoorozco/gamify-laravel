@@ -43,15 +43,17 @@ use Illuminate\Support\Facades\Route;
  * Routes to be authenticated
  *  ------------------------------------------
  */
-Auth::routes();
-// Use this one instead, if you want to disable registration
-// Auth::routes(['register' => false]);
+Auth::routes([
+    'register' => false,  // User registration
+    'verify' => false, // E-mail verification
+    'reset' => false // Reset password
+]);
 
 /* ------------------------------------------
  * Social authentication routes
  *  ------------------------------------------
  */
-Route::get('login/{provider}', 'Auth\SocialAccountController@redirectToProvider');
+Route::get('login/{provider}', 'Auth\SocialAccountController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');
 
 /* ------------------------------------------
