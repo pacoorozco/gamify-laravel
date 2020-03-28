@@ -4,6 +4,7 @@ namespace Gamify\Services;
 
 use Gamify\LinkedSocialAccount;
 use Gamify\User;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class SocialAccountService
@@ -29,11 +30,14 @@ class SocialAccountService
 
         $user = User::where('email', $providerUser->getEmail())->first();
 
-        if (! $user) {
+        if (!$user) {
             $user = User::create([
                 'email' => $providerUser->getEmail(),
                 'name' => $providerUser->getName(),
+                'username' => $this->generateUsernameFromEmail($providerUser->getEmail()),
             ]);
+            
+            $user->profile()->create();
         }
 
         $user->accounts()->create([
@@ -42,5 +46,22 @@ class SocialAccountService
         ]);
 
         return $user;
+    }
+
+    /**
+     * Returns an unique username from the given email.
+     *
+     * @param string $email
+     *
+     * @return string
+     */
+    private function generateUsernameFromEmail(string $email): string
+    {
+        $username = Str::before($email, '@');
+        $uniqueUsername = $username;
+        while (User::where('username', $uniqueUsername)->first(['id'])) {
+            $uniqueUsername = $username . Str::random(2);
+        }
+        return $uniqueUsername;
     }
 }
