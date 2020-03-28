@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 - Social login links. Since this version it's possible to sign in using a third party service such as Facebook, Twitter or Github. ([#83][i83]) 
+### Fixed
+- `UserProfile` validation on updates.
+- Wrong redirection after login.
+- Defaults for `avatar` on `User` creation.
 
 [i83]: https://github.com/pacoorozco/gamify-laravel/issues/83
 
