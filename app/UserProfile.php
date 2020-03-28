@@ -61,6 +61,7 @@ class UserProfile extends Model
         'facebook',
         'linkedin',
         'github',
+        'avatar',
     ];
 
     /**

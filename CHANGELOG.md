@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 2.1.0 - 2020-03-27
+
+### Added
+- Social login links. Since this version it's possible to sign in using a third party service such as Facebook, Twitter or Github. ([#83][i83]) 
+### Fixed
+- `UserProfile` validation on updates.
+- Wrong redirection after login.
+- Defaults for `avatar` on `User` creation.
+
+[i83]: https://github.com/pacoorozco/gamify-laravel/issues/83
+
 ## 2.0.0 - 2020-03-25
 
 > **Note**: This application has been updated to use [Laravel 6.x](https://laravel.com/docs). It's still backwards compatibility, but database needs to be updated too. Some tests have been added but coverage is still very low.

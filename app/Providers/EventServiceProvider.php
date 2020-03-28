@@ -10,6 +10,7 @@ use Gamify\Listeners\UpdateBadgeRepetitions;
 use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        SocialiteWasCalled::class => [
+            'SocialiteProviders\Okta\OktaExtendSocialite@handle',
+        ],
         Login::class => [
             LogSuccessfulLogin::class,
         ],

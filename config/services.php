@@ -30,4 +30,29 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'okta' => [
+        'client_id' => env('OKTA_KEY'),
+        'client_secret' => env('OKTA_SECRET'),
+        'redirect' => env('OKTA_REDIRECT_URI'),
+        'base_url' => env('OKTA_BASE_URL'),
+    ],
+
+    'facebook' => [
+        'client_id' => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET'),
+        'redirect' => env('FB_URL'),
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => env('TWITTER_URL'),
+    ],
+
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_URL'),
+    ],
+
 ];

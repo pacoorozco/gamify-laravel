@@ -28,7 +28,6 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
-use Gamify\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -79,8 +78,9 @@ class AdminUserController extends AdminController
         }
 
         // Insert related models
-        $profile = new UserProfile();
-        $user->profile()->save($profile);
+        $user->profile()->create([
+            'avatar' => asset('images/missing_profile.png'),
+        ]);
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin/user/messages.create.success'));
@@ -156,9 +156,8 @@ class AdminUserController extends AdminController
      *
      * @param \Gamify\User $user
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(User $user)
     {
@@ -183,9 +182,8 @@ class AdminUserController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function data(Request $request, Datatables $dataTable)
     {

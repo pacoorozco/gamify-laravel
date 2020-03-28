@@ -12,46 +12,55 @@
     <!-- start: LOGIN BOX -->
     <p class="login-box-msg">@lang('auth.sign_title')</p>
 
-    {!! Form::open(['route' => 'login']) !!}
-    <div class="form-group has-feedback">
-        {!! Form::text('email', null, [
-                    'class' => 'form-control',
-                    'placeholder' => __('auth.email'),
-                    'required' => 'required',
-                    'autofocus' => 'autofocus',
-                    ]) !!}
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-    </div>
-    <div class="form-group has-feedback">
-        {!! Form::password('password', [
-                    'class' => 'form-control password',
-                    'placeholder' => __('auth.password'),
-                    'required' => 'required',
-                    ]) !!}
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-    </div>
-    <div class="row">
-        <div class="col-xs-8">
-            <div class="checkbox icheck">
-                <label>
-                    {!! Form::checkbox('remember', '1', false) !!}
-                    @lang('auth.remember_me')
-                </label>
-            </div>
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-            {!! Form::submit(__('auth.login'), ['class' => 'btn btn-primary btn-block btn-flat', 'id' => 'loginButton']) !!}
-        </div>
-        <!-- /.col -->
-    </div>
-    {!! Form::close() !!}
-    <a href="{{ route('password.request') }}">
-        @lang('auth.forgot_password')
-    </a><br>
-    <a href="{{ route('register') }}" class="text-center">
-        @lang('auth.create_account')
+    @include('auth._social_login')
+
+    <a href="#" class="btn btn-block btn-flat btn-default" role="button" id="email-login-btn">
+        <i class="fa fa-envelope"></i> @lang('social_login.e-mail')
     </a>
+
+    <div id="email-login" class="hidden">
+        <p class="text-center">- OR -</p>
+        {!! Form::open(['route' => 'login']) !!}
+        <div class="form-group has-feedback">
+            {!! Form::text('email', null, [
+                        'class' => 'form-control',
+                        'placeholder' => __('auth.email'),
+                        'required' => 'required',
+                        'autofocus' => 'autofocus',
+                        ]) !!}
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            {!! Form::password('password', [
+                        'class' => 'form-control password',
+                        'placeholder' => __('auth.password'),
+                        'required' => 'required',
+                        ]) !!}
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        @if(Route::has('password.request'))
+            <p class="text-right">
+                <a href="{{ route('password.request') }}">@lang('auth.forgot_password')</a>
+            </p>
+        @endif
+
+        <div class="checkbox icheck">
+            <label>
+                {!! Form::checkbox('remember', '1', false) !!} @lang('auth.remember_me')
+            </label>
+        </div>
+
+        {!! Form::submit(__('auth.login'), ['class' => 'btn btn-primary btn-block btn-flat', 'id' => 'loginButton']) !!}
+        {!! Form::close() !!}
+    </div>
+
+    <p></p>
+    @if(Route::has('register'))
+        <p class="text-center">
+            @lang('auth.dont_have_account') <a href="{{ route('register') }}">@lang('auth.create_account')</a>
+        </p>
+    @endif
+
     <!-- end: LOGIN BOX -->
 @endsection
 
@@ -63,6 +72,11 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
+            });
+
+            $('#email-login-btn').click(function () {
+                $("#email-login").removeClass("hidden");
+                $("#email-login-btn").addClass("hidden");
             });
         });
     </script>

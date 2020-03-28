@@ -14,7 +14,7 @@ return [
     */
 
     'register'                     => 'Register',
-    'login'                        => 'Login',
+    'login'                        => 'Sign in',
     'logout'                       => 'Logout',
     'username'                     => 'Username',
     'email'                        => 'E-mail',
@@ -22,7 +22,7 @@ return [
     'forgot_password'              => 'I forgot my password',
     'forgot_password_title'        => 'Forget Password?',
     'forgot_password_instructions' => 'Enter your e-mail address below to reset your password.',
-    'remember_me'                  => 'Keep me signed in',
+    'remember_me'                  => 'Remember me',
     'sign_title'                   => 'Sign in to your account',
     'sign_instructions'            => 'Please enter your name and password to log in.',
     'dont_have_account'            => 'Don\'t have an account yet?',

@@ -43,9 +43,18 @@ use Illuminate\Support\Facades\Route;
  * Routes to be authenticated
  *  ------------------------------------------
  */
-Auth::routes();
-// Use this one instead, if you want to disable registration
-// Auth::routes(['register' => false]);
+Auth::routes([
+    'register' => false,  // User registration
+    'verify' => false, // E-mail verification
+    'reset' => false, // Reset password
+]);
+
+/* ------------------------------------------
+ * Social authentication routes
+ *  ------------------------------------------
+ */
+Route::get('login/{provider}', 'Auth\SocialAccountController@redirectToProvider')->name('social.login');
+Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');
 
 /* ------------------------------------------
  * Authenticated routes
@@ -56,8 +65,6 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('dashboard', 'HomeController@index')->name('dashboard');
-    Route::get('rankings/', 'HomeController@data')->name('ranking');
-    //->middleware('ajax');
 
     // Profiles
     Route::get('users/{username}', 'UserController@show')->name('profiles.show');

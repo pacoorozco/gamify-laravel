@@ -158,4 +158,11 @@ class UserTest extends ModelTestCase
         $r = $m->points();
         $this->assertInstanceOf(HasMany::class, $r);
     }
+
+    public function test_accounts_relation()
+    {
+        $m = new User();
+        $r = $m->accounts();
+        $this->assertInstanceOf(HasMany::class, $r);
+    }
 }
