@@ -21,6 +21,7 @@ class UserProfileTest extends ModelTestCase
             'facebook',
             'linkedin',
             'github',
+            'avatar',
         ], $m->getFillable());
     }
 

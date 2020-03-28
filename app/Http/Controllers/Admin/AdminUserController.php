@@ -28,7 +28,6 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
-use Gamify\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -72,15 +71,16 @@ class AdminUserController extends AdminController
         $user->role = $request->input('role');
         $user->password = $request->input('password');
 
-        if (! $user->save()) {
+        if (!$user->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.create.error'));
         }
 
         // Insert related models
-        $profile = new UserProfile();
-        $user->profile()->save($profile);
+        $user->profile()->create([
+            'avatar' => asset('images/missing_profile.png'),
+        ]);
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin/user/messages.create.success'));
@@ -125,11 +125,11 @@ class AdminUserController extends AdminController
         $user->email = $request->input('email');
         $user->role = $request->input('role');
 
-        if (! empty($request->input('password'))) {
+        if (!empty($request->input('password'))) {
             $user->password = $request->input('password');
         }
 
-        if (! $user->save()) {
+        if (!$user->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.edit.error'));
@@ -156,9 +156,9 @@ class AdminUserController extends AdminController
      *
      * @param \Gamify\User $user
      *
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user)
     {
@@ -183,14 +183,14 @@ class AdminUserController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
+        if (!$request->ajax()) {
             return response('Forbidden.', 403);
         }
 

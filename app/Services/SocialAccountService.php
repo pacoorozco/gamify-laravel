@@ -36,8 +36,10 @@ class SocialAccountService
                 'name' => $providerUser->getName(),
                 'username' => $this->generateUsernameFromEmail($providerUser->getEmail()),
             ]);
-            
-            $user->profile()->create();
+
+            $user->profile()->create([
+                'avatar' => asset('images/missing_profile.png'),
+            ]);
         }
 
         $user->accounts()->create([
