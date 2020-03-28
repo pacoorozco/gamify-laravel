@@ -1,14 +1,10 @@
 @extends('layouts.master')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('user/profile.title') :: @parent
-@endsection
+@section('title', __('user/profile.title'))
 
 {{-- Content Header --}}
-@section('header')
-    @lang('user/profile.title')
-@endsection
+@section('header', __('user/profile.title'))
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -81,9 +77,11 @@
                     <div class="active tab-pane" id="overview">
                         @include('profile._overview')
                     </div>
+                    {{--
                     <div class="tab-pane" id="timeline">
                         @include('profile._timeline')
                     </div>
+                    --}}
                     @if ($user->username == Auth::user()->username)
                     <div class="tab-pane" id="settings">
                         @include('profile._settings')
