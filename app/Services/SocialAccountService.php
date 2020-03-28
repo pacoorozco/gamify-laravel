@@ -30,7 +30,7 @@ class SocialAccountService
 
         $user = User::where('email', $providerUser->getEmail())->first();
 
-        if (!$user) {
+        if (! $user) {
             $user = User::create([
                 'email' => $providerUser->getEmail(),
                 'name' => $providerUser->getName(),
@@ -62,8 +62,9 @@ class SocialAccountService
         $username = Str::before($email, '@');
         $uniqueUsername = $username;
         while (User::where('username', $uniqueUsername)->first(['id'])) {
-            $uniqueUsername = $username . Str::random(2);
+            $uniqueUsername = $username.Str::random(2);
         }
+
         return $uniqueUsername;
     }
 }

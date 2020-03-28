@@ -71,7 +71,7 @@ class AdminUserController extends AdminController
         $user->role = $request->input('role');
         $user->password = $request->input('password');
 
-        if (!$user->save()) {
+        if (! $user->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.create.error'));
@@ -125,11 +125,11 @@ class AdminUserController extends AdminController
         $user->email = $request->input('email');
         $user->role = $request->input('role');
 
-        if (!empty($request->input('password'))) {
+        if (! empty($request->input('password'))) {
             $user->password = $request->input('password');
         }
 
-        if (!$user->save()) {
+        if (! $user->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.edit.error'));
@@ -158,7 +158,6 @@ class AdminUserController extends AdminController
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
-     *
      */
     public function destroy(User $user)
     {
@@ -185,12 +184,11 @@ class AdminUserController extends AdminController
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     *
      */
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             return response('Forbidden.', 403);
         }
 
