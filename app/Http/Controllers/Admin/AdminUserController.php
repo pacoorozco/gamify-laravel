@@ -187,11 +187,6 @@ class AdminUserController extends AdminController
      */
     public function data(Request $request, Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        /*if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }*/
-
         $users = User::select([
             'id',
             'name',

@@ -173,11 +173,6 @@ class AdminBadgeController extends AdminController
      */
     public function data(Request $request, Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }
-
         $badges = Badge::select([
             'id',
             'name',
@@ -185,7 +180,7 @@ class AdminBadgeController extends AdminController
             'active',
         ])->orderBy('name', 'ASC');
 
-        return $dataTable->of($badges)
+        return $dataTable->eloquent($badges)
             ->addColumn('image', function (Badge $badge) {
                 return '<img src="'.$badge->getImageURL().'" width="64" class="img-thumbnail" />';
             })
@@ -200,6 +195,6 @@ class AdminBadgeController extends AdminController
             })
             ->rawColumns(['actions', 'image'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }

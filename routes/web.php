@@ -89,7 +89,9 @@ Route::prefix('admin')->middleware(['can:access-dashboard'])->name('admin.')->gr
      *  ------------------------------------------
      */
     // Datatables Ajax route.
-    Route::get('users/data', 'Admin\AdminUserController@data')->name('users.data');
+    Route::get('users/data', 'Admin\AdminUserController@data')
+        ->name('users.data')
+        ->middleware('only.ajax');
 
     // Our special delete confirmation route - uses the show/details view.
     Route::get('users/{users}/delete', 'Admin\AdminUserController@delete')->name('users.delete');
@@ -105,7 +107,9 @@ Route::prefix('admin')->middleware(['can:access-dashboard'])->name('admin.')->gr
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /badges/{badge_id}
-    Route::get('badges/data', 'Admin\AdminBadgeController@data')->name('badges.data');
+    Route::get('badges/data', 'Admin\AdminBadgeController@data')
+        ->name('badges.data')
+        ->middleware('only.ajax');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {badges} needs
@@ -123,7 +127,9 @@ Route::prefix('admin')->middleware(['can:access-dashboard'])->name('admin.')->gr
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /levels/{level_id}
-    Route::get('levels/data', 'Admin\AdminLevelController@data')->name('levels.data');
+    Route::get('levels/data', 'Admin\AdminLevelController@data')
+        ->name('levels.data')
+        ->middleware('only.ajax');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {badges} needs
@@ -140,7 +146,9 @@ Route::prefix('admin')->middleware(['can:access-dashboard'])->name('admin.')->gr
      */
 
     // DataTables Ajax route.
-    Route::get('questions/data', 'Admin\AdminQuestionController@data')->name('questions.data');
+    Route::get('questions/data', 'Admin\AdminQuestionController@data')
+        ->name('questions.data')
+        ->middleware('only.ajax');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {questions} needs

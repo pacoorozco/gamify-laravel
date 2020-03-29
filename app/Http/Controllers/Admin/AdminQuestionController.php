@@ -247,11 +247,6 @@ class AdminQuestionController extends AdminController
      */
     public function data(Request $request, Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }
-
         $question = Question::select([
             'id',
             'short_name',
@@ -265,7 +260,7 @@ class AdminQuestionController extends AdminController
             'unpublish' => '<span class="label label-warning">'.strval(__('admin/question/model.status_list.unpublish')).'</span>',
         ];
 
-        return $dataTable->of($question)
+        return $dataTable->eloquent($question)
             ->editColumn('status', function (Question $question) use ($statusLabel) {
                 return $statusLabel[$question->status];
             })
@@ -277,6 +272,6 @@ class AdminQuestionController extends AdminController
             })
             ->rawColumns(['actions', 'status'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }

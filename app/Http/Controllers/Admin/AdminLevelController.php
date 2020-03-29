@@ -176,11 +176,6 @@ class AdminLevelController extends AdminController
      */
     public function data(Request $request, Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }
-
         $levels = Level::select([
             'id',
             'name',
@@ -188,7 +183,7 @@ class AdminLevelController extends AdminController
             'active',
         ])->orderBy('required_points', 'ASC');
 
-        return $dataTable::of($levels)
+        return $dataTable->eloquent($levels)
             ->addColumn('image', function (Level $level) {
                 return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
             })
@@ -203,6 +198,6 @@ class AdminLevelController extends AdminController
             })
             ->rawColumns(['actions', 'image'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }
