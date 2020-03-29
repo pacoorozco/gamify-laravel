@@ -73,8 +73,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = ['level'];
-
     /**
      * The attributes that should be cast to native types.
      *

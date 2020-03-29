@@ -71,7 +71,7 @@ class AdminUserController extends AdminController
         $user->role = $request->input('role');
         $user->password = $request->input('password');
 
-        if (! $user->save()) {
+        if (!$user->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.create.error'));
@@ -125,11 +125,11 @@ class AdminUserController extends AdminController
         $user->email = $request->input('email');
         $user->role = $request->input('role');
 
-        if (! empty($request->input('password'))) {
+        if (!empty($request->input('password'))) {
             $user->password = $request->input('password');
         }
 
-        if (! $user->save()) {
+        if (!$user->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.edit.error'));
@@ -188,9 +188,9 @@ class AdminUserController extends AdminController
     public function data(Request $request, Datatables $dataTable)
     {
         // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
+        /*if (! $request->ajax()) {
             return response('Forbidden.', 403);
-        }
+        }*/
 
         $users = User::select([
             'id',
@@ -200,7 +200,7 @@ class AdminUserController extends AdminController
             'role',
         ])->orderBy('username', 'ASC');
 
-        return $dataTable->of($users)
+        return $dataTable->eloquent($users)
             ->addColumn('actions', function (User $user) {
                 return view('admin/partials.actions_dd')
                     ->with('model', 'users')
@@ -209,6 +209,6 @@ class AdminUserController extends AdminController
             })
             ->rawColumns(['actions'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }
