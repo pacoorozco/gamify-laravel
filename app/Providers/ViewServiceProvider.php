@@ -26,7 +26,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'partials.header', UserHeaderComposer::class
+            ['partials.header', 'admin.partials.header'], UserHeaderComposer::class
         );
     }
 }
