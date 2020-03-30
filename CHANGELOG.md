@@ -6,8 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Unreleased
 ### Fixed
 - Fix Admin dashboard render errors. ([#88][i88])
+- Fix deletion of the default level. ([#33][i33])
 
 [i88]: https://github.com/pacoorozco/gamify-laravel/issues/88
+[i33]: https://github.com/pacoorozco/gamify-laravel/issues/33
 
 ## 2.1.0 - 2020-03-27
 
