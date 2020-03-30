@@ -177,14 +177,15 @@ class AdminLevelController extends AdminController
      */
 
     /**
-     * @param \Illuminate\Http\Request     $request
+     * Show a list of all levels formatted for Datatables.
+     *
      * @param \Yajra\Datatables\Datatables $dataTable
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      *
      */
-    public function data(Request $request, Datatables $dataTable)
+    public function data(Datatables $dataTable)
     {
         $levels = Level::select([
             'id',

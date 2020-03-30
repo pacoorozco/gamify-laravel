@@ -179,13 +179,12 @@ class AdminUserController extends AdminController
     /**
      * Show a list of all the users formatted for Datatables.
      *
-     * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function data(Request $request, Datatables $dataTable)
+    public function data(Datatables $dataTable)
     {
         $users = User::select([
             'id',

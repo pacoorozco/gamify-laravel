@@ -164,14 +164,13 @@ class AdminBadgeController extends AdminController
     /**
      * Show a list of all badges formatted for Datatables.
      *
-     * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
      * @throws \Exception
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function data(Request $request, Datatables $dataTable)
+    public function data(Datatables $dataTable)
     {
         $badges = Badge::select([
             'id',
