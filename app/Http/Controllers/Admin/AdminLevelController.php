@@ -67,7 +67,7 @@ class AdminLevelController extends AdminController
         $level->required_points = $request->input('required_points');
         $level->active = $request->input('active');
 
-        if (! $level->save()) {
+        if (!$level->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/level/messages.create.error'));
@@ -112,10 +112,14 @@ class AdminLevelController extends AdminController
     public function update(LevelUpdateRequest $request, Level $level)
     {
         $level->name = $request->input('name');
-        $level->required_points = $request->input('required_points');
-        $level->active = $request->input('active');
 
-        if (! $level->save()) {
+        // Default level can not be inactive.
+        if (!$level->isDefault()) {
+            $level->required_points = $request->input('required_points');
+            $level->active = $request->input('active');
+        }
+
+        if (!$level->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/level/messages.update.error'));
@@ -142,12 +146,18 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Level $level)
     {
+        // Default level can not be deleted.
+        if ($level->isDefault()) {
+            return redirect()->back()
+                ->with('error', __('admin/level/messages.delete.error_default_level'));
+        }
+
         if ($level->delete() !== true) {
             return redirect()->back()
                 ->with('error', __('admin/level/messages.delete.error'));
@@ -170,9 +180,9 @@ class AdminLevelController extends AdminController
      * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function data(Request $request, Datatables $dataTable)
     {
@@ -185,10 +195,10 @@ class AdminLevelController extends AdminController
 
         return $dataTable->eloquent($levels)
             ->addColumn('image', function (Level $level) {
-                return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
+                return '<img src="' . $level->getImageURL() . '" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
-                return ($level->active) ? __('general.yes') : trans('general.no');
+                return ($level->active) ? __('general.yes') : __('general.no');
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')

@@ -6,7 +6,7 @@
 
                 <!-- name -->
                 <div class="form-group">
-                    {!! Form::label('name', __('admin/level/model.name'), array('class' => 'control-label')) !!}
+                    {!! Form::label('name', __('admin/level/model.name'), ['class' => 'control-label']) !!}
                     <div class="controls">
                         {{ $level->name }}
                     </div>
@@ -15,7 +15,7 @@
 
                 <!-- required_points -->
                 <div class="form-group">
-                    {!! Form::label('required_points', __('admin/level/model.required_points'), array('class' => 'control-label')) !!}
+                    {!! Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label']) !!}
                     <div class="controls">
                         {{ $level->required_points }}
                     </div>
@@ -24,9 +24,9 @@
 
                 <!-- Activation Status -->
                 <div class="form-group">
-                    {!! Form::label('active', __('admin/level/model.active'), array('class' => 'control-label')) !!}
+                    {!! Form::label('active', __('admin/level/model.active'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ ($level->active ? __('general.yes') : trans('general.no')) }}
+                        {{ ($level->active ? __('general.yes') : __('general.no')) }}
                     </div>
                 </div>
                 <!-- ./ activation status -->
@@ -36,7 +36,7 @@
 
                 <!-- image -->
                 <div class="form-group">
-                    {!! Form::label('image', __('admin/level/model.image'), array('class' => 'control-label')) !!}
+                    {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label']) !!}
                     <div class="controls">
                         @if (isset($level))
                             <img src="{{ $level->getImageURL() }}" class="img-thumbnail" alt="Big size">
@@ -60,7 +60,7 @@
                 </button>
             </a>
         @else
-            {!! Form::button('<i class="fa fa-trash-o"></i>' . __('general.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+            {!! Form::button('<i class="fa fa-trash-o"></i> ' . __('general.delete'),['type' => 'submit', 'class' => 'btn btn-danger']) !!}
         @endif
     </div>
 </div>
