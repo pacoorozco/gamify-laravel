@@ -67,7 +67,7 @@ class AdminLevelController extends AdminController
         $level->required_points = $request->input('required_points');
         $level->active = $request->input('active');
 
-        if (!$level->save()) {
+        if (! $level->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/level/messages.create.error'));
@@ -114,12 +114,12 @@ class AdminLevelController extends AdminController
         $level->name = $request->input('name');
 
         // Default level can not be inactive.
-        if (!$level->isDefault()) {
+        if (! $level->isDefault()) {
             $level->required_points = $request->input('required_points');
             $level->active = $request->input('active');
         }
 
-        if (!$level->save()) {
+        if (! $level->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/level/messages.update.error'));
@@ -148,7 +148,6 @@ class AdminLevelController extends AdminController
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
-     *
      */
     public function destroy(Level $level)
     {
@@ -183,7 +182,6 @@ class AdminLevelController extends AdminController
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     *
      */
     public function data(Datatables $dataTable)
     {
@@ -196,7 +194,7 @@ class AdminLevelController extends AdminController
 
         return $dataTable->eloquent($levels)
             ->addColumn('image', function (Level $level) {
-                return '<img src="' . $level->getImageURL() . '" width="64" class="img-thumbnail" />';
+                return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
                 return ($level->active) ? __('general.yes') : __('general.no');
