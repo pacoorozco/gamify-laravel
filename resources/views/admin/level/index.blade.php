@@ -93,6 +93,7 @@
                     {data: "active"},
                     {data: "actions", "orderable": false, "searchable": false}
                 ],
+                "order": [[2, "asc"]],
                 "aLengthMenu": [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "@lang('general.all')"]
