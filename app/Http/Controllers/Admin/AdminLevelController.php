@@ -112,8 +112,12 @@ class AdminLevelController extends AdminController
     public function update(LevelUpdateRequest $request, Level $level)
     {
         $level->name = $request->input('name');
-        $level->required_points = $request->input('required_points');
-        $level->active = $request->input('active');
+
+        // Default level can not be inactive.
+        if (! $level->isDefault()) {
+            $level->required_points = $request->input('required_points');
+            $level->active = $request->input('active');
+        }
 
         if (! $level->save()) {
             return redirect()->back()
@@ -142,12 +146,17 @@ class AdminLevelController extends AdminController
      *
      * @param Level $level
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Level $level)
     {
+        // Default level can not be deleted.
+        if ($level->isDefault()) {
+            return redirect()->back()
+                ->with('error', __('admin/level/messages.delete.error_default_level'));
+        }
+
         if ($level->delete() !== true) {
             return redirect()->back()
                 ->with('error', __('admin/level/messages.delete.error'));
@@ -167,20 +176,15 @@ class AdminLevelController extends AdminController
      */
 
     /**
-     * @param \Illuminate\Http\Request     $request
+     * Show a list of all levels formatted for Datatables.
+     *
      * @param \Yajra\Datatables\Datatables $dataTable
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
-    public function data(Request $request, Datatables $dataTable)
+    public function data(Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }
-
         $levels = Level::select([
             'id',
             'name',
@@ -188,12 +192,12 @@ class AdminLevelController extends AdminController
             'active',
         ])->orderBy('required_points', 'ASC');
 
-        return $dataTable::of($levels)
+        return $dataTable->eloquent($levels)
             ->addColumn('image', function (Level $level) {
                 return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
             })
             ->editColumn('active', function (Level $level) {
-                return ($level->active) ? __('general.yes') : trans('general.no');
+                return ($level->active) ? __('general.yes') : __('general.no');
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')
@@ -203,6 +207,6 @@ class AdminLevelController extends AdminController
             })
             ->rawColumns(['actions', 'image'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }

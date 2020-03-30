@@ -164,20 +164,14 @@ class AdminBadgeController extends AdminController
     /**
      * Show a list of all badges formatted for Datatables.
      *
-     * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
      * @throws \Exception
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function data(Request $request, Datatables $dataTable)
+    public function data(Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }
-
         $badges = Badge::select([
             'id',
             'name',
@@ -185,7 +179,7 @@ class AdminBadgeController extends AdminController
             'active',
         ])->orderBy('name', 'ASC');
 
-        return $dataTable->of($badges)
+        return $dataTable->eloquent($badges)
             ->addColumn('image', function (Badge $badge) {
                 return '<img src="'.$badge->getImageURL().'" width="64" class="img-thumbnail" />';
             })
@@ -200,6 +194,6 @@ class AdminBadgeController extends AdminController
             })
             ->rawColumns(['actions', 'image'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }

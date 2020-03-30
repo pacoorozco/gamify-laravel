@@ -179,19 +179,13 @@ class AdminUserController extends AdminController
     /**
      * Show a list of all the users formatted for Datatables.
      *
-     * @param \Illuminate\Http\Request     $request
      * @param \Yajra\Datatables\Datatables $dataTable
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function data(Request $request, Datatables $dataTable)
+    public function data(Datatables $dataTable)
     {
-        // Disable this query if isn't AJAX
-        if (! $request->ajax()) {
-            return response('Forbidden.', 403);
-        }
-
         $users = User::select([
             'id',
             'name',
@@ -200,7 +194,7 @@ class AdminUserController extends AdminController
             'role',
         ])->orderBy('username', 'ASC');
 
-        return $dataTable->of($users)
+        return $dataTable->eloquent($users)
             ->addColumn('actions', function (User $user) {
                 return view('admin/partials.actions_dd')
                     ->with('model', 'users')
@@ -209,6 +203,6 @@ class AdminUserController extends AdminController
             })
             ->rawColumns(['actions'])
             ->removeColumn('id')
-            ->make(true);
+            ->toJson();
     }
 }

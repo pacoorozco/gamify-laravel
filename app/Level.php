@@ -127,4 +127,14 @@ class Level extends Model
             ->orderBy('required_points', 'asc')
             ->firstOrFail();
     }
+
+    /**
+     * Returns if this is the default level.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->required_points === 0;
+    }
 }

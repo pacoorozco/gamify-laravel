@@ -3,6 +3,7 @@
 namespace Gamify\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class OnlyAjax
@@ -15,7 +16,7 @@ class OnlyAjax
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (! $request->ajax()) {
             return response(view('errors.403'), ResponseCode::HTTP_FORBIDDEN);

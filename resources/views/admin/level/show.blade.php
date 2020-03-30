@@ -1,14 +1,12 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/level/title.level_show') :: @parent
-@endsection
+@section('title', __('admin/level/title.level_show'))
 
 {{-- Content Header --}}
 @section('header')
-        @lang('admin/level/title.level_show')
-        <small>{{ $level->name }}</small>
+    @lang('admin/level/title.level_show')
+    <small>{{ $level->name }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -26,14 +24,14 @@
     <li class="active">
         @lang('admin/level/title.level_show')
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     @include('admin/level/_details', ['action' => 'show'])
 

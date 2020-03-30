@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/level/title.level_delete') :: @parent
-@endsection
+@section('title', __('admin/level/title.level_delete'))
 
 {{-- Content Header --}}
 @section('header')
@@ -26,17 +24,17 @@
     <li class="active">
         @lang('admin/level/title.level_delete')
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     {{-- Delete Level Form --}}
-    {!! Form::open(array('route' => array('admin.levels.destroy', $level), 'method' => 'delete', )) !!}
+    {!! Form::open(['route' => ['admin.levels.destroy', $level], 'method' => 'delete']) !!}
     @include('admin/level/_details', ['action' => 'delete'])
     {!! Form::close() !!}
 

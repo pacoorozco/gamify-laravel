@@ -7,14 +7,12 @@
 @endpush
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/user/title.user_management') :: @parent
-@endsection
+@section('title', __('admin/user/title.user_management'))
 
 {{-- Content Header --}}
 @section('header')
     @lang('admin/user/title.user_management')
-    <small>create and edit users</small>
+    <small>@lang('admin/user/title.user_management_desc')</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -45,6 +43,7 @@
         </button>
     </a>
     <!-- /.actions -->
+
     <div class="box">
         <div class="box-body">
             <table id="users" class="table table-striped table-bordered">
