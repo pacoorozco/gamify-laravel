@@ -27,18 +27,12 @@ See [CHANGELOG](CHANGELOG.md) file in order to know what changes are implemented
 
 ## How to run gamify
 
-There are two methods in order to run **gamify**:
-
-* [Method 1](#docker-method): Using [Docker](https://www.docker.com/) containers. **This is the quickest way**
-* [Method 2](#local-server-method): Using PHP you can serve the code locally.
-
-### Docker method
-
 This will create several [Docker](https://www.docker.com/) containers to implement all **gamify** needs. An application server, a web server and a database server.
 
 Prior this installation, you **need to have installed** this software:
 
 * [Docker](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
 
 1. Clone the repository locally
 
@@ -72,50 +66,10 @@ Prior this installation, you **need to have installed** this software:
 
     ```bash
     $ docker-compose exec app php artisan key:generate 
-    $ docker-compose exec app php artisan migrate --seed
+    $ docker-compose exec app php artisan migrate:fresh --seed
     ```
     
 1. Go to `http://localhost`. Enjoy!
-
-   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`
-
-### Local server method
-
-This will use PHP to serve this application locally.
-
-Prior this installation, you **need to have installed** this software:
-
-* PHP 7.1+ installed locally
-* [Composer](https://getcomposer.org/download/)
-* PHP extensions/modules installed: `php-mbstring php-xml`
-
-1. Clone the repository locally
-
-    ```bash
-    $ git clone https://github.com/pacoorozco/gamify-laravel.git gamify
-    ```
-
-1. [Install dependencies](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) with: 
-
-    ```bash
-    $ cd gamify
-    $ composer install
-    ```
-
-1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-laravel/blob/master/.env.example) to `.env` and modify its contents to reflect your local environment.
-1. [Run database migrations](http://laravel.com/docs). If you want to include seed data, add a `--seed` flag.
-
-    ```bash
-    php artisan migrate --env=local
-    ```
-    
-1. Configure a web server, such as the [built-in PHP web server](http://php.net/manual/en/features.commandline.webserver.php), to use the `public` directory as the document root.
-
-	```bash
-    php -S localhost:8080 -t public
-    ```
-    
-1. Go to `http://localhost:8000`. Enjoy!
 
    > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`
 

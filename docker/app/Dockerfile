@@ -5,8 +5,22 @@ MAINTAINER Paco Orozco <paco@pacoorozco.info>
 # Install "libmcrypt-dev, "libpng-dev", "zlib1g-dev".
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
+        libwebp-dev \
+        libjpeg62-turbo-dev \
         libpng-dev \
+        libxpm-dev \
+        libfreetype6-dev \
         zlib1g-dev
+
+# Configure GD to use several image formats.
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-webp-dir \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-zlib-dir \
+    --with-xpm-dir \
+    --with-freetype-dir
 
 # Install the PHP needed extentions
 RUN docker-php-ext-install \
