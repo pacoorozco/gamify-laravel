@@ -39,6 +39,7 @@
     "laravel/socialite": "^4.3",
     "laravel/tinker": "^2.0",
     "laravelcollective/html": "^6.0",
+    "qcod/laravel-imageup": "^1.0",
     "richan-fongdasen/eloquent-blameable": "^1.4",
     "socialiteproviders/okta": "dev-master",
     "yajra/laravel-datatables-oracle": "^9.0"
