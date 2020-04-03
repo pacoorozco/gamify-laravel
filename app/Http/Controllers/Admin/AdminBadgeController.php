@@ -138,7 +138,6 @@ class AdminBadgeController extends AdminController
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
-     *
      */
     public function destroy(Badge $badge)
     {
@@ -160,7 +159,6 @@ class AdminBadgeController extends AdminController
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     *
      */
     public function data(Datatables $dataTable)
     {
