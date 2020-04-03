@@ -29,8 +29,11 @@ use QCod\ImageUp\HasImageUploads;
  * @property string $name                  Name of this badge.
  * @property string $description           Description of the badge.
  * @property int    $required_repetitions  How many times you need to request the badge to achieve it.
- * @property string image                  URL of the badge's image
- * @property bool   active                 Is this badge enabled?
+ * @property string $image                  URL of the badge's image
+ * @property bool   $active                 Is this badge enabled?
+ * @property string $imagesUploadDisk
+ * @property string $imagesUploadPath
+ * @property string $autoUploadImages
  */
 class Badge extends Model
 {
@@ -66,12 +69,21 @@ class Badge extends Model
      * @var array
      */
     protected $casts = [
-        'id'                   => 'int',
-        'name'                 => 'string',
-        'description'          => 'string',
+        'id' => 'int',
+        'name' => 'string',
+        'description' => 'string',
         'required_repetitions' => 'int',
-        'active'               => 'boolean',
+        'active' => 'boolean',
     ];
+
+    // which disk to use for upload, can be override by field options
+    //protected $imagesUploadDisk;
+
+    // path in disk to use for upload, can be override by field options
+    protected $imagesUploadPath = 'badges';
+
+    // auto upload allowed
+    protected $autoUploadImages = true;
 
     /**
      * Fields that are managed by the HasImageUploads trait.
@@ -81,25 +93,22 @@ class Badge extends Model
     protected static $imageFields = [
         'image_url' => [
             // width to resize image after upload
-            'width'       => 150,
+            'width' => 150,
 
             // height to resize image after upload
-            'height'      => 150,
+            'height' => 150,
 
             // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
-            'crop'        => true,
-
-            // a folder path, default config('imageup.upload_directory')
-            'path'        => 'badges',
+            'crop' => true,
 
             // placeholder image if image field is empty
             'placeholder' => self::DEFAULT_IMAGE,
 
             // validation rules when uploading image
-            'rules'       => 'image|max:2000',
+            'rules' => 'image|max:2000',
 
             // if request file is don't have same name, default will be the field name
-            'file_input'  => 'image',
+            'file_input' => 'image',
         ],
     ];
 

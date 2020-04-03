@@ -5,7 +5,7 @@ return [
     /**
      * Default upload storage disk
      */
-    'upload_disk' => 'public',
+    'upload_disk' => env('UPLOAD_DISK', 'public'),
 
     /**
      * Default Image upload directory on the disc

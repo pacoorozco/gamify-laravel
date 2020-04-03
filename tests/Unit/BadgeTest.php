@@ -30,7 +30,6 @@ class BadgeTest extends ModelTestCase
             'name',
             'description',
             'required_repetitions',
-            'image_url',
             'active',
         ], $m->getFillable());
     }
@@ -43,8 +42,16 @@ class BadgeTest extends ModelTestCase
             'name' => 'string',
             'description' => 'string',
             'required_repetitions' => 'int',
-            'image_url' => 'string',
             'active' => 'boolean',
         ], $m->getCasts());
+    }
+
+    public function test_rrr()
+    {
+        $m = new Badge();
+
+        var_dump($m->imagesUploadDisk);
+
+        $this->assertEquals(config('imageup.upload_disk'), $m->imagesUploadDisk);
     }
 }
