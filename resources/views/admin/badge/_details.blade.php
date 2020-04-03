@@ -47,7 +47,7 @@
                 <div class="form-group">
                     {!! Form::label('image', __('admin/badge/model.image'), array('class' => 'control-label')) !!}
                     <div class="controls">
-                        <img src="{{ $badge->getImageURL() }}" class="img-thumbnail" alt="Big size">
+                        <img src="{{ $badge->image }}" class="img-thumbnail" alt="Big size">
                     </div>
                 </div>
                 <!-- ./ image -->

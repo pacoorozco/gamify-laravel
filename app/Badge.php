@@ -20,6 +20,7 @@ namespace Gamify;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use QCod\ImageUp\HasImageUploads;
 
 /**
  * Model that represents a badge.
@@ -28,12 +29,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name                  Name of this badge.
  * @property string $description           Description of the badge.
  * @property int    $required_repetitions  How many times you need to request the badge to achieve it.
- * @property string image_url              URL of the badge's image
+ * @property string image                  URL of the badge's image
  * @property bool   active                 Is this badge enabled?
  */
 class Badge extends Model
 {
     use SoftDeletes;
+    use HasImageUploads;
+
+    /**
+     * Default badge image to be used in case no one is supplied.
+     */
+    const DEFAULT_IMAGE = '/images/missing_badge.png';
 
     /**
      * The database table used by the model.
@@ -51,7 +58,6 @@ class Badge extends Model
         'name',
         'description',
         'required_repetitions',
-        'image_url',
         'active',
     ];
     /**
@@ -60,12 +66,41 @@ class Badge extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int',
-        'name' => 'string',
-        'description' => 'string',
+        'id'                   => 'int',
+        'name'                 => 'string',
+        'description'          => 'string',
         'required_repetitions' => 'int',
-        'image_url' => 'string',
-        'active' => 'boolean',
+        'active'               => 'boolean',
+    ];
+
+    /**
+     * Fields that are managed by the HasImageUploads trait.
+     *
+     * @var array
+     */
+    protected static $imageFields = [
+        'image_url' => [
+            // width to resize image after upload
+            'width'       => 150,
+
+            // height to resize image after upload
+            'height'      => 150,
+
+            // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
+            'crop'        => true,
+
+            // a folder path, default config('imageup.upload_directory')
+            'path'        => 'badges',
+
+            // placeholder image if image field is empty
+            'placeholder' => self::DEFAULT_IMAGE,
+
+            // validation rules when uploading image
+            'rules'       => 'image|max:2000',
+
+            // if request file is don't have same name, default will be the field name
+            'file_input'  => 'image',
+        ],
     ];
 
     /**
@@ -76,12 +111,16 @@ class Badge extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Returns Image URL.
+     * Get image attribute or default image.
      *
      * @return string
      */
-    public function getImageURL(): string
+    public function getImageAttribute(): string
     {
-        return asset('images/missing_badge.png');
+        try {
+            return $this->imageUrl();
+        } catch (\Exception $exception) {
+            return asset(self::DEFAULT_IMAGE);
+        }
     }
 }
