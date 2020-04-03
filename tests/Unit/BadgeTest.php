@@ -45,13 +45,4 @@ class BadgeTest extends ModelTestCase
             'active' => 'boolean',
         ], $m->getCasts());
     }
-
-    public function test_rrr()
-    {
-        $m = new Badge();
-
-        var_dump($m->imagesUploadDisk);
-
-        $this->assertEquals(config('imageup.upload_disk'), $m->imagesUploadDisk);
-    }
 }
