@@ -7,14 +7,12 @@
 @endpush
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/badge/title.badge_management') :: @parent
-@endsection
+@section('title', __('admin/badge/title.badge_management'))
 
 {{-- Content Header --}}
 @section('header')
     @lang('admin/badge/title.badge_management')
-    <small>create and edit badges</small>
+    <small>@lang('admin/badge/title.badge_management_desc')</small>
 @endsection
 
 {{-- Breadcrumbs --}}

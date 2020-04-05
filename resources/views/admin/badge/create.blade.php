@@ -1,14 +1,12 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/badge/title.create_a_new_badge') :: @parent
-@endsection
+@section('title', __('admin/badge/title.create_a_new_badge'))
 
 {{-- Content Header --}}
 @section('header')
     @lang('admin/badge/title.create_a_new_badge')
-    <small>create a new badge</small>
+    <small>@lang('admin/badge/title.create_a_new_badge_desc')</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -26,14 +24,14 @@
     <li class="active">
         @lang('admin/badge/title.create_a_new_badge')
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     @include('admin/badge/_form')
 

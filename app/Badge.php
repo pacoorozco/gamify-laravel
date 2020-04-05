@@ -25,10 +25,10 @@ use QCod\ImageUp\HasImageUploads;
 /**
  * Model that represents a badge.
  *
- * @property int    $id                    Object unique id.
- * @property string $name                  Name of this badge.
- * @property string $description           Description of the badge.
- * @property int    $required_repetitions  How many times you need to request the badge to achieve it.
+ * @property int    $id                     Object unique id.
+ * @property string $name                   Name of this badge.
+ * @property string $description            Description of the badge.
+ * @property int    $required_repetitions   How many times you need to request the badge to achieve it.
  * @property string $image                  URL of the badge's image
  * @property bool   $active                 Is this badge enabled?
  * @property string $imagesUploadDisk
@@ -63,6 +63,7 @@ class Badge extends Model
         'required_repetitions',
         'active',
     ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -76,13 +77,18 @@ class Badge extends Model
         'active' => 'boolean',
     ];
 
-    // which disk to use for upload, can be override by field options
-    //protected $imagesUploadDisk;
-
-    // path in disk to use for upload, can be override by field options
+    /**
+     * Path in disk to use for upload, can be override by field options.
+     *
+     * @var string
+     */
     protected $imagesUploadPath = 'badges';
 
-    // auto upload allowed
+    /**
+     * Auto upload allowed.
+     *
+     * @var bool
+     */
     protected $autoUploadImages = true;
 
     /**
