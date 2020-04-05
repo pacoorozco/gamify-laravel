@@ -6,7 +6,7 @@
 
                 <!-- name -->
                 <div class="form-group">
-                    {!! Form::label('name', __('admin/badge/model.name'), array('class' => 'control-label')) !!}
+                    {!! Form::label('name', __('admin/badge/model.name'), ['class' => 'control-label']) !!}
                     <div class="controls">
                         {{ $badge->name }}
                     </div>
@@ -15,7 +15,7 @@
 
                 <!-- description -->
                 <div class="form-group">
-                    {!! Form::label('description', __('admin/badge/model.description'), array('class' => 'control-label')) !!}
+                    {!! Form::label('description', __('admin/badge/model.description'), ['class' => 'control-label']) !!}
                     <div class="controls">
                         {{ $badge->description }}
                     </div>
@@ -24,7 +24,7 @@
 
                 <!-- required_repetitions -->
                 <div class="form-group">
-                    {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), array('class' => 'control-label')) !!}
+                    {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), ['class' => 'control-label']) !!}
                     <div class="controls">
                         {{ $badge->required_repetitions }}
                     </div>
@@ -33,9 +33,9 @@
 
                 <!-- Activation Status -->
                 <div class="form-group">
-                    {!! Form::label('active', __('admin/badge/model.active'), array('class' => 'control-label')) !!}
+                    {!! Form::label('active', __('admin/badge/model.active'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ ($badge->active ? __('general.yes') : trans('general.no')) }}
+                        {{ ($badge->active ? __('general.yes') : __('general.no')) }}
                     </div>
                 </div>
                 <!-- ./ activation status -->
@@ -45,9 +45,9 @@
 
                 <!-- image -->
                 <div class="form-group">
-                    {!! Form::label('image', __('admin/badge/model.image'), array('class' => 'control-label')) !!}
+                    {!! Form::label('image', __('admin/badge/model.image'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        <img src="{{ $badge->getImageURL() }}" class="img-thumbnail" alt="Big size">
+                        <img src="{{ $badge->image }}" class="img-thumbnail" alt="{{ $badge->name }}">
                     </div>
                 </div>
                 <!-- ./ image -->
@@ -69,7 +69,7 @@
                 </button>
             </a>
         @else
-            {!! Form::button('<i class="fa fa-trash-o"></i>' . __('general.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+            {!! Form::button('<i class="fa fa-trash-o"></i> ' . __('general.delete'), ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
         @endif
     </div>
 </div>

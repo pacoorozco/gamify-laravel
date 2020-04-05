@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/badge/title.badge_delete') :: @parent
-@endsection
+@section('title', __('admin/badge/title.badge_delete'))
 
 {{-- Content Header --}}
 @section('header')
@@ -19,24 +17,24 @@
         </a>
     </li>
     <li>
-        <a href="{{ URL::route('admin.badges.index') }}">
+        <a href="{{ route('admin.badges.index') }}">
             @lang('admin/site.badges')
         </a>
     </li>
     <li class="active">
         @lang('admin/badge/title.badge_delete')
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     {{-- Delete Form --}}
-    {!! Form::open(array('route' => array('admin.badges.destroy', $badge), 'method' => 'delete', )) !!}
+    {!! Form::open(['route' => ['admin.badges.destroy', $badge], 'method' => 'delete']) !!}
     @include('admin/badge/_details', ['action' => 'delete'])
     {!! Form::close() !!}
 

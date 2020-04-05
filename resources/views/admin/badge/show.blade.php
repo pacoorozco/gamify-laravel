@@ -1,14 +1,12 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/badge/title.badge_show') :: @parent
-@endsection
+@section('title', __('admin/badge/title.badge_show'))
 
 {{-- Content Header --}}
 @section('header')
-        @lang('admin/badge/title.badge_show')
-        <small>{{ $badge->name }}</small>
+    @lang('admin/badge/title.badge_show')
+    <small>{{ $badge->name }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -26,14 +24,14 @@
     <li class="active">
         @lang('admin/badge/title.badge_show')
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- ./ notifications -->
+    <!-- ./ notifications -->
 
     @include('admin/badge/_details', ['action' => 'show'])
 

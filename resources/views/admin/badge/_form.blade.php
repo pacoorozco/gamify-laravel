@@ -1,16 +1,8 @@
 {{-- Create / Edit Badge Form --}}
 @if (isset($badge))
-    {!! Form::model($badge, array(
-            'route' => array('admin.badges.update', $badge),
-            'method' => 'put',
-            'files' => true
-            )) !!}
+    {!! Form::model($badge, ['route' => ['admin.badges.update', $badge], 'method' => 'put', 'files' => true]) !!}
 @else
-    {!! Form::open(array(
-            'route' => array('admin.badges.store'),
-            'method' => 'post',
-            'files' => true
-            )) !!}
+    {!! Form::open(['route' => 'admin.badges.store', 'method' => 'post', 'files' => true]) !!}
 @endif
 
 <div class="box box-solid">
@@ -20,9 +12,9 @@
             <div class="col-xs-6">
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    {!! Form::label('name', __('admin/badge/model.name'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('name', __('admin/badge/model.name'), ['class' => 'control-label required']) !!}
                     <div class="controls">
-                        {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                        {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
@@ -30,9 +22,9 @@
 
                 <!-- description -->
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                    {!! Form::label('description', __('admin/badge/model.description'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('description', __('admin/badge/model.description'), ['class' => 'control-label required']) !!}
                     <div class="controls">
-                        {!! Form::textarea('description', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                        {!! Form::textarea('description', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         <span class="help-block">{{ $errors->first('description', ':message') }}</span>
                     </div>
                 </div>
@@ -40,9 +32,9 @@
 
                 <!-- required_repetitions -->
                 <div class="form-group {{ $errors->has('required_repetitions') ? 'has-error' : '' }}">
-                    {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), ['class' => 'control-label required']) !!}
                     <div class="controls">
-                        {!! Form::number('required_repetitions', null, array('class' => 'form-control', 'required' => 'required', 'min' => '1')) !!}
+                        {!! Form::number('required_repetitions', null, ['class' => 'form-control', 'required' => 'required', 'min' => '1']) !!}
                         <p class="text-muted">@lang('admin/badge/model.required_repetitions_help')</p>
                         <span class="help-block">{{ $errors->first('required_repetitions', ':message') }}</span>
 
@@ -54,24 +46,23 @@
             <div class="col-xs-6">
 
                 <!-- image -->
-                {{--
                 <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                    {!! Form::label('image', __('admin/badge/model.image'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('image', __('admin/badge/model.image'), ['class' => 'control-label required']) !!}
                     <p class="text-muted">@lang('admin/badge/model.image_help')</p>
                     <div class="controls">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                  style="width: 150px; height: 150px;">
-                                @if (isset($badge))
-                                    <img src="{{ $badge->image->url() }}">
-                                @endif
+                                @isset($badge)
+                                    <img src="{{ $badge->image }}">
+                                @endisset
                             </div>
                             <p>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new"><i
-                                            class="fa fa-picture-o"></i> @lang('button.pick_image')</span>
+                                        class="fa fa-picture-o"></i> @lang('button.pick_image')</span>
                                 <span class="fileinput-exists"><i
-                                            class="fa fa-picture-o"></i> @lang('button.upload_image')</span>
+                                        class="fa fa-picture-o"></i> @lang('button.upload_image')</span>
                                 {!! Form::file('image') !!}
                             </span>
                                 <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
@@ -82,14 +73,13 @@
                     </div>
                     <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                 </div>
-                --}}
                 <!-- ./ image -->
 
                 <!-- activation status -->
                 <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                    {!! Form::label('active', __('admin/badge/model.active'), array('class' => 'control-label required')) !!}
+                    {!! Form::label('active', __('admin/badge/model.active'), ['class' => 'control-label required']) !!}
                     <div class="controls">
-                        {!! Form::select('active', array('1' => __('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) !!}
+                        {!! Form::select('active', ['1' => __('general.yes'), '0' => __('general.no')], null, ['class' => 'form-control', 'required' => 'required']) !!}
                         {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
@@ -104,20 +94,20 @@
                 <i class="fa fa-arrow-left"></i> @lang('general.back')
             </button>
         </a>
-        {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
-        <!-- ./ form actions -->
+    {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+    <!-- ./ form actions -->
     </div>
 </div>
 {!! Form::close() !!}
 
 {{-- Styles --}}
 @push('styles')
-        <!-- File Input -->
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
+    <!-- File Input -->
+    <link rel="stylesheet" href="{{ asset('vendor/jasny-bootstrap/css/jasny-bootstrap.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-        <!-- File Input -->
-{{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
+    <!-- File Input -->
+    <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
 @endpush

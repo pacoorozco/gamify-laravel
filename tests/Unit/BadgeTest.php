@@ -30,7 +30,6 @@ class BadgeTest extends ModelTestCase
             'name',
             'description',
             'required_repetitions',
-            'image_url',
             'active',
         ], $m->getFillable());
     }
@@ -43,7 +42,6 @@ class BadgeTest extends ModelTestCase
             'name' => 'string',
             'description' => 'string',
             'required_repetitions' => 'int',
-            'image_url' => 'string',
             'active' => 'boolean',
         ], $m->getCasts());
     }
