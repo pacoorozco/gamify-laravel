@@ -69,7 +69,7 @@
                 </button>
             </a>
         @else
-            {!! Form::button('<i class="fa fa-trash-o"></i>' . __('general.delete'), ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+            {!! Form::button('<i class="fa fa-trash-o"></i> ' . __('general.delete'), ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
         @endif
     </div>
 </div>
