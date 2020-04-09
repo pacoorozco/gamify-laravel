@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
+- AWS S3 support for image uploads.
 - Image management to Badges & Levels. ([#92][i92], [#96][i96]) 
 ### Fixed
 - Fix Admin dashboard render errors. ([#88][i88])
