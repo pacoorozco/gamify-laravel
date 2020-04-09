@@ -28,7 +28,6 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\LevelCreateRequest;
 use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Level;
-use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 class AdminLevelController extends AdminController
@@ -62,12 +61,9 @@ class AdminLevelController extends AdminController
      */
     public function store(LevelCreateRequest $request)
     {
-        $level = new Level();
-        $level->name = $request->input('name');
-        $level->required_points = $request->input('required_points');
-        $level->active = $request->input('active');
-
-        if (! $level->save()) {
+        try {
+            Level::create($request->validated());
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/level/messages.create.error'));
@@ -111,15 +107,9 @@ class AdminLevelController extends AdminController
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
-        $level->name = $request->input('name');
-
-        // Default level can not be inactive.
-        if (! $level->isDefault()) {
-            $level->required_points = $request->input('required_points');
-            $level->active = $request->input('active');
-        }
-
-        if (! $level->save()) {
+        try {
+            $level->update($request->validated());
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/level/messages.update.error'));
@@ -144,7 +134,7 @@ class AdminLevelController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Level $level
+     * @param \Gamify\Level $level
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -157,7 +147,9 @@ class AdminLevelController extends AdminController
                 ->with('error', __('admin/level/messages.delete.error_default_level'));
         }
 
-        if ($level->delete() !== true) {
+        try {
+            $level->delete();
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->with('error', __('admin/level/messages.delete.error'));
         }
@@ -165,15 +157,6 @@ class AdminLevelController extends AdminController
         return redirect()->route('admin.levels.index')
             ->with('success', __('admin/level/messages.delete.success'));
     }
-
-    /**
-     * Show a list of all the levels formatted for Datatables.
-     *
-     * @param Request    $request
-     * @param Datatables $dataTable
-     *
-     * @return Datatables JsonResponse
-     */
 
     /**
      * Show a list of all levels formatted for Datatables.
@@ -190,14 +173,15 @@ class AdminLevelController extends AdminController
             'name',
             'required_points',
             'active',
+            'image_url',
         ])->orderBy('required_points', 'ASC');
 
         return $dataTable->eloquent($levels)
             ->addColumn('image', function (Level $level) {
-                return '<img src="'.$level->getImageURL().'" width="64" class="img-thumbnail" />';
+                return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">', $level->image, $level->name);
             })
             ->editColumn('active', function (Level $level) {
-                return ($level->active) ? __('general.yes') : __('general.no');
+                return ($level->active) ? (string)__('general.yes') : (string)__('general.no');
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')
@@ -206,7 +190,7 @@ class AdminLevelController extends AdminController
                     ->render();
             })
             ->rawColumns(['actions', 'image'])
-            ->removeColumn('id')
+            ->removeColumn('id', 'image_url')
             ->toJson();
     }
 }

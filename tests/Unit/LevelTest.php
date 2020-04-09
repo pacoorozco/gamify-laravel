@@ -13,7 +13,6 @@ class LevelTest extends ModelTestCase
         $this->assertEquals([
             'name',
             'required_points',
-            'image_url',
             'active',
         ], $m->getFillable());
     }
@@ -25,7 +24,6 @@ class LevelTest extends ModelTestCase
             'id' => 'int',
             'name' => 'string',
             'required_points' => 'int',
-            'image_url' => 'string',
             'active' => 'boolean',
         ], $m->getCasts());
     }

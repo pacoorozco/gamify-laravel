@@ -7,14 +7,12 @@
 @endpush
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/level/title.level_management') :: @parent
-@endsection
+@section('title', __('admin/level/title.level_management'))
 
 {{-- Content Header --}}
 @section('header')
     @lang('admin/level/title.level_management')
-    <small>create and edit levels</small>
+    <small>@lang('admin/level/title.level_management_desc')</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -25,12 +23,9 @@
         </a>
     </li>
     <li class="active">
-        <a href="{{route('admin.levels.index') }}">
-            @lang('admin/site.levels')
-        </a>
+        @lang('admin/site.levels')
     </li>
 @endsection
-
 
 {{-- Content --}}
 @section('content')

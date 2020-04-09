@@ -5,6 +5,8 @@ namespace Tests\Feature\Models;
 use Gamify\Level;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class LevelTest extends TestCase
@@ -15,7 +17,7 @@ class LevelTest extends TestCase
     {
         for ($i = 1; $i <= $number; $i++) {
             factory(Level::class)->create([
-                'name' => 'Level '.$i,
+                'name' => 'Level ' . $i,
                 'required_points' => $i * $distance,
                 'active' => true,
             ]);
@@ -72,5 +74,26 @@ class LevelTest extends TestCase
                 sprintf("Test case: experience='%d', want='%s'", $input, $want)
             );
         }
+    }
+
+    public function test_returns_uploaded_image()
+    {
+        $level = factory(Level::class)->create();
+        Storage::fake('public');
+
+        $image = UploadedFile::fake()->image('level.jpg');
+        $this->assertNull($level->getOriginal('image_url'));
+        $level->uploadImage($image);
+
+        $this->assertEquals('levels/' . $image->hashName(), $level->fresh()->getOriginal('image_url'));
+        $this->assertEquals('/storage/levels/' . $image->hashName(), $level->image);
+    }
+
+    public function test_returns_default_image_when_field_is_empty()
+    {
+        $level = factory(Level::class)->create();
+
+        $this->assertNull($level->getOriginal('image_url'));
+        $this->assertEquals(Level::DEFAULT_IMAGE, $level->image);
     }
 }
