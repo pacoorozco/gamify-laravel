@@ -181,7 +181,7 @@ class AdminLevelController extends AdminController
                 return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">', $level->image, $level->name);
             })
             ->editColumn('active', function (Level $level) {
-                return ($level->active) ? (string)__('general.yes') : (string)__('general.no');
+                return ($level->active) ? (string) __('general.yes') : (string) __('general.no');
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')
