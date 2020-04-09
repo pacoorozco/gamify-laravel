@@ -31,7 +31,7 @@ class LevelUpdateRequest extends Request
         ];
 
         // Rules for non default Levels.
-        if (!$level->isDefault()) {
+        if (! $level->isDefault()) {
             return array_merge(
                 $rules,
                 [
