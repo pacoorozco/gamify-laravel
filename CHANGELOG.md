@@ -5,11 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
-- Image management to Badges. ([#92][i92])
+- Image management to Badges & Levels. ([#92][i92], [#96][i96]) 
 ### Fixed
 - Fix Admin dashboard render errors. ([#88][i88])
 - Fix deletion of the default level. ([#33][i33])
 
+[i96]: https://github.com/pacoorozco/gamify-laravel/issues/96
 [i92]: https://github.com/pacoorozco/gamify-laravel/issues/92
 [i88]: https://github.com/pacoorozco/gamify-laravel/issues/88
 [i33]: https://github.com/pacoorozco/gamify-laravel/issues/33
