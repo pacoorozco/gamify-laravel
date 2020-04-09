@@ -22,6 +22,8 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
+
+use Gamify\Badge;
 use Illuminate\Database\Seeder;
 
 class BadgesTableSeeder extends Seeder
@@ -33,8 +35,6 @@ class BadgesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('badges')->delete();
-
-        factory(\Gamify\Badge::class, 5)->create();
+        factory(Badge::class, 5)->create();
     }
 }

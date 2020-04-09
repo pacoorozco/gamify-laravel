@@ -36,6 +36,7 @@ class UserTest extends ModelTestCase
             'username',
             'email',
             'password',
+            'role',
         ], $m->getFillable());
     }
 

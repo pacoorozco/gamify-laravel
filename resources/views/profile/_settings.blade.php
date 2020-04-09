@@ -93,15 +93,15 @@
             </div>
         </div>
         <!-- /.gender -->
+
         <!-- avatar -->
-        {{--
         <div class="form-group {{ $errors->has('avatar') ? 'has-error' : '' }}">
             {!! Form::label('avatar', __('user/profile.image'), array('class' => 'control-label')) !!}
             <div class="controls">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                          style="width: 150px; height: 150px;">
-                        <img src="{{ $user->profile->getAvatarURL() }}">
+                        <img src="{{ $user->profile->avatar }}">
                     </div>
                     <p>
                     <span class="btn btn-default btn-file">
@@ -111,7 +111,7 @@
                         <span class="fileinput-exists">
                             <i class="fa fa-picture-o"></i> @lang('button.upload_image')
                         </span>
-                        {!! Form::file('avatar') !!}
+                        {!! Form::file('image') !!}
                     </span>
                         <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
                             <i class="fa fa-times"></i> @lang('button.delete_image')
@@ -120,8 +120,8 @@
                 </div>
             </div>
         </div>
-        --}}
         <!-- /.avatar -->
+
     </div>
 </div>
 
@@ -205,25 +205,25 @@
 </div>
 {!! Form::close() !!}
 
-
 @push('styles')
-        <!-- Date Picker -->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
-        <!-- File Input -->
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+    <!-- File Input -->
+    <link rel="stylesheet" href="{{ asset('vendor/jasny-bootstrap/css/jasny-bootstrap.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-        <!-- Date Picker -->
-<script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-        <!-- File Input -->
-{{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
+    <!-- Date Picker -->
+    <script type="text/javascript"
+            src="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <!-- File Input -->
+    <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
 
-<script>
-    $('.date-picker').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    });
-</script>
+    <script>
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+    </script>
 @endpush

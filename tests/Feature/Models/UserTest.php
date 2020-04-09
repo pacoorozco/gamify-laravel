@@ -4,8 +4,11 @@ namespace Tests\Feature\Models;
 
 use Gamify\Question;
 use Gamify\User;
+use Gamify\UserProfile;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -45,5 +48,28 @@ class UserTest extends TestCase
         $u->addExperience($want);
 
         $this->assertEquals($want, $u->experience);
+    }
+
+    public function test_returns_uploaded_image()
+    {
+        $user = factory(User::class)->create();
+        $user->profile()->create();
+        Storage::fake('public');
+
+        $image = UploadedFile::fake()->image('avatar.jpg');
+        $this->assertNull($user->getOriginal('avatar'));
+        $user->profile->uploadImage($image);
+
+        $this->assertEquals('avatars/'.$image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
+        $this->assertEquals('/storage/avatars/'.$image->hashName(), $user->profile->avatar);
+    }
+
+    public function test_returns_default_image_when_field_is_empty()
+    {
+        $user = factory(User::class)->create();
+        $user->profile()->create();
+
+        $this->assertNull($user->profile->getOriginal('avatar'));
+        $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatar);
     }
 }

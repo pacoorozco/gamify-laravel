@@ -20,6 +20,7 @@ namespace Gamify;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use QCod\ImageUp\HasImageUploads;
 
 /**
  * Role model, represents a role.
@@ -36,9 +37,19 @@ use Illuminate\Support\Carbon;
  * @property string $linkedin             LinkedIn username
  * @property string $github               GitHub username
  * @property User   $user                 User wo belongs to.
+ * @property string $imagesUploadDisk
+ * @property string $imagesUploadPath
+ * @property string $autoUploadImages
  */
 class UserProfile extends Model
 {
+    use HasImageUploads;
+
+    /**
+     * Default badge image to be used in case no one is supplied.
+     */
+    const DEFAULT_IMAGE = '/images/missing_profile.png';
+
     /**
      * The database table used by the model.
      *
@@ -61,7 +72,6 @@ class UserProfile extends Model
         'facebook',
         'linkedin',
         'github',
-        'avatar',
     ];
 
     /**
@@ -80,7 +90,47 @@ class UserProfile extends Model
         'facebook' => 'string',
         'linkedin' => 'string',
         'github' => 'string',
-        'avatar' => 'string',
+    ];
+
+    /**
+     * Path in disk to use for upload, can be override by field options.
+     *
+     * @var string
+     */
+    protected $imagesUploadPath = 'avatars';
+
+    /**
+     * Auto upload allowed.
+     *
+     * @var bool
+     */
+    protected $autoUploadImages = true;
+
+    /**
+     * Fields that are managed by the HasImageUploads trait.
+     *
+     * @var array
+     */
+    protected static $imageFields = [
+        'avatar' => [
+            // width to resize image after upload
+            'width' => 150,
+
+            // height to resize image after upload
+            'height' => 150,
+
+            // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
+            'crop' => true,
+
+            // placeholder image if image field is empty
+            'placeholder' => self::DEFAULT_IMAGE,
+
+            // validation rules when uploading image
+            'rules' => 'image|max:2000',
+
+            // if request file is don't have same name, default will be the field name
+            'file_input' => 'image',
+        ],
     ];
 
     /**
@@ -94,12 +144,16 @@ class UserProfile extends Model
     }
 
     /**
-     * Returns avatar URL.
+     * Get image attribute or default image.
      *
      * @return string
      */
-    public function getAvatarURL(): string
+    public function getAvatarAttribute(): string
     {
-        return asset('images/missing_profile.png');
+        try {
+            return $this->imageUrl();
+        } catch (\Exception $exception) {
+            return asset(self::DEFAULT_IMAGE);
+        }
     }
 }

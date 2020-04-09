@@ -28,7 +28,7 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 
@@ -63,24 +63,14 @@ class AdminUserController extends AdminController
      */
     public function store(UserCreateRequest $request)
     {
-        // Create User
-        $user = new User();
-        $user->username = $request->input('username');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->role = $request->input('role');
-        $user->password = $request->input('password');
-
-        if (! $user->save()) {
+        try {
+            $user = User::crete($request->validated());
+            $user->profile()->create();
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.create.error'));
         }
-
-        // Insert related models
-        $user->profile()->create([
-            'avatar' => asset('images/missing_profile.png'),
-        ]);
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin/user/messages.create.success'));
@@ -120,16 +110,14 @@ class AdminUserController extends AdminController
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        // Update User
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->role = $request->input('role');
+        try {
+            // password is not changed if it's empty.
+            $data = empty($request->input('password'))
+                ? Arr::except($request->validated(), ['password'])
+                : $request->validated();
 
-        if (! empty($request->input('password'))) {
-            $user->password = $request->input('password');
-        }
-
-        if (! $user->save()) {
+            $user->update($data);
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.edit.error'));
@@ -167,7 +155,9 @@ class AdminUserController extends AdminController
                 ->with('error', __('admin/user/messages.delete.impossible'));
         }
 
-        if ($user->delete() !== true) {
+        try {
+            $user->delete();
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->with('error', __('admin/user/messages.delete.error'));
         }

@@ -21,7 +21,6 @@ class UserProfileTest extends ModelTestCase
             'facebook',
             'linkedin',
             'github',
-            'avatar',
         ], $m->getFillable());
     }
 
@@ -39,7 +38,6 @@ class UserProfileTest extends ModelTestCase
             'facebook' => 'string',
             'linkedin' => 'string',
             'github' => 'string',
-            'avatar' => 'string',
         ], $m->getCasts());
     }
 
