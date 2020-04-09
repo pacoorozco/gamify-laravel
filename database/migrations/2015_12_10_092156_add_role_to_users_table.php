@@ -15,6 +15,8 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
+
+use Gamify\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -29,7 +31,7 @@ class AddRoleToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['user', 'editor', 'administrator'])->default('user');
+            $table->enum('role', [User::USER_ROLE, User::EDITOR_ROLE, User::ADMIN_ROLE])->default(User::USER_ROLE);
         });
     }
 

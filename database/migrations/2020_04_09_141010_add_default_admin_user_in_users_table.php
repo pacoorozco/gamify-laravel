@@ -3,7 +3,7 @@
 use Gamify\User;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDefaultUsersInUsersTable extends Migration
+class AddDefaultAdminUserInUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,6 @@ class AddDefaultUsersInUsersTable extends Migration
      */
     public function up()
     {
-        $user = User::create([
-            'name' => 'User',
-            'username' => 'user',
-            'email' => 'user@example.com',
-            'password' => 'user',
-            'role' => User::USER_ROLE,
-        ]);
-        $user->profile()->create();
-
         $admin = User::create([
             'name' => 'Administrator',
             'username' => 'admin',
