@@ -24,10 +24,9 @@ class LevelCreateRequest extends Request
     public function rules()
     {
         return [
-            'name'            => ['required', 'string', Rule::unique('levels')],
+            'name' => ['required', 'string', Rule::unique('levels')],
             'required_points' => ['required', 'integer', 'min:1', Rule::unique('levels')],
-            //'image'           => 'required|image',
-            'active'          => ['required', 'boolean'],
+            'active' => ['required', 'boolean'],
         ];
     }
 }

@@ -38,12 +38,11 @@
                 <div class="form-group">
                     {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        @if (isset($level))
-                            <img src="{{ $level->getImageURL() }}" class="img-thumbnail" alt="Big size">
-                        @endif
+                        <img src="{{ $level->image }}" class="img-thumbnail" alt="{{ $level->name }}">
                     </div>
                 </div>
                 <!-- ./ image -->
+
             </div>
         </div>
     </div>

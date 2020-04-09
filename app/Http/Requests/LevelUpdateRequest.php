@@ -28,7 +28,6 @@ class LevelUpdateRequest extends Request
         // Rules for all Levels.
         $rules = [
             'name' => ['required', 'string', Rule::unique('levels')->ignore($level->id)],
-            //'image'           => 'required|image',
         ];
 
         // Rules for non default Levels.

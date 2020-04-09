@@ -75,66 +75,61 @@
                 <div class="col-xs-6">
 
                     <!-- image -->
-                {{--
-                <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                    {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label required']) !!}
-                    <p class="text-muted">@lang('admin/level/model.image_help')</p>
-                    <div class="controls">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <div class="fileinput-preview thumbnail" data-trigger="fileinput"
-                                 style="width: 150px; height: 150px;">
-                                @if (isset($level))
-                                    <img src="{{ $level->image->url() }}">
-                                @endif
-                            </div>
-                            <p>
+                    <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
+                        {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label required']) !!}
+                        <p class="text-muted">@lang('admin/level/model.image_help')</p>
+                        <div class="controls">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput"
+                                     style="width: 150px; height: 150px;">
+                                </div>
+                                <p>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new"><i
-                                            class="fa fa-picture-o"></i> @lang('button.pick_image')</span>
+                                        class="fa fa-picture-o"></i> @lang('button.pick_image')</span>
                                 <span class="fileinput-exists"><i
-                                            class="fa fa-picture-o"></i> @lang('button.upload_image')</span>
+                                        class="fa fa-picture-o"></i> @lang('button.upload_image')</span>
                                 {!! Form::file('image') !!}
                             </span>
-                                <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
-                                    <i class="fa fa-times"></i> @lang('button.delete_image')
-                                </a>
-                            </p>
+                                    <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
+                                        <i class="fa fa-times"></i> @lang('button.delete_image')
+                                    </a>
+                                </p>
+                            </div>
                         </div>
+                        <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                     </div>
-                    <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                 </div>
-            </div>
-            --}}
                 <!-- ./ image -->
 
-                </div>
-            </div>
-
-            <div class="box-footer">
-                <!-- Form Actions -->
-                <a href="{{ route('admin.levels.index') }}">
-                    <button type="button" class="btn btn-primary">
-                        <i class="fa fa-arrow-left"></i> @lang('general.back')
-                    </button>
-                </a>
-            {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-            <!-- ./ form actions -->
             </div>
         </div>
+
+        <div class="box-footer">
+            <!-- Form Actions -->
+            <a href="{{ route('admin.levels.index') }}">
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i> @lang('general.back')
+                </button>
+            </a>
+        {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+        <!-- ./ form actions -->
+        </div>
+    </div>
     </div>
     {!! Form::close() !!}
-
-    {{-- Styles --}}
-    @push('styles')
-        <!-- File Input -->
-        {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"> --}}
-    @endpush
-
-    {{-- Scripts --}}
-    @push('scripts')
-        <!-- File Input -->
-        {{-- <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script> --}}
-    @endpush
-
-
 @endsection
+
+{{-- Styles --}}
+@push('styles')
+    <!-- File Input -->
+    <link rel="stylesheet" href="{{ asset('vendor/jasny-bootstrap/css/jasny-bootstrap.min.css') }}">
+@endpush
+
+{{-- Scripts --}}
+@push('scripts')
+    <!-- File Input -->
+    <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
+@endpush
+
+

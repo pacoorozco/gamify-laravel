@@ -20,19 +20,29 @@ namespace Gamify;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use QCod\ImageUp\HasImageUploads;
 
 /**
- * Model that represents a badge.
+ * Model that represents a level.
  *
  * @property int    $id                    Object unique id.
  * @property string $name                  Name of the level..
  * @property int    $required_points       How many points do you need to achieve it.
- * @property string image_url              URL of the level's image
+ * @property string image                  URL of the level's image
  * @property bool   active                 Is this level enabled?
+ * @property string $imagesUploadDisk
+ * @property string $imagesUploadPath
+ * @property string $autoUploadImages
  */
 class Level extends Model
 {
     use SoftDeletes;
+    use HasImageUploads;
+
+    /**
+     * Default badge image to be used in case no one is supplied.
+     */
+    const DEFAULT_IMAGE = '/images/missing_level.png';
 
     /**
      * The database table used by the model.
@@ -49,7 +59,6 @@ class Level extends Model
     protected $fillable = [
         'name',
         'required_points',
-        'image_url',
         'active',
     ];
 
@@ -62,8 +71,48 @@ class Level extends Model
         'id' => 'int',
         'name' => 'string',
         'required_points' => 'int',
-        'image_url' => 'string',
         'active' => 'boolean',
+    ];
+
+    /**
+     * Path in disk to use for upload, can be override by field options.
+     *
+     * @var string
+     */
+    protected $imagesUploadPath = 'levels';
+
+    /**
+     * Auto upload allowed.
+     *
+     * @var bool
+     */
+    protected $autoUploadImages = true;
+
+    /**
+     * Fields that are managed by the HasImageUploads trait.
+     *
+     * @var array
+     */
+    protected static $imageFields = [
+        'image_url' => [
+            // width to resize image after upload
+            'width' => 150,
+
+            // height to resize image after upload
+            'height' => 150,
+
+            // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
+            'crop' => true,
+
+            // placeholder image if image field is empty
+            'placeholder' => self::DEFAULT_IMAGE,
+
+            // validation rules when uploading image
+            'rules' => 'image|max:2000',
+
+            // if request file is don't have same name, default will be the field name
+            'file_input' => 'image',
+        ],
     ];
 
     /**
@@ -74,13 +123,17 @@ class Level extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Returns Image URL.
+     * Get image attribute or default image.
      *
      * @return string
      */
-    public function getImageURL(): string
+    public function getImageAttribute(): string
     {
-        return asset('images/missing_level.png');
+        try {
+            return $this->imageUrl();
+        } catch (\Exception $exception) {
+            return asset(self::DEFAULT_IMAGE);
+        }
     }
 
     /**
