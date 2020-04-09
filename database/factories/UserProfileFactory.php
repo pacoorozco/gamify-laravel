@@ -25,7 +25,6 @@ $factory->define(UserProfile::class, function (Faker $faker) {
     return [
         'bio' => $faker->text,
         'url' => $faker->url,
-        'avatar' => $faker->imageUrl($width = 640, $height = 480, 'cats'),
         'phone' => $faker->e164PhoneNumber,
         'date_of_birth' => $faker->dateTime,
         'gender' => $faker->randomElement(['male', 'female', 'unspecified']),

@@ -38,15 +38,6 @@ class LevelsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('levels')->delete();
-
-        // Insert default Level (this level could not be deleted).
-        factory(Level::class)->create([
-            'name' => 'Level 0',
-            'required_points' => 0,
-            'active' => true,
-        ]);
-
         foreach (range(1, 4) as $index) {
             factory(Level::class)->create([
                 'name' => 'Level '.$index,

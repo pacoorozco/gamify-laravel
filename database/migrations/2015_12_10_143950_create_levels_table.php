@@ -26,7 +26,7 @@ class CreateLevelsTable extends Migration
         });
 
         // Insert default Level (this level could not be deleted).
-        factory(Level::class)->create([
+        Level::create([
             'name' => 'Level 0',
             'required_points' => 0,
             'active' => true,

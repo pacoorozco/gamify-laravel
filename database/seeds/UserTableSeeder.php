@@ -29,25 +29,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'name' => 'User',
-            'username' => 'user',
-            'email' => 'user@example.com',
-            'password' => 'user',
-            'role' => User::USER_ROLE,
-        ]);
-        $user->profile()->save(factory(UserProfile::class)->make());
-
-        $admin = User::create([
-            'name' => 'Administrator',
-            'username' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => 'admin',
-            'role' => User::ADMIN_ROLE,
-        ]);
-        $admin->profile()->save(factory(UserProfile::class)->make());
-
-        // And finally creates 15 normal users with his/her profile
+        // Creates 15 normal users with his/her profile
         factory(User::class, 15)->create()->each(function ($u) {
             $u->profile()->save(factory(UserProfile::class)->make());
         });
