@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 2.2.0 - 2020-04-10
+
 ### Added
 - Horizontal scaling: session & cache on Redis and uploads on S3. ([#103][i103])
 - Support to custom views under `resources/views/custom`. ([#102][i102])
