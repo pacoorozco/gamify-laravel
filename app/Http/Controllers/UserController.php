@@ -16,7 +16,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('profile.show', compact('user'));
+        $questions_count = $user->pendingQuestions()->count();
+        return view('profile.show', compact('user', 'questions_count'));
     }
 
     /**

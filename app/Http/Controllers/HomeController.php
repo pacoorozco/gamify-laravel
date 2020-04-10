@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    const MAX_QUESTIONS_SHOWN = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -38,10 +40,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::find(Auth::id());
-        $questions = $user->pendingQuestions(3);
+        $user = User::findOrFail(Auth::id());
+        $questions = $user->pendingQuestions(self::MAX_QUESTIONS_SHOWN);
+        $questions_count = $questions->count();
         $usersInRanking = Game::getRanking();
 
-        return view('dashboard.index', compact('questions', 'usersInRanking'));
+        return view('dashboard.index',
+            compact('questions', 'usersInRanking', 'questions_count'));
     }
 }

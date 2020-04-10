@@ -20,8 +20,9 @@ class QuestionController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions();
+        $questions_count = $questions->count();
 
-        return view('question.index', compact('questions'));
+        return view('question.index', compact('questions', 'questions_count'));
     }
 
     /**
