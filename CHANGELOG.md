@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - AWS S3 support for image uploads.
 - Image management to Badges, Levels & Avatars. ([#92][i92], [#96][i96], [#99][i99]) 
 ### Fixed
+- Fix some typos and broken links.
 - Fix Admin dashboard render errors. ([#88][i88])
 - Fix deletion of the default level. ([#33][i33])
 
