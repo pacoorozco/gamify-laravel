@@ -11,19 +11,14 @@
 
     <li class="{{ request()->is('questions*') ? 'active' : '' }}">
         <a href="{{ route('questions.index') }}">
-            @lang('site.play') <span class="badge">{{ Auth()->user()->pendingQuestions()->count() }}</span>
+            @lang('site.play')
+            @if ($questions_count > 0)
+                <span class="label label-danger">{{ $questions_count }}</span>
+            @endif
             @if( request()->is('questions*'))
                 <span class="sr-only">(current)</span>
             @endif
         </a>
     </li>
-
-    @can('admin')
-        <li>
-            <a href="{{ route('admin.home') }}" title="@lang('site.admin_area')">
-                <i class="fa fa-gears"></i> @lang('site.admin_area')
-            </a>
-        </li>
-    @endcan
 
 </ul>

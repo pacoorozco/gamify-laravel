@@ -8,4 +8,5 @@ return [
     'obtained_points' => 'You answered this question and obtained <strong>:points points</strong>.',
     'send' => 'Send',
     'choices' => 'Choose your answer:',
+    'empty_list' => 'There are not questions to be answered.',
 ];

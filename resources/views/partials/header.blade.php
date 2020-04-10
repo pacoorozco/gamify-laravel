@@ -23,13 +23,22 @@
                 <!-- start: TOP NAVIGATION MENU -->
                 <ul class="nav navbar-nav">
 
+                    @can('access-dashboard')
+                        <li>
+                            <a href="{{ route('admin.home') }}" title="@lang('site.admin_area')">
+                                <i class="fa fa-gears"></i>
+                            </a>
+                        </li>
+                    @endcan
+
+                    {{--
                     <!-- start: NOTIFICATION DROPDOWN -->
-                    <!-- TODO -->
                     <!-- end: NOTIFICATION DROPDOWN -->
+                    --}}
 
                     <!-- start: USER DROPDOWN -->
-                @include('partials.user_dropdown')
-                <!-- end: USER DROPDOWN -->
+                    @include('partials.user_dropdown')
+                    <!-- end: USER DROPDOWN -->
                 </ul>
                 <!-- end: TOP RIGHT NAVIGATION MENU -->
             </div>

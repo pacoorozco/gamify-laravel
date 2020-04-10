@@ -4,7 +4,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](https://github.com/pacoorozco/gamify-laravel/blob/master/LICENSE)
-[![Laravel Version](https://img.shields.io/badge/Laravel-5.5-orange.svg)](https://laravel.com/docs/5.5)
+[![Laravel Version](https://img.shields.io/badge/Laravel-6.x-orange.svg)](https://laravel.com/docs/6.x)
 [![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-laravel.svg?style=flat-square)](https://github.com/pacoorozco/gamify-laravel/releases)
 
 ## Presentation

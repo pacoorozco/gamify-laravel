@@ -1,9 +1,7 @@
 @extends('layouts.master')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('site.play') :: @parent
-@endsection
+@section('title', __('site.play'))
 
 {{-- Content Header --}}
 @section('header')
@@ -27,9 +25,12 @@
     <div class="box box-default">
         <div class="box-body">
             <ul class="list-group">
-                @foreach($questions as $question)
-                    <li class="list-group-item"><a href="{{ route('questions.show', $question->short_name) }}">{{ $question->name }}</a></li>
-                @endforeach
+                @forelse($questions as $question)
+                    <li class="list-group-item"><a
+                            href="{{ route('questions.show', $question->short_name) }}">{{ $question->name }}</a></li>
+                @empty
+                    @include('question/_empty-list')
+                @endforelse
             </ul>
         </div>
         <!-- /.box-body -->
