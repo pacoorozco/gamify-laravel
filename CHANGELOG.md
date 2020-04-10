@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
+- Horizontal scaling: session & cache on Redis and uploads on S3. ([#103][i103])
 - Support to custom views under `resources/views/custom`. ([#102][i102])
 - AWS S3 support for image uploads.
 - Image management to Badges, Levels & Avatars. ([#92][i92], [#96][i96], [#99][i99]) 
@@ -12,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Fix Admin dashboard render errors. ([#88][i88])
 - Fix deletion of the default level. ([#33][i33])
 
+[i103]: https://github.com/pacoorozco/gamify-laravel/issues/103
 [i102]: https://github.com/pacoorozco/gamify-laravel/issues/102
 [i99]: https://github.com/pacoorozco/gamify-laravel/issues/99
 [i96]: https://github.com/pacoorozco/gamify-laravel/issues/96
