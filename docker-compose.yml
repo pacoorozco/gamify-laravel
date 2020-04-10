@@ -42,7 +42,7 @@ services:
       depends_on:
         - app
 
-### DATABASE: Database server #############################################
+### DATABASE: Database server #######################################
     database:
       image: mysql:5
       volumes:
@@ -55,4 +55,8 @@ services:
       ports:
         - "3306:3306"
 
-
+### REDIS: Redis server #############################################
+    redis:
+      image: redis:5
+      ports:
+        - "6379:6379"
