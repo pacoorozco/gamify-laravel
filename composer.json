@@ -87,11 +87,22 @@
     ],
     "test-coverage": [
       "vendor/bin/phpunit --coverage-html test-coverage"
+    ],
+    "build": [
+      "@composer archive --format=tar --dir=dist $COMPOSER_ARCHIVE_OPTIONS",
+      "@composer archive --format=zip --dir=dist $COMPOSER_ARCHIVE_OPTIONS"
     ]
   },
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
     "sort-packages": true
+  },
+  "archive": {
+    "exclude": [
+      "/utils",
+      "/.*",
+      "!/.env.example"
+    ]
   }
 }
