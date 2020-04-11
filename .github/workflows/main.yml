@@ -17,10 +17,10 @@ jobs:
       - name: Build project
         id: build_project
         env:
-          COMPOSER_ARCHIVE_OPTIONS: --file=gamify-laravel-${{ steps.get_version.outputs.VERSION }}
+          DIST_FILE: ./dist/gamify-laravel-dist-${{ steps.get_version.outputs.VERSION }}
         run: |
-          composer build
-          echo ::set-output name=FILENAME::gamify-laravel-${{ steps.get_version.outputs.VERSION }}
+          composer archive --format=zip --file=$DIST_FILE
+          echo ::set-output name=DIST_FILE::$DIST_FILE
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -31,6 +31,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+          body: |
+            Review [CHANGELOG](https://github.com/pacoorozco/gamify-laravel/blob/master/CHANGELOG.md) to see changes.
       - name: Upload Release Asset (zip)
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -38,6 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/${{ steps.build_project.outputs.FILENAME }}.zip
-          asset_name: ${{ steps.build_project.outputs.FILENAME }}.zip
+          asset_path: ${{ steps.build_project.outputs.DIST_FILE }}.zip
+          asset_name: ${{ steps.build_project.outputs.DIST_FILE }}.zip
           asset_content_type: application/zip
