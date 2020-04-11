@@ -12,6 +12,7 @@ package-lock.json
 /storage/debugbar
 /test-coverage
 /resources/views/custom/*
+/dist
 .env
 .env.backup
 .phpunit.result.cache
