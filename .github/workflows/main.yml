@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-env:
-  FILENAME: "gamify-laravel-${{ github.ref }}"
 
 jobs:
   build:
@@ -13,10 +11,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build project # This would actually build your project, using zip for an example artifact
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Build project
+        id: build_project
         env:
-          COMPOSER_ARCHIVE_OPTIONS: "--file=$FILENAME"
-        run: composer build
+          COMPOSER_ARCHIVE_OPTIONS: --file=gamify-laravel-${{ steps.get_version.outputs.VERSION }}
+        run: |
+          composer build
+          echo ::set-output name=FILENAME::gamify-laravel-${{ steps.get_version.outputs.VERSION }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -34,6 +38,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/gamify-laravel-${{ github.ref }}.zip
-          asset_name: gamify-laravel-${{ github.ref }}.zip
+          asset_path: ./${{ steps.build_project.outputs.FILENAME }}.zip
+          asset_name: ${{ steps.build_project.outputs.FILENAME }}.zip
           asset_content_type: application/zip
