@@ -1,10 +1,10 @@
+name: Upload Release Asset
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-
-name: Upload Release Asset
+env:
+  FILENAME: "gamify-laravel-${{ github.ref }}"
 
 jobs:
   build:
@@ -14,18 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build project # This would actually build your project, using zip for an example artifact
-        id: build_project
-        run: |
-          FILE="gamify-laravel-${{ github.ref }}"
-          COMPOSER_ARCHIVE_OPTIONS="--file=$FILE"
-          composer build
-          echo '::set-env name=FILE::$FILE'
-      - name: Print var
-        run: |
-          echo "1. $FILE"
-          echo "2. ${{ FILE }}"
-          echo "3. ${{ steps.build_project.outputs.file }}"
-          echo "4. ${{ steps.build_project.outputs.FILE }}"
+        env:
+          COMPOSER_ARCHIVE_OPTIONS: "--file=$FILENAME"
+        run: composer build
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
