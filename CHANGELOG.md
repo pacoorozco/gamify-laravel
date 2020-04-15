@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
+- Trusted proxies configuration through environment variables. See `config/trustedproxies.php`.
 - `composer build` to create distributable files of the application.
 ### Fixed
 - Remove API default route closure. It was buggy on production.
