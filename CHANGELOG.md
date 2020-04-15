@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Unreleased
 ### Added
 - `composer build` to create distributable files of the application.
+### Fixed
+- Remove API default route closure. It was buggy on production.
 
 ## 2.2.0 - 2020-04-10
 
