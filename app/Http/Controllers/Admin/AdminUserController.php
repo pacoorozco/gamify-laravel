@@ -64,7 +64,7 @@ class AdminUserController extends AdminController
     public function store(UserCreateRequest $request)
     {
         try {
-            $user = User::crete($request->validated());
+            $user = User::create($request->validated());
             $user->profile()->create();
         } catch (\Exception $exception) {
             return redirect()->back()
