@@ -20,9 +20,8 @@ class QuestionController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions();
-        $questions_count = $questions->count();
 
-        return view('question.index', compact('questions', 'questions_count'));
+        return view('question.index', compact('questions'));
     }
 
     /**
@@ -46,7 +45,7 @@ class QuestionController extends Controller
             $points += $choice->score;
             $answerCorrectness = $answerCorrectness || $choice->correct;
         }
-        // minimun points for answer is '1'
+        // minimum points for answer is '1'
         if ($points < 1) {
             $points = 1;
         }
