@@ -39,6 +39,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property  string       $type       The question type ['single'. 'multi'].
  * @property  bool         $hidden     The visibility of the question.
  * @property  string       $status     The status of the question ['draft', 'publish', 'pending', 'private', 'future].
+ * @property  string       $public_url The public URL of this question.
  * @property  \Gamify\User $creator    The User who created this question,
  * @property  \Gamify\User $updater    The last User who updated this question.
  */
@@ -46,7 +47,9 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
 
     /**
@@ -152,6 +155,16 @@ class Question extends Model
     public function excerpt($length = 55, $trailing = '...'): string
     {
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
+    }
+
+    /**
+     * Returns the public URL of this question.
+     *
+     * @return string
+     */
+    public function getPublicUrlAttribute(): string
+    {
+        return route('questions.show', ['questionname' => $this->short_name]);
     }
 
     /**

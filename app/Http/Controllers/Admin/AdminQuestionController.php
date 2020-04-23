@@ -252,18 +252,25 @@ class AdminQuestionController extends AdminController
             'name',
             'status',
             'hidden',
+            'type',
         ])->orderBy('name', 'ASC');
 
         return $dataTable->eloquent($question)
             ->editColumn('status', function (Question $question) {
-                return view('admin/question/partials._add_status_label')
+                return view('admin/question/partials._add_status_and_visibility_labels')
                     ->with('status', $question->status)
+                    ->with('hidden', $question->hidden)
                     ->render();
             })
             ->editColumn('name', function (Question $question) {
-                return view('admin/question/partials._add_visibility_label')
-                    ->with('prepend', $question->name)
-                    ->with('hidden', $question->hidden)
+                return view('admin/question/partials._question_name_with_link')
+                    ->with('name', $question->name)
+                    ->with('url', $question->public_url)
+                    ->render();
+            })
+            ->editColumn('type', function (Question $question) {
+                return view('admin/question/partials._question_type')
+                    ->with('type', $question->type)
                     ->render();
             })
             ->addColumn('actions', function (Question $question) {
@@ -272,8 +279,8 @@ class AdminQuestionController extends AdminController
                     ->with('id', $question->id)
                     ->render();
             })
-            ->rawColumns(['actions', 'status', 'name'])
-            ->removeColumn(['id', 'hidden'])
+            ->rawColumns(['actions', 'status', 'name', 'type'])
+            ->removeColumn(['id', 'hidden', 'short_name'])
             ->toJson();
     }
 }

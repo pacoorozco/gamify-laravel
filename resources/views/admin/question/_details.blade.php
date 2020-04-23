@@ -1,6 +1,7 @@
 <div class="box {{ ($action == 'show') ? 'box-info' : 'box-danger' }}">
     <div class="box-header with-border">
-        <h3 class="box-title">{{ $question->name }}
+        <h3 class="box-title">
+            @include('admin/question/partials._question_name_with_link', ['name' => $question->name, 'url' => $question->public_url])
             @include('admin/question/partials._add_status_label', ['status' => $question->status])
             @include('admin/question/partials._add_visibility_label', ['hidden' => $question->hidden])
         </h3>
