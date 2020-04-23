@@ -5,9 +5,9 @@ return [
     // General
     'short_name'           => 'Short name',
     'name'                 => 'Question name',
-    'name_help'            => 'This is an internal name, users will never see this name.',
+    'name_help'            => 'This is public, do not leak any information about the solution.',
     'question'             => 'Question text',
-    'question_help'        => 'This is the text user will see as a question.',
+    'question_help'        => 'User\'s will see this text as the question to be answered.',
     'solution'             => 'General feedback',
     'solution_help'        => 'General feedback is shown to the user after they have completed the question. You can use to give users a fully worked answer and perhaps a link to more information.',
     'type'                 => 'One or multiple answers?',
