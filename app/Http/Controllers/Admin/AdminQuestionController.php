@@ -76,7 +76,7 @@ class AdminQuestionController extends AdminController
         $question = new Question();
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
@@ -103,7 +103,7 @@ class AdminQuestionController extends AdminController
      */
     private function prepareQuestionChoices(Request $request): array
     {
-        if (!is_array($request->input('choice_text'))) {
+        if (! is_array($request->input('choice_text'))) {
             return [];
         }
 
@@ -187,7 +187,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
-            if (!$question->canBePublished()) {
+            if (! $question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
@@ -195,7 +195,7 @@ class AdminQuestionController extends AdminController
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));
