@@ -18,10 +18,10 @@ return [
     'shuffle_choices'      => 'Shuffle the choices?',
     'shuffle_choices_help' => 'If enabled, the order of the answers is randomly shuffled for each attempt.',
 
-    'hidden'      => 'Visible',
+    'hidden'      => 'Visibility',
     'hidden_help' => 'Hidden questions can be only accessed via its URL.',
-    'hidden_yes'  => 'Hide',
-    'hidden_no'   => 'Show',
+    'hidden_yes'  => 'Hidden',
+    'hidden_no'   => 'Visible',
 
     'status'            => 'Status',
     'status_list'       => [

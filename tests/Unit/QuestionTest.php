@@ -78,13 +78,4 @@ class QuestionTest extends ModelTestCase
             $this->assertEquals($want, $m->excerpt($words), 'Test case: '.$words.' words.');
         }
     }
-
-    public function test_getImageURL_method()
-    {
-        $m = new Question();
-
-        $want = asset('images/missing_question.png');
-
-        $this->assertEquals($want, $m->getImageURL());
-    }
 }

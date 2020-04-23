@@ -76,7 +76,7 @@ class AdminQuestionController extends AdminController
         $question = new Question();
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden']));
 
-        if (! $question->save()) {
+        if (!$question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
@@ -103,7 +103,7 @@ class AdminQuestionController extends AdminController
      */
     private function prepareQuestionChoices(Request $request): array
     {
-        if (! is_array($request->input('choice_text'))) {
+        if (!is_array($request->input('choice_text'))) {
             return [];
         }
 
@@ -187,7 +187,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
-            if (! $question->canBePublished()) {
+            if (!$question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
@@ -195,7 +195,7 @@ class AdminQuestionController extends AdminController
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (! $question->save()) {
+        if (!$question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));
@@ -251,17 +251,20 @@ class AdminQuestionController extends AdminController
             'short_name',
             'name',
             'status',
+            'hidden',
         ])->orderBy('name', 'ASC');
 
-        $statusLabel = [
-            'draft' => '<span class="label label-default">'.strval(__('admin/question/model.status_list.draft')).'</span>',
-            'publish' => '<span class="label label-success">'.strval(__('admin/question/model.status_list.publish')).'</span>',
-            'unpublish' => '<span class="label label-warning">'.strval(__('admin/question/model.status_list.unpublish')).'</span>',
-        ];
-
         return $dataTable->eloquent($question)
-            ->editColumn('status', function (Question $question) use ($statusLabel) {
-                return $statusLabel[$question->status];
+            ->editColumn('status', function (Question $question) {
+                return view('admin/question/partials._add_status_label')
+                    ->with('status', $question->status)
+                    ->render();
+            })
+            ->editColumn('name', function (Question $question) {
+                return view('admin/question/partials._add_visibility_label')
+                    ->with('prepend', $question->name)
+                    ->with('hidden', $question->hidden)
+                    ->render();
             })
             ->addColumn('actions', function (Question $question) {
                 return view('admin/partials.actions_dd')
@@ -269,8 +272,8 @@ class AdminQuestionController extends AdminController
                     ->with('id', $question->id)
                     ->render();
             })
-            ->rawColumns(['actions', 'status'])
-            ->removeColumn('id')
+            ->rawColumns(['actions', 'status', 'name'])
+            ->removeColumn(['id', 'hidden'])
             ->toJson();
     }
 }
