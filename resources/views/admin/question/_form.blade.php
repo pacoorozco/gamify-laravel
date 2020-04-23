@@ -1,9 +1,5 @@
 {{-- Create / Edit Question Form --}}
 
-@section('meta')
-
-@endsection
-
 @if (isset($question))
     {!! Form::model($question, [
                 'route' => ['admin.questions.update', $question],
@@ -34,22 +30,34 @@
                 <!-- name -->
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     {!! Form::label('name', __('admin/question/model.name'), ['class' => 'control-label required']) !!}
+                    <p class="text-muted">@lang('admin/question/model.name_help')</p>
                     <div class="controls">
                         {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        <span class="text-muted"><i
-                                class="fa fa-info-circle"></i> @lang('admin/question/model.name_help')</span>
                         <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                     </div>
                 </div>
                 <!-- ./ name -->
 
-                <!-- question -->
+            @isset($question)
+                <!-- link -->
+                    <div class="form-group">
+                        <p class="text-muted">
+                            <b>@lang('admin/question/model.permanent_link')</b>: {{ $question->public_url }}
+                            <a href="{{ $question->public_url }}"
+                               class="btn btn-default btn-xs" target="_blank">
+                                @lang('general.view')    <i class="fa fa-external-link"></i>
+                            </a>
+                        </p>
+                    </div>
+                <!-- ./link -->
+            @endisset
+
+            <!-- question -->
                 <div class="form-group {{ $errors->has('question') ? 'has-error' : '' }}">
                     {!! Form::label('question', __('admin/question/model.question'), ['class' => 'control-label required']) !!}
+                    <p class="text-muted">@lang('admin/question/model.question_help')</p>
                     <div class="controls">
                         {!! Form::textarea('question', null, ['class' => 'form-control editor']) !!}
-                        <span class="text-muted"><i
-                                class="fa fa-info-circle"></i> @lang('admin/question/model.question_help')</span>
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                     </div>
                 </div>
@@ -72,10 +80,10 @@
                 <!-- solution -->
                 <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
                     {!! Form::label('solution', __('admin/question/model.solution'), ['class' => 'control-label']) !!}
+                    <p class="text-muted">@lang('admin/question/model.solution_help')</p>
                     <div class="controls">
                         {!! Form::textarea('solution', null, ['class' => 'form-control editor']) !!}
-                        <span class="text-muted"><i
-                                class="fa fa-info-circle"></i> @lang('admin/question/model.solution_help')</span>
+
                         <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                     </div>
                 </div>
@@ -91,6 +99,10 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('admin/question/title.publish_section')</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
             </div>
             <div class="box-body">
                 <!-- status -->
@@ -109,11 +121,10 @@
                 <!-- hidden -->
                 <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                     {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
+                    <p class="text-muted">@lang('admin/question/model.hidden_help')</p>
                     <div class="controls">
                         {!! Form::select('hidden', ['0' => __('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')], null, ['class' => 'form-control']) !!}
-                        <span class="text-muted"><i
-                                class="fa fa-info-circle"></i> @lang('admin/question/model.hidden_help')
-                            </span>
+
                         {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
                     </div>
                 </div>
@@ -130,6 +141,7 @@
 
         </div>
         <!-- ./ publish section -->
+
         <!-- badges section -->
         <div class="box box-solid">
             <div class="box-header with-border">
@@ -153,7 +165,7 @@
         </div>
         <!-- ./ badges section -->
         <!-- tags section -->
-        <div class="box box-solid">
+        <div class="box box-solid collapsed-box">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('admin/question/title.tags_section')</h3>
                 <div class="box-tools pull-right">
@@ -183,8 +195,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <p>{{ __('admin/question/model.created_by', ['who' => $question->created_by, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
-                    <p>{{ __('admin/question/model.updated_by', ['who' => $question->updated_by, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
+                    <p>{{ __('admin/question/model.created_by', ['who' => $question->creator->name, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
+                    <p>{{ __('admin/question/model.updated_by', ['who' => $question->updater->name, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
                 </div>
             </div>
             <!-- ./ other information section -->

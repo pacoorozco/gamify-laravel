@@ -5,13 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Fixed
-- Bug when user was accessing to a published question. ([#121][i121])
-- Hidden questions where not labelled. ([#122][i122])
+- Add link to each question. Make hidden questions linkable. ([#120][i120]) 
 - Document properly 'Question name'. ([#124][i124])
+- Hidden questions where not labelled. ([#122][i122])
+- Bug when user was accessing to a published question. ([#121][i121])
 
-[i121]: https://github.com/pacoorozco/gamify-laravel/issues/121
-[i122]: https://github.com/pacoorozco/gamify-laravel/issues/122
+[i120]: https://github.com/pacoorozco/gamify-laravel/issues/120
 [i124]: https://github.com/pacoorozco/gamify-laravel/issues/124
+[i122]: https://github.com/pacoorozco/gamify-laravel/issues/122
+[i121]: https://github.com/pacoorozco/gamify-laravel/issues/121
 
 ## 2.3.1 - 2020-04-22
 

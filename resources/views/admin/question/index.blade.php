@@ -50,16 +50,16 @@
             <table id="questions" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-md-4">@lang('admin/question/model.short_name')</th>
-                    <th class="col-md-4">@lang('admin/question/model.name')</th>
+                    <th class="col-md-7">@lang('admin/question/model.name')</th>
+                    <th class="col-md-1">@lang('admin/question/model.type')</th>
                     <th class="col-md-2">@lang('admin/question/model.status')</th>
                     <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">@lang('admin/question/model.short_name')</th>
-                    <th class="col-md-4">@lang('admin/question/model.name')</th>
+                    <th class="col-md-7">@lang('admin/question/model.name')</th>
+                    <th class="col-md-1">@lang('admin/question/model.type')</th>
                     <th class="col-md-2">@lang('admin/question/model.status')</th>
                     <th class="col-md-2">@lang('general.actions')</th>
                 </tr>
@@ -84,8 +84,8 @@
                 },
                 "ajax": "{{ route('admin.questions.data') }}",
                 "columns": [
-                    {data: "short_name"},
                     {data: "name"},
+                    {data: "type"},
                     {data: "status"},
                     {data: "actions", "orderable": false, "searchable": false}
                 ],

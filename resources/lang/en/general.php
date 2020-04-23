@@ -18,5 +18,5 @@ return [
     'close' => 'Close',
     'none' => 'None',
     'never' => 'Never',
-
+    'view' => 'View',
 ];
