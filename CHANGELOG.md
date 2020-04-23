@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 2.3.2 - 2020-04-23
+
 ### Fixed
 - Add link to each question. Make hidden questions linkable. ([#120][i120]) 
 - Document properly 'Question name'. ([#124][i124])
