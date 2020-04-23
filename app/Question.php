@@ -31,14 +31,16 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * Class Question.
  *
  *
- * @property  int    $id         The object unique id.
- * @property  string $name       The name of the question.
- * @property  string $short_name The slugged name of the question.
- * @property  string $question   The text for the question.
- * @property  string $solution   The test for the solution.
- * @property  string $type       The question type ['single'. 'multi'].
- * @property  bool   $hidden     The visibility of the question.
- * @property  string $status     The status of the question ['draft', 'publish', 'pending', 'private', 'future].
+ * @property  int          $id         The object unique id.
+ * @property  string       $name       The name of the question.
+ * @property  string       $short_name The slugged name of the question.
+ * @property  string       $question   The text for the question.
+ * @property  string       $solution   The test for the solution.
+ * @property  string       $type       The question type ['single'. 'multi'].
+ * @property  bool         $hidden     The visibility of the question.
+ * @property  string       $status     The status of the question ['draft', 'publish', 'pending', 'private', 'future].
+ * @property  \Gamify\User $creator    The User who created this question,
+ * @property  \Gamify\User $updater    The last User who updated this question.
  */
 class Question extends Model
 {
@@ -200,16 +202,6 @@ class Question extends Model
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
-    }
-
-    /**
-     * Returns Image URL.
-     *
-     * @return string
-     */
-    public function getImageURL(): string
-    {
-        return asset('images/missing_question.png');
     }
 
     /**

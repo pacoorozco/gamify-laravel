@@ -1,10 +1,8 @@
-<div class="box box-solid {{ ($action == 'show') ? 'box-default' : 'box-danger' }}">
-    <div class="box-header">
+<div class="box {{ ($action == 'show') ? 'box-info' : 'box-danger' }}">
+    <div class="box-header with-border">
         <h3 class="box-title">{{ $question->name }}
-            <span class="badge">{{ __('admin/question/model.status_list.' . $question->status) }}</span>
-            @if ($question->hidden)
-                <span class="badge">hidden</span>
-            @endif
+            @include('admin/question/partials._add_status_label', ['status' => $question->status])
+            @include('admin/question/partials._add_visibility_label', ['hidden' => $question->hidden])
         </h3>
     </div>
     <div class="box-body">
@@ -74,8 +72,8 @@
                 @lang('admin/question/title.other_section')
             </div>
             <div class="panel-body">
-                <p>{{ __('admin/question/model.created_by', ['who' => $question->created_by, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
-                <p>{{ __('admin/question/model.updated_by', ['who' => $question->updated_by, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
+                <p>{{ __('admin/question/model.created_by', ['who' => $question->creator->name, 'when' => $question->created_at->toDayDateTimeString()]) }}</p>
+                <p>{{ __('admin/question/model.updated_by', ['who' => $question->updater->name, 'when' => $question->updated_at->toDayDateTimeString()]) }}</p>
             </div>
         </div>
 
