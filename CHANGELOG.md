@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Fixed
-- Bug when user was accessing to a publised question. ([#121][i121])
+- Bug when user was accessing to a published question. ([#121][i121])
+- Hidden questions where not labelled. ([#122][i122])
 
 [i121]: https://github.com/pacoorozco/gamify-laravel/issues/121
+[i122]: https://github.com/pacoorozco/gamify-laravel/issues/122
 
 ## 2.3.1 - 2020-04-22
 
