@@ -21,7 +21,27 @@ class QuestionController extends Controller
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions();
 
-        return view('question.index', compact('questions'));
+        // Levels
+        $next_level = $user->getNextLevel();
+        $diff_between_levels = $next_level->required_points - $user->experience;
+        $points_to_next_level = ($diff_between_levels > 0) ? $diff_between_levels : 0;
+        $percentage_to_next_level = ($points_to_next_level > 0)
+            ? round(($diff_between_levels / $next_level->required_points) * 100)
+            : 100;
+
+        // Questions
+        $number_of_questions = Question::published()->count();
+        $answered_questions = $user->answeredQuestions()->count();
+        $percentage_of_answered_questions = round(($answered_questions / $number_of_questions) * 100);
+
+        return view('question.index', [
+            'questions' => $questions,
+            'next_level_name' => $next_level->name,
+            'points_to_next_level' => $points_to_next_level,
+            'percentage_to_next_level' => $percentage_to_next_level,
+            'answered_questions' => $answered_questions,
+            'percentage_of_answered_questions' => $percentage_of_answered_questions,
+        ]);
     }
 
     /**
