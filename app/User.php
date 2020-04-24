@@ -179,6 +179,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Get Next level name.
+     *
+     * @return string
+     */
+    public function getNextLevelAttribute(): string
+    {
+        return $this->getNextLevel()->name;
+    }
+
+    /**
+     * Get the next Level object.
+     *
+     * @return \Gamify\Level
+     */
+    public function getNextLevel(): Level
+    {
+        return Level::findNextByExperience($this->experience);
+    }
+
+    /**
      * Returns last logged in date in "x ago" format if it has passed less than a month.
      *
      * @return string

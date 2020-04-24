@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Added
+- User's metrics on 'Play' section. ([#132][i132]) 
+
+[i132]: https://github.com/pacoorozco/gamify-laravel/issues/132
 
 ## 2.3.2 - 2020-04-23
 
