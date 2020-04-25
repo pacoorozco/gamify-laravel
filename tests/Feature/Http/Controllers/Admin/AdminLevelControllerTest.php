@@ -24,7 +24,7 @@ class AdminLevelControllerTest extends TestCase
             ['protocol' => 'GET', 'route' => route('admin.levels.edit', $level)],
             ['protocol' => 'PUT', 'route' => route('admin.levels.update', $level)],
             ['protocol' => 'GET', 'route' => route('admin.levels.delete', $level)],
-            ['protocol' => 'DELETE', 'route' => route('admin.levels.destroy', $level)]
+            ['protocol' => 'DELETE', 'route' => route('admin.levels.destroy', $level)],
         ];
 
         foreach ($test_data as $test) {
@@ -38,7 +38,6 @@ class AdminLevelControllerTest extends TestCase
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.levels.data'))
             ->assertForbidden();
-
     }
 
     /** @test */
