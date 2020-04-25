@@ -18,8 +18,8 @@ class OnlyAjax
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->ajax()) {
-            abort(ResponseCode::HTTP_FORBIDDEN, "Only ajax call are allowed");
+        if (! $request->ajax()) {
+            abort(ResponseCode::HTTP_FORBIDDEN, 'Only ajax call are allowed');
         }
 
         return $next($request);

@@ -175,7 +175,7 @@ class AdminBadgeController extends AdminController
                 return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">', $badge->image, $badge->name);
             })
             ->editColumn('active', function (Badge $badge) {
-                return ($badge->active) ? (string)__('general.yes') : (string)__('general.no');
+                return ($badge->active) ? (string) __('general.yes') : (string) __('general.no');
             })
             ->addColumn('actions', function (Badge $badge) {
                 return view('admin.partials.actions_dd')
