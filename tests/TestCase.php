@@ -10,7 +10,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * Return an admin user
+     * Return an admin user.
      *
      * @param array $overrides - Set attributes to the user.
      *
@@ -24,7 +24,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Return an user
+     * Return an user.
      *
      * @param array $overrides - Set attributes to the user.
      *
@@ -37,7 +37,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Acting as an admin
+     * Acting as an admin.
      *
      * @param string|null $driver
      *
@@ -51,7 +51,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Acting as an user
+     * Acting as an user.
      *
      * @param string|null $driver
      *

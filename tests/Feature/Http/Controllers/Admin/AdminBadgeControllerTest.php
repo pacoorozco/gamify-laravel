@@ -23,7 +23,7 @@ class AdminBadgeControllerTest extends TestCase
             ['protocol' => 'GET', 'route' => route('admin.badges.edit', $badge)],
             ['protocol' => 'PUT', 'route' => route('admin.badges.update', $badge)],
             ['protocol' => 'GET', 'route' => route('admin.badges.delete', $badge)],
-            ['protocol' => 'DELETE', 'route' => route('admin.badges.destroy', $badge)]
+            ['protocol' => 'DELETE', 'route' => route('admin.badges.destroy', $badge)],
         ];
 
         foreach ($test_data as $test) {
@@ -37,7 +37,6 @@ class AdminBadgeControllerTest extends TestCase
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.badges.data'))
             ->assertForbidden();
-
     }
 
     /** @test */
