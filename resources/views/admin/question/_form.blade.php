@@ -57,7 +57,7 @@
                     {!! Form::label('question', __('admin/question/model.question'), ['class' => 'control-label required']) !!}
                     <p class="text-muted">@lang('admin/question/model.question_help')</p>
                     <div class="controls">
-                        {!! Form::textarea('question', null, ['class' => 'form-control editor']) !!}
+                        {!! Form::textarea('question', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
                         <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     {!! Form::label('solution', __('admin/question/model.solution'), ['class' => 'control-label']) !!}
                     <p class="text-muted">@lang('admin/question/model.solution_help')</p>
                     <div class="controls">
-                        {!! Form::textarea('solution', null, ['class' => 'form-control editor']) !!}
+                        {!! Form::textarea('solution', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
 
                         <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                     </div>
