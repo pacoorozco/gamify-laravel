@@ -173,6 +173,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function data_returns_proper_content()
     {
+        // One level has already been created: 'default' level.
         factory(Level::class, 2)->create();
 
         $this->actingAsAdmin()
@@ -184,6 +185,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function data_fails_for_non_ajax_calls()
     {
+        // One level has already been created: 'default' level.
         factory(Level::class, 3)->create();
 
         $this->actingAsAdmin()
