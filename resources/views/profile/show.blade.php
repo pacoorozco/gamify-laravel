@@ -24,34 +24,49 @@
         <div class="col-md-4">
 
             <!-- Profile Image -->
-            <div class="box box-primary">
-                <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive" src="{{ $user->profile->avatar }}"
-                         alt="User profile picture">
-
-                    <h3 class="profile-username text-center">{{ $user->name }}</h3>
-
-                    <p class="text-muted text-center">{{ $user->level }}</p>
-
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <strong>@lang('user/profile.experience')</strong> <a class="pull-right">{{ $user->experience }}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Questions</strong> <a class="pull-right">{{ count($user->answeredQuestions) }}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Badges</strong> <a class="pull-right">{{ count($user->getCompletedBadges()) }}</a>
-                        </li>
-                    </ul>
+            <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-aqua-active">
+                    <h3 class="widget-user-username">{{ $user->name }}</h3>
+                    <h5 class="widget-user-desc">{{ $user->level }}</h5>
                 </div>
-                <!-- /.box-body -->
+                <div class="widget-user-image">
+                    <img class="img-circle" src="{{ $user->profile->avatar }}" alt="User Avatar">
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">{{ $user->experience }}</h5>
+                                <span class="description-text">XP</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">{{ count($user->answeredQuestions) }}</h5>
+                                <span class="description-text">ANSWERS</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="description-block">
+                                <h5 class="description-header">{{ count($user->getCompletedBadges()) }}</h5>
+                                <span class="description-text">BADGES</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
             </div>
             <!-- /.profile image -->
 
             <!-- About Me -->
-            @include('profile._about_me')
-            <!-- /.about me -->
+        @include('profile._about_me')
+        <!-- /.about me -->
 
         </div>
         <div class="col-md-8">
@@ -68,9 +83,9 @@
                     </li>
                     --}}
                     @if ($user->username == Auth::user()->username)
-                    <li>
-                        <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>
-                    </li>
+                        <li>
+                            <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>
+                        </li>
                     @endif
                 </ul>
                 <div class="tab-content">
@@ -83,9 +98,9 @@
                     </div>
                     --}}
                     @if ($user->username == Auth::user()->username)
-                    <div class="tab-pane" id="settings">
-                        @include('profile._settings')
-                    </div>
+                        <div class="tab-pane" id="settings">
+                            @include('profile._settings')
+                        </div>
                     @endif
                 </div>
             </div>
