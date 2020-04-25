@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
-- User's metrics on 'Play' section. ([#132][i132]) 
+- Add user status to the profile information.
+- User's metrics on 'Play' section. ([#132][i132])
+
+### Changed
+- Profile look and feel.
+- Question forms are now responsible.
+- Update dependencies. 
 
 [i132]: https://github.com/pacoorozco/gamify-laravel/issues/132
 
