@@ -118,8 +118,7 @@
             </tr>
             <tr>
                 <td>@lang('user/profile.roles'):</td>
-                <td>
-                    <span class="label label-sm label-info">TODO: User</span></td>
+                <td>{{ ucfirst($user->role) }}</td>
             </tr>
             </tbody>
         </table>
