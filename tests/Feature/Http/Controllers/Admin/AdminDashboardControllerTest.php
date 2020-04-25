@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AdminDashboardControllerTest extends TestCase
@@ -30,6 +29,14 @@ class AdminDashboardControllerTest extends TestCase
         $this->actingAsAdmin()
             ->get(route('admin.home'))
             ->assertOK()
-            ->assertViewIs('admin.dashboard.index');
+            ->assertViewIs('admin.dashboard.index')
+            ->assertViewHasAll([
+                'members_count',
+                'questions_count',
+                'badges_count',
+                'levels_count',
+                'latest_questions',
+                'latest_users',
+            ]);
     }
 }
