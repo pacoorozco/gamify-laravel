@@ -23,7 +23,7 @@ class AdminUserControllerTest extends TestCase
             ['protocol' => 'GET', 'route' => route('admin.users.edit', $user)],
             ['protocol' => 'PUT', 'route' => route('admin.users.update', $user)],
             ['protocol' => 'GET', 'route' => route('admin.users.delete', $user)],
-            ['protocol' => 'DELETE', 'route' => route('admin.users.destroy', $user)]
+            ['protocol' => 'DELETE', 'route' => route('admin.users.destroy', $user)],
         ];
 
         foreach ($test_data as $test) {
@@ -37,7 +37,6 @@ class AdminUserControllerTest extends TestCase
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.users.data'))
             ->assertForbidden();
-
     }
 
     /** @test */
@@ -184,7 +183,6 @@ class AdminUserControllerTest extends TestCase
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.users.data'))
             ->assertJsonCount(5, 'data');
-
     }
 
     /** @test */
