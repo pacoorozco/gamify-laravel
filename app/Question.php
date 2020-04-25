@@ -184,7 +184,7 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePublished(Builder $query)
+    public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', self::PUBLISH_STATUS);
     }
@@ -196,9 +196,21 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisible(Builder $query)
+    public function scopeVisible(Builder $query): Builder
     {
         return $query->where('hidden', false);
+    }
+
+    /**
+     * Scope a query to order question by latest published.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLatestPublished(Builder $query): Builder
+    {
+        return $query->orderBy('publication_date', 'desc');
     }
 
     /**

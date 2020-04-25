@@ -46,5 +46,6 @@ return [
     // Created / last saved
     'created_by' => 'Created by :who on :when',
     'updated_by' => 'Last saved by :who on :when',
+    'published_at' => 'Published at',
 
 ];

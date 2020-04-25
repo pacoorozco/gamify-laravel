@@ -18,6 +18,7 @@
 
 namespace Gamify;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
@@ -234,9 +235,21 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMember($query)
+    public function scopeMember(Builder $query): Builder
     {
         return $query->where('role', self::USER_ROLE);
+    }
+
+    /**
+     * Scope a query to order users by latest registered.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLatest(Builder $query): Builder
+    {
+        return $query->orderBy('created_at', 'desc');
     }
 
     /**

@@ -26,6 +26,7 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
+use Gamify\Level;
 use Gamify\Question;
 use Gamify\User;
 
@@ -38,12 +39,13 @@ class AdminDashboardController extends AdminController
      */
     public function index()
     {
-        $data = [];
-        $data['badges'] = Badge::all()->count();
-        $data['questions'] = Question::published()->count();
-        $data['answers'] = User::Member()->with('answeredQuestions')->count();
-        $data['members'] = User::Member()->count();
-
-        return view('admin.dashboard.index', compact('data'));
+        return view('admin.dashboard.index', [
+            'badges_count' => Badge::active()->count(),
+            'questions_count' => Question::published()->count(),
+            'members_count' => User::Member()->count(),
+            'levels_count' => Level::active()->count(),
+            'latest_users' => User::latest()->take(5)->get(),
+            'latest_questions' => Question::published()->latestPublished()->take(5)->get(),
+        ]);
     }
 }
