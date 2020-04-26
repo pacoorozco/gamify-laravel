@@ -202,18 +202,6 @@ class Question extends Model
     }
 
     /**
-     * Scope a query to order question by latest published.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeLatestPublished(Builder $query): Builder
-    {
-        return $query->orderBy('publication_date', 'desc');
-    }
-
-    /**
      * Return if a question can be published.
      * 1. Has at least one correct answer.
      *

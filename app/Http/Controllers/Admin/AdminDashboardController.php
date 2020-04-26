@@ -42,10 +42,10 @@ class AdminDashboardController extends AdminController
         return view('admin.dashboard.index', [
             'badges_count' => Badge::active()->count(),
             'questions_count' => Question::published()->count(),
-            'members_count' => User::Member()->count(),
+            'members_count' => User::member()->count(),
             'levels_count' => Level::active()->count(),
-            'latest_users' => User::latest()->take(5)->get(),
-            'latest_questions' => Question::published()->latestPublished()->take(5)->get(),
+            'latest_users' => User::orderBy('created_at', 'desc')->take(5)->get(),
+            'latest_questions' => Question::published()->orderBy('publication_date', 'desc')->take(5)->get(),
         ]);
     }
 }

@@ -161,6 +161,7 @@ class AdminQuestionController extends AdminController
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
             }
+            $question->publication_date = now();
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
