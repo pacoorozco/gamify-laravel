@@ -101,7 +101,7 @@ class AdminQuestionController extends AdminController
     public function show(Question $question)
     {
         return view('admin/question/show', [
-            'question' => $question
+            'question' => $question,
         ]);
     }
 
@@ -127,7 +127,7 @@ class AdminQuestionController extends AdminController
             'question' => $question,
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
             'selectedTags' => $question->tagArray,
-            'availableActions' => $availableActions
+            'availableActions' => $availableActions,
         ]);
     }
 
@@ -156,7 +156,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
-            if (!$question->canBePublished()) {
+            if (! $question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
@@ -165,7 +165,7 @@ class AdminQuestionController extends AdminController
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (!$question->save()) {
+        if (! $question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));
