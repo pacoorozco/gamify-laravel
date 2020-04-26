@@ -24,11 +24,11 @@ class QuestionCreateRequest extends Request
         return [
             'name' => ['required'],
             'question' => ['required'],
-   //         'solution' => [''],
+            //         'solution' => [''],
             'type' => ['required', 'in:single,multi'],
             'hidden' => ['required', 'boolean'],
             'status' => ['required', 'in:draft,publish,unpublish'],
-/*
+            /*
             'tags' => ['nullable', 'array'],
 
             'choice_text' => ['required', 'array', 'min:2'],
