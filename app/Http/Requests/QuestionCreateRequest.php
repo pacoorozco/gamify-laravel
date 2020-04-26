@@ -21,23 +21,21 @@ class QuestionCreateRequest extends Request
      */
     public function rules()
     {
-        $rules = [
-            'name'     => ['required'],
+        return [
+            'name' => ['required'],
             'question' => ['required'],
-            'solution' => [''],
-            'type'     => ['required', 'in:single,multi'],
-            'hidden'   => ['required', 'boolean'],
-            'status'   => ['required', 'in:draft,publish,unpublish'],
+   //         'solution' => [''],
+            'type' => ['required', 'in:single,multi'],
+            'hidden' => ['required', 'boolean'],
+            'status' => ['required', 'in:draft,publish,unpublish'],
+/*
+            'tags' => ['nullable', 'array'],
+
+            'choice_text' => ['required', 'array', 'min:2'],
+            'choice_text.*' => ['required', 'string'],
+
+            'choice_score' => ['required', 'array', 'min:2'],
+            'choice_score.*' => ['required', 'integer'],*/
         ];
-
-        // TODO: validate dynamic choices
-//        foreach ($this->request->get('choice_text') as $key => $val) {
-//            if (!empty($val)) {
-//                $rules['choice_text.' . $key] = 'required';
-//                $rules['choice_score.' . $key] = 'required|integer';
-//            }
-//        }
-
-        return $rules;
     }
 }

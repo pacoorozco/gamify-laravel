@@ -10,7 +10,7 @@ $factory->define(Level::class, function (Faker $faker) {
 
     return [
         'name' => 'Level '.$color,
-        'required_points' => $faker->unique()->randomNumber(),
+        'required_points' => $faker->unique()->randomNumber() + 5,
         'active' => $faker->boolean,
     ];
 });

@@ -175,9 +175,9 @@
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    {!! Form::label('tag_list', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                    {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {!! Form::select('tag_list[]', $availableTags, $selectedTags, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tag_list']) !!}
+                        {!! Form::select('tags[]', $availableTags, $selectedTags, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tag_list']) !!}
                     </div>
                 </div>
             </div>
