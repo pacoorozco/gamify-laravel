@@ -43,6 +43,7 @@ class AdminQuestionControllerTest extends TestCase
     private function createQuestionAsAdmin(array $overrides = []): Question
     {
         $this->actingAsAdmin();
+
         return factory(Question::class)->create($overrides);
     }
 
