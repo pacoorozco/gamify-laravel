@@ -1,14 +1,10 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/site.dashboard') :: @parent
-@endsection
+@section('title', __('admin/site.dashboard'))
 
 {{-- Content Header --}}
-@section('header')
-    @lang('admin/site.dashboard')
-@endsection
+@section('header', __('admin/site.dashboard'))
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -18,64 +14,21 @@
 @endsection
 
 @section('content')
-        <!-- Info boxes -->
+    <!-- info boxes -->
     <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="fa fa-trophy"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Badges</span>
-                    <span class="info-box-number">{{ $data['badges'] }}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="fa fa-comments"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Questions</span>
-                    <span class="info-box-number">{{ $data['questions'] }}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-bank"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Answers</span>
-                    <span class="info-box-number">{{ $data['answers'] }}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Members</span>
-                    <span class="info-box-number">{{ $data['members'] }}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        @include('admin.dashboard._info_boxes')
     </div>
-    <!-- /.row -->
+    <!-- ./info boxes -->
+
+    <div class="row">
+        <div class="col-md-6">
+            @include('admin.dashboard._latest_published_questions')
+        </div>
+        <div class="col-md-6">
+            @include('admin.dashboard._latest_registered_users')
+        </div>
+
+    </div>
+
+
 @endsection

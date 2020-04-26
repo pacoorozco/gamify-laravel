@@ -184,7 +184,7 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePublished(Builder $query)
+    public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', self::PUBLISH_STATUS);
     }
@@ -196,7 +196,7 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisible(Builder $query)
+    public function scopeVisible(Builder $query): Builder
     {
         return $query->where('hidden', false);
     }

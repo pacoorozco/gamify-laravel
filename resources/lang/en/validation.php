@@ -146,6 +146,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'choice_text' => 'answer text',
+        'choice_points' => 'answer points',
+    ],
 
 ];

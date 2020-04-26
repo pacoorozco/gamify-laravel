@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Badge;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Yajra\Datatables\Datatables;
 
 class AdminQuestionController extends AdminController
@@ -39,9 +39,9 @@ class AdminQuestionController extends AdminController
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
-        return view('admin/question/index');
+        return view('admin.question.index');
     }
 
     /**
@@ -49,19 +49,11 @@ class AdminQuestionController extends AdminController
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
-        $availableTagArray = Question::allTags();
-        $availableTags = array_combine($availableTagArray, $availableTagArray);
-        $selectedTags = [];
-
-        $availableActions = [];
-        // get actions that hasn't not been used
-        foreach (Badge::all() as $action) {
-            $availableActions[$action->id] = $action->name;
-        }
-
-        return view('admin/question/create', compact('availableTags', 'selectedTags', 'availableActions'));
+        return view('admin.question.create', [
+            'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
+        ]);
     }
 
     /**
@@ -71,60 +63,32 @@ class AdminQuestionController extends AdminController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(QuestionCreateRequest $request)
+    public function store(QuestionCreateRequest $request): RedirectResponse
     {
-        $question = new Question();
-        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden']));
+        try {
+            $question = Question::create($request->only([
+                'name',
+                'question',
+                'solution',
+                'type',
+                'hidden',
+            ]));
 
-        if (! $question->save()) {
+            // The request is an array, validation has ensured it.
+            if ($request->has('tags')) {
+                $question->tag($request->input('tags'));
+            }
+
+            // Save Question Choices
+            $question->choices()->createMany($this->prepareQuestionChoices($request->input('choice_text'), $request->input('choice_score')));
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
         }
 
-        // Save Question Tags
-        if (is_array($request->input('tag_list'))) {
-            $question->tag($request->input('tag_list'));
-        }
-
-        // Save Question Choices
-        $question->choices()->createMany($this->prepareQuestionChoices($request));
-
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.create.success'));
-    }
-
-    /**
-     * Return an array of choices to be associated to a Question.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array
-     */
-    private function prepareQuestionChoices(Request $request): array
-    {
-        if (! is_array($request->input('choice_text'))) {
-            return [];
-        }
-
-        $choice_texts = $request->input('choice_text');
-        $choice_scores = $request->input('choice_score');
-
-        $numberOfChoices = count($choice_texts);
-        $choices = [];
-        for ($i = 0; $i < $numberOfChoices; $i++) {
-            if (empty($choice_texts[$i])) {
-                continue;
-            }
-
-            array_push($choices, [
-                'text' => $choice_texts[$i],
-                'score' => is_numeric($choice_scores[$i]) ? $choice_scores[$i] : 0,
-                'correct' => ($choice_scores[$i] > 0),
-            ]);
-        }
-
-        return $choices;
     }
 
     /**
@@ -136,7 +100,9 @@ class AdminQuestionController extends AdminController
      */
     public function show(Question $question)
     {
-        return view('admin/question/show', compact('question'));
+        return view('admin/question/show', [
+            'question' => $question,
+        ]);
     }
 
     /**
@@ -148,10 +114,8 @@ class AdminQuestionController extends AdminController
      */
     public function edit(Question $question)
     {
-        $availableTagArray = Question::allTags();
-        $availableTags = array_combine($availableTagArray, $availableTagArray);
-        $selectedTagsArray = $question->tagArray;
-        $selectedTags = array_combine($selectedTagsArray, $selectedTagsArray);
+        //$selectedTagsArray = $question->tagArray;
+        //$selectedTags = array_combine($selectedTagsArray, $selectedTagsArray);
 
         $availableActions = [];
         // get actions that hasn't not been used
@@ -159,7 +123,12 @@ class AdminQuestionController extends AdminController
             $availableActions[$action->id] = $action->name;
         }
 
-        return view('admin/question/edit', compact('question', 'availableTags', 'selectedTags', 'availableActions'));
+        return view('admin/question/edit', [
+            'question' => $question,
+            'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
+            'selectedTags' => $question->tagArray,
+            'availableActions' => $availableActions,
+        ]);
     }
 
     /**
@@ -183,7 +152,7 @@ class AdminQuestionController extends AdminController
         // 1st. Deletes the old ones
         $question->choices()->delete();
         // 2nd. Adds the new ones
-        $question->choices()->createMany($this->prepareQuestionChoices($request));
+        $question->choices()->createMany($this->prepareQuestionChoices($request->input('choice_text'), $request->input('choice_score')));
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
@@ -192,6 +161,7 @@ class AdminQuestionController extends AdminController
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
             }
+            $question->publication_date = now();
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
@@ -214,7 +184,9 @@ class AdminQuestionController extends AdminController
      */
     public function delete(Question $question)
     {
-        return view('admin/question/delete', compact('question'));
+        return view('admin/question/delete', [
+            'question' => $question,
+        ]);
     }
 
     /**
@@ -227,7 +199,9 @@ class AdminQuestionController extends AdminController
      */
     public function destroy(Question $question)
     {
-        if ($question->delete() !== true) {
+        try {
+            $question->delete();
+        } catch (\Exception $exception) {
             return redirect()->back()
                 ->with('error', __('admin/question/messages.delete.error'));
         }
@@ -282,5 +256,32 @@ class AdminQuestionController extends AdminController
             ->rawColumns(['actions', 'status', 'name', 'type'])
             ->removeColumn(['id', 'hidden', 'short_name'])
             ->toJson();
+    }
+
+    /**
+     * Return an array of choices to be associated to a Question.
+     *
+     * @param array $choice_texts  - Text of the choices
+     * @param array $choice_scores - Score of the choices
+     *
+     * @return array
+     */
+    private function prepareQuestionChoices(array $choice_texts, $choice_scores): array
+    {
+        $numberOfChoices = count($choice_texts);
+        $choices = [];
+        for ($i = 0; $i < $numberOfChoices; $i++) {
+            if (empty($choice_texts[$i])) {
+                continue;
+            }
+
+            array_push($choices, [
+                'text' => $choice_texts[$i],
+                'score' => is_numeric($choice_scores[$i]) ? $choice_scores[$i] : 0,
+                'correct' => ($choice_scores[$i] > 0),
+            ]);
+        }
+
+        return $choices;
     }
 }

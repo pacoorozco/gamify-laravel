@@ -2,15 +2,16 @@
 
 return [
 
-    'username'              => 'Username',
-    'name'                  => 'Full Name',
-    'email'                 => 'E-mail Address',
-    'role'                  => 'Role',
-    'password'              => 'Password',
+    'username' => 'Username',
+    'name' => 'Full Name',
+    'email' => 'E-mail Address',
+    'role' => 'Role',
+    'password' => 'Password',
     'password_confirmation' => 'Password Confirmation',
-    'roles_list'            => [
-        'user'          => 'Member',
+    'roles_list' => [
+        'user' => 'Member',
         'administrator' => 'Administrator',
     ],
+    'created_at' => 'Registered at',
 
 ];

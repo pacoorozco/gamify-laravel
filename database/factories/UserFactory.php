@@ -27,6 +27,7 @@
 
 use Faker\Generator as Faker;
 use Gamify\User;
+use Gamify\UserProfile;
 use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
@@ -40,3 +41,10 @@ $factory->define(User::class, function (Faker $faker) {
         'role' => User::USER_ROLE,
     ];
 });
+
+$factory->state(User::class, 'with_profile', [])
+    ->afterCreatingState(User::class, 'with_profile', function ($user, $faker) {
+        factory(UserProfile::class)->create([
+            'user_id' => $user->id,
+        ]);
+    });

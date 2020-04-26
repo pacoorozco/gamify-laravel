@@ -18,9 +18,11 @@
 
 namespace Gamify;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -234,7 +236,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMember($query)
+    public function scopeMember(Builder $query): Builder
     {
         return $query->where('role', self::USER_ROLE);
     }

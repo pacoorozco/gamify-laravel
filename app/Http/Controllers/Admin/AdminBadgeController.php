@@ -39,7 +39,7 @@ class AdminBadgeController extends AdminController
      */
     public function index()
     {
-        return view('admin/badge/index');
+        return view('admin.badge.index');
     }
 
     /**
@@ -49,7 +49,7 @@ class AdminBadgeController extends AdminController
      */
     public function create()
     {
-        return view('admin/badge/create');
+        return view('admin.badge.create');
     }
 
     /**
@@ -82,7 +82,7 @@ class AdminBadgeController extends AdminController
      */
     public function show(Badge $badge)
     {
-        return view('admin/badge/show', compact('badge'));
+        return view('admin.badge.show', compact('badge'));
     }
 
     /**
@@ -94,7 +94,7 @@ class AdminBadgeController extends AdminController
      */
     public function edit(Badge $badge)
     {
-        return view('admin/badge/edit', compact('badge'));
+        return view('admin.badge.edit', compact('badge'));
     }
 
     /**
@@ -128,7 +128,7 @@ class AdminBadgeController extends AdminController
      */
     public function delete(Badge $badge)
     {
-        return view('admin/badge/delete', compact('badge'));
+        return view('admin.badge.delete', compact('badge'));
     }
 
     /**
@@ -178,7 +178,7 @@ class AdminBadgeController extends AdminController
                 return ($badge->active) ? (string) __('general.yes') : (string) __('general.no');
             })
             ->addColumn('actions', function (Badge $badge) {
-                return view('admin/partials.actions_dd')
+                return view('admin.partials.actions_dd')
                     ->with('model', 'badges')
                     ->with('id', $badge->id)
                     ->render();
