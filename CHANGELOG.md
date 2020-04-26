@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
+- Two new widgets on admin dashboard: Latest published questions & latest registered users.
 - Add user status to the profile information.
 - User's metrics on 'Play' section. ([#132][i132])
 
