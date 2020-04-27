@@ -44,7 +44,7 @@ class AdminQuestionControllerTest extends TestCase
     {
         $this->actingAsAdmin();
 
-        return factory(Question::class)->create($overrides);
+        return factory(Question::class)->state('with_choices')->create($overrides);
     }
 
     /** @test */

@@ -29,7 +29,7 @@ use Faker\Generator as Faker;
 use Gamify\Question;
 use Gamify\QuestionChoice;
 
-// To create a user with fake information
+// To create a user with fake information.
 $factory->define(Question::class, function (Faker $faker) {
     return [
         'name' => $faker->sentence,
@@ -41,9 +41,19 @@ $factory->define(Question::class, function (Faker $faker) {
     ];
 });
 
+// Create two choices for the Question.
 $factory->state(Question::class, 'with_choices', [])
-    ->afterCreatingState(Question::class, 'with_choices', function ($question, $faker) {
-        factory(QuestionChoice::class)->create([
-            'question_id' => $question->id,
+    ->afterCreatingState(Question::class, 'with_choices', function ($question) {
+        $question->choices()->saveMany([
+            new QuestionChoice([
+                'text' => 'correct answer',
+                'correct' => true,
+                'score' => 5,
+            ]),
+            new QuestionChoice([
+                'text' => 'incorrect answer',
+                'correct' => false,
+                'score' => -5,
+            ]),
         ]);
     });
