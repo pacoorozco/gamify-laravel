@@ -42,10 +42,11 @@ class HomeController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions(self::MAX_QUESTIONS_SHOWN);
-        $questions_count = $questions->count();
-        $usersInRanking = Game::getRanking();
 
-        return view('dashboard.index',
-            compact('questions', 'usersInRanking', 'questions_count'));
+        return view('dashboard.index', [
+            'questions' => $questions,
+            'questions_count' => $questions->count(),
+            'usersInRanking' => Game::getRanking(),
+        ]);
     }
 }

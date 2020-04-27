@@ -194,6 +194,8 @@ class User extends Authenticatable
      * Get the next Level object.
      *
      * @return \Gamify\Level
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function getNextLevel(): Level
     {
