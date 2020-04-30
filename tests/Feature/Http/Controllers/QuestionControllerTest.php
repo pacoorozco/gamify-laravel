@@ -30,10 +30,10 @@ class QuestionControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin([
+        $question = $this->createQuestionAsAdmin(1, [
             'status' => Question::PUBLISH_STATUS,
             'publication_date' => now(),
-        ]);
+        ])->first();
 
         $this->actingAsUser()
             ->get(route('questions.show', $question->short_name))
@@ -45,10 +45,10 @@ class QuestionControllerTest extends TestCase
     /** @test */
     public function answer_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin([
+        $question = $this->createQuestionAsAdmin(1, [
             'status' => Question::PUBLISH_STATUS,
             'publication_date' => now(),
-        ]);
+        ])->first();
         // Answer with the first choice.
         $input_data = [
             'choices' => [$question->choices()->first()->id],
@@ -62,19 +62,5 @@ class QuestionControllerTest extends TestCase
                 'answer',
                 'question'
             ]);
-    }
-
-    /**
-     * Create a Question acting as Admin user to honor Blameable Trait.
-     *
-     * @param array $overrides
-     *
-     * @return \Gamify\Question
-     */
-    private function createQuestionAsAdmin(array $overrides = []): Question
-    {
-        $this->actingAsAdmin();
-
-        return factory(Question::class)->state('with_choices')->create($overrides);
     }
 }

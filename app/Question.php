@@ -31,23 +31,27 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * Class Question.
  *
  *
- * @property  int          $id         The object unique id.
- * @property  string       $name       The name of the question.
- * @property  string       $short_name The slugged name of the question.
- * @property  string       $question   The text for the question.
- * @property  string       $solution   The test for the solution.
- * @property  string       $type       The question type ['single'. 'multi'].
- * @property  bool         $hidden     The visibility of the question.
- * @property  string       $status     The status of the question ['draft', 'publish', 'pending', 'private', 'future].
- * @property  string       $public_url The public URL of this question.
- * @property  \Gamify\User $creator    The User who created this question,
- * @property  \Gamify\User $updater    The last User who updated this question.
+ * @property  int                        $id               The object unique id.
+ * @property  string                     $name             The name of the question.
+ * @property  string                     $short_name       The slugged name of the question.
+ * @property  string                     $question         The text for the question.
+ * @property  string                     $solution         The test for the solution.
+ * @property  string                     $type             The question type ['single'. 'multi'].
+ * @property  bool                       $hidden           The visibility of the question.
+ * @property  string                     $status           The status of the question ['draft', 'publish', 'pending',
+ *            'private', 'future].
+ * @property  string                     $public_url       The public URL of this question.
+ * @property  \Gamify\User               $creator          The User who created this question,
+ * @property  \Gamify\User               $updater          The last User who updated this question.
+ * @property  \Illuminate\Support\Carbon $publication_date The data when the question was published.
  */
 class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
 
     /**
@@ -203,7 +207,8 @@ class Question extends Model
 
     /**
      * Return if a question can be published.
-     * 1. Has at least one correct answer.
+     * 1. It has at least to choices
+     * 2. It has at least one correct choice
      *
      * @return bool
      */
@@ -213,6 +218,29 @@ class Question extends Model
         $answers_correct_count = $this->choices()->where('correct', true)->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
+    }
+
+    /**
+     * Set a Question as published.
+     *
+     * @return bool
+     *
+     * @throws \Throwable
+     */
+    public function publish(): bool
+    {
+        if ($this->status === self::PUBLISH_STATUS) {
+            return true;
+        }
+
+        if (!$this->canBePublished()) {
+            return false;
+        }
+
+        $this->status = Question::PUBLISH_STATUS;
+        $this->publication_date = now();
+
+        return $this->saveOrFail();
     }
 
     /**

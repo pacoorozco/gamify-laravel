@@ -15,32 +15,37 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_pendingQuestions_returns_collection()
+    /** @test */
+    public function pendingQuestions_returns_a_collection()
     {
         $u = factory(User::class)->create();
 
-        factory(Question::class, 5)->create([
-            'status' => Question::PUBLISH_STATUS,
-        ]);
-
-        $got = $u->pendingQuestions();
-
-        $this->assertInstanceOf(Collection::class, $got);
+        $this->assertInstanceOf(Collection::class, $u->pendingQuestions());
     }
 
-    public function test_pendingQuestions_with_limit()
+    /** @test */
+    public function pendingQuestions_returns_specified_number_of_questions()
+    {
+        $u = factory(User::class)->create();
+        // Creates 5 published questions.
+        $this->createQuestionAsAdmin(5)->each(function (Question $q) {
+              $q->publish();
+        });
+
+        // We only want 3 of the 5 created questions.
+        $this->assertCount(3, $u->pendingQuestions(3));
+    }
+
+    /** @test */
+    public function pendingQuestions_returns_zero_when_no_questions()
     {
         $u = factory(User::class)->create();
 
-        $limit = 2;
-        factory(Question::class, $limit + 3)->create([
-            'status' => Question::PUBLISH_STATUS,
-        ]);
-
-        $this->assertCount($limit, $u->pendingQuestions($limit));
+        $this->assertCount(0, $u->pendingQuestions());
     }
 
-    public function test_addExperience_method()
+    /** @test */
+    public function addExperience_method()
     {
         $u = factory(User::class)->create();
 
@@ -50,24 +55,24 @@ class UserTest extends TestCase
         $this->assertEquals($want, $u->experience);
     }
 
-    public function test_returns_uploaded_image()
+    /** @test  */
+    public function returns_image_when_uploaded_avatar()
     {
-        $user = factory(User::class)->create();
-        $user->profile()->create();
+        $user = factory(User::class)->state('with_profile')->create();
         Storage::fake('public');
 
         $image = UploadedFile::fake()->image('avatar.jpg');
         $this->assertNull($user->getOriginal('avatar'));
         $user->profile->uploadImage($image);
 
-        $this->assertEquals('avatars/'.$image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
-        $this->assertEquals('/storage/avatars/'.$image->hashName(), $user->profile->avatar);
+        $this->assertEquals('avatars/' . $image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
+        $this->assertEquals('/storage/avatars/' . $image->hashName(), $user->profile->avatar);
     }
 
-    public function test_returns_default_image_when_field_is_empty()
+    /** @test */
+    public function returns_default_image_when_avatar_is_empty()
     {
-        $user = factory(User::class)->create();
-        $user->profile()->create();
+        $user = factory(User::class)->state('with_profile')->create();
 
         $this->assertNull($user->profile->getOriginal('avatar'));
         $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatar);

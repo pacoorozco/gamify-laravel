@@ -2,7 +2,9 @@
 
 namespace Tests;
 
+use Gamify\Question;
 use Gamify\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -62,5 +64,22 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($this->user(), $driver);
 
         return $this;
+    }
+
+    /**
+     * Create Questions acting as Admin user to honor Blameable Trait.
+     *
+     * @param int   $number
+     * @param array $overrides
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function createQuestionAsAdmin(int $number = 1, array $overrides = []): Collection
+    {
+        $this->actingAsAdmin();
+
+        return factory(Question::class, $number)
+            ->states('with_choices')
+            ->create($overrides);
     }
 }

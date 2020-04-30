@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -171,6 +170,123 @@ class User extends Authenticatable
     }
 
     /**
+     * Returns last logged in date in "x ago" format if it has passed less than a month.
+     *
+     * @return string
+     */
+    public function getLastLoggedDate(): string
+    {
+        if (!$this->last_login_at instanceof Carbon) {
+            return 'N/A';
+        }
+
+        return $this->last_login_at->diffForHumans();
+
+    }
+
+    /**
+     * Return true if user has 'administrator' role.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ADMIN_ROLE;
+    }
+
+    /**
+     * Returns a collection of users that are "Members".
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMember(Builder $query)
+    {
+        return $query->where('role', self::USER_ROLE);
+    }
+
+    /**
+     * Get current Experience points for this user.
+     *
+     * @return int
+     */
+    public function getExperiencePoints(): int
+    {
+        return $this->experience;
+    }
+
+    /**
+     * Add experience to the user.
+     *
+     * Trigger ExperienceChanged event.
+     *
+     * @param int $points
+     */
+    public function addExperience(int $points = 1): void
+    {
+        $this->increment('experience', $points);
+
+        // TODO: Dispatch event ReputationChanged
+    }
+
+    /**
+     * Linked Social Accounts (facebook, twitter, github...).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function accounts()
+    {
+        return $this->hasMany('Gamify\LinkedSocialAccount');
+    }
+
+    /**
+     * Returns a Collection of pending Questions.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function pendingQuestions(int $limit = 5)
+    {
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
+        return Question::published()->visible()
+            ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * Returns a Collection of completed Badges for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getCompletedBadges()
+    {
+        return $this->badges()->wherePivot('completed', true)->get();
+    }
+
+    /**
+     * Checks if user has completed the given Badge.
+     *
+     * @param \Gamify\Badge $badge
+     *
+     * @return bool
+     */
+    public function hasBadgeCompleted(Badge $badge): bool
+    {
+        try {
+            $userBadge = $this->badges()->findOrFail($badge->id);
+        } catch (ModelNotFoundException $exception) {
+            return false;
+        }
+
+        return $userBadge->pivot->completed;
+    }
+
+    /**
      * Add Level name to attributes (see $appends).
      *
      * @return string
@@ -200,126 +316,5 @@ class User extends Authenticatable
     public function getNextLevel(): Level
     {
         return Level::findNextByExperience($this->experience);
-    }
-
-    /**
-     * Returns last logged in date in "x ago" format if it has passed less than a month.
-     *
-     * @return string
-     */
-    public function getLastLoggedDate(): string
-    {
-        if (empty($this->last_login_at)) {
-            return __('general.never');
-        }
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login_at);
-
-        if ($date->diffInMonths() >= 1) {
-            return $date->format('j M Y, g:ia');
-        }
-
-        return $date->diffForHumans();
-    }
-
-    /**
-     * Return true if user has 'administrator' role.
-     *
-     * @return bool
-     */
-    public function isAdmin(): bool
-    {
-        return $this->role === self::ADMIN_ROLE;
-    }
-
-    /**
-     * Returns a collection of users that are "Members".
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMember(Builder $query): Builder
-    {
-        return $query->where('role', self::USER_ROLE);
-    }
-
-    /**
-     * Returns a Collection of pending Questions.
-     *
-     * @param int $limit
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function pendingQuestions(int $limit = 5)
-    {
-        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
-
-        return Question::published()->visible()
-            ->whereNotIn('id', $answeredQuestions)
-            ->orderBy('publication_date', 'ASC')
-            ->take($limit)
-            ->get();
-    }
-
-    /**
-     * Returns a Collection of completed Badges for this user.
-     *
-     * @return mixed
-     */
-    public function getCompletedBadges()
-    {
-        return $this->badges()->wherePivot('completed', true)->get();
-    }
-
-    /**
-     * Get current Experience points for this user.
-     *
-     * @return int
-     */
-    public function getExperiencePoints(): int
-    {
-        return $this->experience;
-    }
-
-    /**
-     * Add experience to the user.
-     *
-     * Trigger ExperienceChanged event.
-     *
-     * @param int $points
-     */
-    public function addExperience(int $points = 1): void
-    {
-        $this->increment('experience', $points);
-
-        // TODO: Dispatch event ReputationChanged
-    }
-
-    /**
-     * Checks if user has completed the given Badge.
-     *
-     * @param \Gamify\Badge $badge
-     *
-     * @return bool
-     */
-    public function hasBadgeCompleted(Badge $badge): bool
-    {
-        try {
-            $userBadge = $this->badges()->findOrFail($badge->id);
-        } catch (ModelNotFoundException $exception) {
-            return false;
-        }
-
-        return $userBadge->pivot->completed;
-    }
-
-    /**
-     * Linked Social Accounts (facebook, twitter, github...).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function accounts()
-    {
-        return $this->hasMany('Gamify\LinkedSocialAccount');
     }
 }

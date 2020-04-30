@@ -33,24 +33,10 @@ class AdminQuestionControllerTest extends TestCase
         ], $overrides);
     }
 
-    /**
-     * Create a Question acting as Admin user to honor Blameable Trait.
-     *
-     * @param array $overrides
-     *
-     * @return \Gamify\Question
-     */
-    private function createQuestionAsAdmin(array $overrides = []): Question
-    {
-        $this->actingAsAdmin();
-
-        return factory(Question::class)->state('with_choices')->create($overrides);
-    }
-
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $question = $this->createQuestionAsAdmin();
+        $question = $this->createQuestionAsAdmin()->first();
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.questions.index')],
             ['protocol' => 'GET', 'route' => route('admin.questions.create')],
@@ -122,7 +108,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin();
+        $question = $this->createQuestionAsAdmin()->first();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.show', $question))
@@ -134,7 +120,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin();
+        $question = $this->createQuestionAsAdmin()->first();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.edit', $question))
@@ -146,9 +132,9 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $question = $this->createQuestionAsAdmin([
+        $question = $this->createQuestionAsAdmin(1, [
             'name' => 'Question gold',
-        ]);
+        ])->first();
         $input_data = $this->generateRequestInputData([
             'name' => 'Question silver',
         ]);
@@ -163,9 +149,9 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $question = $this->createQuestionAsAdmin([
+        $question = $this->createQuestionAsAdmin(1, [
             'name' => 'Question gold',
-        ]);
+        ])->first();
         $input_data = $this->generateRequestInputData([
             'name' => '',
         ]);
@@ -179,7 +165,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin();
+        $question = $this->createQuestionAsAdmin()->first();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.delete', $question))
@@ -191,7 +177,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $question = $this->createQuestionAsAdmin();
+        $question = $this->createQuestionAsAdmin()->first();
 
         $this->actingAsAdmin()
             ->delete(route('admin.questions.destroy', $question))
@@ -203,8 +189,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function data_returns_proper_content()
     {
-        $this->actingAsAdmin();
-        factory(Question::class, 3)->create();
+        $this->createQuestionAsAdmin(3);
 
         $this->actingAsAdmin()
             ->withoutMiddleware(OnlyAjax::class)
@@ -215,8 +200,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function data_fails_for_non_ajax_calls()
     {
-        $this->actingAsAdmin();
-        factory(Question::class, 3)->create();
+        $this->createQuestionAsAdmin(3);
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.data'))
