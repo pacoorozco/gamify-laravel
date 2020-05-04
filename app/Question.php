@@ -49,9 +49,7 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
-
     use Sluggable; // Slugs
-
     use Taggable; // Tags
 
     /**
@@ -208,7 +206,7 @@ class Question extends Model
     /**
      * Return if a question can be published.
      * 1. It has at least to choices
-     * 2. It has at least one correct choice
+     * 2. It has at least one correct choice.
      *
      * @return bool
      */
@@ -233,11 +231,11 @@ class Question extends Model
             return true;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             return false;
         }
 
-        $this->status = Question::PUBLISH_STATUS;
+        $this->status = self::PUBLISH_STATUS;
         $this->publication_date = now();
 
         return $this->saveOrFail();

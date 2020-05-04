@@ -42,6 +42,7 @@ class QuestionController extends Controller
         $percentage_of_answered_questions = ($number_of_questions > 0)
             ? round(($answered_questions / $number_of_questions) * 100)
             : 0;
+
         return view('question.index', [
             'questions' => $questions,
             'next_level_name' => $next_level_name,

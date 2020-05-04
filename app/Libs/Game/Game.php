@@ -26,7 +26,7 @@ class Game
         // add experience points to this user
         $point_entry = new Point([
             'points' => $points,
-            'description' => (!empty($message)) ?: __('messages.unknown_reason'),
+            'description' => (! empty($message)) ?: __('messages.unknown_reason'),
         ]);
 
         return ($user->points()->save($point_entry) === false) ?: true;

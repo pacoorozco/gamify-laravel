@@ -57,4 +57,3 @@ $factory->state(Question::class, 'with_choices', [])
             ]),
         ]);
     });
-
