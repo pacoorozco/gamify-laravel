@@ -26,7 +26,7 @@ class Game
         // add experience points to this user
         $point_entry = new Point([
             'points' => $points,
-            'description' => (! empty($message)) ?: __('messages.unknown_reason'),
+            'description' => (!empty($message)) ?: __('messages.unknown_reason'),
         ]);
 
         return ($user->points()->save($point_entry) === false) ?: true;
@@ -72,7 +72,7 @@ class Game
         $userBadge->pivot->repetitions++;
         if ($userBadge->pivot->repetitions === $badge->required_repetitions) {
             $userBadge->pivot->completed = true;
-            $userBadge->pivot->completed_on = Carbon::now();
+            $userBadge->pivot->completed_on = now();
         }
 
         return ($userBadge->pivot->save() === false) ?: true;
