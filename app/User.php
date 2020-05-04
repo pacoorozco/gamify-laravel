@@ -21,7 +21,6 @@ namespace Gamify;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -87,9 +86,17 @@ class User extends Authenticatable
         'email' => 'string',
         'password' => 'string',
         'role' => 'string',
-        'last_login_at' => 'datetime',
-        'email_verified_at' => 'datetime',
         'experience' => 'int',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_login_at',
+        'email_verified_at',
     ];
 
     /**
@@ -176,11 +183,7 @@ class User extends Authenticatable
      */
     public function getLastLoggedDate(): string
     {
-        if (! $this->last_login_at instanceof Carbon) {
-            return 'N/A';
-        }
-
-        return $this->last_login_at->diffForHumans();
+        return is_null($this->last_login_at) ? 'N/A' : $this->last_login_at->diffForHumans();
     }
 
     /**
