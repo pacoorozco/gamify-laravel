@@ -176,12 +176,11 @@ class User extends Authenticatable
      */
     public function getLastLoggedDate(): string
     {
-        if (!$this->last_login_at instanceof Carbon) {
+        if (! $this->last_login_at instanceof Carbon) {
             return 'N/A';
         }
 
         return $this->last_login_at->diffForHumans();
-
     }
 
     /**
@@ -279,11 +278,11 @@ class User extends Authenticatable
      */
     public function hasBadgeCompleted(Badge $badge): bool
     {
-        return ($this->badges()
+        return $this->badges()
                 ->wherePivot('badge_id', $badge->id)
                 ->wherePivot('completed', true)
                 ->get()
-                ->count() > 0);
+                ->count() > 0;
     }
 
     /**

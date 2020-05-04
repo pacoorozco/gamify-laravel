@@ -60,7 +60,7 @@ class QuestionControllerTest extends TestCase
             ->assertViewIs('question.show-answered')
             ->assertViewHasAll([
                 'answer',
-                'question'
+                'question',
             ]);
     }
 }
