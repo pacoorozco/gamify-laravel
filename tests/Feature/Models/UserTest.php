@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Models;
 
+use Gamify\Badge;
+use Gamify\Level;
 use Gamify\Question;
 use Gamify\User;
 use Gamify\UserProfile;
@@ -18,44 +20,44 @@ class UserTest extends TestCase
     /** @test */
     public function pendingQuestions_returns_a_collection()
     {
-        $u = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
-        $this->assertInstanceOf(Collection::class, $u->pendingQuestions());
+        $this->assertInstanceOf(Collection::class, $user->pendingQuestions());
     }
 
     /** @test */
     public function pendingQuestions_returns_specified_number_of_questions()
     {
-        $u = factory(User::class)->create();
+        $user = factory(User::class)->create();
         // Creates 5 published questions.
         $this->createQuestionAsAdmin(5)->each(function (Question $q) {
-              $q->publish();
+            $q->publish();
         });
 
         // We only want 3 of the 5 created questions.
-        $this->assertCount(3, $u->pendingQuestions(3));
+        $this->assertCount(3, $user->pendingQuestions(3));
     }
 
     /** @test */
     public function pendingQuestions_returns_zero_when_no_questions()
     {
-        $u = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
-        $this->assertCount(0, $u->pendingQuestions());
+        $this->assertCount(0, $user->pendingQuestions());
     }
 
     /** @test */
     public function addExperience_method()
     {
-        $u = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
         $want = 15;
-        $u->addExperience($want);
+        $user->addExperience($want);
 
-        $this->assertEquals($want, $u->experience);
+        $this->assertEquals($want, $user->experience);
     }
 
-    /** @test  */
+    /** @test */
     public function returns_image_when_uploaded_avatar()
     {
         $user = factory(User::class)->state('with_profile')->create();
@@ -76,5 +78,44 @@ class UserTest extends TestCase
 
         $this->assertNull($user->profile->getOriginal('avatar'));
         $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatar);
+    }
+
+    /** @test */
+    public function getCompletedBadges_returns_a_collection()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertInstanceOf(Collection::class, $user->getCompletedBadges());
+    }
+
+    /** @test */
+    public function getCompletedBadges_returns_empty_collection_when_no_badges()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertCount(0, $user->getCompletedBadges());
+    }
+
+    /** @test */
+    public function hasBadgeCompleted_returns_false_when_badge_is_not_completed()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create();
+
+        $this->assertFalse($user->hasBadgeCompleted($badge));
+    }
+
+    /** @test */
+    public function hasBadgeCompleted_returns_false_when_badge_is_completed()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create([
+            'required_repetitions' => 1,
+        ]);
+
+        // Complete the badge
+        $user->badges()->attach($badge->id, ['repetitions' => '1', 'completed' => true]);
+
+        $this->assertTrue($user->hasBadgeCompleted($badge));
     }
 }

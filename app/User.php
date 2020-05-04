@@ -265,7 +265,9 @@ class User extends Authenticatable
      */
     public function getCompletedBadges()
     {
-        return $this->badges()->wherePivot('completed', true)->get();
+        return $this->badges()
+            ->wherePivot('completed', true)
+            ->get();
     }
 
     /**
@@ -277,17 +279,17 @@ class User extends Authenticatable
      */
     public function hasBadgeCompleted(Badge $badge): bool
     {
-        try {
-            $userBadge = $this->badges()->findOrFail($badge->id);
-        } catch (ModelNotFoundException $exception) {
-            return false;
-        }
-
-        return $userBadge->pivot->completed;
+        return ($this->badges()
+                ->wherePivot('badge_id', $badge->id)
+                ->wherePivot('completed', true)
+                ->get()
+                ->count() > 0);
     }
 
     /**
      * Add Level name to attributes (see $appends).
+     *
+     * We rely that a default Level was created with required_points = 0;
      *
      * @return string
      */
@@ -315,6 +317,10 @@ class User extends Authenticatable
      */
     public function getNextLevel(): Level
     {
-        return Level::findNextByExperience($this->experience);
+        try {
+            return Level::findNextByExperience($this->experience);
+        } catch (ModelNotFoundException $exception) {
+            return Level::findByExperience($this->experience);
+        }
     }
 }
