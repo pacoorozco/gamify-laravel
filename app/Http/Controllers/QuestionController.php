@@ -123,7 +123,7 @@ class QuestionController extends Controller
         if ($answer = $user->answeredQuestions()->find($question->id)) {
             // User has answered this question
             return view('question.show-answered', [
-                'answer' => $user->answeredQuestions()->find($question->id),
+                'answer' => $answer,
                 'question' => $question,
             ]);
         }

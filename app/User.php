@@ -27,14 +27,14 @@ use Illuminate\Support\Facades\Hash;
 /**
  * User model, represents a Gamify user.
  *
- * @property  int    $id                      The object unique id.
- * @property  string $name                    The name of this user.
- * @property  string $username                The username of this user.
- * @property  string $email                   The email address of this user.
- * @property  string $password                Encrypted password of this user.
- * @property  string $role                    Role of the user ['user', 'editor', 'administrator'].
- * @property  string $last_login_at           Time when the user last logged in.
- * @property  int    $experience              The reputation of the user.
+ * @property  int                        $id                      The object unique id.
+ * @property  string                     $name                    The name of this user.
+ * @property  string                     $username                The username of this user.
+ * @property  string                     $email                   The email address of this user.
+ * @property  string                     $password                Encrypted password of this user.
+ * @property  string                     $role                    Role of the user ['user', 'editor', 'administrator'].
+ * @property  \Illuminate\Support\Carbon $last_login_at           Time when the user last logged in.
+ * @property  int                        $experience              The reputation of the user.
  */
 class User extends Authenticatable
 {
