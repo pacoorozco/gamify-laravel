@@ -39,6 +39,5 @@ class RedirectIfAuthenticatedTest extends TestCase
             ->get(self::TEST_ENDPOINT);
 
         $response->assertRedirect(RouteServiceProvider::HOME);
-
     }
 }
