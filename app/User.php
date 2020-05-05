@@ -21,21 +21,19 @@ namespace Gamify;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 /**
  * User model, represents a Gamify user.
  *
- * @property  int    $id                      The object unique id.
- * @property  string $name                    The name of this user.
- * @property  string $username                The username of this user.
- * @property  string $email                   The email address of this user.
- * @property  string $password                Encrypted password of this user.
- * @property  string $role                    Role of the user ['user', 'editor', 'administrator'].
- * @property  string $last_login_at           Time when the user last logged in.
- * @property  int    $experience              The reputation of the user.
+ * @property  int                        $id                      The object unique id.
+ * @property  string                     $name                    The name of this user.
+ * @property  string                     $username                The username of this user.
+ * @property  string                     $email                   The email address of this user.
+ * @property  string                     $password                Encrypted password of this user.
+ * @property  string                     $role                    Role of the user ['user', 'editor', 'administrator'].
+ * @property  \Illuminate\Support\Carbon $last_login_at           Time when the user last logged in.
+ * @property  int                        $experience              The reputation of the user.
  */
 class User extends Authenticatable
 {
@@ -88,9 +86,17 @@ class User extends Authenticatable
         'email' => 'string',
         'password' => 'string',
         'role' => 'string',
-        'last_login_at' => 'datetime',
-        'email_verified_at' => 'datetime',
         'experience' => 'int',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_login_at',
+        'email_verified_at',
     ];
 
     /**
@@ -171,52 +177,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Add Level name to attributes (see $appends).
-     *
-     * @return string
-     */
-    public function getLevelAttribute(): string
-    {
-        return Level::findByExperience($this->experience)->name;
-    }
-
-    /**
-     * Get Next level name.
-     *
-     * @return string
-     */
-    public function getNextLevelAttribute(): string
-    {
-        return $this->getNextLevel()->name;
-    }
-
-    /**
-     * Get the next Level object.
-     *
-     * @return \Gamify\Level
-     */
-    public function getNextLevel(): Level
-    {
-        return Level::findNextByExperience($this->experience);
-    }
-
-    /**
      * Returns last logged in date in "x ago" format if it has passed less than a month.
      *
      * @return string
      */
     public function getLastLoggedDate(): string
     {
-        if (empty($this->last_login_at)) {
-            return __('general.never');
-        }
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->last_login_at);
-
-        if ($date->diffInMonths() >= 1) {
-            return $date->format('j M Y, g:ia');
-        }
-
-        return $date->diffForHumans();
+        return is_null($this->last_login_at) ? 'N/A' : $this->last_login_at->diffForHumans();
     }
 
     /**
@@ -236,37 +203,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMember(Builder $query): Builder
+    public function scopeMember(Builder $query)
     {
         return $query->where('role', self::USER_ROLE);
-    }
-
-    /**
-     * Returns a Collection of pending Questions.
-     *
-     * @param int $limit
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function pendingQuestions(int $limit = 5)
-    {
-        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
-
-        return Question::published()->visible()
-            ->whereNotIn('id', $answeredQuestions)
-            ->orderBy('publication_date', 'ASC')
-            ->take($limit)
-            ->get();
-    }
-
-    /**
-     * Returns a Collection of completed Badges for this user.
-     *
-     * @return mixed
-     */
-    public function getCompletedBadges()
-    {
-        return $this->badges()->wherePivot('completed', true)->get();
     }
 
     /**
@@ -294,6 +233,46 @@ class User extends Authenticatable
     }
 
     /**
+     * Linked Social Accounts (facebook, twitter, github...).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function accounts()
+    {
+        return $this->hasMany('Gamify\LinkedSocialAccount');
+    }
+
+    /**
+     * Returns a Collection of pending Questions.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function pendingQuestions(int $limit = 5)
+    {
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
+        return Question::published()->visible()
+            ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * Returns a Collection of completed Badges for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getCompletedBadges()
+    {
+        return $this->badges()
+            ->wherePivot('completed', true)
+            ->get();
+    }
+
+    /**
      * Checks if user has completed the given Badge.
      *
      * @param \Gamify\Badge $badge
@@ -302,22 +281,48 @@ class User extends Authenticatable
      */
     public function hasBadgeCompleted(Badge $badge): bool
     {
-        try {
-            $userBadge = $this->badges()->findOrFail($badge->id);
-        } catch (ModelNotFoundException $exception) {
-            return false;
-        }
-
-        return $userBadge->pivot->completed;
+        return $this->badges()
+                ->wherePivot('badge_id', $badge->id)
+                ->wherePivot('completed', true)
+                ->get()
+                ->count() > 0;
     }
 
     /**
-     * Linked Social Accounts (facebook, twitter, github...).
+     * Add Level name to attributes (see $appends).
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * We rely that a default Level was created with required_points = 0;
+     *
+     * @return string
      */
-    public function accounts()
+    public function getLevelAttribute(): string
     {
-        return $this->hasMany('Gamify\LinkedSocialAccount');
+        return Level::findByExperience($this->experience)->name;
+    }
+
+    /**
+     * Get Next level name.
+     *
+     * @return string
+     */
+    public function getNextLevelAttribute(): string
+    {
+        return $this->getNextLevel()->name;
+    }
+
+    /**
+     * Get the next Level object.
+     *
+     * @return \Gamify\Level
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function getNextLevel(): Level
+    {
+        try {
+            return Level::findNextByExperience($this->experience);
+        } catch (ModelNotFoundException $exception) {
+            return Level::findByExperience($this->experience);
+        }
     }
 }

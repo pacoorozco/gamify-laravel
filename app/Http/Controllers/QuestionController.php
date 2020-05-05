@@ -21,22 +21,31 @@ class QuestionController extends Controller
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions();
 
-        // Levels
-        $next_level = $user->getNextLevel();
-        $diff_between_levels = $next_level->required_points - $user->experience;
-        $points_to_next_level = ($diff_between_levels > 0) ? $diff_between_levels : 0;
-        $percentage_to_next_level = ($points_to_next_level > 0)
-            ? round(($diff_between_levels / $next_level->required_points) * 100)
-            : 100;
+        // If the user is in the highest level, some hacks needs to be done.
+        try {
+            $next_level = $user->getNextLevel();
+            $next_level_name = $next_level->name;
+            $diff_between_levels = $next_level->required_points - $user->experience;
+            $points_to_next_level = ($diff_between_levels > 0) ? $diff_between_levels : 0;
+            $percentage_to_next_level = ($points_to_next_level > 0)
+                ? round(($diff_between_levels / $next_level->required_points) * 100)
+                : 100;
+        } catch (\Exception $exception) {
+            $next_level_name = $user->level;
+            $points_to_next_level = 0;
+            $percentage_to_next_level = 100;
+        }
 
         // Questions
         $number_of_questions = Question::published()->count();
         $answered_questions = $user->answeredQuestions()->count();
-        $percentage_of_answered_questions = round(($answered_questions / $number_of_questions) * 100);
+        $percentage_of_answered_questions = ($number_of_questions > 0)
+            ? round(($answered_questions / $number_of_questions) * 100)
+            : 0;
 
         return view('question.index', [
             'questions' => $questions,
-            'next_level_name' => $next_level->name,
+            'next_level_name' => $next_level_name,
             'points_to_next_level' => $points_to_next_level,
             'percentage_to_next_level' => $percentage_to_next_level,
             'answered_questions' => $answered_questions,
@@ -48,7 +57,7 @@ class QuestionController extends Controller
      * @param QuestionAnswerRequest $request
      * @param Question              $question
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\View\View
      */
     public function answer(QuestionAnswerRequest $request, Question $question)
     {
@@ -95,7 +104,10 @@ class QuestionController extends Controller
         }
 
         // AI. Add notifications and return view
-        return redirect()->route('questions.show', $question->short_name);
+        return view('question.show-answered', [
+            'answer' => $user->answeredQuestions()->find($question->id),
+            'question' => $question,
+        ]);
     }
 
     /**
@@ -111,7 +123,10 @@ class QuestionController extends Controller
         $user = User::findOrFail(Auth::id());
         if ($answer = $user->answeredQuestions()->find($question->id)) {
             // User has answered this question
-            return view('question.show-answered', compact('answer', 'question'));
+            return view('question.show-answered', [
+                'answer' => $answer,
+                'question' => $question,
+            ]);
         }
 
         return view('question.show', compact('question'));

@@ -22,15 +22,16 @@ use Gamify\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Tests\ModelTestCase;
 
 class UserTest extends ModelTestCase
 {
-    public function test_contains_valid_fillable_properties()
+    /** @test */
+    public function contains_valid_fillable_properties()
     {
         $m = new User();
+
         $this->assertEquals([
             'name',
             'username',
@@ -40,18 +41,22 @@ class UserTest extends ModelTestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_hidden_properties()
+    /** @test */
+    public function contains_valid_hidden_properties()
     {
         $m = new User();
+
         $this->assertEquals([
             'password',
             'remember_token',
         ], $m->getHidden());
     }
 
-    public function test_contains_valid_casts_properties()
+    /** @test */
+    public function contains_valid_casts_properties()
     {
         $m = new User();
+
         $this->assertEquals([
             'id' => 'int',
             'name' => 'string',
@@ -59,13 +64,119 @@ class UserTest extends ModelTestCase
             'email' => 'string',
             'password' => 'string',
             'role' => 'string',
-            'last_login_at' => 'datetime',
-            'email_verified_at' => 'datetime',
             'experience' => 'int',
         ], $m->getCasts());
     }
 
-    public function test_username_is_lowercase()
+    /** @test */
+    public function getLastLoggedDate_is_formatted_when_user_logged_in()
+    {
+        $m = new User();
+        $test_cases = [
+            [
+                'input' => today()->subDay(),
+                'want' => '1 day ago',
+            ],
+            [
+                'input' => today()->subDays(3),
+                'want' => '3 days ago',
+            ],
+            [
+                'input' => today()->subWeek(),
+                'want' => '1 week ago',
+            ],
+            [
+                'input' => today()->subWeeks(3),
+                'want' => '3 weeks ago',
+            ],
+        ];
+
+        foreach ($test_cases as $current_test) {
+            $m->last_login_at = $current_test['input'];
+
+            $this->assertEquals($current_test['want'], $m->getLastLoggedDate());
+        }
+    }
+
+    /** @test */
+    public function getLastLoggedDate_is_not_available_when_user_has_not_logged_in()
+    {
+        $m = new User();
+
+        $this->assertEquals('N/A', $m->getLastLoggedDate());
+    }
+
+    /** @test */
+    public function isAdmin_returns_properly()
+    {
+        $m = new User();
+
+        $test_data = [
+            'administrator' => true,
+            'user' => false,
+            'editor' => false,
+            'randomWord' => false,
+        ];
+
+        foreach ($test_data as $input => $want) {
+            $m->role = $input;
+
+            $this->assertEquals($want, $m->isAdmin());
+        }
+    }
+
+    /** @test */
+    public function profile_relation()
+    {
+        $m = new User();
+
+        $r = $m->profile();
+
+        $this->assertInstanceOf(HasOne::class, $r);
+    }
+
+    /** @test */
+    public function answeredQuestions_relation()
+    {
+        $m = new User();
+
+        $r = $m->answeredQuestions();
+
+        $this->assertInstanceOf(BelongsToMany::class, $r);
+    }
+
+    /** @test */
+    public function badges_relation()
+    {
+        $m = new User();
+
+        $r = $m->badges();
+
+        $this->assertInstanceOf(BelongsToMany::class, $r);
+    }
+
+    /** @test */
+    public function points_relation()
+    {
+        $m = new User();
+
+        $r = $m->points();
+
+        $this->assertInstanceOf(HasMany::class, $r);
+    }
+
+    /** @test */
+    public function accounts_relation()
+    {
+        $m = new User();
+
+        $r = $m->accounts();
+
+        $this->assertInstanceOf(HasMany::class, $r);
+    }
+
+    /** @test */
+    public function lowercase_username_when_set()
     {
         $m = new User();
 
@@ -74,96 +185,24 @@ class UserTest extends ModelTestCase
             'ADMIN' => 'admin',
             'user' => 'user',
             'admin' => 'admin',
+            '12345' => '12345',
         ];
 
         foreach ($test_data as $input => $want) {
             $m->username = $input;
+
             $this->assertEquals($want, $m->getAttribute('username'));
         }
     }
 
-    public function test_password_is_hashed()
+    /** @test */
+    public function hashes_password_when_set()
     {
+        Hash::shouldReceive('make')->once()->andReturn('hashed');
+
         $m = new User();
+        $m->password = 'plain';
 
-        $test_data = [
-            'secret',
-            'verysecret',
-            '$2y$04$pmfLKo7TAgmh.JyUT7iSneUCqwowvTvkmV1CO5tHGhue2L1viNvTW',
-        ];
-
-        foreach ($test_data as $input) {
-            $m->password = $input;
-            $this->assertTrue(Hash::check($input, $m->getAttribute('password')));
-        }
-    }
-
-    public function test_getLastLoggedDate_is_formatted()
-    {
-        $m = new User();
-
-        $test_data = [
-            '1 day ago' => today()->subDay(),
-            '3 days ago' => today()->subDays(3),
-            '1 week ago' => today()->subWeek(),
-            '3 weeks ago' => today()->subWeeks(3),
-            '28 Jan 1977, 12:00am' => Carbon::createFromDate(1977, 1, 28),
-        ];
-
-        foreach ($test_data as $want => $input) {
-            $m->last_login_at = $input->toDateString();
-            $this->assertEquals($want, $m->getLastLoggedDate());
-        }
-    }
-
-    public function test_isAdmin_returns_properly()
-    {
-        $m = new User();
-
-        $test_data = [
-            'administrator' => true,
-            'user' => false,
-            'editor' => false,
-        ];
-
-        foreach ($test_data as $input => $want) {
-            $m->role = $input;
-            $this->assertEquals($want, $m->isAdmin());
-        }
-    }
-
-    public function test_profile_relation()
-    {
-        $m = new User();
-        $r = $m->profile();
-        $this->assertInstanceOf(HasOne::class, $r);
-    }
-
-    public function test_answeredQuestions_relation()
-    {
-        $m = new User();
-        $r = $m->answeredQuestions();
-        $this->assertInstanceOf(BelongsToMany::class, $r);
-    }
-
-    public function test_badges_relation()
-    {
-        $m = new User();
-        $r = $m->badges();
-        $this->assertInstanceOf(BelongsToMany::class, $r);
-    }
-
-    public function test_points_relation()
-    {
-        $m = new User();
-        $r = $m->points();
-        $this->assertInstanceOf(HasMany::class, $r);
-    }
-
-    public function test_accounts_relation()
-    {
-        $m = new User();
-        $r = $m->accounts();
-        $this->assertInstanceOf(HasMany::class, $r);
+        $this->assertEquals('hashed', $m->password);
     }
 }

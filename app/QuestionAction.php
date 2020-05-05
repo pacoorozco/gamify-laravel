@@ -68,16 +68,4 @@ class QuestionAction extends Model
      * Every time we modify an action we need to touch the question.
      */
     protected $touches = ['question'];
-
-    /**
-     * Returns the name of the associated Badge.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        $badge = Badge::find($this->badge_id);
-
-        return $badge->name;
-    }
 }
