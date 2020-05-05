@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 2.4.1 - 2020-05-05
+### Changed
+- Small refactors to add more testability.
+- Added more tests.
+
 ## 2.4.0 - 2020-04-26
 
 ### Added
