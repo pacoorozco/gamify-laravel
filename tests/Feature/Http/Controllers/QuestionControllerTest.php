@@ -30,10 +30,13 @@ class QuestionControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin(1, [
-            'status' => Question::PUBLISH_STATUS,
-            'publication_date' => now(),
-        ])->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create([
+                'status' => Question::PUBLISH_STATUS,
+                'publication_date' => now(),
+            ]);
 
         $this->actingAsUser()
             ->get(route('questions.show', $question->short_name))
@@ -45,10 +48,14 @@ class QuestionControllerTest extends TestCase
     /** @test */
     public function answer_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin(1, [
-            'status' => Question::PUBLISH_STATUS,
-            'publication_date' => now(),
-        ])->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create([
+                'status' => Question::PUBLISH_STATUS,
+                'publication_date' => now(),
+            ]);
+
         // Answer with the first choice.
         $input_data = [
             'choices' => [$question->choices()->first()->id],

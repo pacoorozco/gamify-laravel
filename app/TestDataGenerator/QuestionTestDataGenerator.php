@@ -3,6 +3,8 @@
 namespace Gamify\TestDataGenerator;
 
 use Gamify\Question;
+use Gamify\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class QuestionTestDataGenerator
 {
