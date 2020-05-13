@@ -38,7 +38,12 @@ class QuestionCreateRequest extends Request
                 Question::PRIVATE_STATUS,
             ])],
             'hidden' => ['required', 'boolean'],
+
+            // Tags
             'tags' => ['nullable', 'array'],
+            'tags.*' => ['required', 'alpha_dash'],
+
+            // Choices
             'choice_text' => ['required', 'array', 'min:2'],
             'choice_text.*' => ['required', 'string'],
             'choice_score' => ['required', 'array', 'min:2'],

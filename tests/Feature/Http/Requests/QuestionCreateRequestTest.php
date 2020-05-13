@@ -69,6 +69,16 @@ class QuestionCreateRequestTest extends TestCase
     }
 
     /** @test */
+    public function it_returns_error_when_trying_to_validate_a_question_without_a_valid_tag()
+    {
+        $input_data = QuestionTestDataGenerator::FormRequestData([
+            'tags' => ['this is invalid tag'],
+        ]);
+
+        $this->assertValidationHasError('tags.0', $input_data, $this->rules);
+    }
+
+    /** @test */
     public function it_returns_error_when_trying_to_validate_a_question_without_choices()
     {
         $input_data = QuestionTestDataGenerator::FormRequestData([
