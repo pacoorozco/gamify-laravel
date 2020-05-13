@@ -3,8 +3,6 @@
 namespace Gamify\TestDataGenerator;
 
 use Gamify\Question;
-use Gamify\User;
-use Illuminate\Database\Eloquent\Collection;
 
 class QuestionTestDataGenerator
 {
@@ -25,6 +23,13 @@ class QuestionTestDataGenerator
             'type' => $question->type,
             'hidden' => $question->hidden,
             'status' => $question->status,
+
+            // Tags
+            'tags' => [
+                'tag_1',
+                'tag_2',
+                'tag_3',
+            ],
 
             // Choices
             'choice_text' => [
