@@ -44,12 +44,15 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property  \Gamify\User               $creator          The User who created this question,
  * @property  \Gamify\User               $updater          The last User who updated this question.
  * @property  \Illuminate\Support\Carbon $publication_date The data when the question was published.
+ * @property  \Illuminate\Support\Carbon $expiration_date  The data when the question was expired.
  */
 class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
 
     /**
@@ -231,7 +234,7 @@ class Question extends Model
             return true;
         }
 
-        if (! $this->canBePublished()) {
+        if (!$this->canBePublished()) {
             return false;
         }
 
@@ -259,5 +262,61 @@ class Question extends Model
 
         return Badge::whereIn('id', $actionable_actions)
             ->get();
+    }
+
+    public function transitionToDraftStatus(): bool
+    {
+        if ($this->status == self::DRAFT_STATUS) {
+            return true;
+        }
+
+        // TODO: Remove all answers?
+
+        $this->status = self::DRAFT_STATUS;
+        $this->publication_date = null;
+        $this->expiration_date = null;
+        return $this->save();
+    }
+
+    public function transitionToPendingStatus(): bool {
+        if ($this->status == self::PENDING_STATUS) {
+            return true;
+        }
+
+        if ($this->status != self::DRAFT_STATUS) {
+            return false; // Only draft -> pending transition is allowed
+        }
+
+        // TODO: Broadcast new pending question is available to editors
+
+        $this->status = self::PENDING_STATUS;
+        return $this->save();
+    }
+
+    public function transitionToPublishStatus(): bool {
+        if ($this->status == self::PUBLISH_STATUS) {
+            return true;
+        }
+
+        // TODO: Check question is ready to be published or false
+
+        $this->status = self::PUBLISH_STATUS;
+        $this->publication_date = now();
+        return $this->save();
+    }
+
+    public function transitionToFutureStatus(): bool {
+        if ($this->status != self::DRAFT_STATUS) {
+            return false; // Only draft -> future transition is allowed
+        }
+
+        if (is_null($this->publication_date) || $this->publication_date->lessThanOrEqualTo(now())) {
+            return false; // Can not schedule for a past date
+        }
+
+        // TODO: Check question is ready to be published or false
+
+        $this->status = self::FUTURE_STATUS;
+        return $this->save();
     }
 }

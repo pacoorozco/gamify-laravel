@@ -119,8 +119,14 @@
                 </div>
                 <div class="box-body">
                     <!-- status -->
-                {!! Form::hidden('status','draft') !!}
-                <!-- ./ status -->
+                    <div class="form-group">
+                        {!! Form::label('status', __('admin/question/model.status'), ['class' => 'control-label required']) !!}
+                        <div class="controls">
+                            {!! Form::hidden('status','draft') !!}
+                            @lang('admin/question/model.status_list.draft')
+                        </div>
+                    </div>
+                    <!-- ./ status -->
                     <!-- hidden -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                         {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}

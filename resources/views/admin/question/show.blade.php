@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 
 {{-- Web site Title --}}
-@section('title')
-    @lang('admin/question/title.question_show') :: @parent
-@endsection
+@section('title', __('admin/question/title.question_show'))
 
 {{-- Content Header --}}
 @section('header')
