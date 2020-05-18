@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Question;
+use Gamify\TestDataGenerator\QuestionTestDataGenerator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,32 +12,14 @@ class AdminQuestionControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Generate sample data for a form request.
-     *
-     * @param array $overrides
-     *
-     * @return array
-     */
-    private function generateRequestInputData(array $overrides = []): array
-    {
-        $question = factory(Question::class)->make();
-
-        return array_merge([
-            'name' => $question->name,
-            'question' => $question->question,
-            'type' => $question->type,
-            'hidden' => $question->hidden,
-            'status' => $question->status,
-            'choice_text' => ['correct', 'incorrect'],
-            'choice_score' => [5, -5],
-        ], $overrides);
-    }
-
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $question = $this->createQuestionAsAdmin()->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create();
+
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.questions.index')],
             ['protocol' => 'GET', 'route' => route('admin.questions.create')],
@@ -83,7 +66,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $input_data = $this->generateRequestInputData();
+        $input_data = QuestionTestDataGenerator::FormRequestData();
 
         $this->actingAsAdmin()
             ->post(route('admin.questions.store'), $input_data)
@@ -95,7 +78,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function store_returns_errors_on_invalid_data()
     {
-        $invalid_input_data = $this->generateRequestInputData([
+        $invalid_input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => '',
         ]);
 
@@ -108,7 +91,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin()->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.show', $question))
@@ -120,7 +106,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin()->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.edit', $question))
@@ -132,10 +121,13 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $question = $this->createQuestionAsAdmin(1, [
-            'name' => 'Question gold',
-        ])->first();
-        $input_data = $this->generateRequestInputData([
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create([
+                'name' => 'Question gold',
+            ]);
+        $input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => 'Question silver',
         ]);
 
@@ -149,10 +141,13 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $question = $this->createQuestionAsAdmin(1, [
-            'name' => 'Question gold',
-        ])->first();
-        $input_data = $this->generateRequestInputData([
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create([
+                'name' => 'Question gold',
+            ]);
+        $input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => '',
         ]);
 
@@ -165,7 +160,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $question = $this->createQuestionAsAdmin()->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.delete', $question))
@@ -177,7 +175,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $question = $this->createQuestionAsAdmin()->first();
+        $this->actingAsAdmin();
+        $question = factory(Question::class)
+            ->states('with_choices')
+            ->create();
 
         $this->actingAsAdmin()
             ->delete(route('admin.questions.destroy', $question))
@@ -189,7 +190,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function data_returns_proper_content()
     {
-        $this->createQuestionAsAdmin(3);
+        $this->actingAsAdmin();
+        factory(Question::class, 3)
+            ->states('with_choices')
+            ->create();
 
         $this->actingAsAdmin()
             ->withoutMiddleware(OnlyAjax::class)
@@ -200,7 +204,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function data_fails_for_non_ajax_calls()
     {
-        $this->createQuestionAsAdmin(3);
+        $this->actingAsAdmin();
+        factory(Question::class, 3)
+            ->states('with_choices')
+            ->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.questions.data'))

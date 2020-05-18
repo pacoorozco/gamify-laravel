@@ -74,13 +74,15 @@ class AdminQuestionController extends AdminController
                 'hidden',
             ]));
 
-            // The request is an array, validation has ensured it.
+            // Store tags
             if ($request->has('tags')) {
                 $question->tag($request->input('tags'));
             }
 
-            // Save Question Choices
-            $question->choices()->createMany($this->prepareQuestionChoices($request->input('choice_text'), $request->input('choice_score')));
+            // Store question choices
+            $question->choices()->createMany(
+                $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
+            );
         } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
@@ -114,9 +116,6 @@ class AdminQuestionController extends AdminController
      */
     public function edit(Question $question)
     {
-        //$selectedTagsArray = $question->tagArray;
-        //$selectedTags = array_combine($selectedTagsArray, $selectedTagsArray);
-
         $availableActions = [];
         // get actions that hasn't not been used
         foreach ($question->getAvailableActions() as $action) {
@@ -152,7 +151,9 @@ class AdminQuestionController extends AdminController
         // 1st. Deletes the old ones
         $question->choices()->delete();
         // 2nd. Adds the new ones
-        $question->choices()->createMany($this->prepareQuestionChoices($request->input('choice_text'), $request->input('choice_score')));
+        $question->choices()->createMany(
+            $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
+        );
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
@@ -261,24 +262,19 @@ class AdminQuestionController extends AdminController
     /**
      * Return an array of choices to be associated to a Question.
      *
-     * @param array $choice_texts  - Text of the choices
-     * @param array $choice_scores - Score of the choices
+     * @param array $texts_for_choices  - Text of the choices
+     * @param array $scores_for_choices - Score of the choices
      *
      * @return array
      */
-    private function prepareQuestionChoices(array $choice_texts, $choice_scores): array
+    private function getChoicesFromTextsAndScoresArrays(array $texts_for_choices, array $scores_for_choices): array
     {
-        $numberOfChoices = count($choice_texts);
         $choices = [];
-        for ($i = 0; $i < $numberOfChoices; $i++) {
-            if (empty($choice_texts[$i])) {
-                continue;
-            }
-
+        foreach ($texts_for_choices as $key => $text) {
             array_push($choices, [
-                'text' => $choice_texts[$i],
-                'score' => is_numeric($choice_scores[$i]) ? $choice_scores[$i] : 0,
-                'correct' => ($choice_scores[$i] > 0),
+                'text' => $text,
+                'score' => is_numeric($scores_for_choices[$key]) ? $scores_for_choices[$key] : 0,
+                'correct' => ($scores_for_choices[$key] > 0),
             ]);
         }
 

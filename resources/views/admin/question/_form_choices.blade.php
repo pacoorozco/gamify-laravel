@@ -8,7 +8,7 @@
     </div>
 </div>
 
-@if (isset($question))
+@isset($question)
     @foreach ($question->choices as $choice)
         <div class="row form-group cloneable">
             <div class="col-sm-9">
@@ -19,14 +19,14 @@
                     {!! Form::number('choice_score[]', $choice->score, ['class' => 'form-control']) !!}
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-danger btn-remove">
-                        <i class="fa fa-times fa fa-white"></i>
+                        <i class="fa fa-trash fa fa-white"></i>
                     </button>
                 </span>
                 </div>
             </div>
         </div>
     @endforeach
-@endif
+@endisset
 
 <div class="row form-group cloneable">
     <div class="col-sm-9">
@@ -62,7 +62,7 @@
                 .toggleClass('btn-add')
                 .toggleClass('btn-danger')
                 .toggleClass('btn-remove')
-                .html('<i class="fa fa-times"></i>');
+                .html('<i class="fa fa-trash"></i>');
 
             field_new.find('input').val('');
             field_new.insertAfter(field);

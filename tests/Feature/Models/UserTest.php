@@ -3,7 +3,6 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Badge;
-use Gamify\Level;
 use Gamify\Question;
 use Gamify\User;
 use Gamify\UserProfile;
@@ -28,11 +27,15 @@ class UserTest extends TestCase
     /** @test */
     public function pendingQuestions_returns_specified_number_of_questions()
     {
-        $user = factory(User::class)->create();
         // Creates 5 published questions.
-        $this->createQuestionAsAdmin(5)->each(function (Question $q) {
-            $q->publish();
-        });
+        $this->actingAsAdmin();
+        factory(Question::class, 5)
+            ->states('with_choices')
+            ->create([
+                'status' => Question::PUBLISH_STATUS,
+                'publication_date' => now(),
+            ]);
+        $user = factory(User::class)->create();
 
         // We only want 3 of the 5 created questions.
         $this->assertCount(3, $user->pendingQuestions(3));
