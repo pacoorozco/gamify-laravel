@@ -39,7 +39,7 @@ class QuestionTestDataGenerator
             'choice_score' => [
                 '5',
                 '-5',
-            ]
+            ],
         ], $overrides);
     }
 }
