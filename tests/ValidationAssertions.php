@@ -18,14 +18,14 @@ trait ValidationAssertions
      */
     protected function assertValidationPasses(array $actual, array $rules, string $message = '')
     {
-        if (!(\is_array($actual) || $actual instanceof ArrayAccess)) {
+        if (! (\is_array($actual) || $actual instanceof ArrayAccess)) {
             throw InvalidArgumentException::create(
                 1,
                 'array or ArrayAccess'
             );
         }
 
-        if (!(\is_array($rules) || $rules instanceof ArrayAccess)) {
+        if (! (\is_array($rules) || $rules instanceof ArrayAccess)) {
             throw InvalidArgumentException::create(
                 2,
                 'array or ArrayAccess'
@@ -45,14 +45,14 @@ trait ValidationAssertions
      */
     protected function assertValidationFails(array $actual, array $rules, string $message = '')
     {
-        if (!(\is_array($actual) || $actual instanceof ArrayAccess)) {
+        if (! (\is_array($actual) || $actual instanceof ArrayAccess)) {
             throw InvalidArgumentException::create(
                 1,
                 'array or ArrayAccess'
             );
         }
 
-        if (!(\is_array($rules) || $rules instanceof ArrayAccess)) {
+        if (! (\is_array($rules) || $rules instanceof ArrayAccess)) {
             throw InvalidArgumentException::create(
                 2,
                 'array or ArrayAccess'
@@ -73,21 +73,21 @@ trait ValidationAssertions
      */
     protected function assertValidationHasError(string $expected, array $actual, array $rules, string $message = '')
     {
-        if (!\is_string($expected)) {
+        if (! \is_string($expected)) {
             throw InvalidArgumentException::create(
                 1,
                 'string'
             );
         }
 
-        if (!(\is_array($actual) || $actual instanceof ArrayAccess)) {
+        if (! (\is_array($actual) || $actual instanceof ArrayAccess)) {
             throw InvalidArgumentException::create(
                 2,
                 'array or ArrayAccess'
             );
         }
 
-        if (!(\is_array($rules) || $rules instanceof ArrayAccess)) {
+        if (! (\is_array($rules) || $rules instanceof ArrayAccess)) {
             throw InvalidArgumentException::create(
                 3,
                 'array or ArrayAccess'

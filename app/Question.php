@@ -50,9 +50,7 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
-
     use Sluggable; // Slugs
-
     use Taggable; // Tags
 
     /**
@@ -234,7 +232,7 @@ class Question extends Model
             return true;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             return false;
         }
 
@@ -275,10 +273,12 @@ class Question extends Model
         $this->status = self::DRAFT_STATUS;
         $this->publication_date = null;
         $this->expiration_date = null;
+
         return $this->save();
     }
 
-    public function transitionToPendingStatus(): bool {
+    public function transitionToPendingStatus(): bool
+    {
         if ($this->status == self::PENDING_STATUS) {
             return true;
         }
@@ -290,10 +290,12 @@ class Question extends Model
         // TODO: Broadcast new pending question is available to editors
 
         $this->status = self::PENDING_STATUS;
+
         return $this->save();
     }
 
-    public function transitionToPublishStatus(): bool {
+    public function transitionToPublishStatus(): bool
+    {
         if ($this->status == self::PUBLISH_STATUS) {
             return true;
         }
@@ -302,10 +304,12 @@ class Question extends Model
 
         $this->status = self::PUBLISH_STATUS;
         $this->publication_date = now();
+
         return $this->save();
     }
 
-    public function transitionToFutureStatus(): bool {
+    public function transitionToFutureStatus(): bool
+    {
         if ($this->status != self::DRAFT_STATUS) {
             return false; // Only draft -> future transition is allowed
         }
@@ -317,6 +321,7 @@ class Question extends Model
         // TODO: Check question is ready to be published or false
 
         $this->status = self::FUTURE_STATUS;
+
         return $this->save();
     }
 }

@@ -70,8 +70,8 @@ class UserTest extends TestCase
         $this->assertNull($user->getOriginal('avatar'));
         $user->profile->uploadImage($image);
 
-        $this->assertEquals('avatars/' . $image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
-        $this->assertEquals('/storage/avatars/' . $image->hashName(), $user->profile->avatar);
+        $this->assertEquals('avatars/'.$image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
+        $this->assertEquals('/storage/avatars/'.$image->hashName(), $user->profile->avatar);
     }
 
     /** @test */
