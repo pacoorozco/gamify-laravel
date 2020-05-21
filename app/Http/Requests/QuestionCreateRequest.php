@@ -34,10 +34,9 @@ class QuestionCreateRequest extends Request
             ])],
             'status' => ['required', Rule::in([
                 Question::DRAFT_STATUS,
-                Question::PUBLISH_STATUS,
-                Question::PRIVATE_STATUS,
             ])],
             'hidden' => ['required', 'boolean'],
+            'publication_date' => ['nullable', 'date'],
 
             // Tags
             'tags' => ['nullable', 'array'],

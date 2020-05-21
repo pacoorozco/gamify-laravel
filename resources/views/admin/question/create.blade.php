@@ -80,7 +80,7 @@
                         {!! Form::label('type', __('admin/question/model.type'), ['class' => 'control-label required']) !!}
                         <div class="controls">
                             {!! Form::select('type', __('admin/question/model.type_list'), null, ['class' => 'form-control']) !!}
-                            {{ $errors->first('type', '<span class="help-inline">:message</span>') }}
+                            <span class="help-block">{{ $errors->first('type', ':message') }}</span>
                         </div>
                     </div>
                     <!-- ./ type -->
@@ -107,7 +107,7 @@
         </div>
         <div class="col-xs-4">
 
-            <!-- publish section -->
+            <!-- publish widget -->
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('admin/question/title.publish_section')</h3>
@@ -156,31 +156,46 @@
 
                     <!-- publication date -->
                     <div class="form-group {{ $errors->has('publication_date') ? 'has-error' : '' }}">
-                        {!! Form::label('publication_date', 'Publication date', ['class' => 'control-label required']) !!}
+                        {!! Form::label('publication_date', __('admin/question/model.publication_date'), ['class' => 'control-label']) !!}
                         <div id="publicationDateStatus">
-                            <span>Publish immediately</span>
+                            @if (empty(old('publication_date')))
+                                <span>@lang('admin/question/model.publication_date_now')</span>
+                            @else
+                                <span>@lang('admin/question/model.publication_date_on') {{ old('publication_date') }}</span>
+                            @endif
                             <a href="#" id="enablePublicationDateControl">@lang('general.edit')</a>
                         </div>
                         <div class="controls hidden" id="publicationDateControls">
-                            {!! Form::text('publication_date', null, ['class' => 'form-control']) !!}
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                {!! Form::text('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-flat" id="resetPublicationDate"><i
+                                            class="fa fa-times"></i></button>
+                                </span>
+                            </div>
                         </div>
-                        {{ $errors->first('publication_date', '<span class="help-inline">:message</span>') }}
+                        <span class="help-block">{{ $errors->first('publication_date', ':message') }}</span>
                     </div>
                     <!-- ./ publication date -->
-
                 </div>
                 <div class="box-footer">
-                    <!-- form actions -->
                     <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> @lang('general.back')
                     </a>
-                {!! Form::button('Save Draft', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'save']) !!}
-                {!! Form::button('Publish', ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
+                {!! Form::button(__('admin/question/model.save_button'), ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'save']) !!}
+                @if (empty(old('publication_date')))
+                    {!! Form::button(__('admin/question/model.publish_button'), ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
+                @else
+                    {!! Form::button(__('admin/question/model.schedule_button'), ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
+                @endif
                 <!-- ./ form actions -->
                 </div>
 
             </div>
-            <!-- ./ publish section -->
+            <!-- ./ publish widget -->
 
             <!-- badges section -->
             <div class="box box-solid">
@@ -234,22 +249,27 @@
           href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
           href="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-    <script src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script
+        src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script
         src="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script
+        src="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.full.min.js') }}"></script>
 
     <script>
         $(function () {
             $("#tags").select2({
                 tags: true,
-                placeholder: '@lang('admin/question/model.tags_help')',
+                placeholder: "@lang('admin/question/model.tags_help')",
                 tokenSeparators: [',', ' '],
                 allowClear: true,
-                width: '100%'
+                width: "100%"
             });
 
             $('.editor').wysihtml5({
@@ -263,9 +283,30 @@
                 $("#visibilityControls").removeClass("hidden");
             });
 
+            $.datetimepicker.setLocale("@lang('site.dateTimePickerLang')");
+            $("#publication_date").datetimepicker({
+                minDate: 0,
+                minTime: 0,
+                closeOnDateSelect: true,
+            });
+
             $("#enablePublicationDateControl").click(function () {
                 $("#publicationDateStatus").addClass("hidden");
                 $("#publicationDateControls").removeClass("hidden");
+                $("#publication_date").datetimepicker("show");
+            });
+
+            $("#publication_date").change(function () {
+                if ($("#publication_date").val() === "") {
+                    $("#publish").text("@lang('admin/question/model.publish_button')");
+                } else {
+                    $("#publish").text("@lang('admin/question/model.schedule_button')");
+                }
+            });
+
+            $("#resetPublicationDate").click(function () {
+                $("#publication_date").val("");
+                $("#publication_date").change();
             });
         });
     </script>

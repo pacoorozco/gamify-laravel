@@ -19,6 +19,12 @@ return [
     'shuffle_choices' => 'Shuffle the choices?',
     'shuffle_choices_help' => 'If enabled, the order of the answers is randomly shuffled for each attempt.',
 
+    'publication_date' => 'Publication date',
+    'publication_date_now' => 'Publish immediately',
+    'publication_date_on' => 'Publish on',
+    'publication_date_placeholder' => 'Leave it empty to publish immediately',
+
+
     'hidden' => 'Visibility',
     'hidden_help' => 'Hidden questions are only accessed via its URL.',
     'hidden_yes' => 'Hidden',
@@ -52,5 +58,10 @@ return [
     'created_by' => 'Created by :who on :when',
     'updated_by' => 'Last saved by :who on :when',
     'published_at' => 'Published at',
+
+    // Buttons
+    'save_button' => 'Save Draft',
+    'publish_button' => 'Publish',
+    'schedule_button' => 'Schedule',
 
 ];

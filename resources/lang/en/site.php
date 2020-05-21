@@ -23,5 +23,6 @@ return [
     'admin_area' => 'Go to admin area',
 
     'dataTablesLang' => 'English',
+    'dateTimePickerLang' => 'en',
 
 ];
