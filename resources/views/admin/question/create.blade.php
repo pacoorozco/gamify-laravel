@@ -127,24 +127,55 @@
                         </div>
                     </div>
                     <!-- ./ status -->
-                    <!-- hidden -->
+
+                    <!-- visibility -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                         {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
-                        <p class="text-muted">@lang('admin/question/model.hidden_help')</p>
-                        <div class="controls">
-                            {!! Form::select('hidden', ['0' => __('admin/question/model.hidden_no'), '1' => trans('admin/question/model.hidden_yes')], null, ['class' => 'form-control']) !!}
-
-                            {{ $errors->first('hidden', '<span class="help-inline">:message</span>') }}
+                        <div id="visibilityStatus">
+                            <span>@lang('admin/question/model.visibility_options.' . (old('hidden') ?: 0))</span>
+                            <a href="#" id="enableVisibilityControl">@lang('general.edit')</a>
                         </div>
+                        <div class="controls hidden" id="visibilityControls">
+                            <div class="radio">
+                                <label class="control-label">
+                                    {{ Form::radio('hidden', '0', true, [ 'id' => 'visibilityPublic']) }}
+                                    @lang('admin/question/model.visibility_options.0')
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="control-label">
+                                    {{ Form::radio('hidden', '1', false, [ 'id' => 'visibilityPrivate']) }}
+                                    @lang('admin/question/model.visibility_options.1')
+                                </label>
+                                <p class="text-muted">@lang('admin/question/model.hidden_help')</p>
+                            </div>
+                        </div>
+                        <span class="help-block">{{ $errors->first('hidden', ':message') }}</span>
                     </div>
-                    <!-- ./ hidden -->
+                    <!-- ./ visibility -->
+
+                    <!-- publication date -->
+                    <div class="form-group {{ $errors->has('publication_date') ? 'has-error' : '' }}">
+                        {!! Form::label('publication_date', 'Publication date', ['class' => 'control-label required']) !!}
+                        <div id="publicationDateStatus">
+                            <span>Publish immediately</span>
+                            <a href="#" id="enablePublicationDateControl">@lang('general.edit')</a>
+                        </div>
+                        <div class="controls hidden" id="publicationDateControls">
+                            {!! Form::text('publication_date', null, ['class' => 'form-control']) !!}
+                        </div>
+                        {{ $errors->first('publication_date', '<span class="help-inline">:message</span>') }}
+                    </div>
+                    <!-- ./ publication date -->
+
                 </div>
                 <div class="box-footer">
                     <!-- form actions -->
-                    <a href="{{ route('admin.questions.index') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> @lang('general.back')
                     </a>
-                {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+                {!! Form::button('Save Draft', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'save']) !!}
+                {!! Form::button('Publish', ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
                 <!-- ./ form actions -->
                 </div>
 
@@ -225,7 +256,17 @@
                 toolbar: {
                     "font-styles": false,
                 },
-            })
+            });
+
+            $("#enableVisibilityControl").click(function () {
+                $("#visibilityStatus").addClass("hidden");
+                $("#visibilityControls").removeClass("hidden");
+            });
+
+            $("#enablePublicationDateControl").click(function () {
+                $("#publicationDateStatus").addClass("hidden");
+                $("#publicationDateControls").removeClass("hidden");
+            });
         });
     </script>
 @endpush

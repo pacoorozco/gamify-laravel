@@ -24,6 +24,11 @@ return [
     'hidden_yes' => 'Hidden',
     'hidden_no' => 'Visible',
 
+    'visibility_options' => [
+        '0' => 'Public',
+        '1' => 'Private',
+    ],
+
     'status' => 'Status',
     'status_list' => [
         'draft' => 'Draft',
