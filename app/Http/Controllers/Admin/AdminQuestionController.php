@@ -25,6 +25,7 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Exceptions\InvalidContentForPublicationException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
@@ -72,6 +73,7 @@ class AdminQuestionController extends AdminController
                 'solution',
                 'type',
                 'hidden',
+                'publication_date',
             ]));
 
             // Store tags
@@ -83,6 +85,12 @@ class AdminQuestionController extends AdminController
             $question->choices()->createMany(
                 $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
             );
+
+            $question->publish(); // throws exception on error.
+        } catch (InvalidContentForPublicationException $exception) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', __('admin/question/messages.publish.error'));
         } catch (\Exception $exception) {
             return redirect()->back()
                 ->withInput()
@@ -157,7 +165,7 @@ class AdminQuestionController extends AdminController
 
         // Are you trying to publish a question?
         if ($request->input('status') == 'publish') {
-            if (! $question->canBePublished()) {
+            if (!$question->canBePublished()) {
                 return redirect()->back()
                     ->withInput()
                     ->with('error', __('admin/question/messages.publish.error'));
@@ -166,7 +174,7 @@ class AdminQuestionController extends AdminController
         }
         $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (! $question->save()) {
+        if (!$question->save()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));

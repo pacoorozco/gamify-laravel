@@ -18,6 +18,7 @@ class QuestionTest extends ModelTestCase
             'type',
             'hidden',
             'status',
+            'publication_date',
         ], $m->getFillable());
     }
 

@@ -3,10 +3,14 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Badge;
+use Gamify\Events\QuestionPublished;
+use Gamify\Exceptions\InvalidContentForPublicationException;
 use Gamify\Question;
 use Gamify\QuestionAction;
+use Gamify\QuestionChoice;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class QuestionTest extends TestCase
@@ -63,5 +67,128 @@ class QuestionTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $got);
         $this->assertCount(1, $got);
+    }
+
+    /** @test */
+    public function it_returns_true_when_question_can_be_published()
+    {
+        $question = factory(Question::class)->state('with_choices')->create();
+
+        $this->assertTrue($question->canBePublished());
+    }
+
+    /** @test */
+    public function it_returns_false_when_question_can_not_be_published()
+    {
+        $question = factory(Question::class)->create();
+
+        $this->assertFalse($question->canBePublished());
+    }
+
+    /** @test */
+    public function it_publishes_a_question_when_requirements_are_met()
+    {
+        $question = factory(Question::class)->state('with_choices')->create();
+        $question->publish();
+
+        $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
+    }
+
+    /** @test */
+    public function it_schedules_a_question_when_requirements_are_met()
+    {
+        $question = factory(Question::class)->state('with_choices')->create([
+            'publication_date' => now()->addWeek(),
+        ]);
+        $question->publish();
+
+        $this->assertEquals(Question::FUTURE_STATUS, $question->status);
+    }
+
+    /** @test */
+    public function it_triggers_a_event_when_a_question_is_published()
+    {
+        $question = factory(Question::class)->state('with_choices')->create();
+        Event::fake(); // should be fake after question creation
+
+        $question->publish();
+
+        Event::assertDispatched(QuestionPublished::class);
+    }
+
+    /** @test */
+    public function it_triggers_a_event_when_a_question_is_scheduled()
+    {
+        $question = factory(Question::class)->state('with_choices')->create([
+            'publication_date' => now()->addWeek(),
+        ]);
+        Event::fake(); // should be fake after question creation
+
+        $question->publish();
+
+        Event::assertDispatched(QuestionPublished::class);
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_trying_to_publish_a_question_without_at_least_two_choices()
+    {
+        $this->withoutExceptionHandling();
+        $question = factory(Question::class)->create();
+        $question->choices()->save(
+            new QuestionChoice([
+                'text' => 'answer',
+                'correct' => true,
+                'score' => 5,
+            ])
+        );
+
+        $this->expectException(InvalidContentForPublicationException::class);
+
+        $question->publish();
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_trying_to_publish_a_question_without_correct_choice()
+    {
+        $this->withoutExceptionHandling();
+        $question = factory(Question::class)->create();
+        $question->choices()->saveMany([
+            new QuestionChoice([
+                'text' => 'answer 1',
+                'correct' => false,
+                'score' => -5,
+            ]),
+            new QuestionChoice([
+                'text' => 'answer 2',
+                'correct' => false,
+                'score' => -5,
+            ])
+        ]);
+
+        $this->expectException(InvalidContentForPublicationException::class);
+
+        $question->publish();
+    }
+
+    /** @test */
+    public function it_does_not_trigger_an_event_when_publish_fails()
+    {
+        $question = factory(Question::class)->create();
+        $question->choices()->save(
+            new QuestionChoice([
+                'text' => 'answer',
+                'correct' => true,
+                'score' => 5,
+            ])
+        );
+        Event::fake(); // should be fake after question creation
+
+        try {
+            $question->publish();
+        } catch (\Exception $exception) {
+            // catch exception to make the test not fail by this reason
+        }
+
+        Event::assertNotDispatched(QuestionPublished::class);
     }
 }

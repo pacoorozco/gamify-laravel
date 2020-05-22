@@ -20,6 +20,8 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
+use Gamify\Events\QuestionPublished;
+use Gamify\Exceptions\InvalidContentForPublicationException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -50,16 +52,17 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
 
     /**
      * Defines question's statuses.
      */
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
-    const PUBLISH_STATUS = 'publish'; // Viewable by everyone.
+    const PUBLISH_STATUS = 'publish'; // Published.
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
-    const PRIVATE_STATUS = 'private'; // Viewable only to administrators.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
 
     /**
@@ -87,6 +90,7 @@ class Question extends Model
         'type',
         'hidden',
         'status',
+        'publication_date',
     ];
 
     protected $dates = [
@@ -220,26 +224,28 @@ class Question extends Model
     }
 
     /**
-     * Set a Question as published.
+     * Publish the question and trigger events.
      *
-     * @return bool
-     *
+     * @throws \Gamify\Exceptions\InvalidContentForPublicationException
      * @throws \Throwable
      */
-    public function publish(): bool
+    public function publish(): void
     {
         if ($this->status === self::PUBLISH_STATUS) {
-            return true;
+            return;
         }
 
-        if (! $this->canBePublished()) {
-            return false;
+        $this->status = ($this->publication_date > now())
+            ? self::FUTURE_STATUS
+            : self::PUBLISH_STATUS;
+
+        if (!$this->canBePublished()) {
+            throw new InvalidContentForPublicationException();
         }
 
-        $this->status = self::PUBLISH_STATUS;
-        $this->publication_date = now();
+        $this->saveOrFail(); // throws exception on error
 
-        return $this->saveOrFail();
+        QuestionPublished::dispatch($this);
     }
 
     /**
