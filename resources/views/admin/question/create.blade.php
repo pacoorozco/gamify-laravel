@@ -118,6 +118,13 @@
                     </div>
                 </div>
                 <div class="box-body">
+
+                    <!-- save draft and preview -->
+                    <div class="form-group">
+                        {!! Form::button(__('admin/question/model.save_button'), ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'save']) !!}
+                    </div>
+                    <!-- ./ save draft and preview -->
+
                     <!-- status -->
                     <div class="form-group">
                         {!! Form::label('status', __('admin/question/model.status'), ['class' => 'control-label required']) !!}
@@ -170,10 +177,9 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                {!! Form::text('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
+                                {!! Form::datetime('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-flat" id="resetPublicationDate"><i
-                                            class="fa fa-times"></i></button>
+                                    {!! Form::button('<i class="fa fa-times"></i>', ['type' => 'button', 'class' => 'btn btn-flat', 'id' => 'resetPublicationDate']) !!}
                                 </span>
                             </div>
                         </div>
@@ -185,7 +191,6 @@
                     <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> @lang('general.back')
                     </a>
-                {!! Form::button(__('admin/question/model.save_button'), ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'save']) !!}
                 @if (empty(old('publication_date')))
                     {!! Form::button(__('admin/question/model.publish_button'), ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
                 @else
