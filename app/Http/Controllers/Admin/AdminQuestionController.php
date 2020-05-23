@@ -86,7 +86,9 @@ class AdminQuestionController extends AdminController
                 $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
             );
 
-            $question->publish(); // throws exception on error.
+            if ($request->has('publish')) {
+                $question->publish(); // throws exception on error.
+            }
         } catch (InvalidContentForPublicationException $exception) {
             return redirect()->back()
                 ->withInput()
