@@ -10,6 +10,7 @@ use Gamify\QuestionAction;
 use Gamify\QuestionChoice;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -86,27 +87,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_publishes_a_question_when_requirements_are_met()
-    {
-        $question = factory(Question::class)->state('with_choices')->create();
-        $question->publish();
-
-        $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
-    }
-
-    /** @test */
-    public function it_schedules_a_question_when_requirements_are_met()
-    {
-        $question = factory(Question::class)->state('with_choices')->create([
-            'publication_date' => now()->addWeek(),
-        ]);
-        $question->publish();
-
-        $this->assertEquals(Question::FUTURE_STATUS, $question->status);
-    }
-
-    /** @test */
-    public function it_triggers_a_event_when_a_question_is_published()
+    public function it_triggers_an_event_when_a_question_is_published()
     {
         $question = factory(Question::class)->state('with_choices')->create();
         Event::fake(); // should be fake after question creation
@@ -117,7 +98,20 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_triggers_a_event_when_a_question_is_scheduled()
+    public function it_does_not_trigger_an_event_when_a_question_was_already_published()
+    {
+        $question = factory(Question::class)->state('with_choices')->create([
+            'status' => Question::PUBLISH_STATUS,
+        ]);
+        Event::fake(); // should be fake after question creation
+
+        $question->publish();
+
+        Event::assertNotDispatched(QuestionPublished::class);
+    }
+
+    /** @test */
+    public function it_does_not_trigger_an_event_when_a_question_is_scheduled()
     {
         $question = factory(Question::class)->state('with_choices')->create([
             'publication_date' => now()->addWeek(),
@@ -126,7 +120,7 @@ class QuestionTest extends TestCase
 
         $question->publish();
 
-        Event::assertDispatched(QuestionPublished::class);
+        Event::assertNotDispatched(QuestionPublished::class);
     }
 
     /** @test */
@@ -148,7 +142,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_an_exception_when_trying_to_publish_a_question_without_correct_choice()
+    public function it_throws_an_exception_when_trying_to_publish_a_question_without_a_correct_choice()
     {
         $this->withoutExceptionHandling();
         $question = factory(Question::class)->create();
@@ -168,6 +162,28 @@ class QuestionTest extends TestCase
         $this->expectException(InvalidContentForPublicationException::class);
 
         $question->publish();
+    }
+
+    /** @test */
+    public function it_publishes_question_when_date_is_on_the_past()
+    {
+        $question = factory(Question::class)->state('with_choices')->create([
+            'publication_date' => now()->subWeek(),
+        ]);
+        $question->publish();
+
+        $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
+    }
+
+    /** @test */
+    public function it_schedules_question_publication_when_date_is_in_the_future()
+    {
+        $question = factory(Question::class)->state('with_choices')->create([
+            'publication_date' => now()->addWeek(),
+        ]);
+        $question->publish();
+
+        $this->assertEquals(Question::FUTURE_STATUS, $question->status);
     }
 
     /** @test */

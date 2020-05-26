@@ -139,22 +139,22 @@
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                         {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
                         <div id="visibilityStatus">
-                            <span>@lang('admin/question/model.visibility_options.' . (old('hidden') ?: 0))</span>
+                            <span>{{ old('hidden') === '1' ? __('admin/question/model.hidden_yes') : __('admin/question/hidden_no') }}</span>
                             <a href="#" id="enableVisibilityControl">@lang('general.edit')</a>
                         </div>
                         <div class="controls hidden" id="visibilityControls">
                             <div class="radio">
                                 <label class="control-label">
                                     {{ Form::radio('hidden', '0', true, [ 'id' => 'visibilityPublic']) }}
-                                    @lang('admin/question/model.visibility_options.0')
+                                    @lang('admin/question/model.hidden_no')
                                 </label>
                             </div>
                             <div class="radio">
                                 <label class="control-label">
                                     {{ Form::radio('hidden', '1', false, [ 'id' => 'visibilityPrivate']) }}
-                                    @lang('admin/question/model.visibility_options.1')
+                                    @lang('admin/question/model.hidden_yes')
+                                    <p class="text-muted">@lang('admin/question/model.hidden_yes_help')</p>
                                 </label>
-                                <p class="text-muted">@lang('admin/question/model.hidden_help')</p>
                             </div>
                         </div>
                         <span class="help-block">{{ $errors->first('hidden', ':message') }}</span>
@@ -292,6 +292,7 @@
             $("#publication_date").datetimepicker({
                 minDate: 0,
                 minTime: 0,
+                format: "Y-m-d H:i:s",
                 closeOnDateSelect: true,
             });
 

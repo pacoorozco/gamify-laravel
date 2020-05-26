@@ -30,6 +30,7 @@ use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 use Yajra\Datatables\Datatables;
 
@@ -67,14 +68,17 @@ class AdminQuestionController extends AdminController
     public function store(QuestionCreateRequest $request): RedirectResponse
     {
         try {
-            $question = Question::create($request->only([
-                'name',
-                'question',
-                'solution',
-                'type',
-                'hidden',
-                'publication_date',
-            ]));
+            $question = Question::create([
+                'name' => $request->input('name'),
+                'question' => $request->input('question'),
+                'solution' => $request->input('solution'),
+                'type' => $request->input('type'),
+                'hidden' => $request->input('hidden'),
+                'publication_date' => $request->filled('publication_date')
+                    ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
+                    : null,
+            ])
+                ->saveOrFail();
 
             // Store tags
             if ($request->has('tags')) {
@@ -93,7 +97,7 @@ class AdminQuestionController extends AdminController
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.publish.error'));
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
@@ -150,33 +154,46 @@ class AdminQuestionController extends AdminController
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
-        // Save Question Tags
-        if (is_array($request->input('tag_list'))) {
-            $question->retag($request->input('tag_list'));
-        } else {
-            $question->detag();
-        }
+        try {
+            $question->fill([
+                'name' => $request->input('name'),
+                'question' => $request->input('question'),
+                'solution' => $request->input('solution'),
+                'type' => $request->input('type'),
+                'hidden' => $request->input('hidden'),
+                'publication_date' => $request->filled('publication_date')
+                    ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
+                    : null,
+            ])
+                ->saveOrFail();
 
-        // Save Question Choices
-        // 1st. Deletes the old ones
-        $question->choices()->delete();
-        // 2nd. Adds the new ones
-        $question->choices()->createMany(
-            $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
-        );
-
-        // Are you trying to publish a question?
-        if ($request->input('status') == 'publish') {
-            if (!$question->canBePublished()) {
-                return redirect()->back()
-                    ->withInput()
-                    ->with('error', __('admin/question/messages.publish.error'));
+            // Save Question Tags
+            if (is_array($request->input('tag_list'))) {
+                $question->retag($request->input('tag_list'));
+            } else {
+                $question->detag();
             }
-            $question->publication_date = now();
-        }
-        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (!$question->save()) {
+            // Save Question Choices
+            // 1st. Deletes the old ones
+            //$question->choices()->delete();
+            // 2nd. Adds the new ones
+            //$question->choices()->createMany(
+            //    $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
+            //);
+
+            switch ($request->input('status')) {
+                case 'publish':
+                    $question->publish(); // throws exception on error.
+                    break;
+                case 'draft':
+                    $question->transitionToDraftStatus(); // throws exception on error.
+            }
+        } catch (InvalidContentForPublicationException $exception) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', __('admin/question/messages.publish.error'));
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));

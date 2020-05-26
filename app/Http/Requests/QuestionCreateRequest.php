@@ -27,13 +27,13 @@ class QuestionCreateRequest extends Request
         return [
             'name' => ['required', 'string'],
             'question' => ['required', 'string'],
-            'explanation' => ['nullable', 'string'],
+            'solution' => ['nullable', 'string'],
             'type' => ['required', Rule::in([
                 Question::SINGLE_RESPONSE_TYPE,
                 Question::MULTI_RESPONSE_TYPE,
             ])],
             'status' => ['required', Rule::in([
-                Question::DRAFT_STATUS,
+               'draft',
             ])],
             'hidden' => ['required', 'boolean'],
             'publication_date' => ['nullable', 'date'],

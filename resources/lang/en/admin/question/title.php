@@ -15,4 +15,6 @@ return [
     'tags_section'    => 'Tags',
     'badges_section'  => 'Associated badges',
     'other_section'   => 'Other information',
+
+    'un-publish_confirmation' => 'Do you want to un-publish this question?'
 ];
