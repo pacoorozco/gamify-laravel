@@ -23,12 +23,6 @@
   "support": {
     "issues": "https://github.com/pacoorozco/gamify-laravel/issues"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/SocialiteProviders/Okta"
-    }
-  ],
   "require": {
     "php": "^7.2",
     "cviebrock/eloquent-sluggable": "^6.0",
@@ -45,7 +39,7 @@
     "predis/predis": "^1.1",
     "qcod/laravel-imageup": "^1.0",
     "richan-fongdasen/eloquent-blameable": "^1.4",
-    "socialiteproviders/okta": "dev-master",
+    "socialiteproviders/okta": "^1.1",
     "yajra/laravel-datatables-oracle": "^9.0"
   },
   "require-dev": {

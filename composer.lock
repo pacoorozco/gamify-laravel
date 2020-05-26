@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cab395dd6a1b033186ec10a57eee77a3",
+    "content-hash": "62805e235982de35a433b160d6a08b99",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2936,7 +2936,7 @@
         },
         {
             "name": "socialiteproviders/okta",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocialiteProviders/Okta.git",
@@ -2959,6 +2959,7 @@
                     "SocialiteProviders\\Okta\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2969,10 +2970,6 @@
                 }
             ],
             "description": "Okta OAuth2 Provider for Laravel Socialite",
-            "support": {
-                "source": "https://github.com/SocialiteProviders/Okta/tree/master",
-                "issues": "https://github.com/SocialiteProviders/Okta/issues"
-            },
             "time": "2019-09-06T15:27:03+00:00"
         },
         {
@@ -7377,9 +7374,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "socialiteproviders/okta": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
