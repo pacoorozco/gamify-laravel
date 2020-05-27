@@ -156,7 +156,7 @@ class QuestionTest extends TestCase
                 'text' => 'answer 2',
                 'correct' => false,
                 'score' => -5,
-            ])
+            ]),
         ]);
 
         $this->expectException(InvalidContentForPublicationException::class);
@@ -209,13 +209,14 @@ class QuestionTest extends TestCase
     }
 
     /**
-     * PRESENTERS
+     * PRESENTERS.
      *
      * @see \Gamify\Presenters\QuestionPresenter
      */
 
     /** @test */
-    public function it_returns_formatted_publication_date_using_presenter(){
+    public function it_returns_formatted_publication_date_using_presenter()
+    {
         $question = factory(Question::class)->create([
             'publication_date' => '2020-01-02 03:04:05',
         ]);
@@ -224,7 +225,8 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter(){
+    public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter()
+    {
         $question = factory(Question::class)->create([
             'publication_date' => null,
         ]);
@@ -233,9 +235,10 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_formatted_public_url_using_presenter(){
+    public function it_returns_formatted_public_url_using_presenter()
+    {
         $question = factory(Question::class)->create([
-            'name' => 'test question number 1'
+            'name' => 'test question number 1',
         ]);
 
         $this->assertEquals('http://localhost/questions/test-question-number-1', $question->present()->public_url);
