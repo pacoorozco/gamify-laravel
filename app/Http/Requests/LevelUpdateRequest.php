@@ -2,7 +2,6 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Level;
 use Illuminate\Validation\Rule;
 
 class LevelUpdateRequest extends Request
@@ -20,12 +19,12 @@ class LevelUpdateRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param \Gamify\Level $level
-     *
      * @return array
      */
-    public function rules(Level $level)
+    public function rules()
     {
+        $level = $this->route('level');
+
         if ($level->isDefault()) {
             return [
                 'name' => ['required', 'string', Rule::unique('levels')->ignore($level->id)],

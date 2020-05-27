@@ -20,12 +20,12 @@ class QuestionUpdateRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param \Gamify\Question $question
-     *
      * @return array
      */
-    public function rules(Question $question)
+    public function rules()
     {
+        $question = $this->route('question');
+
         return [
             'name' => ['required', 'string', Rule::unique('questions')->ignore($question->id)],
             'question' => ['required', 'string'],

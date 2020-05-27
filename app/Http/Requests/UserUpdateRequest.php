@@ -20,15 +20,15 @@ class UserUpdateRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param \Gamify\User $user
-     *
      * @return array
      */
-    public function rules(User $user)
+    public function rules()
     {
+        $user = $this->route('user');
+
         return [
-            'name'     => ['required', 'string'],
-            'email'    => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'required_with:password_confirmation', 'string', 'min:5', 'confirmed'],
             'role' => ['required', Rule::in([
                 User::USER_ROLE,

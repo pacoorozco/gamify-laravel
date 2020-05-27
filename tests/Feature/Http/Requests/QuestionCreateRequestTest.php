@@ -4,11 +4,13 @@ namespace Tests\Feature\Http\Requests;
 
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\TestDataGenerator\QuestionTestDataGenerator;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ValidationAssertions;
 
 class QuestionCreateRequestTest extends TestCase
 {
+    use RefreshDatabase;
     use ValidationAssertions;
 
     private $rules;
