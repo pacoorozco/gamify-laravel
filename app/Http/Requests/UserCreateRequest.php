@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Requests;
 
+use Gamify\User;
 use Illuminate\Validation\Rule;
 
 class UserCreateRequest extends Request
@@ -25,10 +26,14 @@ class UserCreateRequest extends Request
     {
         return [
             'username' => ['required', 'string', Rule::unique('users')],
-            'name'     => ['required', 'string'],
-            'email'    => ['required', 'email', Rule::unique('users')],
-            'password' => ['required', 'string', 'between:4,11', 'confirmed'],
-            'role'     => ['required', Rule::in(['user', 'editor', 'administrator'])],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', Rule::unique('users')],
+            'password' => ['required', 'string', 'min:5', 'confirmed'],
+            'role' => ['required', Rule::in([
+                User::USER_ROLE,
+                User::EDITOR_ROLE,
+                User::ADMIN_ROLE,
+            ])],
         ];
     }
 }

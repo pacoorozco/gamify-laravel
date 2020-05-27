@@ -25,7 +25,7 @@ class QuestionCreateRequest extends Request
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', Rule::unique('questions')],
             'question' => ['required', 'string'],
             'solution' => ['nullable', 'string'],
             'type' => ['required', Rule::in([
@@ -33,10 +33,11 @@ class QuestionCreateRequest extends Request
                 Question::MULTI_RESPONSE_TYPE,
             ])],
             'status' => ['required', Rule::in([
-               'draft',
+                'draft',
+                'publish',
             ])],
             'hidden' => ['required', 'boolean'],
-            'publication_date' => ['nullable', 'date'],
+            'publication_date' => ['nullable', 'date_format:Y-m-d H:i'],
 
             // Tags
             'tags' => ['nullable', 'array'],

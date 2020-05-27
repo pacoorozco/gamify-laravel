@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class RewardBadgeRequest extends Request
 {
     /**
@@ -22,8 +24,8 @@ class RewardBadgeRequest extends Request
     public function rules()
     {
         return [
-            'badge_username' => ['required', 'string', 'exists:users,id'],
-            'badge'          => ['required', 'integer', 'exists:badges,id'],
+            'badge_username' => ['required', 'string', Rule::exists('users', 'id')],
+            'badge' => ['required', 'integer', Rule::exists('badges', 'id')],
         ];
     }
 }

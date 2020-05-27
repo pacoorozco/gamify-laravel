@@ -2,6 +2,7 @@
 
 namespace Gamify\Http\Requests;
 
+use Gamify\User;
 use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends Request
@@ -19,17 +20,21 @@ class UserUpdateRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param \Gamify\User $user
+     *
      * @return array
      */
-    public function rules()
+    public function rules(User $user)
     {
-        $user = $this->route('user');
-
         return [
             'name'     => ['required', 'string'],
             'email'    => ['required', 'email', Rule::unique('users')->ignore($user->id)],
-            'password' => ['nullable', 'required_with:password_confirmation', 'string', 'between:4,11', 'confirmed'],
-            'role'     => ['required', Rule::in(['user', 'editor', 'administrator'])],
+            'password' => ['nullable', 'required_with:password_confirmation', 'string', 'min:5', 'confirmed'],
+            'role' => ['required', Rule::in([
+                User::USER_ROLE,
+                User::EDITOR_ROLE,
+                User::ADMIN_ROLE,
+            ])],
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class RewardExperienceRequest extends Request
 {
     /**
@@ -22,9 +24,9 @@ class RewardExperienceRequest extends Request
     public function rules()
     {
         return [
-            'username' => ['required', 'string', 'exists:users,id'],
-            'points'   => ['required', 'integer'],
-            'message'  => ['nullable', 'string'],
+            'username' => ['required', 'string', Rule::exists('users', 'id')],
+            'points' => ['required', 'integer'],
+            'message' => ['nullable', 'string'],
 
         ];
     }

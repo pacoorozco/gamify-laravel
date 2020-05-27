@@ -20,12 +20,14 @@ class QuestionUpdateRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param \Gamify\Question $question
+     *
      * @return array
      */
-    public function rules()
+    public function rules(Question $question)
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', Rule::unique('questions')->ignore($question->id)],
             'question' => ['required', 'string'],
             'solution' => ['nullable', 'string'],
             'type' => ['required', Rule::in([
@@ -45,9 +47,9 @@ class QuestionUpdateRequest extends Request
 
             // Choices
             'choice_text' => ['required', 'array', 'min:2'],
-            //'choice_text.*' => ['required', 'string'],
+            'choice_text.*' => ['required', 'string'],
             'choice_score' => ['required', 'array', 'min:2'],
-            //'choice_score.*' => ['required', 'integer'],
+            'choice_score.*' => ['required', 'integer'],
         ];
     }
 }
