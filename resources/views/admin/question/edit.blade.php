@@ -389,10 +389,8 @@
             $.datetimepicker.setLocale("@lang('site.dateTimePickerLang')");
             $("#publication_date").datetimepicker({
                 minDate: 0,
-                minTime: 0,
                 format: "Y-m-d H:i",
                 defaultTime:'09:00',
-                closeOnDateSelect: true,
             });
 
             $("#enablePublicationDateControls").click(function () {
