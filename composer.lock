@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62805e235982de35a433b160d6a08b99",
+    "content-hash": "6428313bf024aa20854276216124fb9f",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -922,6 +922,53 @@
                 "fixtures"
             ],
             "time": "2019-12-12T13:22:17+00:00"
+        },
+        {
+            "name": "guilhermegonzaga/presenter",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guilhermegonzaga/presenter.git",
+                "reference": "d2630f88dfbde536fff143ae83ee1b00d4c6dfd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guilhermegonzaga/presenter/zipball/d2630f88dfbde536fff143ae83ee1b00d4c6dfd3",
+                "reference": "d2630f88dfbde536fff143ae83ee1b00d4c6dfd3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.0|^6.0|^7.0",
+                "illuminate/support": "^5.0|^6.0|^7.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laracodes\\Presenter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme de Oliveira Gonzaga",
+                    "email": "guilherme10gonzaga@gmail.com"
+                }
+            ],
+            "description": "Implementation for Laravel of the presenter design pattern.",
+            "keywords": [
+                "entity",
+                "laravel",
+                "presenter",
+                "view"
+            ],
+            "time": "2020-04-15T15:22:30+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

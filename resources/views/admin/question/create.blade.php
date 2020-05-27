@@ -36,7 +36,6 @@
     {!! Form::open([
                 'route' => ['admin.questions.store'],
                 'method' => 'post',
-                'files' => true
                 ]) !!}
 
     <div class="row">
@@ -47,8 +46,8 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('admin/question/title.general_section')</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -64,7 +63,7 @@
                     </div>
                     <!-- ./ name -->
 
-                    <!-- question -->
+                    <!-- question text -->
                     <div class="form-group {{ $errors->has('question') ? 'has-error' : '' }}">
                         {!! Form::label('question', __('admin/question/model.question'), ['class' => 'control-label required']) !!}
                         <p class="text-muted">@lang('admin/question/model.question_help')</p>
@@ -73,7 +72,7 @@
                             <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                         </div>
                     </div>
-                    <!-- ./ question -->
+                    <!-- ./ question text -->
 
                     <!-- type -->
                     <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
@@ -95,7 +94,6 @@
                         <p class="text-muted">@lang('admin/question/model.solution_help')</p>
                         <div class="controls">
                             {!! Form::textarea('solution', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
-
                             <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
                         </div>
                     </div>
@@ -107,13 +105,13 @@
         </div>
         <div class="col-xs-4">
 
-            <!-- publish widget -->
+            <!-- publish section -->
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('admin/question/title.publish_section')</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -121,7 +119,9 @@
 
                     <!-- save draft and preview -->
                     <div class="form-group">
-                        {!! Form::button(__('admin/question/model.save_button'), ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'save']) !!}
+                        <button type="submit" class="btn btn-primary" id="submitDraftBtn">
+                            @lang('button.save_as_draft')
+                        </button>
                     </div>
                     <!-- ./ save draft and preview -->
 
@@ -129,8 +129,8 @@
                     <div class="form-group">
                         {!! Form::label('status', __('admin/question/model.status'), ['class' => 'control-label required']) !!}
                         <div class="controls">
+                            <span>@lang('admin/question/model.status_list.draft')</span>
                             {!! Form::hidden('status','draft') !!}
-                            @lang('admin/question/model.status_list.draft')
                         </div>
                     </div>
                     <!-- ./ status -->
@@ -138,9 +138,11 @@
                     <!-- visibility -->
                     <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                         {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
+                        <a href="#" id="enableVisibilityControls">@lang('general.edit')</a>
                         <div id="visibilityStatus">
-                            <span>{{ old('hidden') === '1' ? __('admin/question/model.hidden_yes') : __('admin/question/hidden_no') }}</span>
-                            <a href="#" id="enableVisibilityControl">@lang('general.edit')</a>
+                            <span>
+                                {{ old('hidden') === '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
+                            </span>
                         </div>
                         <div class="controls hidden" id="visibilityControls">
                             <div class="radio">
@@ -164,51 +166,53 @@
                     <!-- publication date -->
                     <div class="form-group {{ $errors->has('publication_date') ? 'has-error' : '' }}">
                         {!! Form::label('publication_date', __('admin/question/model.publication_date'), ['class' => 'control-label']) !!}
+                        <a href="#" id="enablePublicationDateControls">@lang('general.edit')</a>
                         <div id="publicationDateStatus">
+                            <span>
                             @if (empty(old('publication_date')))
-                                <span>@lang('admin/question/model.publication_date_now')</span>
+                                    @lang('admin/question/model.publish_immediately')
                             @else
-                                <span>@lang('admin/question/model.publication_date_on') {{ old('publication_date') }}</span>
+                                    @lang('admin/question/model.publish_on', ['datetime' => old('publication_date')])
                             @endif
-                            <a href="#" id="enablePublicationDateControl">@lang('general.edit')</a>
+                            </span>
                         </div>
                         <div class="controls hidden" id="publicationDateControls">
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                {!! Form::datetime('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
+                                {!! Form::text('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
                                 <span class="input-group-btn">
-                                    {!! Form::button('<i class="fa fa-times"></i>', ['type' => 'button', 'class' => 'btn btn-flat', 'id' => 'resetPublicationDate']) !!}
+                                    <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
+                                        @lang('admin/question/model.publish_immediately')
+                                    </button>
                                 </span>
                             </div>
                         </div>
                         <span class="help-block">{{ $errors->first('publication_date', ':message') }}</span>
                     </div>
                     <!-- ./ publication date -->
+
                 </div>
                 <div class="box-footer">
                     <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
-                        <i class="fa fa-arrow-left"></i> @lang('general.back')
+                        @lang('button.back')
                     </a>
-                @if (empty(old('publication_date')))
-                    {!! Form::button(__('admin/question/model.publish_button'), ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
-                @else
-                    {!! Form::button(__('admin/question/model.schedule_button'), ['type' => 'submit', 'class' => 'btn btn-success pull-right', 'id' => 'publish']) !!}
-                @endif
-                <!-- ./ form actions -->
+                    <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
+                            @lang('button.publish')
+                    </button>
                 </div>
 
             </div>
-            <!-- ./ publish widget -->
+            <!-- ./ publish section -->
 
             <!-- badges section -->
-            <div class="box box-solid">
+            <div class="box box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -221,13 +225,14 @@
                 </div>
             </div>
             <!-- ./ badges section -->
+
             <!-- tags section -->
             <div class="box box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('admin/question/title.tags_section')</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -283,34 +288,37 @@
                 },
             });
 
-            $("#enableVisibilityControl").click(function () {
+            $("#submitDraftBtn").click(function () {
+                $("#status").val("draft");
+                $("#formEditQuestion").submit();
+            });
+
+            $("#submitPublishBtn").click(function () {
+                $("#status").val("publish");
+                $("#formEditQuestion").submit();
+            });
+
+            $("#enableVisibilityControls").click(function () {
                 $("#visibilityStatus").addClass("hidden");
                 $("#visibilityControls").removeClass("hidden");
+                $("#enableVisibilityControls").addClass("hidden");
             });
 
             $.datetimepicker.setLocale("@lang('site.dateTimePickerLang')");
             $("#publication_date").datetimepicker({
                 minDate: 0,
-                minTime: 0,
-                format: "Y-m-d H:i:s",
-                closeOnDateSelect: true,
+                format: "Y-m-d H:i",
+                defaultTime:'09:00',
             });
 
-            $("#enablePublicationDateControl").click(function () {
+            $("#enablePublicationDateControls").click(function () {
                 $("#publicationDateStatus").addClass("hidden");
                 $("#publicationDateControls").removeClass("hidden");
+                $("#enablePublicationDateControls").addClass("hidden");
                 $("#publication_date").datetimepicker("show");
             });
 
-            $("#publication_date").change(function () {
-                if ($("#publication_date").val() === "") {
-                    $("#publish").text("@lang('admin/question/model.publish_button')");
-                } else {
-                    $("#publish").text("@lang('admin/question/model.schedule_button')");
-                }
-            });
-
-            $("#resetPublicationDate").click(function () {
+            $("#resetPublicationDateBtn").click(function () {
                 $("#publication_date").val("");
                 $("#publication_date").change();
             });

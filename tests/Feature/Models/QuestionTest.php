@@ -207,4 +207,37 @@ class QuestionTest extends TestCase
 
         Event::assertNotDispatched(QuestionPublished::class);
     }
+
+    /**
+     * PRESENTERS
+     *
+     * @see \Gamify\Presenters\QuestionPresenter
+     */
+
+    /** @test */
+    public function it_returns_formatted_publication_date_using_presenter(){
+        $question = factory(Question::class)->create([
+            'publication_date' => '2020-01-02 03:04:05',
+        ]);
+
+        $this->assertEquals('2020-01-02 03:04', $question->present()->publication_date);
+    }
+
+    /** @test */
+    public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter(){
+        $question = factory(Question::class)->create([
+            'publication_date' => null,
+        ]);
+
+        $this->assertEquals('', $question->present()->publication_date);
+    }
+
+    /** @test */
+    public function it_returns_formatted_public_url_using_presenter(){
+        $question = factory(Question::class)->create([
+            'name' => 'test question number 1'
+        ]);
+
+        $this->assertEquals('http://localhost/questions/test-question-number-1', $question->present()->public_url);
+    }
 }

@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laracodes\Presenter\Traits\Presentable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
@@ -54,10 +55,11 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
-
     use Sluggable; // Slugs
-
     use Taggable; // Tags
+    use Presentable;
+
+    protected $presenter = 'Gamify\Presenters\QuestionPresenter';
 
     /**
      * Defines question's statuses.
@@ -163,16 +165,6 @@ class Question extends Model
     public function excerpt($length = 55, $trailing = '...'): string
     {
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
-    }
-
-    /**
-     * Returns the public URL of this question.
-     *
-     * @return string
-     */
-    public function getPublicUrlAttribute(): string
-    {
-        return route('questions.show', ['questionname' => $this->short_name]);
     }
 
     /**
@@ -323,6 +315,7 @@ class Question extends Model
         }
 
         $this->status = self::PENDING_STATUS;
+        $this->publication_date = null;
         $this->saveOrFail(); // throws exception on error
 
         QuestionPendingReview::dispatch($this);

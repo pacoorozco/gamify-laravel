@@ -224,14 +224,14 @@
                                     @if (empty(old('publication_date')))
                                         @lang('admin/question/model.publish_immediately')
                                     @else
-                                        @lang('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->publication_date)])
+                                        @lang('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->present()->publication_date)])
                                     @endif
                                     @break
                                     @case(\Gamify\Question::PUBLISH_STATUS)
-                                    @lang('admin/question/model.published_on', ['datetime' => old('publication_date', $question->publication_date)])
+                                    @lang('admin/question/model.published_on', ['datetime' => old('publication_date', $question->present()->publication_date)])
                                     @break
                                     @case(\Gamify\Question::FUTURE_STATUS)
-                                    @lang('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->publication_date)])
+                                    @lang('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->present()->publication_date)])
                                     @break
                                 @endswitch
                             </span>
@@ -241,7 +241,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                {!! Form::text('publication_date', $question->publication_date, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
+                                {!! Form::text('publication_date', $question->present()->publication_date, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
                                         @lang('admin/question/model.publish_immediately')
@@ -255,7 +255,7 @@
 
                 </div>
                 <div class="box-footer">
-                    <a href="{{ route('admin.questions.index') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
                         @lang('button.back')
                     </a>
                     <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">

@@ -29,9 +29,12 @@ use Gamify\Exceptions\InvalidContentForPublicationException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Yajra\Datatables\Datatables;
 
 class AdminQuestionController extends AdminController
@@ -68,7 +71,7 @@ class AdminQuestionController extends AdminController
     public function store(QuestionCreateRequest $request): RedirectResponse
     {
         try {
-            $question = Question::create([
+            $question = Question::make([
                 'name' => $request->input('name'),
                 'question' => $request->input('question'),
                 'solution' => $request->input('solution'),
@@ -77,8 +80,8 @@ class AdminQuestionController extends AdminController
                 'publication_date' => $request->filled('publication_date')
                     ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
                     : null,
-            ])
-                ->saveOrFail();
+            ]);
+            $question->saveOrFail();
 
             // Store tags
             if ($request->has('tags')) {
@@ -267,7 +270,7 @@ class AdminQuestionController extends AdminController
             ->editColumn('name', function (Question $question) {
                 return view('admin/question/partials._question_name_with_link')
                     ->with('name', $question->name)
-                    ->with('url', $question->public_url)
+                    ->with('url', $question->present()->public_url)
                     ->render();
             })
             ->editColumn('type', function (Question $question) {
