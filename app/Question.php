@@ -186,7 +186,7 @@ class Question extends Model
      */
     public function isPublished(): bool
     {
-        return ($this->status == self::PUBLISH_STATUS);
+        return $this->status == self::PUBLISH_STATUS;
     }
 
     /**
@@ -271,7 +271,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new InvalidContentForPublicationException();
         }
 
@@ -310,7 +310,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new InvalidContentForPublicationException();
         }
 
@@ -327,7 +327,6 @@ class Question extends Model
      *
      * @throws \Throwable
      * @see \Gamify\Question::publish()
-     *
      */
     private function transitionToPublishedStatus(): void
     {
