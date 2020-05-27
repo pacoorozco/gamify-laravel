@@ -29,12 +29,9 @@ use Gamify\Exceptions\InvalidContentForPublicationException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Yajra\Datatables\Datatables;
 
 class AdminQuestionController extends AdminController

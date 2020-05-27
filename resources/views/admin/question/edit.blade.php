@@ -67,8 +67,8 @@
                     <!-- link -->
                     <div class="form-group">
                         <p class="text-muted">
-                            <b>@lang('admin/question/model.permanent_link')</b>: {{ $question->public_url }}
-                            <a href="{{ $question->public_url }}"
+                            <b>@lang('admin/question/model.permanent_link')</b>: {{  $question->present()->public_url }}
+                            <a href="{{ $question->present()->public_url }}"
                                class="btn btn-default btn-xs" target="_blank">
                                 @lang('general.view') <i class="fa fa-external-link"></i>
                             </a>
