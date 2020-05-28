@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Changed
+- Upgrade requirements to PHP 7.4. 
+- Add [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) to install PHP extensions in docker.
 
 ## 2.4.1 - 2020-05-05
 ### Changed
