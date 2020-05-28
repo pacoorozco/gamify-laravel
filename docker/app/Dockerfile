@@ -1,33 +1,13 @@
-FROM php:7.2-fpm
+FROM php:7.4-fpm
 
 MAINTAINER Paco Orozco <paco@pacoorozco.info>
 
-# Install "libmcrypt-dev, "libpng-dev", "zlib1g-dev".
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests \
-        libwebp-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libxpm-dev \
-        libfreetype6-dev \
-        zlib1g-dev
+# Install "docker-php-extension-installer" to install PHP extensions.
+ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
-# Configure GD to use several image formats.
-RUN docker-php-ext-configure gd \
-    --with-gd \
-    --with-webp-dir \
-    --with-jpeg-dir \
-    --with-png-dir \
-    --with-zlib-dir \
-    --with-xpm-dir \
-    --with-freetype-dir
-
-# Install the PHP needed extentions
-RUN docker-php-ext-install \
-    gd \
-    mbstring \
-    pdo_mysql \
-    zip
+# Install the PHP needed extensions
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions gd pdo_mysql zip
 
 # Clean up
 RUN apt-get clean \
