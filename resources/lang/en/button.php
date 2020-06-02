@@ -17,4 +17,6 @@ return [
     'upload_image' => 'Change',
 
     'publish' => '<i class="fa fa-paper-plane-o"></i> Publish',
+    'remove_choice' => '<i class="fa fa-trash-o"></i>',
+    'add_new_choice' => '<i class="fa fa-plus"></i> Add an option',
 ];

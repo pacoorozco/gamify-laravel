@@ -47,9 +47,11 @@ return [
     'tags_none' => 'None',
 
     // Answers
-    'choice_text' => 'Answer Text',
-    'choice_text_help' => 'Put here the text of this choice',
-    'choice_score' => 'Points',
+    'choices_section' => 'Answer options',
+    'choices_help' => 'These are the options from which the participant can choose. Note that <strong>positive scores will mark option as correct</strong>.',
+    'choice_text' => 'Option Text',
+    'choice_text_help' => 'Put here the text of this answer option.',
+    'choice_score' => 'Score',
     'choice_score_help' => 'Choices with positive points are considered as correct.',
 
     // Created / last saved

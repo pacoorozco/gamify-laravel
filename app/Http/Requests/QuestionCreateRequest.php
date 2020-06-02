@@ -44,10 +44,8 @@ class QuestionCreateRequest extends Request
             'tags.*' => ['required', 'alpha_dash'],
 
             // Choices
-            'choice_text' => ['required', 'array', 'min:2'],
-            'choice_text.*' => ['required', 'string'],
-            'choice_score' => ['required', 'array', 'min:2'],
-            'choice_score.*' => ['required', 'integer'],
+            'choices.*.text' => ['required', 'string'],
+            'choices.*.score' => ['required', 'integer'],
         ];
     }
 }

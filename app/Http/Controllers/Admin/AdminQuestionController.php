@@ -67,6 +67,8 @@ class AdminQuestionController extends AdminController
      */
     public function store(QuestionCreateRequest $request): RedirectResponse
     {
+        dd($request->input('choices'));
+
         try {
             $question = Question::make([
                 'name' => $request->input('name'),
