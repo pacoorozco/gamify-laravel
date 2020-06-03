@@ -4,7 +4,7 @@ namespace Gamify\Exceptions;
 
 use Exception;
 
-class InvalidContentForPublicationException extends Exception
+class QuestionPublishingException extends Exception
 {
     //
 }

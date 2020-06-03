@@ -47,12 +47,10 @@ $factory->state(Question::class, 'with_choices', [])
         $question->choices()->saveMany([
             new QuestionChoice([
                 'text' => 'correct answer',
-                'correct' => true,
                 'score' => 5,
             ]),
             new QuestionChoice([
                 'text' => 'incorrect answer',
-                'correct' => false,
                 'score' => -5,
             ]),
         ]);

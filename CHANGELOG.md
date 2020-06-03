@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Changed
 - Upgrade requirements to PHP 7.4. 
 - Add [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) to install PHP extensions in docker.
+### Deprecated
+- QuestionChoice's `correct` model attribute. Use `isCorrect()` and scope `correct()` to get the same functionality than before.
+### Removed
+- QuestionChoice's `correct` field has been removed from the model. This field was not used in favor of `score` field. The removal is **backward compatible** and you can still use `correct` attribute, that it's **deprecated**.
 
 ## 2.4.1 - 2020-05-05
 ### Changed

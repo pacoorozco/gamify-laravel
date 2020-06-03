@@ -13,7 +13,6 @@ class QuestionChoiceTest extends ModelTestCase
         $m = new QuestionChoice();
         $this->assertEquals([
             'text',
-            'correct',
             'score',
         ], $m->getFillable());
     }
@@ -24,7 +23,6 @@ class QuestionChoiceTest extends ModelTestCase
         $this->assertEquals([
             'id' => 'int',
             'text' => 'string',
-            'correct' => 'bool',
             'score' => 'int',
         ], $m->getCasts());
     }
@@ -35,4 +33,68 @@ class QuestionChoiceTest extends ModelTestCase
         $r = $m->question();
         $this->assertInstanceOf(BelongsTo::class, $r);
     }
+
+    /** @test */
+    public function it_is_considered_correct_when_score_is_positive()
+    {
+        $m = new QuestionChoice();
+        $m->score = 5;
+
+        $this->assertTrue($m->isCorrect());
+    }
+
+    /** @test */
+    public function it_is_considered_incorrect_when_score_is_zero()
+    {
+        $m = new QuestionChoice();
+        $m->score = 0;
+
+        $this->assertFalse($m->isCorrect());
+    }
+
+    /** @test */
+    public function it_is_considered_incorrect_when_score_is_negative()
+    {
+        $m = new QuestionChoice();
+        $m->score = -5;
+
+        $this->assertFalse($m->isCorrect());
+    }
+
+    /**
+     * @test
+     * @deprecated
+     */
+    public function it_is_considered_correct_when_score_is_positive_using_deprecated_attribute()
+    {
+        $m = new QuestionChoice();
+        $m->score = 5;
+
+        $this->assertTrue($m->correct);
+    }
+
+    /**
+     * @test
+     * @deprecated
+     */
+    public function it_is_considered_incorrect_when_score_is_zero_using_deprecated_attribute()
+    {
+        $m = new QuestionChoice();
+        $m->score = 0;
+
+        $this->assertFalse($m->correct);
+    }
+
+    /**
+     * @test
+     * @deprecated
+     */
+    public function it_is_considered_incorrect_when_score_is_negative_using_deprecated_attribute()
+    {
+        $m = new QuestionChoice();
+        $m->score = -5;
+
+        $this->assertFalse($m->correct);
+    }
+
 }

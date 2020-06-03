@@ -4,7 +4,7 @@ namespace Tests\Feature\Models;
 
 use Gamify\Badge;
 use Gamify\Events\QuestionPublished;
-use Gamify\Exceptions\InvalidContentForPublicationException;
+use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Question;
 use Gamify\QuestionAction;
 use Gamify\QuestionChoice;
@@ -136,7 +136,7 @@ class QuestionTest extends TestCase
             ])
         );
 
-        $this->expectException(InvalidContentForPublicationException::class);
+        $this->expectException(QuestionPublishingException::class);
 
         $question->publish();
     }
@@ -149,17 +149,15 @@ class QuestionTest extends TestCase
         $question->choices()->saveMany([
             new QuestionChoice([
                 'text' => 'answer 1',
-                'correct' => false,
                 'score' => -5,
             ]),
             new QuestionChoice([
                 'text' => 'answer 2',
-                'correct' => false,
                 'score' => -5,
             ]),
         ]);
 
-        $this->expectException(InvalidContentForPublicationException::class);
+        $this->expectException(QuestionPublishingException::class);
 
         $question->publish();
     }

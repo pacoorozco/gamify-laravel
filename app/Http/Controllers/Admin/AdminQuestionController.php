@@ -25,7 +25,7 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Exceptions\InvalidContentForPublicationException;
+use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
@@ -86,16 +86,15 @@ class AdminQuestionController extends AdminController
             }
 
             // Store question choices
-            $question->choices()->createMany(
-                $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
-            );
+            if ($request->has('choices')) {
+                $question->choices()->createMany($request->input('choices'));
+            }
 
-            if ($request->has('publish')) {
+            if ($request->input('status') == Question::PUBLISH_STATUS) {
                 $question->publish(); // throws exception on error.
             }
-        } catch (InvalidContentForPublicationException $exception) {
-            return redirect()->back()
-                ->withInput()
+        } catch (QuestionPublishingException $exception) {
+            return redirect(route('admin.questions.edit', $question))
                 ->with('error', __('admin/question/messages.publish.error'));
         } catch (\Throwable $exception) {
             return redirect()->back()
@@ -189,7 +188,7 @@ class AdminQuestionController extends AdminController
                 case 'draft':
                     $question->transitionToDraftStatus(); // throws exception on error.
             }
-        } catch (InvalidContentForPublicationException $exception) {
+        } catch (QuestionPublishingException $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.publish.error'));

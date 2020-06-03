@@ -22,8 +22,8 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;
-use Gamify\Exceptions\InvalidContentForPublicationException;
 use Gamify\Exceptions\InvalidDateForPublicationException;
+use Gamify\Exceptions\QuestionPublishingException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -55,8 +55,11 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
+
     use Sluggable; // Slugs
+
     use Taggable; // Tags
+
     use Presentable;
 
     protected $presenter = 'Gamify\Presenters\QuestionPresenter';
@@ -233,7 +236,7 @@ class Question extends Model
     public function canBePublished(): bool
     {
         $answers_count = $this->choices()->count();
-        $answers_correct_count = $this->choices()->where('correct', true)->count();
+        $answers_correct_count = $this->choices()->correct()->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
     }
@@ -262,8 +265,7 @@ class Question extends Model
      * Publishes or schedules a question using transitions to desired status.
      * It verifies all requirements before it.
      *
-     * @throws \Gamify\Exceptions\InvalidContentForPublicationException
-     * @throws \Throwable
+     * @throws \Gamify\Exceptions\QuestionPublishingException
      */
     public function publish(): void
     {
@@ -271,13 +273,17 @@ class Question extends Model
             return;
         }
 
-        if (! $this->canBePublished()) {
-            throw new InvalidContentForPublicationException();
+        if (!$this->canBePublished()) {
+            throw new QuestionPublishingException();
         }
 
-        (is_null($this->publication_date) || $this->publication_date->lessThanOrEqualTo(now()))
-            ? $this->transitionToPublishedStatus()
-            : $this->transitionToScheduledStatus();
+        try {
+            (is_null($this->publication_date) || $this->publication_date->lessThanOrEqualTo(now()))
+                ? $this->transitionToPublishedStatus()
+                : $this->transitionToScheduledStatus();
+        } catch (\Throwable $exception) {
+            throw new QuestionPublishingException($exception);
+        }
     }
 
     /**
@@ -301,7 +307,7 @@ class Question extends Model
     /**
      * Transits a question to self::PENDING_STATUS status.
      *
-     * @throws \Gamify\Exceptions\InvalidContentForPublicationException
+     * @throws \Gamify\Exceptions\QuestionPublishingException
      * @throws \Throwable
      */
     public function transitionToPendingStatus(): void
@@ -310,8 +316,8 @@ class Question extends Model
             return;
         }
 
-        if (! $this->canBePublished()) {
-            throw new InvalidContentForPublicationException();
+        if (!$this->canBePublished()) {
+            throw new QuestionPublishingException();
         }
 
         $this->status = self::PENDING_STATUS;
