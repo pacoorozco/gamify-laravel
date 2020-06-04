@@ -86,9 +86,7 @@ class AdminQuestionController extends AdminController
             }
 
             // Store question choices
-            if ($request->has('choices')) {
-                $question->choices()->createMany($request->input('choices'));
-            }
+            $this->addChoicesToQuestion($question, $request->input('choices'));
 
             if ($request->input('status') == Question::PUBLISH_STATUS) {
                 $question->publish(); // throws exception on error.
@@ -167,19 +165,14 @@ class AdminQuestionController extends AdminController
                 ->saveOrFail();
 
             // Save Question Tags
-            if (is_array($request->input('tag_list'))) {
-                $question->retag($request->input('tag_list'));
+            if (is_array($request->input('tags'))) {
+                $question->retag($request->input('tags'));
             } else {
                 $question->detag();
             }
 
             // Save Question Choices
-            // 1st. Deletes the old ones
-            //$question->choices()->delete();
-            // 2nd. Adds the new ones
-            //$question->choices()->createMany(
-            //    $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
-            //);
+            $this->addChoicesToQuestion($question, $request->input('choices'));
 
             switch ($request->input('status')) {
                 case 'publish':
@@ -200,6 +193,23 @@ class AdminQuestionController extends AdminController
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.update.success'));
+    }
+
+    /**
+     * Sync the given array of QuestionChoices to a Question.
+     *
+     * @param \Gamify\Question $question
+     * @param array            $choices
+     */
+    private function addChoicesToQuestion(Question $question, array $choices): void
+    {
+        if ($question->choices()->count() > 0) {
+            $question->choices()->delete();
+        }
+
+        if (count($choices) > 0) {
+            $question->choices()->createMany($choices);
+        }
     }
 
     /**
@@ -258,21 +268,13 @@ class AdminQuestionController extends AdminController
 
         return $dataTable->eloquent($question)
             ->editColumn('status', function (Question $question) {
-                return view('admin/question/partials._add_status_and_visibility_labels')
-                    ->with('status', $question->status)
-                    ->with('hidden', $question->hidden)
-                    ->render();
+                return $question->present()->statusBadge . ' ' . $question->present()->visibilityBadge;
             })
             ->editColumn('name', function (Question $question) {
-                return view('admin/question/partials._question_name_with_link')
-                    ->with('name', $question->name)
-                    ->with('url', $question->present()->public_url)
-                    ->render();
+                return $question->present()->name . ' ' . $question->present()->publicUrlLink;
             })
             ->editColumn('type', function (Question $question) {
-                return view('admin/question/partials._question_type')
-                    ->with('type', $question->type)
-                    ->render();
+                return $question->present()->typeIcon;
             })
             ->addColumn('actions', function (Question $question) {
                 return view('admin/partials.actions_dd')

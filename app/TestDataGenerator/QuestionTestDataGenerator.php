@@ -32,13 +32,15 @@ class QuestionTestDataGenerator
             ],
 
             // Choices
-            'choice_text' => [
-                'option_0_is_correct',
-                'option_1_is_incorrect',
-            ],
-            'choice_score' => [
-                '5',
-                '-5',
+            'choices' => [
+                [
+                    'text' => 'option_0_is_correct',
+                    'score' => '5',
+                ],
+                [
+                    'text' => 'option_1_is_incorrect',
+                    'score' => '-5'
+                ],
             ],
         ], $overrides);
     }

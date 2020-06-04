@@ -34,6 +34,7 @@
     <!-- ./ notifications -->
 
     {!! Form::open([
+                'id' => 'formCreateQuestion',
                 'route' => ['admin.questions.store'],
                 'method' => 'post',
                 ]) !!}
@@ -83,9 +84,9 @@
                         <!-- ./ type -->
                     </fieldset>
 
-                    <!-- answers -->
+                    <!-- options -->
                 @include('admin/question/_form_choices')
-                <!-- ./ answers -->
+                <!-- ./ options -->
 
                     <fieldset>
                         <legend>
@@ -158,7 +159,8 @@
                                         {{ Form::radio('hidden', '1', false, [ 'id' => 'visibilityPrivate', 'aria-describedby' => 'helpHiddenYes']) }}
                                         @lang('admin/question/model.hidden_yes')
                                     </label>
-                                    <span id="helpHiddenYes" class="text-muted">@lang('admin/question/model.hidden_yes_help')</span>
+                                    <span id="helpHiddenYes"
+                                          class="text-muted">@lang('admin/question/model.hidden_yes_help')</span>
                                 </div>
                             </div>
                             <span class="help-block">{{ $errors->first('hidden', ':message') }}</span>
@@ -293,12 +295,12 @@
 
             $("#submitDraftBtn").click(function () {
                 $("#status").val("draft");
-                $("#formEditQuestion").submit();
+                $("#formCreateQuestion").submit();
             });
 
             $("#submitPublishBtn").click(function () {
                 $("#status").val("publish");
-                $("#formEditQuestion").submit();
+                $("#formCreateQuestion").submit();
             });
 
             $("#enableVisibilityControls").click(function () {

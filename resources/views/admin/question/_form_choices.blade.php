@@ -13,7 +13,7 @@
 
     <div class="choices-wrapper">
         <div class="choices-container">
-            @foreach(old('choices', []) as $choice)
+            @foreach(old('choices', (isset($question) ? $question->choices->toArray() : [])) as $choice)
                 <div class="row choices-row">
                     <div class="col-sm-9 form-group {{ $errors->has('choices.'. $loop->index .'.*') ? 'has-error' : '' }}">
                         {!! Form::label('choices['. $loop->index .'][text]', __('admin/question/model.choice_text'), ['class' => 'control-label']) !!}

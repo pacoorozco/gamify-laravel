@@ -9,14 +9,14 @@ return [
     'permanent_link' => 'Permanent link',
     'name' => 'Question name',
     'name_help' => 'This is public, do not leak any information about the solution.',
-    'question' => 'Question text',
-    'question_help' => 'User\'s will see this text as the question to be answered.',
+    'question' => 'Statement of the question',
+    'question_help' => 'User\'s will see this text as the statement of the question to be answered.',
     'solution' => 'Explanation',
     'solution_help' => 'Explanation is shown to the user after they have completed the question. You can use to give users a fully worked answer and perhaps a link to more information.',
     'type' => 'Type',
     'type_list' => [
-        Question::SINGLE_RESPONSE_TYPE => 'Only one answer allowed',
-        Question::MULTI_RESPONSE_TYPE => 'Multiple answers allowed',
+        Question::SINGLE_RESPONSE_TYPE => 'Single choice question',
+        Question::MULTI_RESPONSE_TYPE => 'Multiple choice question',
     ],
     'shuffle_choices' => 'Shuffle the choices?',
     'shuffle_choices_help' => 'If enabled, the order of the answers is randomly shuffled for each attempt.',
@@ -53,6 +53,7 @@ return [
     'choice_text_help' => 'Put here the text of this answer option.',
     'choice_score' => 'Score',
     'choice_score_help' => 'Choices with positive points are considered as correct.',
+    'choice_correctness' => 'Correctness',
 
     // Created / last saved
     'created_by' => 'Created by :who on :when',
