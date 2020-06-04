@@ -39,7 +39,7 @@ class QuestionTestDataGenerator
                 ],
                 [
                     'text' => 'option_1_is_incorrect',
-                    'score' => '-5'
+                    'score' => '-5',
                 ],
             ],
         ], $overrides);
