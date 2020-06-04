@@ -286,26 +286,4 @@ class AdminQuestionController extends AdminController
             ->removeColumn(['id', 'hidden', 'short_name'])
             ->toJson();
     }
-
-    /**
-     * Return an array of choices to be associated to a Question.
-     *
-     * @param array $texts_for_choices  - Text of the choices
-     * @param array $scores_for_choices - Score of the choices
-     *
-     * @return array
-     */
-    private function getChoicesFromTextsAndScoresArrays(array $texts_for_choices, array $scores_for_choices): array
-    {
-        $choices = [];
-        foreach ($texts_for_choices as $key => $text) {
-            array_push($choices, [
-                'text' => $text,
-                'score' => is_numeric($scores_for_choices[$key]) ? $scores_for_choices[$key] : 0,
-                'correct' => ($scores_for_choices[$key] > 0),
-            ]);
-        }
-
-        return $choices;
-    }
 }
