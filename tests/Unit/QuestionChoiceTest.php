@@ -96,5 +96,4 @@ class QuestionChoiceTest extends ModelTestCase
 
         $this->assertFalse($m->correct);
     }
-
 }
