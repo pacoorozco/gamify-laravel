@@ -11,8 +11,11 @@ return [
 
     'general_section' => 'General',
     'answer_section'  => 'Answers',
+    'optional_section' => 'Optional fields',
     'publish_section' => 'Publish',
     'tags_section'    => 'Tags',
     'badges_section'  => 'Associated badges',
     'other_section'   => 'Other information',
+
+    'un-publish_confirmation' => 'Do you want to un-publish this question?',
 ];

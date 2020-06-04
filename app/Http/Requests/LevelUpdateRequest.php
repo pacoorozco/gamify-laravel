@@ -25,22 +25,17 @@ class LevelUpdateRequest extends Request
     {
         $level = $this->route('level');
 
-        // Rules for all Levels.
-        $rules = [
-            'name' => ['required', 'string', Rule::unique('levels')->ignore($level->id)],
-        ];
-
-        // Rules for non default Levels.
-        if (! $level->isDefault()) {
-            return array_merge(
-                $rules,
-                [
-                    'required_points' => ['required', 'integer', 'min:1', Rule::unique('levels')->ignore($level->id)],
-                    'active' => ['required', 'boolean'],
-                ]
-            );
+        if ($level->isDefault()) {
+            return [
+                'name' => ['required', 'string', Rule::unique('levels')->ignore($level->id)],
+            ];
         }
 
-        return $rules;
+        // Rules for non default Levels.
+        return [
+            'name' => ['required', 'string', Rule::unique('levels')->ignore($level->id)],
+            'required_points' => ['required', 'integer', 'min:1', Rule::unique('levels')->ignore($level->id)],
+            'active' => ['required', 'boolean'],
+        ];
     }
 }

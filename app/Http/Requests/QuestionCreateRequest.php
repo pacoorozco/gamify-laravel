@@ -25,29 +25,27 @@ class QuestionCreateRequest extends Request
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', Rule::unique('questions')],
             'question' => ['required', 'string'],
-            'explanation' => ['nullable', 'string'],
+            'solution' => ['nullable', 'string'],
             'type' => ['required', Rule::in([
                 Question::SINGLE_RESPONSE_TYPE,
                 Question::MULTI_RESPONSE_TYPE,
             ])],
             'status' => ['required', Rule::in([
-                Question::DRAFT_STATUS,
-                Question::PUBLISH_STATUS,
-                Question::PRIVATE_STATUS,
+                'draft',
+                'publish',
             ])],
             'hidden' => ['required', 'boolean'],
+            'publication_date' => ['nullable', 'date_format:Y-m-d H:i'],
 
             // Tags
             'tags' => ['nullable', 'array'],
             'tags.*' => ['required', 'alpha_dash'],
 
             // Choices
-            'choice_text' => ['required', 'array', 'min:2'],
-            'choice_text.*' => ['required', 'string'],
-            'choice_score' => ['required', 'array', 'min:2'],
-            'choice_score.*' => ['required', 'integer'],
+            'choices.*.text' => ['required', 'string'],
+            'choices.*.score' => ['required', 'integer'],
         ];
     }
 }

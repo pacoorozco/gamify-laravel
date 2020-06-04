@@ -26,10 +26,10 @@ class BadgeUpdateRequest extends Request
         $badge = $this->route('badge');
 
         return [
-            'name'                 => ['required', 'string', Rule::unique('badges')->ignore($badge->id)],
-            'description'          => ['required'],
+            'name' => ['required', 'string', Rule::unique('badges')->ignore($badge->id)],
+            'description' => ['required'],
             'required_repetitions' => ['required', 'integer', 'min:1'],
-            'active'               => ['required', 'boolean'],
+            'active' => ['required', 'boolean'],
         ];
     }
 }

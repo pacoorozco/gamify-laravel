@@ -43,9 +43,11 @@ mix.copyDirectory('node_modules/admin-lte/bower_components/jquery/dist', 'public
 mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net/js', 'public/vendor/AdminLTE/plugins/datatables');
 mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/js', 'public/vendor/AdminLTE/plugins/datatables');
 mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/css', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap-datepicker/dist', 'public/vendor/AdminLTE/plugins/bootstrap-datepicker');
 mix.copyDirectory('node_modules/admin-lte/bower_components/select2/dist', 'public/vendor/AdminLTE/plugins/select2');
 mix.copyDirectory('node_modules/jasny-bootstrap/dist', 'public/vendor/jasny-bootstrap');
+mix.copyDirectory('node_modules/jquery-datetimepicker/build', 'public/vendor/jquery-datetimepicker');
+mix.copy('node_modules/repeatable-fields/repeatable-fields.js', 'public/vendor/repeatable-fields/')
+    .minify('public/vendor/repeatable-fields/repeatable-fields.js');
 
 
 

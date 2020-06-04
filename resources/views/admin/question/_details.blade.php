@@ -1,10 +1,12 @@
 <div class="box {{ ($action == 'show') ? 'box-info' : 'box-danger' }}">
     <div class="box-header with-border">
         <h3 class="box-title">
-            @include('admin/question/partials._question_name_with_link', ['name' => $question->name, 'url' => $question->public_url])
-            @include('admin/question/partials._add_status_label', ['status' => $question->status])
-            @include('admin/question/partials._add_visibility_label', ['hidden' => $question->hidden])
+            {{ $question->present()->name }}
         </h3>
+        {{ $question->present()->publicUrlLink }}
+        {{ $question->present()->visibilityBadge }}
+        {{ $question->present()->statusBadge }}
+
     </div>
     <div class="box-body">
         <div class="panel panel-default">
@@ -12,7 +14,7 @@
                 @lang('admin/question/model.question')
             </div>
             <div class="panel-body">
-                {!! $question->question !!}
+                {{ $question->present()->statement }}
             </div>
         </div>
 
@@ -29,13 +31,13 @@
                         <tr>
                             <th>@lang('admin/question/model.choice_text')</th>
                             <th>@lang('admin/question/model.choice_score')</th>
-                            <th>@lang('admin/question/model.choice_correct')</th>
+                            <th>@lang('admin/question/model.choice_correctness')</th>
                         </tr>
                         @foreach ($question->choices as $choice)
                             <tr>
                                 <td>{{ $choice->text }}</td>
                                 <td>{{ $choice->score }}</td>
-                                <td>{{ $choice->correct ? __('general.yes') : trans('general.no') }}</td>
+                                <td>{{ $choice->isCorrect() ? __('general.yes') : __('general.no') }}
                             </tr>
                         @endforeach
                     </table>
@@ -51,7 +53,7 @@
                 @lang('admin/question/model.solution')
             </div>
             <div class="panel-body">
-                {!! $question->solution !!}
+                {{ $question->present()->explanation }}
             </div>
         </div>
 

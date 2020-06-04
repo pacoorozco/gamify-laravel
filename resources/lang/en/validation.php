@@ -147,8 +147,8 @@ return [
     */
 
     'attributes' => [
-        'choice_text' => 'answer text',
-        'choice_points' => 'answer points',
+        'choices.*.text' => 'answer option text',
+        'choices.*.score' => 'answer option score',
     ],
 
 ];

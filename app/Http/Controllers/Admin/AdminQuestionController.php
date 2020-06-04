@@ -25,10 +25,12 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 use Yajra\Datatables\Datatables;
 
@@ -66,13 +68,17 @@ class AdminQuestionController extends AdminController
     public function store(QuestionCreateRequest $request): RedirectResponse
     {
         try {
-            $question = Question::create($request->only([
-                'name',
-                'question',
-                'solution',
-                'type',
-                'hidden',
-            ]));
+            $question = Question::make([
+                'name' => $request->input('name'),
+                'question' => $request->input('question'),
+                'solution' => $request->input('solution'),
+                'type' => $request->input('type'),
+                'hidden' => $request->input('hidden'),
+                'publication_date' => $request->filled('publication_date')
+                    ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
+                    : null,
+            ]);
+            $question->saveOrFail();
 
             // Store tags
             if ($request->has('tags')) {
@@ -80,10 +86,15 @@ class AdminQuestionController extends AdminController
             }
 
             // Store question choices
-            $question->choices()->createMany(
-                $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
-            );
-        } catch (\Exception $exception) {
+            $this->addChoicesToQuestion($question, $request->input('choices'));
+
+            if ($request->input('status') == Question::PUBLISH_STATUS) {
+                $question->publish(); // throws exception on error.
+            }
+        } catch (QuestionPublishingException $exception) {
+            return redirect(route('admin.questions.edit', $question))
+                ->with('error', __('admin/question/messages.publish.error'));
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
@@ -140,33 +151,41 @@ class AdminQuestionController extends AdminController
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
-        // Save Question Tags
-        if (is_array($request->input('tag_list'))) {
-            $question->retag($request->input('tag_list'));
-        } else {
-            $question->detag();
-        }
+        try {
+            $question->fill([
+                'name' => $request->input('name'),
+                'question' => $request->input('question'),
+                'solution' => $request->input('solution'),
+                'type' => $request->input('type'),
+                'hidden' => $request->input('hidden'),
+                'publication_date' => $request->filled('publication_date')
+                    ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
+                    : null,
+            ])
+                ->saveOrFail();
 
-        // Save Question Choices
-        // 1st. Deletes the old ones
-        $question->choices()->delete();
-        // 2nd. Adds the new ones
-        $question->choices()->createMany(
-            $this->getChoicesFromTextsAndScoresArrays($request->input('choice_text'), $request->input('choice_score'))
-        );
-
-        // Are you trying to publish a question?
-        if ($request->input('status') == 'publish') {
-            if (! $question->canBePublished()) {
-                return redirect()->back()
-                    ->withInput()
-                    ->with('error', __('admin/question/messages.publish.error'));
+            // Save Question Tags
+            if (is_array($request->input('tags'))) {
+                $question->retag($request->input('tags'));
+            } else {
+                $question->detag();
             }
-            $question->publication_date = now();
-        }
-        $question->fill($request->only(['name', 'question', 'solution', 'type', 'hidden', 'status']));
 
-        if (! $question->save()) {
+            // Save Question Choices
+            $this->addChoicesToQuestion($question, $request->input('choices'));
+
+            switch ($request->input('status')) {
+                case 'publish':
+                    $question->publish(); // throws exception on error.
+                    break;
+                case 'draft':
+                    $question->transitionToDraftStatus(); // throws exception on error.
+            }
+        } catch (QuestionPublishingException $exception) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', __('admin/question/messages.publish.error'));
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));
@@ -174,6 +193,23 @@ class AdminQuestionController extends AdminController
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.update.success'));
+    }
+
+    /**
+     * Sync the given array of QuestionChoices to a Question.
+     *
+     * @param \Gamify\Question $question
+     * @param array            $choices
+     */
+    private function addChoicesToQuestion(Question $question, array $choices): void
+    {
+        if ($question->choices()->count() > 0) {
+            $question->choices()->delete();
+        }
+
+        if (count($choices) > 0) {
+            $question->choices()->createMany($choices);
+        }
     }
 
     /**
@@ -232,21 +268,13 @@ class AdminQuestionController extends AdminController
 
         return $dataTable->eloquent($question)
             ->editColumn('status', function (Question $question) {
-                return view('admin/question/partials._add_status_and_visibility_labels')
-                    ->with('status', $question->status)
-                    ->with('hidden', $question->hidden)
-                    ->render();
+                return $question->present()->statusBadge.' '.$question->present()->visibilityBadge;
             })
             ->editColumn('name', function (Question $question) {
-                return view('admin/question/partials._question_name_with_link')
-                    ->with('name', $question->name)
-                    ->with('url', $question->public_url)
-                    ->render();
+                return $question->present()->name.' '.$question->present()->publicUrlLink;
             })
             ->editColumn('type', function (Question $question) {
-                return view('admin/question/partials._question_type')
-                    ->with('type', $question->type)
-                    ->render();
+                return $question->present()->typeIcon;
             })
             ->addColumn('actions', function (Question $question) {
                 return view('admin/partials.actions_dd')

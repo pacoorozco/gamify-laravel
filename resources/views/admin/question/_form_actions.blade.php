@@ -28,5 +28,5 @@
             </tr>
         @endforeach
     </table>
-    @endif
+@endif
 <!-- ./ actions -->

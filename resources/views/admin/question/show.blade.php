@@ -4,10 +4,7 @@
 @section('title', __('admin/question/title.question_show'))
 
 {{-- Content Header --}}
-@section('header')
-        @lang('admin/question/title.question_show')
-        <small>{{ $question->name }}</small>
-@endsection
+@section('header', __('admin/question/title.question_show'))
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
@@ -24,14 +21,14 @@
     <li class="active">
         @lang('admin/question/title.question_show')
     </li>
-    @endsection
+@endsection
 
-    {{-- Content --}}
-    @section('content')
+{{-- Content --}}
+@section('content')
 
-            <!-- Notifications -->
+    <!-- Notifications -->
     @include('partials.notifications')
-            <!-- /.notifications -->
+    <!-- /.notifications -->
 
     @include('admin/question/_details', ['action' => 'show'])
 

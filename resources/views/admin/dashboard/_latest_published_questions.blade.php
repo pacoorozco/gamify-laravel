@@ -23,15 +23,11 @@
             @foreach($latest_questions as $question)
                 <tr>
                     <td>
-                        @include('admin.question.partials._question_name_with_link', [
-                        'name' => $question->name,
-                        'url' => route('questions.show', $question->short_name),
-                        ])
+                        {{ $question->present()->name }}
+                        {{ $question->present()->publicUrlLink }}
                     </td>
                     <td>
-                        @include('admin.question.partials._question_type', [
-                        'type' => $question->type
-                        ])
+                        {{ $question->present()->typeIcon }}
                     </td>
                     <td>
                         @if($question->hidden)

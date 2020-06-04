@@ -20,11 +20,16 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
+use Gamify\Events\QuestionPendingReview;
+use Gamify\Events\QuestionPublished;
+use Gamify\Exceptions\InvalidDateForPublicationException;
+use Gamify\Exceptions\QuestionPublishingException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laracodes\Presenter\Traits\Presentable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
@@ -38,13 +43,13 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property  string                     $solution         The test for the solution.
  * @property  string                     $type             The question type ['single'. 'multi'].
  * @property  bool                       $hidden           The visibility of the question.
- * @property  string                     $status           The status of the question ['draft', 'publish', 'pending',
- *            'private', 'future].
+ * @property  string                     $status           The status of the question.
  * @property  string                     $public_url       The public URL of this question.
  * @property  \Gamify\User               $creator          The User who created this question,
  * @property  \Gamify\User               $updater          The last User who updated this question.
  * @property  \Illuminate\Support\Carbon $publication_date The data when the question was published.
  * @property  \Illuminate\Support\Carbon $expiration_date  The data when the question was expired.
+ * @mixin \Eloquent
  */
 class Question extends Model
 {
@@ -52,14 +57,16 @@ class Question extends Model
     use BlameableTrait; // Record author, updater and deleter
     use Sluggable; // Slugs
     use Taggable; // Tags
+    use Presentable;
+
+    protected $presenter = 'Gamify\Presenters\QuestionPresenter';
 
     /**
      * Defines question's statuses.
      */
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
-    const PUBLISH_STATUS = 'publish'; // Viewable by everyone.
+    const PUBLISH_STATUS = 'publish'; // Published.
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
-    const PRIVATE_STATUS = 'private'; // Viewable only to administrators.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
 
     /**
@@ -86,10 +93,12 @@ class Question extends Model
         'solution',
         'type',
         'hidden',
-        'status',
+        'publication_date',
     ];
 
     protected $dates = [
+        'created_at',
+        'updated_at',
         'deleted_at',
         'publication_date',
         'expiration_date',
@@ -159,16 +168,6 @@ class Question extends Model
     }
 
     /**
-     * Returns the public URL of this question.
-     *
-     * @return string
-     */
-    public function getPublicUrlAttribute(): string
-    {
-        return route('questions.show', ['questionname' => $this->short_name]);
-    }
-
-    /**
      * Get the list of actions that has not been selected yet.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -178,6 +177,26 @@ class Question extends Model
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
 
         return Badge::whereNotIn('id', $selectedActions)->get();
+    }
+
+    /**
+     * Returns true if question has been published.
+     *
+     * @return bool
+     */
+    public function isPublished(): bool
+    {
+        return $this->status == self::PUBLISH_STATUS;
+    }
+
+    /**
+     * Returns true if question has been published or scheduled.
+     *
+     * @return bool
+     */
+    public function isPublishedOrScheduled(): bool
+    {
+        return ($this->status == self::PUBLISH_STATUS) || ($this->status == self::FUTURE_STATUS);
     }
 
     /**
@@ -214,32 +233,9 @@ class Question extends Model
     public function canBePublished(): bool
     {
         $answers_count = $this->choices()->count();
-        $answers_correct_count = $this->choices()->where('correct', true)->count();
+        $answers_correct_count = $this->choices()->correct()->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
-    }
-
-    /**
-     * Set a Question as published.
-     *
-     * @return bool
-     *
-     * @throws \Throwable
-     */
-    public function publish(): bool
-    {
-        if ($this->status === self::PUBLISH_STATUS) {
-            return true;
-        }
-
-        if (! $this->canBePublished()) {
-            return false;
-        }
-
-        $this->status = self::PUBLISH_STATUS;
-        $this->publication_date = now();
-
-        return $this->saveOrFail();
     }
 
     /**
@@ -262,66 +258,98 @@ class Question extends Model
             ->get();
     }
 
-    public function transitionToDraftStatus(): bool
+    /**
+     * Publishes or schedules a question using transitions to desired status.
+     * It verifies all requirements before it.
+     *
+     * @throws \Gamify\Exceptions\QuestionPublishingException
+     */
+    public function publish(): void
+    {
+        if ($this->status == self::PUBLISH_STATUS) {
+            return;
+        }
+
+        if (! $this->canBePublished()) {
+            throw new QuestionPublishingException();
+        }
+
+        try {
+            (is_null($this->publication_date) || $this->publication_date->lessThanOrEqualTo(now()))
+                ? $this->transitionToPublishedStatus()
+                : $this->transitionToScheduledStatus();
+        } catch (\Throwable $exception) {
+            throw new QuestionPublishingException($exception);
+        }
+    }
+
+    /**
+     * Transits a question to self::DRAFT_STATUS status.
+     *
+     * @throws \Throwable
+     */
+    public function transitionToDraftStatus(): void
     {
         if ($this->status == self::DRAFT_STATUS) {
-            return true;
+            return;
         }
 
         // TODO: Remove all answers?
 
         $this->status = self::DRAFT_STATUS;
         $this->publication_date = null;
-        $this->expiration_date = null;
-
-        return $this->save();
+        $this->saveOrFail(); // throws exception on error
     }
 
-    public function transitionToPendingStatus(): bool
+    /**
+     * Transits a question to self::PENDING_STATUS status.
+     *
+     * @throws \Gamify\Exceptions\QuestionPublishingException
+     * @throws \Throwable
+     */
+    public function transitionToPendingStatus(): void
     {
         if ($this->status == self::PENDING_STATUS) {
-            return true;
+            return;
         }
 
-        if ($this->status != self::DRAFT_STATUS) {
-            return false; // Only draft -> pending transition is allowed
+        if (! $this->canBePublished()) {
+            throw new QuestionPublishingException();
         }
-
-        // TODO: Broadcast new pending question is available to editors
 
         $this->status = self::PENDING_STATUS;
+        $this->publication_date = null;
+        $this->saveOrFail(); // throws exception on error
 
-        return $this->save();
+        QuestionPendingReview::dispatch($this);
     }
 
-    public function transitionToPublishStatus(): bool
+    /**
+     * Transits the question to self::PUBLISH_STATUS status.
+     * Requirements have been verified before, send events once is published.
+     *
+     * @throws \Throwable
+     * @see \Gamify\Question::publish()
+     */
+    private function transitionToPublishedStatus(): void
     {
-        if ($this->status == self::PUBLISH_STATUS) {
-            return true;
-        }
-
-        // TODO: Check question is ready to be published or false
-
         $this->status = self::PUBLISH_STATUS;
         $this->publication_date = now();
+        $this->saveOrFail(); // throws exception on error
 
-        return $this->save();
+        QuestionPublished::dispatch($this);
     }
 
-    public function transitionToFutureStatus(): bool
+    /**
+     * Transits the question to self:FUTURE_STATUS status.
+     * Requirements have been verified before.
+     *
+     * @throws \Throwable
+     * @see \Gamify\Question::publish()
+     */
+    private function transitionToScheduledStatus(): void
     {
-        if ($this->status != self::DRAFT_STATUS) {
-            return false; // Only draft -> future transition is allowed
-        }
-
-        if (is_null($this->publication_date) || $this->publication_date->lessThanOrEqualTo(now())) {
-            return false; // Can not schedule for a past date
-        }
-
-        // TODO: Check question is ready to be published or false
-
         $this->status = self::FUTURE_STATUS;
-
-        return $this->save();
+        $this->saveOrFail(); // throws exception on error
     }
 }
