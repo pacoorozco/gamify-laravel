@@ -41,7 +41,7 @@ class QuestionPresenter extends Presenter
         return new HtmlString(sprintf(
             '<span class="label %s">%s</span>',
             $this->mapStatusToLabel($this->model->status),
-            __('admin/question/model.status_list.'.$this->model->status)
+            (string)__('admin/question/model.status_list.' . $this->model->status)
         ));
     }
 
@@ -53,16 +53,16 @@ class QuestionPresenter extends Presenter
      */
     public function visibilityBadge(): HtmlString
     {
-        if ($this->model->hidden) {
+        if ($this->model->hidden === true) {
             return new HtmlString(sprintf(
                 '<span class="label label-default">%s</span>',
-                __('admin/question/model.hidden_yes')
+                (string)__('admin/question/model.hidden_yes')
             ));
         }
 
         return new HtmlString(sprintf(
             '<span class="label label-default hidden">%s</span>',
-            __('admin/question/model.hidden_no')
+            (string)__('admin/question/model.hidden_no')
         ));
     }
 
@@ -74,7 +74,7 @@ class QuestionPresenter extends Presenter
      */
     public function statement(): HtmlString
     {
-        return new HtmlString($this->model->question);
+        return new HtmlString((string)$this->model->question);
     }
 
     /**
@@ -85,7 +85,7 @@ class QuestionPresenter extends Presenter
      */
     public function explanation(): HtmlString
     {
-        return new HtmlString($this->model->solution);
+        return new HtmlString((string)$this->model->solution);
     }
 
     /**
@@ -112,7 +112,7 @@ class QuestionPresenter extends Presenter
     {
         return new HtmlString(sprintf(
             '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
-            __('admin/question/model.type_list.'.$this->model->type),
+            (string)__('admin/question/model.type_list.' . $this->model->type),
             $this->model->type,
         ));
     }
@@ -134,6 +134,6 @@ class QuestionPresenter extends Presenter
             Question::PENDING_STATUS => 'label-warning',
         ];
 
-        return (string) $LabelToColorDict[$status] ?? $default;
+        return (string)$LabelToColorDict[$status] ?? $default;
     }
 }
