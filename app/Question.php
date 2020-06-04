@@ -54,11 +54,8 @@ class Question extends Model
 {
     use SoftDeletes;
     use BlameableTrait; // Record author, updater and deleter
-
     use Sluggable; // Slugs
-
     use Taggable; // Tags
-
     use Presentable;
 
     protected $presenter = 'Gamify\Presenters\QuestionPresenter';
@@ -272,7 +269,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
@@ -315,7 +312,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
