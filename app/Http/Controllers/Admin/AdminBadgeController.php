@@ -62,8 +62,14 @@ class AdminBadgeController extends AdminController
     public function store(BadgeCreateRequest $request)
     {
         try {
-            Badge::create($request->validated());
-        } catch (\Exception $exception) {
+            $badge = Badge::make([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'required_repetitions' => $request->input('required_repetitions'),
+                'active' => $request->input('active'),
+            ]);
+            $badge->saveOrFail();
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/badge/messages.create.error'));
@@ -108,8 +114,14 @@ class AdminBadgeController extends AdminController
     public function update(BadgeUpdateRequest $request, Badge $badge)
     {
         try {
-            $badge->update($request->validated());
-        } catch (\Exception $exception) {
+            $badge->fill([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'required_repetitions' => $request->input('required_repetitions'),
+                'active' => $request->input('active'),
+            ])
+                ->saveOrFail();
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/badge/messages.update.error'));
@@ -172,10 +184,10 @@ class AdminBadgeController extends AdminController
 
         return $dataTable->eloquent($badges)
             ->addColumn('image', function (Badge $badge) {
-                return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">', $badge->image, $badge->name);
+                return $badge->present()->imageTableThumbnail;
             })
             ->editColumn('active', function (Badge $badge) {
-                return ($badge->active) ? (string) __('general.yes') : (string) __('general.no');
+                return $badge->present()->status;
             })
             ->addColumn('actions', function (Badge $badge) {
                 return view('admin.partials.actions_dd')

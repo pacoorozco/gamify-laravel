@@ -54,7 +54,7 @@
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                  style="width: 150px; height: 150px;">
                                 @isset($badge)
-                                    <img src="{{ $badge->image }}">
+                                    {{ $badge->present()->imageTag }}
                                 @endisset
                             </div>
                             <p>

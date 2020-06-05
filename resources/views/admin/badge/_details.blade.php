@@ -8,7 +8,7 @@
                 <div class="form-group">
                     {!! Form::label('name', __('admin/badge/model.name'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $badge->name }}
+                        {{ $badge->present()->name }}
                     </div>
                 </div>
                 <!-- ./ name -->
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     {!! Form::label('description', __('admin/badge/model.description'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $badge->description }}
+                        {{ $badge->present()->description }}
                     </div>
                 </div>
                 <!-- ./ description -->
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $badge->required_repetitions }}
+                        {{ $badge->present()->required_repetitions }}
                     </div>
                 </div>
                 <!-- ./ required_repetitions -->
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     {!! Form::label('active', __('admin/badge/model.active'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ ($badge->active ? __('general.yes') : __('general.no')) }}
+                        {{ $badge->present()->status }}
                     </div>
                 </div>
                 <!-- ./ activation status -->
@@ -47,7 +47,7 @@
                 <div class="form-group">
                     {!! Form::label('image', __('admin/badge/model.image'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        <img src="{{ $badge->image }}" class="img-thumbnail" alt="{{ $badge->name }}">
+                       {{ $badge->present()->imageThumbnail }}
                     </div>
                 </div>
                 <!-- ./ image -->

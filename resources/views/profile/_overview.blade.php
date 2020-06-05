@@ -11,7 +11,7 @@
         <div class="col-xs-2">
             <a href="#badge-{{ $badge->name }}" class="thumbnail" data-toggle="modal">
                 @if ($badge->pivot->completed)
-                    <img src="{{ $badge->image }}" alt="{{ $badge->name }}">
+                    {{ $badge->present()->imageThumbnail }}
                 @else
                     <img src="{{ asset('images/missing_badge.png') }}" alt="{{ $badge->name }}">
                 @endif
@@ -37,7 +37,7 @@
                     </div>
                     <div class="modal-body text-center">
                         @if ($badge->pivot->completed)
-                            <img src="{{ $badge->image }}" alt="{{ $badge->name }}">
+                            {{ $badge->present()->imageThumbnail }}
                             <p>{{ $badge->description }}</p>
                         @else
                             <img src="{{ asset('images/missing_badge.png') }}" alt="{{ $badge->name }}">
