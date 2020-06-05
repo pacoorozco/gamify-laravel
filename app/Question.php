@@ -22,7 +22,6 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;
-use Gamify\Exceptions\InvalidDateForPublicationException;
 use Gamify\Exceptions\QuestionPublishingException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
