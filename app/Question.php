@@ -23,6 +23,7 @@ use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
+use Gamify\Presenters\QuestionPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -61,21 +62,27 @@ class Question extends Model
 
     use Presentable;
 
-    protected $presenter = 'Gamify\Presenters\QuestionPresenter';
-
     /**
      * Defines question's statuses.
      */
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
+
     const PUBLISH_STATUS = 'publish'; // Published.
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
-
     /**
      * Defines question's types.
      */
     const SINGLE_RESPONSE_TYPE = 'single'; // Only one answer is correct.
+
     const MULTI_RESPONSE_TYPE = 'multi'; // Multiple answers are correct.
+
+    /**
+     * Model presenter
+     *
+     * @var string
+     */
+    protected $presenter = QuestionPresenter::class;
 
     /**
      * The database table used by the model.

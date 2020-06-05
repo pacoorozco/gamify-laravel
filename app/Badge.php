@@ -18,8 +18,10 @@
 
 namespace Gamify;
 
+use Gamify\Presenters\BadgePresenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
 
 /**
@@ -39,11 +41,19 @@ class Badge extends Model
 {
     use SoftDeletes;
     use HasImageUploads;
+    use Presentable;
 
     /**
      * Default badge image to be used in case no one is supplied.
      */
     const DEFAULT_IMAGE = '/images/missing_badge.png';
+
+    /**
+     * Model presenter
+     *
+     * @var string
+     */
+    protected $presenter = BadgePresenter::class;
 
     /**
      * The database table used by the model.
@@ -124,20 +134,6 @@ class Badge extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-
-    /**
-     * Get image attribute or default image.
-     *
-     * @return string
-     */
-    public function getImageAttribute(): string
-    {
-        try {
-            return $this->imageUrl();
-        } catch (\Exception $exception) {
-            return asset(self::DEFAULT_IMAGE);
-        }
-    }
 
     /**
      * Returns a collection of active Badges.
