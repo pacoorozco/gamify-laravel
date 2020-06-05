@@ -13,12 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Upgrade requirements to PHP 7.4. 
 - Add [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) to install PHP extensions in docker.
 ### Fixed
+- Badge images were not working on 'local' storage. ([#162][i162])
 - Choices were not shown on validation errors. Dynamic Form fields is using [repeatable-fields](https://github.com/Rhyzz/repeatable-fields).
 ### Deprecated
 - QuestionChoice's `correct` model attribute. Use `isCorrect()` and scope `correct()` to get the same functionality than before.
 ### Removed
 - QuestionChoice's `correct` field has been removed from the model. This field was not used in favor of `score` field. The removal is **backward compatible** and you can still use `correct` attribute, that it's **deprecated**.
 
+[i162]: https://github.com/pacoorozco/gamify-laravel/issues/162
 [i152]: https://github.com/pacoorozco/gamify-laravel/issues/152
 
 ## 2.4.1 - 2020-05-05
