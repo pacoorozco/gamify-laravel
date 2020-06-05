@@ -22,7 +22,6 @@ class BadgeTest extends TestCase
         $badge->uploadImage($image);
 
         $this->assertEquals('badges/'.$image->hashName(), $badge->fresh()->getOriginal('image_url'));
-        $this->assertEquals('/storage/badges/'.$image->hashName(), $badge->image);
     }
 
     public function test_returns_default_image_when_field_is_empty()
@@ -30,6 +29,5 @@ class BadgeTest extends TestCase
         $badge = factory(Badge::class)->create();
 
         $this->assertNull($badge->getOriginal('image_url'));
-        $this->assertEquals(Badge::DEFAULT_IMAGE, $badge->image);
     }
 }

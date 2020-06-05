@@ -38,4 +38,13 @@ class BadgePresenter extends Presenter
         return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail center-block" width="96"'));
     }
 
+    /**
+     * Returns the image HTML tag.
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function imageTag(): HtmlString
+    {
+        return new HtmlString($this->model->imageTag('image_url'));
+    }
 }
