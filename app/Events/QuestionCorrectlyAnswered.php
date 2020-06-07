@@ -7,37 +7,32 @@ use Gamify\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class QuestionAnswered
+class QuestionCorrectlyAnswered
 {
     use Dispatchable, SerializesModels;
 
     /** @var \Gamify\User */
-    public $user;
+    public User $user;
 
     /** @var \Gamify\Question */
-    public $question;
+    public Question $question;
 
     /** @var int */
-    public $points;
-
-    /** @var bool */
-    public $answerCorrectness;
+    public int $points;
 
     /**
      * Create a new event instance.
      *
      * @param \Gamify\User     $user
      * @param \Gamify\Question $question
-     * @param bool             $answerCorrectness
      * @param int              $points
      *
      * @return void
      */
-    public function __construct(User $user, Question $question, bool $answerCorrectness, int $points)
+    public function __construct(User $user, Question $question, int $points)
     {
         $this->user = $user;
         $this->question = $question;
-        $this->answerCorrectness = $answerCorrectness;
         $this->points = $points;
     }
 }

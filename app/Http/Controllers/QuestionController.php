@@ -3,6 +3,8 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
+use Gamify\Events\QuestionCorrectlyAnswered;
+use Gamify\Events\QuestionIncorrectlyAnswered;
 use Gamify\Http\Requests\QuestionAnswerRequest;
 use Gamify\Libs\Game\Game;
 use Gamify\Question;
@@ -87,7 +89,7 @@ class QuestionController extends Controller
         ]);
 
         // Trigger an event that will update XP, badges...
-        event(new QuestionAnswered($user, $question, $answerCorrectness, $points));
+        $this->dispatchEvents($user, $question, $answerCorrectness, $points);
 
         // Deal with Question specific Badges
         if ($answerCorrectness) {
@@ -108,6 +110,27 @@ class QuestionController extends Controller
             'answer' => $user->answeredQuestions()->find($question->id),
             'question' => $question,
         ]);
+    }
+
+    /**
+     * Dispatch events related with a question.
+     *
+     * @param \Gamify\User     $user
+     * @param \Gamify\Question $question
+     * @param bool             $correctness
+     * @param int              $points
+     */
+    private function dispatchEvents(
+        User $user,
+        Question $question,
+        bool $correctness,
+        int $points): void
+    {
+        if ($correctness) {
+            event(new QuestionCorrectlyAnswered($user, $question, $points));
+        } else {
+            event(new QuestionIncorrectlyAnswered($user, $question, $points));
+        }
     }
 
     /**
