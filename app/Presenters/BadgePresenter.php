@@ -7,7 +7,6 @@ use Laracodes\Presenter\Presenter;
 
 class BadgePresenter extends Presenter
 {
-
     /**
      * Returns the badge status in the local language.
      *
@@ -15,7 +14,7 @@ class BadgePresenter extends Presenter
      */
     public function status(): string
     {
-        return ($this->model->active) ? (string)__('general.yes') : (string)__('general.no');
+        return ($this->model->active) ? (string) __('general.yes') : (string) __('general.no');
     }
 
     /**

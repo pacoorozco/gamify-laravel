@@ -49,7 +49,7 @@ class Badge extends Model
     const DEFAULT_IMAGE = '/images/missing_badge.png';
 
     /**
-     * Model presenter
+     * Model presenter.
      *
      * @var string
      */
