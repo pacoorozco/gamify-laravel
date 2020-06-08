@@ -74,7 +74,7 @@ class QuestionController extends Controller
         foreach ($request->choices as $answer) {
             $choice = $question->choices()->find($answer);
             $points += $choice->score;
-            $answerCorrectness = $answerCorrectness || $choice->correct;
+            $answerCorrectness = $answerCorrectness || $choice->isCorrect();
         }
         // minimum points for answer is '1'
         if ($points < 1) {
@@ -89,7 +89,7 @@ class QuestionController extends Controller
         ]);
 
         // Trigger an event that will update XP, badges...
-        $this->dispatchEvents($user, $question, $answerCorrectness, $points);
+        event(new QuestionAnswered($user, $question, $points, $answerCorrectness));
 
         // Deal with Question specific Badges
         if ($answerCorrectness) {
@@ -110,27 +110,6 @@ class QuestionController extends Controller
             'answer' => $user->answeredQuestions()->find($question->id),
             'question' => $question,
         ]);
-    }
-
-    /**
-     * Dispatch events related with a question.
-     *
-     * @param \Gamify\User     $user
-     * @param \Gamify\Question $question
-     * @param bool             $correctness
-     * @param int              $points
-     */
-    private function dispatchEvents(
-        User $user,
-        Question $question,
-        bool $correctness,
-        int $points): void
-    {
-        if ($correctness) {
-            event(new QuestionCorrectlyAnswered($user, $question, $points));
-        } else {
-            event(new QuestionIncorrectlyAnswered($user, $question, $points));
-        }
     }
 
     /**

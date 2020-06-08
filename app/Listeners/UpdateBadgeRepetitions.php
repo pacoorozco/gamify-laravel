@@ -26,7 +26,7 @@ class UpdateBadgeRepetitions
      */
     public function handle(QuestionAnswered $event)
     {
-        $badges = $event->question->getActionableBadgesForCorrectness($event->answerCorrectness);
+        $badges = $event->question->getActionableBadgesForCorrectness($event->correctness);
         Game::incrementManyBadges($event->user, $badges);
     }
 }
