@@ -6,7 +6,7 @@ use Gamify\Events\PointCreated;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\LogSuccessfulLogin;
-use Gamify\Listeners\UpdateBadgeRepetitions;
+use Gamify\Listeners\AddAchievements;
 use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         QuestionAnswered::class => [
             AddReputation::class,
-            UpdateBadgeRepetitions::class,
+            AddAchievements::class,
         ],
         PointCreated::class => [
             UpdateExperience::class,
