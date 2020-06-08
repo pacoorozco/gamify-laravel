@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Gamify\Events\QuestionAnswered;
 use Gamify\Events\QuestionCorrectlyAnswered;
 use Gamify\Events\QuestionIncorrectlyAnswered;
 use Gamify\Question;
@@ -96,11 +97,10 @@ class QuestionControllerTest extends TestCase
             ->post(route('questions.answer', $question->short_name), $input_data)
             ->assertOk();
 
-        Event::assertDispatched(QuestionCorrectlyAnswered::class, function ($e) use ($question) {
-            return $e->question->id === $question->id;
+        Event::assertDispatched(QuestionAnswered::class, function ($e) use ($question) {
+            return $e->question->id === $question->id &&
+                $e->correctness === true;
         });
-
-        Event::assertNotDispatched(QuestionIncorrectlyAnswered::class);
     }
 
     /** @test */
@@ -125,10 +125,9 @@ class QuestionControllerTest extends TestCase
             ->post(route('questions.answer', $question->short_name), $input_data)
             ->assertOk();
 
-        Event::assertDispatched(QuestionIncorrectlyAnswered::class, function ($e) use ($question) {
-            return $e->question->id === $question->id;
+        Event::assertDispatched(QuestionAnswered::class, function ($e) use ($question) {
+            return $e->question->id === $question->id &&
+                $e->correctness === false;
         });
-
-        Event::assertNotDispatched(QuestionCorrectlyAnswered::class);
     }
 }
