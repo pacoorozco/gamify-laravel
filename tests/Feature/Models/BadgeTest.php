@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Badge;
+use Gamify\Enums\BadgeActuators;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -30,4 +31,18 @@ class BadgeTest extends TestCase
 
         $this->assertNull($badge->getOriginal('image_url'));
     }
+
+    /** @test */
+    public function it_returns_actuators_as_enum_when_model_is_read_from_database()
+    {
+        $want = factory(Badge::class)->create();
+        $want->actuators = BadgeActuators::OnUserLogin();
+        $want->saveOrFail();
+
+        $got = Badge::find($want)->first();
+
+        $this->assertEquals(BadgeActuators::OnUserLogin(), $got->actuators);
+    }
+
+
 }

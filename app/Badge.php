@@ -18,6 +18,7 @@
 
 namespace Gamify;
 
+use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,15 +28,16 @@ use QCod\ImageUp\HasImageUploads;
 /**
  * Model that represents a badge.
  *
- * @property int    $id                     Object unique id.
- * @property string $name                   Name of this badge.
- * @property string $description            Description of the badge.
- * @property int    $required_repetitions   How many times you need to request the badge to achieve it.
- * @property string $image                  URL of the badge's image
- * @property bool   $active                 Is this badge enabled?
- * @property string $imagesUploadDisk
- * @property string $imagesUploadPath
- * @property string $autoUploadImages
+ * @property int            $id                     Object unique id.
+ * @property string         $name                   Name of this badge.
+ * @property string         $description            Description of the badge.
+ * @property int            $required_repetitions   How many times you need to request the badge to achieve it.
+ * @property string         $image                  URL of the badge's image
+ * @property bool           $active                 Is this badge enabled?
+ * @property BadgeActuators $actuators              Events that triggers this badge completition.
+ * @property string         $imagesUploadDisk
+ * @property string         $imagesUploadPath
+ * @property string         $autoUploadImages
  */
 class Badge extends Model
 {

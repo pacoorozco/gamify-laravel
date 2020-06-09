@@ -19,6 +19,7 @@
 namespace Tests\Unit;
 
 use Gamify\Badge;
+use Gamify\Enums\BadgeActuators;
 use Tests\ModelTestCase;
 
 class BadgeTest extends ModelTestCase
