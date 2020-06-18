@@ -26,8 +26,11 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Badge;
+use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
+use Gamify\Presenters\BadgePresenter;
+use Illuminate\Support\Arr;
 use Yajra\Datatables\Datatables;
 
 class AdminBadgeController extends AdminController
@@ -49,7 +52,10 @@ class AdminBadgeController extends AdminController
      */
     public function create()
     {
-        return view('admin.badge.create');
+        return view('admin.badge.create', [
+            'actuators_list' => BadgePresenter::actuatorsSelect(),
+            'selected_actuators' => null,
+        ]);
     }
 
     /**
@@ -67,6 +73,9 @@ class AdminBadgeController extends AdminController
                 'description' => $request->input('description'),
                 'required_repetitions' => $request->input('required_repetitions'),
                 'active' => $request->input('active'),
+                'actuators' => $request->has('actuators')
+                    ? BadgeActuators::fromValue($request->input('actuators'))
+                    : BadgeActuators::None,
             ]);
             $badge->saveOrFail();
         } catch (\Throwable $exception) {
@@ -100,7 +109,11 @@ class AdminBadgeController extends AdminController
      */
     public function edit(Badge $badge)
     {
-        return view('admin.badge.edit', compact('badge'));
+        return view('admin.badge.edit', [
+            'badge' => $badge,
+            'actuators_list' => BadgePresenter::actuatorsSelect(),
+            'selected_actuators' => Arr::pluck($badge->actuators->getFlags(), 'value'),
+        ]);
     }
 
     /**
@@ -119,12 +132,15 @@ class AdminBadgeController extends AdminController
                 'description' => $request->input('description'),
                 'required_repetitions' => $request->input('required_repetitions'),
                 'active' => $request->input('active'),
+                'actuators' => $request->has('actuators')
+                    ? BadgeActuators::fromValue($request->input('actuators'))
+                    : BadgeActuators::None,
             ])
                 ->saveOrFail();
         } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', __('admin/badge/messages.update.error'));
+                ->with('error', __('admin/badge/messages.update.error') . $exception->getMessage());
         }
 
         return redirect()->route('admin.badges.index')

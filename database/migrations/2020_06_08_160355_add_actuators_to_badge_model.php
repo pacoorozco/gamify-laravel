@@ -14,7 +14,7 @@ class AddActuatorsToBadgeModel extends Migration
     public function up()
     {
         Schema::table('badges', function (Blueprint $table) {
-            $table->tinyInteger('actuators')->unsigned()->nullable()->after('active');
+            $table->tinyInteger('actuators')->unsigned()->default(0)->after('active');
         });
     }
 

@@ -19,7 +19,6 @@
 namespace Tests\Unit;
 
 use Gamify\Badge;
-use Gamify\Enums\BadgeActuators;
 use Tests\ModelTestCase;
 
 class BadgeTest extends ModelTestCase
@@ -32,6 +31,7 @@ class BadgeTest extends ModelTestCase
             'description',
             'required_repetitions',
             'active',
+            'actuators',
         ], $m->getFillable());
     }
 
@@ -44,6 +44,7 @@ class BadgeTest extends ModelTestCase
             'description' => 'string',
             'required_repetitions' => 'int',
             'active' => 'boolean',
+            'actuators' => 'int',
         ], $m->getCasts());
     }
 }

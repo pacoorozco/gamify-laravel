@@ -8,7 +8,7 @@
                 <div class="form-group">
                     {!! Form::label('name', __('admin/badge/model.name'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $badge->present()->name }}
+                        <span class="form-control-static">{{ $badge->present()->name }}</span>
                     </div>
                 </div>
                 <!-- ./ name -->
@@ -17,7 +17,9 @@
                 <div class="form-group">
                     {!! Form::label('description', __('admin/badge/model.description'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $badge->present()->description }}
+                        <span class="form-control-static">
+                            {{ $badge->present()->description }}
+                        </span>
                     </div>
                 </div>
                 <!-- ./ description -->
@@ -26,10 +28,32 @@
                 <div class="form-group">
                     {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $badge->present()->required_repetitions }}
+                        <span class="form-control-static">
+                            {{ $badge->present()->required_repetitions }}
+                        </span>
                     </div>
                 </div>
                 <!-- ./ required_repetitions -->
+
+                <!-- actuators -->
+                <div class="form-group">
+                    {!! Form::label('actuators[]', __('admin/badge/model.actuators'), ['class' => 'control-label']) !!}
+                    <div class="controls">
+                        <ul>
+                            @forelse($badge->present()->actuators as $actuator)
+                                <li>
+                                    <span class="label label-primary" data-toggle="tooltip" data-placement="top"
+                                          title="{{ $actuator->description }}">
+                                        {{ $actuator->key }}
+                                    </span>
+                                </li>
+                            @empty
+                                <li>@lang('general.none')</li>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+                <!-- ./ actuators -->
 
                 <!-- Activation Status -->
                 <div class="form-group">
@@ -47,7 +71,7 @@
                 <div class="form-group">
                     {!! Form::label('image', __('admin/badge/model.image'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                       {{ $badge->present()->imageThumbnail }}
+                        {{ $badge->present()->imageThumbnail }}
                     </div>
                 </div>
                 <!-- ./ image -->

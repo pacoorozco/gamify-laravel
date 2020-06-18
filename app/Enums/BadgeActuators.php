@@ -4,6 +4,7 @@ namespace Gamify\Enums;
 
 use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\FlaggedEnum;
+use Gamify\Presenters\BadgePresenter;
 
 /**
  * @method static static OnQuestionAnswered()
@@ -14,8 +15,21 @@ use BenSampo\Enum\FlaggedEnum;
  */
 final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
 {
-    const OnQuestionAnswered = 1 << 0;
-    const OnQuestionCorrectlyAnswered = 1 << 1;
-    const OnQuestionIncorrectlyAnswered = 1 << 2;
-    const OnUserLogin = 1 << 3;
+    const OnQuestionCorrectlyAnswered = 1 << 0;
+    const OnQuestionIncorrectlyAnswered = 1 << 1;
+    const OnUserLogin = 1 << 2;
+
+    // Shortcuts
+    const OnQuestionAnswered = self::OnQuestionCorrectlyAnswered | self::OnQuestionIncorrectlyAnswered;
+
+    /**
+     * Returns an array of values to be used on <select> with <optgroups> and filtered options.
+     *
+     * @return array
+     * @see BadgePresenter::actuatorsSelect()
+     */
+    public static function toSelectArray(): array
+    {
+        return BadgePresenter::actuatorsSelect();
+    }
 }
