@@ -43,12 +43,12 @@
                 <!-- ./ required_repetitions -->
 
                 <!-- actuators -->
-                <div class="form-group {{ $errors->has('actuators[]') ? 'has-error' : '' }}">
-                    {!! Form::label('actuators[]', __('admin/badge/model.actuators'), ['class' => 'control-label']) !!}
+                <div class="form-group {{ $errors->has('actuators') ? 'has-error' : '' }}">
+                    {!! Form::label('actuators', __('admin/badge/model.actuators'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {!! Form::select('actuators[]', $actuators_list, $selected_actuators, ['class' => 'form-control actuators-select', 'multiple' => 'multiple']) !!}
+                        {!! Form::select('actuators', $actuators_list, $selected_actuators, ['class' => 'form-control actuators-select', 'required' => 'required']) !!}
                         <p class="text-muted">@lang('admin/badge/model.actuators_help')</p>
-                        <span class="help-block">{{ $errors->first('actuators[]', ':message') }}</span>
+                        <span class="help-block">{{ $errors->first('actuators', ':message') }}</span>
                     </div>
                 </div>
                 <!-- ./ actuators -->
@@ -130,7 +130,6 @@
     <script>
         $(function () {
             $(".actuators-select").select2({
-                multiple: true,
                 width: '100%'
             });
         });

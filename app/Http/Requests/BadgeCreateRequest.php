@@ -30,8 +30,7 @@ class BadgeCreateRequest extends Request
             'description' => ['required'],
             'required_repetitions' => ['required', 'integer', 'min:1'],
             'active' => ['required', 'boolean'],
-            'actuators' => ['array'],
-            'actuators.*' => ['required', new EnumValue(BadgeActuators::class)],
+            'actuators' => ['required', new EnumValue(BadgeActuators::class)],
         ];
     }
 }

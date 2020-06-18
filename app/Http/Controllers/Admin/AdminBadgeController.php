@@ -73,9 +73,7 @@ class AdminBadgeController extends AdminController
                 'description' => $request->input('description'),
                 'required_repetitions' => $request->input('required_repetitions'),
                 'active' => $request->input('active'),
-                'actuators' => $request->has('actuators')
-                    ? BadgeActuators::fromValue($request->input('actuators'))
-                    : BadgeActuators::None,
+                'actuators' => BadgeActuators::fromValue($request->input('actuators')),
             ]);
             $badge->saveOrFail();
         } catch (\Throwable $exception) {
@@ -132,9 +130,7 @@ class AdminBadgeController extends AdminController
                 'description' => $request->input('description'),
                 'required_repetitions' => $request->input('required_repetitions'),
                 'active' => $request->input('active'),
-                'actuators' => $request->has('actuators')
-                    ? BadgeActuators::fromValue($request->input('actuators'))
-                    : BadgeActuators::None,
+                'actuators' => BadgeActuators::fromValue($request->input('actuators')),
             ])
                 ->saveOrFail();
         } catch (\Throwable $exception) {

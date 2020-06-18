@@ -57,7 +57,9 @@ class BadgePresenter extends Presenter
     public static function actuatorsSelect(): array
     {
         return [
+            BadgeActuators::None()->value => BadgeActuators::None()->description,
             __('admin/badge/model.actuators_related_with_question_events') => [
+                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
                 BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
                 BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
             ],
