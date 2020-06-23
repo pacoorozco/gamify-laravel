@@ -51,31 +51,28 @@ class Game
      * @param User  $user
      * @param Badge $badge
      *
-     * @return bool
+     * @return void
      */
-    public static function incrementBadge(User $user, Badge $badge): bool
+    public static function incrementBadge(User $user, Badge $badge): void
     {
+        if ($user->hasBadgeCompleted($badge)) {
+            return;
+        }
+
         try {
-            $userBadge = $user->badges()->findOrFail($badge->id);
+            $userBadge = $user->badges()->wherePivot('badge_id', $badge->id)->firstOrFail();
+            // this badge was initiated before
+            $data['repetitions'] = $userBadge->pivot->repetitions + 1;
+            $user->badges()->updateExistingPivot($badge->id, $data);
         } catch (ModelNotFoundException $exception) {
             // this is the first occurrence of this badge for this user
-            $user->badges()->attach($badge->id, ['repetitions' => '1']);
-
-            return true;
+            $data['repetitions'] = 1;
+            $user->badges()->attach($badge->id, $data);
         }
 
-        if ($user->hasBadgeCompleted($badge)) {
-            return true;
+        if ($data['repetitions'] === $badge->required_repetitions) {
+            self::giveCompletedBadge($user, $badge);
         }
-
-        // this badge was initiated before
-        $userBadge->pivot->repetitions++;
-        if ($userBadge->pivot->repetitions === $badge->required_repetitions) {
-            $userBadge->pivot->completed = true;
-            $userBadge->pivot->completed_on = now();
-        }
-
-        return ($userBadge->pivot->save() === false) ?: true;
     }
 
     /**
@@ -84,29 +81,27 @@ class Game
      * @param User  $user
      * @param Badge $badge
      *
-     * @return bool
+     * @return void
      */
-    public static function addBadge(User $user, Badge $badge): bool
+    public static function giveCompletedBadge(User $user, Badge $badge): void
     {
         if ($user->hasBadgeCompleted($badge)) {
-            return true;
+            return;
         }
 
         $data = [
             'repetitions' => $badge->required_repetitions,
             'completed' => true,
-            'completed_on' => Carbon::now(),
+            'completed_on' => now(),
         ];
 
         try {
-            $userBadge = $user->badges()->findOrFail($badge->id);
+            $user->badges()->wherePivot('badge_id', $badge->id)->firstOrFail();
             // this badge was initiated before
-            return ($userBadge->pivot->save($data) === false) ?: true;
+            $user->badges()->updateExistingPivot($badge->id, $data);
         } catch (ModelNotFoundException $exception) {
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, $data);
-
-            return true;
         }
     }
 

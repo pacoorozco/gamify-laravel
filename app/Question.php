@@ -63,7 +63,6 @@ class Question extends Model
      * Defines question's statuses.
      */
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
-
     const PUBLISH_STATUS = 'publish'; // Published.
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
