@@ -136,7 +136,7 @@ class AdminBadgeController extends AdminController
         } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', __('admin/badge/messages.update.error') . $exception->getMessage());
+                ->with('error', __('admin/badge/messages.update.error').$exception->getMessage());
         }
 
         return redirect()->route('admin.badges.index')

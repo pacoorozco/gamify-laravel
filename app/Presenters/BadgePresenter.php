@@ -15,7 +15,7 @@ class BadgePresenter extends Presenter
      */
     public function status(): string
     {
-        return ($this->model->active) ? (string)__('general.yes') : (string)__('general.no');
+        return ($this->model->active) ? (string) __('general.yes') : (string) __('general.no');
     }
 
     /**
@@ -25,7 +25,7 @@ class BadgePresenter extends Presenter
      */
     public function imageThumbnail(): HtmlString
     {
-        return new HtmlString((string)$this->model->imageTag('image_url', 'class="img-thumbnail"'));
+        return new HtmlString((string) $this->model->imageTag('image_url', 'class="img-thumbnail"'));
     }
 
     /**
@@ -35,7 +35,7 @@ class BadgePresenter extends Presenter
      */
     public function imageTableThumbnail(): HtmlString
     {
-        return new HtmlString((string)$this->model->imageTag('image_url', 'class="img-thumbnail center-block" width="96"'));
+        return new HtmlString((string) $this->model->imageTag('image_url', 'class="img-thumbnail center-block" width="96"'));
     }
 
     /**
@@ -45,7 +45,7 @@ class BadgePresenter extends Presenter
      */
     public function imageTag(): HtmlString
     {
-        return new HtmlString((string)$this->model->imageTag('image_url'));
+        return new HtmlString((string) $this->model->imageTag('image_url'));
     }
 
     /**
