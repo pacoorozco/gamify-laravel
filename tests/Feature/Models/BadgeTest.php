@@ -43,6 +43,4 @@ class BadgeTest extends TestCase
 
         $this->assertEquals(BadgeActuators::OnUserLogin(), $got->actuators);
     }
-
-
 }

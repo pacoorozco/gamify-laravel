@@ -4,11 +4,11 @@ namespace Gamify\Providers;
 
 use Gamify\Events\PointCreated;
 use Gamify\Events\QuestionAnswered;
+use Gamify\Listeners\AddAchievements;
 use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
 use Gamify\Listeners\LogSuccessfulLogin;
-use Gamify\Listeners\AddAchievements;
 use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
