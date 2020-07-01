@@ -82,14 +82,7 @@ class AdminRewardController extends AdminController
         $user = User::findOrFail($request->input('badge_username'));
         $badge = Badge::findOrFail($request->input('badge'));
 
-        if (! Game::incrementBadge($user, $badge)) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error',
-                    trans('admin/reward/messages.badge_given.error', [
-                        'username' => $user->username,
-                    ]));
-        }
+        Game::incrementBadge($user, $badge);
 
         return redirect()->route('admin.rewards.index')
             ->with('success',
