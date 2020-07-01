@@ -104,13 +104,14 @@ class AdminBadgeController extends AdminController
      * @param Badge $badge
      *
      * @return \Illuminate\View\View
+     * @throws \Laracodes\Presenter\Exceptions\PresenterException
      */
     public function edit(Badge $badge)
     {
         return view('admin.badge.edit', [
             'badge' => $badge,
             'actuators_list' => BadgePresenter::actuatorsSelect(),
-            'selected_actuators' => Arr::pluck($badge->actuators->getFlags(), 'value'),
+            'selected_actuators' => Arr::pluck($badge->present()->actuators, 'value'),
         ]);
     }
 
@@ -136,7 +137,7 @@ class AdminBadgeController extends AdminController
         } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', __('admin/badge/messages.update.error') . $exception->getMessage());
+                ->with('error', __('admin/badge/messages.update.error'));
         }
 
         return redirect()->route('admin.badges.index')
