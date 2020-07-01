@@ -113,7 +113,7 @@ class QuestionPresenter extends Presenter
         return new HtmlString(sprintf(
             '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
             (string) __('admin/question/model.type_list.'.$this->model->type),
-            (string)$this->model->type,
+            (string) $this->model->type,
         ));
     }
 
