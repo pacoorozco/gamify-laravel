@@ -69,8 +69,13 @@ class BadgePresenter extends Presenter
         ];
     }
 
+    /**
+     * Returns an array of actuators.
+     *
+     * @return array
+     */
     public function actuators(): array
     {
-        return $this->model->actuators->getFlags();
+        return optional($this->model->actuators)->getFlags() ?? [];
     }
 }

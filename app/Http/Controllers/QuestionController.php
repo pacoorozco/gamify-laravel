@@ -3,10 +3,7 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
-use Gamify\Events\QuestionCorrectlyAnswered;
-use Gamify\Events\QuestionIncorrectlyAnswered;
 use Gamify\Http\Requests\QuestionAnswerRequest;
-use Gamify\Libs\Game\Game;
 use Gamify\Question;
 use Gamify\User;
 use Illuminate\Support\Facades\Auth;
@@ -65,8 +62,6 @@ class QuestionController extends Controller
     {
         // TODO: If question has been answered can't answer again
 
-        // TODO: AI. Global Badges
-
         // Obtain how many points has its answer obtained
         $points = 0;
         $answerCorrectness = false;
@@ -82,7 +77,7 @@ class QuestionController extends Controller
         }
 
         // Create relation between User and Question
-        $user = User::findOrFail(Auth::id());
+        $user = User::findOrFail($request->user()->id);
         $user->answeredQuestions()->attach($question, [
             'points' => $points,
             'answers' => implode(',', $request->choices),
@@ -90,20 +85,6 @@ class QuestionController extends Controller
 
         // Trigger an event that will update XP, badges...
         event(new QuestionAnswered($user, $question, $points, $answerCorrectness));
-
-        // Deal with Question specific Badges
-        if ($answerCorrectness) {
-            $answerStatus = 'correct';
-        } else {
-            $answerStatus = 'incorrect';
-        }
-        $badges = $question->actions()
-            ->whereIn('when', ['always', $answerStatus]);
-
-        // AI. Increment actions
-        foreach ($badges as $badge) {
-            Game::incrementBadge($user, $badge);
-        }
 
         // AI. Add notifications and return view
         return view('question.show-answered', [
