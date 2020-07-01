@@ -35,9 +35,11 @@ class IncrementBadgesOnQuestionAnswered
             ($event->correctness === true)
                 ? BadgeActuators::OnQuestionCorrectlyAnswered
                 : BadgeActuators::OnQuestionIncorrectlyAnswered,
-            ])->get();
+        ])->get();
 
-        // TODO: badges associated to questions
+        $badges = $badges->merge(
+            $event->question->getActionableBadgesForCorrectness($event->correctness)
+        );
 
         Game::incrementManyBadges($user, $badges);
     }

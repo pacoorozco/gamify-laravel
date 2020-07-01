@@ -27,12 +27,13 @@
 
 use Faker\Generator as Faker;
 use Gamify\Badge;
+use Gamify\Enums\QuestionActuators;
 use Gamify\QuestionAction;
 
 // To create a user with fake information
 $factory->define(QuestionAction::class, function (Faker $faker) {
     return [
-        'when' => $faker->randomElement([QuestionAction::ON_ANY_CASE, QuestionAction::ON_SUCCESS, QuestionAction::ON_FAILURE]),
+        'when' => QuestionActuators::getRandomInstance(),
         'badge_id' => function () {
             return factory(Badge::class)->create()->id;
         },

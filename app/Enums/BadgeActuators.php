@@ -15,12 +15,12 @@ use Gamify\Presenters\BadgePresenter;
  */
 final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
 {
-    /** Based on question's events */
+    /** Actuators based on question's events */
     const OnQuestionAnswered = 1 << 0;
     const OnQuestionCorrectlyAnswered = 1 << 1;
     const OnQuestionIncorrectlyAnswered = 1 << 2;
 
-    /** Based on user's events */
+    /** Actuators based on user's events */
     const OnUserLogin = 1 << 3;
 
     /**

@@ -23,7 +23,7 @@ class CreateQuestionActionsTable extends Migration
             $table->foreign('badge_id')
                 ->references('id')->on('badges')
                 ->onDelete('cascade');
-            $table->enum('when', ['always', 'correct', 'incorrect']);
+            $table->tinyInteger('when')->unsigned();
             $table->index(['question_id', 'badge_id']);
         });
     }

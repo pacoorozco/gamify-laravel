@@ -2,23 +2,17 @@
 
 namespace Gamify;
 
+use Gamify\Enums\BadgeActuators;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class QuestionAction.
  *
- * @property  string $when     This is when this action will be triggered ['success', 'fail', 'always'].
+ * @property  string $when     This is when this action will be triggered (@see BadgeActuators::getActuatorsForQuestions().
  * @property  int    $badge_id This Badge will be associated once you complete the action.
  */
 class QuestionAction extends Model
 {
-    /**
-     * Defines values for 'when'.
-     */
-    const ON_SUCCESS = 'success';
-    const ON_FAILURE = 'fail';
-    const ON_ANY_CASE = 'always';
-
     /**
      * The database table used by the model.
      *
@@ -50,7 +44,7 @@ class QuestionAction extends Model
      */
     protected $casts = [
         'id' => 'int',
-        'when' => 'string',
+        'when' => 'int',
         'badge_id' => 'int',
     ];
 
