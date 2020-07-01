@@ -42,6 +42,17 @@
                 </div>
                 <!-- ./ required_repetitions -->
 
+                <!-- actuators -->
+                <div class="form-group {{ $errors->has('actuators') ? 'has-error' : '' }}">
+                    {!! Form::label('actuators', __('admin/badge/model.actuators'), ['class' => 'control-label']) !!}
+                    <div class="controls">
+                        {!! Form::select('actuators', $actuators_list, $selected_actuators, ['class' => 'form-control actuators-select', 'required' => 'required']) !!}
+                        <p class="text-muted">@lang('admin/badge/model.actuators_help')</p>
+                        <span class="help-block">{{ $errors->first('actuators', ':message') }}</span>
+                    </div>
+                </div>
+                <!-- ./ actuators -->
+
             </div>
             <div class="col-xs-6">
 
@@ -80,10 +91,11 @@
                     {!! Form::label('active', __('admin/badge/model.active'), ['class' => 'control-label required']) !!}
                     <div class="controls">
                         {!! Form::select('active', ['1' => __('general.yes'), '0' => __('general.no')], null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
+                        <span class="help-block">{{ $errors->first('active', ':message') }}</span>
                     </div>
                 </div>
                 <!-- ./ activation status -->
+
             </div>
         </div>
     </div>
@@ -102,12 +114,24 @@
 
 {{-- Styles --}}
 @push('styles')
-    <!-- File Input -->
-    <link rel="stylesheet" href="{{ asset('vendor/jasny-bootstrap/css/jasny-bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('vendor/jasny-bootstrap/css/jasny-bootstrap.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-    <!-- File Input -->
-    <script type="text/javascript" src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
+    <script
+        src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script
+        src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
+
+    <script>
+        $(function () {
+            $(".actuators-select").select2({
+                width: '100%'
+            });
+        });
+    </script>
 @endpush

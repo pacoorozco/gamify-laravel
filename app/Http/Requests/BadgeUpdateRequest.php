@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use BenSampo\Enum\Rules\EnumValue;
+use Gamify\Enums\BadgeActuators;
 use Illuminate\Validation\Rule;
 
 class BadgeUpdateRequest extends Request
@@ -30,6 +32,7 @@ class BadgeUpdateRequest extends Request
             'description' => ['required'],
             'required_repetitions' => ['required', 'integer', 'min:1'],
             'active' => ['required', 'boolean'],
+            'actuators' => ['required', new EnumValue(BadgeActuators::class)],
         ];
     }
 }

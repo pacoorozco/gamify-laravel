@@ -46,7 +46,7 @@
             <ul class="list-group">
                 @forelse($questions as $question)
                     <li class="list-group-item"><a
-                            href="{{ $question->public_url }}">{{ $question->name }}</a></li>
+                            href="{{ $question->present()->publicUrl }}">{{ $question->name }}</a></li>
                 @empty
                     @include('question/_empty-list')
                 @endforelse

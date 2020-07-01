@@ -89,6 +89,18 @@ class QuestionChoice extends Model
     }
 
     /**
+     * Return question choices considered as incorrect.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIncorrect(Builder $query): Builder
+    {
+        return $query->where('score', '<=', '0');
+    }
+
+    /**
      * DEPRECATED: Use isCorrect() instead.
      *
      * @return bool

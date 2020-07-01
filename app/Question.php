@@ -20,6 +20,8 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
+use Gamify\Enums\BadgeActuators;
+use Gamify\Enums\QuestionActuators;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
@@ -63,7 +65,6 @@ class Question extends Model
      * Defines question's statuses.
      */
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
-
     const PUBLISH_STATUS = 'publish'; // Published.
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
@@ -253,10 +254,10 @@ class Question extends Model
      */
     public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
     {
-        $filter = ($correctness === true) ? QuestionAction::ON_SUCCESS : QuestionAction::ON_FAILURE;
+        $filter = ($correctness === true) ? QuestionActuators::OnQuestionCorrectlyAnswered : QuestionActuators::OnQuestionIncorrectlyAnswered;
 
         $actionable_actions = $this->actions()
-            ->whereIn('when', [QuestionAction::ON_ANY_CASE, $filter])
+            ->whereIn('when', [QuestionActuators::OnQuestionAnswered, $filter])
             ->pluck('badge_id')
             ->toArray();
 

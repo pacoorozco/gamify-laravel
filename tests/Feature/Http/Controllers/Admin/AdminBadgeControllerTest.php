@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Badge;
+use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Middleware\OnlyAjax;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -66,6 +67,7 @@ class AdminBadgeControllerTest extends TestCase
             'description' => $badge->description,
             'required_repetitions' => $badge->required_repetitions,
             'active' => true,
+            'actuators' => BadgeActuators::OnQuestionAnswered,
         ];
 
         $this->actingAsAdmin()
@@ -121,6 +123,7 @@ class AdminBadgeControllerTest extends TestCase
             'description' => $badge->description,
             'required_repetitions' => $badge->required_repetitions,
             'active' => true,
+            'actuators' => $badge->actuators->value,
         ];
 
         $this->actingAsAdmin()

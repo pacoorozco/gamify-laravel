@@ -2,6 +2,7 @@
 
 namespace Gamify\Presenters;
 
+use Gamify\Enums\BadgeActuators;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
@@ -45,5 +46,36 @@ class BadgePresenter extends Presenter
     public function imageTag(): HtmlString
     {
         return new HtmlString((string) $this->model->imageTag('image_url'));
+    }
+
+    /**
+     * Returns an array of values to be used on <select>. It's filtering some actuators and adding <optgroups> to group
+     * them.
+     *
+     * @return array
+     */
+    public static function actuatorsSelect(): array
+    {
+        return [
+            BadgeActuators::None()->value => BadgeActuators::None()->description,
+            __('admin/badge/model.actuators_related_with_question_events') => [
+                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
+                BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
+                BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
+            ],
+            __('admin/badge/model.actuators_related_with_user_events') => [
+                BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
+            ],
+        ];
+    }
+
+    /**
+     * Returns an array of actuators.
+     *
+     * @return array
+     */
+    public function actuators(): array
+    {
+        return ! is_null($this->model->actuators) ? $this->model->actuators->getFlags() : [];
     }
 }

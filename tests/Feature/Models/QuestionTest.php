@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Badge;
+use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Question;
@@ -60,7 +61,7 @@ class QuestionTest extends TestCase
         $badge = factory(Badge::class)->create();
 
         $question->actions()->create([
-            'when' => QuestionAction::ON_ANY_CASE,
+            'when' => BadgeActuators::OnQuestionAnswered,
             'badge_id' => $badge->id,
         ]);
 

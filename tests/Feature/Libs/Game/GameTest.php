@@ -21,24 +21,96 @@ class GameTest extends TestCase
         $this->assertEquals(5, $user->points()->sum('points'));
     }
 
-    public function test_incrementBadge_method()
+    /** @test */
+    public function it_increments_repetitions_for_a_given_badge()
     {
         $user = factory(User::class)->create();
         $badge = factory(Badge::class)->create([
             'required_repetitions' => 5,
         ]);
 
-        $this->assertTrue(Game::incrementBadge($user, $badge));
+        Game::incrementBadge($user, $badge);
+
+        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
     }
 
-    public function test_addBadge_method()
+    /** @test */
+    public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create([
+            'required_repetitions' => 5,
+        ]);
+        Game::incrementBadge($user, $badge);
+
+        Game::incrementBadge($user, $badge);
+
+        $this->assertEquals(2, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
+    }
+
+    /** @test */
+    public function it_completes_badge_when_reach_required_repetitions()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create([
+            'required_repetitions' => 1,
+        ]);
+
+        Game::incrementBadge($user, $badge);
+
+        $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+    }
+
+    /** @test */
+    public function it_does_not_complete_badge_when_required_repetitions_is_not_reached()
     {
         $user = factory(User::class)->create();
         $badge = factory(Badge::class)->create([
             'required_repetitions' => 5,
         ]);
 
-        $this->assertTrue(Game::addBadge($user, $badge));
+        Game::incrementBadge($user, $badge);
+
+        $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+    }
+
+    /** @test */
+    public function it_does_not_update_repetitions_if_badge_was_already_completed()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create([
+            'required_repetitions' => 1,
+        ]);
+        Game::giveCompletedBadge($user, $badge);
+
+        Game::incrementBadge($user, $badge);
+
+        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
+    }
+
+    /** @test */
+    public function it_completes_a_badge_for_a_user()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create();
+
+        Game::giveCompletedBadge($user, $badge);
+
+        $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+    }
+
+    /** @test */
+    public function it_completes_a_badge_when_a_user_had_already_started_it()
+    {
+        $user = factory(User::class)->create();
+        $badge = factory(Badge::class)->create([
+            'required_repetitions' => 5,
+        ]);
+        Game::incrementBadge($user, $badge); // Badge is started and not completed.
+
+        Game::giveCompletedBadge($user, $badge);
+
+        $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
     }
 
     public function test_getRanking_method()

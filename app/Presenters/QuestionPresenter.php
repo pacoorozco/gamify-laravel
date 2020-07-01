@@ -53,7 +53,7 @@ class QuestionPresenter extends Presenter
      */
     public function visibilityBadge(): HtmlString
     {
-        if ($this->model->hidden === true) {
+        if ($this->model->hidden == true) {
             return new HtmlString(sprintf(
                 '<span class="label label-default">%s</span>',
                 (string) __('admin/question/model.hidden_yes')
@@ -113,7 +113,7 @@ class QuestionPresenter extends Presenter
         return new HtmlString(sprintf(
             '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
             (string) __('admin/question/model.type_list.'.$this->model->type),
-            $this->model->type,
+            (string) $this->model->type,
         ));
     }
 

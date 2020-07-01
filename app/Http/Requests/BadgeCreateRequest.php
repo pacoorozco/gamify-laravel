@@ -2,6 +2,8 @@
 
 namespace Gamify\Http\Requests;
 
+use BenSampo\Enum\Rules\EnumValue;
+use Gamify\Enums\BadgeActuators;
 use Illuminate\Validation\Rule;
 
 class BadgeCreateRequest extends Request
@@ -24,10 +26,11 @@ class BadgeCreateRequest extends Request
     public function rules()
     {
         return [
-            'name'                 => ['required', 'string', Rule::unique('badges')],
-            'description'          => ['required'],
+            'name' => ['required', 'string', Rule::unique('badges')],
+            'description' => ['required'],
             'required_repetitions' => ['required', 'integer', 'min:1'],
-            'active'               => ['required', 'boolean'],
+            'active' => ['required', 'boolean'],
+            'actuators' => ['required', new EnumValue(BadgeActuators::class)],
         ];
     }
 }

@@ -22,7 +22,7 @@ class QuestionActionTest extends ModelTestCase
         $m = new QuestionAction();
         $this->assertEquals([
             'id' => 'int',
-            'when' => 'string',
+            'when' => 'int',
             'badge_id' => 'int',
         ], $m->getCasts());
     }

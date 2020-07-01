@@ -12,32 +12,32 @@ class QuestionAnswered
     use Dispatchable, SerializesModels;
 
     /** @var \Gamify\User */
-    public $user;
+    public User $user;
 
     /** @var \Gamify\Question */
-    public $question;
+    public Question $question;
 
     /** @var int */
-    public $points;
+    public int $points;
 
     /** @var bool */
-    public $answerCorrectness;
+    public bool $correctness;
 
     /**
      * Create a new event instance.
      *
      * @param \Gamify\User     $user
      * @param \Gamify\Question $question
-     * @param bool             $answerCorrectness
      * @param int              $points
+     * @param bool             $correctness
      *
      * @return void
      */
-    public function __construct(User $user, Question $question, bool $answerCorrectness, int $points)
+    public function __construct(User $user, Question $question, int $points, bool $correctness)
     {
         $this->user = $user;
         $this->question = $question;
-        $this->answerCorrectness = $answerCorrectness;
         $this->points = $points;
+        $this->correctness = $correctness;
     }
 }
