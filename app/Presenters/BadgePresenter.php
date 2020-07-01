@@ -76,6 +76,6 @@ class BadgePresenter extends Presenter
      */
     public function actuators(): array
     {
-        return !is_null($this->model->actuators) ? $this->model->actuators->getFlags() : [];
+        return ! is_null($this->model->actuators) ? $this->model->actuators->getFlags() : [];
     }
 }
