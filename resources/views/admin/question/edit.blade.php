@@ -115,6 +115,16 @@
                             </div>
                         </div>
                         <!-- ./ solution -->
+
+                        <!-- tags -->
+                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
+                            {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                            <div class="controls">
+                                {!! Form::select('tags[]', $availableTags, null, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tags']) !!}
+                            </div>
+                        </div>
+                        <!-- ./ tags -->
+
                     </fieldset>
                 </div>
             </div>
@@ -122,6 +132,62 @@
 
         </div>
         <div class="col-xs-4">
+
+            <!-- badges section -->
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>@lang('admin/action/table.action')</th>
+                            <th>@lang('admin/action/table.when')</th>
+                            <th>@lang('admin/action/table.actions')</th>
+                        </tr>
+
+                        @foreach($globalActions as $badge)
+                            <tr>
+                                <td>{{ $badge->name }}</td>
+                                <td>{{ $badge->actuators->description }}</td>
+                                <td>Global</td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($question->badges as $badge)
+                            <tr>
+                                <td>{{ $badge->id }}</td>
+                                <td>{{ $badge->pivot->when }}</td>
+                                <td>
+                                    <a href="{{ route('admin.questions.actions.destroy', [$question, $action]) }}"
+                                       rel="nofollow" data-method="delete"
+                                       data-confirm="@lang('admin/action/messages.confirm_delete')">
+                                        <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip"
+                                                data-placement="top" title="@lang('general.delete')">
+                                            <i class="fa fa-times fa fa-white"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+
+                    <a href="{{ route('admin.questions.actions.create', $question) }}" class="btn btn-default pull-right">
+                        <i class="fa fa-plus"></i> @lang('admin/action/title.create_new')
+                    </a>
+
+                </div>
+            </div>
+            <!-- ./ badges section -->
 
             <!-- publish section -->
             <div class="box box-solid">
@@ -275,45 +341,6 @@
 
             </div>
             <!-- ./ publish section -->
-
-            <!-- badges section -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-
-                    @include('admin/question/_form_actions')
-
-                </div>
-            </div>
-            <!-- ./ badges section -->
-
-            <!-- tags section -->
-            <div class="box box-solid collapsed-box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@lang('admin/question/title.tags_section')</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class="form-group">
-                        {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
-                        <div class="controls">
-                            {!! Form::select('tags[]', $availableTags, null, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tag_list']) !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./ tags section -->
 
             <!-- other information section -->
             <div class="box box-solid collapsed-box">
