@@ -161,10 +161,10 @@
                             </tr>
                         @endforeach
 
-                        @foreach ($question->badges as $badge)
+                        @foreach ($question->actions as $action)
                             <tr>
-                                <td>{{ $badge->id }}</td>
-                                <td>{{ $badge->pivot->when }}</td>
+                                <td>{{ $action->badge_id }}</td>
+                                <td>{{ __('admin/action/table.when_values.' . $action->when) }}</td>
                                 <td>
                                     <a href="{{ route('admin.questions.actions.destroy', [$question, $action]) }}"
                                        rel="nofollow" data-method="delete"
