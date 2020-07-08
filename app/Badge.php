@@ -21,6 +21,7 @@ namespace Gamify;
 use BenSampo\Enum\Traits\CastsEnums;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laracodes\Presenter\Traits\Presentable;
@@ -155,5 +156,17 @@ class Badge extends Model
     public function scopeActive($query)
     {
         return $query->where('active', true);
+    }
+
+    /**
+     * Scope a query to only include badges with the given actuators.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Gamify\Enums\QuestionActuators[]  $actuators
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithActuatorsIn(Builder $query, array $actuators)
+    {
+        return $query->whereIn('actuators', $actuators);
     }
 }

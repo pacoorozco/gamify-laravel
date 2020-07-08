@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
+- Possibility to obtain/assign badges based on events (question has been answered, user is logged in...) ([#161][i161])
 - Possibility to schedule question publication. ([#152][i152])
 - Presenter to `Question` model. Removes several partial views.
 ### Changed
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Removed
 - QuestionChoice's `correct` field has been removed from the model. This field was not used in favor of `score` field. The removal is **backward compatible** and you can still use `correct` attribute, that it's **deprecated**.
 
+[i161]: https://github.com/pacoorozco/gamify-laravel/issues/161
 [i162]: https://github.com/pacoorozco/gamify-laravel/issues/162
 [i152]: https://github.com/pacoorozco/gamify-laravel/issues/152
 
