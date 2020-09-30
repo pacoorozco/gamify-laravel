@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateQuestionsBadgesTable
+ * Class CreateQuestionsBadgesTable.
  *
  * This table 'questions_badges' has never been used, so it's removed since v2.5.0.
  *

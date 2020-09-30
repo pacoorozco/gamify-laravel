@@ -25,7 +25,6 @@
 
 use Gamify\Level;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class LevelsTableSeeder extends Seeder
 {
@@ -40,7 +39,7 @@ class LevelsTableSeeder extends Seeder
     {
         foreach (range(1, 4) as $index) {
             factory(Level::class)->create([
-                'name' => 'Level '.$index,
+                'name' => 'Level ' . $index,
                 'required_points' => ($index * 10),
             ]);
         }

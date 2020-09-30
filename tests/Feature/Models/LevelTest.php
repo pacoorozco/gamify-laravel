@@ -17,7 +17,7 @@ class LevelTest extends TestCase
     {
         for ($i = 1; $i <= $number; $i++) {
             factory(Level::class)->create([
-                'name' => 'Level '.$i,
+                'name' => 'Level ' . $i,
                 'required_points' => $i * $distance,
                 'active' => true,
             ]);
@@ -85,8 +85,8 @@ class LevelTest extends TestCase
         $this->assertNull($level->getOriginal('image_url'));
         $level->uploadImage($image);
 
-        $this->assertEquals('levels/'.$image->hashName(), $level->fresh()->getOriginal('image_url'));
-        $this->assertEquals('/storage/levels/'.$image->hashName(), $level->image);
+        $this->assertEquals('levels/' . $image->hashName(), $level->fresh()->getOriginal('image_url'));
+        $this->assertEquals('/storage/levels/' . $image->hashName(), $level->image);
     }
 
     public function test_returns_default_image_when_field_is_empty()
