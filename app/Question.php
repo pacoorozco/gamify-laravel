@@ -20,7 +20,6 @@ namespace Gamify;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
-use Gamify\Enums\BadgeActuators;
 use Gamify\Enums\QuestionActuators;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;

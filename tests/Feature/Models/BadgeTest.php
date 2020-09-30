@@ -22,7 +22,7 @@ class BadgeTest extends TestCase
         $this->assertNull($badge->getOriginal('image_url'));
         $badge->uploadImage($image);
 
-        $this->assertEquals('badges/'.$image->hashName(), $badge->fresh()->getOriginal('image_url'));
+        $this->assertEquals('badges/' . $image->hashName(), $badge->fresh()->getOriginal('image_url'));
     }
 
     public function test_returns_default_image_when_field_is_empty()

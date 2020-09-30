@@ -100,7 +100,7 @@ abstract class ModelTestCase extends TestCase
             $parent = $model->getKeyName();
         }
 
-        $this->assertEquals($model->getTable().'.'.$parent, $relation->getQualifiedParentKeyName());
+        $this->assertEquals($model->getTable() . '.' . $parent, $relation->getQualifiedParentKeyName());
     }
 
     /**

@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
-use Gamify\Events\QuestionCorrectlyAnswered;
-use Gamify\Events\QuestionIncorrectlyAnswered;
 use Gamify\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
