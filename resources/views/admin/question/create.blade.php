@@ -103,6 +103,16 @@
                             </div>
                         </div>
                         <!-- ./ solution -->
+
+                        <!-- tags -->
+                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
+                            {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
+                            <div class="controls">
+                                {!! Form::select('tags[]', $availableTags, null, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tags']) !!}
+                            </div>
+                        </div>
+                        <!-- ./ tags -->
+
                     </fieldset>
                 </div>
             </div>
@@ -110,6 +120,45 @@
 
         </div>
         <div class="col-xs-4">
+
+            <!-- badges section -->
+            <div class="box box-solid collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>@lang('admin/action/table.action')</th>
+                            <th>@lang('admin/action/table.when')</th>
+                            <th>@lang('admin/action/table.actions')</th>
+                        </tr>
+
+                        @foreach($globalActions as $badge)
+                            <tr>
+                                <td>{{ $badge->name }}</td>
+                                <td>{{ $badge->actuators->description }}</td>
+                                <td>Global</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <div class="callout callout-info">
+                        <h4>NOTE!</h4>
+
+                        <p>After saving this question you will be able to add some actions.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ./ badges section -->
 
             <!-- publish section -->
             <div class="box box-solid">
@@ -210,47 +259,6 @@
 
             </div>
             <!-- ./ publish section -->
-
-            <!-- badges section -->
-            <div class="box box-solid collapsed-box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class="callout callout-info">
-                        <h4>NOTE!</h4>
-
-                        <p>After saving this question you will be able to add some actions.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- ./ badges section -->
-
-            <!-- tags section -->
-            <div class="box box-solid collapsed-box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@lang('admin/question/title.tags_section')</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class="form-group">
-                        {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
-                        <div class="controls">
-                            {!! Form::select('tags[]', $availableTags, null, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tags']) !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./ tags section -->
 
         </div>
     </div>

@@ -25,6 +25,8 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Badge;
+use Gamify\Enums\QuestionActuators;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
@@ -55,6 +57,7 @@ class AdminQuestionController extends AdminController
     {
         return view('admin.question.create', [
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
+            'globalActions' => Badge::withActuatorsIn(QuestionActuators::toArray())->get(),
         ]);
     }
 
@@ -138,6 +141,7 @@ class AdminQuestionController extends AdminController
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
             'selectedTags' => $question->tagArray,
             'availableActions' => $availableActions,
+            'globalActions' => Badge::withActuatorsIn(QuestionActuators::toArray())->get(),
         ]);
     }
 
@@ -268,10 +272,10 @@ class AdminQuestionController extends AdminController
 
         return $dataTable->eloquent($question)
             ->editColumn('status', function (Question $question) {
-                return $question->present()->statusBadge.' '.$question->present()->visibilityBadge;
+                return $question->present()->statusBadge . ' ' . $question->present()->visibilityBadge;
             })
             ->editColumn('name', function (Question $question) {
-                return $question->present()->name.' '.$question->present()->publicUrlLink;
+                return $question->present()->name . ' ' . $question->present()->publicUrlLink;
             })
             ->editColumn('type', function (Question $question) {
                 return $question->present()->typeIcon;

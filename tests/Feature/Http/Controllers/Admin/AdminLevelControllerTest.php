@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Gamify\Badge;
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;

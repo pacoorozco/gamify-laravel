@@ -7,11 +7,9 @@ use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Question;
-use Gamify\QuestionAction;
 use Gamify\QuestionChoice;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
