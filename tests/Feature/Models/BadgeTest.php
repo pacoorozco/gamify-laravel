@@ -5,8 +5,6 @@ namespace Tests\Feature\Models;
 use Gamify\Badge;
 use Gamify\Enums\BadgeActuators;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class BadgeTest extends TestCase
