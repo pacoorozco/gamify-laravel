@@ -8,8 +8,6 @@ use Gamify\User;
 use Gamify\UserProfile;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -58,20 +56,6 @@ class UserTest extends TestCase
         $user->addExperience($want);
 
         $this->assertEquals($want, $user->experience);
-    }
-
-    /** @test */
-    public function returns_image_when_uploaded_avatar()
-    {
-        $user = factory(User::class)->state('with_profile')->create();
-        Storage::fake('public');
-
-        $image = UploadedFile::fake()->image('avatar.jpg');
-        $this->assertNull($user->getOriginal('avatar'));
-        $user->profile->uploadImage($image);
-
-        $this->assertEquals('avatars/' . $image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
-        $this->assertEquals('/storage/avatars/' . $image->hashName(), $user->profile->avatar);
     }
 
     /** @test */
