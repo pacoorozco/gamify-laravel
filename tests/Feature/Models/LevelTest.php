@@ -5,8 +5,6 @@ namespace Tests\Feature\Models;
 use Gamify\Level;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class LevelTest extends TestCase
