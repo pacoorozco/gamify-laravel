@@ -61,20 +61,6 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function returns_image_when_uploaded_avatar()
-    {
-        $user = factory(User::class)->state('with_profile')->create();
-        Storage::fake('public');
-
-        $image = UploadedFile::fake()->image('avatar.jpg');
-        $this->assertNull($user->getOriginal('avatar'));
-        $user->profile->uploadImage($image);
-
-        $this->assertEquals('avatars/' . $image->hashName(), $user->profile->fresh()->getOriginal('avatar'));
-        $this->assertEquals('/storage/avatars/' . $image->hashName(), $user->profile->avatar);
-    }
-
-    /** @test */
     public function returns_default_image_when_avatar_is_empty()
     {
         $user = factory(User::class)->state('with_profile')->create();
