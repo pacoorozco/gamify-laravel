@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 2.5.0 - 2020-12-03
+
 ### Added
 - Possibility to obtain/assign badges based on events (question has been answered, user is logged in...) ([#161][i161])
 - Possibility to schedule question publication. ([#152][i152])
@@ -13,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Use `SocialProviders/okta` from packagist instead of GitHub.
 - Upgrade requirements to PHP 7.4. 
 - Add [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) to install PHP extensions in docker.
+- Dependencies has been updated.
 ### Fixed
 - Badge images were not working on 'local' storage. ([#162][i162])
 - Choices were not shown on validation errors. Dynamic Form fields is using [repeatable-fields](https://github.com/Rhyzz/repeatable-fields).
