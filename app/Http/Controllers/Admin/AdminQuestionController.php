@@ -101,15 +101,18 @@ class AdminQuestionController extends AdminController
             }
         } catch (QuestionPublishingException $exception) {
             DB::commit();
+
             return redirect(route('admin.questions.edit', $question))
                 ->with('error', __('admin/question/messages.publish.error'));
         } catch (\Throwable $exception) {
             DB::rollBack();
+
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
         }
         DB::commit();
+
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.create.success'));
     }
@@ -203,6 +206,7 @@ class AdminQuestionController extends AdminController
                 ->withInput()
                 ->with('error', __('admin/question/messages.update.error'));
         }
+
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.update.success'));
     }
