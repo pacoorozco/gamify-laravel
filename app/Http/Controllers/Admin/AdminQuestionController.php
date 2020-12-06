@@ -33,6 +33,7 @@ use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Yajra\Datatables\Datatables;
 
@@ -64,23 +65,25 @@ class AdminQuestionController extends AdminController
     /**
      * Stores new question.
      *
-     * @param QuestionCreateRequest $request
+     * @param  QuestionCreateRequest  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(QuestionCreateRequest $request): RedirectResponse
     {
+        $question = Question::make([
+            'name' => $request->input('name'),
+            'question' => $request->input('question'),
+            'solution' => $request->input('solution'),
+            'type' => $request->input('type'),
+            'hidden' => $request->input('hidden'),
+            'publication_date' => $request->filled('publication_date')
+                ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
+                : null,
+        ]);
+
+        DB::beginTransaction();
         try {
-            $question = Question::make([
-                'name' => $request->input('name'),
-                'question' => $request->input('question'),
-                'solution' => $request->input('solution'),
-                'type' => $request->input('type'),
-                'hidden' => $request->input('hidden'),
-                'publication_date' => $request->filled('publication_date')
-                    ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
-                    : null,
-            ]);
             $question->saveOrFail();
 
             // Store tags
@@ -89,19 +92,26 @@ class AdminQuestionController extends AdminController
             }
 
             // Store question choices
-            $this->addChoicesToQuestion($question, $request->input('choices'));
+            if ($request->has('choices')) {
+                $this->addChoicesToQuestion($question, $request->input('choices'));
+            }
 
             if ($request->input('status') == Question::PUBLISH_STATUS) {
                 $question->publish(); // throws exception on error.
             }
         } catch (QuestionPublishingException $exception) {
+            DB::commit();
+
             return redirect(route('admin.questions.edit', $question))
                 ->with('error', __('admin/question/messages.publish.error'));
         } catch (\Throwable $exception) {
+            DB::rollBack();
+
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/question/messages.create.error'));
         }
+        DB::commit();
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.create.success'));
@@ -110,7 +120,7 @@ class AdminQuestionController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Question $question
+     * @param  Question  $question
      *
      * @return \Illuminate\View\View
      */
@@ -124,7 +134,7 @@ class AdminQuestionController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Question $question
+     * @param  Question  $question
      *
      * @return \Illuminate\View\View
      */
@@ -148,25 +158,25 @@ class AdminQuestionController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param QuestionUpdateRequest $request
-     * @param Question              $question
+     * @param  QuestionUpdateRequest  $request
+     * @param  Question  $question
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(QuestionUpdateRequest $request, Question $question)
     {
+        $question->fill([
+            'name' => $request->input('name'),
+            'question' => $request->input('question'),
+            'solution' => $request->input('solution'),
+            'type' => $request->input('type'),
+            'hidden' => $request->input('hidden'),
+            'publication_date' => $request->filled('publication_date')
+                ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
+                : null,
+        ]);
         try {
-            $question->fill([
-                'name' => $request->input('name'),
-                'question' => $request->input('question'),
-                'solution' => $request->input('solution'),
-                'type' => $request->input('type'),
-                'hidden' => $request->input('hidden'),
-                'publication_date' => $request->filled('publication_date')
-                    ? Carbon::createFromFormat('Y-m-d H:i', $request->input('publication_date'))
-                    : null,
-            ])
-                ->saveOrFail();
+            $question->saveOrFail();
 
             // Save Question Tags
             if (is_array($request->input('tags'))) {
@@ -176,7 +186,9 @@ class AdminQuestionController extends AdminController
             }
 
             // Save Question Choices
-            $this->addChoicesToQuestion($question, $request->input('choices'));
+            if ($request->has('choices')) {
+                $this->addChoicesToQuestion($question, $request->input('choices'));
+            }
 
             switch ($request->input('status')) {
                 case 'publish':
@@ -202,8 +214,8 @@ class AdminQuestionController extends AdminController
     /**
      * Sync the given array of QuestionChoices to a Question.
      *
-     * @param \Gamify\Question $question
-     * @param array            $choices
+     * @param  \Gamify\Question  $question
+     * @param  array  $choices
      */
     private function addChoicesToQuestion(Question $question, array $choices): void
     {
@@ -219,7 +231,7 @@ class AdminQuestionController extends AdminController
     /**
      * Remove question page.
      *
-     * @param Question $question
+     * @param  Question  $question
      *
      * @return \Illuminate\View\View
      */
@@ -233,7 +245,7 @@ class AdminQuestionController extends AdminController
     /**
      * Remove the specified question from storage.
      *
-     * @param Question $question
+     * @param  Question  $question
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -254,7 +266,7 @@ class AdminQuestionController extends AdminController
     /**
      * Show a list of all the questions formatted for Datatables.
      *
-     * @param \Yajra\Datatables\Datatables $dataTable
+     * @param  \Yajra\Datatables\Datatables  $dataTable
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception

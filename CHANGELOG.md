@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Fixed
+- Bug when creating a question without choices. ([#177][i177])
+
+[i177]: https://github.com/pacoorozco/gamify-laravel/issues/177
 
 ## 2.5.0 - 2020-12-03
 
