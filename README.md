@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/pacoorozco/gamify-laravel.svg)](https://travis-ci.com/pacoorozco/gamify-laravel)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
-[![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](https://github.com/pacoorozco/gamify-laravel/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](LICENSE)
 [![Laravel Version](https://img.shields.io/badge/Laravel-6.x-orange.svg)](https://laravel.com/docs/6.x)
 [![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-laravel.svg?style=flat-square)](https://github.com/pacoorozco/gamify-laravel/releases)
 
@@ -51,7 +51,7 @@ Prior this installation, you **need to have installed** this software:
           composer install
     ```
 
-1. Copy [`.env.example`](https://github.com/pacoorozco/gamify-laravel/blob/master/.env.example) to `.env`.
+1. Copy [`.env.example`](.env.example) to `.env`.
 
     > **NOTE**: You don't need to touch anything from this file. It works with default settings.
 
@@ -79,7 +79,7 @@ If you have issues with **gamify**, you can report them with the [GitHub issues 
 
 ## Contributing
 
-Please see [CONTRIBUTE](https://github.com/pacoorozco/gamify-laravel/blob/master/CONTRIBUTE.md) for details.
+Please see [CONTRIBUTE](CONTRIBUTE.md) for details.
 
 ## License
 
