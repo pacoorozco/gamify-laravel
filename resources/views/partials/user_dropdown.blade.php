@@ -2,7 +2,7 @@
     <!-- Menu Toggle Button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <!-- The user image in the navbar-->
-        <img src="{{ $user->profile->avatar }}" class="user-image"
+        <img src="{{ $user->profile->avatarUrl }}" class="user-image"
              alt="@lang('user/profile.avatar')"/>
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
         <span class="hidden-xs">{{ $user->name }}</span>
@@ -10,7 +10,7 @@
     <ul class="dropdown-menu">
         <!-- The user image in the menu -->
         <li class="user-header">
-            <img src="{{ $user->profile->avatar }}" class="img-circle"
+            <img src="{{ $user->profile->avatarUrl }}" class="img-circle"
                  alt="@lang('user/profile.avatar')"/>
             <p>
                 {{ $user->name }} - {{ $user->level }}

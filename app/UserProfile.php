@@ -28,7 +28,7 @@ use QCod\ImageUp\HasImageUploads;
  * @property int    $id                   The object unique id.
  * @property string $bio                  Short bio information.
  * @property string $url                  Homepage.
- * @property string $avatar               URL of the avatar.
+ * @property string $avatarUrl            URL of the avatar.
  * @property string $phone                Phone number.
  * @property Carbon $date_of_birth        Date of Birth.
  * @property string $gender               Gender, could be 'male', 'female' or 'unspecified'.
@@ -148,12 +148,12 @@ class UserProfile extends Model
      *
      * @return string
      */
-    public function getAvatarAttribute(): string
-    {
-        try {
-            return $this->imageUrl();
-        } catch (\Exception $exception) {
-            return asset(self::DEFAULT_IMAGE);
-        }
-    }
+    public function getAvatarUrlAttribute(): string
+     {
+         try {
+             return $this->imageUrl('avatar');
+         } catch (\Throwable $exception) {
+             return asset(self::DEFAULT_IMAGE);
+         }
+     }
 }

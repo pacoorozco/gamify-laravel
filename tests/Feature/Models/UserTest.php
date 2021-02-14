@@ -63,8 +63,8 @@ class UserTest extends TestCase
     {
         $user = factory(User::class)->state('with_profile')->create();
 
-        $this->assertNull($user->profile->getOriginal('avatar'));
-        $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatar);
+        $this->assertNull($user->profile->avatar);
+        $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatarUrl);
     }
 
     /** @test */
