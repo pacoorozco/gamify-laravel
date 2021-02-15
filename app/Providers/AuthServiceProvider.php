@@ -18,7 +18,7 @@
 
 namespace Gamify\Providers;
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'Gamify\Model' => 'Gamify\Policies\ModelPolicy',
+        // 'Gamify\Models\Model' => 'Gamify\Policies\ModelPolicy',
     ];
 
     /**

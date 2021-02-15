@@ -16,11 +16,12 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\User;
-use Gamify\UserProfile;
+namespace Database\Seeders;
+
+use Gamify\Models\User;
 use Illuminate\Database\Seeder;
 
-class UserTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,9 +30,8 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        // Creates 15 normal users with his/her profile
-        factory(User::class, 15)->create()->each(function ($u) {
-            $u->profile()->save(factory(UserProfile::class)->make());
-        });
+        User::factory()
+            ->count(15)
+            ->create();
     }
 }

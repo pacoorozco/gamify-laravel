@@ -16,40 +16,51 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify;
+namespace Gamify\Models;
 
+use BenSampo\Enum\Traits\CastsEnums;
+use Gamify\Enums\BadgeActuators;
+use Gamify\Presenters\BadgePresenter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
 
 /**
- * Model that represents a level.
+ * Model that represents a badge.
  *
- * @property int    $id                    Object unique id.
- * @property string $name                  Name of the level..
- * @property int    $required_points       How many points do you need to achieve it.
- * @property string image                  URL of the level's image
- * @property bool   active                 Is this level enabled?
- * @property string $imagesUploadDisk
- * @property string $imagesUploadPath
- * @property string $autoUploadImages
+ * @property int            $id                     Object unique id.
+ * @property string         $name                   Name of this badge.
+ * @property string         $description            Description of the badge.
+ * @property int            $required_repetitions   How many times you need to request the badge to achieve it.
+ * @property string         $image                  URL of the badge's image
+ * @property bool           $active                 Is this badge enabled?
+ * @property BadgeActuators $actuators              Events that triggers this badge completion.
+ * @property string         $imagesUploadDisk
+ * @property string         $imagesUploadPath
+ * @property string         $autoUploadImages
  */
-class Level extends Model
+class Badge extends Model
 {
     use SoftDeletes;
     use HasImageUploads;
+    use Presentable;
+    use CastsEnums;
+    use HasFactory;
 
     /**
      * Default badge image to be used in case no one is supplied.
      */
-    const DEFAULT_IMAGE = '/images/missing_level.png';
+    const DEFAULT_IMAGE = '/images/missing_badge.png';
 
     /**
-     * The database table used by the model.
+     * Model presenter.
      *
      * @var string
      */
-    protected $table = 'levels';
+    protected $presenter = BadgePresenter::class;
 
     /**
      * The attributes that are mass assignable.
@@ -58,8 +69,10 @@ class Level extends Model
      */
     protected $fillable = [
         'name',
-        'required_points',
+        'description',
+        'required_repetitions',
         'active',
+        'actuators',
     ];
 
     /**
@@ -70,8 +83,14 @@ class Level extends Model
     protected $casts = [
         'id' => 'int',
         'name' => 'string',
-        'required_points' => 'int',
+        'description' => 'string',
+        'required_repetitions' => 'int',
         'active' => 'boolean',
+        'actuators' => 'int',
+    ];
+
+    protected $enumCasts = [
+        'actuators' => BadgeActuators::class,
     ];
 
     /**
@@ -79,7 +98,7 @@ class Level extends Model
      *
      * @var string
      */
-    protected $imagesUploadPath = 'levels';
+    protected $imagesUploadPath = 'badges';
 
     /**
      * Auto upload allowed.
@@ -123,21 +142,7 @@ class Level extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Get image attribute or default image.
-     *
-     * @return string
-     */
-    public function getImageAttribute(): string
-    {
-        try {
-            return $this->imageUrl();
-        } catch (\Exception $exception) {
-            return asset(self::DEFAULT_IMAGE);
-        }
-    }
-
-    /**
-     * Returns a collection of active Level.
+     * Returns a collection of active Badges.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      *
@@ -149,45 +154,14 @@ class Level extends Model
     }
 
     /**
-     * Returns Level (object) for the specified experience.
+     * Scope a query to only include badges with the given actuators.
      *
-     * @param int $experience
-     *
-     * @return \Gamify\Level
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Gamify\Enums\QuestionActuators[]  $actuators
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function findByExperience(int $experience)
+    public function scopeWithActuatorsIn(Builder $query, array $actuators)
     {
-        return self::active()
-            ->where('required_points', '<=', $experience)
-            ->orderBy('required_points', 'desc')
-            ->first();
-    }
-
-    /**
-     * Return the upcoming Level (object) for the specified experience.
-     *
-     * Throws an exception in case that this is the highest possible level.
-     *
-     * @param int $experience
-     *
-     * @return \Gamify\Level
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public static function findNextByExperience(int $experience)
-    {
-        return self::active()
-            ->where('required_points', '>', $experience)
-            ->orderBy('required_points', 'asc')
-            ->firstOrFail();
-    }
-
-    /**
-     * Returns if this is the default level.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->required_points === 0;
+        return $query->whereIn('actuators', $actuators);
     }
 }

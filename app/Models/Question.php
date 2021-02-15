@@ -16,7 +16,7 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify;
+namespace Gamify\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
@@ -27,6 +27,7 @@ use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Presenters\QuestionPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -46,8 +47,8 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property  bool                       $hidden           The visibility of the question.
  * @property  string                     $status           The status of the question.
  * @property  string                     $public_url       The public URL of this question.
- * @property  \Gamify\User               $creator          The User who created this question,
- * @property  \Gamify\User               $updater          The last User who updated this question.
+ * @property  \Gamify\Models\User               $creator          The User who created this question,
+ * @property  \Gamify\Models\User               $updater          The last User who updated this question.
  * @property  \Illuminate\Support\Carbon $publication_date The data when the question was published.
  * @property  \Illuminate\Support\Carbon $expiration_date  The data when the question was expired.
  * @mixin \Eloquent
@@ -59,6 +60,7 @@ class Question extends Model
     use Sluggable; // Slugs
     use Taggable; // Tags
     use Presentable;
+    use HasFactory;
 
     /**
      * Defines question's statuses.
@@ -80,13 +82,6 @@ class Question extends Model
      * @var string
      */
     protected $presenter = QuestionPresenter::class;
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'questions';
 
     /**
      * The attributes that are mass assignable.
@@ -147,7 +142,7 @@ class Question extends Model
      */
     public function actions()
     {
-        return $this->hasMany('Gamify\QuestionAction');
+        return $this->hasMany(QuestionAction::class);
     }
 
     /**
@@ -157,7 +152,7 @@ class Question extends Model
      */
     public function choices()
     {
-        return $this->hasMany('Gamify\QuestionChoice');
+        return $this->hasMany(QuestionChoice::class);
     }
 
     /**
@@ -335,7 +330,7 @@ class Question extends Model
      * Requirements have been verified before, send events once is published.
      *
      * @throws \Throwable
-     * @see \Gamify\Question::publish()
+     * @see \Gamify\Models\Question::publish()
      */
     private function transitionToPublishedStatus(): void
     {
@@ -351,7 +346,7 @@ class Question extends Model
      * Requirements have been verified before.
      *
      * @throws \Throwable
-     * @see \Gamify\Question::publish()
+     * @see \Gamify\Models\Question::publish()
      */
     private function transitionToScheduledStatus(): void
     {

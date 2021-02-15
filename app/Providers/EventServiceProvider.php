@@ -13,6 +13,7 @@ use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\Okta\OktaExtendSocialite;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         SocialiteWasCalled::class => [
-            'SocialiteProviders\Okta\OktaExtendSocialite@handle',
+            OktaExtendSocialite::class,
         ],
         Login::class => [
             LogSuccessfulLogin::class,
@@ -46,8 +47,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
-
         //
     }
 }

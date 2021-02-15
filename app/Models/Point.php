@@ -1,6 +1,6 @@
 <?php
 
-namespace Gamify;
+namespace Gamify\Models;
 
 use Gamify\Events\PointCreated;
 use Illuminate\Database\Eloquent\Model;
@@ -15,13 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Point extends Model
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'points';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -59,6 +52,6 @@ class Point extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Gamify\User');
+        return $this->belongsTo(User::class);
     }
 }

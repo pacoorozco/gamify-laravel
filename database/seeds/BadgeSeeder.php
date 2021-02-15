@@ -23,10 +23,12 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Badge;
+namespace Database\Seeders;
+
+use Gamify\Models\Badge;
 use Illuminate\Database\Seeder;
 
-class BadgesTableSeeder extends Seeder
+class BadgeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -35,6 +37,8 @@ class BadgesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Badge::class, 5)->create();
+        Badge::factory()
+            ->count(5)
+            ->create();
     }
 }

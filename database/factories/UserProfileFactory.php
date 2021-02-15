@@ -16,21 +16,38 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use Gamify\UserProfile;
+use Gamify\Models\UserProfile;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(UserProfile::class, function (Faker $faker) {
-    return [
-        'bio' => $faker->text,
-        'url' => $faker->url,
-        'phone' => $faker->e164PhoneNumber,
-        'date_of_birth' => $faker->dateTime,
-        'gender' => $faker->randomElement(['male', 'female', 'unspecified']),
-        'twitter' => $faker->url,
-        'facebook' => $faker->url,
-        'linkedin' => $faker->url,
-        'github' => $faker->url,
-    ];
-});
+class UserProfileFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = UserProfile::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'bio' => $this->faker->text,
+            'url' => $this->faker->url,
+            'phone' => $this->faker->e164PhoneNumber,
+            'date_of_birth' => $this->faker->dateTime,
+            'gender' => $this->faker->randomElement(['male', 'female', 'unspecified']),
+            'twitter' => $this->faker->url,
+            'facebook' => $this->faker->url,
+            'linkedin' => $this->faker->url,
+            'github' => $this->faker->url,
+        ];
+    }
+}
+

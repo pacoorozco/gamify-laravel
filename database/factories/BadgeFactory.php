@@ -1,18 +1,35 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use Gamify\Badge;
 use Gamify\Enums\BadgeActuators;
+use Gamify\Models\Badge;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Badge::class, function (Faker $faker) {
-    $color = $faker->unique()->safeColorName;
+class BadgeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Badge::class;
 
-    return [
-        'name' => $color,
-        'description' => 'This badge is for people who thinks in ' . $color . ' :D',
-        'required_repetitions' => 5,
-        'actuators' => BadgeActuators::None()->value,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $color = $this->faker->unique()->safeColorName;
+
+        return [
+            'name' => $color,
+            'description' => 'This badge is for people who think about ' . $color . ' :D',
+            'required_repetitions' => 5,
+            'actuators' => BadgeActuators::None()->value,
+        ];
+    }
+
+}

@@ -1,8 +1,9 @@
 <?php
 
-namespace Gamify;
+namespace Gamify\Models;
 
 use Gamify\Enums\BadgeActuators;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,12 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class QuestionAction extends Model
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'question_actions';
+    use HasFactory;
 
     /**
      * Disable the timestamps on this model.
@@ -55,7 +51,7 @@ class QuestionAction extends Model
      */
     public function question()
     {
-        return $this->belongsTo('Gamify\Question');
+        return $this->belongsTo(Question::class);
     }
 
     /**

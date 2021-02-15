@@ -68,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Gamify\User::class,
+            'model' => Gamify\Models\User::class,
         ],
 
         // 'users' => [

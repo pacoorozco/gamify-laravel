@@ -16,8 +16,9 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify;
+namespace Gamify\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use QCod\ImageUp\HasImageUploads;
@@ -44,18 +45,12 @@ use QCod\ImageUp\HasImageUploads;
 class UserProfile extends Model
 {
     use HasImageUploads;
+    use HasFactory;
 
     /**
      * Default badge image to be used in case no one is supplied.
      */
     const DEFAULT_IMAGE = '/images/missing_profile.png';
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'user_profiles';
 
     /**
      * The attributes that are mass assignable.
@@ -140,7 +135,7 @@ class UserProfile extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Gamify\User');
+        return $this->belongsTo(User::class);
     }
 
     /**

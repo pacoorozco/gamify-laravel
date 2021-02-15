@@ -23,19 +23,28 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Seeders;
 
-use Faker\Generator as Faker;
-use Gamify\Badge;
-use Gamify\Enums\QuestionActuators;
-use Gamify\QuestionAction;
+use Gamify\Models\Level;
+use Illuminate\Database\Seeder;
 
-// To create a user with fake information
-$factory->define(QuestionAction::class, function (Faker $faker) {
-    return [
-        'when' => QuestionActuators::getRandomInstance(),
-        'badge_id' => function () {
-            return factory(Badge::class)->create()->id;
-        },
-    ];
-});
+class LevelSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * Create four Levels in order to start your Gamify app
+     *
+     * @return void
+     */
+    public function run()
+    {
+        foreach (range(1, 4) as $index) {
+            Level::factory()
+                ->create([
+                    'name' => 'Level ' . $index,
+                    'required_points' => ($index * 10),
+                ]);
+        }
+    }
+}

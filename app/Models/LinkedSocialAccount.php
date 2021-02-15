@@ -1,18 +1,11 @@
 <?php
 
-namespace Gamify;
+namespace Gamify\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class LinkedSocialAccount extends Model
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'linked_social_accounts';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -36,6 +29,6 @@ class LinkedSocialAccount extends Model
 
     public function user()
     {
-        return $this->belongsTo('Gamify\User');
+        return $this->belongsTo(User::class);
     }
 }

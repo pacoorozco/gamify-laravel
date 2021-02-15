@@ -25,19 +25,18 @@
 
 namespace Database\Factories;
 
-use Gamify\Models\User;
-use Gamify\Models\UserProfile;
+use Gamify\Models\Question;
+use Gamify\Models\QuestionChoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class QuestionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Question::class;
 
     /**
      * Configure the model factory.
@@ -46,10 +45,17 @@ class UserFactory extends Factory
      */
     public function configure()
     {
-        return $this->afterCreating(function (User $user) {
-            UserProfile::factory()
-                ->for($user)
-                ->create();
+        return $this->afterCreating(function (Question $question) {
+            $question->choices()->saveMany([
+                new QuestionChoice([
+                    'text' => 'correct answer',
+                    'score' => 5,
+                ]),
+                new QuestionChoice([
+                    'text' => 'incorrect answer',
+                    'score' => -5,
+                ]),
+            ]);
         });
     }
 
@@ -61,13 +67,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'username' => $this->faker->userName,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('secret'),
-            'remember_token' => Str::random(10),
-            'email_verified_at' => now(),
-            'role' => User::USER_ROLE,
+            'name' => $this->faker->sentence,
+            'question' => $this->faker->paragraph,
+            'solution' => $this->faker->paragraph,
+            'type' => Question::SINGLE_RESPONSE_TYPE,
+            'hidden' => false,
+            'status' => Question::DRAFT_STATUS,
         ];
     }
 }
