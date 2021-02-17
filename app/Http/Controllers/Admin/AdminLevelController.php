@@ -27,7 +27,7 @@ namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Http\Requests\LevelCreateRequest;
 use Gamify\Http\Requests\LevelUpdateRequest;
-use Gamify\Level;
+use Gamify\Models\Level;
 use Yajra\Datatables\Datatables;
 
 class AdminLevelController extends AdminController
@@ -134,7 +134,7 @@ class AdminLevelController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Gamify\Level $level
+     * @param \Gamify\Models\Level $level
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

@@ -18,7 +18,7 @@
 
 namespace Gamify\Listeners;
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Carbon;
 

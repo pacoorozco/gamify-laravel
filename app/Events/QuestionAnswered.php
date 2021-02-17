@@ -2,8 +2,8 @@
 
 namespace Gamify\Events;
 
-use Gamify\Question;
-use Gamify\User;
+use Gamify\Models\Question;
+use Gamify\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -11,10 +11,10 @@ class QuestionAnswered
 {
     use Dispatchable, SerializesModels;
 
-    /** @var \Gamify\User */
+    /** @var \Gamify\Models\User */
     public User $user;
 
-    /** @var \Gamify\Question */
+    /** @var \Gamify\Models\Question */
     public Question $question;
 
     /** @var int */
@@ -26,8 +26,8 @@ class QuestionAnswered
     /**
      * Create a new event instance.
      *
-     * @param \Gamify\User     $user
-     * @param \Gamify\Question $question
+     * @param \Gamify\Models\User     $user
+     * @param \Gamify\Models\Question $question
      * @param int              $points
      * @param bool             $correctness
      *

@@ -2,7 +2,7 @@
 
 namespace Gamify\Events;
 
-use Gamify\Point;
+use Gamify\Models\Point;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -10,7 +10,7 @@ class PointCreated
 {
     use Dispatchable, SerializesModels;
 
-    /** @var \Gamify\User */
+    /** @var \Gamify\Models\User */
     public $user;
 
     /** @var int */
@@ -19,7 +19,7 @@ class PointCreated
     /**
      * Create a new event instance.
      *
-     * @param \Gamify\Point $point
+     * @param \Gamify\Models\Point $point
      *
      * @return void
      */

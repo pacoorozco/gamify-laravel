@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Models;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
-use Gamify\Question;
-use Gamify\QuestionChoice;
+use Gamify\Models\Question;
+use Gamify\Models\QuestionChoice;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -20,12 +20,12 @@ class QuestionTest extends TestCase
     public function test_scopePublished_returns_correct_data()
     {
         // three non-published Questions
-        factory(Question::class, 3)->create([
+        Question::factory()->count(3)->create([
             'status' => Question::DRAFT_STATUS,
         ]);
 
         // two published Questions
-        factory(Question::class, 2)->create([
+        Question::factory()->count(2)->create([
             'status' => Question::PUBLISH_STATUS,
         ]);
 
@@ -37,13 +37,13 @@ class QuestionTest extends TestCase
     public function test_scopeVisible_returns_correct_data()
     {
         // this questions should not be shown
-        factory(Question::class, 3)->create([
+        Question::factory()->count(3)->create([
             'status' => Question::PUBLISH_STATUS,
             'hidden' => true,
         ]);
 
         // this questions should be shown
-        factory(Question::class, 2)->create([
+        Question::factory()->count(2)->create([
             'status' => Question::PUBLISH_STATUS,
             'hidden' => false,
         ]);
@@ -55,8 +55,8 @@ class QuestionTest extends TestCase
 
     public function test_getActionableBadgesForCorrectness_method()
     {
-        $question = factory(Question::class)->create();
-        $badge = factory(Badge::class)->create();
+        $question = Question::factory()->create();
+        $badge = Badge::factory()->create();
 
         $question->actions()->create([
             'when' => BadgeActuators::OnQuestionAnswered,
@@ -72,7 +72,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_returns_true_when_question_can_be_published()
     {
-        $question = factory(Question::class)->state('with_choices')->create();
+        $question = Question::factory()->state('with_choices')->create();
 
         $this->assertTrue($question->canBePublished());
     }
@@ -80,7 +80,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_returns_false_when_question_can_not_be_published()
     {
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $this->assertFalse($question->canBePublished());
     }
@@ -88,7 +88,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_triggers_an_event_when_a_question_is_published()
     {
-        $question = factory(Question::class)->state('with_choices')->create();
+        $question = Question::factory()->state('with_choices')->create();
         Event::fake(); // should be fake after question creation
 
         $question->publish();
@@ -99,7 +99,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_does_not_trigger_an_event_when_a_question_was_already_published()
     {
-        $question = factory(Question::class)->state('with_choices')->create([
+        $question = Question::factory()->state('with_choices')->create([
             'status' => Question::PUBLISH_STATUS,
         ]);
         Event::fake(); // should be fake after question creation
@@ -112,7 +112,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_does_not_trigger_an_event_when_a_question_is_scheduled()
     {
-        $question = factory(Question::class)->state('with_choices')->create([
+        $question = Question::factory()->state('with_choices')->create([
             'publication_date' => now()->addWeek(),
         ]);
         Event::fake(); // should be fake after question creation
@@ -126,7 +126,7 @@ class QuestionTest extends TestCase
     public function it_throws_an_exception_when_trying_to_publish_a_question_without_at_least_two_choices()
     {
         $this->withoutExceptionHandling();
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
         $question->choices()->save(
             new QuestionChoice([
                 'text' => 'answer',
@@ -144,7 +144,7 @@ class QuestionTest extends TestCase
     public function it_throws_an_exception_when_trying_to_publish_a_question_without_a_correct_choice()
     {
         $this->withoutExceptionHandling();
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
         $question->choices()->saveMany([
             new QuestionChoice([
                 'text' => 'answer 1',
@@ -164,7 +164,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_publishes_question_when_date_is_on_the_past()
     {
-        $question = factory(Question::class)->state('with_choices')->create([
+        $question = Question::factory()->state('with_choices')->create([
             'publication_date' => now()->subWeek(),
         ]);
         $question->publish();
@@ -175,7 +175,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_schedules_question_publication_when_date_is_in_the_future()
     {
-        $question = factory(Question::class)->state('with_choices')->create([
+        $question = Question::factory()->state('with_choices')->create([
             'publication_date' => now()->addWeek(),
         ]);
         $question->publish();
@@ -186,7 +186,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_does_not_trigger_an_event_when_publish_fails()
     {
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
         $question->choices()->save(
             new QuestionChoice([
                 'text' => 'answer',
@@ -214,7 +214,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_returns_formatted_publication_date_using_presenter()
     {
-        $question = factory(Question::class)->create([
+        $question = Question::factory()->create([
             'publication_date' => '2020-01-02 03:04:05',
         ]);
 
@@ -224,7 +224,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter()
     {
-        $question = factory(Question::class)->create([
+        $question = Question::factory()->create([
             'publication_date' => null,
         ]);
 
@@ -234,7 +234,7 @@ class QuestionTest extends TestCase
     /** @test */
     public function it_returns_formatted_public_url_using_presenter()
     {
-        $question = factory(Question::class)->create([
+        $question = Question::factory()->create([
             'name' => 'test question number 1',
         ]);
 

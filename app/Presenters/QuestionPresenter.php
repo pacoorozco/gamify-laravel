@@ -2,7 +2,7 @@
 
 namespace Gamify\Presenters;
 
-use Gamify\Question;
+use Gamify\Models\Question;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 

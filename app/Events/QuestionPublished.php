@@ -2,7 +2,7 @@
 
 namespace Gamify\Events;
 
-use Gamify\Question;
+use Gamify\Models\Question;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -10,13 +10,13 @@ class QuestionPublished
 {
     use Dispatchable, SerializesModels;
 
-    /** @var \Gamify\Question */
+    /** @var \Gamify\Models\Question */
     public $question;
 
     /**
      * Create a new event instance.
      *
-     * @param \Gamify\Question $question
+     * @param \Gamify\Models\Question $question
      */
     public function __construct(Question $question)
     {

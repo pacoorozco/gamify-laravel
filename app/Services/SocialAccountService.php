@@ -3,7 +3,7 @@
 namespace Gamify\Services;
 
 use Gamify\LinkedSocialAccount;
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 
@@ -16,7 +16,7 @@ class SocialAccountService
      * @param \Laravel\Socialite\Contracts\User $providerUser
      * @param string                            $provider
      *
-     * @return \Gamify\User
+     * @return \Gamify\Models\User
      */
     public function findOrCreate(ProviderUser $providerUser, string $provider)
     {

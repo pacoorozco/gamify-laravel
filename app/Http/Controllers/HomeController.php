@@ -26,7 +26,7 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Libs\Game\Game;
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

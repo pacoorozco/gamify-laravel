@@ -25,10 +25,10 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Badge;
-use Gamify\Level;
-use Gamify\Question;
-use Gamify\User;
+use Gamify\Models\Badge;
+use Gamify\Models\Level;
+use Gamify\Models\Question;
+use Gamify\Models\User;
 
 class AdminDashboardController extends AdminController
 {

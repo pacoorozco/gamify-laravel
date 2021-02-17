@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Libs\Game;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Gamify\Libs\Game\Game;
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -15,7 +15,7 @@ class GameTest extends TestCase
 
     public function test_addReputation_method()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->assertTrue(Game::addReputation($user, 5, 'test'));
         $this->assertEquals(5, $user->points()->sum('points'));
@@ -24,8 +24,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_increments_repetitions_for_a_given_badge()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
 
@@ -37,8 +37,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
         Game::incrementBadge($user, $badge);
@@ -51,8 +51,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_completes_badge_when_reach_required_repetitions()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
 
@@ -64,8 +64,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_does_not_complete_badge_when_required_repetitions_is_not_reached()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
 
@@ -77,8 +77,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_does_not_update_repetitions_if_badge_was_already_completed()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
         Game::giveCompletedBadge($user, $badge);
@@ -91,8 +91,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_completes_a_badge_for_a_user()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create();
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create();
 
         Game::giveCompletedBadge($user, $badge);
 
@@ -102,8 +102,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_completes_a_badge_when_a_user_had_already_started_it()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
         Game::incrementBadge($user, $badge); // Badge is started and not completed.
@@ -115,7 +115,7 @@ class GameTest extends TestCase
 
     public function test_getRanking_method()
     {
-        factory(User::class, 10)->create();
+        User::factory()->count(10)->create();
 
         $test_data = [
             ['input' => 5, 'output' => 5],
@@ -135,7 +135,7 @@ class GameTest extends TestCase
 
     public function test_getRanking_returns_proper_content()
     {
-        $users = factory(User::class, 5)->create();
+        $users = User::factory()->count(5)->create();
 
         $got = Game::getRanking(5);
 

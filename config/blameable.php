@@ -1,6 +1,6 @@
 <?php
 
-use Gamify\User;
+use Gamify\Models\User;
 
 return [
 

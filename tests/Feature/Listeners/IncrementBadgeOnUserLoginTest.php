@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Listeners;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
 use Illuminate\Auth\Events\Login;
@@ -17,7 +17,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
     public function it_increments_badges_with_OnUserLogin_actuator()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::OnUserLogin,
         ]);
 
@@ -34,7 +34,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
     public function it_does_not_increment_badges_without_OnUserLogin_actuator()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::None,
         ]);
 

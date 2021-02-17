@@ -18,7 +18,7 @@
 
 namespace Tests\Unit;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Tests\ModelTestCase;
 
 class BadgeTest extends ModelTestCase

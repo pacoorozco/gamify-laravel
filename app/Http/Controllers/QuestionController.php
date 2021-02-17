@@ -4,8 +4,8 @@ namespace Gamify\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
 use Gamify\Http\Requests\QuestionAnswerRequest;
-use Gamify\Question;
-use Gamify\User;
+use Gamify\Models\Question;
+use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller

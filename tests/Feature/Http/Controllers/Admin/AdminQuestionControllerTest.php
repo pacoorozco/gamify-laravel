@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
-use Gamify\Question;
+use Gamify\Models\Question;
 use Gamify\TestDataGenerator\QuestionTestDataGenerator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,7 +16,7 @@ class AdminQuestionControllerTest extends TestCase
     public function access_is_restricted_to_admins()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create();
 
@@ -92,7 +92,7 @@ class AdminQuestionControllerTest extends TestCase
     public function show_returns_proper_content()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create();
 
@@ -107,7 +107,7 @@ class AdminQuestionControllerTest extends TestCase
     public function edit_returns_proper_content()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create();
 
@@ -122,7 +122,7 @@ class AdminQuestionControllerTest extends TestCase
     public function update_edits_an_object()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create([
                 'name' => 'Question gold',
@@ -142,7 +142,7 @@ class AdminQuestionControllerTest extends TestCase
     public function update_returns_errors_on_invalid_data()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create([
                 'name' => 'Question gold',
@@ -161,7 +161,7 @@ class AdminQuestionControllerTest extends TestCase
     public function delete_returns_proper_content()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create();
 
@@ -176,7 +176,7 @@ class AdminQuestionControllerTest extends TestCase
     public function destroy_deletes_an_object()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create();
 
@@ -191,7 +191,7 @@ class AdminQuestionControllerTest extends TestCase
     public function data_returns_proper_content()
     {
         $this->actingAsAdmin();
-        factory(Question::class, 3)
+        Question::factory()->count(3)
             ->states('with_choices')
             ->create();
 
@@ -205,7 +205,7 @@ class AdminQuestionControllerTest extends TestCase
     public function data_fails_for_non_ajax_calls()
     {
         $this->actingAsAdmin();
-        factory(Question::class, 3)
+        Question::factory()->count(3)
             ->states('with_choices')
             ->create();
 

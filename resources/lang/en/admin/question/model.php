@@ -1,6 +1,6 @@
 <?php
 
-use Gamify\Question;
+use Gamify\Models\Question;
 
 return [
 

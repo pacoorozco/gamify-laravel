@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
-use Gamify\Level;
+use Gamify\Models\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +14,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.levels.index')],
             ['protocol' => 'GET', 'route' => route('admin.levels.create')],
@@ -60,7 +60,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $level = factory(Level::class)->make();
+        $level = Level::factory()->make();
         $input_data = [
             'name' => $level->name,
             'required_points' => $level->required_points,
@@ -88,7 +88,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.levels.show', $level))
@@ -100,7 +100,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.levels.edit', $level))
@@ -112,7 +112,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $level = factory(Level::class)->create([
+        $level = Level::factory()->create([
             'name' => 'Level gold',
         ]);
         $input_data = [
@@ -131,7 +131,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $level = factory(Level::class)->create([
+        $level = Level::factory()->create([
             'name' => 'Level gold',
         ]);
         $input_data = [
@@ -147,7 +147,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.levels.delete', $level))
@@ -159,7 +159,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
 
         $this->actingAsAdmin()
             ->delete(route('admin.levels.destroy', $level))
@@ -172,7 +172,7 @@ class AdminLevelControllerTest extends TestCase
     public function data_returns_proper_content()
     {
         // One level has already been created: 'default' level.
-        factory(Level::class, 2)->create();
+        Level::factory()->count(2)->create();
 
         $this->actingAsAdmin()
             ->withoutMiddleware(OnlyAjax::class)
@@ -184,7 +184,7 @@ class AdminLevelControllerTest extends TestCase
     public function data_fails_for_non_ajax_calls()
     {
         // One level has already been created: 'default' level.
-        factory(Level::class, 3)->create();
+        Level::factory()->count(3)->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.levels.data'))

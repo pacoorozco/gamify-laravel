@@ -2,7 +2,7 @@
 
 namespace Gamify\TestDataGenerator;
 
-use Gamify\Question;
+use Gamify\Models\Question;
 
 class QuestionTestDataGenerator
 {

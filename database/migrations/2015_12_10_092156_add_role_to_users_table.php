@@ -16,7 +16,7 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

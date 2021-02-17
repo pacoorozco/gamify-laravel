@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $score   How many points are added by this choice.
  * @mixin \Eloquent
  * @property-read \Gamify\Models\Question $question
- * @method static \Illuminate\Database\Eloquent\Builder|\Gamify\QuestionChoice correct()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Gamify\Models\QuestionChoice correct()
  */
 class QuestionChoice extends Model
 {

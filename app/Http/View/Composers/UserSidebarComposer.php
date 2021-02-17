@@ -2,7 +2,7 @@
 
 namespace Gamify\Http\View\Composers;
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

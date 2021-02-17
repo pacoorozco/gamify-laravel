@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Gamify\QuestionAction;
+use Gamify\Models\QuestionAction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\ModelTestCase;
 

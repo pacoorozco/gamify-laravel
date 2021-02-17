@@ -2,7 +2,7 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Question;
+use Gamify\Models\Question;
 use Illuminate\Validation\Rule;
 
 class QuestionUpdateRequest extends Request

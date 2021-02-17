@@ -291,17 +291,17 @@
                             <div id="publicationDateStatus">
                             <span class="form-control-static">
                             @switch($question->status)
-                                    @case(\Gamify\Question::DRAFT_STATUS)
+                                    @case(\Gamify\Models\Question::DRAFT_STATUS)
                                     @if (empty(old('publication_date')))
                                         @lang('admin/question/model.publish_immediately')
                                     @else
                                         @lang('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->present()->publication_date)])
                                     @endif
                                     @break
-                                    @case(\Gamify\Question::PUBLISH_STATUS)
+                                    @case(\Gamify\Models\Question::PUBLISH_STATUS)
                                     @lang('admin/question/model.published_on', ['datetime' => old('publication_date', $question->present()->publication_date)])
                                     @break
-                                    @case(\Gamify\Question::FUTURE_STATUS)
+                                    @case(\Gamify\Models\Question::FUTURE_STATUS)
                                     @lang('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->present()->publication_date)])
                                     @break
                                 @endswitch

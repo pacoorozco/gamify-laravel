@@ -25,12 +25,12 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Gamify\Enums\QuestionActuators;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
-use Gamify\Question;
+use Gamify\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -214,7 +214,7 @@ class AdminQuestionController extends AdminController
     /**
      * Sync the given array of QuestionChoices to a Question.
      *
-     * @param  \Gamify\Question  $question
+     * @param  \Gamify\Models\Question  $question
      * @param  array  $choices
      */
     private function addChoicesToQuestion(Question $question, array $choices): void

@@ -2,7 +2,7 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Validation\Rule;
 
 class UserCreateRequest extends Request

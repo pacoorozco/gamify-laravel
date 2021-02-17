@@ -1,6 +1,6 @@
 <?php
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Database\Migrations\Migration;
 
 class AddDefaultAdminUserInUsersTable extends Migration

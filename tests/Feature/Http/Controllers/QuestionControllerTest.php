@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
-use Gamify\Question;
+use Gamify\Models\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -33,7 +33,7 @@ class QuestionControllerTest extends TestCase
     public function show_returns_proper_content()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create([
                 'status' => Question::PUBLISH_STATUS,
@@ -51,7 +51,7 @@ class QuestionControllerTest extends TestCase
     public function answer_returns_proper_content()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create([
                 'status' => Question::PUBLISH_STATUS,
@@ -77,7 +77,7 @@ class QuestionControllerTest extends TestCase
     public function it_fires_an_event_when_question_is_answered_correctly()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create([
                 'status' => Question::PUBLISH_STATUS,
@@ -105,7 +105,7 @@ class QuestionControllerTest extends TestCase
     public function it_fires_an_event_when_question_is_answered_incorrectly()
     {
         $this->actingAsAdmin();
-        $question = factory(Question::class)
+        $question = Question::factory()
             ->states('with_choices')
             ->create([
                 'status' => Question::PUBLISH_STATUS,

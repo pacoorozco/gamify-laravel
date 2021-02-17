@@ -117,7 +117,7 @@ class User extends Authenticatable
      */
     public function answeredQuestions()
     {
-        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
+        return $this->belongsToMany('Gamify\Models\Question', 'users_questions', 'user_id', 'question_id')
             ->withPivot('points', 'answers');
     }
 

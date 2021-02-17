@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Middleware\OnlyAjax;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +15,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $badge = factory(Badge::class)->create();
+        $badge = Badge::factory()->create();
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.badges.index')],
             ['protocol' => 'GET', 'route' => route('admin.badges.create')],
@@ -61,7 +61,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $badge = factory(Badge::class)->make();
+        $badge = Badge::factory()->make();
         $input_data = [
             'name' => $badge->name,
             'description' => $badge->description,
@@ -91,7 +91,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $badge = factory(Badge::class)->create();
+        $badge = Badge::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.badges.show', $badge))
@@ -103,7 +103,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $badge = factory(Badge::class)->create();
+        $badge = Badge::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.badges.edit', $badge))
@@ -115,7 +115,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'name' => 'gold',
         ]);
         $input_data = [
@@ -136,7 +136,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'name' => 'gold',
         ]);
         $input_data = [
@@ -152,7 +152,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $badge = factory(Badge::class)->create();
+        $badge = Badge::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.badges.delete', $badge))
@@ -164,7 +164,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $badge = factory(Badge::class)->create();
+        $badge = Badge::factory()->create();
 
         $this->actingAsAdmin()
             ->delete(route('admin.badges.destroy', $badge))
@@ -176,7 +176,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function data_returns_proper_content()
     {
-        factory(Badge::class, 3)->create();
+        Badge::factory()->count(3)->create();
 
         $this->actingAsAdmin()
             ->withoutMiddleware(OnlyAjax::class)
@@ -187,7 +187,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function data_fails_for_non_ajax_calls()
     {
-        factory(Badge::class, 3)->create();
+        Badge::factory()->count(3)->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.badges.data'))

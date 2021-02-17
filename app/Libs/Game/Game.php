@@ -2,10 +2,10 @@
 
 namespace Gamify\Libs\Game;
 
-use Gamify\Badge;
-use Gamify\Level;
-use Gamify\Point;
-use Gamify\User;
+use Gamify\Models\Badge;
+use Gamify\Models\Level;
+use Gamify\Models\Point;
+use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -34,7 +34,7 @@ class Game
     /**
      * Add more repetitions towards a collection of Badges.
      *
-     * @param \Gamify\User                             $user
+     * @param \Gamify\Models\User                             $user
      * @param \Illuminate\Database\Eloquent\Collection $badges
      */
     public static function incrementManyBadges(User $user, Collection $badges): void

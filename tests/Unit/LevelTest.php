@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Gamify\Level;
+use Gamify\Models\Level;
 use Tests\ModelTestCase;
 
 class LevelTest extends ModelTestCase

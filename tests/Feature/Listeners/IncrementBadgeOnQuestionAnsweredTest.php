@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Listeners;
 
-use Gamify\Badge;
+use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Enums\QuestionActuators;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
-use Gamify\Question;
+use Gamify\Models\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,10 +19,10 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_increments_badges_with_OnQuestionAnswered_actuator()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::OnQuestionAnswered,
         ]);
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $event = \Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
@@ -39,10 +39,10 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_does_not_increment_badges_without_OnQuestionAnswered_actuator()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::None,
         ]);
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $event = \Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
@@ -59,10 +59,10 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_increments_badges_with_OnQuestionCorrectlyAnswered_actuator_when_answer_is_correct()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
         ]);
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $event = \Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
@@ -79,10 +79,10 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_increments_badges_with_OnQuestionIncorrectlyAnswered_actuator_when_answer_is_incorrect()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
         ]);
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $event = \Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
@@ -99,10 +99,10 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_does_not_increment_badges_with_OnQuestionCorrectlyAnswered_actuator_when_answer_is_incorrect()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
         ]);
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $event = \Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
@@ -119,10 +119,10 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_does_not_increment_badges_with_OnQuestionIncorrectlyAnswered_actuator_when_answer_is_correct()
     {
         $user = $this->user();
-        $badge = factory(Badge::class)->create([
+        $badge = Badge::factory()->create([
             'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
         ]);
-        $question = factory(Question::class)->create();
+        $question = Question::factory()->create();
 
         $event = \Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
@@ -138,8 +138,8 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     /** @test */
     public function it_increments_badges_with_OnQuestionIncorrectlyAnswered_actuator_associated_to_a_question_when_answer_is_incorrect()
     {
-        $badge = factory(Badge::class)->create();
-        $question = factory(Question::class)->create();
+        $badge = Badge::factory()->create();
+        $question = Question::factory()->create();
         $question->actions()->create([
             'when' => QuestionActuators::OnQuestionIncorrectlyAnswered,
             'badge_id' => $badge->id,
@@ -161,8 +161,8 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     /** @test */
     public function it_increments_badges_with_OnQuestionIncorrectlyAnswered_actuator_associated_to_a_question_when_answer_is_correct()
     {
-        $badge = factory(Badge::class)->create();
-        $question = factory(Question::class)->create();
+        $badge = Badge::factory()->create();
+        $question = Question::factory()->create();
         $question->actions()->create([
             'when' => QuestionActuators::OnQuestionIncorrectlyAnswered,
             'badge_id' => $badge->id,

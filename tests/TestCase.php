@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -14,7 +14,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @param array $overrides - Set attributes to the user.
      *
-     * @return \Gamify\User $admin
+     * @return \Gamify\Models\User $admin
      */
     protected function admin(array $overrides = []): User
     {
@@ -28,11 +28,11 @@ abstract class TestCase extends BaseTestCase
      *
      * @param array $overrides - Set attributes to the user.
      *
-     * @return \Gamify\User
+     * @return \Gamify\Models\User
      */
     protected function user(array $overrides = []): User
     {
-        return factory(User::class)->states('with_profile')
+        return User::factory()->states('with_profile')
             ->create($overrides);
     }
 

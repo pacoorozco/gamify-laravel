@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +14,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.users.index')],
             ['protocol' => 'GET', 'route' => route('admin.users.create')],
@@ -60,7 +60,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $input_data = [
             'username' => $user->username,
             'name' => $user->name,
@@ -93,7 +93,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.users.show', $user))
@@ -105,7 +105,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.users.edit', $user))
@@ -117,7 +117,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'name' => 'Han Solo',
         ]);
         $input_data = [
@@ -136,7 +136,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'username' => 'anakin',
         ]);
         $input_data = [
@@ -152,7 +152,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.users.delete', $user))
@@ -164,7 +164,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAsAdmin()
             ->delete(route('admin.users.destroy', $user))
@@ -177,7 +177,7 @@ class AdminUserControllerTest extends TestCase
     public function data_returns_proper_content()
     {
         // Two users has already been created by TestCase.
-        factory(User::class, 3)->create();
+        User::factory()->count(3)->create();
 
         $this->actingAsAdmin()
             ->withoutMiddleware(OnlyAjax::class)
@@ -189,7 +189,7 @@ class AdminUserControllerTest extends TestCase
     public function data_fails_for_non_ajax_calls()
     {
         // Two users has already been created by TestCase.
-        factory(User::class, 3)->create();
+        User::factory()->count(3)->create();
 
         $this->actingAsAdmin()
             ->get(route('admin.users.data'))

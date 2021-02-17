@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Models;
 
-use Gamify\Level;
+use Gamify\Models\Level;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class LevelTest extends TestCase
     private function createLevels(int $number, int $distance = 10): void
     {
         for ($i = 1; $i <= $number; $i++) {
-            factory(Level::class)->create([
+            Level::factory()->create([
                 'name' => 'Level ' . $i,
                 'required_points' => $i * $distance,
                 'active' => true,
@@ -76,7 +76,7 @@ class LevelTest extends TestCase
 
     public function test_returns_default_image_when_field_is_empty()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
 
         $this->assertNull($level->getOriginal('image_url'));
         $this->assertEquals(Level::DEFAULT_IMAGE, $level->image);
