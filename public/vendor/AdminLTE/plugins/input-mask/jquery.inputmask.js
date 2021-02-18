@@ -1,14 +1,30 @@
 /**
-* @license Input Mask plugin for jquery
-* http://github.com/RobinHerbots/jquery.inputmask
-* Copyright (c) 2010 - 2014 Robin Herbots
-* Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
-* Version: 0.0.0
-*/
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 (function ($) {
     if ($.fn.inputmask === undefined) {
-        //helper functions    
+        //helper functions
         function isInputEventSupported(eventName) {
             var el = document.createElement('input'),
             eventName = 'on' + eventName,
@@ -261,7 +277,7 @@
             }
 
             function isValid(pos, c, strict) { //strict true ~ no correction or autofill
-                strict = strict === true; //always set a value to strict to prevent possible strange behavior in the extensions 
+                strict = strict === true; //always set a value to strict to prevent possible strange behavior in the extensions
 
                 function _isValid(position, activeMaskset, c, strict) {
                     var testPos = determineTestPosition(position), loopend = c ? 1 : 0, chrs = '', buffer = activeMaskset["buffer"];
@@ -1067,7 +1083,7 @@
                                     }
                                 }
                                 if (minimalForwardPosition > getActiveMaskSet()["p"])
-                                    getActiveMaskSet()["p"] = minimalForwardPosition; //needed for checkval strict 
+                                    getActiveMaskSet()["p"] = minimalForwardPosition; //needed for checkval strict
                             }
                         });
 
@@ -1199,7 +1215,7 @@
                                 }
                             });
                         }
-                        if (getMaskLength() >= maxLength && maxLength > -1) { //FF sets no defined max length to -1 
+                        if (getMaskLength() >= maxLength && maxLength > -1) { //FF sets no defined max length to -1
                             if (maxLength < getActiveBufferTemplate().length) getActiveBufferTemplate().length = maxLength;
                             if (getActiveMaskSet()['greedy'] == false) {
                                 getActiveMaskSet()['repeat'] = Math.round(maxLength / getActiveBufferTemplate().length);
@@ -1567,7 +1583,7 @@
                             return masksets[activeMasksetIndex]['_buffer'].join('');
                         }
                         else return "";
-                    case "hasMaskedValue": //check wheter the returned value is masked or not; currently only works reliable when using jquery.val fn to retrieve the value 
+                    case "hasMaskedValue": //check wheter the returned value is masked or not; currently only works reliable when using jquery.val fn to retrieve the value
                         return this.data('_inputmask') ? !this.data('_inputmask')['opts'].autoUnmask : false;
                     case "isComplete":
                         masksets = this.data('_inputmask')['masksets'];

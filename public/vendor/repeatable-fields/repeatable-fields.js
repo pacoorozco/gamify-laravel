@@ -1,10 +1,26 @@
-/*
- * jQuery Repeatable Fields v1.5.0
- * http://www.rhyzz.com/repeatable-fields.html
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
  *
- * Copyright (c) 2014-2018 Rhyzz
- * License MIT
-*/
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 (function($) {
 	"use strict";
@@ -25,7 +41,7 @@
 
 			$(container).attr('data-rf-row-count', row_count);
 		};
-		
+
 		self.default_settings = {
 			wrapper: '.wrapper',
 			container: '.container',
@@ -104,7 +120,7 @@
 						self.settings.after_remove(container);
 					}
 				});
-			
+
 				if(self.settings.is_sortable === true) {
 					if(typeof $.ui !== 'undefined' && typeof $.ui.sortable !== 'undefined') {
 						var sortable_options = self.settings.sortable_options !== null ? self.settings.sortable_options : {};
@@ -120,10 +136,10 @@
 						}
 
 						var steps = 1;
-						
+
 						if($(event.target).siblings(self.settings.move_steps).length === 1) {
 							var custom_steps = parseInt($(event.target).siblings(self.settings.move_steps).val(), 10);
-							
+
 							if(isNaN(custom_steps) === false && (custom_steps > 0 || custom_steps === -1)) {
 								steps = custom_steps;
 							}
@@ -135,7 +151,7 @@
 
 						if($(event.target).is(self.settings.move_up) === true) {
 							var previous_row;
-							
+
 							for(i = 0; steps === -1 ? true : i < steps; i++) {
 								if(previous_row === undefined) {
 									if(current_row.prev().not(self.settings.template).length === 1) {
@@ -154,7 +170,7 @@
 									}
 								}
 							}
-							
+
 							if(previous_row !== undefined) {
 								previous_row.before(current_row);
 							}
@@ -194,7 +210,7 @@
 
 		// Initialize all repeatable field wrappers
 		self.initialize(self);
-		
+
 		return self;
 	};
 })(jQuery);
