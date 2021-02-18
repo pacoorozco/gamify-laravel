@@ -144,11 +144,11 @@ class UserProfile extends Model
      * @return string
      */
     public function getAvatarUrlAttribute(): string
-     {
-         try {
-             return $this->imageUrl('avatar');
-         } catch (\Throwable $exception) {
-             return asset(self::DEFAULT_IMAGE);
-         }
-     }
+    {
+        try {
+            return $this->imageUrl('avatar');
+        } catch (\Throwable $exception) {
+            return asset(self::DEFAULT_IMAGE);
+        }
+    }
 }
