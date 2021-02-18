@@ -25,9 +25,9 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Middleware\OnlyAjax;
+use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -119,7 +119,7 @@ Route::get(
 Route::get(
     'login/{provider}/callback',
     [SocialAccountController::class, 'handleProviderCallback']
-)->name('social.callback');;
+)->name('social.callback');
 
 /* ------------------------------------------
  * Authenticated routes

@@ -57,4 +57,3 @@ class UserProfileFactory extends Factory
         ];
     }
 }
-

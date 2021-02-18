@@ -26,7 +26,6 @@
 namespace Database\Factories;
 
 use Gamify\Models\Question;
-use Gamify\Models\QuestionChoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class QuestionFactory extends Factory

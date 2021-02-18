@@ -25,8 +25,8 @@
 
 namespace Tests\Feature\Models;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
+use Gamify\Models\Badge;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

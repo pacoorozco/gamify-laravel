@@ -25,10 +25,10 @@
 
 namespace Gamify\Listeners;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Libs\Game\Game;
+use Gamify\Models\Badge;
 use Gamify\Models\User;
 
 class IncrementBadgesOnQuestionAnswered

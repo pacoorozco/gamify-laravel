@@ -54,5 +54,4 @@ class BadgeFactory extends Factory
             'actuators' => BadgeActuators::None()->value,
         ];
     }
-
 }

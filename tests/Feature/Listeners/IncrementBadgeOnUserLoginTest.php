@@ -25,9 +25,9 @@
 
 namespace Tests\Feature\Listeners;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
+use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Testing\RefreshDatabase;
