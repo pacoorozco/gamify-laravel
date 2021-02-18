@@ -3,8 +3,8 @@
 namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
-use Gamify\Providers\RouteServiceProvider;
 use Gamify\Models\User;
+use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

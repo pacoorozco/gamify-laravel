@@ -52,4 +52,3 @@ class QuestionActionFactory extends Factory
         ];
     }
 }
-

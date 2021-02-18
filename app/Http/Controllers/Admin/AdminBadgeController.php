@@ -25,10 +25,10 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
+use Gamify\Models\Badge;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Support\Arr;
 use Yajra\Datatables\Datatables;

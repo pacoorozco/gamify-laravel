@@ -2,9 +2,9 @@
 
 namespace Gamify\Listeners;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Libs\Game\Game;
+use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
 

@@ -25,11 +25,11 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Models\Badge;
 use Gamify\Enums\QuestionActuators;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
+use Gamify\Models\Badge;
 use Gamify\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;

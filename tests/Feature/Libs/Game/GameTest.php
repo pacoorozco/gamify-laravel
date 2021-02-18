@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Libs\Game;
 
-use Gamify\Models\Badge;
 use Gamify\Libs\Game\Game;
+use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;

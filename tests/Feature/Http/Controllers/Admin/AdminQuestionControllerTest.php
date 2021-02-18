@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Question;
-use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
 use Gamify\TestDataGenerator\QuestionTestDataGenerator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -125,8 +124,8 @@ class AdminQuestionControllerTest extends TestCase
     {
         /** @var Question $question */
         $question = Question::factory()->create([
-                'name' => 'Question gold',
-            ]);
+            'name' => 'Question gold',
+        ]);
         $input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => 'Question silver',
         ]);
@@ -142,8 +141,8 @@ class AdminQuestionControllerTest extends TestCase
     {
         /** @var Question $question */
         $question = Question::factory()->create([
-                'name' => 'Question gold',
-            ]);
+            'name' => 'Question gold',
+        ]);
         $input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => '',
         ]);

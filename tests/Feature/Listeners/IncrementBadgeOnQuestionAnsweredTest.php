@@ -167,8 +167,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
 
     /** @test */
     public function it_increments_badges_with_OnQuestionIncorrectlyAnswered_actuator_associated_to_a_question_when_answer_is_incorrect(
-    )
-    {
+    ) {
         /** @var User $user */
         $user = User::factory()->create();
 
@@ -195,8 +194,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
 
     /** @test */
     public function it_increments_badges_with_OnQuestionIncorrectlyAnswered_actuator_associated_to_a_question_when_answer_is_correct(
-    )
-    {
+    ) {
         /** @var User $user */
         $user = User::factory()->create();
 
