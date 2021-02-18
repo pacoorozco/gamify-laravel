@@ -23,35 +23,32 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Database\Factories;
+namespace Tests\Unit\Models;
 
-use Gamify\Models\Question;
-use Gamify\Models\QuestionChoice;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Gamify\Models\Level;
+use Tests\TestCase;
 
-class QuestionFactory extends Factory
+class LevelTest extends TestCase
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Question::class;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+    public function test_contains_valid_fillable_properties()
     {
-        return [
-            'name' => $this->faker->sentence,
-            'question' => $this->faker->paragraph,
-            'solution' => $this->faker->paragraph,
-            'type' => Question::SINGLE_RESPONSE_TYPE,
-            'hidden' => false,
-            'status' => Question::DRAFT_STATUS,
-        ];
+        $m = new Level();
+        $this->assertEquals([
+            'name',
+            'required_points',
+            'active',
+        ], $m->getFillable());
+    }
+
+    public function test_contains_valid_casts_properties()
+    {
+        $m = new Level();
+        $this->assertEquals([
+            'id' => 'int',
+            'name' => 'string',
+            'required_points' => 'int',
+            'active' => 'boolean',
+            'deleted_at' => 'datetime',
+        ], $m->getCasts());
     }
 }

@@ -4,12 +4,22 @@ namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Level;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AdminLevelControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var User $admin */
+        $admin = User::factory()->admin()->create();
+        $this->actingAs($admin);
+    }
 
     /** @test */
     public function access_is_restricted_to_admins()
@@ -26,14 +36,17 @@ class AdminLevelControllerTest extends TestCase
             ['protocol' => 'DELETE', 'route' => route('admin.levels.destroy', $level)],
         ];
 
+        /** @var User $user */
+        $user = User::factory()->create();
+
         foreach ($test_data as $test) {
-            $this->actingAsUser()
+            $this->actingAs($user)
                 ->call($test['protocol'], $test['route'])
                 ->assertForbidden();
         }
 
         // Ajax routes needs to disable middleware
-        $this->actingAsUser()
+        $this->actingAs($user)
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.levels.data'))
             ->assertForbidden();
@@ -42,8 +55,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function index_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.levels.index'))
+        $this->get(route('admin.levels.index'))
             ->assertOK()
             ->assertViewIs('admin.level.index');
     }
@@ -51,8 +63,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function create_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.levels.create'))
+        $this->get(route('admin.levels.create'))
             ->assertOk()
             ->assertViewIs('admin.level.create');
     }
@@ -60,6 +71,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
+        /** @var Level $level */
         $level = Level::factory()->make();
         $input_data = [
             'name' => $level->name,
@@ -67,8 +79,7 @@ class AdminLevelControllerTest extends TestCase
             'active' => true,
         ];
 
-        $this->actingAsAdmin()
-            ->post(route('admin.levels.store'), $input_data)
+        $this->post(route('admin.levels.store'), $input_data)
             ->assertRedirect(route('admin.levels.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -79,8 +90,7 @@ class AdminLevelControllerTest extends TestCase
     {
         $invalid_input_data = [];
 
-        $this->actingAsAdmin()
-            ->post(route('admin.levels.store'), $invalid_input_data)
+        $this->post(route('admin.levels.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -88,10 +98,10 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
+        /** @var Level $level */
         $level = Level::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.levels.show', $level))
+        $this->get(route('admin.levels.show', $level))
             ->assertOk()
             ->assertViewIs('admin.level.show')
             ->assertSee($level->name);
@@ -100,10 +110,10 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
+        /** @var Level $level */
         $level = Level::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.levels.edit', $level))
+        $this->get(route('admin.levels.edit', $level))
             ->assertOk()
             ->assertViewIs('admin.level.edit')
             ->assertSee($level->name);
@@ -112,6 +122,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
+        /** @var Level $level */
         $level = Level::factory()->create([
             'name' => 'Level gold',
         ]);
@@ -121,8 +132,7 @@ class AdminLevelControllerTest extends TestCase
             'active' => true,
         ];
 
-        $this->actingAsAdmin()
-            ->put(route('admin.levels.update', $level), $input_data)
+        $this->put(route('admin.levels.update', $level), $input_data)
             ->assertRedirect(route('admin.levels.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -131,6 +141,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
+        /** @var Level $level */
         $level = Level::factory()->create([
             'name' => 'Level gold',
         ]);
@@ -138,8 +149,7 @@ class AdminLevelControllerTest extends TestCase
             'name' => '',
         ];
 
-        $this->actingAsAdmin()
-            ->put(route('admin.levels.update', $level), $input_data)
+        $this->put(route('admin.levels.update', $level), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -147,10 +157,10 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
+        /** @var Level $level */
         $level = Level::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.levels.delete', $level))
+        $this->get(route('admin.levels.delete', $level))
             ->assertOk()
             ->assertViewIs('admin.level.delete')
             ->assertSee($level->name);
@@ -159,10 +169,10 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
+        /** @var Level $level */
         $level = Level::factory()->create();
 
-        $this->actingAsAdmin()
-            ->delete(route('admin.levels.destroy', $level))
+        $this->delete(route('admin.levels.destroy', $level))
             ->assertRedirect(route('admin.levels.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -174,8 +184,7 @@ class AdminLevelControllerTest extends TestCase
         // One level has already been created: 'default' level.
         Level::factory()->count(2)->create();
 
-        $this->actingAsAdmin()
-            ->withoutMiddleware(OnlyAjax::class)
+        $this->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.levels.data'))
             ->assertJsonCount(3, 'data');
     }
@@ -186,8 +195,7 @@ class AdminLevelControllerTest extends TestCase
         // One level has already been created: 'default' level.
         Level::factory()->count(3)->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.levels.data'))
+        $this->get(route('admin.levels.data'))
             ->assertForbidden();
     }
 }

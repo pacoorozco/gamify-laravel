@@ -52,13 +52,13 @@ class AdminQuestionController extends AdminController
     /**
      * Displays the form for question creation.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
      */
-    public function create(): View
+    public function create()
     {
         return view('admin.question.create', [
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::toArray())->get(),
+            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
         ]);
     }
 
@@ -151,7 +151,7 @@ class AdminQuestionController extends AdminController
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
             'selectedTags' => $question->tagArray,
             'availableActions' => $availableActions,
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::toArray())->get(),
+            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
         ]);
     }
 

@@ -4,6 +4,8 @@ namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Question;
+use Gamify\Models\QuestionChoice;
+use Gamify\Models\User;
 use Gamify\TestDataGenerator\QuestionTestDataGenerator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -12,13 +14,20 @@ class AdminQuestionControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var User $admin */
+        $admin = User::factory()->admin()->create();
+        $this->actingAs($admin);
+    }
+
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create();
+        /** @var Question $question */
+        $question = Question::factory()->create();
 
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.questions.index')],
@@ -31,14 +40,17 @@ class AdminQuestionControllerTest extends TestCase
             ['protocol' => 'DELETE', 'route' => route('admin.questions.destroy', $question)],
         ];
 
+        /** @var User $user */
+        $user = User::factory()->create();
+
         foreach ($test_data as $test) {
-            $this->actingAsUser()
+            $this->actingAs($user)
                 ->call($test['protocol'], $test['route'])
                 ->assertForbidden();
         }
 
         // Ajax routes needs to disable middleware
-        $this->actingAsUser()
+        $this->actingAs($user)
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.questions.data'))
             ->assertForbidden();
@@ -47,8 +59,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function index_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.questions.index'))
+        $this->get(route('admin.questions.index'))
             ->assertOK()
             ->assertViewIs('admin.question.index');
     }
@@ -56,8 +67,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function create_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.questions.create'))
+        $this->get(route('admin.questions.create'))
             ->assertOk()
             ->assertViewIs('admin.question.create')
             ->assertViewHasAll(['availableTags']);
@@ -68,8 +78,7 @@ class AdminQuestionControllerTest extends TestCase
     {
         $input_data = QuestionTestDataGenerator::FormRequestData();
 
-        $this->actingAsAdmin()
-            ->post(route('admin.questions.store'), $input_data)
+        $this->post(route('admin.questions.store'), $input_data)
             ->assertRedirect(route('admin.questions.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -82,8 +91,7 @@ class AdminQuestionControllerTest extends TestCase
             'name' => '',
         ]);
 
-        $this->actingAsAdmin()
-            ->post(route('admin.questions.store'), $invalid_input_data)
+        $this->post(route('admin.questions.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -91,13 +99,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create();
+        /** @var Question $question */
+        $question = Question::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.questions.show', $question))
+        $this->get(route('admin.questions.show', $question))
             ->assertOk()
             ->assertViewIs('admin.question.show')
             ->assertSee($question->name);
@@ -106,13 +111,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create();
+        /** @var Question $question */
+        $question = Question::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.questions.edit', $question))
+        $this->get(route('admin.questions.edit', $question))
             ->assertOk()
             ->assertViewIs('admin.question.edit')
             ->assertSee($question->name);
@@ -121,18 +123,15 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create([
+        /** @var Question $question */
+        $question = Question::factory()->create([
                 'name' => 'Question gold',
             ]);
         $input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => 'Question silver',
         ]);
 
-        $this->actingAsAdmin()
-            ->put(route('admin.questions.update', $question), $input_data)
+        $this->put(route('admin.questions.update', $question), $input_data)
             ->assertRedirect(route('admin.questions.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -141,18 +140,15 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create([
+        /** @var Question $question */
+        $question = Question::factory()->create([
                 'name' => 'Question gold',
             ]);
         $input_data = QuestionTestDataGenerator::FormRequestData([
             'name' => '',
         ]);
 
-        $this->actingAsAdmin()
-            ->put(route('admin.questions.update', $question), $input_data)
+        $this->put(route('admin.questions.update', $question), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -160,13 +156,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create();
+        /** @var Question $question */
+        $question = Question::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.questions.delete', $question))
+        $this->get(route('admin.questions.delete', $question))
             ->assertOk()
             ->assertViewIs('admin.question.delete')
             ->assertSee($question->name);
@@ -175,13 +168,10 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $this->actingAsAdmin();
-        $question = Question::factory()
-            ->states('with_choices')
-            ->create();
+        /** @var Question $question */
+        $question = Question::factory()->create();
 
-        $this->actingAsAdmin()
-            ->delete(route('admin.questions.destroy', $question))
+        $this->delete(route('admin.questions.destroy', $question))
             ->assertRedirect(route('admin.questions.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -190,13 +180,11 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function data_returns_proper_content()
     {
-        $this->actingAsAdmin();
-        Question::factory()->count(3)
-            ->states('with_choices')
+        Question::factory()
+            ->count(3)
             ->create();
 
-        $this->actingAsAdmin()
-            ->withoutMiddleware(OnlyAjax::class)
+        $this->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.questions.data'))
             ->assertJsonCount(3, 'data');
     }
@@ -204,13 +192,11 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function data_fails_for_non_ajax_calls()
     {
-        $this->actingAsAdmin();
-        Question::factory()->count(3)
-            ->states('with_choices')
+        Question::factory()
+            ->count(3)
             ->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.questions.data'))
+        $this->get(route('admin.questions.data'))
             ->assertForbidden();
     }
 }

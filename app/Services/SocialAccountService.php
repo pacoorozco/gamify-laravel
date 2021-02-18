@@ -2,7 +2,7 @@
 
 namespace Gamify\Services;
 
-use Gamify\LinkedSocialAccount;
+use Gamify\Models\LinkedSocialAccount;
 use Gamify\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as ProviderUser;

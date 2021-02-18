@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,7 +13,10 @@ class HomeControllerTest extends TestCase
     /** @test */
     public function index_returns_proper_content()
     {
-        $this->actingAsUser()
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
             ->get(route('home'))
             ->assertOK()
             ->assertViewIs('dashboard.index')

@@ -5,12 +5,22 @@ namespace Tests\Feature\Http\Controllers\Admin;
 use Gamify\Models\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Middleware\OnlyAjax;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AdminBadgeControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var User $admin */
+        $admin = User::factory()->admin()->create();
+        $this->actingAs($admin);
+    }
 
     /** @test */
     public function access_is_restricted_to_admins()
@@ -27,14 +37,17 @@ class AdminBadgeControllerTest extends TestCase
             ['protocol' => 'DELETE', 'route' => route('admin.badges.destroy', $badge)],
         ];
 
+        /** @var User $user */
+        $user = User::factory()->create();
+
         foreach ($test_data as $test) {
-            $this->actingAsUser()
+            $this->actingAs($user)
                 ->call($test['protocol'], $test['route'])
                 ->assertForbidden();
         }
 
         // Ajax routes needs to disable middleware
-        $this->actingAsUser()
+        $this->actingAs($user)
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.badges.data'))
             ->assertForbidden();
@@ -43,8 +56,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function index_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.badges.index'))
+        $this->get(route('admin.badges.index'))
             ->assertOK()
             ->assertViewIs('admin.badge.index');
     }
@@ -52,8 +64,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function create_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.badges.create'))
+        $this->get(route('admin.badges.create'))
             ->assertOk()
             ->assertViewIs('admin.badge.create');
     }
@@ -61,6 +72,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->make();
         $input_data = [
             'name' => $badge->name,
@@ -70,8 +82,7 @@ class AdminBadgeControllerTest extends TestCase
             'actuators' => BadgeActuators::OnQuestionAnswered,
         ];
 
-        $this->actingAsAdmin()
-            ->post(route('admin.badges.store'), $input_data)
+        $this->post(route('admin.badges.store'), $input_data)
             ->assertRedirect(route('admin.badges.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -82,8 +93,7 @@ class AdminBadgeControllerTest extends TestCase
     {
         $invalid_input_data = [];
 
-        $this->actingAsAdmin()
-            ->post(route('admin.badges.store'), $invalid_input_data)
+        $this->post(route('admin.badges.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -91,10 +101,10 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.badges.show', $badge))
+        $this->get(route('admin.badges.show', $badge))
             ->assertOk()
             ->assertViewIs('admin.badge.show')
             ->assertSee($badge->name);
@@ -103,10 +113,10 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.badges.edit', $badge))
+        $this->get(route('admin.badges.edit', $badge))
             ->assertOk()
             ->assertViewIs('admin.badge.edit')
             ->assertSee($badge->name);
@@ -115,6 +125,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'name' => 'gold',
         ]);
@@ -126,8 +137,7 @@ class AdminBadgeControllerTest extends TestCase
             'actuators' => $badge->actuators->value,
         ];
 
-        $this->actingAsAdmin()
-            ->put(route('admin.badges.update', $badge), $input_data)
+        $this->put(route('admin.badges.update', $badge), $input_data)
             ->assertRedirect(route('admin.badges.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -136,6 +146,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'name' => 'gold',
         ]);
@@ -143,8 +154,7 @@ class AdminBadgeControllerTest extends TestCase
             'name' => 'silver',
         ];
 
-        $this->actingAsAdmin()
-            ->put(route('admin.badges.update', $badge), $input_data)
+        $this->put(route('admin.badges.update', $badge), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -152,10 +162,10 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.badges.delete', $badge))
+        $this->get(route('admin.badges.delete', $badge))
             ->assertOk()
             ->assertViewIs('admin.badge.delete')
             ->assertSee($badge->name);
@@ -164,10 +174,10 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
-        $this->actingAsAdmin()
-            ->delete(route('admin.badges.destroy', $badge))
+        $this->delete(route('admin.badges.destroy', $badge))
             ->assertRedirect(route('admin.badges.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -178,8 +188,7 @@ class AdminBadgeControllerTest extends TestCase
     {
         Badge::factory()->count(3)->create();
 
-        $this->actingAsAdmin()
-            ->withoutMiddleware(OnlyAjax::class)
+        $this->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.badges.data'))
             ->assertJsonCount(3, 'data');
     }
@@ -189,8 +198,7 @@ class AdminBadgeControllerTest extends TestCase
     {
         Badge::factory()->count(3)->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.badges.data'))
+        $this->get(route('admin.badges.data'))
             ->assertForbidden();
     }
 }

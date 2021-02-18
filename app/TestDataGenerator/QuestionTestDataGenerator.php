@@ -15,7 +15,8 @@ class QuestionTestDataGenerator
      */
     public static function FormRequestData(array $overrides = []): array
     {
-        $question = factory(Question::class)->make();
+        /** @var Question $question */
+        $question = Question::factory()->make();
 
         return array_merge([
             'name' => $question->name,

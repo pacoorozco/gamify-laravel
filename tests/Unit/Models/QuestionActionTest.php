@@ -23,35 +23,37 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Database\Factories;
+namespace Tests\Unit\Models;
 
-use Gamify\Models\Question;
-use Gamify\Models\QuestionChoice;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Gamify\Models\QuestionAction;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Tests\TestCase;
 
-class QuestionFactory extends Factory
+class QuestionActionTest extends TestCase
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Question::class;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+    public function test_contains_valid_fillable_properties()
     {
-        return [
-            'name' => $this->faker->sentence,
-            'question' => $this->faker->paragraph,
-            'solution' => $this->faker->paragraph,
-            'type' => Question::SINGLE_RESPONSE_TYPE,
-            'hidden' => false,
-            'status' => Question::DRAFT_STATUS,
-        ];
+        $m = new QuestionAction();
+        $this->assertEquals([
+            'when',
+            'badge_id',
+        ], $m->getFillable());
+    }
+
+    public function test_contains_valid_casts_properties()
+    {
+        $m = new QuestionAction();
+        $this->assertEquals([
+            'id' => 'int',
+            'when' => 'int',
+            'badge_id' => 'int',
+        ], $m->getCasts());
+    }
+
+    public function test_question_relation()
+    {
+        $m = new QuestionAction();
+        $r = $m->question();
+        $this->assertInstanceOf(BelongsTo::class, $r);
     }
 }

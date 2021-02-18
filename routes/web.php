@@ -22,11 +22,11 @@ use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
 use Gamify\Http\Controllers\Admin\AdminQuestionController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
+use Gamify\Http\Controllers\Auth\LoginController;
 use Gamify\Http\Controllers\Auth\SocialAccountController;
 use Gamify\Http\Controllers\HomeController;
 use Gamify\Http\Controllers\QuestionController;
 use Gamify\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Route;
  *  Route model binding.
  *
  *  @see RouteServiceProvider
- *  ------------------------------------------.
+ *  ------------------------------------------
  */
 
 /* ------------------------------------------
@@ -53,11 +53,53 @@ use Illuminate\Support\Facades\Route;
  * Routes to be authenticated
  *  ------------------------------------------
  */
-/*Auth::routes([
-    'register' => false,  // User registration
-    'verify' => false, // E-mail verification
-    'reset' => false, // Reset password
-]);*/
+// Login Routes...
+Route::get('login',
+    [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login',
+    [LoginController::class, 'login']);
+
+// Logout Routes...
+Route::post('logout',
+    [LoginController::class, 'logout'])->name('logout');
+
+// Registration Routes...
+/* DISABLED
+Route::get('register',
+    [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register',
+    [RegisterController::class, 'register']);
+*/
+
+// Password Reset Routes...
+/* DISABLED
+Route::get('password/reset',
+    [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email',
+    [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}',
+    [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset',
+    [ResetPasswordController::class, 'reset'])->name('password.update');
+*/
+
+// Password Confirmation Routes...
+/* DISABLED
+Route::get('password/confirm',
+    [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
+Route::post('password/confirm',
+    [ConfirmPasswordController::class, 'confirm']);
+*/
+
+// Email Verification Routes...
+/* DISABLED
+Route::get('email/verify',
+    [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('email/verify/{id}/{hash}',
+    [VerificationController::class, 'verify'])->name('verification.verify');
+Route::post('email/resend',
+    [VerificationController::class, 'resend'])->name('verification.resend');
+*/
 
 /* ------------------------------------------
  * Social authentication routes

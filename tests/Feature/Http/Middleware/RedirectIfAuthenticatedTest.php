@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Middleware;
 
 use Gamify\Http\Middleware\RedirectIfAuthenticated;
+use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,9 @@ class RedirectIfAuthenticatedTest extends TestCase
     /** @test */
     public function it_redirects_to_home_for_authenticated_users_requests()
     {
-        $response = $this->actingAsUser()
+        /** @var User $user */
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
             ->get(self::TEST_ENDPOINT);
 
         $response->assertRedirect(RouteServiceProvider::HOME);
