@@ -25,7 +25,6 @@
 
 namespace Gamify\Models;
 
-use BenSampo\Enum\Traits\CastsEnums;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Database\Eloquent\Builder;
