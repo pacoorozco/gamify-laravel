@@ -27,8 +27,8 @@ before_script:
   - php artisan migrate --seed
 
 script:
-  - composer test -- --coverage-text --coverage-clover=coverage.clover
+  - php artisan test --parallel --coverage-text --coverage-clover=coverage.clover
 
-after_script:
+after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

@@ -92,7 +92,7 @@
       "php artisan test --parallel"
     ],
     "test-coverage": [
-      "php artisan test --coverage-html test-coverage"
+      "php artisan test --parallel --coverage-html test-coverage"
     ],
     "build": [
       "@composer archive --format=zip --dir=dist"
