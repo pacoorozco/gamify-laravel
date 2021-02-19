@@ -27,7 +27,7 @@ before_script:
   - php artisan migrate --seed
 
 script:
-  - php artisan test --parallel --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpunit --parallel --coverage-text --coverage-clover=coverage.clover
 
 after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
