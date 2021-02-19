@@ -54,7 +54,6 @@ class Badge extends Model
     use SoftDeletes;
     use HasImageUploads;
     use Presentable;
-    use CastsEnums;
     use HasFactory;
 
     /**
@@ -93,10 +92,6 @@ class Badge extends Model
         'description' => 'string',
         'required_repetitions' => 'int',
         'active' => 'boolean',
-        'actuators' => 'int',
-    ];
-
-    protected $enumCasts = [
         'actuators' => BadgeActuators::class,
     ];
 

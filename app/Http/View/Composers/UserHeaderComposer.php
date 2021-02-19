@@ -31,7 +31,7 @@ use Illuminate\View\View;
 
 class UserHeaderComposer
 {
-    /** @var int */
+    /** @var int|null|string */
     private $user_id;
 
     /**

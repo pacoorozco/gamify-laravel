@@ -25,6 +25,7 @@
 
 namespace Tests\Unit\Models;
 
+use Gamify\Enums\BadgeActuators;
 use Gamify\Models\Badge;
 use Tests\TestCase;
 
@@ -51,7 +52,7 @@ class BadgeTest extends TestCase
             'description' => 'string',
             'required_repetitions' => 'int',
             'active' => 'boolean',
-            'actuators' => 'int',
+            'actuators' => BadgeActuators::class,
             'deleted_at' => 'datetime',
         ], $m->getCasts());
     }
