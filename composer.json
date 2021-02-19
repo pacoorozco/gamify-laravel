@@ -48,6 +48,7 @@
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.8",
+    "brianium/paratest": "^6.2",
     "facade/ignition": "^2.5",
     "mockery/mockery": "^1.4.2",
     "nunomaduro/collision": "^5.0",
@@ -88,7 +89,7 @@
       "@php artisan ide-helper:meta"
     ],
     "test": [
-      "php artisan test"
+      "php artisan test --parallel"
     ],
     "test-coverage": [
       "php artisan test --coverage-html test-coverage"
