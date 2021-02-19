@@ -28,7 +28,7 @@ namespace Tests\Feature\Http\Controllers\Admin;
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Question;
 use Gamify\Models\User;
-use Gamify\TestDataGenerator\QuestionTestDataGenerator;
+use Tests\DataGenerator\QuestionDataGenerator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -98,7 +98,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $input_data = QuestionTestDataGenerator::FormRequestData();
+        $input_data = QuestionDataGenerator::FormRequestData();
 
         $this->post(route('admin.questions.store'), $input_data)
             ->assertRedirect(route('admin.questions.index'))
@@ -109,7 +109,7 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function store_returns_errors_on_invalid_data()
     {
-        $invalid_input_data = QuestionTestDataGenerator::FormRequestData([
+        $invalid_input_data = QuestionDataGenerator::FormRequestData([
             'name' => '',
         ]);
 
@@ -149,7 +149,7 @@ class AdminQuestionControllerTest extends TestCase
         $question = Question::factory()->create([
             'name' => 'Question gold',
         ]);
-        $input_data = QuestionTestDataGenerator::FormRequestData([
+        $input_data = QuestionDataGenerator::FormRequestData([
             'name' => 'Question silver',
         ]);
 
@@ -166,7 +166,7 @@ class AdminQuestionControllerTest extends TestCase
         $question = Question::factory()->create([
             'name' => 'Question gold',
         ]);
-        $input_data = QuestionTestDataGenerator::FormRequestData([
+        $input_data = QuestionDataGenerator::FormRequestData([
             'name' => '',
         ]);
 

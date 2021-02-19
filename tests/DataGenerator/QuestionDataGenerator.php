@@ -27,7 +27,7 @@ namespace Tests\DataGenerator;
 
 use Gamify\Models\Question;
 
-class QuestionGenerator
+class QuestionDataGenerator
 {
     /**
      * Generate sample form request data.
