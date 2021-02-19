@@ -62,7 +62,6 @@ class SocialAccountController extends Controller
     public function handleProviderCallback(SocialAccountService $accountRepository, string $provider)
     {
         try {
-            /** @var \Gamify\Models\User $user */
             $user = Socialite::with($provider)->user();
         } catch (\Exception $e) {
             return redirect()->route('login');
