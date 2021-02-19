@@ -23,11 +23,11 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\TestDataGenerator;
+namespace Tests\DataGenerator;
 
 use Gamify\Models\Question;
 
-class QuestionTestDataGenerator
+class QuestionGenerator
 {
     /**
      * Generate sample form request data.
