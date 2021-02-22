@@ -23,18 +23,37 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Badge;
-use Illuminate\Database\Seeder;
+namespace Tests\Unit\Models;
 
-class BadgesTableSeeder extends Seeder
+use Gamify\Models\Point;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Tests\TestCase;
+
+class PointTest extends TestCase
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function test_contains_valid_fillable_properties()
     {
-        factory(Badge::class, 5)->create();
+        $m = new Point();
+        $this->assertEquals([
+            'points',
+            'description',
+        ], $m->getFillable());
+    }
+
+    public function test_contains_valid_casts_properties()
+    {
+        $m = new Point();
+        $this->assertEquals([
+            'id' => 'int',
+            'points' => 'int',
+            'description' => 'string',
+        ], $m->getCasts());
+    }
+
+    public function test_user_relation()
+    {
+        $m = new Point();
+        $r = $m->user();
+        $this->assertInstanceOf(BelongsTo::class, $r);
     }
 }

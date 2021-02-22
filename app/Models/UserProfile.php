@@ -4,10 +4,17 @@
  *
  * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
  *
- * This file is part of some open source application.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
- * Licensed under GNU General Public License 3.0.
- * Some rights reserved. See LICENSE, AUTHORS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
  *
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
@@ -16,8 +23,9 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify;
+namespace Gamify\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use QCod\ImageUp\HasImageUploads;
@@ -28,7 +36,7 @@ use QCod\ImageUp\HasImageUploads;
  * @property int    $id                   The object unique id.
  * @property string $bio                  Short bio information.
  * @property string $url                  Homepage.
- * @property string $avatar               URL of the avatar.
+ * @property string $avatarUrl            URL of the avatar.
  * @property string $phone                Phone number.
  * @property Carbon $date_of_birth        Date of Birth.
  * @property string $gender               Gender, could be 'male', 'female' or 'unspecified'.
@@ -44,18 +52,12 @@ use QCod\ImageUp\HasImageUploads;
 class UserProfile extends Model
 {
     use HasImageUploads;
+    use HasFactory;
 
     /**
      * Default badge image to be used in case no one is supplied.
      */
     const DEFAULT_IMAGE = '/images/missing_profile.png';
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'user_profiles';
 
     /**
      * The attributes that are mass assignable.
@@ -140,7 +142,7 @@ class UserProfile extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Gamify\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -148,11 +150,11 @@ class UserProfile extends Model
      *
      * @return string
      */
-    public function getAvatarAttribute(): string
+    public function getAvatarUrlAttribute(): string
     {
         try {
-            return $this->imageUrl();
-        } catch (\Exception $exception) {
+            return $this->imageUrl('avatar');
+        } catch (\Throwable $exception) {
             return asset(self::DEFAULT_IMAGE);
         }
     }

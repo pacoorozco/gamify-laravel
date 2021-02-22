@@ -2,23 +2,31 @@
 /**
  * Gamify - Gamification platform to implement any serious game mechanic.
  *
- * Copyright (c) 2018 - 2020 by Paco Orozco <paco@pacoorozco.info>
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
  *
- * This file is part of some open source application.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
- * Licensed under GNU General Public License 3.0.
- * Some rights reserved. See LICENSE.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
  *
  * @author             Paco Orozco <paco@pacoorozco.info>
- * @copyright          2018 - 2020 Paco Orozco
+ * @copyright          2018 Paco Orozco
  * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify;
+namespace Gamify\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
@@ -37,19 +45,14 @@ use Illuminate\Support\Facades\Hash;
  */
 class User extends Authenticatable
 {
+    use HasFactory;
+
     /**
      * Define User's roles.
      */
     const USER_ROLE = 'user';
     const EDITOR_ROLE = 'editor';
     const ADMIN_ROLE = 'administrator';
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -106,7 +109,7 @@ class User extends Authenticatable
      */
     public function profile()
     {
-        return $this->hasOne('Gamify\UserProfile');
+        return $this->hasOne(UserProfile::class);
     }
 
     /**
@@ -121,7 +124,7 @@ class User extends Authenticatable
      */
     public function answeredQuestions()
     {
-        return $this->belongsToMany('Gamify\Question', 'users_questions', 'user_id', 'question_id')
+        return $this->belongsToMany('Gamify\Models\Question', 'users_questions', 'user_id', 'question_id')
             ->withPivot('points', 'answers');
     }
 
@@ -138,7 +141,11 @@ class User extends Authenticatable
      */
     public function badges()
     {
-        return $this->belongsToMany('Gamify\Badge', 'users_badges', 'user_id', 'badge_id')
+        return $this->belongsToMany(
+            Badge::class,
+            'users_badges',
+            'user_id',
+            'badge_id')
             ->withPivot('repetitions', 'completed', 'completed_on');
     }
 
@@ -151,7 +158,7 @@ class User extends Authenticatable
      */
     public function points()
     {
-        return $this->hasMany('Gamify\Point')
+        return $this->hasMany(Point::class)
             ->selectRaw('sum(points) as sum, user_id')
             ->groupBy('user_id');
     }
@@ -239,7 +246,7 @@ class User extends Authenticatable
      */
     public function accounts()
     {
-        return $this->hasMany('Gamify\LinkedSocialAccount');
+        return $this->hasMany(LinkedSocialAccount::class);
     }
 
     /**
@@ -275,7 +282,7 @@ class User extends Authenticatable
     /**
      * Checks if user has completed the given Badge.
      *
-     * @param \Gamify\Badge $badge
+     * @param \Gamify\Models\Badge $badge
      *
      * @return bool
      */
@@ -313,7 +320,7 @@ class User extends Authenticatable
     /**
      * Get the next Level object.
      *
-     * @return \Gamify\Level
+     * @return \Gamify\Models\Level
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */

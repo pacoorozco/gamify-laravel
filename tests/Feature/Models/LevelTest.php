@@ -1,8 +1,31 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 namespace Tests\Feature\Models;
 
-use Gamify\Level;
+use Gamify\Models\Level;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +37,7 @@ class LevelTest extends TestCase
     private function createLevels(int $number, int $distance = 10): void
     {
         for ($i = 1; $i <= $number; $i++) {
-            factory(Level::class)->create([
+            Level::factory()->create([
                 'name' => 'Level ' . $i,
                 'required_points' => $i * $distance,
                 'active' => true,
@@ -76,7 +99,7 @@ class LevelTest extends TestCase
 
     public function test_returns_default_image_when_field_is_empty()
     {
-        $level = factory(Level::class)->create();
+        $level = Level::factory()->create();
 
         $this->assertNull($level->getOriginal('image_url'));
         $this->assertEquals(Level::DEFAULT_IMAGE, $level->image);

@@ -1,11 +1,34 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 namespace Gamify\Libs\Game;
 
-use Gamify\Badge;
-use Gamify\Level;
-use Gamify\Point;
-use Gamify\User;
+use Gamify\Models\Badge;
+use Gamify\Models\Level;
+use Gamify\Models\Point;
+use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -34,7 +57,7 @@ class Game
     /**
      * Add more repetitions towards a collection of Badges.
      *
-     * @param \Gamify\User                             $user
+     * @param \Gamify\Models\User                             $user
      * @param \Illuminate\Database\Eloquent\Collection $badges
      */
     public static function incrementManyBadges(User $user, Collection $badges): void

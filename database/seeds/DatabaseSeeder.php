@@ -4,10 +4,17 @@
  *
  * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
  *
- * This file is part of some open source application.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
- * Licensed under GNU General Public License 3.0.
- * Some rights reserved. See LICENSE, AUTHORS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
  *
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
@@ -16,19 +23,21 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */
     public function run()
     {
-        $this->call(UserTableSeeder::class);
-        $this->call(BadgesTableSeeder::class);
-        $this->call(LevelsTableSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(BadgeSeeder::class);
+        $this->call(LevelSeeder::class);
     }
 }

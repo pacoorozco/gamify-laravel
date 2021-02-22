@@ -25,12 +25,12 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Badge;
 use Gamify\Enums\QuestionActuators;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
-use Gamify\Question;
+use Gamify\Models\Badge;
+use Gamify\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -52,13 +52,13 @@ class AdminQuestionController extends AdminController
     /**
      * Displays the form for question creation.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
      */
-    public function create(): View
+    public function create()
     {
         return view('admin.question.create', [
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::toArray())->get(),
+            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
         ]);
     }
 
@@ -151,7 +151,7 @@ class AdminQuestionController extends AdminController
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
             'selectedTags' => $question->tagArray,
             'availableActions' => $availableActions,
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::toArray())->get(),
+            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
         ]);
     }
 
@@ -214,7 +214,7 @@ class AdminQuestionController extends AdminController
     /**
      * Sync the given array of QuestionChoices to a Question.
      *
-     * @param  \Gamify\Question  $question
+     * @param  \Gamify\Models\Question  $question
      * @param  array  $choices
      */
     private function addChoicesToQuestion(Question $question, array $choices): void

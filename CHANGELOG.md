@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+> **Note**: This application has been updated to use [Laravel 8.x](https://laravel.com/docs). It's backwards compatibility, so the database does not need to be updated.
+
+### Changed
+- **Important**: This application has been upgraded to [Laravel 8.x](https://laravel.com/docs). A lot of refactors has been done in order to adopt Laravel 8.x best practices. 
+
 ### Fixed
 - Bug when creating a question without choices. ([#177][i177])
 

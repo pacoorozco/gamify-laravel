@@ -1,11 +1,35 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 namespace Tests\Feature\Models;
 
-use Gamify\Badge;
-use Gamify\Question;
-use Gamify\User;
-use Gamify\UserProfile;
+use Gamify\Models\Badge;
+use Gamify\Models\Question;
+use Gamify\Models\QuestionChoice;
+use Gamify\Models\User;
+use Gamify\Models\UserProfile;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -17,7 +41,7 @@ class UserTest extends TestCase
     /** @test */
     public function pendingQuestions_returns_a_collection()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->assertInstanceOf(Collection::class, $user->pendingQuestions());
     }
@@ -26,14 +50,20 @@ class UserTest extends TestCase
     public function pendingQuestions_returns_specified_number_of_questions()
     {
         // Creates 5 published questions.
-        $this->actingAsAdmin();
-        factory(Question::class, 5)
-            ->states('with_choices')
+        /** @var User $admin */
+        $admin = User::factory()->admin()->create();
+        $this->actingAs($admin);
+        Question::factory()
+            ->count(5)
+            ->has(QuestionChoice::factory()->correct(), 'choices')
+            ->has(QuestionChoice::factory()->incorrect(), 'choices')
             ->create([
                 'status' => Question::PUBLISH_STATUS,
                 'publication_date' => now(),
             ]);
-        $user = factory(User::class)->create();
+
+        /** @var User $user */
+        $user = User::factory()->create();
 
         // We only want 3 of the 5 created questions.
         $this->assertCount(3, $user->pendingQuestions(3));
@@ -42,7 +72,8 @@ class UserTest extends TestCase
     /** @test */
     public function pendingQuestions_returns_zero_when_no_questions()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
         $this->assertCount(0, $user->pendingQuestions());
     }
@@ -50,7 +81,8 @@ class UserTest extends TestCase
     /** @test */
     public function addExperience_method()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
         $want = 15;
         $user->addExperience($want);
@@ -61,16 +93,18 @@ class UserTest extends TestCase
     /** @test */
     public function returns_default_image_when_avatar_is_empty()
     {
-        $user = factory(User::class)->state('with_profile')->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
-        $this->assertNull($user->profile->getOriginal('avatar'));
-        $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatar);
+        $this->assertNull($user->profile->avatar);
+        $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatarUrl);
     }
 
     /** @test */
     public function getCompletedBadges_returns_a_collection()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
         $this->assertInstanceOf(Collection::class, $user->getCompletedBadges());
     }
@@ -78,7 +112,8 @@ class UserTest extends TestCase
     /** @test */
     public function getCompletedBadges_returns_empty_collection_when_no_badges()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
         $this->assertCount(0, $user->getCompletedBadges());
     }
@@ -86,8 +121,11 @@ class UserTest extends TestCase
     /** @test */
     public function hasBadgeCompleted_returns_false_when_badge_is_not_completed()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        /** @var Badge $badge */
+        $badge = Badge::factory()->create();
 
         $this->assertFalse($user->hasBadgeCompleted($badge));
     }
@@ -95,8 +133,11 @@ class UserTest extends TestCase
     /** @test */
     public function hasBadgeCompleted_returns_false_when_badge_is_completed()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        /** @var Badge $badge */
+        $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
 

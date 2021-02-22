@@ -25,10 +25,10 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Badge;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
+use Gamify\Models\Badge;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Support\Arr;
 use Yajra\Datatables\Datatables;
@@ -159,7 +159,7 @@ class AdminBadgeController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Gamify\Badge $badge
+     * @param \Gamify\Models\Badge $badge
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

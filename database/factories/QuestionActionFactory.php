@@ -23,25 +23,32 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Level;
-use Illuminate\Database\Seeder;
+namespace Database\Factories;
 
-class LevelsTableSeeder extends Seeder
+use Gamify\Enums\QuestionActuators;
+use Gamify\Models\Badge;
+use Gamify\Models\QuestionAction;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class QuestionActionFactory extends Factory
 {
     /**
-     * Run the database seeds.
+     * The name of the factory's corresponding model.
      *
-     * Create five Levels in order to start your Gamify app
-     *
-     * @return void
+     * @var string
      */
-    public function run()
+    protected $model = QuestionAction::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
     {
-        foreach (range(1, 4) as $index) {
-            factory(Level::class)->create([
-                'name' => 'Level ' . $index,
-                'required_points' => ($index * 10),
-            ]);
-        }
+        return [
+            'when' => QuestionActuators::getRandomInstance(),
+            'badge_id' => Badge::factory(),
+        ];
     }
 }

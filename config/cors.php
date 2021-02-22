@@ -23,19 +23,35 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+return [
 
-use Faker\Generator as Faker;
-use Gamify\Badge;
-use Gamify\Enums\QuestionActuators;
-use Gamify\QuestionAction;
+    /*
+    |--------------------------------------------------------------------------
+    | Cross-Origin Resource Sharing (CORS) Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure your settings for cross-origin resource sharing
+    | or "CORS". This determines what cross-origin operations may execute
+    | in web browsers. You are free to adjust these settings as needed.
+    |
+    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+    |
+    */
 
-// To create a user with fake information
-$factory->define(QuestionAction::class, function (Faker $faker) {
-    return [
-        'when' => QuestionActuators::getRandomInstance(),
-        'badge_id' => function () {
-            return factory(Badge::class)->create()->id;
-        },
-    ];
-});
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+
+    'allowed_methods' => ['*'],
+
+    'allowed_origins' => ['*'],
+
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => false,
+
+];

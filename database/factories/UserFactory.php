@@ -23,28 +23,65 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use Gamify\User;
-use Gamify\UserProfile;
+use Gamify\Models\User;
+use Gamify\Models\UserProfile;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-$factory->define(User::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'username' => $faker->userName,
-        'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('secret'),
-        'remember_token' => Str::random(10),
-        'email_verified_at' => now(),
-        'role' => User::USER_ROLE,
-    ];
-});
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
-$factory->state(User::class, 'with_profile', [])
-    ->afterCreatingState(User::class, 'with_profile', function ($user, $faker) {
-        factory(UserProfile::class)->create([
-            'user_id' => $user->id,
-        ]);
-    });
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            UserProfile::factory()
+                ->for($user)
+                ->create();
+        });
+    }
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name,
+            'username' => $this->faker->userName,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => bcrypt('secret'),
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now(),
+            'role' => User::USER_ROLE,
+        ];
+    }
+
+    /**
+     * Indicate that the user is admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state(function () {
+            return [
+                'role' => User::ADMIN_ROLE,
+            ];
+        });
+    }
+}

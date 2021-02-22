@@ -30,7 +30,7 @@
                     <h5 class="widget-user-desc">{{ $user->level }}</h5>
                 </div>
                 <div class="widget-user-image">
-                    <img class="img-circle" src="{{ $user->profile->avatar }}" alt="User Avatar">
+                    <img class="img-circle" src="{{ $user->profile->avatarUrl }}" alt="User Avatar">
                 </div>
                 <div class="box-footer">
                     <div class="row">

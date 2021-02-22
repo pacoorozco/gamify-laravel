@@ -27,7 +27,7 @@ namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -79,7 +79,7 @@ class AdminUserController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param \Gamify\User $user
+     * @param \Gamify\Models\User $user
      *
      * @return \Illuminate\View\View
      */
@@ -91,7 +91,7 @@ class AdminUserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \Gamify\User $user
+     * @param \Gamify\Models\User $user
      *
      * @return \Illuminate\View\View
      */
@@ -104,7 +104,7 @@ class AdminUserController extends AdminController
      * Update the specified resource in storage.
      *
      * @param \Gamify\Http\Requests\UserUpdateRequest $request
-     * @param \Gamify\User                            $user
+     * @param \Gamify\Models\User                            $user
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -130,7 +130,7 @@ class AdminUserController extends AdminController
     /**
      * Remove user.
      *
-     * @param \Gamify\User $user
+     * @param \Gamify\Models\User $user
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -142,7 +142,7 @@ class AdminUserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Gamify\User $user
+     * @param \Gamify\Models\User $user
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

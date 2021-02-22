@@ -4,7 +4,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](LICENSE)
-[![Laravel Version](https://img.shields.io/badge/Laravel-6.x-orange.svg)](https://laravel.com/docs/6.x)
+[![Laravel Version](https://img.shields.io/badge/Laravel-8.x-orange.svg)](https://laravel.com/docs/8.x)
 [![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-laravel.svg?style=flat-square)](https://github.com/pacoorozco/gamify-laravel/releases)
 
 ## Presentation
@@ -40,28 +40,20 @@ Prior this installation, you **need to have installed** this software:
     $ git clone https://github.com/pacoorozco/gamify-laravel.git gamify
     $ cd gamify
     ```
-1. Install PHP dependencies with:
-
-    > **NOTE**: You don't need to install neither _PHP_ nor _Composer_, we are going to use a [Composer image](https://hub.docker.com/_/composer/) instead.
-
-    ```bash
-    $ docker run --rm --interactive --tty \
-          --volume $PWD:/app \
-          --user $(id -u):$(id -g) \
-          composer install
-    ```
-
 1. Copy [`.env.example`](.env.example) to `.env`.
 
     > **NOTE**: You don't need to touch anything from this file. It works with default settings.
 
 1. Start all containers with [Docker Compose](https://docs.docker.com/compose/)
 
+    > **NOTE**: You **must** export the `DOCKER_APP_UID` variable if your user ID is different from `1000`. This will allow the docker to get permissions over your files.
+
     ```bash
+    $ export DOCKER_APP_UID="$(id -u)"
     $ docker-compose build
     $ docker-compose up -d
     ```
-
+   
 1. Seed database in order to play with some data
 
     ```bash

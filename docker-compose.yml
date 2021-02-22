@@ -11,15 +11,17 @@ services:
       build:
         context: ./
         dockerfile: docker/app/Dockerfile
+        args:
+          - DOCKER_APP_UID=${DOCKER_APP_UID:-1000}
       working_dir: /var/www
       volumes:
         - ./:/var/www
       environment:
         DB_HOST: database
-        REDIS_HOST: redis
         DB_DATABASE: homestead
         DB_USERNAME: homestead
         DB_PASSWORD: secret
+        REDIS_HOST: redis
       ports:
         - "9000:9000"
       depends_on:
@@ -31,10 +33,8 @@ services:
         context: ./
         dockerfile: docker/web/Dockerfile
         args:
-          - PHP_UPSTREAM_CONTAINER=app
-          - PHP_UPSTREAM_PORT=9000
+          - DOCKER_APP_UID=${DOCKER_APP_UID:-1000}
       volumes:
-        - ./docker/web/sites:/etc/nginx/sites-available:ro
         - ./:/var/www:ro
       ports:
         - "80:80"

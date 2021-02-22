@@ -26,8 +26,8 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Http\Requests\QuestionActionCreateRequest;
-use Gamify\Question;
-use Gamify\QuestionAction;
+use Gamify\Models\Question;
+use Gamify\Models\QuestionAction;
 
 class AdminQuestionActionController extends AdminController
 {

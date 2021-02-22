@@ -24,33 +24,35 @@
     "issues": "https://github.com/pacoorozco/gamify-laravel/issues"
   },
   "require": {
-    "php": "^7.4",
-    "bensampo/laravel-enum": "^1.38",
-    "cviebrock/eloquent-sluggable": "^6.0",
-    "cviebrock/eloquent-taggable": "^6.0",
+    "php": "^7.4|^8.0",
+    "bensampo/laravel-enum": "^3.2",
+    "cviebrock/eloquent-sluggable": "^8.0",
+    "cviebrock/eloquent-taggable": "^8.0",
     "doctrine/dbal": "^2.10",
-    "fideloper/proxy": "^4.0",
+    "fideloper/proxy": "^4.4",
+    "fruitcake/laravel-cors": "^2.0",
     "fzaninotto/faker": "^1.9.1",
     "guilhermegonzaga/presenter": "^1.0",
-    "laravel/framework": "^6.2",
-    "laravel/socialite": "^4.3",
-    "laravel/tinker": "^2.0",
-    "laravelcollective/html": "^6.0",
+    "laravel/framework": "^8.12",
+    "laravel/socialite": "^5.0",
+    "laravel/tinker": "^2.5",
+    "laravel/ui": "^3.2",
+    "laravelcollective/html": "^6.1",
     "league/flysystem-aws-s3-v3": "^1.0",
     "league/flysystem-cached-adapter": "^1.0",
-    "predis/predis": "^1.1",
-    "qcod/laravel-imageup": "^1.0",
-    "richan-fongdasen/eloquent-blameable": "^1.4",
+    "predis/predis": "^1.1.6",
+    "qcod/laravel-imageup": "^1.1",
+    "richan-fongdasen/eloquent-blameable": "^1.6",
     "socialiteproviders/okta": "^1.1",
     "yajra/laravel-datatables-oracle": "^9.0"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^3.2",
-    "barryvdh/laravel-ide-helper": "^2.7",
-    "facade/ignition": "^1.4",
-    "mockery/mockery": "^1.0",
-    "nunomaduro/collision": "^3.0",
-    "phpunit/phpunit": "^8.0"
+    "barryvdh/laravel-ide-helper": "^2.8",
+    "brianium/paratest": "^6.2",
+    "facade/ignition": "^2.5",
+    "mockery/mockery": "^1.4.2",
+    "nunomaduro/collision": "^5.0",
+    "phpunit/phpunit": "^9.3.3"
   },
   "autoload": {
     "classmap": [
@@ -58,7 +60,9 @@
       "database/factories"
     ],
     "psr-4": {
-      "Gamify\\": "app/"
+      "Gamify\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
     }
   },
   "autoload-dev": {
@@ -85,10 +89,10 @@
       "@php artisan ide-helper:meta"
     ],
     "test": [
-      "vendor/bin/phpunit"
+      "php artisan test --parallel"
     ],
     "test-coverage": [
-      "vendor/bin/phpunit --coverage-html test-coverage"
+      "php artisan test --parallel --coverage-html test-coverage"
     ],
     "build": [
       "@composer archive --format=zip --dir=dist"

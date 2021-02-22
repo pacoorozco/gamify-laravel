@@ -1,9 +1,32 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Http\Middleware\OnlyAjax;
-use Gamify\User;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,10 +34,19 @@ class AdminUserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var User $admin */
+        $admin = User::factory()->admin()->create();
+        $this->actingAs($admin);
+    }
+
     /** @test */
     public function access_is_restricted_to_admins()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.users.index')],
             ['protocol' => 'GET', 'route' => route('admin.users.create')],
@@ -26,14 +58,17 @@ class AdminUserControllerTest extends TestCase
             ['protocol' => 'DELETE', 'route' => route('admin.users.destroy', $user)],
         ];
 
+        /** @var User $user */
+        $user = User::factory()->create();
+
         foreach ($test_data as $test) {
-            $this->actingAsUser()
+            $this->actingAs($user)
                 ->call($test['protocol'], $test['route'])
                 ->assertForbidden();
         }
 
         // Ajax routes needs to disable middleware
-        $this->actingAsUser()
+        $this->actingAs($user)
             ->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.users.data'))
             ->assertForbidden();
@@ -42,8 +77,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function index_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.users.index'))
+        $this->get(route('admin.users.index'))
             ->assertOK()
             ->assertViewIs('admin.user.index');
     }
@@ -51,8 +85,7 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function create_returns_proper_content()
     {
-        $this->actingAsAdmin()
-            ->get(route('admin.users.create'))
+        $this->get(route('admin.users.create'))
             ->assertOk()
             ->assertViewIs('admin.user.create');
     }
@@ -60,7 +93,8 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $user = factory(User::class)->make();
+        /** @var User $user */
+        $user = User::factory()->make();
         $input_data = [
             'username' => $user->username,
             'name' => $user->name,
@@ -70,8 +104,7 @@ class AdminUserControllerTest extends TestCase
             'role' => $user->role,
         ];
 
-        $this->actingAsAdmin()
-            ->post(route('admin.users.store'), $input_data)
+        $this->post(route('admin.users.store'), $input_data)
             ->assertRedirect(route('admin.users.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -84,8 +117,7 @@ class AdminUserControllerTest extends TestCase
             'username' => 'yoda',
         ];
 
-        $this->actingAsAdmin()
-            ->post(route('admin.users.store'), $invalid_input_data)
+        $this->post(route('admin.users.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -93,10 +125,10 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function show_returns_proper_content()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.users.show', $user))
+        $this->get(route('admin.users.show', $user))
             ->assertOk()
             ->assertViewIs('admin.user.show')
             ->assertSee($user->username);
@@ -105,10 +137,10 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function edit_returns_proper_content()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.users.edit', $user))
+        $this->get(route('admin.users.edit', $user))
             ->assertOk()
             ->assertViewIs('admin.user.edit')
             ->assertSee($user->name);
@@ -117,7 +149,8 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function update_edits_an_object()
     {
-        $user = factory(User::class)->create([
+        /** @var User $user */
+        $user = User::factory()->create([
             'name' => 'Han Solo',
         ]);
         $input_data = [
@@ -126,8 +159,7 @@ class AdminUserControllerTest extends TestCase
             'role' => $user->role,
         ];
 
-        $this->actingAsAdmin()
-            ->put(route('admin.users.update', $user), $input_data)
+        $this->put(route('admin.users.update', $user), $input_data)
             ->assertRedirect(route('admin.users.edit', $user))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -136,15 +168,15 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function update_returns_errors_on_invalid_data()
     {
-        $user = factory(User::class)->create([
+        /** @var User $user */
+        $user = User::factory()->create([
             'username' => 'anakin',
         ]);
         $input_data = [
             'username' => '',
         ];
 
-        $this->actingAsAdmin()
-            ->put(route('admin.users.update', $user), $input_data)
+        $this->put(route('admin.users.update', $user), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
     }
@@ -152,10 +184,10 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function delete_returns_proper_content()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.users.delete', $user))
+        $this->get(route('admin.users.delete', $user))
             ->assertOk()
             ->assertViewIs('admin.user.delete')
             ->assertSee($user->name);
@@ -164,10 +196,10 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function destroy_deletes_an_object()
     {
-        $user = factory(User::class)->create();
+        /** @var User $user */
+        $user = User::factory()->create();
 
-        $this->actingAsAdmin()
-            ->delete(route('admin.users.destroy', $user))
+        $this->delete(route('admin.users.destroy', $user))
             ->assertRedirect(route('admin.users.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
@@ -176,11 +208,10 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function data_returns_proper_content()
     {
-        // Two users has already been created by TestCase.
-        factory(User::class, 3)->create();
+        // One user has already been created by setUp().
+        User::factory()->count(3)->create();
 
-        $this->actingAsAdmin()
-            ->withoutMiddleware(OnlyAjax::class)
+        $this->withoutMiddleware(OnlyAjax::class)
             ->get(route('admin.users.data'))
             ->assertJsonCount(5, 'data');
     }
@@ -188,11 +219,10 @@ class AdminUserControllerTest extends TestCase
     /** @test */
     public function data_fails_for_non_ajax_calls()
     {
-        // Two users has already been created by TestCase.
-        factory(User::class, 3)->create();
+        // One user has already been created by setUp().
+        User::factory()->count(3)->create();
 
-        $this->actingAsAdmin()
-            ->get(route('admin.users.data'))
+        $this->get(route('admin.users.data'))
             ->assertForbidden();
     }
 }

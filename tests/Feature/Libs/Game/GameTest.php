@@ -1,10 +1,33 @@
 <?php
+/**
+ * Gamify - Gamification platform to implement any serious game mechanic.
+ *
+ * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
+ *
+ * @author             Paco Orozco <paco@pacoorozco.info>
+ * @copyright          2018 Paco Orozco
+ * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
+ *
+ * @link               https://github.com/pacoorozco/gamify-laravel
+ */
 
 namespace Tests\Feature\Libs\Game;
 
-use Gamify\Badge;
 use Gamify\Libs\Game\Game;
-use Gamify\User;
+use Gamify\Models\Badge;
+use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -15,7 +38,7 @@ class GameTest extends TestCase
 
     public function test_addReputation_method()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->assertTrue(Game::addReputation($user, 5, 'test'));
         $this->assertEquals(5, $user->points()->sum('points'));
@@ -24,8 +47,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_increments_repetitions_for_a_given_badge()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
 
@@ -37,8 +60,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
         Game::incrementBadge($user, $badge);
@@ -51,8 +74,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_completes_badge_when_reach_required_repetitions()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
 
@@ -64,8 +87,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_does_not_complete_badge_when_required_repetitions_is_not_reached()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
 
@@ -77,8 +100,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_does_not_update_repetitions_if_badge_was_already_completed()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
         Game::giveCompletedBadge($user, $badge);
@@ -91,8 +114,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_completes_a_badge_for_a_user()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create();
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create();
 
         Game::giveCompletedBadge($user, $badge);
 
@@ -102,8 +125,8 @@ class GameTest extends TestCase
     /** @test */
     public function it_completes_a_badge_when_a_user_had_already_started_it()
     {
-        $user = factory(User::class)->create();
-        $badge = factory(Badge::class)->create([
+        $user = User::factory()->create();
+        $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
         Game::incrementBadge($user, $badge); // Badge is started and not completed.
@@ -115,7 +138,7 @@ class GameTest extends TestCase
 
     public function test_getRanking_method()
     {
-        factory(User::class, 10)->create();
+        User::factory()->count(10)->create();
 
         $test_data = [
             ['input' => 5, 'output' => 5],
@@ -135,7 +158,7 @@ class GameTest extends TestCase
 
     public function test_getRanking_returns_proper_content()
     {
-        $users = factory(User::class, 5)->create();
+        $users = User::factory()->count(5)->create();
 
         $got = Game::getRanking(5);
 

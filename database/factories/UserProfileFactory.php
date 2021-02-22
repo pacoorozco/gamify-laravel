@@ -4,10 +4,17 @@
  *
  * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
  *
- * This file is part of some open source application.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
- * Licensed under GNU General Public License 3.0.
- * Some rights reserved. See LICENSE, AUTHORS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Some rights reserved. See LICENSE and AUTHORS files.
  *
  * @author             Paco Orozco <paco@pacoorozco.info>
  * @copyright          2018 Paco Orozco
@@ -16,21 +23,37 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use Gamify\UserProfile;
+use Gamify\Models\UserProfile;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(UserProfile::class, function (Faker $faker) {
-    return [
-        'bio' => $faker->text,
-        'url' => $faker->url,
-        'phone' => $faker->e164PhoneNumber,
-        'date_of_birth' => $faker->dateTime,
-        'gender' => $faker->randomElement(['male', 'female', 'unspecified']),
-        'twitter' => $faker->url,
-        'facebook' => $faker->url,
-        'linkedin' => $faker->url,
-        'github' => $faker->url,
-    ];
-});
+class UserProfileFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = UserProfile::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'bio' => $this->faker->text,
+            'url' => $this->faker->url,
+            'phone' => $this->faker->e164PhoneNumber,
+            'date_of_birth' => $this->faker->dateTime,
+            'gender' => $this->faker->randomElement(['male', 'female', 'unspecified']),
+            'twitter' => $this->faker->url,
+            'facebook' => $this->faker->url,
+            'linkedin' => $this->faker->url,
+            'github' => $this->faker->url,
+        ];
+    }
+}
