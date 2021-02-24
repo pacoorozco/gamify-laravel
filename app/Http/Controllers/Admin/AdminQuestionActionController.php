@@ -79,7 +79,6 @@ class AdminQuestionActionController extends AdminController
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
-     *
      */
     public function destroy(Question $question, QuestionAction $action)
     {
