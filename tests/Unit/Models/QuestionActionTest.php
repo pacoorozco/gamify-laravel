@@ -25,6 +25,7 @@
 
 namespace Tests\Unit\Models;
 
+use Gamify\Enums\QuestionActuators;
 use Gamify\Models\QuestionAction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
@@ -45,7 +46,7 @@ class QuestionActionTest extends TestCase
         $m = new QuestionAction();
         $this->assertEquals([
             'id' => 'int',
-            'when' => 'int',
+            'when' => QuestionActuators::class,
             'badge_id' => 'int',
         ], $m->getCasts());
     }

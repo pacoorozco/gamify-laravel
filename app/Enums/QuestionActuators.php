@@ -25,6 +25,7 @@
 
 namespace Gamify\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
 /**
@@ -32,7 +33,7 @@ use BenSampo\Enum\Enum;
  * @method static static OnQuestionCorrectlyAnswered()
  * @method static static OnQuestionIncorrectlyAnswered()
  */
-final class QuestionActuators extends Enum
+final class QuestionActuators extends Enum implements LocalizedEnum
 {
     /** Actuators based on question's events */
     const OnQuestionAnswered = 1;

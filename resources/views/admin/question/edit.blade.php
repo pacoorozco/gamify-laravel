@@ -163,8 +163,8 @@
 
                         @foreach ($question->actions as $action)
                             <tr>
-                                <td>{{ $action->badge_id }}</td>
-                                <td>{{ __('admin/action/table.when_values.' . $action->when) }}</td>
+                                <td>{{ \Gamify\Models\Badge::findOrFail($action->badge_id)->name }}</td>
+                                <td>{{ \Gamify\Enums\QuestionActuators::getDescription($action->when) }}</td>
                                 <td>
                                     <a href="{{ route('admin.questions.actions.destroy', [$question, $action]) }}"
                                        rel="nofollow" data-method="delete"

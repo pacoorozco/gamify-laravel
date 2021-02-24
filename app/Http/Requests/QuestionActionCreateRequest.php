@@ -25,6 +25,10 @@
 
 namespace Gamify\Http\Requests;
 
+use BenSampo\Enum\Rules\EnumValue;
+use Gamify\Enums\QuestionActuators;
+use Illuminate\Validation\Rule;
+
 class QuestionActionCreateRequest extends Request
 {
     /**
@@ -45,7 +49,8 @@ class QuestionActionCreateRequest extends Request
     public function rules()
     {
         return [
-            //
+            'badge_id' => ['required', Rule::exists('badges', 'id')],
+            'when' => ['required', new EnumValue(QuestionActuators::class, false)],
         ];
     }
 }
