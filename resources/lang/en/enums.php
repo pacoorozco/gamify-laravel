@@ -24,6 +24,7 @@
  */
 
 use Gamify\Enums\BadgeActuators;
+use Gamify\Enums\QuestionActuators;
 
 return [
 
@@ -32,6 +33,12 @@ return [
         BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
         BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
         BadgeActuators::OnUserLogin => 'User has logged in',
+    ],
+
+    QuestionActuators::class => [
+        QuestionActuators::OnQuestionAnswered => 'Always',
+        QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
+        QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
     ],
 
 ];

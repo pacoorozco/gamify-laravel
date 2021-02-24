@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+### Fixed
+- Error adding actions to questions. ([#144][i144])
+
+[i144]: https://github.com/pacoorozco/gamify-laravel/issues/144
+
 ## 2.6.0 - 2021-02-22
 
 > **Note**: This application has been updated to use [Laravel 8.x](https://laravel.com/docs). It's backwards compatibility, so the database does not need to be updated.

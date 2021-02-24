@@ -26,15 +26,10 @@
 namespace Gamify\Models;
 
 use Gamify\Enums\BadgeActuators;
+use Gamify\Enums\QuestionActuators;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class QuestionAction.
- *
- * @property  string $when     This is when this action will be triggered (@see BadgeActuators::getActuatorsForQuestions().
- * @property  int    $badge_id This Badge will be associated once you complete the action.
- */
 class QuestionAction extends Model
 {
     use HasFactory;
@@ -63,7 +58,7 @@ class QuestionAction extends Model
      */
     protected $casts = [
         'id' => 'int',
-        'when' => 'int',
+        'when' => QuestionActuators::class,
         'badge_id' => 'int',
     ];
 

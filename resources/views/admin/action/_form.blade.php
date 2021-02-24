@@ -22,8 +22,8 @@
         <div class="form-group {{ $errors->has('when') ? 'has-error' : '' }}">
             {!! Form::label('when', __('admin/action/model.when'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {!! Form::select('when', __('admin/action/model.when_values'), null, array('class' => 'form-control')) !!}
-                {{ $errors->first('when', '<span class="help-inline">:message</span>') }}
+                {!! Form::select('when', $actuators, null, array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('when', ':message') }}</span>
             </div>
         </div>
         <!-- ./ when -->
