@@ -25,7 +25,6 @@
 
 namespace Gamify\Models;
 
-use Gamify\Enums\BadgeActuators;
 use Gamify\Enums\QuestionActuators;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
