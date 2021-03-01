@@ -1,8 +1,8 @@
 **What issue type does this pull request address?** (choose at least one)  
-- [ ] bug
-- [ ] enhancement
-- [ ] feature
-- [ ] documentation
+- bug
+- enhancement
+- feature
+- documentation
 
 **What is this pull request for? Which issues does it resolve?** (use `resolves #<issue_number>` if possible)  
 - resolves #
@@ -16,6 +16,6 @@
 
 **What else do we need to know?** 
 
-**How have you tested it?**
-- [ ] Automatic tests are included
-- [ ] Manual tests has been done
+**How have you tested it?** (choose at least one)
+- Automatic tests has been included
+- Manual tests has been done
