@@ -280,7 +280,7 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      */
     Route::get(
         'rewards',
-        [AdminRewardController::class, '@index']
+        [AdminRewardController::class, 'index']
     )->name('rewards.index');
     Route::post(
         'rewards/experience',
