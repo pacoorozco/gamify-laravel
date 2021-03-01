@@ -7,8 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Fixed
 - Error adding actions to questions. ([#144][i144])
+- Rewards link is broken on Admin Sidebar ([#193][i193])
 
 [i144]: https://github.com/pacoorozco/gamify-laravel/issues/144
+[i193]: https://github.com/pacoorozco/gamify-laravel/issues/193
 
 ## 2.6.0 - 2021-02-22
 
