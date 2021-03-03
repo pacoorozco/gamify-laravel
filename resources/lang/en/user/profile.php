@@ -44,6 +44,11 @@ return [
     'general_info' => 'General Info',
     'avatar' => 'Avatar',
 
+    'change_password' => 'Change password',
+    'current_password' => 'Current password',
+    'new_password' => 'New password',
+    'new_password_confirm' => 'Confirm new password',
+
     'fullname' => 'Fullname',
     'email' => 'Email',
     'url' => 'Website',

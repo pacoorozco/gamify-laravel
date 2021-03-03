@@ -42,6 +42,7 @@ return [
     'username'                     => 'Username',
     'email'                        => 'E-mail',
     'password'                     => 'Password',
+    'change_password'              => 'Change password',
     'forgot_password'              => 'I forgot my password',
     'forgot_password_title'        => 'Forget Password?',
     'forgot_password_instructions' => 'Enter your e-mail address below to reset your password.',
@@ -53,5 +54,9 @@ return [
 
     'failed'   => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+
+    'current_password' => 'Current password',
+    'new_password' => 'New password',
+    'new_password_confirmation' => 'Confirm new password',
 
 ];
