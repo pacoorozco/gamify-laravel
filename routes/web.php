@@ -85,7 +85,6 @@ Route::get('password/change',
 Route::post('password/change',
     [ChangePasswordController::class, 'change']);
 
-
 // Password Reset Routes...
 /* DISABLED
 Route::get('password/reset',

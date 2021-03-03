@@ -48,7 +48,6 @@ class ChangePasswordController extends Controller
         return route('password.change');
     }
 
-
     /**
      * Show the user's password change form.
      *
@@ -93,7 +92,7 @@ class ChangePasswordController extends Controller
         // If the responses from the validate method is not a user instance, we will
         // assume that it is a redirect and simply return it from this method and
         // the user is properly redirected having an error message on the post.
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return $user;
         }
 
@@ -133,7 +132,7 @@ class ChangePasswordController extends Controller
         $user = Auth::user();
 
         // Using current email from user, and current password sent with the request to authenticate the user
-        if (!$this->guard()->attempt([
+        if (! $this->guard()->attempt([
             $user->getAuthIdentifierName() => $user->getAuthIdentifier(),
             'password' => $credentials['current-password'],
         ])) {
