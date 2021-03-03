@@ -42,6 +42,6 @@ return [
     'token' => 'This password reset token is invalid.',
     'user' => "We can't find a user with that email address.",
     'changed' => 'Your password has been changed!',
-    'invalid' => 'Supplied password does not match with the current password.'
+    'invalid' => 'Supplied password does not match with the current password.',
 
 ];
