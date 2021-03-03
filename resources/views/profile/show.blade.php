@@ -86,6 +86,9 @@
                         <li>
                             <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>
                         </li>
+                        <li>
+                            <a href="{{ route('password.change') }}">@lang('user/profile.change_password')</a>
+                        </li>
                     @endif
                 </ul>
                 <div class="tab-content">
