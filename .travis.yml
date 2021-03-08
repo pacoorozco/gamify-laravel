@@ -23,7 +23,7 @@ before_script:
   - cp .env.travis .env
   - mysql -e 'create database testing;'
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-dist --no-interaction --no-progress --no-suggest ${COMPOSER_FLAGS}
+  - travis_retry composer install --prefer-dist --no-interaction --no-progress ${COMPOSER_FLAGS}
   - php artisan key:generate
   - php artisan migrate --seed
 
