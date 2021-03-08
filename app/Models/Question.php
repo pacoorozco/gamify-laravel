@@ -133,7 +133,7 @@ class Question extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'short_name' => [
