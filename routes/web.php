@@ -29,6 +29,7 @@ use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
 use Gamify\Http\Controllers\Admin\AdminQuestionController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
+use Gamify\Http\Controllers\Auth\ChangePasswordController;
 use Gamify\Http\Controllers\Auth\LoginController;
 use Gamify\Http\Controllers\Auth\SocialAccountController;
 use Gamify\Http\Controllers\HomeController;
@@ -77,6 +78,12 @@ Route::get('register',
 Route::post('register',
     [RegisterController::class, 'register']);
 */
+
+// Password Change Routes...
+Route::get('password/change',
+    [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
+Route::post('password/change',
+    [ChangePasswordController::class, 'change']);
 
 // Password Reset Routes...
 /* DISABLED
@@ -280,7 +287,7 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      */
     Route::get(
         'rewards',
-        [AdminRewardController::class, '@index']
+        [AdminRewardController::class, 'index']
     )->name('rewards.index');
     Route::post(
         'rewards/experience',

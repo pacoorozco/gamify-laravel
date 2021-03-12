@@ -53,7 +53,13 @@ Prior this installation, you **need to have installed** this software:
     $ docker-compose build
     $ docker-compose up -d
     ```
-   
+
+1. Install dependencies with:
+
+    ```bash
+    $ docker-compose exec app composer install
+    ```
+
 1. Seed database in order to play with some data
 
     ```bash

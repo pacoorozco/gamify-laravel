@@ -16,7 +16,7 @@
                 <th>@lang('admin/question/model.name')</th>
                 <th>@lang('admin/question/model.type')</th>
                 <th>@lang('admin/question/model.hidden')</th>
-                <th>@lang('admin/question/model.published_at')</th>
+                <th>@lang('admin/question/model.publication_date')</th>
                 <th>@lang('general.edit')</th>
             </tr>
             </thead>

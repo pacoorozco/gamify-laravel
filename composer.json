@@ -23,6 +23,12 @@
   "support": {
     "issues": "https://github.com/pacoorozco/gamify-laravel/issues"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/qcod/laravel-imageup.git"
+    }
+  ],
   "require": {
     "php": "^7.4|^8.0",
     "bensampo/laravel-enum": "^3.2",
@@ -31,7 +37,7 @@
     "doctrine/dbal": "^2.10",
     "fideloper/proxy": "^4.4",
     "fruitcake/laravel-cors": "^2.0",
-    "fzaninotto/faker": "^1.9.1",
+    "fakerphp/faker": "^1.9.1",
     "guilhermegonzaga/presenter": "^1.0",
     "laravel/framework": "^8.12",
     "laravel/socialite": "^5.0",
@@ -41,9 +47,9 @@
     "league/flysystem-aws-s3-v3": "^1.0",
     "league/flysystem-cached-adapter": "^1.0",
     "predis/predis": "^1.1.6",
-    "qcod/laravel-imageup": "^1.1",
+    "qcod/laravel-imageup": "dev-master#1cf9610573270ae04aa94485a5980daa8497da40",
     "richan-fongdasen/eloquent-blameable": "^1.6",
-    "socialiteproviders/okta": "^1.1",
+    "socialiteproviders/okta": "^4.1",
     "yajra/laravel-datatables-oracle": "^9.0"
   },
   "require-dev": {
