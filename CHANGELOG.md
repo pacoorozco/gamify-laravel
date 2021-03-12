@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 2.7.0 - 2021-03-12
+
+
 ### Added
 - PHP 8 support ([#200][i200])
 
@@ -15,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Rewards link is broken on Admin Sidebar. ([#193][i193])
 - Missing translation: admin/question/model.published_at. ([#192][i192])
 - Users can't change their password. ([#135][i135])
+- Add a missing step to install dependencies on docker container.
+
 
 [i144]: https://github.com/pacoorozco/gamify-laravel/issues/144
 [i193]: https://github.com/pacoorozco/gamify-laravel/issues/193
