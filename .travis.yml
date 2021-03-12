@@ -2,6 +2,7 @@ language: php
 
 php:
   - 7.4
+  - 8.0
 
 services:
   - mysql
@@ -22,7 +23,7 @@ before_script:
   - cp .env.travis .env
   - mysql -e 'create database testing;'
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-dist --no-interaction --no-progress --no-suggest ${COMPOSER_FLAGS}
+  - travis_retry composer install --prefer-dist --no-interaction --no-progress ${COMPOSER_FLAGS}
   - php artisan key:generate
   - php artisan migrate --seed
 
