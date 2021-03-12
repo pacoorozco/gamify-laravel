@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+### Added
+- PHP 8 support ([#200][i200])
+
+[i200]: https://github.com/pacoorozco/gamify-laravel/issues/200 
+
 ### Fixed
 - Error adding actions to questions. ([#144][i144])
 - Rewards link is broken on Admin Sidebar. ([#193][i193])
