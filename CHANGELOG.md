@@ -4,10 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Added
+- Support to store sessions on the database  ([#204][i204])
+
+[i204]: https://github.com/pacoorozco/gamify-laravel/issues/204
 
 ## 2.7.0 - 2021-03-12
-
-
 ### Added
 - PHP 8 support ([#200][i200])
 
