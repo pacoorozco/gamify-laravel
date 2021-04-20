@@ -3,9 +3,9 @@
     <!-- start: LOGO -->
     <a href="{{ route('admin.home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><strong>g</strong>v3</span>
+        <span class="logo-mini"><strong><i class="fa fa-fw fa-home"></i></strong></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><strong>gamify</strong> v3</span>
+        <span class="logo-lg"><strong>@lang('site.name')</strong></span>
     </a>
     <!-- end: LOGO -->
 

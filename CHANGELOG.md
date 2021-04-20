@@ -6,11 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Unreleased
 ### Added
 - Support to store sessions on the database ([#204][i204])
+- Show current version in the admin dashboard ([#191][i191])
 ### Fixed
 - Last admin can change its type member ([#194][i194])
 
 [i204]: https://github.com/pacoorozco/gamify-laravel/issues/204
 [i194]: https://github.com/pacoorozco/gamify-laravel/issues/194
+[i191]: https://github.com/pacoorozco/gamify-laravel/issues/191git ad
 
 ## 2.7.0 - 2021-03-12
 ### Added
