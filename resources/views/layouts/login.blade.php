@@ -8,7 +8,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- start: META -->
-    <meta content="gamify v3: A Gamification Platform - Login" name="description">
+    <meta content="gamify: A Gamification Platform - Login" name="description">
     <meta content="Paco Orozco" name="author">
     @yield('meta')
     <!-- end: META -->
