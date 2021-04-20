@@ -4,15 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 2.7.1 - 2021-04-20
+
 ### Added
 - Support to store sessions on the database ([#204][i204])
+- Adds gamify:publish command to publish scheduled questions ([#203][i203])
 - Show current version in the admin dashboard ([#191][i191])
 ### Fixed
 - Last admin can change its type member ([#194][i194])
 
 [i204]: https://github.com/pacoorozco/gamify-laravel/issues/204
+[i203]: https://github.com/pacoorozco/gamify-laravel/issues/203
 [i194]: https://github.com/pacoorozco/gamify-laravel/issues/194
-[i191]: https://github.com/pacoorozco/gamify-laravel/issues/191git ad
+[i191]: https://github.com/pacoorozco/gamify-laravel/issues/191
 
 ## 2.7.0 - 2021-03-12
 ### Added
