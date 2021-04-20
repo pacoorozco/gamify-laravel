@@ -66,7 +66,8 @@ class PublishScheduledQuestionsTest extends TestCase
     }
 
     /** @test */
-    public function onlyPublishQuestionsScheduledOnThePast() {
+    public function onlyPublishQuestionsScheduledOnThePast()
+    {
         \Artisan::call(PublishScheduledQuestions::class);
 
         $this->assertTrue(Question::findOrFail($this->questionScheduledOnThePast->id)->isPublished());
