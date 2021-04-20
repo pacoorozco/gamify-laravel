@@ -116,6 +116,11 @@ class AdminUserController extends AdminController
                 ? Arr::except($request->validated(), ['password'])
                 : $request->validated();
 
+            // users can't change its own role
+            if (Auth::user()->cannot('update-role', $user->id)) {
+                $data = Arr::except($data, ['role']);
+            }
+
             $user->update($data);
         } catch (\Exception $exception) {
             return redirect()->back()

@@ -5,9 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 ### Added
-- Support to store sessions on the database  ([#204][i204])
+- Support to store sessions on the database ([#204][i204])
+### Fixed
+- Last admin can change its type member ([#194][i194])
 
 [i204]: https://github.com/pacoorozco/gamify-laravel/issues/204
+[i194]: https://github.com/pacoorozco/gamify-laravel/issues/194
 
 ## 2.7.0 - 2021-03-12
 ### Added
