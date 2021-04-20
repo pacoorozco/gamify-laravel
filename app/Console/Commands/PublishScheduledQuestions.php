@@ -42,6 +42,7 @@ class PublishScheduledQuestions extends Command
         foreach ($questions as $question) {
             $question->publish();
         }
+
         return 0;
     }
 }

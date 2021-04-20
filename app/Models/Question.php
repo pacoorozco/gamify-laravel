@@ -204,7 +204,7 @@ class Question extends Model
      */
     public function isScheduled(): bool
     {
-        return ($this->status == self::FUTURE_STATUS);
+        return $this->status == self::FUTURE_STATUS;
     }
 
     /**
