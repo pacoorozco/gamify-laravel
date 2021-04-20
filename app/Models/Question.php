@@ -198,13 +198,23 @@ class Question extends Model
     }
 
     /**
+     * Returns true if question has been scheduled.
+     *
+     * @return bool
+     */
+    public function isScheduled(): bool
+    {
+        return ($this->status == self::FUTURE_STATUS);
+    }
+
+    /**
      * Returns true if question has been published or scheduled.
      *
      * @return bool
      */
     public function isPublishedOrScheduled(): bool
     {
-        return ($this->status == self::PUBLISH_STATUS) || ($this->status == self::FUTURE_STATUS);
+        return $this->isPublished() || $this->isScheduled();
     }
 
     /**
@@ -217,6 +227,18 @@ class Question extends Model
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', self::PUBLISH_STATUS);
+    }
+
+    /**
+     * Returns scheduled Questions, including hidden ones.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeScheduled(Builder $query): Builder
+    {
+        return $query->where('status', self::FUTURE_STATUS);
     }
 
     /**
@@ -341,6 +363,10 @@ class Question extends Model
      */
     private function transitionToPublishedStatus(): void
     {
+        if ($this->status == self::PUBLISH_STATUS) {
+            return;
+        }
+
         $this->status = self::PUBLISH_STATUS;
         $this->publication_date = now();
         $this->saveOrFail(); // throws exception on error
@@ -357,6 +383,10 @@ class Question extends Model
      */
     private function transitionToScheduledStatus(): void
     {
+        if ($this->status == self::FUTURE_STATUS) {
+            return;
+        }
+
         $this->status = self::FUTURE_STATUS;
         $this->saveOrFail(); // throws exception on error
     }

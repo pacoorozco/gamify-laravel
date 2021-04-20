@@ -84,6 +84,26 @@ class QuestionTest extends TestCase
         $this->assertCount(2, $got);
     }
 
+    public function test_scopeScheduled_returns_correct_data()
+    {
+        // one published Question
+        Question::factory()
+            ->create([
+                'status' => Question::PUBLISH_STATUS,
+            ]);
+
+        // two scheduled Questions
+        Question::factory()
+            ->count(2)
+            ->create([
+                'status' => Question::FUTURE_STATUS,
+            ]);
+
+        $got = Question::scheduled()->get();
+
+        $this->assertCount(2, $got);
+    }
+
     public function test_getActionableBadgesForCorrectness_method()
     {
         /** @var Question $question */
