@@ -23,7 +23,7 @@
                         @if ($action == 'create')
                             {!! Form::text('username', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         @else
-                            {!! Form::text('username', null, array('class' => 'form-control', 'disabled' => 'disabled')) !!}
+                            {!! Form::text('username', $user->username, array('class' => 'form-control', 'disabled' => 'disabled')) !!}
                         @endif
                         <span class="help-block">{{ $errors->first('username', ':message') }}</span>
                     </div>
@@ -77,8 +77,13 @@
                 <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
                     {!! Form::label('role', __('admin/user/model.role'), array('class' => 'control-label required')) !!}
                     <div class="controls">
-                        {!! Form::select('role', __('admin/user/model.roles_list'), null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        <p class="text-muted">@lang('admin/user/messages.roles_help')</p>
+                        @if (isset($user) && Auth::user()->cannot('update-role', $user->id))
+                            {!! Form::select('role', __('admin/user/model.roles_list'), $user->role, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
+                            {!! Form::hidden('role', $user->role) !!}
+                        @else
+                            {!! Form::select('role', __('admin/user/model.roles_list'), null, ['class' => 'form-control', 'required' => 'required']) !!}
+                            <p class="text-muted">@lang('admin/user/messages.roles_help')</p>
+                        @endif
                     </div>
                 </div>
                 <!-- ./ role -->
@@ -93,8 +98,8 @@
                 <i class="fa fa-arrow-left"></i> @lang('general.back')
             </button>
         </a>
-        {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
-                <!-- ./ form actions -->
+    {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
+    <!-- ./ form actions -->
     </div>
 </div>
 

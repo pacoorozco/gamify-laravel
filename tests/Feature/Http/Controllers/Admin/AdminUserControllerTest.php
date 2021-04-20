@@ -166,6 +166,26 @@ class AdminUserControllerTest extends TestCase
     }
 
     /** @test */
+    public function update_does_not_allows_users_to_change_its_own_role()
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $input_data = [
+            'name' => $user->username,
+            'email' => $user->email,
+            'role' => User::USER_ROLE,
+        ];
+
+        $this->put(route('admin.users.update', $user), $input_data)
+            ->assertRedirect(route('admin.users.edit', $user))
+            ->assertSessionHasNoErrors()
+            ->assertSessionHas('success');
+
+        $this->assertTrue(User::findOrFail($user->id)->isAdmin());
+    }
+
+    /** @test */
     public function update_returns_errors_on_invalid_data()
     {
         /** @var User $user */
