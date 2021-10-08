@@ -143,9 +143,8 @@ class QuestionPresenter extends Presenter
     /**
      * Map a Question status to a color label.
      *
-     * @param string $status
-     * @param string $default
-     *
+     * @param  string  $status
+     * @param  string  $default
      * @return string
      */
     protected function mapStatusToLabel(string $status, string $default = 'label-default')

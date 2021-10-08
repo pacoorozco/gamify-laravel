@@ -36,9 +36,8 @@ class SocialAccountService
      * Returns the User object authenticated by a social login.
      * If the user didn't exist, it will be created.
      *
-     * @param \Laravel\Socialite\Contracts\User $providerUser
-     * @param string                            $provider
-     *
+     * @param  \Laravel\Socialite\Contracts\User  $providerUser
+     * @param  string  $provider
      * @return \Gamify\Models\User
      */
     public function findOrCreate(ProviderUser $providerUser, string $provider)
@@ -76,8 +75,7 @@ class SocialAccountService
     /**
      * Returns an unique username from the given email.
      *
-     * @param string $email
-     *
+     * @param  string  $email
      * @return string
      */
     private function generateUsernameFromEmail(string $email): string

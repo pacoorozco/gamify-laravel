@@ -44,8 +44,7 @@ class LogSuccessfulLogin
     /**
      * Handle the event.
      *
-     * @param \Illuminate\Auth\Events\Login $event
-     *
+     * @param  \Illuminate\Auth\Events\Login  $event
      * @return void
      */
     public function handle(Login $event): void

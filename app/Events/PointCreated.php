@@ -42,8 +42,7 @@ class PointCreated
     /**
      * Create a new event instance.
      *
-     * @param \Gamify\Models\Point $point
-     *
+     * @param  \Gamify\Models\Point  $point
      * @return void
      */
     public function __construct(Point $point)
