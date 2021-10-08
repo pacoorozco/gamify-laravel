@@ -45,19 +45,19 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * Class Question.
  *
  *
- * @property  int                        $id               The object unique id.
- * @property  string                     $name             The name of the question.
- * @property  string                     $short_name       The slugged name of the question.
- * @property  string                     $question         The text for the question.
- * @property  string                     $solution         The test for the solution.
- * @property  string                     $type             The question type ['single'. 'multi'].
- * @property  bool                       $hidden           The visibility of the question.
- * @property  string                     $status           The status of the question.
- * @property  string                     $public_url       The public URL of this question.
- * @property  \Gamify\Models\User               $creator          The User who created this question,
- * @property  \Gamify\Models\User               $updater          The last User who updated this question.
- * @property  \Illuminate\Support\Carbon $publication_date The data when the question was published.
- * @property  \Illuminate\Support\Carbon $expiration_date  The data when the question was expired.
+ * @property int $id The object unique id.
+ * @property string $name The name of the question.
+ * @property string $short_name The slugged name of the question.
+ * @property string $question The text for the question.
+ * @property string $solution The test for the solution.
+ * @property string $type The question type ['single'. 'multi'].
+ * @property bool $hidden The visibility of the question.
+ * @property string $status The status of the question.
+ * @property string $public_url The public URL of this question.
+ * @property \Gamify\Models\User $creator The User who created this question,
+ * @property \Gamify\Models\User $updater The last User who updated this question.
+ * @property \Illuminate\Support\Carbon $publication_date The data when the question was published.
+ * @property \Illuminate\Support\Carbon $expiration_date The data when the question was expired.
  * @mixin \Eloquent
  */
 class Question extends Model
@@ -165,9 +165,8 @@ class Question extends Model
     /**
      * Return the excerpt of the question text.
      *
-     * @param int    $length
-     * @param string $trailing
-     *
+     * @param  int  $length
+     * @param  string  $trailing
      * @return string
      */
     public function excerpt($length = 55, $trailing = '...'): string
@@ -220,8 +219,7 @@ class Question extends Model
     /**
      * Returns published Questions, including hidden ones.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePublished(Builder $query): Builder
@@ -232,8 +230,7 @@ class Question extends Model
     /**
      * Returns scheduled Questions, including hidden ones.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeScheduled(Builder $query): Builder
@@ -244,8 +241,7 @@ class Question extends Model
     /**
      * Returns visible Questions, not hidden ones.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisible(Builder $query): Builder
@@ -271,8 +267,7 @@ class Question extends Model
     /**
      * Returns the Badges that can be actionable depending if the answer was correct or not.
      *
-     * @param bool $correctness
-     *
+     * @param  bool  $correctness
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
@@ -359,6 +354,7 @@ class Question extends Model
      * Requirements have been verified before, send events once is published.
      *
      * @throws \Throwable
+     *
      * @see \Gamify\Models\Question::publish()
      */
     private function transitionToPublishedStatus(): void
@@ -379,6 +375,7 @@ class Question extends Model
      * Requirements have been verified before.
      *
      * @throws \Throwable
+     *
      * @see \Gamify\Models\Question::publish()
      */
     private function transitionToScheduledStatus(): void

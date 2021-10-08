@@ -32,9 +32,9 @@ use Illuminate\Database\Eloquent\Model;
  * Class Point.
  *
  *
- * @property  int    $id           Object unique id..
- * @property  int    $points       How many points has been given.
- * @property  string $description  Reason to obtain the points.
+ * @property int $id Object unique id..
+ * @property int $points How many points has been given.
+ * @property string $description Reason to obtain the points.
  */
 class Point extends Model
 {

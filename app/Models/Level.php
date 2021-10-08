@@ -33,9 +33,9 @@ use QCod\ImageUp\HasImageUploads;
 /**
  * Model that represents a level.
  *
- * @property int    $id                    Object unique id.
- * @property string $name                  Name of the level..
- * @property int    $required_points       How many points do you need to achieve it.
+ * @property int $id Object unique id.
+ * @property string $name Name of the level..
+ * @property int $required_points How many points do you need to achieve it.
  * @property string image                  URL of the level's image
  * @property bool   active                 Is this level enabled?
  * @property string $imagesUploadDisk
@@ -141,8 +141,7 @@ class Level extends Model
     /**
      * Returns a collection of active Level.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive($query)
@@ -153,8 +152,7 @@ class Level extends Model
     /**
      * Returns Level (object) for the specified experience.
      *
-     * @param int $experience
-     *
+     * @param  int  $experience
      * @return \Gamify\Models\Level
      */
     public static function findByExperience(int $experience)
@@ -170,9 +168,9 @@ class Level extends Model
      *
      * Throws an exception in case that this is the highest possible level.
      *
-     * @param int $experience
-     *
+     * @param  int  $experience
      * @return \Gamify\Models\Level
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public static function findNextByExperience(int $experience)

@@ -36,7 +36,6 @@ class AdminQuestionActionController extends AdminController
      * Show the form for creating a new resource.
      *
      * @param  Question  $question
-     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function create(Question $question)
@@ -60,7 +59,6 @@ class AdminQuestionActionController extends AdminController
      *
      * @param  Question  $question
      * @param  QuestionActionCreateRequest  $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Question $question, QuestionActionCreateRequest $request)
@@ -76,8 +74,8 @@ class AdminQuestionActionController extends AdminController
      *
      * @param  Question  $question
      * @param  QuestionAction  $action
-     *
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(Question $question, QuestionAction $action)

@@ -66,7 +66,6 @@ class AdminQuestionController extends AdminController
      * Stores new question.
      *
      * @param  QuestionCreateRequest  $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(QuestionCreateRequest $request): RedirectResponse
@@ -121,7 +120,6 @@ class AdminQuestionController extends AdminController
      * Display the specified resource.
      *
      * @param  Question  $question
-     *
      * @return \Illuminate\View\View
      */
     public function show(Question $question)
@@ -135,7 +133,6 @@ class AdminQuestionController extends AdminController
      * Show the form for editing the specified resource.
      *
      * @param  Question  $question
-     *
      * @return \Illuminate\View\View
      */
     public function edit(Question $question)
@@ -160,7 +157,6 @@ class AdminQuestionController extends AdminController
      *
      * @param  QuestionUpdateRequest  $request
      * @param  Question  $question
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(QuestionUpdateRequest $request, Question $question)
@@ -232,7 +228,6 @@ class AdminQuestionController extends AdminController
      * Remove question page.
      *
      * @param  Question  $question
-     *
      * @return \Illuminate\View\View
      */
     public function delete(Question $question)
@@ -246,8 +241,8 @@ class AdminQuestionController extends AdminController
      * Remove the specified question from storage.
      *
      * @param  Question  $question
-     *
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(Question $question)
@@ -267,8 +262,8 @@ class AdminQuestionController extends AdminController
      * Show a list of all the questions formatted for Datatables.
      *
      * @param  \Yajra\Datatables\Datatables  $dataTable
-     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function data(Datatables $dataTable)

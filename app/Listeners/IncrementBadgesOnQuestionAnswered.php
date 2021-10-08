@@ -46,8 +46,7 @@ class IncrementBadgesOnQuestionAnswered
     /**
      * Handle the event.
      *
-     * @param \Gamify\Events\QuestionAnswered $event
-     *
+     * @param  \Gamify\Events\QuestionAnswered  $event
      * @return void
      */
     public function handle(QuestionAnswered $event)
