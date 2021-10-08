@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Changed
+- Application CI/CD has been migrated from [Travis](https://travis-ci.com/) to GitHub actions.
+- Update dependencies
+  - Bump `bensampo/laravel-enum` to `v3.4.2`.
+  - Bump `cviebrock/eloquent-sluggable` to `v8.0.5`.
+  - Bump `cviebrock/eloquent-taggable` to `v8.0.2`.
+  - Bump `doctrine/dbal` to `v3.1.3`.
+  - Bump `fruitcake/laravel-cors` to `v2.0.4`.
+  - Bump `fakerphp/faker` to `v1.16.0`.
+  - Bump `laravel/framework` to `v8.63`.
+  - Bump `laravel/socialite` to `v5.2.2`.
+  - Bump `laravel/tinker` to `v2.5.1`.
+  - Bump `laravel/ui` to `v3.3.0`.
+  - Bump `qcod/laravel-imageup` to `v1.1.0`.
+  - Bump `yajra/laravel-datatables-oracle` to `v9.18.1`.
+- Update dev dependencies
+    - Bump `facade/ignition` to `v2.14.0`.
+    - Bump `mockery/mockery` to `v1.4.4`.
+    - Bump `nunomaduro/collision` to `v5.10.0`.
+    - Bump `phpunit/phpunit` to `v9.5.10`.
+### Removed
+- PHP v7.4 support. Only PHP v8.0 will be supported since that version.
 
 ## 2.7.1 - 2021-04-20
 
