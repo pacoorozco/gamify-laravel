@@ -37,10 +37,9 @@ class Game
     /**
      * Add experience to an user.
      *
-     * @param User   $user
-     * @param int    $points
-     * @param string $message
-     *
+     * @param  User  $user
+     * @param  int  $points
+     * @param  string  $message
      * @return bool
      */
     public static function addReputation(User $user, $points = 5, $message = '')
@@ -57,8 +56,8 @@ class Game
     /**
      * Add more repetitions towards a collection of Badges.
      *
-     * @param \Gamify\Models\User                             $user
-     * @param \Illuminate\Database\Eloquent\Collection $badges
+     * @param  \Gamify\Models\User  $user
+     * @param  \Illuminate\Database\Eloquent\Collection  $badges
      */
     public static function incrementManyBadges(User $user, Collection $badges): void
     {
@@ -70,9 +69,8 @@ class Game
     /**
      * Give one more action towards a Badge for an User.
      *
-     * @param User  $user
-     * @param Badge $badge
-     *
+     * @param  User  $user
+     * @param  Badge  $badge
      * @return void
      */
     public static function incrementBadge(User $user, Badge $badge): void
@@ -100,9 +98,8 @@ class Game
     /**
      * Give a completed Badge for an User.
      *
-     * @param User  $user
-     * @param Badge $badge
-     *
+     * @param  User  $user
+     * @param  Badge  $badge
      * @return void
      */
     public static function giveCompletedBadge(User $user, Badge $badge): void
@@ -130,8 +127,7 @@ class Game
     /**
      * Get a collection with members ordered by Experience Points.
      *
-     * @param int $limitTopUsers
-     *
+     * @param  int  $limitTopUsers
      * @return \Illuminate\Support\Collection
      */
     public static function getRanking($limitTopUsers = 10)

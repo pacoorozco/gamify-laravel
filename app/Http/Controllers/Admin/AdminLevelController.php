@@ -55,8 +55,7 @@ class AdminLevelController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param LevelCreateRequest $request
-     *
+     * @param  LevelCreateRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LevelCreateRequest $request)
@@ -76,8 +75,7 @@ class AdminLevelController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Level $level
-     *
+     * @param  Level  $level
      * @return \Illuminate\View\View
      */
     public function show(Level $level)
@@ -88,8 +86,7 @@ class AdminLevelController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Level $level
-     *
+     * @param  Level  $level
      * @return \Illuminate\View\View
      */
     public function edit(Level $level)
@@ -100,9 +97,8 @@ class AdminLevelController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param LevelUpdateRequest $request
-     * @param Level              $level
-     *
+     * @param  LevelUpdateRequest  $request
+     * @param  Level  $level
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(LevelUpdateRequest $request, Level $level)
@@ -122,8 +118,7 @@ class AdminLevelController extends AdminController
     /**
      * Remove level page.
      *
-     * @param Level $level
-     *
+     * @param  Level  $level
      * @return \Illuminate\View\View
      */
     public function delete(Level $level)
@@ -134,9 +129,9 @@ class AdminLevelController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Gamify\Models\Level $level
-     *
+     * @param  \Gamify\Models\Level  $level
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(Level $level)
@@ -161,9 +156,9 @@ class AdminLevelController extends AdminController
     /**
      * Show a list of all levels formatted for Datatables.
      *
-     * @param \Yajra\Datatables\Datatables $dataTable
-     *
+     * @param  \Yajra\Datatables\Datatables  $dataTable
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function data(Datatables $dataTable)

@@ -39,7 +39,7 @@ class QuestionPublished
     /**
      * Create a new event instance.
      *
-     * @param \Gamify\Models\Question $question
+     * @param  \Gamify\Models\Question  $question
      */
     public function __construct(Question $question)
     {

@@ -37,13 +37,13 @@ use QCod\ImageUp\HasImageUploads;
 /**
  * Model that represents a badge.
  *
- * @property int $id                     Object unique id.
- * @property string $name                   Name of this badge.
- * @property string $description            Description of the badge.
- * @property int $required_repetitions   How many times you need to request the badge to achieve it.
- * @property string $image                  URL of the badge's image
- * @property bool $active                 Is this badge enabled?
- * @property BadgeActuators $actuators              Events that triggers this badge completion.
+ * @property int $id Object unique id.
+ * @property string $name Name of this badge.
+ * @property string $description Description of the badge.
+ * @property int $required_repetitions How many times you need to request the badge to achieve it.
+ * @property string $image URL of the badge's image
+ * @property bool $active Is this badge enabled?
+ * @property BadgeActuators $actuators Events that triggers this badge completion.
  * @property string $imagesUploadDisk
  * @property string $imagesUploadPath
  * @property string $autoUploadImages
@@ -146,7 +146,6 @@ class Badge extends Model
      * Returns a collection of active Badges.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive($query)
@@ -159,7 +158,6 @@ class Badge extends Model
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  \Gamify\Enums\QuestionActuators[]  $actuators
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithActuatorsIn(Builder $query, array $actuators)

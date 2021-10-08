@@ -76,9 +76,8 @@ class QuestionController extends Controller
     }
 
     /**
-     * @param QuestionAnswerRequest $request
-     * @param Question              $question
-     *
+     * @param  QuestionAnswerRequest  $request
+     * @param  Question  $question
      * @return \Illuminate\View\View
      */
     public function answer(QuestionAnswerRequest $request, Question $question)
@@ -119,8 +118,7 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Question $question
-     *
+     * @param  Question  $question
      * @return \Illuminate\View\View
      */
     public function show(Question $question)

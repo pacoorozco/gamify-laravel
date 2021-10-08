@@ -62,7 +62,6 @@ class ChangePasswordController extends Controller
      * Change the given user's password.
      *
      * @param  \Illuminate\Http\Request  $request
-     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function change(Request $request)
@@ -82,7 +81,6 @@ class ChangePasswordController extends Controller
      * Validate a password change request and update password of the user.
      *
      * @param  array  $credentials
-     *
      * @return string|Authenticatable
      */
     protected function validateAndPasswordChange(array $credentials)
@@ -105,7 +103,6 @@ class ChangePasswordController extends Controller
      * Validate a password change request with the given credentials.
      *
      * @param  array  $credentials
-     *
      * @return string|Authenticatable
      *
      * @throws \UnexpectedValueException
@@ -123,7 +120,6 @@ class ChangePasswordController extends Controller
      * Get the user with the given credentials.
      *
      * @param  array  $credentials
-     *
      * @return null|Authenticatable
      */
     protected function getUser(array $credentials): ?Authenticatable
@@ -170,7 +166,6 @@ class ChangePasswordController extends Controller
      * Get the password change credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request
-     *
      * @return array
      */
     protected function credentials(Request $request): array
@@ -185,7 +180,6 @@ class ChangePasswordController extends Controller
      *
      * @param  \Gamify\Models\User  $user
      * @param  string  $password
-     *
      * @return void
      */
     protected function setNewPassword(User $user, string $password)
@@ -203,7 +197,6 @@ class ChangePasswordController extends Controller
      * Get the response for a successful password change.
      *
      * @param  string  $response
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendChangedResponse(string $response)
@@ -216,7 +209,6 @@ class ChangePasswordController extends Controller
      * Get the response for a failed password change.
      *
      * @param  string  $response
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendChangedFailedResponse(string $response)
@@ -230,7 +222,6 @@ class ChangePasswordController extends Controller
      *
      * @param  \Gamify\Models\User  $user
      * @param  string  $password
-     *
      * @return void
      */
     protected function setUserPassword(User $user, string $password): void

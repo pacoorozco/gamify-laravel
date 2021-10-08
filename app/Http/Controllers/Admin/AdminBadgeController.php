@@ -61,8 +61,7 @@ class AdminBadgeController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param BadgeCreateRequest $request
-     *
+     * @param  BadgeCreateRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(BadgeCreateRequest $request)
@@ -89,8 +88,7 @@ class AdminBadgeController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Badge $badge
-     *
+     * @param  Badge  $badge
      * @return \Illuminate\View\View
      */
     public function show(Badge $badge)
@@ -101,9 +99,9 @@ class AdminBadgeController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Badge $badge
-     *
+     * @param  Badge  $badge
      * @return \Illuminate\View\View
+     *
      * @throws \Laracodes\Presenter\Exceptions\PresenterException
      */
     public function edit(Badge $badge)
@@ -118,9 +116,8 @@ class AdminBadgeController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param BadgeUpdateRequest $request
-     * @param Badge              $badge
-     *
+     * @param  BadgeUpdateRequest  $request
+     * @param  Badge  $badge
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(BadgeUpdateRequest $request, Badge $badge)
@@ -147,8 +144,7 @@ class AdminBadgeController extends AdminController
     /**
      * Remove badge page.
      *
-     * @param Badge $badge
-     *
+     * @param  Badge  $badge
      * @return \Illuminate\View\View
      */
     public function delete(Badge $badge)
@@ -159,9 +155,9 @@ class AdminBadgeController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Gamify\Models\Badge $badge
-     *
+     * @param  \Gamify\Models\Badge  $badge
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(Badge $badge)
@@ -180,9 +176,9 @@ class AdminBadgeController extends AdminController
     /**
      * Show a list of all badges formatted for Datatables.
      *
-     * @param \Yajra\Datatables\Datatables $dataTable
-     *
+     * @param  \Yajra\Datatables\Datatables  $dataTable
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function data(Datatables $dataTable)

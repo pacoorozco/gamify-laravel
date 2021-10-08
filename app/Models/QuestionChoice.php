@@ -32,10 +32,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class QuestionChoice.
  *
- * @property string $text    The text of this choice.
- * @property int $score   How many points are added by this choice.
+ * @property string $text The text of this choice.
+ * @property int $score How many points are added by this choice.
  * @mixin \Eloquent
+ *
  * @property-read \Gamify\Models\Question $question
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\Gamify\Models\QuestionChoice correct()
  */
 class QuestionChoice extends Model
@@ -99,7 +101,6 @@ class QuestionChoice extends Model
      * Return question choices considered as correct.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeCorrect(Builder $query): Builder
@@ -111,7 +112,6 @@ class QuestionChoice extends Model
      * Return question choices considered as incorrect.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeIncorrect(Builder $query): Builder
@@ -123,6 +123,7 @@ class QuestionChoice extends Model
      * DEPRECATED: Use isCorrect() instead.
      *
      * @return bool
+     *
      * @deprecated
      */
     public function getCorrectAttribute(): bool

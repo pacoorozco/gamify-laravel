@@ -50,6 +50,7 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      * Returns an array of values to be used on <select> with <optgroups> and filtered options.
      *
      * @return array
+     *
      * @see BadgePresenter::actuatorsSelect()
      */
     public static function toSelectArray(): array
