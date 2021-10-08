@@ -57,8 +57,7 @@ class AdminUserController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Gamify\Http\Requests\UserCreateRequest $request
-     *
+     * @param  \Gamify\Http\Requests\UserCreateRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserCreateRequest $request)
@@ -79,8 +78,7 @@ class AdminUserController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param \Gamify\Models\User $user
-     *
+     * @param  \Gamify\Models\User  $user
      * @return \Illuminate\View\View
      */
     public function show(User $user)
@@ -91,8 +89,7 @@ class AdminUserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \Gamify\Models\User $user
-     *
+     * @param  \Gamify\Models\User  $user
      * @return \Illuminate\View\View
      */
     public function edit(User $user)
@@ -103,9 +100,8 @@ class AdminUserController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Gamify\Http\Requests\UserUpdateRequest $request
-     * @param \Gamify\Models\User                            $user
-     *
+     * @param  \Gamify\Http\Requests\UserUpdateRequest  $request
+     * @param  \Gamify\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -135,8 +131,7 @@ class AdminUserController extends AdminController
     /**
      * Remove user.
      *
-     * @param \Gamify\Models\User $user
-     *
+     * @param  \Gamify\Models\User  $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function delete(User $user)
@@ -147,9 +142,9 @@ class AdminUserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Gamify\Models\User $user
-     *
+     * @param  \Gamify\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(User $user)
@@ -174,9 +169,9 @@ class AdminUserController extends AdminController
     /**
      * Show a list of all the users formatted for Datatables.
      *
-     * @param \Yajra\Datatables\Datatables $dataTable
-     *
+     * @param  \Yajra\Datatables\Datatables  $dataTable
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function data(Datatables $dataTable)

@@ -43,7 +43,6 @@ class SocialAccountController extends Controller
      * Redirect the user to the GitHub authentication page.
      *
      * @param  string  $provider  - Provider name to use.
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectToProvider(string $provider)
@@ -56,7 +55,6 @@ class SocialAccountController extends Controller
      *
      * @param  \Gamify\Services\SocialAccountService  $accountRepository
      * @param  string  $provider
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function handleProviderCallback(SocialAccountService $accountRepository, string $provider)

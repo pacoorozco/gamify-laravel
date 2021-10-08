@@ -43,8 +43,7 @@ class AddReputation
     /**
      * Handle the event.
      *
-     * @param QuestionAnswered $event
-     *
+     * @param  QuestionAnswered  $event
      * @return void
      */
     public function handle(QuestionAnswered $event)

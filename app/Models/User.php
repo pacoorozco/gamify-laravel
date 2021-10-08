@@ -34,14 +34,14 @@ use Illuminate\Support\Facades\Hash;
 /**
  * User model, represents a Gamify user.
  *
- * @property  int                        $id                      The object unique id.
- * @property  string                     $name                    The name of this user.
- * @property  string                     $username                The username of this user.
- * @property  string                     $email                   The email address of this user.
- * @property  string                     $password                Encrypted password of this user.
- * @property  string                     $role                    Role of the user ['user', 'editor', 'administrator'].
- * @property  \Illuminate\Support\Carbon $last_login_at           Time when the user last logged in.
- * @property  int                        $experience              The reputation of the user.
+ * @property int $id The object unique id.
+ * @property string $name The name of this user.
+ * @property string $username The username of this user.
+ * @property string $email The email address of this user.
+ * @property string $password Encrypted password of this user.
+ * @property string $role Role of the user ['user', 'editor', 'administrator'].
+ * @property \Illuminate\Support\Carbon $last_login_at Time when the user last logged in.
+ * @property int $experience The reputation of the user.
  */
 class User extends Authenticatable
 {
@@ -166,7 +166,7 @@ class User extends Authenticatable
     /**
      * Set the username attribute to lowercase.
      *
-     * @param string $value
+     * @param  string  $value
      */
     public function setUsernameAttribute(string $value)
     {
@@ -176,7 +176,7 @@ class User extends Authenticatable
     /**
      * Add a mutator to ensure hashed passwords.
      *
-     * @param string $password
+     * @param  string  $password
      */
     public function setPasswordAttribute(string $password)
     {
@@ -206,8 +206,7 @@ class User extends Authenticatable
     /**
      * Returns a collection of users that are "Members".
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeMember(Builder $query)
@@ -230,7 +229,7 @@ class User extends Authenticatable
      *
      * Trigger ExperienceChanged event.
      *
-     * @param int $points
+     * @param  int  $points
      */
     public function addExperience(int $points = 1): void
     {
@@ -252,8 +251,7 @@ class User extends Authenticatable
     /**
      * Returns a Collection of pending Questions.
      *
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function pendingQuestions(int $limit = 5)
@@ -282,8 +280,7 @@ class User extends Authenticatable
     /**
      * Checks if user has completed the given Badge.
      *
-     * @param \Gamify\Models\Badge $badge
-     *
+     * @param  \Gamify\Models\Badge  $badge
      * @return bool
      */
     public function hasBadgeCompleted(Badge $badge): bool

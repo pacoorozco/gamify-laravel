@@ -45,8 +45,7 @@ class AdminRewardController extends AdminController
     }
 
     /**
-     * @param \Gamify\Http\Requests\RewardExperienceRequest $request
-     *
+     * @param  \Gamify\Http\Requests\RewardExperienceRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function giveExperience(RewardExperienceRequest $request)
@@ -73,8 +72,7 @@ class AdminRewardController extends AdminController
     }
 
     /**
-     * @param \Gamify\Http\Requests\RewardBadgeRequest $request
-     *
+     * @param  \Gamify\Http\Requests\RewardBadgeRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function giveBadge(RewardBadgeRequest $request)

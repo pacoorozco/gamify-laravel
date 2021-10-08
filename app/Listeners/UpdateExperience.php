@@ -42,8 +42,7 @@ class UpdateExperience
     /**
      * Handle the event.
      *
-     * @param PointCreated $event
-     *
+     * @param  PointCreated  $event
      * @return void
      */
     public function handle(PointCreated $event)

@@ -33,8 +33,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param User $user
-     *
+     * @param  User  $user
      * @return \Illuminate\View\View
      */
     public function show(User $user)
@@ -47,9 +46,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UserProfileUpdateRequest $request
-     * @param User                     $user
-     *
+     * @param  UserProfileUpdateRequest  $request
+     * @param  User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserProfileUpdateRequest $request, User $user)

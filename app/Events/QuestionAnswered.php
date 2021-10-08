@@ -49,11 +49,10 @@ class QuestionAnswered
     /**
      * Create a new event instance.
      *
-     * @param \Gamify\Models\User     $user
-     * @param \Gamify\Models\Question $question
-     * @param int              $points
-     * @param bool             $correctness
-     *
+     * @param  \Gamify\Models\User  $user
+     * @param  \Gamify\Models\Question  $question
+     * @param  int  $points
+     * @param  bool  $correctness
      * @return void
      */
     public function __construct(User $user, Question $question, int $points, bool $correctness)

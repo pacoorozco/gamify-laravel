@@ -86,6 +86,7 @@ class QuestionChoiceTest extends TestCase
 
     /**
      * @test
+     *
      * @deprecated
      */
     public function it_is_considered_correct_when_score_is_positive_using_deprecated_attribute()
@@ -98,6 +99,7 @@ class QuestionChoiceTest extends TestCase
 
     /**
      * @test
+     *
      * @deprecated
      */
     public function it_is_considered_incorrect_when_score_is_zero_using_deprecated_attribute()
@@ -110,6 +112,7 @@ class QuestionChoiceTest extends TestCase
 
     /**
      * @test
+     *
      * @deprecated
      */
     public function it_is_considered_incorrect_when_score_is_negative_using_deprecated_attribute()
