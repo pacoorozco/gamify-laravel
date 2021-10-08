@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 2.7.2 - 2021-10-08
+
 ### Changed
 - Application CI/CD has been migrated from [Travis](https://travis-ci.com/) to GitHub actions.
 - Update dependencies
