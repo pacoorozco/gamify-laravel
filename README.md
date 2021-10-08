@@ -1,6 +1,6 @@
 # gamify - A gamification platform to implement any serious game mechanic
 
-[![Build Status](https://travis-ci.com/pacoorozco/gamify-laravel.svg)](https://travis-ci.com/pacoorozco/gamify-laravel)
+[![Testing ssham with MySQL](https://github.com/pacoorozco/gamify-laravel/actions/workflows/run-tests.yml/badge.svg)](https://github.com/pacoorozco/gamify-laravel/actions/workflows/run-tests.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/quality-score.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![Code Coverage](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel/badges/coverage.png)](https://scrutinizer-ci.com/g/pacoorozco/gamify-laravel)
 [![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](LICENSE)
