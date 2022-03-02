@@ -31,22 +31,11 @@ use Illuminate\Support\Carbon;
 
 class LogSuccessfulLogin
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param  \Illuminate\Auth\Events\Login  $event
-     * @return void
-     */
     public function handle(Login $event): void
     {
         $user = User::findOrFail($event->user->getAuthIdentifier());

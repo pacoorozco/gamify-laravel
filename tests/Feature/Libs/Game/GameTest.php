@@ -28,8 +28,8 @@ namespace Tests\Feature\Libs\Game;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class GameTest extends TestCase
@@ -136,7 +136,8 @@ class GameTest extends TestCase
         $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
     }
 
-    public function test_getRanking_method()
+    /** @test */
+    public function getRanking_method_returns_data()
     {
         User::factory()->count(10)->create();
 

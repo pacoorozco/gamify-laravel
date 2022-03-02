@@ -26,28 +26,25 @@
 namespace Gamify\Events;
 
 use Gamify\Models\Point;
+use Gamify\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class PointCreated
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
-    /** @var \Gamify\Models\User */
-    public $user;
+    public User $user;
 
-    /** @var int */
-    public $points;
+    public int $points;
 
-    /**
-     * Create a new event instance.
-     *
-     * @param  \Gamify\Models\Point  $point
-     * @return void
-     */
     public function __construct(Point $point)
     {
-        $this->user = $point->user()->first();
+        /** @var \Gamify\Models\User $user */
+        $user = $point->user()->first();
+        $this->user = $user;
+
         $this->points = $point->points;
     }
 }

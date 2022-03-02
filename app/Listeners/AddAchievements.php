@@ -30,23 +30,12 @@ use Gamify\Libs\Game\Game;
 
 class AddAchievements
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param  QuestionAnswered  $event
-     * @return void
-     */
-    public function handle(QuestionAnswered $event)
+    public function handle(QuestionAnswered $event): void
     {
         // TODO: Get all the achievements with QuestionAnswered, QuestionCorrectlyAnswered and QuestionIncorrectlyAnswered.
 

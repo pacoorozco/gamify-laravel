@@ -30,13 +30,12 @@ use Gamify\Http\Requests\RewardExperienceRequest;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AdminRewardController extends AdminController
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         $users = User::Member()->pluck('username', 'id');
         $badges = Badge::all()->pluck('name', 'id');
@@ -44,12 +43,9 @@ class AdminRewardController extends AdminController
         return view('admin.reward.index', compact('users', 'badges'));
     }
 
-    /**
-     * @param  \Gamify\Http\Requests\RewardExperienceRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function giveExperience(RewardExperienceRequest $request)
+    public function giveExperience(RewardExperienceRequest $request): RedirectResponse
     {
+        /** @var \Gamify\Models\User $user */
         $user = User::findOrFail($request->input('username'));
         $points = $request->input('points');
         $message = $request->input('message');
@@ -71,13 +67,11 @@ class AdminRewardController extends AdminController
                 ]));
     }
 
-    /**
-     * @param  \Gamify\Http\Requests\RewardBadgeRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function giveBadge(RewardBadgeRequest $request)
+    public function giveBadge(RewardBadgeRequest $request): RedirectResponse
     {
+        /** @var User $user */
         $user = User::findOrFail($request->input('badge_username'));
+        /** @var Badge $badge */
         $badge = Badge::findOrFail($request->input('badge'));
 
         Game::incrementBadge($user, $badge);

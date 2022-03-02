@@ -31,11 +31,6 @@ use Laracodes\Presenter\Presenter;
 
 class QuestionPresenter extends Presenter
 {
-    /**
-     * Returns publication_date with predefined format.
-     *
-     * @return string
-     */
     public function publicationDate(): string
     {
         return empty($this->model->publication_date)
@@ -43,11 +38,6 @@ class QuestionPresenter extends Presenter
             : $this->model->publication_date->format('Y-m-d H:i');
     }
 
-    /**
-     * Returns the public URL of a question.
-     *
-     * @return string
-     */
     public function publicUrl(): string
     {
         return route('questions.show', ['questionname' => $this->model->short_name]);
@@ -64,7 +54,7 @@ class QuestionPresenter extends Presenter
         return new HtmlString(sprintf(
             '<span class="label %s">%s</span>',
             $this->mapStatusToLabel($this->model->status),
-            (string) __('admin/question/model.status_list.' . $this->model->status)
+            trans('admin/question/model.status_list.' . $this->model->status)
         ));
     }
 
@@ -79,7 +69,7 @@ class QuestionPresenter extends Presenter
         if ($this->model->hidden == true) {
             return new HtmlString(sprintf(
                 '<span class="label label-default">%s</span>',
-                (string) __('admin/question/model.hidden_yes')
+                trans('admin/question/model.hidden_yes')
             ));
         }
 
@@ -135,7 +125,7 @@ class QuestionPresenter extends Presenter
     {
         return new HtmlString(sprintf(
             '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
-            (string) __('admin/question/model.type_list.' . $this->model->type),
+            trans('admin/question/model.type_list.' . $this->model->type),
             (string) $this->model->type,
         ));
     }
@@ -156,6 +146,6 @@ class QuestionPresenter extends Presenter
             Question::PENDING_STATUS => 'label-warning',
         ];
 
-        return (string) $LabelToColorDict[$status] ?? $default;
+        return $LabelToColorDict[$status] ?? $default;
     }
 }

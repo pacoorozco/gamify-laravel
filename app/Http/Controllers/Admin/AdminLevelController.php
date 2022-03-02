@@ -28,37 +28,24 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\LevelCreateRequest;
 use Gamify\Http\Requests\LevelUpdateRequest;
 use Gamify\Models\Level;
-use Yajra\Datatables\Datatables;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Yajra\DataTables\DataTables;
 
 class AdminLevelController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         return view('admin/level/index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function create(): View
     {
         return view('admin/level/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  LevelCreateRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(LevelCreateRequest $request)
+    public function store(LevelCreateRequest $request): RedirectResponse
     {
         try {
             Level::create($request->validated());
@@ -72,36 +59,17 @@ class AdminLevelController extends AdminController
             ->with('success', __('admin/level/messages.create.success'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Level  $level
-     * @return \Illuminate\View\View
-     */
-    public function show(Level $level)
+    public function show(Level $level): View
     {
         return view('admin/level/show', compact('level'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Level  $level
-     * @return \Illuminate\View\View
-     */
-    public function edit(Level $level)
+    public function edit(Level $level): View
     {
         return view('admin/level/edit', compact('level'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  LevelUpdateRequest  $request
-     * @param  Level  $level
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(LevelUpdateRequest $request, Level $level)
+    public function update(LevelUpdateRequest $request, Level $level): RedirectResponse
     {
         try {
             $level->update($request->validated());
@@ -115,26 +83,12 @@ class AdminLevelController extends AdminController
             ->with('success', __('admin/level/messages.update.success'));
     }
 
-    /**
-     * Remove level page.
-     *
-     * @param  Level  $level
-     * @return \Illuminate\View\View
-     */
-    public function delete(Level $level)
+    public function delete(Level $level): View
     {
         return view('admin/level/delete', compact('level'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Gamify\Models\Level  $level
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Exception
-     */
-    public function destroy(Level $level)
+    public function destroy(Level $level): RedirectResponse
     {
         // Default level can not be deleted.
         if ($level->isDefault()) {
@@ -153,15 +107,7 @@ class AdminLevelController extends AdminController
             ->with('success', __('admin/level/messages.delete.success'));
     }
 
-    /**
-     * Show a list of all levels formatted for Datatables.
-     *
-     * @param  \Yajra\Datatables\Datatables  $dataTable
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception
-     */
-    public function data(Datatables $dataTable)
+    public function data(Datatables $dataTable): JsonResponse
     {
         $levels = Level::select([
             'id',
@@ -176,7 +122,7 @@ class AdminLevelController extends AdminController
                 return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">', $level->image, $level->name);
             })
             ->editColumn('active', function (Level $level) {
-                return ($level->active) ? (string) __('general.yes') : (string) __('general.no');
+                return ($level->active) ? trans('general.yes') : trans('general.no');
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')

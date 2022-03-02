@@ -25,6 +25,7 @@
 
 namespace Gamify\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -81,14 +82,14 @@ class Level extends Model
      *
      * @var string
      */
-    protected $imagesUploadPath = 'levels';
+    protected string $imagesUploadPath = 'levels';
 
     /**
      * Auto upload allowed.
      *
      * @var bool
      */
-    protected $autoUploadImages = true;
+    protected bool $autoUploadImages = true;
 
     /**
      * Fields that are managed by the HasImageUploads trait.
@@ -142,9 +143,10 @@ class Level extends Model
      * Returns a collection of active Level.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);
     }
@@ -155,7 +157,7 @@ class Level extends Model
      * @param  int  $experience
      * @return \Gamify\Models\Level
      */
-    public static function findByExperience(int $experience)
+    public static function findByExperience(int $experience): Level
     {
         return self::active()
             ->where('required_points', '<=', $experience)
@@ -173,7 +175,7 @@ class Level extends Model
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public static function findNextByExperience(int $experience)
+    public static function findNextByExperience(int $experience): Level
     {
         return self::active()
             ->where('required_points', '>', $experience)

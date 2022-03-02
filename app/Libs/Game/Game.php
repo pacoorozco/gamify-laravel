@@ -40,9 +40,10 @@ class Game
      * @param  User  $user
      * @param  int  $points
      * @param  string  $message
+     *
      * @return bool
      */
-    public static function addReputation(User $user, $points = 5, $message = '')
+    public static function addReputation(User $user, int $points = 5, string $message = ''): bool
     {
         // add experience points to this user
         $point_entry = new Point([
@@ -128,9 +129,10 @@ class Game
      * Get a collection with members ordered by Experience Points.
      *
      * @param  int  $limitTopUsers
+     *
      * @return \Illuminate\Support\Collection
      */
-    public static function getRanking($limitTopUsers = 10)
+    public static function getRanking(int $limitTopUsers = 10): \Illuminate\Support\Collection
     {
         $users = User::Member()
             ->select([

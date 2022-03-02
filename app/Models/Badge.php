@@ -65,7 +65,7 @@ class Badge extends Model
      *
      * @var string
      */
-    protected $presenter = BadgePresenter::class;
+    protected string $presenter = BadgePresenter::class;
 
     /**
      * The attributes that are mass assignable.
@@ -99,14 +99,14 @@ class Badge extends Model
      *
      * @var string
      */
-    protected $imagesUploadPath = 'badges';
+    protected string $imagesUploadPath = 'badges';
 
     /**
      * Auto upload allowed.
      *
      * @var bool
      */
-    protected $autoUploadImages = true;
+    protected bool $autoUploadImages = true;
 
     /**
      * Fields that are managed by the HasImageUploads trait.
@@ -146,9 +146,10 @@ class Badge extends Model
      * Returns a collection of active Badges.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);
     }
@@ -160,7 +161,7 @@ class Badge extends Model
      * @param  \Gamify\Enums\QuestionActuators[]  $actuators
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithActuatorsIn(Builder $query, array $actuators)
+    public function scopeWithActuatorsIn(Builder $query, array $actuators): Builder
     {
         return $query->whereIn('actuators', $actuators);
     }

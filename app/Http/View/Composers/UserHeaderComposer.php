@@ -31,33 +31,21 @@ use Illuminate\View\View;
 
 class UserHeaderComposer
 {
-    /** @var int|null|string */
-    private $user_id;
+    private User $user;
 
-    /**
-     * Create a new User Dropdown composer.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->user_id = Auth::id();
+        $this->user = Auth::user();
     }
 
-    /**
-     * Bind data to the view.
-     *
-     * @param  \Illuminate\View\View  $view
-     * @return void
-     */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $user = User::with([
             'profile' => function ($query) {
                 $query->select('avatar', 'user_id');
             },
         ])->find(
-            $this->user_id,
+            $this->user->id,
             ['id', 'name', 'username', 'experience', 'created_at']
         );
 

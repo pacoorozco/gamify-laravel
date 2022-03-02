@@ -30,27 +30,20 @@ use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
 use Gamify\Models\Badge;
 use Gamify\Presenters\BadgePresenter;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
-use Yajra\Datatables\Datatables;
+use Illuminate\View\View;
+use Yajra\DataTables\DataTables;
 
 class AdminBadgeController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         return view('admin.badge.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function create(): View
     {
         return view('admin.badge.create', [
             'actuators_list' => BadgePresenter::actuatorsSelect(),
@@ -58,16 +51,10 @@ class AdminBadgeController extends AdminController
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  BadgeCreateRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(BadgeCreateRequest $request)
+    public function store(BadgeCreateRequest $request): RedirectResponse
     {
         try {
-            $badge = Badge::make([
+            $badge = new Badge([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'required_repetitions' => $request->input('required_repetitions'),
@@ -85,26 +72,12 @@ class AdminBadgeController extends AdminController
             ->with('success', __('admin/badge/messages.create.success'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Badge  $badge
-     * @return \Illuminate\View\View
-     */
-    public function show(Badge $badge)
+    public function show(Badge $badge): View
     {
         return view('admin.badge.show', compact('badge'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Badge  $badge
-     * @return \Illuminate\View\View
-     *
-     * @throws \Laracodes\Presenter\Exceptions\PresenterException
-     */
-    public function edit(Badge $badge)
+    public function edit(Badge $badge): View
     {
         return view('admin.badge.edit', [
             'badge' => $badge,
@@ -113,14 +86,7 @@ class AdminBadgeController extends AdminController
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  BadgeUpdateRequest  $request
-     * @param  Badge  $badge
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(BadgeUpdateRequest $request, Badge $badge)
+    public function update(BadgeUpdateRequest $request, Badge $badge): RedirectResponse
     {
         try {
             $badge->fill([
@@ -141,26 +107,12 @@ class AdminBadgeController extends AdminController
             ->with('success', __('admin/badge/messages.update.success'));
     }
 
-    /**
-     * Remove badge page.
-     *
-     * @param  Badge  $badge
-     * @return \Illuminate\View\View
-     */
-    public function delete(Badge $badge)
+    public function delete(Badge $badge): View
     {
         return view('admin.badge.delete', compact('badge'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Gamify\Models\Badge  $badge
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Exception
-     */
-    public function destroy(Badge $badge)
+    public function destroy(Badge $badge): RedirectResponse
     {
         try {
             $badge->delete();
@@ -173,15 +125,7 @@ class AdminBadgeController extends AdminController
             ->with('success', __('admin/badge/messages.delete.success'));
     }
 
-    /**
-     * Show a list of all badges formatted for Datatables.
-     *
-     * @param  \Yajra\Datatables\Datatables  $dataTable
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception
-     */
-    public function data(Datatables $dataTable)
+    public function data(Datatables $dataTable): JsonResponse
     {
         $badges = Badge::select([
             'id',

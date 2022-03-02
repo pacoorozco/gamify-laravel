@@ -28,6 +28,7 @@ namespace Gamify\Models;
 use Gamify\Enums\QuestionActuators;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class QuestionAction extends Model
 {
@@ -66,7 +67,7 @@ class QuestionAction extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function question()
+    public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);
     }

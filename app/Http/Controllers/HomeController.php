@@ -28,17 +28,13 @@ namespace Gamify\Http\Controllers;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     const MAX_QUESTIONS_SHOWN = 10;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions(self::MAX_QUESTIONS_SHOWN);
