@@ -40,7 +40,7 @@ class SocialAccountService
      * @param  string  $provider
      * @return \Gamify\Models\User
      */
-    public function findOrCreate(ProviderUser $providerUser, string $provider)
+    public function findOrCreate(ProviderUser $providerUser, string $provider): User
     {
         $account = LinkedSocialAccount::where('provider_name', $provider)
             ->where('provider_id', $providerUser->getId())

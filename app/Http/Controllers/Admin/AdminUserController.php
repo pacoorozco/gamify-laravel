@@ -28,39 +28,26 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Yajra\Datatables\Datatables;
+use Illuminate\View\View;
+use Yajra\DataTables\DataTables;
 
 class AdminUserController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         return view('admin/user/index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function create(): View
     {
         return view('admin/user/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Gamify\Http\Requests\UserCreateRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(UserCreateRequest $request)
+    public function store(UserCreateRequest $request): RedirectResponse
     {
         try {
             $user = User::create($request->validated());
@@ -75,36 +62,17 @@ class AdminUserController extends AdminController
             ->with('success', __('admin/user/messages.create.success'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Gamify\Models\User  $user
-     * @return \Illuminate\View\View
-     */
-    public function show(User $user)
+    public function show(User $user): View
     {
         return view('admin/user/show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Gamify\Models\User  $user
-     * @return \Illuminate\View\View
-     */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         return view('admin/user/edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Gamify\Http\Requests\UserUpdateRequest  $request
-     * @param  \Gamify\Models\User  $user
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
         try {
             // password is not changed if it's empty.
@@ -128,26 +96,12 @@ class AdminUserController extends AdminController
             ->with('success', __('admin/user/messages.edit.success'));
     }
 
-    /**
-     * Remove user.
-     *
-     * @param  \Gamify\Models\User  $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function delete(User $user)
+    public function delete(User $user): View
     {
         return view('admin/user/delete', compact('user'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Gamify\Models\User  $user
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Exception
-     */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         // Can't remove myself
         if ($user->id === Auth::id()) {
@@ -166,15 +120,7 @@ class AdminUserController extends AdminController
             ->with('success', __('admin/user/messages.delete.success'));
     }
 
-    /**
-     * Show a list of all the users formatted for Datatables.
-     *
-     * @param  \Yajra\Datatables\Datatables  $dataTable
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception
-     */
-    public function data(Datatables $dataTable)
+    public function data(Datatables $dataTable): JsonResponse
     {
         $users = User::select([
             'id',

@@ -27,6 +27,7 @@ namespace Gamify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use QCod\ImageUp\HasImageUploads;
 
@@ -99,14 +100,14 @@ class UserProfile extends Model
      *
      * @var string
      */
-    protected $imagesUploadPath = 'avatars';
+    protected string $imagesUploadPath = 'avatars';
 
     /**
      * Auto upload allowed.
      *
      * @var bool
      */
-    protected $autoUploadImages = true;
+    protected bool $autoUploadImages = true;
 
     /**
      * Fields that are managed by the HasImageUploads trait.
@@ -140,7 +141,7 @@ class UserProfile extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

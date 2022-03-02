@@ -29,15 +29,11 @@ use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\User;
+use Illuminate\View\View;
 
 class AdminDashboardController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         return view('admin.dashboard.index', [
             'badges_count' => Badge::active()->count(),

@@ -31,30 +31,21 @@ use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Models\Badge;
 use Gamify\Models\Question;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class AdminQuestionController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
     public function index(): View
     {
         return view('admin.question.index');
     }
 
-    /**
-     * Displays the form for question creation.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
-     */
-    public function create()
+    public function create(): View
     {
         return view('admin.question.create', [
             'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
@@ -62,15 +53,9 @@ class AdminQuestionController extends AdminController
         ]);
     }
 
-    /**
-     * Stores new question.
-     *
-     * @param  QuestionCreateRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(QuestionCreateRequest $request): RedirectResponse
     {
-        $question = Question::make([
+        $question = new Question([
             'name' => $request->input('name'),
             'question' => $request->input('question'),
             'solution' => $request->input('solution'),
@@ -116,26 +101,14 @@ class AdminQuestionController extends AdminController
             ->with('success', __('admin/question/messages.create.success'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Question  $question
-     * @return \Illuminate\View\View
-     */
-    public function show(Question $question)
+    public function show(Question $question): View
     {
         return view('admin/question/show', [
             'question' => $question,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Question  $question
-     * @return \Illuminate\View\View
-     */
-    public function edit(Question $question)
+    public function edit(Question $question): View
     {
         $availableActions = [];
         // get actions that hasn't not been used
@@ -152,14 +125,7 @@ class AdminQuestionController extends AdminController
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  QuestionUpdateRequest  $request
-     * @param  Question  $question
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(QuestionUpdateRequest $request, Question $question)
+    public function update(QuestionUpdateRequest $request, Question $question): RedirectResponse
     {
         $question->fill([
             'name' => $request->input('name'),
@@ -207,12 +173,6 @@ class AdminQuestionController extends AdminController
             ->with('success', __('admin/question/messages.update.success'));
     }
 
-    /**
-     * Sync the given array of QuestionChoices to a Question.
-     *
-     * @param  \Gamify\Models\Question  $question
-     * @param  array  $choices
-     */
     private function addChoicesToQuestion(Question $question, array $choices): void
     {
         if ($question->choices()->count() > 0) {
@@ -224,28 +184,14 @@ class AdminQuestionController extends AdminController
         }
     }
 
-    /**
-     * Remove question page.
-     *
-     * @param  Question  $question
-     * @return \Illuminate\View\View
-     */
-    public function delete(Question $question)
+    public function delete(Question $question): View
     {
         return view('admin/question/delete', [
             'question' => $question,
         ]);
     }
 
-    /**
-     * Remove the specified question from storage.
-     *
-     * @param  Question  $question
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Exception
-     */
-    public function destroy(Question $question)
+    public function destroy(Question $question): RedirectResponse
     {
         try {
             $question->delete();
@@ -258,15 +204,7 @@ class AdminQuestionController extends AdminController
             ->with('success', __('admin/question/messages.delete.success'));
     }
 
-    /**
-     * Show a list of all the questions formatted for Datatables.
-     *
-     * @param  \Yajra\Datatables\Datatables  $dataTable
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception
-     */
-    public function data(Datatables $dataTable)
+    public function data(Datatables $dataTable): JsonResponse
     {
         $question = Question::select([
             'id',

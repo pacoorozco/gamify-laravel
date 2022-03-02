@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Laracodes\Presenter\Traits\Presentable;
@@ -88,7 +89,7 @@ class Question extends Model
      *
      * @var string
      */
-    protected $presenter = QuestionPresenter::class;
+    protected string $presenter = QuestionPresenter::class;
 
     /**
      * The attributes that are mass assignable.
@@ -147,7 +148,7 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function actions()
+    public function actions(): HasMany
     {
         return $this->hasMany(QuestionAction::class);
     }
@@ -157,7 +158,7 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function choices()
+    public function choices(): HasMany
     {
         return $this->hasMany(QuestionChoice::class);
     }
@@ -169,7 +170,7 @@ class Question extends Model
      * @param  string  $trailing
      * @return string
      */
-    public function excerpt($length = 55, $trailing = '...'): string
+    public function excerpt(int $length = 55, string $trailing = '...'): string
     {
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
     }
@@ -179,7 +180,7 @@ class Question extends Model
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getAvailableActions()
+    public function getAvailableActions(): Collection
     {
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
 

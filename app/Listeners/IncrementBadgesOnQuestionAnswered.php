@@ -33,23 +33,12 @@ use Gamify\Models\User;
 
 class IncrementBadgesOnQuestionAnswered
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param  \Gamify\Events\QuestionAnswered  $event
-     * @return void
-     */
-    public function handle(QuestionAnswered $event)
+    public function handle(QuestionAnswered $event): void
     {
         $user = User::findOrFail($event->user->getAuthIdentifier());
         $badges = Badge::whereIn('actuators', [

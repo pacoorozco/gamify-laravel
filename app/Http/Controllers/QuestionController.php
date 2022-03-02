@@ -30,15 +30,11 @@ use Gamify\Http\Requests\QuestionAnswerRequest;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         $user = User::findOrFail(Auth::id());
         $questions = $user->pendingQuestions();
@@ -75,12 +71,7 @@ class QuestionController extends Controller
         ]);
     }
 
-    /**
-     * @param  QuestionAnswerRequest  $request
-     * @param  Question  $question
-     * @return \Illuminate\View\View
-     */
-    public function answer(QuestionAnswerRequest $request, Question $question)
+    public function answer(QuestionAnswerRequest $request, Question $question): View
     {
         // TODO: If question has been answered can't answer again
 
@@ -115,13 +106,7 @@ class QuestionController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Question  $question
-     * @return \Illuminate\View\View
-     */
-    public function show(Question $question)
+    public function show(Question $question): View
     {
         // TODO: If question has been answered, not show form
         $user = User::findOrFail(Auth::id());

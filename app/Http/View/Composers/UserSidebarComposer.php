@@ -31,29 +31,17 @@ use Illuminate\View\View;
 
 class UserSidebarComposer
 {
-    /** @var int|null|string */
-    private $user_id;
+    private User $user;
 
-    /**
-     * Create a new User Dropdown composer.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->user_id = Auth::id();
+        $this->user = Auth::user();
     }
 
-    /**
-     * Bind data to the view.
-     *
-     * @param  \Illuminate\View\View  $view
-     * @return void
-     */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $user = User::findOrFail(
-            $this->user_id,
+            $this->user->id,
             ['id']
         );
 

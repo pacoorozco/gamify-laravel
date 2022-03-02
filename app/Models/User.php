@@ -26,8 +26,12 @@
 namespace Gamify\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
@@ -107,7 +111,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function profile()
+    public function profile(): HasOne
     {
         return $this->hasOne(UserProfile::class);
     }
@@ -122,7 +126,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function answeredQuestions()
+    public function answeredQuestions(): BelongsToMany
     {
         return $this->belongsToMany('Gamify\Models\Question', 'users_questions', 'user_id', 'question_id')
             ->withPivot('points', 'answers');
@@ -139,7 +143,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function badges()
+    public function badges(): BelongsToMany
     {
         return $this->belongsToMany(
             Badge::class,
@@ -156,7 +160,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function points()
+    public function points(): HasMany
     {
         return $this->hasMany(Point::class)
             ->selectRaw('sum(points) as sum, user_id')
@@ -168,7 +172,7 @@ class User extends Authenticatable
      *
      * @param  string  $value
      */
-    public function setUsernameAttribute(string $value)
+    public function setUsernameAttribute(string $value): void
     {
         $this->attributes['username'] = strtolower($value);
     }
@@ -178,7 +182,7 @@ class User extends Authenticatable
      *
      * @param  string  $password
      */
-    public function setPasswordAttribute(string $password)
+    public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
     }
@@ -209,7 +213,7 @@ class User extends Authenticatable
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMember(Builder $query)
+    public function scopeMember(Builder $query): Builder
     {
         return $query->where('role', self::USER_ROLE);
     }
@@ -243,7 +247,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function accounts()
+    public function accounts(): HasMany
     {
         return $this->hasMany(LinkedSocialAccount::class);
     }
@@ -254,7 +258,7 @@ class User extends Authenticatable
      * @param  int  $limit
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function pendingQuestions(int $limit = 5)
+    public function pendingQuestions(int $limit = 5): Collection
     {
         $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
 
@@ -270,7 +274,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getCompletedBadges()
+    public function getCompletedBadges(): Collection
     {
         return $this->badges()
             ->wherePivot('completed', true)
