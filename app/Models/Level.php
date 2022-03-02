@@ -143,7 +143,6 @@ class Level extends Model
      * Returns a collection of active Level.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $query): Builder
