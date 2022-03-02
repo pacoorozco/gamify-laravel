@@ -10,14 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
       - name: Build project
         id: build_project
         env:
-          DIST_FILE: ./dist/gamify-laravel-dist-${{ steps.get_version.outputs.VERSION }}
+          DIST_FILE: ./dist/ssham-dist-${{ steps.get_version.outputs.VERSION }}
         run: |
           composer archive --format=zip --file=$DIST_FILE
           echo ::set-output name=DIST_FILE::$DIST_FILE
@@ -32,7 +34,7 @@ jobs:
           draft: false
           prerelease: false
           body: |
-            Review [CHANGELOG](https://github.com/pacoorozco/gamify-laravel/blob/master/CHANGELOG.md) to see changes.
+            Review [CHANGELOG](https://github.com/pacoorozco/gamify-laravel/blob/main/CHANGELOG.md) to see changes.
       - name: Upload Release Asset (zip)
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
