@@ -168,7 +168,6 @@ class Question extends Model
      *
      * @param  int  $length
      * @param  string  $trailing
-     *
      * @return string
      */
     public function excerpt(int $length = 55, string $trailing = '...'): string
