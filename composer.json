@@ -52,6 +52,7 @@
     "facade/ignition": "^2.14.0",
     "mockery/mockery": "^1.4.4",
     "nunomaduro/collision": "^5.10.0",
+    "nunomaduro/larastan": "^1.0",
     "phpunit/phpunit": "^9.5.10"
   },
   "autoload": {
@@ -102,7 +103,9 @@
     "exclude": [
       "/utils",
       "/.*",
-      "!/.env.example"
+      "!/.env.example",
+      "webpack.mix.js",
+      "package.json"
     ]
   }
 }
