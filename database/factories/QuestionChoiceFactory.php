@@ -30,19 +30,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class QuestionChoiceFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = QuestionChoice::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+    public function definition(): array
     {
         return [
             'text' => $this->faker->sentence,
@@ -50,12 +40,7 @@ class QuestionChoiceFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the choice is correct.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function correct()
+    public function correct(): self
     {
         return $this->state(function (array $attributes) {
             return [
@@ -64,12 +49,7 @@ class QuestionChoiceFactory extends Factory
         });
     }
 
-    /**
-     * Indicate that the choice is incorrect.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function incorrect()
+    public function incorrect(): self
     {
         return $this->state(function (array $attributes) {
             return [
