@@ -47,7 +47,6 @@
     "yajra/laravel-datatables-oracle": "^9.18.1"
   },
   "require-dev": {
-    "barryvdh/laravel-ide-helper": "^2.10.0",
     "brianium/paratest": "^6.2",
     "facade/ignition": "^2.14.0",
     "mockery/mockery": "^1.4.4",
