@@ -49,7 +49,7 @@ class SocialAccountService
             ->where('provider_id', $externalUser->getId())
             ->first();
 
-        if ($account) {
+        if (!is_null($account?->user)) {
             return $account->user;
         }
 
