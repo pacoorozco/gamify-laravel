@@ -38,9 +38,10 @@ class LogSuccessfulLogin
 
     public function handle(Login $event): void
     {
+        /** @var User $user */
         $user = User::findOrFail($event->user->getAuthIdentifier());
         $user->save([
-            'last_login' => Carbon::now()->toDateTimeString(),
+            'last_login_at' => Carbon::now()->toDateTimeString(),
         ]);
     }
 }

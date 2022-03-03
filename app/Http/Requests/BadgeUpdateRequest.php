@@ -27,6 +27,7 @@ namespace Gamify\Http\Requests;
 
 use BenSampo\Enum\Rules\EnumValue;
 use Gamify\Enums\BadgeActuators;
+use Gamify\Models\Badge;
 use Illuminate\Validation\Rule;
 
 class BadgeUpdateRequest extends Request
@@ -38,14 +39,31 @@ class BadgeUpdateRequest extends Request
 
     public function rules(): array
     {
+        /** @var Badge $badge */
         $badge = $this->route('badge');
 
         return [
-            'name' => ['required', 'string', Rule::unique('badges')->ignore($badge->id)],
-            'description' => ['required'],
-            'required_repetitions' => ['required', 'integer', 'min:1'],
-            'active' => ['required', 'boolean'],
-            'actuators' => ['required', new EnumValue(BadgeActuators::class)],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('badges')->ignore($badge->id),
+            ],
+            'description' => [
+                'required',
+            ],
+            'required_repetitions' => [
+                'required',
+                'integer',
+                'min:1',
+            ],
+            'active' => [
+                'required',
+                'boolean',
+            ],
+            'actuators' => [
+                'required',
+                new EnumValue(BadgeActuators::class),
+            ],
         ];
     }
 }

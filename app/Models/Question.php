@@ -25,6 +25,7 @@
 
 namespace Gamify\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Enums\QuestionActuators;
@@ -194,12 +195,17 @@ class Question extends Model
         }
 
         try {
-            (is_null($this->publication_date) || $this->publication_date->lessThanOrEqualTo(now()))
+            (is_null($this->publishedAt()) || $this->publishedAt()->lessThanOrEqualTo(now()))
                 ? $this->transitionToPublishedStatus()
                 : $this->transitionToScheduledStatus();
         } catch (\Throwable $exception) {
             throw new QuestionPublishingException($exception);
         }
+    }
+
+    public function publishedAt(): ?Carbon
+    {
+        return $this->publication_date;
     }
 
     /**

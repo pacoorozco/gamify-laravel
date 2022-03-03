@@ -40,7 +40,9 @@ class IncrementBadgesOnQuestionAnswered
 
     public function handle(QuestionAnswered $event): void
     {
+        /** @var User $user */
         $user = User::findOrFail($event->user->getAuthIdentifier());
+
         $badges = Badge::whereIn('actuators', [
             BadgeActuators::OnQuestionAnswered,
             ($event->correctness === true)

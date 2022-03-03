@@ -41,7 +41,7 @@
     "league/flysystem-aws-s3-v3": "^1.0.29",
     "league/flysystem-cached-adapter": "^1.1.0",
     "predis/predis": "^1.1.6",
-    "qcod/laravel-imageup": "dev-master",
+    "qcod/laravel-imageup": "^1.2.0",
     "richan-fongdasen/eloquent-blameable": "^1.7.0",
     "socialiteproviders/okta": "^4.1.1",
     "yajra/laravel-datatables-oracle": "^9.18.1"

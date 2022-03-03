@@ -48,7 +48,7 @@ class Game
         // add experience points to this user
         $point_entry = new Point([
             'points' => $points,
-            'description' => (! empty($message)) ?: __('messages.unknown_reason'),
+            'description' => (!empty($message)) ?: __('messages.unknown_reason'),
         ]);
 
         return ($user->points()->save($point_entry) === false) ?: true;
@@ -72,6 +72,7 @@ class Game
      *
      * @param  User  $user
      * @param  Badge  $badge
+     *
      * @return void
      */
     public static function incrementBadge(User $user, Badge $badge): void
@@ -101,6 +102,7 @@ class Game
      *
      * @param  User  $user
      * @param  Badge  $badge
+     *
      * @return void
      */
     public static function giveCompletedBadge(User $user, Badge $badge): void
@@ -151,7 +153,7 @@ class Game
                 'username' => $user->username,
                 'name' => $user->name,
                 'experience' => $experience,
-                'level' => (empty(Level::findByExperience($experience))) ? 'Null' : Level::findByExperience($experience)->name,
+                'level' => Level::findByExperience($experience)?->name ?? 'Null',
             ];
         });
 

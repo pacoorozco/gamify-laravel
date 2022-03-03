@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98828064e8362618ac82b1fee2e630a9",
+    "content-hash": "0a15048a800dda5113357a367cf6caad",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -58,16 +58,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.211.1",
+            "version": "3.212.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "fa6b2cc2df7563b775b346d60da4d36c06062ce1"
+                "reference": "d7670125548a886f90e889e08ae0ae7be4958908"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fa6b2cc2df7563b775b346d60da4d36c06062ce1",
-                "reference": "fa6b2cc2df7563b775b346d60da4d36c06062ce1",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d7670125548a886f90e889e08ae0ae7be4958908",
+                "reference": "d7670125548a886f90e889e08ae0ae7be4958908",
                 "shasum": ""
             },
             "require": {
@@ -143,9 +143,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.211.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.212.0"
             },
-            "time": "2022-03-01T19:17:13+00:00"
+            "time": "2022-03-02T19:29:21+00:00"
         },
         {
             "name": "bensampo/laravel-enum",
@@ -2267,16 +2267,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.83.2",
+            "version": "v8.83.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b91b3b5b39fbbdc763746f5714e08d50a4dd7857"
+                "reference": "b4ed222a188cca74ca9062296e525d26ae54a0ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b91b3b5b39fbbdc763746f5714e08d50a4dd7857",
-                "reference": "b91b3b5b39fbbdc763746f5714e08d50a4dd7857",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b4ed222a188cca74ca9062296e525d26ae54a0ce",
+                "reference": "b4ed222a188cca74ca9062296e525d26ae54a0ce",
                 "shasum": ""
             },
             "require": {
@@ -2436,7 +2436,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-02-22T15:10:17+00:00"
+            "time": "2022-03-03T15:14:29+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -4430,7 +4430,7 @@
         },
         {
             "name": "qcod/laravel-imageup",
-            "version": "dev-master",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/qcod/laravel-imageup.git",
@@ -4452,7 +4452,6 @@
                 "orchestra/testbench": "^4.0|^5.0|^7.0",
                 "phpunit/phpunit": "^8.0|^9.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -8161,29 +8160,30 @@
         },
         {
             "name": "doctrine/instantiator",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "d56bf6102915de5702778fe20f2de3b2fe570b5b"
+                "reference": "10dcfce151b967d20fde1b34ae6640712c3891bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/d56bf6102915de5702778fe20f2de3b2fe570b5b",
-                "reference": "d56bf6102915de5702778fe20f2de3b2fe570b5b",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/10dcfce151b967d20fde1b34ae6640712c3891bc",
+                "reference": "10dcfce151b967d20fde1b34ae6640712c3891bc",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^8.0",
+                "doctrine/coding-standard": "^9",
                 "ext-pdo": "*",
                 "ext-phar": "*",
-                "phpbench/phpbench": "^0.13 || 1.0.0-alpha2",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+                "phpbench/phpbench": "^0.16 || ^1",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-phpunit": "^1",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "vimeo/psalm": "^4.22"
             },
             "type": "library",
             "autoload": {
@@ -8210,7 +8210,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/instantiator/issues",
-                "source": "https://github.com/doctrine/instantiator/tree/1.4.0"
+                "source": "https://github.com/doctrine/instantiator/tree/1.4.1"
             },
             "funding": [
                 {
@@ -8226,7 +8226,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-10T18:47:58+00:00"
+            "time": "2022-03-03T08:28:38+00:00"
         },
         {
             "name": "facade/flare-client-php",
@@ -8690,25 +8690,29 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220"
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/776f831124e9c62e1a2c601ecc52e776d8bb7220",
-                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
+            "conflict": {
+                "doctrine/collections": "<1.6.8",
+                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
+            },
             "require-dev": {
-                "doctrine/collections": "^1.0",
-                "doctrine/common": "^2.6",
-                "phpunit/phpunit": "^7.1"
+                "doctrine/collections": "^1.6.8",
+                "doctrine/common": "^2.13.3 || ^3.2.2",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
             },
             "type": "library",
             "autoload": {
@@ -8733,7 +8737,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.10.2"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
             },
             "funding": [
                 {
@@ -8741,7 +8745,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-13T09:40:50+00:00"
+            "time": "2022-03-03T13:19:32+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -9268,16 +9272,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.4.6",
+            "version": "1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8a7761f1c520e0dad6e04d862fdc697445457cfe"
+                "reference": "15087679960d72ae56bfcbf0d728d19941d3f7c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8a7761f1c520e0dad6e04d862fdc697445457cfe",
-                "reference": "8a7761f1c520e0dad6e04d862fdc697445457cfe",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/15087679960d72ae56bfcbf0d728d19941d3f7c2",
+                "reference": "15087679960d72ae56bfcbf0d728d19941d3f7c2",
                 "shasum": ""
             },
             "require": {
@@ -9308,7 +9312,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.4.6"
+                "source": "https://github.com/phpstan/phpstan/tree/1.4.7"
             },
             "funding": [
                 {
@@ -9328,7 +9332,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-06T12:56:13+00:00"
+            "time": "2022-03-02T16:04:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -11018,9 +11022,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "qcod/laravel-imageup": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

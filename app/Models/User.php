@@ -25,6 +25,7 @@
 
 namespace Gamify\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -73,46 +74,19 @@ class User extends Authenticatable
         'email_verified_at',
     ];
 
+    public static function findByUsername(string $username): self
+    {
+        return static::where('username', $username)->firstOrFail();
+    }
+
+    public static function findByEmailAddress(string $emailAddress): self
+    {
+        return static::where('email', $emailAddress)->firstOrFail();
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(UserProfile::class);
-    }
-
-    /**
-     * These are the User's answered Questions.
-     *
-     * It uses a pivot table with these values:
-     *
-     * points: int - how many points was obtained
-     * answers: string - which answers was supplied
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function answeredQuestions(): BelongsToMany
-    {
-        return $this->belongsToMany('Gamify\Models\Question', 'users_questions', 'user_id', 'question_id')
-            ->withPivot('points', 'answers');
-    }
-
-    /**
-     * These are the User's Badges relationship.
-     *
-     * It uses a pivot table with these values:
-     *
-     * amount: int - how many actions has completed
-     * completed: bool - true if User's has own this badge
-     * completed_on: Datetime - where it was completed
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function badges(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Badge::class,
-            'users_badges',
-            'user_id',
-            'badge_id')
-            ->withPivot('repetitions', 'completed', 'completed_on');
     }
 
     /**
@@ -141,7 +115,12 @@ class User extends Authenticatable
 
     public function getLastLoggedDate(): string
     {
-        return is_null($this->last_login_at) ? 'N/A' : $this->last_login_at->diffForHumans();
+        return $this->lastLoginAt()?->diffForHumans() ?? 'N/A';
+    }
+
+    public function lastLoginAt(): ?Carbon
+    {
+        return $this->last_login_at;
     }
 
     public function isAdmin(): bool
@@ -187,6 +166,22 @@ class User extends Authenticatable
             ->get();
     }
 
+    /**
+     * These are the User's answered Questions.
+     *
+     * It uses a pivot table with these values:
+     *
+     * points: int - how many points was obtained
+     * answers: string - which answers was supplied
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function answeredQuestions(): BelongsToMany
+    {
+        return $this->belongsToMany('Gamify\Models\Question', 'users_questions', 'user_id', 'question_id')
+            ->withPivot('points', 'answers');
+    }
+
     public function getCompletedBadges(): Collection
     {
         return $this->badges()
@@ -194,13 +189,33 @@ class User extends Authenticatable
             ->get();
     }
 
+    /**
+     * These are the User's Badges relationship.
+     *
+     * It uses a pivot table with these values:
+     *
+     * amount: int - how many actions has completed
+     * completed: bool - true if User's has own this badge
+     * completed_on: Datetime - where it was completed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Badge::class,
+            'users_badges',
+            'user_id',
+            'badge_id')
+            ->withPivot('repetitions', 'completed', 'completed_on');
+    }
+
     public function hasBadgeCompleted(Badge $badge): bool
     {
         return $this->badges()
                 ->wherePivot('badge_id', $badge->id)
                 ->wherePivot('completed', true)
-                ->get()
-                ->count() > 0;
+                ->exists();
     }
 
     /**
@@ -227,15 +242,5 @@ class User extends Authenticatable
         } catch (ModelNotFoundException $exception) {
             return Level::findByExperience($this->experience);
         }
-    }
-
-    public static function findByUsername(string $username): self
-    {
-        return static::where('username', $username)->firstOrFail();
-    }
-
-    public static function findByEmailAddress(string $emailAddress): self
-    {
-        return static::where('email', $emailAddress)->firstOrFail();
     }
 }
