@@ -27,6 +27,7 @@ namespace Gamify\Http\Requests;
 
 use Gamify\Models\User;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserCreateRequest extends Request
 {
@@ -38,15 +39,58 @@ class UserCreateRequest extends Request
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', Rule::unique('users')],
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email', Rule::unique('users')],
-            'password' => ['required', 'string', 'min:5', 'confirmed'],
-            'role' => ['required', Rule::in([
-                User::USER_ROLE,
-                User::EDITOR_ROLE,
-                User::ADMIN_ROLE,
-            ])],
+            'username' => [
+                'required',
+                'string',
+                Rule::unique('users'),
+            ],
+            'name' => [
+                'required',
+                'string',
+            ],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users'),
+            ],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::defaults(),
+            ],
+            'role' => [
+                'required',
+                Rule::in([
+                    User::USER_ROLE,
+                    User::EDITOR_ROLE,
+                    User::ADMIN_ROLE,
+                ]),
+            ],
         ];
+    }
+
+    public function username(): string
+    {
+        return $this->input('username');
+    }
+
+    public function email(): string
+    {
+        return $this->input('email');
+    }
+
+    public function name(): string
+    {
+        return $this->input('name');
+    }
+
+    public function password(): string
+    {
+        return $this->input('password');
+    }
+
+    public function role(): string
+    {
+        return $this->input('role');
     }
 }

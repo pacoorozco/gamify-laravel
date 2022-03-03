@@ -27,6 +27,7 @@ namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
+use Gamify\Jobs\CreateUser;
 use Gamify\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -50,9 +51,14 @@ class AdminUserController extends AdminController
     public function store(UserCreateRequest $request): RedirectResponse
     {
         try {
-            $user = User::create($request->validated());
-            $user->profile()->create();
-        } catch (\Exception $exception) {
+            CreateUser::dispatchSync(
+                $request->username(),
+                $request->email(),
+                $request->name(),
+                $request->password(),
+                $request->role()
+            );
+        } catch (\Throwable $exception) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('admin/user/messages.create.error'));

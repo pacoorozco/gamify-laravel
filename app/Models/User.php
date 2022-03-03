@@ -333,4 +333,14 @@ class User extends Authenticatable
             return Level::findByExperience($this->experience);
         }
     }
+
+    public static function findByUsername(string $username): self
+    {
+        return static::where('username', $username)->firstOrFail();
+    }
+
+    public static function findByEmailAddress(string $emailAddress): self
+    {
+        return static::where('email', $emailAddress)->firstOrFail();
+    }
 }
