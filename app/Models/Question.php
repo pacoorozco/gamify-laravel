@@ -64,38 +64,22 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 class Question extends Model
 {
     use SoftDeletes;
-    use BlameableTrait; // Record author, updater and deleter
-    use Sluggable; // Slugs
-    use Taggable; // Tags
+    use BlameableTrait;
+    use Sluggable;
+    use Taggable;
     use Presentable;
     use HasFactory;
 
-    /**
-     * Defines question's statuses.
-     */
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
     const PUBLISH_STATUS = 'publish'; // Published.
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
-    /**
-     * Defines question's types.
-     */
-    const SINGLE_RESPONSE_TYPE = 'single'; // Only one answer is correct.
 
+    const SINGLE_RESPONSE_TYPE = 'single'; // Only one answer is correct.
     const MULTI_RESPONSE_TYPE = 'multi'; // Multiple answers are correct.
 
-    /**
-     * Model presenter.
-     *
-     * @var string
-     */
     protected string $presenter = QuestionPresenter::class;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'question',
@@ -113,27 +97,10 @@ class Question extends Model
         'expiration_date',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
-        'id' => 'int',
-        'name' => 'string',
-        'short_name' => 'string',
-        'question' => 'string',
-        'solution' => 'string',
-        'type' => 'string',
         'hidden' => 'bool',
-        'status' => 'string',
     ];
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     public function sluggable(): array
     {
         return [
@@ -143,44 +110,11 @@ class Question extends Model
         ];
     }
 
-    /**
-     * A question will have some actions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function actions(): HasMany
-    {
-        return $this->hasMany(QuestionAction::class);
-    }
-
-    /**
-     * A question will have some choices.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function choices(): HasMany
-    {
-        return $this->hasMany(QuestionChoice::class);
-    }
-
-    /**
-     * Return the excerpt of the question text.
-     *
-     * @param  int  $length
-     * @param  string  $trailing
-     *
-     * @return string
-     */
     public function excerpt(int $length = 55, string $trailing = '...'): string
     {
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
     }
 
-    /**
-     * Get the list of actions that has not been selected yet.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function getAvailableActions(): Collection
     {
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
@@ -188,88 +122,46 @@ class Question extends Model
         return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
-    /**
-     * Returns true if question has been published.
-     *
-     * @return bool
-     */
-    public function isPublished(): bool
+    public function actions(): HasMany
     {
-        return $this->status == self::PUBLISH_STATUS;
+        return $this->hasMany(QuestionAction::class);
     }
 
-    /**
-     * Returns true if question has been scheduled.
-     *
-     * @return bool
-     */
-    public function isScheduled(): bool
-    {
-        return $this->status == self::FUTURE_STATUS;
-    }
-
-    /**
-     * Returns true if question has been published or scheduled.
-     *
-     * @return bool
-     */
     public function isPublishedOrScheduled(): bool
     {
         return $this->isPublished() || $this->isScheduled();
     }
 
-    /**
-     * Returns published Questions, including hidden ones.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+    public function isPublished(): bool
+    {
+        return $this->status == self::PUBLISH_STATUS;
+    }
+
+    public function isScheduled(): bool
+    {
+        return $this->status == self::FUTURE_STATUS;
+    }
+
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', self::PUBLISH_STATUS);
     }
 
-    /**
-     * Returns scheduled Questions, including hidden ones.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeScheduled(Builder $query): Builder
     {
         return $query->where('status', self::FUTURE_STATUS);
     }
 
-    /**
-     * Returns visible Questions, not hidden ones.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeVisible(Builder $query): Builder
     {
         return $query->where('hidden', false);
     }
 
     /**
-     * Return if a question can be published.
-     * 1. It has at least to choices
-     * 2. It has at least one correct choice.
-     *
-     * @return bool
-     */
-    public function canBePublished(): bool
-    {
-        $answers_count = $this->choices()->count();
-        $answers_correct_count = $this->choices()->correct()->count();
-
-        return ($answers_count > 1) && ($answers_correct_count > 0);
-    }
-
-    /**
      * Returns the Badges that can be actionable depending if the answer was correct or not.
      *
      * @param  bool  $correctness
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
@@ -297,7 +189,7 @@ class Question extends Model
             return;
         }
 
-        if (! $this->canBePublished()) {
+        if (!$this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
@@ -311,44 +203,23 @@ class Question extends Model
     }
 
     /**
-     * Transits a question to self::DRAFT_STATUS status.
+     * Return if a question can be published.
+     * 1. It has at least to choices
+     * 2. It has at least one correct choice.
      *
-     * @throws \Throwable
+     * @return bool
      */
-    public function transitionToDraftStatus(): void
+    public function canBePublished(): bool
     {
-        if ($this->status == self::DRAFT_STATUS) {
-            return;
-        }
+        $answers_count = $this->choices()->count();
+        $answers_correct_count = $this->choices()->correct()->count();
 
-        // TODO: Remove all answers?
-
-        $this->status = self::DRAFT_STATUS;
-        $this->publication_date = null;
-        $this->saveOrFail(); // throws exception on error
+        return ($answers_count > 1) && ($answers_correct_count > 0);
     }
 
-    /**
-     * Transits a question to self::PENDING_STATUS status.
-     *
-     * @throws \Gamify\Exceptions\QuestionPublishingException
-     * @throws \Throwable
-     */
-    public function transitionToPendingStatus(): void
+    public function choices(): HasMany
     {
-        if ($this->status == self::PENDING_STATUS) {
-            return;
-        }
-
-        if (! $this->canBePublished()) {
-            throw new QuestionPublishingException();
-        }
-
-        $this->status = self::PENDING_STATUS;
-        $this->publication_date = null;
-        $this->saveOrFail(); // throws exception on error
-
-        QuestionPendingReview::dispatch($this);
+        return $this->hasMany(QuestionChoice::class);
     }
 
     /**
@@ -388,5 +259,46 @@ class Question extends Model
 
         $this->status = self::FUTURE_STATUS;
         $this->saveOrFail(); // throws exception on error
+    }
+
+    /**
+     * Transits a question to self::DRAFT_STATUS status.
+     *
+     * @throws \Throwable
+     */
+    public function transitionToDraftStatus(): void
+    {
+        if ($this->status == self::DRAFT_STATUS) {
+            return;
+        }
+
+        // TODO: Remove all answers?
+
+        $this->status = self::DRAFT_STATUS;
+        $this->publication_date = null;
+        $this->saveOrFail(); // throws exception on error
+    }
+
+    /**
+     * Transits a question to self::PENDING_STATUS status.
+     *
+     * @throws \Gamify\Exceptions\QuestionPublishingException
+     * @throws \Throwable
+     */
+    public function transitionToPendingStatus(): void
+    {
+        if ($this->status == self::PENDING_STATUS) {
+            return;
+        }
+
+        if (!$this->canBePublished()) {
+            throw new QuestionPublishingException();
+        }
+
+        $this->status = self::PENDING_STATUS;
+        $this->publication_date = null;
+        $this->saveOrFail(); // throws exception on error
+
+        QuestionPendingReview::dispatch($this);
     }
 }

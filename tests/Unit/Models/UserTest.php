@@ -66,12 +66,6 @@ class UserTest extends TestCase
 
         $this->assertEquals([
             'id' => 'int',
-            'name' => 'string',
-            'username' => 'string',
-            'email' => 'string',
-            'password' => 'string',
-            'role' => 'string',
-            'experience' => 'int',
         ], $m->getCasts());
     }
 

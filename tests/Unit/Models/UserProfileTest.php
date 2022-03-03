@@ -52,15 +52,6 @@ class UserProfileTest extends TestCase
         $m = new UserProfile();
         $this->assertEquals([
             'id' => 'int',
-            'bio' => 'string',
-            'url' => 'string',
-            'phone' => 'string',
-            'date_of_birth' => 'string',
-            'gender' => 'string',
-            'twitter' => 'string',
-            'facebook' => 'string',
-            'linkedin' => 'string',
-            'github' => 'string',
         ], $m->getCasts());
     }
 

@@ -39,41 +39,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Point extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'points',
         'description',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'int',
-        'points' => 'int',
-        'description' => 'string',
-    ];
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
     protected $dispatchesEvents = [
         'created' => PointCreated::class,
     ];
 
-    /**
-     * A point belongs to one User.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

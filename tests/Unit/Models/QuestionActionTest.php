@@ -47,7 +47,6 @@ class QuestionActionTest extends TestCase
         $this->assertEquals([
             'id' => 'int',
             'when' => QuestionActuators::class,
-            'badge_id' => 'int',
         ], $m->getCasts());
     }
 

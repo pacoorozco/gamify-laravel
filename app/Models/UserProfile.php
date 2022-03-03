@@ -55,16 +55,8 @@ class UserProfile extends Model
     use HasImageUploads;
     use HasFactory;
 
-    /**
-     * Default badge image to be used in case no one is supplied.
-     */
     const DEFAULT_IMAGE = '/images/missing_profile.png';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'bio',
         'url',
@@ -77,44 +69,11 @@ class UserProfile extends Model
         'github',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'int',
-        'bio' => 'string',
-        'url' => 'string',
-        'phone' => 'string',
-        'date_of_birth' => 'string',
-        'gender' => 'string',
-        'twitter' => 'string',
-        'facebook' => 'string',
-        'linkedin' => 'string',
-        'github' => 'string',
-    ];
-
-    /**
-     * Path in disk to use for upload, can be override by field options.
-     *
-     * @var string
-     */
     protected string $imagesUploadPath = 'avatars';
 
-    /**
-     * Auto upload allowed.
-     *
-     * @var bool
-     */
     protected bool $autoUploadImages = true;
 
-    /**
-     * Fields that are managed by the HasImageUploads trait.
-     *
-     * @var array
-     */
-    protected static $imageFields = [
+    protected static array $imageFields = [
         'avatar' => [
             // width to resize image after upload
             'width' => 150,
@@ -136,21 +95,11 @@ class UserProfile extends Model
         ],
     ];
 
-    /**
-     * UserProfile are attached to every User.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get image attribute or default image.
-     *
-     * @return string
-     */
     public function getAvatarUrlAttribute(): string
     {
         try {

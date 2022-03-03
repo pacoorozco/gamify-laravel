@@ -38,7 +38,7 @@ use QCod\ImageUp\HasImageUploads;
  * @property string $name Name of the level..
  * @property int $required_points How many points do you need to achieve it.
  * @property string image                  URL of the level's image
- * @property bool   active                 Is this level enabled?
+ * @property bool active                 Is this level enabled?
  * @property string $imagesUploadDisk
  * @property string $imagesUploadPath
  * @property string $autoUploadImages
@@ -49,54 +49,8 @@ class Level extends Model
     use HasImageUploads;
     use HasFactory;
 
-    /**
-     * Default badge image to be used in case no one is supplied.
-     */
     const DEFAULT_IMAGE = '/images/missing_level.png';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'required_points',
-        'active',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'int',
-        'name' => 'string',
-        'required_points' => 'int',
-        'active' => 'boolean',
-    ];
-
-    /**
-     * Path in disk to use for upload, can be override by field options.
-     *
-     * @var string
-     */
-    protected string $imagesUploadPath = 'levels';
-
-    /**
-     * Auto upload allowed.
-     *
-     * @var bool
-     */
-    protected bool $autoUploadImages = true;
-
-    /**
-     * Fields that are managed by the HasImageUploads trait.
-     *
-     * @var array
-     */
-    protected static $imageFields = [
+    protected static array $imageFields = [
         'image_url' => [
             // width to resize image after upload
             'width' => 150,
@@ -117,19 +71,36 @@ class Level extends Model
             'file_input' => 'image',
         ],
     ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
+    protected $fillable = [
+        'name',
+        'required_points',
+        'active',
+    ];
+    protected $casts = [
+        'active' => 'boolean',
+    ];
     protected $dates = ['deleted_at'];
+    protected string $imagesUploadPath = 'levels';
+    protected bool $autoUploadImages = true;
 
-    /**
-     * Get image attribute or default image.
-     *
-     * @return string
-     */
+    public static function findByExperience(int $experience): Level
+    {
+        return self::query()
+            ->active()
+            ->where('required_points', '<=', $experience)
+            ->orderBy('required_points', 'desc')
+            ->first();
+    }
+
+    public static function findNextByExperience(int $experience): Level
+    {
+        return self::query()
+            ->active()
+            ->where('required_points', '>', $experience)
+            ->orderBy('required_points', 'asc')
+            ->firstOrFail();
+    }
+
     public function getImageAttribute(): string
     {
         try {
@@ -139,55 +110,11 @@ class Level extends Model
         }
     }
 
-    /**
-     * Returns a collection of active Level.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);
     }
 
-    /**
-     * Returns Level (object) for the specified experience.
-     *
-     * @param  int  $experience
-     * @return \Gamify\Models\Level
-     */
-    public static function findByExperience(int $experience): Level
-    {
-        return self::active()
-            ->where('required_points', '<=', $experience)
-            ->orderBy('required_points', 'desc')
-            ->first();
-    }
-
-    /**
-     * Return the upcoming Level (object) for the specified experience.
-     *
-     * Throws an exception in case that this is the highest possible level.
-     *
-     * @param  int  $experience
-     * @return \Gamify\Models\Level
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public static function findNextByExperience(int $experience): Level
-    {
-        return self::active()
-            ->where('required_points', '>', $experience)
-            ->orderBy('required_points', 'asc')
-            ->firstOrFail();
-    }
-
-    /**
-     * Returns if this is the default level.
-     *
-     * @return bool
-     */
     public function isDefault(): bool
     {
         return $this->required_points === 0;

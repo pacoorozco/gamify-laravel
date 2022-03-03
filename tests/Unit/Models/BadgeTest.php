@@ -48,9 +48,6 @@ class BadgeTest extends TestCase
         $m = new Badge();
         $this->assertEquals([
             'id' => 'int',
-            'name' => 'string',
-            'description' => 'string',
-            'required_repetitions' => 'int',
             'active' => 'boolean',
             'actuators' => BadgeActuators::class,
             'deleted_at' => 'datetime',
