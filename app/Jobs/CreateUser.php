@@ -48,7 +48,6 @@ final class CreateUser
      */
     public function handle(): User
     {
-
         $this->assertEmailAddressIsUnique($this->email);
         $this->assertUsernameIsUnique($this->username);
 

@@ -162,7 +162,6 @@ class Question extends Model
      * Returns the Badges that can be actionable depending if the answer was correct or not.
      *
      * @param  bool  $correctness
-     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
@@ -190,7 +189,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
@@ -297,7 +296,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 

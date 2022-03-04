@@ -39,7 +39,6 @@ class SocialAccountService
      *
      * @param  \Laravel\Socialite\Contracts\User  $externalUser
      * @param  string  $provider
-     *
      * @return \Gamify\Models\User
      */
     public function findOrCreate(ExternalUser $externalUser, string $provider): User
@@ -49,7 +48,7 @@ class SocialAccountService
             ->where('provider_id', $externalUser->getId())
             ->first();
 
-        if (!is_null($account?->user)) {
+        if (! is_null($account?->user)) {
             return $account->user;
         }
 
@@ -63,7 +62,7 @@ class SocialAccountService
             ->where('email', $providerUser->getEmail())
             ->first();
 
-        if (!($user instanceof User)) {
+        if (! ($user instanceof User)) {
             $user = CreateUser::dispatchSync(
                 $this->getUniqueUsername($providerUser->getNickname()),
                 $providerUser->getEmail(),
@@ -85,7 +84,6 @@ class SocialAccountService
      * Returns an unique username from a given base username.
      *
      * @param  string  $baseUsername
-     *
      * @return string
      */
     private function getUniqueUsername(string $baseUsername): string
