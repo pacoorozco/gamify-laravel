@@ -100,6 +100,8 @@ class Badge extends Model
         ],
     ];
 
+    protected $dates = ['deleted_at'];
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);

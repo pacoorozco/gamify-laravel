@@ -111,6 +111,16 @@ class Question extends Model
         ];
     }
 
+    public function actions(): HasMany
+    {
+        return $this->hasMany(QuestionAction::class);
+    }
+
+    public function choices(): HasMany
+    {
+        return $this->hasMany(QuestionChoice::class);
+    }
+
     public function excerpt(int $length = 55, string $trailing = '...'): string
     {
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
