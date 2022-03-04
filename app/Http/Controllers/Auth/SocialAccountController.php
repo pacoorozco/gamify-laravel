@@ -44,7 +44,6 @@ class SocialAccountController extends Controller
      * Redirect the user to the Provider authentication page.
      *
      * @param  string  $provider
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToProvider(string $provider): RedirectResponse

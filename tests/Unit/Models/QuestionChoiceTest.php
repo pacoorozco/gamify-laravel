@@ -81,5 +81,4 @@ class QuestionChoiceTest extends TestCase
 
         $this->assertFalse($m->isCorrect());
     }
-
 }

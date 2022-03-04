@@ -37,8 +37,8 @@ use QCod\ImageUp\HasImageUploads;
  * @property int $id Object unique id.
  * @property string $name Name of the level..
  * @property int $required_points How many points do you need to achieve it.
- * @property string $image                  URL of the level's image
- * @property bool $active                 Is this level enabled?
+ * @property string $image URL of the level's image
+ * @property bool $active Is this level enabled?
  * @property string $imagesUploadDisk
  * @property string $imagesUploadPath
  * @property string $autoUploadImages
