@@ -23,42 +23,19 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Unit\Models;
+namespace Gamify\Exceptions;
 
-use Gamify\Models\UserProfile;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Tests\TestCase;
+use Exception;
 
-class UserProfileTest extends TestCase
+final class CannotCreateUser extends Exception
 {
-    public function test_contains_valid_fillable_properties()
+    public static function duplicateEmailAddress(string $emailAddress): self
     {
-        $m = new UserProfile();
-        $this->assertEquals([
-            'bio',
-            'url',
-            'phone',
-            'date_of_birth',
-            'gender',
-            'twitter',
-            'facebook',
-            'linkedin',
-            'github',
-        ], $m->getFillable());
+        return new CannotCreateUser("The email address [$emailAddress] already exists.");
     }
 
-    public function test_contains_valid_casts_properties()
+    public static function duplicateUsername(string $username): self
     {
-        $m = new UserProfile();
-        $this->assertEquals([
-            'id' => 'int',
-        ], $m->getCasts());
-    }
-
-    public function test_user_relation()
-    {
-        $m = new UserProfile();
-        $r = $m->user();
-        $this->assertInstanceOf(BelongsTo::class, $r);
+        return new CannotCreateUser("The username [$username] already exists.");
     }
 }

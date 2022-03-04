@@ -45,8 +45,6 @@ class LinkedSocialAccountTest extends TestCase
         $m = new LinkedSocialAccount();
         $this->assertEquals([
             'id' => 'int',
-            'provider_name' => 'string',
-            'provider_id' => 'int',
         ], $m->getCasts());
     }
 

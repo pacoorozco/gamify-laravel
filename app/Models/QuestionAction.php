@@ -34,46 +34,21 @@ class QuestionAction extends Model
 {
     use HasFactory;
 
-    /**
-     * Disable the timestamps on this model.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'when',
         'badge_id',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
-        'id' => 'int',
         'when' => QuestionActuators::class,
-        'badge_id' => 'int',
     ];
 
-    /**
-     * A question action belongs to a question.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);
     }
 
-    /**
-     * Every time we modify an action we need to touch the question.
-     */
     protected $touches = ['question'];
 }

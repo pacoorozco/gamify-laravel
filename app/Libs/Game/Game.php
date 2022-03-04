@@ -149,7 +149,7 @@ class Game
                 'username' => $user->username,
                 'name' => $user->name,
                 'experience' => $experience,
-                'level' => (empty(Level::findByExperience($experience))) ? 'Null' : Level::findByExperience($experience)->name,
+                'level' => Level::findByExperience($experience)?->name ?? 'Null',
             ];
         });
 

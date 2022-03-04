@@ -31,6 +31,30 @@ use Laracodes\Presenter\Presenter;
 
 class BadgePresenter extends Presenter
 {
+    /** @var \Gamify\Models\Badge */
+    protected $model;
+
+    /**
+     * Returns an array of values to be used on <select>. It's filtering some actuators and adding <optgroups> to group
+     * them.
+     *
+     * @return array
+     */
+    public static function actuatorsSelect(): array
+    {
+        return [
+            BadgeActuators::None()->value => BadgeActuators::None()->description,
+            trans('admin/badge/model.actuators_related_with_question_events') => [
+                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
+                BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
+                BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
+            ],
+            trans('admin/badge/model.actuators_related_with_user_events') => [
+                BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
+            ],
+        ];
+    }
+
     public function status(): string
     {
         return ($this->model->active)
@@ -45,33 +69,13 @@ class BadgePresenter extends Presenter
 
     public function imageTableThumbnail(): HtmlString
     {
-        return new HtmlString((string) $this->model->imageTag('image_url', 'class="img-thumbnail center-block" width="96"'));
+        return new HtmlString((string) $this->model->imageTag('image_url',
+            'class="img-thumbnail center-block" width="96"'));
     }
 
     public function imageTag(): HtmlString
     {
         return new HtmlString((string) $this->model->imageTag('image_url'));
-    }
-
-    /**
-     * Returns an array of values to be used on <select>. It's filtering some actuators and adding <optgroups> to group
-     * them.
-     *
-     * @return array
-     */
-    public static function actuatorsSelect(): array
-    {
-        return [
-            BadgeActuators::None()->value => BadgeActuators::None()->description,
-            __('admin/badge/model.actuators_related_with_question_events') => [
-                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
-                BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
-                BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
-            ],
-            __('admin/badge/model.actuators_related_with_user_events') => [
-                BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
-            ],
-        ];
     }
 
     /**

@@ -31,6 +31,9 @@ use Laracodes\Presenter\Presenter;
 
 class QuestionPresenter extends Presenter
 {
+    /** @var Question */
+    protected $model;
+
     public function publicationDate(): string
     {
         return empty($this->model->publication_date)
@@ -59,6 +62,25 @@ class QuestionPresenter extends Presenter
     }
 
     /**
+     * Map a Question status to a color label.
+     *
+     * @param  string  $status
+     * @param  string  $default
+     * @return string
+     */
+    protected function mapStatusToLabel(string $status, string $default = 'label-default')
+    {
+        $LabelToColorDict = [
+            Question::DRAFT_STATUS => 'label-default',
+            Question::PUBLISH_STATUS => 'label-success',
+            Question::FUTURE_STATUS => 'label-info',
+            Question::PENDING_STATUS => 'label-warning',
+        ];
+
+        return $LabelToColorDict[$status] ?? $default;
+    }
+
+    /**
      * Returns the question visibility as a badge.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
@@ -75,7 +97,7 @@ class QuestionPresenter extends Presenter
 
         return new HtmlString(sprintf(
             '<span class="label label-default hidden">%s</span>',
-            (string) __('admin/question/model.hidden_no')
+            trans('admin/question/model.hidden_no')
         ));
     }
 
@@ -128,24 +150,5 @@ class QuestionPresenter extends Presenter
             trans('admin/question/model.type_list.' . $this->model->type),
             (string) $this->model->type,
         ));
-    }
-
-    /**
-     * Map a Question status to a color label.
-     *
-     * @param  string  $status
-     * @param  string  $default
-     * @return string
-     */
-    protected function mapStatusToLabel(string $status, string $default = 'label-default')
-    {
-        $LabelToColorDict = [
-            Question::DRAFT_STATUS => 'label-default',
-            Question::PUBLISH_STATUS => 'label-success',
-            Question::FUTURE_STATUS => 'label-info',
-            Question::PENDING_STATUS => 'label-warning',
-        ];
-
-        return $LabelToColorDict[$status] ?? $default;
     }
 }

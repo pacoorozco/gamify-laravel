@@ -28,6 +28,7 @@ namespace Gamify\Http\Controllers\Auth;
 use Gamify\Http\Controllers\Controller;
 use Gamify\Providers\RouteServiceProvider;
 use Gamify\Services\SocialAccountService;
+use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAccountController extends Controller
@@ -37,15 +38,15 @@ class SocialAccountController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected string $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the Provider authentication page.
      *
-     * @param  string  $provider  - Provider name to use.
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param  string  $provider
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirectToProvider(string $provider)
+    public function redirectToProvider(string $provider): RedirectResponse
     {
         return Socialite::driver($provider)->redirect();
     }
@@ -57,7 +58,7 @@ class SocialAccountController extends Controller
      * @param  string  $provider
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function handleProviderCallback(SocialAccountService $accountRepository, string $provider)
+    public function handleProviderCallback(SocialAccountService $accountRepository, string $provider): RedirectResponse
     {
         try {
             $user = Socialite::with($provider)->user();

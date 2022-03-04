@@ -49,13 +49,7 @@ class QuestionTest extends TestCase
         $m = new Question();
         $this->assertEquals([
             'id' => 'int',
-            'name' => 'string',
-            'short_name' => 'string',
-            'question' => 'string',
-            'solution' => 'string',
-            'type' => 'string',
             'hidden' => 'bool',
-            'status' => 'string',
             'deleted_at' => 'datetime',
         ], $m->getCasts());
     }

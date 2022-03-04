@@ -55,23 +55,10 @@ class Badge extends Model
     use Presentable;
     use HasFactory;
 
-    /**
-     * Default badge image to be used in case no one is supplied.
-     */
     const DEFAULT_IMAGE = '/images/missing_badge.png';
 
-    /**
-     * Model presenter.
-     *
-     * @var string
-     */
     protected string $presenter = BadgePresenter::class;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'description',
@@ -80,40 +67,18 @@ class Badge extends Model
         'actuators',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
-        'id' => 'int',
-        'name' => 'string',
-        'description' => 'string',
-        'required_repetitions' => 'int',
         'active' => 'boolean',
         'actuators' => BadgeActuators::class,
     ];
 
-    /**
-     * Path in disk to use for upload, can be override by field options.
-     *
-     * @var string
-     */
+    protected $dates = ['deleted_at'];
+
     protected string $imagesUploadPath = 'badges';
 
-    /**
-     * Auto upload allowed.
-     *
-     * @var bool
-     */
     protected bool $autoUploadImages = true;
 
-    /**
-     * Fields that are managed by the HasImageUploads trait.
-     *
-     * @var array
-     */
-    protected static $imageFields = [
+    protected static array $imageFields = [
         'image_url' => [
             // width to resize image after upload
             'width' => 150,
@@ -135,31 +100,11 @@ class Badge extends Model
         ],
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
-     * Returns a collection of active Badges.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);
     }
 
-    /**
-     * Scope a query to only include badges with the given actuators.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Gamify\Enums\QuestionActuators[]  $actuators
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeWithActuatorsIn(Builder $query, array $actuators): Builder
     {
         return $query->whereIn('actuators', $actuators);

@@ -45,8 +45,6 @@ class PointTest extends TestCase
         $m = new Point();
         $this->assertEquals([
             'id' => 'int',
-            'points' => 'int',
-            'description' => 'string',
         ], $m->getCasts());
     }
 

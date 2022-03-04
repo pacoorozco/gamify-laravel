@@ -37,30 +37,65 @@ class QuestionUpdateRequest extends Request
 
     public function rules(): array
     {
+        /** @var Question $question */
         $question = $this->route('question');
 
         return [
-            'name' => ['required', 'string', Rule::unique('questions')->ignore($question->id)],
-            'question' => ['required', 'string'],
-            'solution' => ['nullable', 'string'],
-            'type' => ['required', Rule::in([
-                Question::SINGLE_RESPONSE_TYPE,
-                Question::MULTI_RESPONSE_TYPE,
-            ])],
-            'status' => ['required', Rule::in([
-                'draft',
-                'publish',
-            ])],
-            'hidden' => ['required', 'boolean'],
-            'publication_date' => ['nullable', 'date_format:Y-m-d H:i'],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('questions')->ignore($question->id),
+            ],
+            'question' => [
+                'required',
+                'string',
+            ],
+            'solution' => [
+                'nullable',
+                'string',
+            ],
+            'type' => [
+                'required',
+                Rule::in([
+                    Question::SINGLE_RESPONSE_TYPE,
+                    Question::MULTI_RESPONSE_TYPE,
+                ]),
+            ],
+            'status' => [
+                'required',
+                Rule::in([
+                    'draft',
+                    'publish',
+                ]),
+            ],
+            'hidden' => [
+                'required',
+                'boolean',
+            ],
+            'publication_date' => [
+                'nullable',
+                'date_format:Y-m-d H:i',
+            ],
 
             // Tags
-            'tags' => ['nullable', 'array'],
-            'tags.*' => ['required', 'alpha_dash'],
+            'tags' => [
+                'nullable',
+                'array',
+            ],
+            'tags.*' => [
+                'required',
+                'alpha_dash',
+            ],
 
             // Choices
-            'choices.*.text' => ['required', 'string'],
-            'choices.*.score' => ['required', 'integer'],
+            'choices.*.text' => [
+                'required',
+                'string',
+            ],
+            'choices.*.score' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

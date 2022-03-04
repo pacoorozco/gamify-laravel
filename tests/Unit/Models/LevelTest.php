@@ -45,8 +45,6 @@ class LevelTest extends TestCase
         $m = new Level();
         $this->assertEquals([
             'id' => 'int',
-            'name' => 'string',
-            'required_points' => 'int',
             'active' => 'boolean',
             'deleted_at' => 'datetime',
         ], $m->getCasts());
