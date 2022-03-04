@@ -28,6 +28,7 @@ namespace Gamify\Http\Controllers;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Http\Requests\QuestionAnswerRequest;
 use Gamify\Models\Question;
+use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -80,6 +81,7 @@ class QuestionController extends Controller
         $answerCorrectness = false;
 
         foreach ($request->choices as $answer) {
+            /** @var QuestionChoice $choice */
             $choice = $question->choices()->find($answer);
             $points += $choice->score;
             $answerCorrectness = $answerCorrectness || $choice->isCorrect();
@@ -90,6 +92,7 @@ class QuestionController extends Controller
         }
 
         // Create relation between User and Question
+        /** @var User $user */
         $user = User::findOrFail($request->user()->id);
         $user->answeredQuestions()->attach($question, [
             'points' => $points,

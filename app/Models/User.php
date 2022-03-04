@@ -227,7 +227,7 @@ class User extends Authenticatable
      */
     public function getLevelAttribute(): string
     {
-        return Level::findByExperience($this->experience)->name;
+        return Level::findByExperience($this->experience)?->name ?? 'N/A';
     }
 
     public function getNextLevelAttribute(): string

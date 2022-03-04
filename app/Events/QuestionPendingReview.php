@@ -32,7 +32,7 @@ class QuestionPendingReview
 {
     use Dispatchable;
 
-    private Question $question;
+    public Question $question;
 
     public function __construct(Question $question)
     {
