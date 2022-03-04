@@ -133,11 +133,6 @@ class Question extends Model
         return Badge::whereNotIn('id', $selectedActions)->get();
     }
 
-    public function actions(): HasMany
-    {
-        return $this->hasMany(QuestionAction::class);
-    }
-
     public function isPublishedOrScheduled(): bool
     {
         return $this->isPublished() || $this->isScheduled();
@@ -230,11 +225,6 @@ class Question extends Model
         $answers_correct_count = $this->choices()->correct()->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
-    }
-
-    public function choices(): HasMany
-    {
-        return $this->hasMany(QuestionChoice::class);
     }
 
     /**
