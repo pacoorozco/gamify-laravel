@@ -95,12 +95,12 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        /** @var Badge $badge */
-        $badge = Badge::factory()->make();
+        /** @var Badge $want */
+        $want = Badge::factory()->make();
         $input_data = [
-            'name' => $badge->name,
-            'description' => $badge->description,
-            'required_repetitions' => $badge->required_repetitions,
+            'name' => $want->name,
+            'description' => $want->description,
+            'required_repetitions' => $want->required_repetitions,
             'active' => true,
             'actuators' => BadgeActuators::OnQuestionAnswered,
         ];
@@ -109,16 +109,32 @@ class AdminBadgeControllerTest extends TestCase
             ->assertRedirect(route('admin.badges.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertDatabaseHas(Badge::class, [
+            'name' => $want->name,
+            'description' => $want->description,
+            'required_repetitions' => $want->required_repetitions,
+            'active' => true,
+            'actuators' => BadgeActuators::OnQuestionAnswered,
+        ]);
     }
 
     /** @test */
     public function store_returns_errors_on_invalid_data()
     {
-        $invalid_input_data = [];
+        /** @var Badge $want */
+        $want = Badge::factory()->make();
+        $invalid_input_data = [
+            'name' => $want->name,
+        ];
 
         $this->post(route('admin.badges.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $this->assertDatabaseMissing(Badge::class, [
+            'name' => $want->name,
+        ]);
     }
 
     /** @test */
@@ -164,6 +180,15 @@ class AdminBadgeControllerTest extends TestCase
             ->assertRedirect(route('admin.badges.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertDatabaseHas(Badge::class, [
+            'id' => $badge->id,
+            'name' => 'silver',
+            'description' => $badge->description,
+            'required_repetitions' => $badge->required_repetitions,
+            'active' => true,
+            'actuators' => $badge->actuators->value,
+        ]);
     }
 
     /** @test */
@@ -180,6 +205,9 @@ class AdminBadgeControllerTest extends TestCase
         $this->put(route('admin.badges.update', $badge), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $badge->refresh();
+        $this->assertEquals('gold', $badge->name);
     }
 
     /** @test */
@@ -204,6 +232,8 @@ class AdminBadgeControllerTest extends TestCase
             ->assertRedirect(route('admin.badges.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertSoftDeleted($badge);
     }
 
     /** @test */

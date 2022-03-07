@@ -98,24 +98,69 @@ class AdminQuestionControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        $input_data = QuestionDataGenerator::FormRequestData();
+        /** @var Question $question */
+        $question = Question::factory()->make();
+        $input_data = [
+            'name' => $question->name,
+            'question' => $question->question,
+            'type' => $question->type,
+            'hidden' => $question->hidden,
+            'status' => $question->status,
+
+            // Tags
+            'tags' => [
+                'tag_1',
+                'tag_2',
+                'tag_3',
+            ],
+
+            // Choices
+            'choices' => [
+                [
+                    'text' => 'option_0_is_correct',
+                    'score' => '5',
+                ],
+                [
+                    'text' => 'option_1_is_incorrect',
+                    'score' => '-5',
+                ],
+            ],
+        ];
 
         $this->post(route('admin.questions.store'), $input_data)
             ->assertRedirect(route('admin.questions.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $newQuestion = Question::where([
+            'name' => $question->name,
+            'question' => $question->question,
+            'type' => $question->type,
+            'hidden' => $question->hidden,
+            'status' => $question->status,
+        ])->first();
+
+        $this->assertInstanceOf(Question::class, $newQuestion);
+        $this->assertCount(3, $newQuestion->tags);
+        $this->assertCount(2, $newQuestion->choices);
     }
 
     /** @test */
     public function store_returns_errors_on_invalid_data()
     {
-        $invalid_input_data = QuestionDataGenerator::FormRequestData([
-            'name' => '',
-        ]);
+        /** @var Question $want */
+        $want = Question::factory()->make();
+        $input_data = [
+            'name' => $want->name,
+        ];
 
-        $this->post(route('admin.questions.store'), $invalid_input_data)
+        $this->post(route('admin.questions.store'), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $this->assertDatabaseMissing(Question::class, [
+            'name' => $want->name,
+        ]);
     }
 
     /** @test */
@@ -149,14 +194,45 @@ class AdminQuestionControllerTest extends TestCase
         $question = Question::factory()->create([
             'name' => 'Question gold',
         ]);
-        $input_data = QuestionDataGenerator::FormRequestData([
+
+        $input_data = [
             'name' => 'Question silver',
-        ]);
+            'question' => $question->question,
+            'type' => $question->type,
+            'hidden' => $question->hidden,
+            'status' => $question->status,
+
+            // Tags
+            'tags' => [
+                'tag_1',
+                'tag_2',
+                'tag_3',
+            ],
+
+            // Choices
+            'choices' => [
+                [
+                    'text' => 'option_0_is_correct',
+                    'score' => '5',
+                ],
+                [
+                    'text' => 'option_1_is_incorrect',
+                    'score' => '-5',
+                ],
+            ],
+        ];
 
         $this->put(route('admin.questions.update', $question), $input_data)
             ->assertRedirect(route('admin.questions.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $question->refresh();
+
+        $this->assertInstanceOf(Question::class, $question);
+        $this->assertEquals('Question silver', $question->name);
+        $this->assertCount(3, $question->tags);
+        $this->assertCount(2, $question->choices);
     }
 
     /** @test */
@@ -173,6 +249,9 @@ class AdminQuestionControllerTest extends TestCase
         $this->put(route('admin.questions.update', $question), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $question->refresh();
+        $this->assertEquals('Question gold', $question->name);
     }
 
     /** @test */
@@ -197,6 +276,8 @@ class AdminQuestionControllerTest extends TestCase
             ->assertRedirect(route('admin.questions.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertSoftDeleted($question);
     }
 
     /** @test */

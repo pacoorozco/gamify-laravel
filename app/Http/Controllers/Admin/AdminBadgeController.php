@@ -34,6 +34,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
+use Throwable;
 use Yajra\DataTables\DataTables;
 
 class AdminBadgeController extends AdminController
@@ -116,7 +117,7 @@ class AdminBadgeController extends AdminController
     {
         try {
             $badge->delete();
-        } catch (\Exception $exception) {
+        } catch (Throwable $exception) {
             return redirect()->back()
                 ->with('error', __('admin/badge/messages.delete.error'));
         }
