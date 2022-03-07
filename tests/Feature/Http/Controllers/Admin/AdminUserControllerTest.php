@@ -108,18 +108,31 @@ class AdminUserControllerTest extends TestCase
             ->assertRedirect(route('admin.users.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertDatabaseHas(User::class, [
+            'username' => $user->username,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+        ]);
     }
 
     /** @test */
     public function store_returns_errors_on_invalid_data()
     {
+        /** @var User $want */
+        $want = User::factory()->make();
         $invalid_input_data = [
-            'username' => 'yoda',
+            'username' => $want->username,
         ];
 
         $this->post(route('admin.users.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $this->assertDatabaseMissing(User::class, [
+            'username' => $want->username,
+        ]);
     }
 
     /** @test */
@@ -163,6 +176,13 @@ class AdminUserControllerTest extends TestCase
             ->assertRedirect(route('admin.users.edit', $user))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertDatabaseHas(User::class, [
+            'id' => $user->id,
+            'name' => 'Leia',
+            'email' => $user->email,
+            'role' => $user->role,
+        ]);
     }
 
     /** @test */
@@ -182,7 +202,9 @@ class AdminUserControllerTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
 
-        $this->assertTrue(User::findOrFail($user->id)->isAdmin());
+        $user->refresh();
+
+        $this->assertTrue($user->isAdmin());
     }
 
     /** @test */
@@ -199,6 +221,9 @@ class AdminUserControllerTest extends TestCase
         $this->put(route('admin.users.update', $user), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $user->refresh();
+        $this->assertEquals('anakin', $user->username);
     }
 
     /** @test */
@@ -223,6 +248,8 @@ class AdminUserControllerTest extends TestCase
             ->assertRedirect(route('admin.users.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertSoftDeleted($user);
     }
 
     /** @test */

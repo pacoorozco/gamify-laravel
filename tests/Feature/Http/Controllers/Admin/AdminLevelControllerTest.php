@@ -94,11 +94,11 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function store_creates_an_object()
     {
-        /** @var Level $level */
-        $level = Level::factory()->make();
+        /** @var Level $want */
+        $want = Level::factory()->make();
         $input_data = [
-            'name' => $level->name,
-            'required_points' => $level->required_points,
+            'name' => $want->name,
+            'required_points' => $want->required_points,
             'active' => true,
         ];
 
@@ -106,16 +106,30 @@ class AdminLevelControllerTest extends TestCase
             ->assertRedirect(route('admin.levels.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertDatabaseHas(Level::class, [
+            'name' => $want->name,
+            'required_points' => $want->required_points,
+            'active' => true,
+        ]);
     }
 
     /** @test */
     public function store_returns_errors_on_invalid_data()
     {
-        $invalid_input_data = [];
+        /** @var Level $want */
+        $want = Level::factory()->make();
+        $invalid_input_data = [
+            'name' => $want->name,
+        ];
 
         $this->post(route('admin.levels.store'), $invalid_input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $this->assertDatabaseMissing(Level::class, [
+            'name' => $want->name,
+        ]);
     }
 
     /** @test */
@@ -159,6 +173,13 @@ class AdminLevelControllerTest extends TestCase
             ->assertRedirect(route('admin.levels.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertDatabaseHas(Level::class, [
+            'id' => $level->id,
+            'name' => 'Level silver',
+            'required_points' => $level->required_points,
+            'active' => true,
+        ]);
     }
 
     /** @test */
@@ -175,6 +196,8 @@ class AdminLevelControllerTest extends TestCase
         $this->put(route('admin.levels.update', $level), $input_data)
             ->assertSessionHasErrors()
             ->assertSessionHas('errors');
+
+        $this->assertModelExists($level);
     }
 
     /** @test */
@@ -199,6 +222,8 @@ class AdminLevelControllerTest extends TestCase
             ->assertRedirect(route('admin.levels.index'))
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
+
+        $this->assertSoftDeleted($level);
     }
 
     /** @test */
