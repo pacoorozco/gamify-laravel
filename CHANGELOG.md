@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 2.7.3 - 2022-04-06
+
+### Changed
+- Update dependencies to fix some security vulnerabilities ([#231][i231], [#229][i229], [#228][i228])
+
+[i228]: https://github.com/pacoorozco/gamify-laravel/pull/228
+[i229]: https://github.com/pacoorozco/gamify-laravel/pull/229
+[i231]: https://github.com/pacoorozco/gamify-laravel/pull/231
+
 ## 2.7.2 - 2021-10-08
 
 ### Changed
