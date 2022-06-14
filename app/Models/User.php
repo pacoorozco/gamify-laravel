@@ -29,7 +29,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -213,9 +212,9 @@ class User extends Authenticatable
     public function hasBadgeCompleted(Badge $badge): bool
     {
         return $this->badges()
-                ->wherePivot('badge_id', $badge->id)
-                ->wherePivot('completed', true)
-                ->exists();
+            ->wherePivot('badge_id', $badge->id)
+            ->wherePivot('completed', true)
+            ->exists();
     }
 
     /**
@@ -227,7 +226,8 @@ class User extends Authenticatable
      */
     public function getLevelAttribute(): string
     {
-        return Level::findByExperience($this->experience)?->name ?? 'N/A';
+        return Level::findByExperience($this->experience)
+            ->name;
     }
 
     public function getNextLevelAttribute(): string
@@ -237,10 +237,7 @@ class User extends Authenticatable
 
     public function getNextLevel(): Level
     {
-        try {
-            return Level::findNextByExperience($this->experience);
-        } catch (ModelNotFoundException $exception) {
-            return Level::findByExperience($this->experience);
-        }
+        return Level::findNextByExperience($this->experience) ?? Level::findByExperience($this->experience);
+
     }
 }

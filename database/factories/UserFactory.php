@@ -56,12 +56,7 @@ class UserFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the user is admin.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function admin()
+    public function admin(): Factory
     {
         return $this->state(function () {
             return [

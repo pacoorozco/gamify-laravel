@@ -26,6 +26,7 @@
 namespace Gamify\Presenters;
 
 use Gamify\Enums\BadgeActuators;
+use Gamify\Models\Badge;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
@@ -78,15 +79,8 @@ class BadgePresenter extends Presenter
         return new HtmlString((string) $this->model->imageTag('image_url'));
     }
 
-    /**
-     * Returns an array of actuators.
-     *
-     * @return array
-     */
     public function actuators(): array
     {
-        return ! is_null($this->model->actuators)
-            ? $this->model->actuators->getFlags()
-            : [];
+        return $this->model->actuators->getFlags();
     }
 }
