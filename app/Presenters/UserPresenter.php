@@ -23,45 +23,19 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Requests;
+namespace Gamify\Presenters;
 
-use BenSampo\Enum\Rules\EnumValue;
-use Gamify\Enums\Roles;
+use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\HtmlString;
+use Laracodes\Presenter\Presenter;
 
-class UserUpdateRequest extends Request
+class UserPresenter extends Presenter
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
+    /** @var User */
+    protected $model;
 
-    public function rules(): array
-    {
-        /** @var User $user */
-        $user = $this->route('user');
-
-        return [
-            'name' => [
-                'required',
-                'string',
-            ],
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user),
-            ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::default(),
-            ],
-            'role' => [
-                'required',
-                new EnumValue(Roles::class),
-            ],
-        ];
+    public function role(): string {
+        return $this->model->role->description;
     }
 }

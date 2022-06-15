@@ -43,6 +43,9 @@ class AdminUserDataTablesController extends AdminController
         ])->orderBy('username', 'ASC');
 
         return $dataTable->eloquent($users)
+            ->editColumn('role', function (User $user) {
+                return $user->present()->role;
+            })
             ->addColumn('actions', function (User $user) {
                 return view('admin/partials.actions_dd')
                     ->with('model', 'users')

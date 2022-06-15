@@ -26,6 +26,7 @@
 namespace Gamify\Providers;
 
 use Gamify\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -60,13 +61,20 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function registerGamifyAbilities(): void
     {
-        Gate::define('access-dashboard', function (User $user) {
-            return $user->isAdmin();
+        Gate::define('access-dashboard', function (User $currentUser) {
+            return $currentUser->isAdmin();
         });
 
-        // User can not update its own role.
-        Gate::define('update-role', function (User $user, int $userId) {
-            return $user->id != $userId;
+        // A user can not update its own role.
+        Gate::define('update-role', function (User $currentUser, User $user) {
+            return $currentUser->isAdmin()
+                && $currentUser->isNot($user);
+        });
+
+        // A user can not delete itself.
+        Gate::define('delete-user', function (User $currentUser, User $user) {
+            return $currentUser->isAdmin()
+                && $currentUser->isNot($user);
         });
     }
 }

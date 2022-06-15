@@ -25,6 +25,7 @@
 
 use Gamify\Enums\BadgeActuators;
 use Gamify\Enums\QuestionActuators;
+use Gamify\Enums\Roles;
 
 return [
 
@@ -39,6 +40,11 @@ return [
         QuestionActuators::OnQuestionAnswered => 'Always',
         QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
         QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
+    ],
+
+    Roles::class => [
+        Roles::Admin => 'Administrator',
+        Roles::Player => 'Player',
     ],
 
 ];

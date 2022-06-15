@@ -31,7 +31,7 @@ use Gamify\Jobs\CreateUser;
 use Gamify\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class AdminUserController extends AdminController
@@ -78,23 +78,17 @@ class AdminUserController extends AdminController
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        try {
-            // password is not changed if it's empty.
-            $data = empty($request->input('password'))
-                ? Arr::except($request->validated(), ['password'])
-                : $request->validated();
+        // password is not changed if it's empty.
+        $data = empty($request->input('password'))
+            ? Arr::except($request->validated(), ['password'])
+            : $request->validated();
 
-            // users can't change its own role
-            if (Auth::user()?->cannot('update-role', $user->id)) {
-                $data = Arr::except($data, ['role']);
-            }
-
-            $user->update($data);
-        } catch (\Exception $exception) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', __('admin/user/messages.edit.error'));
+        // users can't change its own role
+        if (Gate::denies('update-role', $user)) {
+            $data = Arr::except($data, ['role']);
         }
+
+        $user->update($data);
 
         return redirect()->route('admin.users.edit', $user)
             ->with('success', __('admin/user/messages.edit.success'));
@@ -102,18 +96,11 @@ class AdminUserController extends AdminController
 
     public function destroy(User $user): RedirectResponse
     {
-        // Can't remove myself
-        if ($user->id === Auth::id()) {
-            return redirect()->route('admin.users.index')
-                ->with('error', __('admin/user/messages.delete.impossible'));
+        if (Gate::denies('delete-user', $user)) {
+            abort(403);
         }
 
-        try {
-            $user->delete();
-        } catch (\Exception $exception) {
-            return redirect()->back()
-                ->with('error', __('admin/user/messages.delete.error'));
-        }
+        $user->delete();
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin/user/messages.delete.success'));

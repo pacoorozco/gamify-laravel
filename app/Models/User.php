@@ -27,6 +27,7 @@ namespace Gamify\Models;
 
 use Carbon\Carbon;
 use Gamify\Enums\Roles;
+use Gamify\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Laracodes\Presenter\Traits\Presentable;
 
 /**
  * User model, represents a Gamify user.
@@ -44,13 +46,16 @@ use Illuminate\Support\Facades\Hash;
  * @property string $username The username of this user.
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
- * @property string $role Role of the user ['user', 'editor', 'administrator'].
+ * @property \Gamify\Enums\Roles $role Role of the user.
  * @property \Illuminate\Support\Carbon $last_login_at Time when the user last logged in.
  * @property int $experience The reputation of the user.
  */
 class User extends Authenticatable
 {
     use HasFactory;
+    use Presentable;
+
+    protected string $presenter = UserPresenter::class;
 
     protected $fillable = [
         'name',
@@ -68,6 +73,10 @@ class User extends Authenticatable
     protected $dates = [
         'last_login_at',
         'email_verified_at',
+    ];
+
+    protected $casts = [
+        'role' => Roles::class,
     ];
 
     public static function findByUsername(string $username): self
@@ -121,7 +130,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->role === Roles::Admin;
+        return $this->role->is(Roles::Admin);
     }
 
     // DEPRECATED - Use 'player' scope instead.

@@ -27,23 +27,19 @@ namespace Gamify\Http\Requests;
 
 use BenSampo\Enum\Rules\EnumValue;
 use Gamify\Enums\Roles;
-use Gamify\Models\User;
+use Gamify\Rules\UsernameRule;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UserCreateRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
             'username' => [
                 'required',
-                'string',
+                'max:255',
+                new UsernameRule(),
                 Rule::unique('users'),
             ],
             'name' => [

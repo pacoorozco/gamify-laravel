@@ -25,6 +25,7 @@
 
 namespace Tests\Unit\Models;
 
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -66,6 +67,7 @@ class UserTest extends TestCase
 
         $this->assertEquals([
             'id' => 'int',
+            'role' => Roles::class,
         ], $m->getCasts());
     }
 

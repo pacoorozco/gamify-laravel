@@ -23,45 +23,30 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Requests;
+namespace Gamify\Rules;
 
-use BenSampo\Enum\Rules\EnumValue;
-use Gamify\Enums\Roles;
-use Gamify\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Str;
 
-class UserUpdateRequest extends Request
+class UsernameRule implements Rule
 {
-    public function authorize(): bool
+    // Based on 'The Open Group Base Specifications Issue 7, 2018 edition'.
+    // https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_437
+    const VALID_USERNAME_REGEXP = '/^[A-Za-z\d][A-Za-z\d._-]*$/';
+
+    public function passes($attribute, $value): bool
     {
-        return true;
+        if (Str::length($value) < 1 || Str::length($value) > 255) {
+            return false;
+        }
+
+        return 1 == preg_match(self::VALID_USERNAME_REGEXP, $value);
     }
 
-    public function rules(): array
+    public function message(): string
     {
-        /** @var User $user */
-        $user = $this->route('user');
-
-        return [
-            'name' => [
-                'required',
-                'string',
-            ],
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user),
-            ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::default(),
-            ],
-            'role' => [
-                'required',
-                new EnumValue(Roles::class),
-            ],
-        ];
+        return 'The :attribute is not a valid POSIX username.';
     }
 }
+
+
