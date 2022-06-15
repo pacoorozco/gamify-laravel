@@ -29,6 +29,7 @@ use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
 use Gamify\Http\Controllers\Admin\AdminQuestionController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
+use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
 use Gamify\Http\Controllers\Auth\ChangePasswordController;
 use Gamify\Http\Controllers\Auth\LoginController;
 use Gamify\Http\Controllers\Auth\SocialAccountController;
@@ -186,10 +187,8 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      */
     // Datatables Ajax route.
     Route::middleware(['only.ajax'])
-        ->get(
-            'users/data',
-            [AdminUserController::class, 'data']
-        )->name('users.data');
+        ->get('users/data', AdminUserDataTablesController::class)
+        ->name('users.data');
 
     // Our special delete confirmation route - uses the show/details view.
     Route::get(

@@ -25,6 +25,7 @@
 
 namespace Database\Seeders;
 
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -40,13 +41,13 @@ class UserSeeder extends Seeder
                 'username' => 'admin',
                 'email' => 'admin@domain.local',
                 'password' => 'admin',
-                'role' => User::ADMIN_ROLE,
+                'role' => Roles::Admin,
             ],
             [
                 'username' => 'player',
                 'email' => 'player@domain.local',
                 'password' => 'player',
-                'role' => User::USER_ROLE,
+                'role' => Roles::Player,
             ],
         ];
 

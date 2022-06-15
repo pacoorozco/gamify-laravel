@@ -23,25 +23,12 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests;
+namespace Gamify\Enums;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Testing\TestResponse;
+use BenSampo\Enum\Enum;
 
-abstract class TestCase extends BaseTestCase
+final class Roles extends Enum
 {
-    use CreatesApplication;
-
-    /**
-     * Make ajax GET request.
-     *
-     * @param  string  $uri
-     * @return TestResponse
-     */
-    protected function ajaxGet(string $uri): TestResponse
-    {
-        return $this->withHeader('HTTP_X-Requested-With', 'XMLHttpRequest')
-            ->get($uri);
-    }
-
+    const Admin = 'administrator';
+    const Player = 'user';
 }

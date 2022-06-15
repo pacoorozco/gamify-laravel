@@ -26,6 +26,7 @@
 namespace Gamify\Models;
 
 use Carbon\Carbon;
+use Gamify\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,10 +51,6 @@ use Illuminate\Support\Facades\Hash;
 class User extends Authenticatable
 {
     use HasFactory;
-
-    const USER_ROLE = 'user';
-    const EDITOR_ROLE = 'editor';
-    const ADMIN_ROLE = 'administrator';
 
     protected $fillable = [
         'name',
@@ -124,12 +121,18 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->role === self::ADMIN_ROLE;
+        return $this->role === Roles::Admin;
     }
 
+    // DEPRECATED - Use 'player' scope instead.
     public function scopeMember(Builder $query): Builder
     {
-        return $query->where('role', self::USER_ROLE);
+        return $this->scopePlayer($query);
+    }
+
+    public function scopePlayer(Builder $query): Builder
+    {
+        return $query->where('role', Roles::Player);
     }
 
     public function getExperiencePoints(): int

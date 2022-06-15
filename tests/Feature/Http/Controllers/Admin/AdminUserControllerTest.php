@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use Gamify\Enums\Roles;
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -194,7 +195,7 @@ class AdminUserControllerTest extends TestCase
         $input_data = [
             'name' => $user->username,
             'email' => $user->email,
-            'role' => User::USER_ROLE,
+            'role' => Roles::Player,
         ];
 
         $this->put(route('admin.users.update', $user), $input_data)

@@ -25,6 +25,8 @@
 
 namespace Gamify\Http\Requests;
 
+use BenSampo\Enum\Rules\EnumValue;
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -59,11 +61,7 @@ class UserUpdateRequest extends Request
             ],
             'role' => [
                 'required',
-                Rule::in([
-                    User::USER_ROLE,
-                    User::EDITOR_ROLE,
-                    User::ADMIN_ROLE,
-                ]),
+                new EnumValue(Roles::class),
             ],
         ];
     }

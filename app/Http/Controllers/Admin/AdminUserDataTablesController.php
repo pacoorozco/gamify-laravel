@@ -23,25 +23,34 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests;
+namespace Gamify\Http\Controllers\Admin;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Testing\TestResponse;
+use Gamify\Models\User;
+use Illuminate\Http\JsonResponse;
+use Yajra\DataTables\DataTables;
 
-abstract class TestCase extends BaseTestCase
+class AdminUserDataTablesController extends AdminController
 {
-    use CreatesApplication;
 
-    /**
-     * Make ajax GET request.
-     *
-     * @param  string  $uri
-     * @return TestResponse
-     */
-    protected function ajaxGet(string $uri): TestResponse
+    public function __invoke(Datatables $dataTable): JsonResponse
     {
-        return $this->withHeader('HTTP_X-Requested-With', 'XMLHttpRequest')
-            ->get($uri);
-    }
+        $users = User::select([
+            'id',
+            'name',
+            'username',
+            'email',
+            'role',
+        ])->orderBy('username', 'ASC');
 
+        return $dataTable->eloquent($users)
+            ->addColumn('actions', function (User $user) {
+                return view('admin/partials.actions_dd')
+                    ->with('model', 'users')
+                    ->with('id', $user->id)
+                    ->render();
+            })
+            ->rawColumns(['actions'])
+            ->removeColumn('id')
+            ->toJson();
+    }
 }

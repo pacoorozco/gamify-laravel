@@ -29,12 +29,10 @@ use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\Jobs\CreateUser;
 use Gamify\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Yajra\DataTables\DataTables;
 
 class AdminUserController extends AdminController
 {
@@ -102,11 +100,6 @@ class AdminUserController extends AdminController
             ->with('success', __('admin/user/messages.edit.success'));
     }
 
-    public function delete(User $user): View
-    {
-        return view('admin/user/delete', compact('user'));
-    }
-
     public function destroy(User $user): RedirectResponse
     {
         // Can't remove myself
@@ -126,25 +119,8 @@ class AdminUserController extends AdminController
             ->with('success', __('admin/user/messages.delete.success'));
     }
 
-    public function data(Datatables $dataTable): JsonResponse
+    public function delete(User $user): View
     {
-        $users = User::select([
-            'id',
-            'name',
-            'username',
-            'email',
-            'role',
-        ])->orderBy('username', 'ASC');
-
-        return $dataTable->eloquent($users)
-            ->addColumn('actions', function (User $user) {
-                return view('admin/partials.actions_dd')
-                    ->with('model', 'users')
-                    ->with('id', $user->id)
-                    ->render();
-            })
-            ->rawColumns(['actions'])
-            ->removeColumn('id')
-            ->toJson();
+        return view('admin/user/delete', compact('user'));
     }
 }
