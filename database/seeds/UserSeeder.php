@@ -27,18 +27,21 @@ namespace Database\Seeders;
 
 use Gamify\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
+        DB::table('users')->delete();
+
         User::factory()
-            ->count(15)
-            ->create();
+            ->admin()
+            ->create([
+                'name' => 'Administrator',
+                'username' => 'admin',
+                'email' => 'admin@example.com',
+                'password' => 'admin',
+            ]);
     }
 }
