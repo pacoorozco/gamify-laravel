@@ -25,7 +25,6 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Couchbase\Role;
 use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

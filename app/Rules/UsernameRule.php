@@ -48,5 +48,3 @@ class UsernameRule implements Rule
         return 'The :attribute is not a valid POSIX username.';
     }
 }
-
-

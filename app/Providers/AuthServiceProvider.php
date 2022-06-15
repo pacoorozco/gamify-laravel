@@ -26,7 +26,6 @@
 namespace Gamify\Providers;
 
 use Gamify\Models\User;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
