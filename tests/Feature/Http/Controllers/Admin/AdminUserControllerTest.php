@@ -252,25 +252,4 @@ class AdminUserControllerTest extends TestCase
 
         $this->assertSoftDeleted($user);
     }
-
-    /** @test */
-    public function data_returns_proper_content()
-    {
-        // One user has already been created by setUp().
-        User::factory()->count(3)->create();
-
-        $this->withoutMiddleware(OnlyAjax::class)
-            ->get(route('admin.users.data'))
-            ->assertJsonCount(5, 'data');
-    }
-
-    /** @test */
-    public function data_fails_for_non_ajax_calls()
-    {
-        // One user has already been created by setUp().
-        User::factory()->count(3)->create();
-
-        $this->get(route('admin.users.data'))
-            ->assertForbidden();
-    }
 }
