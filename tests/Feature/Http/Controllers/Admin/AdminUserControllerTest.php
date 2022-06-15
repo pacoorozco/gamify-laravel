@@ -334,7 +334,6 @@ class AdminUserControllerTest extends TestCase
         $this->assertModelExists($want);
     }
 
-
     /** @test */
     public function admins_should_update_users(): void
     {
