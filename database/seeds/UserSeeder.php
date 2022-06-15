@@ -35,13 +35,21 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->delete();
 
-        User::factory()
-            ->admin()
-            ->create([
-                'name' => 'Administrator',
+        $users = [
+            [
                 'username' => 'admin',
-                'email' => 'admin@example.com',
+                'email' => 'admin@domain.local',
                 'password' => 'admin',
-            ]);
+                'role' => User::ADMIN_ROLE,
+            ],
+            [
+                'username' => 'player',
+                'email' => 'player@domain.local',
+                'password' => 'player',
+                'role' => User::USER_ROLE,
+            ],
+        ];
+
+        User::factory()->createMany($users);
     }
 }
