@@ -118,16 +118,6 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
-    public function getLastLoggedDate(): string
-    {
-        return $this->lastLoginAt()?->diffForHumans() ?? 'N/A';
-    }
-
-    public function lastLoginAt(): ?Carbon
-    {
-        return $this->last_login_at;
-    }
-
     public function isAdmin(): bool
     {
         return $this->role->is(Roles::Admin);

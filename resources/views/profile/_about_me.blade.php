@@ -111,11 +111,6 @@
                 <td>@lang('user/profile.user_since'):</td>
                 <td>{{ date("M Y", strtotime($user->created_at)) }}</td>
             </tr>
-
-            <tr>
-                <td>@lang('user/profile.last_logged'):</td>
-                <td>{{ $user->getLastLoggedDate() }}</td>
-            </tr>
             <tr>
                 <td>@lang('user/profile.roles'):</td>
                 <td>{{ ucfirst($user->role) }}</td>

@@ -25,9 +25,7 @@
 
 namespace Gamify\Presenters;
 
-use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
 class UserPresenter extends Presenter
@@ -35,7 +33,8 @@ class UserPresenter extends Presenter
     /** @var User */
     protected $model;
 
-    public function role(): string {
+    public function role(): string
+    {
         return $this->model->role->description;
     }
 }

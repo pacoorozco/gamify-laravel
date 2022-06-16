@@ -31,7 +31,6 @@ use Gamify\Listeners\AddAchievements;
 use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
-use Gamify\Listeners\LogSuccessfulLogin;
 use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -50,7 +49,6 @@ class EventServiceProvider extends ServiceProvider
             OktaExtendSocialite::class,
         ],
         Login::class => [
-            LogSuccessfulLogin::class,
             IncrementBadgesOnUserLogin::class,
         ],
         QuestionAnswered::class => [
