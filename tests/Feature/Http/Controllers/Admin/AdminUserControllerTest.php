@@ -25,251 +25,523 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Gamify\Http\Middleware\OnlyAjax;
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
+use Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AdminUserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private User $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        /** @var User $admin */
-        $admin = User::factory()->admin()->create();
-        $this->actingAs($admin);
+        $this->user = User::factory()
+            ->create();
     }
 
     /** @test */
-    public function access_is_restricted_to_admins()
+    public function players_should_not_see_the_index_view(): void
     {
-        $user = User::factory()->create();
-        $test_data = [
-            ['protocol' => 'GET', 'route' => route('admin.users.index')],
-            ['protocol' => 'GET', 'route' => route('admin.users.create')],
-            ['protocol' => 'POST', 'route' => route('admin.users.store')],
-            ['protocol' => 'GET', 'route' => route('admin.users.show', $user)],
-            ['protocol' => 'GET', 'route' => route('admin.users.edit', $user)],
-            ['protocol' => 'PUT', 'route' => route('admin.users.update', $user)],
-            ['protocol' => 'GET', 'route' => route('admin.users.delete', $user)],
-            ['protocol' => 'DELETE', 'route' => route('admin.users.destroy', $user)],
-        ];
-
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        foreach ($test_data as $test) {
-            $this->actingAs($user)
-                ->call($test['protocol'], $test['route'])
-                ->assertForbidden();
-        }
-
-        // Ajax routes needs to disable middleware
-        $this->actingAs($user)
-            ->withoutMiddleware(OnlyAjax::class)
-            ->get(route('admin.users.data'))
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.index'))
             ->assertForbidden();
     }
 
     /** @test */
-    public function index_returns_proper_content()
+    public function admins_should_see_the_index_view()
     {
-        $this->get(route('admin.users.index'))
-            ->assertOK()
+        $this->user->role = Roles::Admin;
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.index'))
+            ->assertSuccessful()
             ->assertViewIs('admin.user.index');
     }
 
     /** @test */
-    public function create_returns_proper_content()
+    public function players_should_not_see_the_new_user_form(): void
     {
-        $this->get(route('admin.users.create'))
-            ->assertOk()
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.create'))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_see_the_new_user_form(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.create'))
+            ->assertSuccessful()
             ->assertViewIs('admin.user.create');
     }
 
     /** @test */
-    public function store_creates_an_object()
-    {
-        /** @var User $user */
-        $user = User::factory()->make();
-        $input_data = [
-            'username' => $user->username,
-            'name' => $user->name,
-            'email' => $user->email,
-            'password' => 'very_secret',
-            'password_confirmation' => 'very_secret',
-            'role' => $user->role,
-        ];
-
-        $this->post(route('admin.users.store'), $input_data)
-            ->assertRedirect(route('admin.users.index'))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
-
-        $this->assertDatabaseHas(User::class, [
-            'username' => $user->username,
-            'name' => $user->name,
-            'email' => $user->email,
-            'role' => $user->role,
-        ]);
-    }
-
-    /** @test */
-    public function store_returns_errors_on_invalid_data()
+    public function players_should_not_create_users(): void
     {
         /** @var User $want */
         $want = User::factory()->make();
-        $invalid_input_data = [
-            'username' => $want->username,
-        ];
 
-        $this->post(route('admin.users.store'), $invalid_input_data)
-            ->assertSessionHasErrors()
-            ->assertSessionHas('errors');
+        $this
+            ->actingAs($this->user)
+            ->post(route('admin.users.store'), [
+                'username' => $want->username,
+                'name' => $want->name,
+                'email' => $want->email,
+                'password' => 'secret123',
+                'password_confirmation' => 'secret123',
+                'role' => $want->role,
+            ])
+            ->assertForbidden();
 
         $this->assertDatabaseMissing(User::class, [
             'username' => $want->username,
+            'email' => $want->email,
         ]);
     }
 
     /** @test */
-    public function show_returns_proper_content()
+    public function admins_should_create_users(): void
     {
-        /** @var User $user */
-        $user = User::factory()->create();
+        $this->user->role = Roles::Admin;
 
-        $this->get(route('admin.users.show', $user))
-            ->assertOk()
-            ->assertViewIs('admin.user.show')
-            ->assertSee($user->username);
-    }
+        /** @var User $want */
+        $want = User::factory()->make();
 
-    /** @test */
-    public function edit_returns_proper_content()
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
+        $this
+            ->actingAs($this->user)
+            ->post(route('admin.users.store'), [
+                'username' => $want->username,
+                'name' => $want->name,
+                'email' => $want->email,
+                'password' => 'secret123',
+                'password_confirmation' => 'secret123',
+                'role' => $want->role->value,
+            ])
+            ->assertRedirect(route('admin.users.index'))
+            ->assertValid();
 
-        $this->get(route('admin.users.edit', $user))
-            ->assertOk()
-            ->assertViewIs('admin.user.edit')
-            ->assertSee($user->name);
-    }
-
-    /** @test */
-    public function update_edits_an_object()
-    {
-        /** @var User $user */
-        $user = User::factory()->create([
-            'name' => 'Han Solo',
+        $this->assertDatabaseHas(User::class, [
+            'username' => $want->username,
+            'name' => $want->name,
+            'email' => $want->email,
+            'role' => $want->role,
         ]);
-        $input_data = [
-            'name' => 'Leia',
-            'email' => $user->email,
-            'role' => $user->role,
+    }
+
+    /**
+     * @test
+     * @dataProvider provideWrongDataForUserCreation
+     */
+    public function admins_should_get_errors_when_creating_users_with_wrong_data(
+        array $data,
+        array $errors
+    ): void {
+        $this->user->role = Roles::Admin;
+
+        // User to validate unique rules...
+        User::factory()->create([
+            'username' => 'john',
+            'email' => 'john.doe@domain.local',
+        ]);
+
+        /** @var User $want */
+        $want = User::factory()->make();
+
+        $formData = [
+            'username' => $data['username'] ?? $want->username,
+            'name' => $data['name'] ?? $want->name,
+            'email' => $data['email'] ?? $want->email,
+            'password' => $data['password'] ?? $want->password,
+            'password_confirmation' => $data['password_confirmation'] ?? $want->password,
+            'role' => $data['role'] ?? $want->role->value,
         ];
 
-        $this->put(route('admin.users.update', $user), $input_data)
+        $this
+            ->actingAs($this->user)
+            ->post(route('admin.users.store'), $formData)
+            ->assertInvalid($errors);
+
+        $this->assertDatabaseMissing(User::class, [
+            'username' => $formData['username'],
+            'email' => $formData['email'],
+        ]);
+    }
+
+    public function provideWrongDataForUserCreation(): Generator
+    {
+        yield 'username is empty' => [
+            'data' => [
+                'username' => '',
+            ],
+            'errors' => ['username'],
+        ];
+
+        yield 'username > 255 chars' => [
+            'data' => [
+                'username' => '01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012
+34567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345',
+            ],
+            'errors' => ['username'],
+        ];
+
+        yield 'username ! a username' => [
+            'data' => [
+                'username' => 'u$ern4me',
+            ],
+            'errors' => ['username'],
+        ];
+
+        yield 'username is taken' => [
+            'data' => [
+                'username' => 'john',
+            ],
+            'errors' => ['username'],
+        ];
+
+        yield 'name is empty' => [
+            'data' => [
+                'name' => '',
+            ],
+            'errors' => ['name'],
+        ];
+
+        yield 'email is empty' => [
+            'data' => [
+                'email' => '',
+            ],
+            'errors' => ['email'],
+        ];
+
+        yield 'email ! an email' => [
+            'data' => [
+                'email' => 'is-not-an-email',
+            ],
+            'errors' => ['email'],
+        ];
+
+        yield 'email is taken' => [
+            'data' => [
+                'email' => 'john.doe@domain.local',
+            ],
+            'errors' => ['email'],
+        ];
+
+        yield 'password is empty' => [
+            'data' => [
+                'password' => '',
+            ],
+            'errors' => ['password'],
+        ];
+
+        yield 'password ! long enough' => [
+            'data' => [
+                'password' => '1234',
+            ],
+            'errors' => ['password'],
+        ];
+
+        yield 'password ! confirmed' => [
+            'data' => [
+                'password' => 'verySecretPassword',
+                'password_confirmation' => 'notSoSecretPassword',
+            ],
+            'errors' => ['password'],
+        ];
+
+        yield 'role ! a role' => [
+            'data' => [
+                'role' => 'non-existent-role',
+            ],
+            'errors' => ['role'],
+        ];
+    }
+
+    /** @test */
+    public function players_should_not_see_any_user(): void
+    {
+        $want = User::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.show', $want))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_see_any_user(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $want = User::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.show', $want))
+            ->assertSuccessful()
+            ->assertViewIs('admin.user.show')
+            ->assertViewHas('user', $want);
+    }
+
+    /** @test */
+    public function players_should_not_see_the_edit_user_form(): void
+    {
+        $want = User::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.edit', $want))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_see_the_edit_user_form(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $want = User::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.edit', $want))
+            ->assertSuccessful()
+            ->assertViewIs('admin.user.edit')
+            ->assertViewHas('user', $want);
+    }
+
+    /** @test */
+    public function players_should_not_update_users(): void
+    {
+        $want = User::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.users.update', $want), [])
+            ->assertForbidden();
+
+        $this->assertModelExists($want);
+    }
+
+    /** @test */
+    public function admins_should_update_users(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        /** @var User $want */
+        $want = User::factory()->make();
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.users.update', $user), [
+                'name' => $want->name,
+                'email' => $want->email,
+                'password' => 'new-password-123',
+                'password_confirmation' => 'new-password-123',
+                'role' => $want->role->value,
+            ])
             ->assertRedirect(route('admin.users.edit', $user))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
+            ->assertValid();
 
         $this->assertDatabaseHas(User::class, [
             'id' => $user->id,
-            'name' => 'Leia',
+            'name' => $want->name,
+            'email' => $want->email,
+            'role' => $want->role,
+        ]);
+
+        $user->refresh();
+
+        $this->assertTrue(Hash::check('new-password-123', $user->password));
+    }
+
+    /** @test */
+    public function admins_should_not_update_their_own_role(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $this->user->save();
+
+        /** @var User $want */
+        $want = User::factory()->make();
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.users.update', $this->user), [
+                'name' => $want->name,
+                'email' => $want->email,
+                'role' => Roles::Player,
+            ])
+            ->assertRedirect(route('admin.users.edit', $this->user))
+            ->assertValid();
+
+        $this->assertDatabaseHas(User::class, [
+            'username' => $this->user->username,
+            'name' => $want->name,
+            'email' => $want->email,
+            'role' => $this->user->role,
+        ]);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideWrongDataForUserModification
+     */
+    public function admins_should_get_errors_when_updating_users_with_wrong_data(
+        array $data,
+        array $errors
+    ): void {
+        $this->user->role = Roles::Admin;
+
+        // User to validate unique rules...
+        User::factory()->create([
+            'username' => 'john',
+            'email' => 'john.doe@domain.local',
+        ]);
+
+        /** @var User $user */
+        $user = User::factory()->create([
+            'password' => 'veryS3cr3t',
+        ]);
+
+        $formData = [
+            'name' => $data['name'] ?? $user->name,
+            'email' => $data['email'] ?? $user->email,
+            'password' => $data['password'] ?? $user->password,
+            'password_confirmation' => $data['password_confirmation'] ?? $user->password,
+            'role' => $data['role'] ?? $user->role->value,
+        ];
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.users.update', $user), $formData)
+            ->assertInvalid($errors);
+
+        $this->assertDatabaseHas(User::class, [
+            'id' => $user->id,
+            'username' => $user->username,
+            'name' => $user->name,
             'email' => $user->email,
             'role' => $user->role,
         ]);
-    }
-
-    /** @test */
-    public function update_does_not_allows_users_to_change_its_own_role()
-    {
-        /** @var User $user */
-        $user = auth()->user();
-
-        $input_data = [
-            'name' => $user->username,
-            'email' => $user->email,
-            'role' => User::USER_ROLE,
-        ];
-
-        $this->put(route('admin.users.update', $user), $input_data)
-            ->assertRedirect(route('admin.users.edit', $user))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
 
         $user->refresh();
 
-        $this->assertTrue($user->isAdmin());
+        $this->assertTrue(Hash::check('veryS3cr3t', $user->password));
     }
 
-    /** @test */
-    public function update_returns_errors_on_invalid_data()
+    public function provideWrongDataForUserModification(): Generator
     {
-        /** @var User $user */
-        $user = User::factory()->create([
-            'username' => 'anakin',
-        ]);
-        $input_data = [
-            'username' => '',
+        yield 'name is empty' => [
+            'data' => [
+                'name' => '',
+            ],
+            'errors' => ['name'],
         ];
 
-        $this->put(route('admin.users.update', $user), $input_data)
-            ->assertSessionHasErrors()
-            ->assertSessionHas('errors');
+        yield 'email is empty' => [
+            'data' => [
+                'email' => '',
+            ],
+            'errors' => ['email'],
+        ];
 
-        $user->refresh();
-        $this->assertEquals('anakin', $user->username);
+        yield 'email ! an email' => [
+            'data' => [
+                'email' => 'is-not-an-email',
+            ],
+            'errors' => ['email'],
+        ];
+
+        yield 'email is taken' => [
+            'data' => [
+                'email' => 'john.doe@domain.local',
+            ],
+            'errors' => ['email'],
+        ];
+
+        yield 'password is empty' => [
+            'data' => [
+                'password' => '',
+            ],
+            'errors' => ['password'],
+        ];
+
+        yield 'password ! long enough' => [
+            'data' => [
+                'password' => '1234',
+            ],
+            'errors' => ['password'],
+        ];
+
+        yield 'password ! confirmed' => [
+            'data' => [
+                'password' => 'verySecretPassword',
+                'password_confirmation' => 'notSoSecretPassword',
+            ],
+            'errors' => ['password'],
+        ];
+
+        yield 'role ! a role' => [
+            'data' => [
+                'role' => 'non-existent-role',
+            ],
+            'errors' => ['role'],
+        ];
     }
 
     /** @test */
-    public function delete_returns_proper_content()
+    public function players_should_not_delete_users(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->get(route('admin.users.delete', $user))
-            ->assertOk()
-            ->assertViewIs('admin.user.delete')
-            ->assertSee($user->name);
-    }
-
-    /** @test */
-    public function destroy_deletes_an_object()
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        $this->delete(route('admin.users.destroy', $user))
-            ->assertRedirect(route('admin.users.index'))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
-
-        $this->assertSoftDeleted($user);
-    }
-
-    /** @test */
-    public function data_returns_proper_content()
-    {
-        // One user has already been created by setUp().
-        User::factory()->count(3)->create();
-
-        $this->withoutMiddleware(OnlyAjax::class)
-            ->get(route('admin.users.data'))
-            ->assertJsonCount(5, 'data');
-    }
-
-    /** @test */
-    public function data_fails_for_non_ajax_calls()
-    {
-        // One user has already been created by setUp().
-        User::factory()->count(3)->create();
-
-        $this->get(route('admin.users.data'))
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.users.destroy', $user))
             ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_not_delete_themselves(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $this
+            ->actingAs($this->user)
+            ->delete(route('admin.users.destroy', $this->user))
+            ->assertForbidden();
+
+        $this->assertModelExists($this->user);
+    }
+
+    /** @test */
+    public function admins_should_delete_users(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->delete(route('admin.users.destroy', $user))
+            ->assertRedirect(route('admin.users.index'));
+
+        $this->assertModelMissing($user);
     }
 }

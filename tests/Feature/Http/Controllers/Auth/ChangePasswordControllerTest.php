@@ -66,7 +66,7 @@ class ChangePasswordControllerTest extends TestCase
                 'new-password' => 'fooBarBaz',
                 'new-password_confirmation' => 'fooBarBaz',
             ])
-            ->assertSessionHasErrors('current-password');
+            ->assertSessionHasErrors('password');
     }
 
     /** @test */

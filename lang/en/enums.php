@@ -23,25 +23,28 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Listeners;
+use Gamify\Enums\BadgeActuators;
+use Gamify\Enums\QuestionActuators;
+use Gamify\Enums\Roles;
 
-use Gamify\Models\User;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Support\Carbon;
+return [
 
-class LogSuccessfulLogin
-{
-    public function __construct()
-    {
-        //
-    }
+    BadgeActuators::class => [
+        BadgeActuators::OnQuestionAnswered => 'Question has been answered',
+        BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
+        BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
+        BadgeActuators::OnUserLogin => 'User has logged in',
+    ],
 
-    public function handle(Login $event): void
-    {
-        /** @var User $user */
-        $user = User::findOrFail($event->user->getAuthIdentifier());
-        $user->save([
-            'last_login_at' => Carbon::now()->toDateTimeString(),
-        ]);
-    }
-}
+    QuestionActuators::class => [
+        QuestionActuators::OnQuestionAnswered => 'Always',
+        QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
+        QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
+    ],
+
+    Roles::class => [
+        Roles::Admin => 'Administrator',
+        Roles::Player => 'Player',
+    ],
+
+];

@@ -23,45 +23,36 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Requests;
+namespace Gamify\Http\Controllers\Admin;
 
-use BenSampo\Enum\Rules\EnumValue;
-use Gamify\Enums\Roles;
 use Gamify\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Http\JsonResponse;
+use Yajra\DataTables\DataTables;
 
-class UserUpdateRequest extends Request
+class AdminUserDataTablesController extends AdminController
 {
-    public function authorize(): bool
+    public function __invoke(Datatables $dataTable): JsonResponse
     {
-        return true;
-    }
+        $users = User::select([
+            'id',
+            'name',
+            'username',
+            'email',
+            'role',
+        ])->orderBy('username', 'ASC');
 
-    public function rules(): array
-    {
-        /** @var User $user */
-        $user = $this->route('user');
-
-        return [
-            'name' => [
-                'required',
-                'string',
-            ],
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user),
-            ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::default(),
-            ],
-            'role' => [
-                'required',
-                new EnumValue(Roles::class),
-            ],
-        ];
+        return $dataTable->eloquent($users)
+            ->editColumn('role', function (User $user) {
+                return $user->present()->role;
+            })
+            ->addColumn('actions', function (User $user) {
+                return view('admin/partials.actions_dd')
+                    ->with('model', 'users')
+                    ->with('id', $user->id)
+                    ->render();
+            })
+            ->rawColumns(['actions'])
+            ->removeColumn('id')
+            ->toJson();
     }
 }

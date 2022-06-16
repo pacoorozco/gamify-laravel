@@ -23,22 +23,18 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Enums\BadgeActuators;
-use Gamify\Enums\QuestionActuators;
+namespace Gamify\Presenters;
 
-return [
+use Gamify\Models\User;
+use Laracodes\Presenter\Presenter;
 
-    BadgeActuators::class => [
-        BadgeActuators::OnQuestionAnswered => 'Question has been answered',
-        BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
-        BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
-        BadgeActuators::OnUserLogin => 'User has logged in',
-    ],
+class UserPresenter extends Presenter
+{
+    /** @var User */
+    protected $model;
 
-    QuestionActuators::class => [
-        QuestionActuators::OnQuestionAnswered => 'Always',
-        QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
-        QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
-    ],
-
-];
+    public function role(): string
+    {
+        return $this->model->role->description;
+    }
+}

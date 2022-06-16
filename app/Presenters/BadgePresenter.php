@@ -78,15 +78,8 @@ class BadgePresenter extends Presenter
         return new HtmlString((string) $this->model->imageTag('image_url'));
     }
 
-    /**
-     * Returns an array of actuators.
-     *
-     * @return array
-     */
     public function actuators(): array
     {
-        return ! is_null($this->model->actuators)
-            ? $this->model->actuators->getFlags()
-            : [];
+        return $this->model->actuators->getFlags();
     }
 }

@@ -25,6 +25,7 @@
 
 namespace Tests\Unit\Models;
 
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -66,64 +67,36 @@ class UserTest extends TestCase
 
         $this->assertEquals([
             'id' => 'int',
+            'role' => Roles::class,
         ], $m->getCasts());
     }
 
-    /** @test */
-    public function getLastLoggedDate_is_formatted_when_user_logged_in()
-    {
+    /**
+     * @test
+     * @dataProvider provideDataToTestAdminMembership
+     */
+    public function it_should_return_if_user_is_admin(
+        string $role,
+        bool $shouldBeAdmin,
+    ) {
         $m = new User();
-        $test_cases = [
-            [
-                'input' => today()->subDay(),
-                'want' => '1 day ago',
-            ],
-            [
-                'input' => today()->subDays(3),
-                'want' => '3 days ago',
-            ],
-            [
-                'input' => today()->subWeek(),
-                'want' => '1 week ago',
-            ],
-            [
-                'input' => today()->subWeeks(3),
-                'want' => '3 weeks ago',
-            ],
-        ];
 
-        foreach ($test_cases as $current_test) {
-            $m->last_login_at = $current_test['input'];
+        $m->role = $role;
 
-            $this->assertEquals($current_test['want'], $m->getLastLoggedDate());
-        }
+        $this->assertEquals($shouldBeAdmin, $m->isAdmin());
     }
 
-    /** @test */
-    public function getLastLoggedDate_is_not_available_when_user_has_not_logged_in()
+    public function provideDataToTestAdminMembership(): \Generator
     {
-        $m = new User();
-
-        $this->assertEquals('N/A', $m->getLastLoggedDate());
-    }
-
-    /** @test */
-    public function isAdmin_returns_properly()
-    {
-        $m = new User();
-
-        $test_data = [
-            'administrator' => true,
-            'user' => false,
-            'editor' => false,
-            'randomWord' => false,
+        yield 'Administrator' => [
+            'role' => Roles::Admin,
+            'want' => true,
         ];
 
-        foreach ($test_data as $input => $want) {
-            $m->role = $input;
-
-            $this->assertEquals($want, $m->isAdmin());
-        }
+        yield 'Player' => [
+            'role' => Roles::Player,
+            'want' => false,
+        ];
     }
 
     /** @test */

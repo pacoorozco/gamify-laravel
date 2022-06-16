@@ -23,34 +23,27 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Models\User;
-use Illuminate\Database\Migrations\Migration;
+return [
 
-class AddDefaultAdminUserInUsersTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        $admin = User::create([
-            'name' => 'Administrator',
-            'username' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => 'admin',
-            'role' => User::ADMIN_ROLE,
-        ]);
-        $admin->profile()->create();
-    }
+    'already_exists'          => 'User already exists!',
+    'does_not_exist'          => 'User does not exist.',
+    'login_required'          => 'The login field is required',
+    'password_required'       => 'The password is required.',
+    'password_does_not_match' => 'The passwords provided do not match.',
+    'roles_help'          => 'Select a role to assign to the user, remember that a user takes on the permissions of the role they are assigned.',
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-    }
-}
+    'create' => [
+        'success' => 'User created successfully.',
+    ],
+
+    'edit' => [
+        'impossible' => 'You cannot edit yourself.',
+        'success'    => 'The user was edited successfully.',
+    ],
+
+    'delete' => [
+        'impossible' => 'You cannot delete yourself.',
+        'success'    => 'The user was deleted successfully.',
+    ],
+
+];

@@ -6,9 +6,12 @@ use Gamify\Http\Controllers\Controller;
 use Gamify\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\RedirectsUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class ChangePasswordController extends Controller
 {
@@ -38,33 +41,12 @@ class ChangePasswordController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @return string
-     */
-    protected function redirectTo(): string
-    {
-        return route('password.change');
-    }
-
-    /**
-     * Show the user's password change form.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
-     */
-    public function showChangePasswordForm()
+    public function showChangePasswordForm(): View
     {
         return view('auth.change_password');
     }
 
-    /**
-     * Change the given user's password.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    public function change(Request $request)
+    public function change(Request $request): RedirectResponse
     {
         $request->validate($this->rules(), $this->validationErrorMessages());
 
@@ -75,6 +57,48 @@ class ChangePasswordController extends Controller
         return $response == self::PASSWORD_CHANGED
             ? $this->sendChangedResponse($response)
             : $this->sendChangedFailedResponse($response);
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules(): array
+    {
+        return [
+            'current-password' => [
+                'required',
+            ],
+            'new-password' => [
+                'required',
+                'confirmed',
+                Password::defaults(),
+            ],
+        ];
+    }
+
+    /**
+     * Get the password reset validation error messages.
+     *
+     * @return array
+     */
+    protected function validationErrorMessages(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the password change credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request): array
+    {
+        return $request->only(
+            'current-password', 'new-password', 'new-password_confirmation'
+        );
     }
 
     /**
@@ -140,39 +164,13 @@ class ChangePasswordController extends Controller
     }
 
     /**
-     * Get the password reset validation rules.
+     * Get the guard to be used during password reset.
      *
-     * @return array
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    protected function rules(): array
+    protected function guard()
     {
-        return [
-            'current-password' => 'required|password',
-            'new-password' => 'required|confirmed|min:8',
-        ];
-    }
-
-    /**
-     * Get the password reset validation error messages.
-     *
-     * @return array
-     */
-    protected function validationErrorMessages(): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the password change credentials from the request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    protected function credentials(Request $request): array
-    {
-        return $request->only(
-            'current-password', 'new-password', 'new-password_confirmation'
-        );
+        return Auth::guard();
     }
 
     /**
@@ -194,30 +192,6 @@ class ChangePasswordController extends Controller
     }
 
     /**
-     * Get the response for a successful password change.
-     *
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function sendChangedResponse(string $response)
-    {
-        return redirect($this->redirectPath())
-            ->with('success', __($response));
-    }
-
-    /**
-     * Get the response for a failed password change.
-     *
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function sendChangedFailedResponse(string $response)
-    {
-        return redirect()->back()
-            ->withErrors(['password' => __($response)]);
-    }
-
-    /**
      * Set the user's password.
      *
      * @param  \Gamify\Models\User  $user
@@ -231,13 +205,25 @@ class ChangePasswordController extends Controller
         $user->password = $password;
     }
 
-    /**
-     * Get the guard to be used during password reset.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
+    protected function sendChangedResponse(string $response): RedirectResponse
     {
-        return Auth::guard();
+        return redirect($this->redirectPath())
+            ->with('success', __($response));
+    }
+
+    protected function sendChangedFailedResponse(string $response): RedirectResponse
+    {
+        return redirect()->back()
+            ->withErrors(['password' => __($response)]);
+    }
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @return string
+     */
+    protected function redirectTo(): string
+    {
+        return route('password.change');
     }
 }

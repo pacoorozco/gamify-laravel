@@ -22,33 +22,29 @@
  *
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class AddLastLoginAtToUsersTable extends Migration
+namespace Gamify\Rules;
+
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Str;
+
+class UsernameRule implements Rule
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    // Based on 'The Open Group Base Specifications Issue 7, 2018 edition'.
+    // https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_437
+    const VALID_USERNAME_REGEXP = '/^[A-Za-z\d][A-Za-z\d._-]*$/';
+
+    public function passes($attribute, $value): bool
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->datetime('last_login_at')->nullable();
-        });
+        if (Str::length($value) < 1 || Str::length($value) > 255) {
+            return false;
+        }
+
+        return 1 == preg_match(self::VALID_USERNAME_REGEXP, $value);
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function message(): string
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['last_login_at']);
-        });
+        return 'The :attribute is not a valid POSIX username.';
     }
 }

@@ -5,7 +5,7 @@
         <div class="form-group">
             {!! Form::label('username', __('admin/user/model.username'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ $user->username }}
+                {{ $user->present()->username }}
             </div>
         </div>
         <!-- ./ username -->
@@ -14,7 +14,7 @@
         <div class="form-group">
             {!! Form::label('fullname', __('admin/user/model.name'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ $user->name }}
+                {{ $user->present()->name }}
             </div>
         </div>
         <!-- ./ fullname -->
@@ -23,7 +23,7 @@
         <div class="form-group">
             {!! Form::label('email', __('admin/user/model.email'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ $user->email }}
+                {{ $user->present()->email }}
             </div>
         </div>
         <!-- ./ email -->
@@ -32,7 +32,7 @@
         <div class="form-group">
             {!! Form::label('roles', __('admin/user/model.role'), array('class' => 'control-label')) !!}
             <div class="controls">
-                {{ __('admin/user/model.roles_list.' . $user->role) }}
+                {{ $user->present()->role }}
             </div>
         </div>
         <!-- ./ roles -->

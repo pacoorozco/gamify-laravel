@@ -23,45 +23,13 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Requests;
+namespace Gamify\Enums;
 
-use BenSampo\Enum\Rules\EnumValue;
-use Gamify\Enums\Roles;
-use Gamify\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
+use BenSampo\Enum\Contracts\LocalizedEnum;
+use BenSampo\Enum\Enum;
 
-class UserUpdateRequest extends Request
+final class Roles extends Enum implements LocalizedEnum
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
-    {
-        /** @var User $user */
-        $user = $this->route('user');
-
-        return [
-            'name' => [
-                'required',
-                'string',
-            ],
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user),
-            ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::default(),
-            ],
-            'role' => [
-                'required',
-                new EnumValue(Roles::class),
-            ],
-        ];
-    }
+    const Admin = 'administrator';
+    const Player = 'user';
 }

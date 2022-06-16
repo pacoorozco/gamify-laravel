@@ -25,16 +25,17 @@
 
 namespace Gamify\Models;
 
-use Carbon\Carbon;
+use Gamify\Enums\Roles;
+use Gamify\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Laracodes\Presenter\Traits\Presentable;
 
 /**
  * User model, represents a Gamify user.
@@ -44,17 +45,16 @@ use Illuminate\Support\Facades\Hash;
  * @property string $username The username of this user.
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
- * @property string $role Role of the user ['user', 'editor', 'administrator'].
+ * @property \Gamify\Enums\Roles $role Role of the user.
  * @property \Illuminate\Support\Carbon $last_login_at Time when the user last logged in.
  * @property int $experience The reputation of the user.
  */
 class User extends Authenticatable
 {
     use HasFactory;
+    use Presentable;
 
-    const USER_ROLE = 'user';
-    const EDITOR_ROLE = 'editor';
-    const ADMIN_ROLE = 'administrator';
+    protected string $presenter = UserPresenter::class;
 
     protected $fillable = [
         'name',
@@ -72,6 +72,10 @@ class User extends Authenticatable
     protected $dates = [
         'last_login_at',
         'email_verified_at',
+    ];
+
+    protected $casts = [
+        'role' => Roles::class,
     ];
 
     public static function findByUsername(string $username): self
@@ -113,24 +117,20 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
-    public function getLastLoggedDate(): string
-    {
-        return $this->lastLoginAt()?->diffForHumans() ?? 'N/A';
-    }
-
-    public function lastLoginAt(): ?Carbon
-    {
-        return $this->last_login_at;
-    }
-
     public function isAdmin(): bool
     {
-        return $this->role === self::ADMIN_ROLE;
+        return $this->role->is(Roles::Admin);
     }
 
+    // DEPRECATED - Use 'player' scope instead.
     public function scopeMember(Builder $query): Builder
     {
-        return $query->where('role', self::USER_ROLE);
+        return $this->scopePlayer($query);
+    }
+
+    public function scopePlayer(Builder $query): Builder
+    {
+        return $query->where('role', Roles::Player);
     }
 
     public function getExperiencePoints(): int
@@ -213,9 +213,9 @@ class User extends Authenticatable
     public function hasBadgeCompleted(Badge $badge): bool
     {
         return $this->badges()
-                ->wherePivot('badge_id', $badge->id)
-                ->wherePivot('completed', true)
-                ->exists();
+            ->wherePivot('badge_id', $badge->id)
+            ->wherePivot('completed', true)
+            ->exists();
     }
 
     /**
@@ -227,7 +227,8 @@ class User extends Authenticatable
      */
     public function getLevelAttribute(): string
     {
-        return Level::findByExperience($this->experience)?->name ?? 'N/A';
+        return Level::findByExperience($this->experience)
+            ->name;
     }
 
     public function getNextLevelAttribute(): string
@@ -237,10 +238,6 @@ class User extends Authenticatable
 
     public function getNextLevel(): Level
     {
-        try {
-            return Level::findNextByExperience($this->experience);
-        } catch (ModelNotFoundException $exception) {
-            return Level::findByExperience($this->experience);
-        }
+        return Level::findNextByExperience($this->experience) ?? Level::findByExperience($this->experience);
     }
 }

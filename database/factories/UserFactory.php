@@ -25,6 +25,7 @@
 
 namespace Database\Factories;
 
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Gamify\Models\UserProfile;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -52,20 +53,15 @@ class UserFactory extends Factory
             'password' => bcrypt('secret'),
             'remember_token' => Str::random(10),
             'email_verified_at' => now(),
-            'role' => User::USER_ROLE,
+            'role' => Roles::Player,
         ];
     }
 
-    /**
-     * Indicate that the user is admin.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function admin()
+    public function admin(): Factory
     {
         return $this->state(function () {
             return [
-                'role' => User::ADMIN_ROLE,
+                'role' => Roles::Admin,
             ];
         });
     }

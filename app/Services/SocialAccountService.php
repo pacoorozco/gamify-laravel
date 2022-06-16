@@ -25,6 +25,7 @@
 
 namespace Gamify\Services;
 
+use Gamify\Enums\Roles;
 use Gamify\Jobs\CreateUser;
 use Gamify\Models\LinkedSocialAccount;
 use Gamify\Models\User;
@@ -68,7 +69,7 @@ class SocialAccountService
                 $providerUser->getEmail(),
                 $providerUser->getName(),
                 '',
-                User::USER_ROLE,
+                Roles::Player,
             );
         }
 

@@ -29,12 +29,10 @@ use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\Jobs\CreateUser;
 use Gamify\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Yajra\DataTables\DataTables;
 
 class AdminUserController extends AdminController
 {
@@ -80,71 +78,36 @@ class AdminUserController extends AdminController
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        try {
-            // password is not changed if it's empty.
-            $data = empty($request->input('password'))
-                ? Arr::except($request->validated(), ['password'])
-                : $request->validated();
+        // password is not changed if it's empty.
+        $data = empty($request->input('password'))
+            ? Arr::except($request->validated(), ['password'])
+            : $request->validated();
 
-            // users can't change its own role
-            if (Auth::user()->cannot('update-role', $user->id)) {
-                $data = Arr::except($data, ['role']);
-            }
-
-            $user->update($data);
-        } catch (\Exception $exception) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', __('admin/user/messages.edit.error'));
+        // users can't change its own role
+        if (Gate::denies('update-role', $user)) {
+            $data = Arr::except($data, ['role']);
         }
+
+        $user->update($data);
 
         return redirect()->route('admin.users.edit', $user)
             ->with('success', __('admin/user/messages.edit.success'));
     }
 
-    public function delete(User $user): View
-    {
-        return view('admin/user/delete', compact('user'));
-    }
-
     public function destroy(User $user): RedirectResponse
     {
-        // Can't remove myself
-        if ($user->id === Auth::id()) {
-            return redirect()->route('admin.users.index')
-                ->with('error', __('admin/user/messages.delete.impossible'));
+        if (Gate::denies('delete-user', $user)) {
+            abort(403);
         }
 
-        try {
-            $user->delete();
-        } catch (\Exception $exception) {
-            return redirect()->back()
-                ->with('error', __('admin/user/messages.delete.error'));
-        }
+        $user->delete();
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin/user/messages.delete.success'));
     }
 
-    public function data(Datatables $dataTable): JsonResponse
+    public function delete(User $user): View
     {
-        $users = User::select([
-            'id',
-            'name',
-            'username',
-            'email',
-            'role',
-        ])->orderBy('username', 'ASC');
-
-        return $dataTable->eloquent($users)
-            ->addColumn('actions', function (User $user) {
-                return view('admin/partials.actions_dd')
-                    ->with('model', 'users')
-                    ->with('id', $user->id)
-                    ->render();
-            })
-            ->rawColumns(['actions'])
-            ->removeColumn('id')
-            ->toJson();
+        return view('admin/user/delete', compact('user'));
     }
 }
