@@ -25,12 +25,14 @@
 
 namespace Tests\Feature\Listeners;
 
+use Event;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
 use Tests\TestCase;
 
 class IncrementBadgeOnUserLoginTest extends TestCase
@@ -38,7 +40,17 @@ class IncrementBadgeOnUserLoginTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_increments_badges_with_OnUserLogin_actuator()
+    public function it_should_listen_for_login_events()
+    {
+        Event::fake();
+        Event::assertListening(
+            expectedEvent: Login::class,
+            expectedListener: IncrementBadgesOnUserLogin::class
+        );
+    }
+
+    /** @test */
+    public function it_increments_badges_when_user_logs_in()
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -48,17 +60,17 @@ class IncrementBadgeOnUserLoginTest extends TestCase
             'actuators' => BadgeActuators::OnUserLogin,
         ]);
 
-        $event = \Mockery::mock(Login::class);
+        $event = Mockery::mock(Login::class);
         $event->user = $user;
 
-        $listener = app()->make(IncrementBadgesOnUserLogin::class);
+        $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
         $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
     }
 
     /** @test */
-    public function it_does_not_increment_badges_without_OnUserLogin_actuator()
+    public function it_does_not_increment_badges_when_user_logs_in()
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -68,10 +80,10 @@ class IncrementBadgeOnUserLoginTest extends TestCase
             'actuators' => BadgeActuators::None,
         ]);
 
-        $event = \Mockery::mock(Login::class);
+        $event = Mockery::mock(Login::class);
         $event->user = $user;
 
-        $listener = app()->make(IncrementBadgesOnUserLogin::class);
+        $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
         $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first());
