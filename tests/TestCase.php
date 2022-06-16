@@ -43,5 +43,4 @@ abstract class TestCase extends BaseTestCase
         return $this->withHeader('HTTP_X-Requested-With', 'XMLHttpRequest')
             ->get($uri);
     }
-
 }

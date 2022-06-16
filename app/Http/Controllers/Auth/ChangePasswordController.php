@@ -92,7 +92,6 @@ class ChangePasswordController extends Controller
      * Get the password change credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request
-     *
      * @return array
      */
     protected function credentials(Request $request): array
@@ -106,7 +105,6 @@ class ChangePasswordController extends Controller
      * Validate a password change request and update password of the user.
      *
      * @param  array  $credentials
-     *
      * @return string|Authenticatable
      */
     protected function validateAndPasswordChange(array $credentials)
@@ -116,7 +114,7 @@ class ChangePasswordController extends Controller
         // If the responses from the validate method is not a user instance, we will
         // assume that it is a redirect and simply return it from this method and
         // the user is properly redirected having an error message on the post.
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return $user;
         }
 
@@ -129,7 +127,6 @@ class ChangePasswordController extends Controller
      * Validate a password change request with the given credentials.
      *
      * @param  array  $credentials
-     *
      * @return string|Authenticatable
      *
      * @throws \UnexpectedValueException
@@ -147,7 +144,6 @@ class ChangePasswordController extends Controller
      * Get the user with the given credentials.
      *
      * @param  array  $credentials
-     *
      * @return null|Authenticatable
      */
     protected function getUser(array $credentials): ?Authenticatable
@@ -156,7 +152,7 @@ class ChangePasswordController extends Controller
         $user = Auth::user();
 
         // Using current email from user, and current password sent with the request to authenticate the user
-        if (!$this->guard()->attempt([
+        if (! $this->guard()->attempt([
             $user->getAuthIdentifierName() => $user->getAuthIdentifier(),
             'password' => $credentials['current-password'],
         ])) {
@@ -182,7 +178,6 @@ class ChangePasswordController extends Controller
      *
      * @param  \Gamify\Models\User  $user
      * @param  string  $password
-     *
      * @return void
      */
     protected function setNewPassword(User $user, string $password)
@@ -201,7 +196,6 @@ class ChangePasswordController extends Controller
      *
      * @param  \Gamify\Models\User  $user
      * @param  string  $password
-     *
      * @return void
      */
     protected function setUserPassword(User $user, string $password): void
