@@ -25,7 +25,6 @@
 
 namespace Gamify\Models;
 
-use Carbon\Carbon;
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\Builder;
