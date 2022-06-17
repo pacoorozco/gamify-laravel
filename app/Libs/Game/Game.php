@@ -40,6 +40,7 @@ class Game
      * @param  User  $user
      * @param  int  $points
      * @param  string  $message
+     *
      * @return bool
      */
     public static function addReputation(User $user, int $points = 5, string $message = ''): bool
@@ -47,7 +48,7 @@ class Game
         // add experience points to this user
         $point_entry = new Point([
             'points' => $points,
-            'description' => (! empty($message)) ?: __('messages.unknown_reason'),
+            'description' => (!empty($message)) ?: __('messages.unknown_reason'),
         ]);
 
         return ($user->points()->save($point_entry) === false) ?: true;
@@ -71,6 +72,7 @@ class Game
      *
      * @param  User  $user
      * @param  Badge  $badge
+     *
      * @return void
      */
     public static function incrementBadge(User $user, Badge $badge): void
@@ -100,6 +102,7 @@ class Game
      *
      * @param  User  $user
      * @param  Badge  $badge
+     *
      * @return void
      */
     public static function giveCompletedBadge(User $user, Badge $badge): void
@@ -128,11 +131,12 @@ class Game
      * Get a collection with members ordered by Experience Points.
      *
      * @param  int  $limitTopUsers
+     *
      * @return \Illuminate\Support\Collection
      */
     public static function getRanking(int $limitTopUsers = 10): \Illuminate\Support\Collection
     {
-        $users = User::query()
+        return User::query()
             ->player()
             ->select([
                 'name',
@@ -141,19 +145,14 @@ class Game
             ])
             ->orderBy('experience', 'DESC')
             ->take($limitTopUsers)
-            ->get();
-
-        $rank = $users->map(function ($user) {
-            $experience = $user->getExperiencePoints();
-
-            return [
-                'username' => $user->username,
-                'name' => $user->name,
-                'experience' => $experience,
-                'level' => Level::findByExperience($experience)?->name ?? 'Null',
-            ];
-        });
-
-        return $rank;
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'username' => $user->username,
+                    'name' => $user->name,
+                    'experience' => $user->experience,
+                    'level' => $user->level,
+                ];
+            });
     }
 }
