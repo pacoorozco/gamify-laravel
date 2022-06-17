@@ -28,6 +28,7 @@ namespace Gamify\Models;
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -106,14 +107,18 @@ class User extends Authenticatable
             ->groupBy('user_id');
     }
 
-    public function setUsernameAttribute(string $value): void
+    protected function username(): Attribute
     {
-        $this->attributes['username'] = strtolower($value);
+        return Attribute::make(
+            set: fn ($value) => strtolower($value),
+        );
     }
 
-    public function setPasswordAttribute(string $password): void
+    protected function password(): Attribute
     {
-        $this->attributes['password'] = Hash::make($password);
+        return Attribute::make(
+            set: fn ($value) => Hash::make($value),
+        );
     }
 
     public function isAdmin(): bool
