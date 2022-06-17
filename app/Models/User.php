@@ -70,7 +70,6 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'last_login_at',
         'email_verified_at',
     ];
 
