@@ -2,8 +2,8 @@
 <div class="col-lg-3 col-xs-6">
     <div class="small-box bg-orange">
         <div class="inner">
-            <h3>{{ $members_count }}</h3>
-            <p>Members</p>
+            <h3>{{ $players_count }}</h3>
+            <p>Players</p>
         </div>
         <div class="icon">
             <i class="fa fa-users"></i>

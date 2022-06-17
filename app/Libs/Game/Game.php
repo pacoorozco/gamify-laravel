@@ -132,7 +132,8 @@ class Game
      */
     public static function getRanking(int $limitTopUsers = 10): \Illuminate\Support\Collection
     {
-        $users = User::Member()
+        $users = User::query()
+            ->player()
             ->select([
                 'name',
                 'username',

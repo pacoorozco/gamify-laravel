@@ -126,12 +126,6 @@ class User extends Authenticatable
         return $this->role->is(Roles::Admin);
     }
 
-    // DEPRECATED - Use 'player' scope instead.
-    public function scopeMember(Builder $query): Builder
-    {
-        return $this->scopePlayer($query);
-    }
-
     public function scopePlayer(Builder $query): Builder
     {
         return $query->where('role', Roles::Player);
