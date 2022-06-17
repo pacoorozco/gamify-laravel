@@ -47,7 +47,6 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
  * @property \Gamify\Enums\Roles $role Role of the user.
- * @property \Illuminate\Support\Carbon $last_login_at Time when the user last logged in.
  * @property int $experience The reputation of the user.
  */
 class User extends Authenticatable
