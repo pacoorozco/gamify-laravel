@@ -28,6 +28,7 @@ namespace Gamify\Models;
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -46,7 +47,6 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
  * @property \Gamify\Enums\Roles $role Role of the user.
- * @property \Illuminate\Support\Carbon $last_login_at Time when the user last logged in.
  * @property int $experience The reputation of the user.
  */
 class User extends Authenticatable
@@ -70,7 +70,6 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'last_login_at',
         'email_verified_at',
     ];
 
@@ -107,35 +106,14 @@ class User extends Authenticatable
             ->groupBy('user_id');
     }
 
-    public function setUsernameAttribute(string $value): void
-    {
-        $this->attributes['username'] = strtolower($value);
-    }
-
-    public function setPasswordAttribute(string $password): void
-    {
-        $this->attributes['password'] = Hash::make($password);
-    }
-
     public function isAdmin(): bool
     {
         return $this->role->is(Roles::Admin);
     }
 
-    // DEPRECATED - Use 'player' scope instead.
-    public function scopeMember(Builder $query): Builder
-    {
-        return $this->scopePlayer($query);
-    }
-
     public function scopePlayer(Builder $query): Builder
     {
         return $query->where('role', Roles::Player);
-    }
-
-    public function getExperiencePoints(): int
-    {
-        return $this->experience;
     }
 
     public function addExperience(int $points = 1): void
@@ -218,26 +196,38 @@ class User extends Authenticatable
             ->exists();
     }
 
-    /**
-     * Add Level name to attributes (see $appends).
-     *
-     * We rely that a default Level was created with required_points = 0;
-     *
-     * @return string
-     */
-    public function getLevelAttribute(): string
+    protected function username(): Attribute
     {
-        return Level::findByExperience($this->experience)
-            ->name;
+        return Attribute::make(
+            set: fn ($value) => strtolower($value),
+        );
     }
 
-    public function getNextLevelAttribute(): string
+    protected function password(): Attribute
     {
-        return $this->getNextLevel()->name;
+        return Attribute::make(
+            set: fn ($value) => Hash::make($value),
+        );
     }
 
-    public function getNextLevel(): Level
+    protected function level(): Attribute
     {
-        return Level::findNextByExperience($this->experience) ?? Level::findByExperience($this->experience);
+        return Attribute::make(
+            get: fn ($value) => Level::findByExperience($this->experience)
+                ->name,
+        );
+    }
+
+    protected function nextLevel(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getNextLevel()->name
+        );
+    }
+
+    private function getNextLevel(): Level
+    {
+        return Level::findNextByExperience($this->experience)
+            ?? Level::findByExperience($this->experience);
     }
 }

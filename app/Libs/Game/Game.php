@@ -26,7 +26,6 @@
 namespace Gamify\Libs\Game;
 
 use Gamify\Models\Badge;
-use Gamify\Models\Level;
 use Gamify\Models\Point;
 use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -132,7 +131,8 @@ class Game
      */
     public static function getRanking(int $limitTopUsers = 10): \Illuminate\Support\Collection
     {
-        $users = User::Member()
+        return User::query()
+            ->player()
             ->select([
                 'name',
                 'username',
@@ -140,19 +140,14 @@ class Game
             ])
             ->orderBy('experience', 'DESC')
             ->take($limitTopUsers)
-            ->get();
-
-        $rank = $users->map(function ($user) {
-            $experience = $user->getExperiencePoints();
-
-            return [
-                'username' => $user->username,
-                'name' => $user->name,
-                'experience' => $experience,
-                'level' => Level::findByExperience($experience)?->name ?? 'Null',
-            ];
-        });
-
-        return $rank;
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'username' => $user->username,
+                    'name' => $user->name,
+                    'experience' => $user->experience,
+                    'level' => $user->level,
+                ];
+            });
     }
 }

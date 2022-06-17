@@ -66,7 +66,7 @@ class AdminDashboardControllerTest extends TestCase
             ->assertOK()
             ->assertViewIs('admin.dashboard.index')
             ->assertViewHasAll([
-                'members_count',
+                'players_count',
                 'questions_count',
                 'badges_count',
                 'levels_count',
