@@ -106,20 +106,6 @@ class User extends Authenticatable
             ->groupBy('user_id');
     }
 
-    protected function username(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => strtolower($value),
-        );
-    }
-
-    protected function password(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => Hash::make($value),
-        );
-    }
-
     public function isAdmin(): bool
     {
         return $this->role->is(Roles::Admin);
@@ -128,11 +114,6 @@ class User extends Authenticatable
     public function scopePlayer(Builder $query): Builder
     {
         return $query->where('role', Roles::Player);
-    }
-
-    public function getExperiencePoints(): int
-    {
-        return $this->experience;
     }
 
     public function addExperience(int $points = 1): void
@@ -215,26 +196,38 @@ class User extends Authenticatable
             ->exists();
     }
 
-    /**
-     * Add Level name to attributes (see $appends).
-     *
-     * We rely that a default Level was created with required_points = 0;
-     *
-     * @return string
-     */
-    public function getLevelAttribute(): string
+    protected function username(): Attribute
     {
-        return Level::findByExperience($this->experience)
-            ->name;
+        return Attribute::make(
+            set: fn($value) => strtolower($value),
+        );
     }
 
-    public function getNextLevelAttribute(): string
+    protected function password(): Attribute
     {
-        return $this->getNextLevel()->name;
+        return Attribute::make(
+            set: fn($value) => Hash::make($value),
+        );
     }
 
-    public function getNextLevel(): Level
+    protected function level(): Attribute
     {
-        return Level::findNextByExperience($this->experience) ?? Level::findByExperience($this->experience);
+        return Attribute::make(
+            get: fn($value) => Level::findByExperience($this->experience)
+                ->name,
+        );
+    }
+
+    protected function nextLevel(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->getNextLevel()->name
+        );
+    }
+
+    private function getNextLevel(): Level
+    {
+        return Level::findNextByExperience($this->experience)
+            ?? Level::findByExperience($this->experience);
     }
 }
