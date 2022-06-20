@@ -26,82 +26,205 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Models\Level;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LevelTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
-    private function createLevels(int $number, int $distance = 10): void
+    /** @test */
+    public function it_should_find_the_default_level_when_levels_has_not_been_created_yet(): void
     {
-        for ($i = 1; $i <= $number; $i++) {
-            Level::factory()->create([
-                'name' => 'Level ' . $i,
-                'required_points' => $i * $distance,
-                'active' => true,
-            ]);
-        }
+        $want = Level::defaultLevel();
+
+        $level = Level::findByExperience($this->faker->randomNumber());
+
+        $this->assertInstanceOf(Level::class, $level);
+
+        $this->assertEquals($want->name, $level->name);
+
+        $this->assertEquals($want->required_points, $level->required_points);
     }
 
-    public function test_findByExperience_method_returns_a_level()
+    /** @test */
+    public function it_should_find_next_level_even_when_levels_has_not_been_created_yet(): void
     {
-        // create some levels (max: 50 points)
-        $this->createLevels(5, 10);
+        $want = Level::defaultLevel();
 
-        $test_data = [
-            0 => 'Level 0',
-            1 => 'Level 0',
-            10 => 'Level 1',
-            11 => 'Level 1',
-            49 => 'Level 4',
-            50 => 'Level 5',
-            60 => 'Level 5',
+        $level = Level::findNextByExperience($this->faker->randomNumber());
+
+        $this->assertInstanceOf(Level::class, $level);
+
+        $this->assertEquals($want->name, $level->name);
+
+        $this->assertEquals($want->required_points, $level->required_points);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideFindLevelTestCases
+     */
+    public function it_should_return_the_proper_level_based_on_experience(
+        array $levels,
+        int $experience,
+        string $want
+    ): void {
+        collect($levels)
+            ->each(function ($level) {
+                return Level::factory()->create([
+                    'name' => $level['name'],
+                    'required_points' => $level['required_points'],
+                ]);
+            });
+
+        $level = Level::findByExperience($experience);
+
+        $this->assertInstanceOf(Level::class, $level);
+
+        $this->assertEquals($want, $level->name);
+    }
+
+    public function provideFindLevelTestCases(): Generator
+    {
+        yield 'minimum level when experience 0' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 0,
+            'want' => 'minimum',
         ];
 
-        foreach ($test_data as $input => $want) {
-            $this->assertEquals(
-                $want, Level::findByExperience($input)->name,
-                sprintf("Test case: experience='%d', want='%s'", $input, $want)
-            );
-        }
-    }
-
-    public function test_findNextByExperience_method_returns_a_level()
-    {
-        // create some levels (max: 50 points)
-        $this->createLevels(5, 10);
-
-        $test_data = [
-            0 => 'Level 1',
-            1 => 'Level 1',
-            10 => 'Level 2',
-            11 => 'Level 2',
-            49 => 'Level 5',
-            50 => 'Exception',
-            60 => 'Exception',
+        yield 'minimum level when experience is below middle level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 4,
+            'want' => 'minimum',
         ];
 
-        foreach ($test_data as $input => $want) {
-            if ($want === 'Exception') {
-                $this->expectException(ModelNotFoundException::class);
-            }
+        yield 'middle level when experience is exactly equal to middle level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 5,
+            'want' => 'middle',
+        ];
 
-            $got = Level::findNextByExperience($input)->name;
+        yield 'middle level when experience is below maximum level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 9,
+            'want' => 'middle',
+        ];
 
-            $this->assertEquals(
-                $want, $got,
-                sprintf("Test case: experience='%d', want='%s'", $input, $want)
-            );
-        }
+        yield 'maximum level when experience is bigger than maximum level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 15,
+            'want' => 'maximum',
+        ];
     }
 
-    public function test_returns_default_image_when_field_is_empty()
+    /**
+     * @test
+     * @dataProvider provideFindNextLevelTestCases
+     */
+    public function it_should_return_the_next_level_based_on_experience(
+        array $levels,
+        int $experience,
+        string $want
+    ): void {
+        collect($levels)
+            ->each(function ($level) {
+                return Level::factory()->create([
+                    'name' => $level['name'],
+                    'required_points' => $level['required_points'],
+                ]);
+            });
+
+        $level = Level::findNextByExperience($experience);
+
+        $this->assertInstanceOf(Level::class, $level);
+
+        $this->assertEquals($want, $level->name);
+    }
+
+    public function provideFindNextLevelTestCases(): Generator
+    {
+        yield 'middle level when experience 0' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 0,
+            'want' => 'middle',
+        ];
+
+        yield 'middle level when experience is below middle level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 4,
+            'want' => 'middle',
+        ];
+
+        yield 'maximum level when experience is exactly equal to middle level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 5,
+            'want' => 'maximum',
+        ];
+
+        yield 'maximum level when experience is below maximum level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 9,
+            'want' => 'maximum',
+        ];
+
+        yield 'maximum level when experience is bigger than maximum level' => [
+            'levels' => [
+                ['name' => 'minimum', 'required_points' => 0],
+                ['name' => 'middle', 'required_points' => 5],
+                ['name' => 'maximum', 'required_points' => 10],
+            ],
+            'experience' => 15,
+            'want' => 'maximum',
+        ];
+    }
+
+    /** @test */
+    public function it_should_return_the_default_image_if_level_has_not_image()
     {
         $level = Level::factory()->create();
 
         $this->assertNull($level->getOriginal('image_url'));
+
         $this->assertEquals(Level::DEFAULT_IMAGE, $level->image);
     }
 }

@@ -6,7 +6,7 @@
 {{-- Content Header --}}
 @section('header')
     @lang('admin/level/title.level_show')
-    <small>{{ $level->name }}</small>
+    <small>{{ $level->present()->name }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}

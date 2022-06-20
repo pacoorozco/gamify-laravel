@@ -25,10 +25,13 @@
 
 namespace Gamify\Models;
 
+use Gamify\Presenters\LevelPresenter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
 
 /**
@@ -39,17 +42,16 @@ use QCod\ImageUp\HasImageUploads;
  * @property int $required_points How many points do you need to achieve it.
  * @property string $image URL of the level's image
  * @property bool $active Is this level enabled?
- * @property string $imagesUploadDisk
- * @property string $imagesUploadPath
- * @property string $autoUploadImages
  */
 class Level extends Model
 {
     use SoftDeletes;
     use HasImageUploads;
     use HasFactory;
+    use Presentable;
 
     const DEFAULT_IMAGE = '/images/missing_level.png';
+
     protected static array $imageFields = [
         'image_url' => [
             // width to resize image after upload
@@ -71,43 +73,56 @@ class Level extends Model
             'file_input' => 'image',
         ],
     ];
+    protected string $presenter = LevelPresenter::class;
     protected $fillable = [
         'name',
         'required_points',
         'active',
     ];
+
     protected $casts = [
         'active' => 'boolean',
     ];
-    protected $dates = ['deleted_at'];
-    protected string $imagesUploadPath = 'levels';
-    protected bool $autoUploadImages = true;
 
-    public static function findByExperience(int $experience): ?Level
-    {
-        return self::query()
-            ->active()
-            ->where('required_points', '<=', $experience)
-            ->orderBy('required_points', 'desc')
-            ->first();
-    }
+    protected $dates = ['deleted_at'];
+
+    protected string $imagesUploadPath = 'levels';
+
+    protected bool $autoUploadImages = true;
 
     public static function findNextByExperience(int $experience): Level
     {
         return self::query()
-            ->active()
-            ->where('required_points', '>', $experience)
-            ->orderBy('required_points', 'asc')
-            ->firstOrFail();
+                ->active()
+                ->where('required_points', '>', $experience)
+                ->orderBy('required_points', 'asc')
+                ->first()
+            ?? self::findByExperience($experience);
     }
 
-    public function getImageAttribute(): string
+    public static function findByExperience(int $experience): Level
     {
-        try {
-            return $this->imageUrl();
-        } catch (\Throwable $exception) {
-            return asset(self::DEFAULT_IMAGE);
-        }
+        return self::query()
+                ->active()
+                ->where('required_points', '<=', $experience)
+                ->orderBy('required_points', 'desc')
+                ->first()
+            ?? self::defaultLevel();
+    }
+
+    /**
+     * The default level could be overridden by creating another Level with
+     * required_points = 0.
+     *
+     * @return \Gamify\Models\Level
+     */
+    public static function defaultLevel(): Level
+    {
+        return new Level([
+            'name' => 'Default',
+            'required_points' => 0,
+            'active' => true,
+        ]);
     }
 
     public function scopeActive(Builder $query): Builder
@@ -118,5 +133,12 @@ class Level extends Model
     public function isDefault(): bool
     {
         return $this->required_points === 0;
+    }
+
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->imageUrl()
+        );
     }
 }
