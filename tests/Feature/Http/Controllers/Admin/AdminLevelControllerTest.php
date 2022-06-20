@@ -25,9 +25,10 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Gamify\Http\Middleware\OnlyAjax;
+use Gamify\Enums\Roles;
 use Gamify\Models\Level;
 use Gamify\Models\User;
+use Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -35,215 +36,397 @@ class AdminLevelControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private User $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        /** @var User $admin */
-        $admin = User::factory()->admin()->create();
-        $this->actingAs($admin);
+        $this->user = User::factory()
+            ->create();
     }
 
     /** @test */
-    public function access_is_restricted_to_admins()
+    public function players_should_not_see_the_index_view(): void
     {
-        $level = Level::factory()->create();
-        $test_data = [
-            ['protocol' => 'GET', 'route' => route('admin.levels.index')],
-            ['protocol' => 'GET', 'route' => route('admin.levels.create')],
-            ['protocol' => 'POST', 'route' => route('admin.levels.store')],
-            ['protocol' => 'GET', 'route' => route('admin.levels.show', $level)],
-            ['protocol' => 'GET', 'route' => route('admin.levels.edit', $level)],
-            ['protocol' => 'PUT', 'route' => route('admin.levels.update', $level)],
-            ['protocol' => 'GET', 'route' => route('admin.levels.delete', $level)],
-            ['protocol' => 'DELETE', 'route' => route('admin.levels.destroy', $level)],
-        ];
-
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        foreach ($test_data as $test) {
-            $this->actingAs($user)
-                ->call($test['protocol'], $test['route'])
-                ->assertForbidden();
-        }
-
-        // Ajax routes needs to disable middleware
-        $this->actingAs($user)
-            ->withoutMiddleware(OnlyAjax::class)
-            ->get(route('admin.levels.data'))
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.index'))
             ->assertForbidden();
     }
 
     /** @test */
-    public function index_returns_proper_content()
+    public function admins_should_see_the_index_view()
     {
-        $this->get(route('admin.levels.index'))
-            ->assertOK()
+        $this->user->role = Roles::Admin;
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.index'))
+            ->assertSuccessful()
             ->assertViewIs('admin.level.index');
     }
 
     /** @test */
-    public function create_returns_proper_content()
+    public function players_should_not_see_the_new_user_form(): void
     {
-        $this->get(route('admin.levels.create'))
-            ->assertOk()
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.create'))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_see_the_new_user_form(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.create'))
+            ->assertSuccessful()
             ->assertViewIs('admin.level.create');
     }
 
     /** @test */
-    public function store_creates_an_object()
+    public function players_should_not_create_levels(): void
     {
         /** @var Level $want */
         $want = Level::factory()->make();
-        $input_data = [
-            'name' => $want->name,
-            'required_points' => $want->required_points,
-            'active' => true,
-        ];
 
-        $this->post(route('admin.levels.store'), $input_data)
-            ->assertRedirect(route('admin.levels.index'))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
-
-        $this->assertDatabaseHas(Level::class, [
-            'name' => $want->name,
-            'required_points' => $want->required_points,
-            'active' => true,
-        ]);
-    }
-
-    /** @test */
-    public function store_returns_errors_on_invalid_data()
-    {
-        /** @var Level $want */
-        $want = Level::factory()->make();
-        $invalid_input_data = [
-            'name' => $want->name,
-        ];
-
-        $this->post(route('admin.levels.store'), $invalid_input_data)
-            ->assertSessionHasErrors()
-            ->assertSessionHas('errors');
+        $this
+            ->actingAs($this->user)
+            ->post(route('admin.levels.store'), [
+                'name' => $want->name,
+                'required_points' => $want->required_points,
+                'active' => $want->active,
+            ])
+            ->assertForbidden();
 
         $this->assertDatabaseMissing(Level::class, [
             'name' => $want->name,
+            'required_points' => $want->required_points,
         ]);
     }
 
     /** @test */
-    public function show_returns_proper_content()
+    public function admins_should_create_levels(): void
     {
-        /** @var Level $level */
-        $level = Level::factory()->create();
+        $this->user->role = Roles::Admin;
 
-        $this->get(route('admin.levels.show', $level))
-            ->assertOk()
-            ->assertViewIs('admin.level.show')
-            ->assertSee($level->name);
-    }
+        /** @var Level $want */
+        $want = Level::factory()->make();
 
-    /** @test */
-    public function edit_returns_proper_content()
-    {
-        /** @var Level $level */
-        $level = Level::factory()->create();
+        $this
+            ->actingAs($this->user)
+            ->post(route('admin.levels.store'), [
+                'name' => $want->name,
+                'required_points' => $want->required_points,
+                'active' => $want->active,
+            ])
+            ->assertRedirect(route('admin.levels.index'))
+            ->assertValid();
 
-        $this->get(route('admin.levels.edit', $level))
-            ->assertOk()
-            ->assertViewIs('admin.level.edit')
-            ->assertSee($level->name);
-    }
-
-    /** @test */
-    public function update_edits_an_object()
-    {
-        /** @var Level $level */
-        $level = Level::factory()->create([
-            'name' => 'Level gold',
+        $this->assertDatabaseHas(Level::class, [
+            'name' => $want->name,
+            'required_points' => $want->required_points,
+            'active' => $want->active,
         ]);
-        $input_data = [
-            'name' => 'Level silver',
-            'required_points' => $level->required_points,
-            'active' => true,
+    }
+
+    /**
+     * @test
+     * @dataProvider provideWrongDataForLevelCreation
+     */
+    public function admins_should_get_errors_when_creating_levels_with_wrong_data(
+        array $data,
+        array $errors
+    ): void {
+        $this->user->role = Roles::Admin;
+
+        // Level to validate unique rules...
+        Level::factory()->create([
+            'name' => 'Level 42',
+            'required_points' => 42,
+        ]);
+
+        /** @var Level $want */
+        $want = Level::factory()->make();
+
+        $formData = [
+            'name' => $data['name'] ?? $want->name,
+            'required_points' => $data['required_points'] ?? $want->required_points,
+            'active' => $data['active'] ?? $want->active,
         ];
 
-        $this->put(route('admin.levels.update', $level), $input_data)
+        $this
+            ->actingAs($this->user)
+            ->post(route('admin.levels.store'), $formData)
+            ->assertInvalid($errors);
+
+        $this->assertDatabaseMissing(Level::class, [
+            'name' => $formData['name'],
+            'required_points' => $formData['required_points'],
+        ]);
+    }
+
+    public function provideWrongDataForLevelCreation(): Generator
+    {
+        yield 'name is empty' => [
+            'data' => [
+                'name' => '',
+            ],
+            'errors' => ['name'],
+        ];
+
+        yield 'name is taken' => [
+            'data' => [
+                'name' => 'Level 42',
+            ],
+            'errors' => ['name'],
+        ];
+
+        yield 'required_points is empty' => [
+            'data' => [
+                'required_points' => '',
+            ],
+            'errors' => ['required_points'],
+        ];
+
+        yield 'required_points ! an integer' => [
+            'data' => [
+                'required_points' => 'foo',
+            ],
+            'errors' => ['required_points'],
+        ];
+
+        yield 'required_points is taken' => [
+            'data' => [
+                'required_points' => 42,
+            ],
+            'errors' => ['required_points'],
+        ];
+
+        yield 'active is empty' => [
+            'data' => [
+                'active' => '',
+            ],
+            'errors' => ['active'],
+        ];
+
+        yield 'active ! a boolean' => [
+            'data' => [
+                'active' => 'foo',
+            ],
+            'errors' => ['active'],
+        ];
+    }
+
+    /** @test */
+    public function players_should_not_see_any_level(): void
+    {
+        $want = Level::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.show', $want))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_see_any_level(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $level = Level::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.show', $level))
+            ->assertSuccessful()
+            ->assertViewIs('admin.level.show')
+            ->assertViewHas('level', $level);
+    }
+
+    /** @test */
+    public function players_should_not_see_the_edit_level_form(): void
+    {
+        $want = Level::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.edit', $want))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_see_the_edit_level_form(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $level = Level::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.edit', $level))
+            ->assertSuccessful()
+            ->assertViewIs('admin.level.edit')
+            ->assertViewHas('level', $level);
+    }
+
+    /** @test */
+    public function players_should_not_update_levels(): void
+    {
+        $want = Level::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.levels.update', $want), [])
+            ->assertForbidden();
+
+        $this->assertModelExists($want);
+    }
+
+    /** @test */
+    public function admins_should_update_levels(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        /** @var Level $level */
+        $level = Level::factory()->create();
+
+        /** @var Level $want */
+        $want = Level::factory()->make();
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.levels.update', $level), [
+                'name' => $want->name,
+                'required_points' => $want->required_points,
+                'active' => $want->active,
+            ])
             ->assertRedirect(route('admin.levels.index'))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
+            ->assertValid();
 
         $this->assertDatabaseHas(Level::class, [
             'id' => $level->id,
-            'name' => 'Level silver',
-            'required_points' => $level->required_points,
-            'active' => true,
+            'name' => $want->name,
+            'required_points' => $want->required_points,
+            'active' => $want->active,
         ]);
     }
 
-    /** @test */
-    public function update_returns_errors_on_invalid_data()
-    {
-        /** @var Level $level */
-        $level = Level::factory()->create([
-            'name' => 'Level gold',
+    /**
+     * @test
+     * @dataProvider provideWrongDataForLevelModification
+     */
+    public function admins_should_get_errors_when_updating_levels_with_wrong_data(
+        array $data,
+        array $errors
+    ): void {
+        $this->user->role = Roles::Admin;
+
+        // Level to validate unique rules...
+        Level::factory()->create([
+            'name' => 'Level 42',
+            'required_points' => 42,
         ]);
-        $input_data = [
-            'name' => '',
+
+        /** @var Level $level */
+        $level = Level::factory()->create();
+
+        /** @var Level $want */
+        $want = Level::factory()->make();
+
+        $formData = [
+            'name' => $data['name'] ?? $want->name,
+            'required_points' => $data['required_points'] ?? $want->required_points,
+            'active' => $data['active'] ?? $want->active,
         ];
 
-        $this->put(route('admin.levels.update', $level), $input_data)
-            ->assertSessionHasErrors()
-            ->assertSessionHas('errors');
+        $this
+            ->actingAs($this->user)
+            ->put(route('admin.levels.update', $level), $formData)
+            ->assertInvalid($errors);
 
         $this->assertModelExists($level);
     }
 
-    /** @test */
-    public function delete_returns_proper_content()
+    public function provideWrongDataForLevelModification(): Generator
     {
-        /** @var Level $level */
-        $level = Level::factory()->create();
+        yield 'name is empty' => [
+            'data' => [
+                'name' => '',
+            ],
+            'errors' => ['name'],
+        ];
 
-        $this->get(route('admin.levels.delete', $level))
-            ->assertOk()
-            ->assertViewIs('admin.level.delete')
-            ->assertSee($level->name);
+        yield 'name is taken' => [
+            'data' => [
+                'name' => 'Level 42',
+            ],
+            'errors' => ['name'],
+        ];
+
+        yield 'required_points is empty' => [
+            'data' => [
+                'required_points' => '',
+            ],
+            'errors' => ['required_points'],
+        ];
+
+        yield 'required_points ! an integer' => [
+            'data' => [
+                'required_points' => 'foo',
+            ],
+            'errors' => ['required_points'],
+        ];
+
+        yield 'required_points is taken' => [
+            'data' => [
+                'required_points' => 42,
+            ],
+            'errors' => ['required_points'],
+        ];
+
+        yield 'active is empty' => [
+            'data' => [
+                'active' => '',
+            ],
+            'errors' => ['active'],
+        ];
+
+        yield 'active ! a boolean' => [
+            'data' => [
+                'active' => 'foo',
+            ],
+            'errors' => ['active'],
+        ];
     }
 
     /** @test */
-    public function destroy_deletes_an_object()
+    public function players_should_not_delete_levels(): void
     {
-        /** @var Level $level */
         $level = Level::factory()->create();
 
-        $this->delete(route('admin.levels.destroy', $level))
-            ->assertRedirect(route('admin.levels.index'))
-            ->assertSessionHasNoErrors()
-            ->assertSessionHas('success');
+        $this
+            ->actingAs($this->user)
+            ->get(route('admin.levels.destroy', $level))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function admins_should_delete_users(): void
+    {
+        $this->user->role = Roles::Admin;
+
+        $level = Level::factory()->create();
+
+        $this
+            ->actingAs($this->user)
+            ->delete(route('admin.levels.destroy', $level))
+            ->assertRedirect(route('admin.levels.index'));
 
         $this->assertSoftDeleted($level);
-    }
-
-    /** @test */
-    public function data_returns_proper_content()
-    {
-        // One level has already been created: 'default' level.
-        Level::factory()->count(2)->create();
-
-        $this->withoutMiddleware(OnlyAjax::class)
-            ->get(route('admin.levels.data'))
-            ->assertJsonCount(3, 'data');
-    }
-
-    /** @test */
-    public function data_fails_for_non_ajax_calls()
-    {
-        // One level has already been created: 'default' level.
-        Level::factory()->count(3)->create();
-
-        $this->get(route('admin.levels.data'))
-            ->assertForbidden();
     }
 }

@@ -23,28 +23,27 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Gamify\Presenters;
 
-class CreateLevelsTable extends Migration
+use Gamify\Models\Level;
+use Laracodes\Presenter\Presenter;
+
+class LevelPresenter extends Presenter
 {
-    public function up(): void
-    {
-        Schema::create('levels', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->unsignedInteger('required_points');
-            $table->boolean('active')->default(true);
-            $table->string('image_url')->nullable();
+    /** @var Level */
+    protected $model;
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+    public function image(): string
+    {
+        return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">',
+            $this->model->imageUrl(),
+            $this->model->name);
     }
 
-    public function down(): void
+    public function active(): string
     {
-        Schema::dropIfExists('levels');
+        return $this->model->active
+            ? trans('general.yes')
+            : trans('general.no');
     }
 }

@@ -8,7 +8,7 @@
                 <div class="form-group">
                     {!! Form::label('name', __('admin/level/model.name'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $level->name }}
+                        {{ $level->present()->name }}
                     </div>
                 </div>
                 <!-- ./ name -->
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     {!! Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ $level->required_points }}
+                        {{ $level->present()->required_points }}
                     </div>
                 </div>
                 <!-- ./ required_points -->
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     {!! Form::label('active', __('admin/level/model.active'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        {{ ($level->active ? __('general.yes') : __('general.no')) }}
+                        {{ $level->present()->active }}
                     </div>
                 </div>
                 <!-- ./ activation status -->
@@ -38,7 +38,7 @@
                 <div class="form-group">
                     {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label']) !!}
                     <div class="controls">
-                        <img src="{{ $level->image }}" class="img-thumbnail" alt="{{ $level->name }}">
+                        {{ $level->present()->image() }}
                     </div>
                 </div>
                 <!-- ./ image -->

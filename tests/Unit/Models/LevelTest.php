@@ -49,4 +49,18 @@ class LevelTest extends TestCase
             'deleted_at' => 'datetime',
         ], $m->getCasts());
     }
+
+    /** @test */
+    public function it_returns_the_default_level()
+    {
+        $level = Level::defaultLevel();
+
+        $this->assertInstanceOf(Level::class, $level);
+
+        $this->assertEquals(0, $level->required_points);
+
+        $this->assertEquals('Default', $level->name);
+
+        $this->assertTrue($level->active);
+    }
 }

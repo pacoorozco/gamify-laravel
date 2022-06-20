@@ -29,17 +29,23 @@ use Illuminate\Validation\Rule;
 
 class LevelCreateRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', Rule::unique('levels')],
-            'required_points' => ['required', 'integer', 'min:1', Rule::unique('levels')],
-            'active' => ['required', 'boolean'],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('levels'),
+            ],
+            'required_points' => [
+                'required',
+                'integer',
+                Rule::unique('levels'),
+            ],
+            'active' => [
+                'required',
+                'boolean',
+            ],
         ];
     }
 }

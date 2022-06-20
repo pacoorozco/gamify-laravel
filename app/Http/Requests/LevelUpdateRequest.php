@@ -30,38 +30,21 @@ use Illuminate\Validation\Rule;
 
 class LevelUpdateRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         /** @var Level $level */
         $level = $this->route('level');
 
-        if ($level->isDefault()) {
-            return [
-                'name' => [
-                    'required',
-                    'string',
-                    Rule::unique('levels')->ignore($level->id),
-                ],
-            ];
-        }
-
-        // Rules for non default Levels.
         return [
             'name' => [
                 'required',
                 'string',
-                Rule::unique('levels')->ignore($level->id),
+                Rule::unique('levels')->ignore($level),
             ],
             'required_points' => [
                 'required',
                 'integer',
-                'min:1',
-                Rule::unique('levels')->ignore($level->id),
+                Rule::unique('levels')->ignore($level),
             ],
             'active' => [
                 'required',
