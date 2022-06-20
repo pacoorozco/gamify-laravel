@@ -181,11 +181,11 @@ class User extends Authenticatable
             ->withPivot('repetitions', 'completed', 'completed_on');
     }
 
-    public function hasBadgeCompleted(Badge $badge): bool
+    public function isBadgeUnlocked(Badge $badge): bool
     {
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)
-            ->wherePivot('completed', true)
+            ->wherePivotNotNull('completed_on')
             ->exists();
     }
 

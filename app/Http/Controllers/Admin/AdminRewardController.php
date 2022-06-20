@@ -50,7 +50,8 @@ class AdminRewardController extends AdminController
 
     public function giveExperience(RewardExperienceRequest $request): RedirectResponse
     {
-        $request->userToReward()->addExperience(
+        Game::addExperienceTo(
+            user: $request->userToReward(),
             experience: $request->experience(),
             reason: $request->reason() ?? __('messages.unknown_reason')
         );
@@ -65,18 +66,16 @@ class AdminRewardController extends AdminController
 
     public function giveBadge(RewardBadgeRequest $request): RedirectResponse
     {
-        /** @var User $user */
-        $user = User::findOrFail($request->input('badge_username'));
-        /** @var Badge $badge */
-        $badge = Badge::findOrFail($request->input('badge'));
-
-        Game::incrementBadge($user, $badge);
+        Game::incrementBadgeCount(
+            user: $request->userToReward(),
+            badge: $request->badge()
+        );
 
         return redirect()->route('admin.rewards.index')
             ->with('success',
                 trans('admin/reward/messages.badge_given.success', [
-                    'username' => $user->username,
-                    'badge' => $badge->name,
+                    'username' => $request->userToReward()->username,
+                    'badge' => $request->badge()->name,
                 ]));
     }
 }

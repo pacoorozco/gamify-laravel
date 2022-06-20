@@ -40,87 +40,71 @@ class Game
         ]);
     }
 
-    /**
-     * Add more repetitions towards a collection of Badges.
-     *
-     * @param  \Gamify\Models\User  $user
-     * @param  \Illuminate\Database\Eloquent\Collection  $badges
-     */
-    public static function incrementManyBadges(User $user, Collection $badges): void
+    public static function incrementManyBadgesCount(User $user, Collection $badges): void
     {
-        foreach ($badges as $badge) {
-            self::incrementBadge($user, $badge);
-        }
+        $badges->each(function ($badge) use ($user) {
+            self::incrementBadgeCount($user, $badge);
+        });
     }
 
-    /**
-     * Give one more action towards a Badge for an User.
-     *
-     * @param  User  $user
-     * @param  Badge  $badge
-     *
-     * @return void
-     */
-    public static function incrementBadge(User $user, Badge $badge): void
+    public static function incrementBadgeCount(User $user, Badge $badge): void
     {
-        if ($user->hasBadgeCompleted($badge)) {
+        if ($user->isBadgeUnlocked($badge)) {
             return;
         }
 
         try {
-            $userBadge = $user->badges()->wherePivot('badge_id', $badge->id)->firstOrFail();
+            $userBadge = $user->badges()
+                ->wherePivot('badge_id', $badge->id)
+                ->firstOrFail();
+
+            $repetitions = $userBadge->pivot->repetitions + 1;
+
             // this badge was initiated before
-            $data['repetitions'] = $userBadge->pivot->repetitions + 1;
-            $user->badges()->updateExistingPivot($badge->id, $data);
+            $user->badges()->updateExistingPivot($badge->id, [
+                'repetitions' => $repetitions,
+            ]);
         } catch (ModelNotFoundException $exception) {
+
             // this is the first occurrence of this badge for this user
-            $data['repetitions'] = 1;
-            $user->badges()->attach($badge->id, $data);
+            $repetitions = 1;
+
+            $user->badges()->attach($badge->id, [
+                'repetitions' => $repetitions,
+            ]);
         }
 
-        if ($data['repetitions'] === $badge->required_repetitions) {
-            self::giveCompletedBadge($user, $badge);
+        if ($repetitions === $badge->required_repetitions) {
+            self::unlockBadgeFor($user, $badge);
         }
     }
 
-    /**
-     * Give a completed Badge for an User.
-     *
-     * @param  User  $user
-     * @param  Badge  $badge
-     *
-     * @return void
-     */
-    public static function giveCompletedBadge(User $user, Badge $badge): void
+    public static function unlockBadgeFor(User $user, Badge $badge): void
     {
-        if ($user->hasBadgeCompleted($badge)) {
+        if ($user->isBadgeUnlocked($badge)) {
             return;
         }
 
         $data = [
             'repetitions' => $badge->required_repetitions,
-            'completed' => true,
             'completed_on' => now(),
         ];
 
         try {
-            $user->badges()->wherePivot('badge_id', $badge->id)->firstOrFail();
+            $user->badges()
+                ->wherePivot('badge_id', $badge->id)
+                ->firstOrFail();
+
             // this badge was initiated before
             $user->badges()->updateExistingPivot($badge->id, $data);
         } catch (ModelNotFoundException $exception) {
+
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, $data);
         }
     }
 
-    /**
-     * Get a collection with members ordered by Experience Points.
-     *
-     * @param  int  $limitTopUsers
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public static function getRanking(int $limitTopUsers = 10): \Illuminate\Support\Collection
+    public static function getTopExperiencedPlayers(int $numberOfPlayers = 10): \Illuminate\Support\Collection
     {
         return User::query()
             ->player()
@@ -130,15 +114,15 @@ class Game
                 'experience',
             ])
             ->orderBy('experience', 'DESC')
-            ->take($limitTopUsers)
+            ->take($numberOfPlayers)
             ->get()
-            ->map(function ($user) {
-                return [
+            ->map(
+                fn($user) => [
                     'username' => $user->username,
                     'name' => $user->name,
                     'experience' => $user->experience,
                     'level' => $user->level,
-                ];
-            });
+                ]
+            );
     }
 }

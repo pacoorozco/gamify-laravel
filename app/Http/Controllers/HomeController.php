@@ -42,7 +42,7 @@ class HomeController extends Controller
         return view('dashboard.index', [
             'questions' => $questions,
             'questions_count' => $questions->count(),
-            'usersInRanking' => Game::getRanking(),
+            'usersInRanking' => Game::getTopExperiencedPlayers(),
         ]);
     }
 }
