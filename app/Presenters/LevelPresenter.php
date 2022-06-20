@@ -26,6 +26,7 @@
 namespace Gamify\Presenters;
 
 use Gamify\Models\Level;
+use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
 class LevelPresenter extends Presenter
@@ -33,11 +34,11 @@ class LevelPresenter extends Presenter
     /** @var Level */
     protected $model;
 
-    public function image(): string
+    public function image(): HtmlString
     {
-        return sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">',
+        return new HtmlString(sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">',
             $this->model->imageUrl(),
-            $this->model->name);
+            $this->model->name));
     }
 
     public function active(): string
