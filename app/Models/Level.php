@@ -112,7 +112,7 @@ class Level extends Model
 
     /**
      * The default level could be overridden by creating another Level with
-     * required_points = 0
+     * required_points = 0.
      *
      * @return \Gamify\Models\Level
      */
@@ -138,7 +138,7 @@ class Level extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->imageUrl()
+            get: fn ($value) => $this->imageUrl()
         );
     }
 }
