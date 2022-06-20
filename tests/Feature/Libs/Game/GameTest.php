@@ -40,7 +40,8 @@ class GameTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->assertTrue(Game::addReputation($user, 5, 'test'));
+        Game::addExperienceTo($user, 5, 'test');
+
         $this->assertEquals(5, $user->points()->sum('points'));
     }
 

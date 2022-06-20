@@ -79,18 +79,6 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function addExperience_method()
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        $want = 15;
-        $user->addExperience($want);
-
-        $this->assertEquals($want, $user->experience);
-    }
-
-    /** @test */
     public function returns_default_image_when_avatar_is_empty()
     {
         /** @var User $user */

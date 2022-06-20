@@ -25,22 +25,42 @@
 
 namespace Gamify\Http\Requests;
 
+use Gamify\Models\User;
 use Illuminate\Validation\Rule;
 
 class RewardExperienceRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', Rule::exists('users', 'id')],
-            'points' => ['required', 'integer'],
-            'message' => ['nullable', 'string'],
-
+            'username' => [
+                'required',
+                'string',
+                Rule::exists(User::class, 'id'),
+            ],
+            'points' => [
+                'required',
+                'integer',
+            ],
+            'message' => [
+                'nullable',
+                'string',
+            ],
         ];
+    }
+
+    public function userToReward(): User
+    {
+        return User::findOrFail($this->input('username'));
+    }
+
+    public function experience(): int
+    {
+        return $this->input('points');
+    }
+
+    public function reason(): ?string
+    {
+        return $this->input('message');
     }
 }

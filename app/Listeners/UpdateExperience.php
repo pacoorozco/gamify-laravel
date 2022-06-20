@@ -29,13 +29,8 @@ use Gamify\Events\PointCreated;
 
 class UpdateExperience
 {
-    public function __construct()
-    {
-        //
-    }
-
     public function handle(PointCreated $event): void
     {
-        $event->user->addExperience($event->points);
+        $event->user->increment('experience', $event->points);
     }
 }

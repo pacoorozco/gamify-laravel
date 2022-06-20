@@ -26,30 +26,18 @@
 namespace Gamify\Libs\Game;
 
 use Gamify\Models\Badge;
-use Gamify\Models\Point;
 use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Game
 {
-    /**
-     * Add experience to an user.
-     *
-     * @param  User  $user
-     * @param  int  $points
-     * @param  string  $message
-     * @return bool
-     */
-    public static function addReputation(User $user, int $points = 5, string $message = ''): bool
+    public static function addExperienceTo(User $user, int $experience, string $reason): void
     {
-        // add experience points to this user
-        $point_entry = new Point([
-            'points' => $points,
-            'description' => (! empty($message)) ?: __('messages.unknown_reason'),
+        $user->points()->create([
+            'points' => $experience,
+            'description' => $reason,
         ]);
-
-        return ($user->points()->save($point_entry) === false) ?: true;
     }
 
     /**
@@ -70,6 +58,7 @@ class Game
      *
      * @param  User  $user
      * @param  Badge  $badge
+     *
      * @return void
      */
     public static function incrementBadge(User $user, Badge $badge): void
@@ -99,6 +88,7 @@ class Game
      *
      * @param  User  $user
      * @param  Badge  $badge
+     *
      * @return void
      */
     public static function giveCompletedBadge(User $user, Badge $badge): void
@@ -127,6 +117,7 @@ class Game
      * Get a collection with members ordered by Experience Points.
      *
      * @param  int  $limitTopUsers
+     *
      * @return \Illuminate\Support\Collection
      */
     public static function getRanking(int $limitTopUsers = 10): \Illuminate\Support\Collection
