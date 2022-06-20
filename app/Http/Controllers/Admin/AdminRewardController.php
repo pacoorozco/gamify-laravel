@@ -37,7 +37,7 @@ class AdminRewardController extends AdminController
 {
     public function index(): View
     {
-        $users = User::Member()->pluck('username', 'id');
+        $users = User::player()->pluck('username', 'id');
         $badges = Badge::all()->pluck('name', 'id');
 
         return view('admin.reward.index', compact('users', 'badges'));
