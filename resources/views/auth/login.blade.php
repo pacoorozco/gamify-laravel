@@ -19,7 +19,7 @@
     </a>
 
     <div id="email-login" class="hidden">
-        <p class="text-center">- OR -</p>
+
         {!! Form::open(['route' => 'login']) !!}
         <div class="form-group has-feedback">
             {!! Form::text('email', null, [

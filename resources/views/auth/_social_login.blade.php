@@ -18,9 +18,14 @@
         </a>
     @endif
     @if(config('services.okta.client_id'))
-        <a href="{{ route('social.login', ['provider' => 'okta']) }}" class="btn btn-block btn-flat btn-primary" role="button">
+        <a href="{{ route('social.login', ['provider' => 'okta']) }}" class="btn btn-block btn-flat btn-primary"
+           role="button">
             <i class="fa fa-circle-o"></i> @lang('social_login.okta')
         </a>
+    @endif
+
+    @if(config('services.facebook.client_id') || config('services.twitter.client_id') || config('services.github.client_id') || config('services.okta.client_id'))
+        <p class="text-center">- OR -</p>
     @endif
 
 </div>

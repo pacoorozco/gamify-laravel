@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Fixed
 - Broken image urls for levels.
+- `- OR -` statement in the login form should not appear when social login is not enabled.
 
 ## 2.7.3 - 2022-04-06
 
