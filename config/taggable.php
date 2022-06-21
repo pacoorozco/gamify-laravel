@@ -62,7 +62,7 @@ return [
      * to define the inverse relations here.  The array keys are the relation names
      * you would use to access them (e.g. "posts") and the values are the qualified
      * class names of the models that are taggable (e.g. "\App\Post).  e.g. with
-     * the following configuration:
+     * the following configuration:.
      *
      *  'taggedModels' => [
      *      'posts' => \App\Post::class
@@ -74,7 +74,6 @@ return [
      *
      * to get a collection of all the Posts that are tagged "Apple".
      */
-
     'taggedModels' => [],
 
     /**
@@ -83,7 +82,6 @@ return [
      * then update the configuration below.
      */
     'model' => \Cviebrock\EloquentTaggable\Models\Tag::class,
-
 
     /**
      * The tables used to store the tags in the database.  You can

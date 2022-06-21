@@ -27,7 +27,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         $connection = config('taggable.connection');
@@ -42,7 +43,7 @@ return new class extends Migration {
             default => $charset . '_bin',
         };
 
-        if (!Schema::connection($connection)->hasTable($taggableTagsTable)) {
+        if (! Schema::connection($connection)->hasTable($taggableTagsTable)) {
             Schema::connection($connection)->create($taggableTagsTable,
                 static function (Blueprint $table) use ($collation) {
                     $table->bigIncrements('tag_id');
@@ -54,7 +55,7 @@ return new class extends Migration {
                 });
         }
 
-        if (!Schema::connection($connection)->hasTable($taggableTaggablesTable)) {
+        if (! Schema::connection($connection)->hasTable($taggableTaggablesTable)) {
             Schema::connection($connection)->create($taggableTaggablesTable, static function (Blueprint $table) {
                 $table->unsignedBigInteger('tag_id');
                 $table->unsignedBigInteger('taggable_id');
