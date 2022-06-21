@@ -27,38 +27,27 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersBadgesTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+return new class extends Migration {
+    public function up(): void
     {
         Schema::create('users_badges', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->unsignedInteger('badge_id');
-            $table->foreign('badge_id')
-                ->references('id')->on('badges');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignId('badge_id')
+                ->constrained();
             $table->unsignedInteger('repetitions');
-            $table->boolean('completed')->default(false);
-            $table->timestamp('completed_on')->nullable();
+            $table->timestamp('unlocked_at')->nullable();
             $table->timestamps();
-            $table->primary(['user_id', 'badge_id']);
+            $table->primary([
+                'user_id',
+                'badge_id',
+            ]);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::drop('users_badges');
     }
-}
+};

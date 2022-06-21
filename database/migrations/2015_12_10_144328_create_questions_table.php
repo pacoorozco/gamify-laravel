@@ -23,38 +23,40 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
+use Gamify\Models\Question;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+return new class extends Migration {
+    public function up(): void
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('short_name')->unique();
             $table->string('name');
             $table->text('question');
             $table->text('solution')->nullable();
-            $table->enum('type', ['single', 'multi']);
+            $table->enum('type', [Question::SINGLE_RESPONSE_TYPE, Question::MULTI_RESPONSE_TYPE]);
             $table->boolean('hidden')->default(false);
-            $table->enum('status', ['draft', 'publish', 'pending', 'private', 'future'])->default('draft');
+            $table->enum('status', [
+                Question::DRAFT_STATUS,
+                Question::PUBLISH_STATUS,
+                Question::PENDING_STATUS,
+                Question::FUTURE_STATUS,
+            ])->default(Question::DRAFT_STATUS);
 
-            $table->unsignedInteger('created_by')->nullable();
-            $table->foreign('created_by')
-                ->references('id')->on('users');
-            $table->unsignedInteger('updated_by')->nullable();
-            $table->foreign('updated_by')
-                ->references('id')->on('users');
-            $table->unsignedInteger('deleted_by')->nullable();
-            $table->foreign('deleted_by')
-                ->references('id')->on('users');
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users');
+
+            $table->foreignId('updated_by')
+                ->nullable()
+                ->constrained('users');
+
+            $table->foreignId('deleted_by')
+                ->nullable()
+                ->constrained('users');
 
             $table->timestamp('publication_date')->nullable();
             $table->timestamp('expiration_date')->nullable();
@@ -63,13 +65,8 @@ class CreateQuestionsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('questions');
     }
-}
+};
