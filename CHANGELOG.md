@@ -4,9 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 3.0.0 - 2022-06-21
+
 > NOTE: This release has **non-backwards compatible** changes.
+
+### Added
+- Improved form validation to make user's input safer. Test has been increased to ensure proper validation.
+- Added a `Default` level outside the database. It could be overridden by creating a new level with `required_points = 0`
+
 ### Changed
-- Database schema has been changed in non-backwards compatible way. 
+- **Important**: This application has been upgraded to [Laravel 9.x](https://laravel.com/docs). A lot of refactors has been done in order to adopt Laravel 9.x best practices.
+- **Important**: Database schema has been modified in a **non-backwards compatible way**.
+
+### Fixed
+- Broken image urls for levels.
 
 ## 2.7.3 - 2022-04-06
 
