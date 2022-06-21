@@ -43,6 +43,6 @@ class AddAchievements
         $badges = $event->question->getActionableBadgesForCorrectness($event->correctness);
 
         // For each of it increment the counter.
-        Game::incrementManyBadges($event->user, $badges);
+        Game::incrementManyBadgesCount($event->user, $badges);
     }
 }

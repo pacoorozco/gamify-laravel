@@ -116,13 +116,6 @@ class User extends Authenticatable
         return $query->where('role', Roles::Player);
     }
 
-    public function addExperience(int $points = 1): void
-    {
-        $this->increment('experience', $points);
-
-        // TODO: Dispatch event ReputationChanged
-    }
-
     /**
      * Linked Social Accounts (facebook, twitter, github...).
      *
@@ -188,11 +181,11 @@ class User extends Authenticatable
             ->withPivot('repetitions', 'completed', 'completed_on');
     }
 
-    public function hasBadgeCompleted(Badge $badge): bool
+    public function isBadgeUnlocked(Badge $badge): bool
     {
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)
-            ->wherePivot('completed', true)
+            ->wherePivotNotNull('completed_on')
             ->exists();
     }
 

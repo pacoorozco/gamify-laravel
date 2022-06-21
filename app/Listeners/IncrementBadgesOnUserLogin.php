@@ -43,6 +43,6 @@ class IncrementBadgesOnUserLogin
         /** @var User $user */
         $user = User::findOrFail($event->user->getAuthIdentifier());
         $badges = Badge::whereActuators(BadgeActuators::OnUserLogin)->get();
-        Game::incrementManyBadges($user, $badges);
+        Game::incrementManyBadgesCount($user, $badges);
     }
 }

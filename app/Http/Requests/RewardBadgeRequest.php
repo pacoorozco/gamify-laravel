@@ -25,20 +25,33 @@
 
 namespace Gamify\Http\Requests;
 
+use Gamify\Models\Badge;
+use Gamify\Models\User;
 use Illuminate\Validation\Rule;
 
 class RewardBadgeRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
-            'badge_username' => ['required', 'string', Rule::exists('users', 'id')],
-            'badge' => ['required', 'integer', Rule::exists('badges', 'id')],
+            'badge_username' => [
+                'required',
+                Rule::exists(User::class, 'id'),
+            ],
+            'badge' => [
+                'required',
+                Rule::exists(Badge::class, 'id'),
+            ],
         ];
+    }
+
+    public function userToReward(): User
+    {
+        return User::findOrFail($this->input('badge_username'));
+    }
+
+    public function badge(): Badge
+    {
+        return Badge::findOrFail($this->input('badge'));
     }
 }

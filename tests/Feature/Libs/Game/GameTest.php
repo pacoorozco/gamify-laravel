@@ -28,19 +28,27 @@ namespace Tests\Feature\Libs\Game;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
+use Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class GameTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_addReputation_method()
+    /** @test */
+    public function it_should_add_experience_to_the_user()
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->create();
 
-        $this->assertTrue(Game::addReputation($user, 5, 'test'));
+        Game::addExperienceTo(
+            user: $user,
+            experience: 5,
+            reason: 'test'
+        );
+
         $this->assertEquals(5, $user->points()->sum('points'));
     }
 
@@ -48,124 +56,190 @@ class GameTest extends TestCase
     public function it_increments_repetitions_for_a_given_badge()
     {
         $user = User::factory()->create();
+
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
 
-        Game::incrementBadge($user, $badge);
+        Game::incrementBadgeCount($user, $badge);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
+        $repetitions = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot
+            ->repetitions;
+
+        $this->assertEquals(1, $repetitions);
     }
 
     /** @test */
     public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated()
     {
         $user = User::factory()->create();
+
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
-        Game::incrementBadge($user, $badge);
 
-        Game::incrementBadge($user, $badge);
+        Game::incrementBadgeCount($user, $badge);
 
-        $this->assertEquals(2, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
+        Game::incrementBadgeCount($user, $badge);
+
+        $repetitions = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot
+            ->repetitions;
+
+        $this->assertEquals(2, $repetitions);
     }
 
     /** @test */
     public function it_completes_badge_when_reach_required_repetitions()
     {
         $user = User::factory()->create();
+
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
 
-        Game::incrementBadge($user, $badge);
+        Game::incrementBadgeCount($user, $badge);
 
-        $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+        $userBadge = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot;
+
+        $this->assertNotNull($userBadge->completed_on);
     }
 
     /** @test */
-    public function it_does_not_complete_badge_when_required_repetitions_is_not_reached()
+    public function it_does_not_complete_badge_when_required_repetitions_are_not_reached()
     {
         $user = User::factory()->create();
+
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
 
-        Game::incrementBadge($user, $badge);
+        Game::incrementBadgeCount($user, $badge);
 
-        $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+        $userBadge = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot;
+
+        $this->assertFalse((bool) $userBadge->completed);
+
+        $this->assertNull($userBadge->completed_on);
     }
 
     /** @test */
     public function it_does_not_update_repetitions_if_badge_was_already_completed()
     {
         $user = User::factory()->create();
+
+        /** @var Badge $badge */
         $badge = Badge::factory()->create([
             'required_repetitions' => 1,
         ]);
-        Game::giveCompletedBadge($user, $badge);
 
-        Game::incrementBadge($user, $badge);
+        Game::unlockBadgeFor($user, $badge);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
+        Game::incrementBadgeCount($user, $badge);
+
+        $repetitions = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot
+            ->repetitions;
+
+        $this->assertEquals(1, $repetitions);
     }
 
     /** @test */
     public function it_completes_a_badge_for_a_user()
     {
         $user = User::factory()->create();
+
         $badge = Badge::factory()->create();
 
-        Game::giveCompletedBadge($user, $badge);
+        Game::unlockBadgeFor($user, $badge);
 
-        $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+        $userBadge = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot;
+
+        $this->assertNotNull($userBadge->completed_on);
     }
 
     /** @test */
     public function it_completes_a_badge_when_a_user_had_already_started_it()
     {
         $user = User::factory()->create();
+
         $badge = Badge::factory()->create([
             'required_repetitions' => 5,
         ]);
-        Game::incrementBadge($user, $badge); // Badge is started and not completed.
 
-        Game::giveCompletedBadge($user, $badge);
+        Game::incrementBadgeCount($user, $badge); // Badge is started and not completed.
 
-        $this->assertNotNull($user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->completed_on);
+        Game::unlockBadgeFor($user, $badge);
+
+        $userBadge = $user->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->pivot;
+
+        $this->assertNotNull($userBadge->completed_on);
     }
 
-    /** @test */
-    public function getRanking_method_returns_data()
-    {
-        User::factory()->count(10)->create();
+    /**
+     * @test
+     * @dataProvider provideRankingTestCases
+     */
+    public function it_should_return_the_first_players_with_the_highest_score(
+        int $numberOfPlayers,
+        array $expectedPlayers,
+    ): void {
+        // Users: 'User 10' has 10 points, ..., 'User 50' has 50 points
+        User::factory()
+            ->count(5)
+            ->sequence(fn ($sequence) => [
+                'name' => 'User ' . ($sequence->index + 1) * 10,
+                'experience' => ($sequence->index + 1) * 10,
+            ])
+            ->create();
 
-        $test_data = [
-            ['input' => 5, 'output' => 5],
-            ['input' => 10, 'output' => 10],
-            ['input' => 11, 'output' => 10],
+        $got = Game::getTopExperiencedPlayers($numberOfPlayers);
+
+        $this->assertEquals($expectedPlayers, $got->pluck('name')->toArray());
+
+        $got->each(function ($item) {
+            $this->assertTrue(Arr::has($item, ['username', 'name', 'experience', 'level']));
+        });
+    }
+
+    public function provideRankingTestCases(): Generator
+    {
+        yield 'top players is zero' => [
+            'numberOfPlayers' => 0,
+            'expectedPlayers' => [],
         ];
 
-        foreach ($test_data as $test) {
-            $got = Game::getRanking($test['input']);
+        yield 'top players is smaller than total players' => [
+            'numberOfPlayers' => 3,
+            'expectedPlayers' => ['User 50', 'User 40', 'User 30'],
+        ];
 
-            $this->assertInstanceOf(Collection::class, $got);
-            $this->assertCount(
-                $test['output'], $got,
-                sprintf("Test case: input='%d', want='%d'", $test['input'], $test['output']));
-        }
-    }
-
-    public function test_getRanking_returns_proper_content()
-    {
-        $users = User::factory()->count(5)->create();
-
-        $got = Game::getRanking(5);
-
-        foreach ($users as $item) {
-            $this->assertTrue($got->contains('username', $item->username));
-            $this->assertTrue($got->contains('name', $item->name));
-        }
+        yield 'top players is bigger than total players' => [
+            'numberOfPlayers' => 6,
+            'expectedPlayers' => ['User 50', 'User 40', 'User 30', 'User 20', 'User 10'],
+        ];
     }
 }

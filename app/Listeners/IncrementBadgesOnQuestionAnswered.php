@@ -54,6 +54,6 @@ class IncrementBadgesOnQuestionAnswered
             $event->question->getActionableBadgesForCorrectness($event->correctness)
         );
 
-        Game::incrementManyBadges($user, $badges);
+        Game::incrementManyBadgesCount($user, $badges);
     }
 }
