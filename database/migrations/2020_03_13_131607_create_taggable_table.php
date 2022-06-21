@@ -27,26 +27,32 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaggableTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         $connection = config('taggable.connection');
         $taggableTagsTable = config('taggable.tables.taggable_tags', 'taggable_tags');
         $taggableTaggablesTable = config('taggable.tables.taggable_taggables', 'taggable_taggables');
 
-        if (! Schema::connection($connection)->hasTable($taggableTagsTable)) {
-            Schema::connection($connection)->create($taggableTagsTable, static function (Blueprint $table) {
-                $table->bigIncrements('tag_id');
-                $table->string('name');
-                $table->string('normalized')->unique();
-                $table->timestamps();
+        $charset = Schema::connection($connection)->getConnection()->getConfig('charset') ?? 'utf8mb4';
+        $driver = Schema::connection($connection)->getConnection()->getConfig('driver');
 
-                $table->index('normalized');
-            });
+        $collation = match ($driver) {
+            'pgsql' => null,
+            default => $charset . '_bin',
+        };
+
+        if (! Schema::connection($connection)->hasTable($taggableTagsTable)) {
+            Schema::connection($connection)->create($taggableTagsTable,
+                static function (Blueprint $table) use ($collation) {
+                    $table->bigIncrements('tag_id');
+                    $table->string('name');
+                    $table->string('normalized')->unique()->collation($collation);
+                    $table->timestamps();
+
+                    $table->index('normalized');
+                });
         }
 
         if (! Schema::connection($connection)->hasTable($taggableTaggablesTable)) {
@@ -65,9 +71,6 @@ class CreateTaggableTable extends Migration
         }
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         $connection = config('taggable.connection');
@@ -82,4 +85,4 @@ class CreateTaggableTable extends Migration
             Schema::connection($connection)->drop($taggableTaggablesTable);
         }
     }
-}
+};

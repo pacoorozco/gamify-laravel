@@ -156,21 +156,10 @@ class User extends Authenticatable
     public function getCompletedBadges(): Collection
     {
         return $this->badges()
-            ->wherePivot('completed', true)
+            ->wherePivotNotNull('unlocked_at')
             ->get();
     }
 
-    /**
-     * These are the User's Badges relationship.
-     *
-     * It uses a pivot table with these values:
-     *
-     * amount: int - how many actions has completed
-     * completed: bool - true if User's has own this badge
-     * completed_on: Datetime - where it was completed
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -178,14 +167,14 @@ class User extends Authenticatable
             'users_badges',
             'user_id',
             'badge_id')
-            ->withPivot('repetitions', 'completed', 'completed_on');
+            ->withPivot('repetitions', 'unlocked_at');
     }
 
     public function isBadgeUnlocked(Badge $badge): bool
     {
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)
-            ->wherePivotNotNull('completed_on')
+            ->wherePivotNotNull('unlocked_at')
             ->exists();
     }
 

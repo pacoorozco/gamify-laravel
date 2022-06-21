@@ -130,7 +130,7 @@ class UserTest extends TestCase
         ]);
 
         // Complete the badge
-        $user->badges()->attach($badge->id, ['repetitions' => '1', 'completed_on' => now()]);
+        $user->badges()->attach($badge->id, ['repetitions' => '1', 'unlocked_at' => now()]);
 
         $this->assertTrue($user->isBadgeUnlocked($badge));
     }

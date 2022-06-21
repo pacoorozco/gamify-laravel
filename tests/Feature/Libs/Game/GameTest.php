@@ -113,7 +113,7 @@ class GameTest extends TestCase
             ->first()
             ->pivot;
 
-        $this->assertNotNull($userBadge->completed_on);
+        $this->assertNotNull($userBadge->unlocked_at);
     }
 
     /** @test */
@@ -135,7 +135,7 @@ class GameTest extends TestCase
 
         $this->assertFalse((bool) $userBadge->completed);
 
-        $this->assertNull($userBadge->completed_on);
+        $this->assertNull($userBadge->unlocked_at);
     }
 
     /** @test */
@@ -175,7 +175,7 @@ class GameTest extends TestCase
             ->first()
             ->pivot;
 
-        $this->assertNotNull($userBadge->completed_on);
+        $this->assertNotNull($userBadge->unlocked_at);
     }
 
     /** @test */
@@ -196,7 +196,7 @@ class GameTest extends TestCase
             ->first()
             ->pivot;
 
-        $this->assertNotNull($userBadge->completed_on);
+        $this->assertNotNull($userBadge->unlocked_at);
     }
 
     /**

@@ -27,17 +27,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLevelsTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
         Schema::create('levels', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->unsignedInteger('required_points');
             $table->boolean('active')->default(true);
             $table->string('image_url')->nullable();
-
             $table->timestamps();
             $table->softDeletes();
         });
@@ -47,4 +46,4 @@ class CreateLevelsTable extends Migration
     {
         Schema::dropIfExists('levels');
     }
-}
+};

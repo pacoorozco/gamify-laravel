@@ -87,7 +87,7 @@ class Game
 
         $data = [
             'repetitions' => $badge->required_repetitions,
-            'completed_on' => now(),
+            'unlocked_at' => now(),
         ];
 
         try {

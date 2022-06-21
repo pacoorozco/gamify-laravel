@@ -25,29 +25,11 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class PrepareUsersTableForSocialAuthentication extends Migration
+return new class extends Migration
 {
-    /**
-     * PrepareUsersTableForSocialAuthentication constructor.
-     *
-     * Forces Doctrine to treat enum columns as string.
-     */
-    public function __construct()
-    {
-        DB::getDoctrineSchemaManager()
-            ->getDatabasePlatform()
-            ->registerDoctrineTypeMapping('enum', 'string');
-    }
-
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
             // Making email and password nullable
@@ -56,16 +38,11 @@ class PrepareUsersTableForSocialAuthentication extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('email')->nullable(false)->change();
             $table->string('password')->nullable(false)->change();
         });
     }
-}
+};
