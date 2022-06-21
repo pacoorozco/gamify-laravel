@@ -26,13 +26,10 @@
 namespace Database\Factories;
 
 use Gamify\Enums\BadgeActuators;
-use Gamify\Models\Badge;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BadgeFactory extends Factory
 {
-    protected $model = Badge::class;
-
     public function definition(): array
     {
         $color = $this->faker->unique()->safeColorName;
@@ -43,5 +40,28 @@ class BadgeFactory extends Factory
             'required_repetitions' => 5,
             'actuators' => BadgeActuators::None()->value,
         ];
+    }
+
+    public function active(): Factory
+    {
+        return $this->state(fn() => [
+            'active' => true,
+        ]);
+    }
+
+    public function inactive(): Factory
+    {
+        return $this->state(fn() => [
+            'active' => false,
+        ]);
+    }
+
+    public function withActuators(array $actuators): Factory
+    {
+        return $this->state(function () use ($actuators) {
+            return [
+                'actuators' => BadgeActuators::flags($actuators),
+            ];
+        });
     }
 }

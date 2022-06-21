@@ -48,8 +48,12 @@ class AdminQuestionController extends AdminController
     public function create(): View
     {
         return view('admin.question.create', [
-            'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
+            'availableTags' => Question::allTagModels()
+                ->pluck('name', 'normalized')
+                ->toArray(),
+            'globalActions' => Badge::query()
+                ->withActuatorsIn(QuestionActuators::asArray())
+                ->get(),
         ]);
     }
 
@@ -99,6 +103,24 @@ class AdminQuestionController extends AdminController
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.create.success'));
+    }
+
+    private function addChoicesToQuestion(Question $question, array $choices): void
+    {
+        if ($question->choices()->count() > 0) {
+            $question->choices()->delete();
+        }
+
+        if (count($choices) > 0) {
+            $question->choices()->createMany($choices);
+        }
+    }
+
+    public function delete(Question $question): View
+    {
+        return view('admin/question/delete', [
+            'question' => $question,
+        ]);
     }
 
     public function show(Question $question): View
@@ -173,32 +195,9 @@ class AdminQuestionController extends AdminController
             ->with('success', __('admin/question/messages.update.success'));
     }
 
-    private function addChoicesToQuestion(Question $question, array $choices): void
-    {
-        if ($question->choices()->count() > 0) {
-            $question->choices()->delete();
-        }
-
-        if (count($choices) > 0) {
-            $question->choices()->createMany($choices);
-        }
-    }
-
-    public function delete(Question $question): View
-    {
-        return view('admin/question/delete', [
-            'question' => $question,
-        ]);
-    }
-
     public function destroy(Question $question): RedirectResponse
     {
-        try {
-            $question->delete();
-        } catch (\Exception $exception) {
-            return redirect()->back()
-                ->with('error', __('admin/question/messages.delete.error'));
-        }
+        $question->delete();
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.delete.success'));

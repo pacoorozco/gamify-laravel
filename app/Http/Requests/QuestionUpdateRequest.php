@@ -64,8 +64,8 @@ class QuestionUpdateRequest extends Request
             'status' => [
                 'required',
                 Rule::in([
-                    'draft',
-                    'publish',
+                    Question::DRAFT_STATUS,
+                    Question::PUBLISH_STATUS,
                 ]),
             ],
             'hidden' => [

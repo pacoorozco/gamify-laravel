@@ -25,9 +25,11 @@
 
 namespace Gamify\Models;
 
+use BenSampo\Enum\Traits\QueriesFlaggedEnums;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -44,39 +46,16 @@ use QCod\ImageUp\HasImageUploads;
  * @property string $image URL of the badge's image
  * @property bool $active Is this badge enabled?
  * @property BadgeActuators $actuators Events that triggers this badge completion.
- * @property string $imagesUploadDisk
- * @property string $imagesUploadPath
- * @property string $autoUploadImages
  */
 class Badge extends Model
 {
     use SoftDeletes;
     use HasImageUploads;
-    use Presentable;
     use HasFactory;
+    use Presentable;
+    use QueriesFlaggedEnums;
 
     const DEFAULT_IMAGE = '/images/missing_badge.png';
-
-    protected string $presenter = BadgePresenter::class;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'required_repetitions',
-        'active',
-        'actuators',
-    ];
-
-    protected $casts = [
-        'active' => 'boolean',
-        'actuators' => BadgeActuators::class,
-    ];
-
-    protected $dates = ['deleted_at'];
-
-    protected string $imagesUploadPath = 'badges';
-
-    protected bool $autoUploadImages = true;
 
     protected static array $imageFields = [
         'image_url' => [
@@ -99,6 +78,25 @@ class Badge extends Model
             'file_input' => 'image',
         ],
     ];
+    protected string $presenter = BadgePresenter::class;
+    protected $fillable = [
+        'name',
+        'description',
+        'required_repetitions',
+        'active',
+        'actuators',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean',
+        'actuators' => BadgeActuators::class,
+    ];
+
+    protected $dates = ['deleted_at'];
+
+    protected string $imagesUploadPath = 'badges';
+
+    protected bool $autoUploadImages = true;
 
     public function scopeActive(Builder $query): Builder
     {
@@ -107,6 +105,15 @@ class Badge extends Model
 
     public function scopeWithActuatorsIn(Builder $query, array $actuators): Builder
     {
-        return $query->whereIn('actuators', $actuators);
+        return $query
+            ->active()
+            ->hasAnyFlags('actuators', $actuators);
+    }
+
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->imageUrl()
+        );
     }
 }
