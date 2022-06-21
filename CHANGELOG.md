@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+### Fixed
+- Error showing Badges with more than one actuator.
+
 ## 3.0.0 - 2022-06-21
 
 > NOTE: This release has **non-backwards compatible** changes.
