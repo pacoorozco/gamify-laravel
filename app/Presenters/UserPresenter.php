@@ -37,4 +37,19 @@ class UserPresenter extends Presenter
     {
         return $this->model->role->description;
     }
+
+    public function createdAt(): string
+    {
+        return $this->model->created_at->toFormattedDateString();
+    }
+
+    public function birthdate(): string
+    {
+        return $this->model->profile->date_of_birth->toFormattedDateString();
+    }
+
+    public function bio(): string
+    {
+        return $this->model->profile->bio;
+    }
 }
