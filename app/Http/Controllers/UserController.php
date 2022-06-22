@@ -34,14 +34,21 @@ class UserController extends Controller
 {
     public function show(User $user): View
     {
-        $questions_count = $user->pendingQuestions()->count();
+        $questions_count = $user
+            ->pendingQuestions()
+            ->count();
 
-        return view('profile.show', compact('user', 'questions_count'));
+        return view('profile.show')
+            ->with('user', $user)
+            ->with('questions_count', $questions_count);
     }
 
     public function update(UserProfileUpdateRequest $request, User $user): RedirectResponse
     {
-        $user->profile->fill($request->validated())->save();
+        $user
+            ->profile
+            ->fill($request->validated())
+            ->save();
 
         return redirect()->route('profiles.show', $user->username)
             ->with('success', __('user/messages.settings_updated'));
