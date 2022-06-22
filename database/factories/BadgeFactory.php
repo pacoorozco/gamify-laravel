@@ -44,14 +44,14 @@ class BadgeFactory extends Factory
 
     public function active(): Factory
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'active' => true,
         ]);
     }
 
     public function inactive(): Factory
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'active' => false,
         ]);
     }
