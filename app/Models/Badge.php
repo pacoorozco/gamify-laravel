@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
 
@@ -78,7 +79,9 @@ class Badge extends Model
             'file_input' => 'image',
         ],
     ];
+
     protected string $presenter = BadgePresenter::class;
+
     protected $fillable = [
         'name',
         'description',
@@ -110,10 +113,15 @@ class Badge extends Model
             ->hasAnyFlags('actuators', $actuators);
     }
 
+    public function slug(): string
+    {
+        return Str::slug($this->name);
+    }
+
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn($value) => $this->imageUrl()
         );
     }
 }
