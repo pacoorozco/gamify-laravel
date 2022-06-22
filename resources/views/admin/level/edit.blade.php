@@ -56,30 +56,25 @@
                     </div>
                     <!-- ./ name -->
 
-                {{-- Attributes that can not be edited on the default level --}}
-                @unless($level->isDefault())
-
                     <!-- required_points -->
-                        <div class="form-group {{ $errors->has('required_points') ? 'has-error' : '' }}">
-                            {{ Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label required']) }}
-                            <div class="controls">
-                                {{ Form::number('required_points', null, array('class' => 'form-control', 'required' => 'required', 'min' => '0')) }}
-                                <span class="help-block">{{ $errors->first('required_points', ':message') }}</span>
-                            </div>
+                    <div class="form-group {{ $errors->has('required_points') ? 'has-error' : '' }}">
+                        {{ Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label required']) }}
+                        <div class="controls">
+                            {{ Form::number('required_points', null, array('class' => 'form-control', 'required' => 'required', 'min' => '0')) }}
+                            <span class="help-block">{{ $errors->first('required_points', ':message') }}</span>
                         </div>
-                        <!-- ./ required_points -->
+                    </div>
+                    <!-- ./ required_points -->
 
-                        <!-- activation status -->
-                        <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                            {{ Form::label('active', __('admin/level/model.active'), array('class' => 'control-label required')) }}
-                            <div class="controls">
-                                {{ Form::select('active', array('1' => __('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) }}
-                                {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
-                            </div>
+                    <!-- activation status -->
+                    <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
+                        {{ Form::label('active', __('admin/level/model.active'), array('class' => 'control-label required')) }}
+                        <div class="controls">
+                            {{ Form::select('active', array('1' => __('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) }}
+                            {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
                         </div>
-                        <!-- ./ activation status -->
-
-                    @endunless
+                    </div>
+                    <!-- ./ activation status -->
 
                 </div>
                 <div class="col-xs-6">
@@ -123,8 +118,8 @@
                     <i class="fa fa-arrow-left"></i> @lang('general.back')
                 </button>
             </a>
-        {{ Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) }}
-        <!-- ./ form actions -->
+            {{ Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) }}
+            <!-- ./ form actions -->
         </div>
     </div>
     </div>

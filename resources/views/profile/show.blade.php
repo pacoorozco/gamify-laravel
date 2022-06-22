@@ -26,8 +26,8 @@
             <!-- Profile Image -->
             <div class="box box-widget widget-user">
                 <div class="widget-user-header bg-aqua-active">
-                    <h3 class="widget-user-username">{{ $user->name }}</h3>
-                    <h5 class="widget-user-desc">{{ $user->level }}</h5>
+                    <h3 class="widget-user-username">{{ $user->present()->name }}</h3>
+                    <h5 class="widget-user-desc">{{ $user->present()->level }}</h5>
                 </div>
                 <div class="widget-user-image">
                     <img class="img-circle" src="{{ $user->profile->avatarUrl }}" alt="User Avatar">
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                                <h5 class="description-header">{{ $user->experience }}</h5>
+                                <h5 class="description-header">{{ $user->present()->experience }}</h5>
                                 <span class="description-text">XP</span>
                             </div>
                             <!-- /.description-block -->
@@ -44,7 +44,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                                <h5 class="description-header">{{ count($user->answeredQuestions) }}</h5>
+                                <h5 class="description-header">{{ $user->answeredQuestions->count() }}</h5>
                                 <span class="description-text">ANSWERS</span>
                             </div>
                             <!-- /.description-block -->
@@ -52,7 +52,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                             <div class="description-block">
-                                <h5 class="description-header">{{ count($user->getCompletedBadges()) }}</h5>
+                                <h5 class="description-header">{{ $user->getCompletedBadges()->count() }}</h5>
                                 <span class="description-text">BADGES</span>
                             </div>
                             <!-- /.description-block -->

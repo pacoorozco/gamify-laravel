@@ -34,22 +34,56 @@ class BadgeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_returns_default_image_when_field_is_empty()
+    /** @test */
+    public function it_should_return_the_default_image_if_badge_has_not_image()
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
         $this->assertNull($badge->getOriginal('image_url'));
+
+        $this->assertEquals(Badge::DEFAULT_IMAGE, $badge->image);
     }
 
     /** @test */
-    public function it_returns_actuators_as_enum_when_model_is_read_from_database()
+    public function it_should_return_only_active_badges()
     {
-        $want = Badge::factory()->create();
-        $want->actuators = BadgeActuators::OnUserLogin();
-        $want->saveOrFail();
+        Badge::factory()
+            ->inactive()
+            ->count(3)
+            ->create();
 
-        $got = Badge::find($want)->first();
+        $want = Badge::factory()
+            ->active()
+            ->count(2)
+            ->create();
 
-        $this->assertEquals(BadgeActuators::OnUserLogin(), $got->actuators);
+        $this->assertEquals($want->pluck('name'), Badge::active()->pluck('name'));
+    }
+
+    /** @test */
+    public function it_should_return_only_active_badges_with_the_specified_actuators()
+    {
+        Badge::factory()
+            ->inactive()
+            ->withActuators([BadgeActuators::OnUserLogin])
+            ->create();
+
+        $want = Badge::factory()
+            ->active()
+            ->withActuators([
+                BadgeActuators::OnUserLogin,
+                BadgeActuators::OnQuestionAnswered,
+            ])
+            ->count(2)
+            ->create();
+
+        $badges = Badge::query()
+            ->withActuatorsIn([
+                BadgeActuators::OnUserLogin,
+            ])
+            ->get();
+
+        $this->assertEquals($want->pluck('name'), $badges->pluck('name'));
     }
 }

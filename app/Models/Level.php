@@ -130,11 +130,6 @@ class Level extends Model
         return $query->where('active', true);
     }
 
-    public function isDefault(): bool
-    {
-        return $this->required_points === 0;
-    }
-
     protected function image(): Attribute
     {
         return Attribute::make(
