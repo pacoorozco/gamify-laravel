@@ -67,7 +67,7 @@ class GameTest extends TestCase
         $repetitions = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot
+            ->progress
             ->repetitions;
 
         $this->assertEquals(1, $repetitions);
@@ -90,7 +90,7 @@ class GameTest extends TestCase
         $repetitions = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot
+            ->progress
             ->repetitions;
 
         $this->assertEquals(2, $repetitions);
@@ -111,7 +111,7 @@ class GameTest extends TestCase
         $userBadge = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot;
+            ->progress;
 
         $this->assertNotNull($userBadge->unlocked_at);
     }
@@ -131,7 +131,7 @@ class GameTest extends TestCase
         $userBadge = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot;
+            ->progress;
 
         $this->assertFalse((bool) $userBadge->completed);
 
@@ -155,7 +155,7 @@ class GameTest extends TestCase
         $repetitions = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot
+            ->progress
             ->repetitions;
 
         $this->assertEquals(1, $repetitions);
@@ -173,7 +173,7 @@ class GameTest extends TestCase
         $userBadge = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot;
+            ->progress;
 
         $this->assertNotNull($userBadge->unlocked_at);
     }
@@ -194,7 +194,7 @@ class GameTest extends TestCase
         $userBadge = $user->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ->pivot;
+            ->progress;
 
         $this->assertNotNull($userBadge->unlocked_at);
     }
