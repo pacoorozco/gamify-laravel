@@ -1,57 +1,30 @@
 <div class="row">
     <div class="col-xs-12">
-        {{ strip_tags($user->profile->bio) }}
+        <blockquote class="blockquote">
+            <p class="mb-0">
+            {{ $user->present()->bio }}
+            </p>
+            <footer class="blockquote-footer">{{ $user->name }}</footer>
+        </blockquote>
+
     </div>
 </div>
 
-<h3>@lang('user/profile.badges')</h3>
+<!-- unlocked badges -->
+<h3>@lang('user/profile.unlocked_badges')</h3>
 
 <div class="row">
-    @foreach($user->badges as $badge)
-        <div class="col-xs-2">
-            <a href="#badge-{{ $badge->name }}" class="thumbnail" data-toggle="modal">
-                @if ($badge->pivot->completed)
-                    {{ $badge->present()->imageThumbnail }}
-                @else
-                    <img src="{{ asset('images/missing_badge.png') }}" alt="{{ $badge->name }}">
-                @endif
-            </a>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="badge-{{ $badge->name }}" tabindex="-1" role="dialog"
-             aria-labelledby="badge-{{ $badge->name }}Label">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="@lang('general.close')">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="badge-{{ $badge->name }}Label">
-                            @lang('user/profile.badge'): {{ $badge->name }}
-                            @if ($badge->pivot->completed)
-                                <span class="label label-success">@lang('user/profile.badge_completed')</span>
-                            @endif
-                        </h4>
-                    </div>
-                    <div class="modal-body text-center">
-                        @if ($badge->pivot->completed)
-                            {{ $badge->present()->imageThumbnail }}
-                            <p>{{ $badge->description }}</p>
-                        @else
-                            <img src="{{ asset('images/missing_badge.png') }}" alt="{{ $badge->name }}">
-                        @endif
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">@lang('general.close')</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
+    @each('profile._badge_unlocked', $user->unlockedBadges(), 'badge', 'profile._badges_none')
 </div>
+<!-- ./unlocked badges -->
+
+<!-- locked badges -->
+<h3>@lang('user/profile.locked_badges')</h3>
+
+<div class="row">
+    @each('profile._badge_locked', $user->lockedBadges(), 'badge', 'profile._badges_none')
+</div>
+<!-- ./unlocked badges -->
 
 
 

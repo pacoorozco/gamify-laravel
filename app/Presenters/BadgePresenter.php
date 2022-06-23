@@ -26,6 +26,7 @@
 namespace Gamify\Presenters;
 
 use Gamify\Enums\BadgeActuators;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
@@ -67,19 +68,25 @@ class BadgePresenter extends Presenter
         return new HtmlString((string) $this->model->imageTag('image_url', 'class="img-thumbnail"'));
     }
 
-    public function imageTableThumbnail(): HtmlString
-    {
-        return new HtmlString((string) $this->model->imageTag('image_url',
-            'class="img-thumbnail center-block" width="96"'));
-    }
-
     public function imageTag(): HtmlString
     {
         return new HtmlString((string) $this->model->imageTag('image_url'));
     }
 
+    public function imageTableThumbnail(): HtmlString
+    {
+        return new HtmlString((string) $this->model->imageTag('image_url',
+            'class="img-thumbnail center-block"'));
+    }
+
     public function actuators(): array
     {
         return $this->model->actuators->getFlags();
+    }
+
+    public function unlockedAt(): string
+    {
+        return Carbon::parse($this->model->progress->completed_at)?->toFormattedDateString()
+            ?? '';
     }
 }

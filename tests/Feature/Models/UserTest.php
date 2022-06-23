@@ -79,12 +79,11 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function returns_default_image_when_avatar_is_empty()
+    public function it_should_return_the_default_image_when_avatar_is_not_set(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertNull($user->profile->avatar);
         $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatarUrl);
     }
 
