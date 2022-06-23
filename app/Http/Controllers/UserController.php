@@ -34,13 +34,8 @@ class UserController extends Controller
 {
     public function show(User $user): View
     {
-        $questions_count = $user
-            ->pendingQuestions()
-            ->count();
-
         return view('profile.show')
-            ->with('user', $user)
-            ->with('questions_count', $questions_count);
+            ->with('user', $user);
     }
 
     public function update(UserProfileUpdateRequest $request, User $user): RedirectResponse
