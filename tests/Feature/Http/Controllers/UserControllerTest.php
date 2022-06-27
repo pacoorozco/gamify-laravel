@@ -62,7 +62,7 @@ class UserControllerTest extends TestCase
             ->assertViewIs('profile.show')
             ->assertViewHas('user', $user)
             ->assertDontSeeText(__('user/profile.edit_account'))
-            ->assertDontSeeText(__('user/profile.change_password'));;
+            ->assertDontSeeText(__('user/profile.change_password'));
     }
 
     /** @test */

@@ -40,5 +40,4 @@ class UserProfileUpdated
         public User $user
     ) {
     }
-
 }

@@ -73,6 +73,6 @@ return [
     'unlocked_badges' => 'Unlocked badges',
     'locked_badges' => 'Locked badges',
     'no_badges_yet' => 'None as yet',
-    'unlocked_at' => 'It was unlocked the :date'
+    'unlocked_at' => 'It was unlocked the :date',
 
 ];
