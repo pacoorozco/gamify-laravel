@@ -39,7 +39,7 @@ return new class extends Migration
         $driver = Schema::connection($connection)->getConnection()->getConfig('driver');
 
         $collation = match ($driver) {
-            'pgsql' => null,
+            'pgsql' => '',
             default => $charset . '_bin',
         };
 
