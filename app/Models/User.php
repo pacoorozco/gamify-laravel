@@ -49,6 +49,7 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property \Gamify\Enums\Roles $role Role of the user.
  * @property int $experience The reputation of the user.
  * @property UserProfile $profile The user's profile
+ * @property-read string $level The current level of the user.
  */
 class User extends Authenticatable
 {
