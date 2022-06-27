@@ -238,7 +238,6 @@ class User extends Authenticatable
 
     private function getNextLevel(): Level
     {
-        return Level::findNextByExperience($this->experience)
-            ?? Level::findByExperience($this->experience);
+        return Level::findNextByExperience($this->experience);
     }
 }
