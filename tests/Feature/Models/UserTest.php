@@ -133,4 +133,15 @@ class UserTest extends TestCase
 
         $this->assertTrue($user->isBadgeUnlocked($badge));
     }
+
+    /** @test */
+    public function it_should_get_empty_string_when_birthdate_is_not_set()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $user->profile->date_of_birth = null;
+
+        $this->assertEmpty($user->present()->birthdate);
+    }
 }

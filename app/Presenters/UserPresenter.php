@@ -40,13 +40,14 @@ class UserPresenter extends Presenter
 
     public function createdAt(): string
     {
-        return $this->model->created_at->toFormattedDateString();
+        return $this->model->created_at?->toFormattedDateString()
+            ?? '';
     }
 
     public function birthdate(): string
     {
         return $this->model->profile->date_of_birth?->toFormattedDateString()
-            ?? __('user/profile.date_of_birth_not_set');
+            ?? '';
     }
 
     public function bio(): string
