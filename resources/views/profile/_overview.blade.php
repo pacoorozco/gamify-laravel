@@ -1,12 +1,13 @@
 <div class="row">
     <div class="col-xs-12">
+        @unless (empty($user->present()->bio))
         <blockquote class="blockquote">
             <p class="mb-0">
             {{ $user->present()->bio }}
             </p>
             <footer class="blockquote-footer">{{ $user->name }}</footer>
         </blockquote>
-
+        @endunless
     </div>
 </div>
 
