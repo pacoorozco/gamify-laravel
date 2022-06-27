@@ -47,6 +47,7 @@ mix.copyDirectory('node_modules/jasny-bootstrap/dist', 'public/vendor/jasny-boot
 mix.copyDirectory('node_modules/jquery-datetimepicker/build', 'public/vendor/jquery-datetimepicker');
 mix.copy('node_modules/repeatable-fields/repeatable-fields.js', 'public/vendor/repeatable-fields/')
     .minify('public/vendor/repeatable-fields/repeatable-fields.js');
+mix.js('resources/js/app.js', 'public/js');
 
 
 
