@@ -25,18 +25,8 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Models\User;
-
 class UserProfileUpdateRequest extends Request
 {
-    public function authorize(): bool
-    {
-        /** @var User $user */
-        $user = $this->route('username');
-
-        return $user->username == $this->user()->username;
-    }
-
     public function rules(): array
     {
         return [
