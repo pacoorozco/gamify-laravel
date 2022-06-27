@@ -9,11 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Dispatched event `UserProfileUpdated` when the user's profile has been modified.
 
 ### Changed
-- Remove sensible information (like gender, url, phone...) from the user's profile.
+- Remove sensible information (like gender, url, phone...) from the user's profile. ([#256][i256])
 - Fix HTTP method for the user's profile update to `PUT`.
 
 ### Fixed
 - Error showing Badges with more than one actuator.
+
+[i256]: https://github.com/pacoorozco/gamify-laravel/pull/256
 
 ## 3.0.0 - 2022-06-21
 
