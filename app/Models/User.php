@@ -70,13 +70,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $dates = [
-        'email_verified_at',
-    ];
-
     protected $casts = [
         'level' => Level::class,
         'role' => Roles::class,
+        'email_verified_at' => 'datetime',
     ];
 
     public static function findByUsername(string $username): self

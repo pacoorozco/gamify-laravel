@@ -95,8 +95,6 @@ class Badge extends Model
         'actuators' => BadgeActuators::class,
     ];
 
-    protected $dates = ['deleted_at'];
-
     protected string $imagesUploadPath = 'badges';
 
     protected bool $autoUploadImages = true;

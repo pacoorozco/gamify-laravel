@@ -50,6 +50,8 @@ class QuestionTest extends TestCase
         $this->assertEquals([
             'id' => 'int',
             'hidden' => 'bool',
+            'publication_date' => 'datetime',
+            'expiration_date' => 'datetime',
             'deleted_at' => 'datetime',
         ], $m->getCasts());
     }

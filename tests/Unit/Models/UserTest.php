@@ -70,6 +70,7 @@ class UserTest extends TestCase
             'id' => 'int',
             'level' => Level::class,
             'role' => Roles::class,
+            'email_verified_at' => 'datetime',
         ], $m->getCasts());
     }
 

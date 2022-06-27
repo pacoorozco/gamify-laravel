@@ -90,16 +90,11 @@ class Question extends Model
         'publication_date',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'publication_date',
-        'expiration_date',
-    ];
-
     protected $casts = [
         'hidden' => 'bool',
+        'publication_date' => 'datetime',
+        'expiration_date' => 'datetime',
+
     ];
 
     public function sluggable(): array
@@ -109,16 +104,6 @@ class Question extends Model
                 'source' => 'name',
             ],
         ];
-    }
-
-    public function actions(): HasMany
-    {
-        return $this->hasMany(QuestionAction::class);
-    }
-
-    public function choices(): HasMany
-    {
-        return $this->hasMany(QuestionChoice::class);
     }
 
     public function excerpt(int $length = 55, string $trailing = '...'): string
@@ -131,6 +116,11 @@ class Question extends Model
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
 
         return Badge::whereNotIn('id', $selectedActions)->get();
+    }
+
+    public function actions(): HasMany
+    {
+        return $this->hasMany(QuestionAction::class);
     }
 
     public function isPublishedOrScheduled(): bool
@@ -167,6 +157,7 @@ class Question extends Model
      * Returns the Badges that can be actionable depending if the answer was correct or not.
      *
      * @param  bool  $correctness
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
@@ -194,7 +185,7 @@ class Question extends Model
             return;
         }
 
-        if (! $this->canBePublished()) {
+        if (!$this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
@@ -205,11 +196,6 @@ class Question extends Model
         } catch (\Throwable $exception) {
             throw new QuestionPublishingException($exception);
         }
-    }
-
-    public function publishedAt(): ?Carbon
-    {
-        return $this->publication_date;
     }
 
     /**
@@ -225,6 +211,16 @@ class Question extends Model
         $answers_correct_count = $this->choices()->correct()->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
+    }
+
+    public function choices(): HasMany
+    {
+        return $this->hasMany(QuestionChoice::class);
+    }
+
+    public function publishedAt(): ?Carbon
+    {
+        return $this->publication_date;
     }
 
     /**
@@ -296,7 +292,7 @@ class Question extends Model
             return;
         }
 
-        if (! $this->canBePublished()) {
+        if (!$this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
