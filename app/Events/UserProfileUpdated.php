@@ -23,34 +23,22 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Controllers;
+namespace Gamify\Events;
 
-use Gamify\Events\UserProfileUpdated;
-use Gamify\Http\Requests\UserProfileUpdateRequest;
 use Gamify\Models\User;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
-class UserController extends Controller
+class UserProfileUpdated
 {
-    public function show(User $user): View
-    {
-        return view('profile.show')
-            ->with('user', $user);
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
+
+    public function __construct(
+        public User $user
+    ) {
     }
 
-    public function update(UserProfileUpdateRequest $request, User $user): RedirectResponse
-    {
-        $this->authorize('update-profile', $user);
-
-        $user
-            ->profile
-            ->fill($request->validated())
-            ->save();
-
-        UserProfileUpdated::dispatch($user);
-
-        return redirect()->route('profiles.show', $user->username)
-            ->with('success', __('user/messages.settings_updated'));
-    }
 }
