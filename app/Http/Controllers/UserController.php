@@ -40,6 +40,8 @@ class UserController extends Controller
 
     public function update(UserProfileUpdateRequest $request, User $user): RedirectResponse
     {
+        $this->authorize('update-profile', $user);
+
         $user
             ->profile
             ->fill($request->validated())
