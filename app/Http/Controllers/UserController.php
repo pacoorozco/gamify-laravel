@@ -45,10 +45,9 @@ class UserController extends Controller
 
         $user
             ->profile
-            ->fill($request->validated())
-            ->save();
+            ->update($request->validated());
 
-        UserProfileUpdated::dispatch($user);
+        UserProfileUpdated::dispatchIf($user->profile->wasChanged(), $user);
 
         return redirect()->route('profiles.show', $user->username)
             ->with('success', __('user/messages.settings_updated'));

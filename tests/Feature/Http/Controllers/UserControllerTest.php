@@ -201,7 +201,7 @@ class UserControllerTest extends TestCase
     }
 
     /** @test */
-    public function event_should_be_dispatched_when_user_profile_is_updated(): void
+    public function event_should_be_dispatched_when_user_profile_is_updating_at_least_one_attribute(): void
     {
         Event::fake([
             UserProfileUpdated::class,
@@ -216,5 +216,21 @@ class UserControllerTest extends TestCase
             ->assertValid();
 
         Event::assertDispatched(UserProfileUpdated::class);
+    }
+
+    /** @test */
+    public function event_should_not_be_dispatched_when_user_profile_is_not_updating_any_attribute(): void
+    {
+        Event::fake([
+            UserProfileUpdated::class,
+        ]);
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('profiles.update', $this->user->username), [])
+            ->assertRedirect(route('profiles.show', $this->user->username))
+            ->assertValid();
+
+        Event::assertNotDispatched(UserProfileUpdated::class);
     }
 }
