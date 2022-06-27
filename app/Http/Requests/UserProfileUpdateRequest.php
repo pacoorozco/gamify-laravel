@@ -26,7 +26,6 @@
 namespace Gamify\Http\Requests;
 
 use Gamify\Models\User;
-use Illuminate\Validation\Rule;
 
 class UserProfileUpdateRequest extends Request
 {
@@ -41,32 +40,28 @@ class UserProfileUpdateRequest extends Request
     public function rules(): array
     {
         return [
-            'url' => [
-                'sometimes',
-                'url',
+            'bio' => [
+                'nullable',
+                'string',
             ],
             'date_of_birth' => [
-                'sometimes',
+                'nullable',
                 'date',
             ],
-            'gender' => [
-                'required',
-                Rule::in(['male', 'female', 'unspecified']),
-            ],
             'twitter' => [
-                'sometimes',
+                'nullable',
                 'url',
             ],
             'facebook' => [
-                'sometimes',
+                'nullable',
                 'url',
             ],
             'linkedin' => [
-                'sometimes',
+                'nullable',
                 'url',
             ],
             'github' => [
-                'sometimes',
+                'nullable',
                 'url',
             ],
         ];
