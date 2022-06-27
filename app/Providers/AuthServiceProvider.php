@@ -72,7 +72,6 @@ class AuthServiceProvider extends ServiceProvider
             return $currentUser->is($user);
         });
 
-
         // A user can not update its own role.
         Gate::define('update-role', function (User $currentUser, User $user) {
             return $currentUser->isAdmin()
