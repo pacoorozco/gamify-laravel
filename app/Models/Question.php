@@ -58,8 +58,8 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property string $public_url The public URL of this question.
  * @property \Gamify\Models\User $creator The User who created this question,
  * @property \Gamify\Models\User $updater The last User who updated this question.
- * @property \Illuminate\Support\Carbon $publication_date The data when the question was published.
- * @property \Illuminate\Support\Carbon $expiration_date The data when the question was expired.
+ * @property ?Carbon $publication_date The data when the question was published.
+ * @property ?Carbon $expiration_date The data when the question was expired.
  * @mixin \Eloquent
  */
 class Question extends Model
