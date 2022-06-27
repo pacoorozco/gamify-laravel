@@ -1,6 +1,6 @@
 {!! Form::model($user->profile, array(
                                 'route' => array('profiles.update', $user->username),
-                                'method' => 'post',
+                                'method' => 'put',
                                 'files' => true,
                                 'role' => 'form',
                                                     )) !!}

@@ -26,6 +26,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Gamify\Models\User;
+use Gamify\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -70,5 +71,26 @@ class UserControllerTest extends TestCase
             ->assertViewHas('user', $this->user)
             ->assertSeeText(__('user/profile.edit_account'))
             ->assertSeeText(__('user/profile.change_password'));
+    }
+
+    /** @test */
+    public function users_should_update_its_own_profile(): void
+    {
+        $this
+            ->actingAs($this->user)
+            ->put(route('profiles.update', $this->user->username), [
+                'bio' => 'foo bar',
+                'date_of_birth' => '',
+                'twitter' => '',
+                'facebook' => '',
+                'linkedin' => '',
+                'github' => '',
+            ])
+            ->assertValid();
+
+        $this->assertDatabaseHas(UserProfile::class, [
+            'user_id' => $this->user->id,
+            'bio' => 'foo bar r'
+        ]);
     }
 }
