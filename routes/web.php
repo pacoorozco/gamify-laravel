@@ -141,6 +141,7 @@ Route::middleware(['auth'])->group(function () {
         '/',
         [HomeController::class, 'index']
     )->name('home');
+
     Route::get(
         'dashboard',
         [HomeController::class, 'index']
@@ -151,7 +152,8 @@ Route::middleware(['auth'])->group(function () {
         'users/{username}',
         [UserController::class, 'show']
     )->name('profiles.show');
-    Route::post(
+
+    Route::put(
         'users/{username}',
         [UserController::class, 'update']
     )->name('profiles.update');

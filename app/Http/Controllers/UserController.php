@@ -25,6 +25,7 @@
 
 namespace Gamify\Http\Controllers;
 
+use Gamify\Events\UserProfileUpdated;
 use Gamify\Http\Requests\UserProfileUpdateRequest;
 use Gamify\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -34,21 +35,19 @@ class UserController extends Controller
 {
     public function show(User $user): View
     {
-        $questions_count = $user
-            ->pendingQuestions()
-            ->count();
-
         return view('profile.show')
-            ->with('user', $user)
-            ->with('questions_count', $questions_count);
+            ->with('user', $user);
     }
 
     public function update(UserProfileUpdateRequest $request, User $user): RedirectResponse
     {
+        $this->authorize('update-profile', $user);
+
         $user
             ->profile
-            ->fill($request->validated())
-            ->save();
+            ->update($request->validated());
+
+        UserProfileUpdated::dispatchIf($user->profile->wasChanged(), $user);
 
         return redirect()->route('profiles.show', $user->username)
             ->with('success', __('user/messages.settings_updated'));

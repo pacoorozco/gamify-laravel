@@ -36,10 +36,7 @@ class UserProfileFactory extends Factory
     {
         return [
             'bio' => $this->faker->text,
-            'url' => $this->faker->url,
-            'phone' => $this->faker->e164PhoneNumber,
             'date_of_birth' => $this->faker->dateTime,
-            'gender' => $this->faker->randomElement(['male', 'female', 'unspecified']),
             'twitter' => $this->faker->url,
             'facebook' => $this->faker->url,
             'linkedin' => $this->faker->url,

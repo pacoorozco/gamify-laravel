@@ -66,7 +66,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
         $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->pivot->repetitions);
+        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->progress->repetitions);
     }
 
     /** @test */

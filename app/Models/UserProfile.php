@@ -25,6 +25,7 @@
 
 namespace Gamify\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,17 +39,12 @@ use QCod\ImageUp\HasImageUploads;
  * @property string $bio Short bio information.
  * @property string $url Homepage.
  * @property string $avatarUrl URL of the avatar.
- * @property string $phone Phone number.
  * @property Carbon $date_of_birth Date of Birth.
- * @property string $gender Gender, could be 'male', 'female' or 'unspecified'.
  * @property string $twitter Twitter username
  * @property string $facebook Facebook username
  * @property string $linkedin LinkedIn username
  * @property string $github GitHub username
  * @property User $user User wo belongs to.
- * @property string $imagesUploadDisk
- * @property string $imagesUploadPath
- * @property string $autoUploadImages
  */
 class UserProfile extends Model
 {
@@ -59,14 +55,15 @@ class UserProfile extends Model
 
     protected $fillable = [
         'bio',
-        'url',
-        'phone',
         'date_of_birth',
-        'gender',
         'twitter',
         'facebook',
         'linkedin',
         'github',
+    ];
+
+    protected $dates = [
+        'date_of_birth',
     ];
 
     protected string $imagesUploadPath = 'avatars';
@@ -100,12 +97,10 @@ class UserProfile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getAvatarUrlAttribute(): string
+    protected function avatarUrl(): Attribute
     {
-        try {
-            return $this->imageUrl('avatar');
-        } catch (\Throwable $exception) {
-            return asset(self::DEFAULT_IMAGE);
-        }
+        return Attribute::make(
+            get: fn ($value) => $this->imageUrl()
+        );
     }
 }

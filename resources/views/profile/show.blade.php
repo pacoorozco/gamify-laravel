@@ -26,8 +26,8 @@
             <!-- Profile Image -->
             <div class="box box-widget widget-user">
                 <div class="widget-user-header bg-aqua-active">
-                    <h3 class="widget-user-username">{{ $user->present()->name }}</h3>
-                    <h5 class="widget-user-desc">{{ $user->present()->level }}</h5>
+                    <h3 class="widget-user-username">{{ $user->name }}</h3>
+                    <h5 class="widget-user-desc">{{ $user->level }}</h5>
                 </div>
                 <div class="widget-user-image">
                     <img class="img-circle" src="{{ $user->profile->avatarUrl }}" alt="User Avatar">
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                                <h5 class="description-header">{{ $user->present()->experience }}</h5>
+                                <h5 class="description-header">{{ $user->experience }}</h5>
                                 <span class="description-text">XP</span>
                             </div>
                             <!-- /.description-block -->
@@ -44,7 +44,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                                <h5 class="description-header">{{ $user->answeredQuestions->count() }}</h5>
+                                <h5 class="description-header">{{ $user->answeredQuestionsCount() }}</h5>
                                 <span class="description-text">ANSWERS</span>
                             </div>
                             <!-- /.description-block -->
@@ -52,7 +52,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                             <div class="description-block">
-                                <h5 class="description-header">{{ $user->getCompletedBadges()->count() }}</h5>
+                                <h5 class="description-header">{{ $user->unlockedBadgesCount() }}</h5>
                                 <span class="description-text">BADGES</span>
                             </div>
                             <!-- /.description-block -->
@@ -72,6 +72,7 @@
         <div class="col-md-8">
             <!-- notifications -->
             @include('partials.notifications')
+            <!-- ./notifications -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active">
@@ -82,14 +83,16 @@
                         <a href="#timeline" data-toggle="tab">Timeline</a>
                     </li>
                     --}}
-                    @if ($user->username == Auth::user()->username)
+                    @can('update-profile', $user)
                         <li>
                             <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>
                         </li>
+                    @endcan
+                    @can('update-password', $user)
                         <li>
                             <a href="{{ route('password.change') }}">@lang('user/profile.change_password')</a>
                         </li>
-                    @endif
+                    @endcan
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="overview">
@@ -100,11 +103,11 @@
                         @include('profile._timeline')
                     </div>
                     --}}
-                    @if ($user->username == Auth::user()->username)
+                    @can('update-profile', $user)
                         <div class="tab-pane" id="settings">
                             @include('profile._settings')
                         </div>
-                    @endif
+                    @endcan
                 </div>
             </div>
         </div>

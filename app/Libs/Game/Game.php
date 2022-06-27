@@ -58,7 +58,7 @@ class Game
                 ->wherePivot('badge_id', $badge->id)
                 ->firstOrFail();
 
-            $repetitions = $userBadge->pivot->repetitions + 1;
+            $repetitions = $userBadge->progress->repetitions + 1;
 
             // this badge was initiated before
             $user->badges()->updateExistingPivot($badge->id, [

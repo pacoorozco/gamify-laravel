@@ -48,6 +48,7 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property string $password Encrypted password of this user.
  * @property \Gamify\Enums\Roles $role Role of the user.
  * @property int $experience The reputation of the user.
+ * @property UserProfile $profile The user's profile
  */
 class User extends Authenticatable
 {
@@ -74,6 +75,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
+        'level' => Level::class,
         'role' => Roles::class,
     ];
 
@@ -149,8 +151,23 @@ class User extends Authenticatable
      */
     public function answeredQuestions(): BelongsToMany
     {
-        return $this->belongsToMany('Gamify\Models\Question', 'users_questions', 'user_id', 'question_id')
+        return $this->belongsToMany(
+            Question::class,
+            'users_questions',
+            'user_id',
+            'question_id'
+        )
             ->withPivot('points', 'answers');
+    }
+
+    public function answeredQuestionsCount(): int
+    {
+        return $this->answeredQuestions()->count();
+    }
+
+    public function unlockedBadgesCount(): int
+    {
+        return $this->getCompletedBadges()->count();
     }
 
     public function getCompletedBadges(): Collection
@@ -167,7 +184,22 @@ class User extends Authenticatable
             'users_badges',
             'user_id',
             'badge_id')
+            ->as('progress')
             ->withPivot('repetitions', 'unlocked_at');
+    }
+
+    public function unlockedBadges(): Collection
+    {
+        return $this->badges()
+            ->wherePivotNotNull('unlocked_at')
+            ->get();
+    }
+
+    public function lockedBadges(): Collection
+    {
+        return $this->badges()
+            ->wherePivotNull('unlocked_at')
+            ->get();
     }
 
     public function isBadgeUnlocked(Badge $badge): bool
