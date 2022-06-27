@@ -6,7 +6,7 @@
     </ol>
     <div class="carousel-inner">
         <div class="item active">
-            <img src="//placehold.it/900x500/39CCCC/ffffff&text=I+Love+gamify+v3"
+            <img src="//via.placeholder.com/900x500.jpg/39CCCC/ffffff&text=I+Love+gamify+v3"
                  alt="First slide">
 
             <div class="carousel-caption">
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="item">
-            <img src="//placehold.it/900x500/3c8dbc/ffffff&text=I+Love+gamify+v3"
+            <img src="//via.placeholder.com/900x500.jpg/3c8dbc/ffffff&text=I+Love+gamify+v3"
                  alt="Second slide">
 
             <div class="carousel-caption">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="item">
-            <img src="//placehold.it/900x500/f39c12/ffffff&text=I+Love+gamify+v3"
+            <img src="//via.placeholder.com/900x500.jpg/f39c12/ffffff&text=I+Love+gamify+v3"
                  alt="Third slide">
 
             <div class="carousel-caption">
