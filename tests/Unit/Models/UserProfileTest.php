@@ -36,7 +36,6 @@ class UserProfileTest extends TestCase
         $m = new UserProfile();
         $this->assertEquals([
             'bio',
-            'url',
             'date_of_birth',
             'twitter',
             'facebook',

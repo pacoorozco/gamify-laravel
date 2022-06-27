@@ -55,7 +55,6 @@ class UserProfile extends Model
 
     protected $fillable = [
         'bio',
-        'url',
         'date_of_birth',
         'twitter',
         'facebook',
