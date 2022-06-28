@@ -126,6 +126,11 @@ class User extends Authenticatable
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
+    public function pendingQuestionsCount(): int
+    {
+        return $this->pendingQuestions()->count();
+    }
+
     public function pendingQuestions(int $limit = 5): Collection
     {
         $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
@@ -211,21 +216,21 @@ class User extends Authenticatable
     protected function username(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower($value),
+            set: fn($value) => strtolower($value),
         );
     }
 
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => Hash::make($value),
+            set: fn($value) => Hash::make($value),
         );
     }
 
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Level::findByExperience($this->experience)
+            get: fn($value) => Level::findByExperience($this->experience)
                 ->name,
         );
     }
@@ -233,7 +238,7 @@ class User extends Authenticatable
     protected function nextLevel(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->getNextLevel()->name
+            get: fn($value) => $this->getNextLevel()->name
         );
     }
 
