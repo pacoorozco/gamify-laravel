@@ -53,7 +53,7 @@ class AdminRewardController extends AdminController
         Game::addExperienceTo(
             user: $request->userToReward(),
             experience: $request->experience(),
-            reason: $request->reason() ?? __('messages.unknown_reason')
+            reason: $request->reason() ?? ''
         );
 
         return redirect()->route('admin.rewards.index')
