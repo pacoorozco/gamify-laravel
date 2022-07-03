@@ -51,7 +51,7 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property UserProfile $profile The user's profile
  * @property-read string $level The current level of the user.
  */
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     use HasFactory;
     use Presentable;
@@ -163,6 +163,18 @@ class User extends Authenticatable
             ->withPivot('points', 'answers');
     }
 
+    public function hasQuestionsToAnswer(): bool
+    {
+        $answeredQuestions = $this->answeredQuestions()
+            ->pluck('question_id')
+            ->toArray();
+
+        return Question::query()
+            ->published()
+            ->whereNotIn('id', $answeredQuestions)
+            ->exists();
+    }
+
     public function answeredQuestionsCount(): int
     {
         return $this->answeredQuestions()->count();
@@ -213,6 +225,47 @@ class User extends Authenticatable
             ->exists();
     }
 
+    public function nextLevelCompletion(): int
+    {
+        if ($this->nextLevel()->required_points == 0) {
+            return 100;
+        }
+
+        $completion = $this->experience / $this->nextLevel()->required_points;
+
+        return ($completion > 1)
+            ? 100
+            : $completion * 100;
+    }
+
+    public function nextLevel(): Level
+    {
+        return Level::findNextByExperience($this->experience);
+    }
+
+    public function pointsToNextLevel(): int
+    {
+        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
+
+        return ($pointsToNextLevel < 0)
+            ? 0
+            : $pointsToNextLevel;
+    }
+
+    public function hasAnsweredQuestion(Question $question): bool
+    {
+        return $this->answeredQuestions()
+            ->where('question_id', $question->id)
+            ->exists();
+    }
+
+    public function getAnswerForQuestion(Question $question): Answer
+    {
+        return $this->answeredQuestions()
+            ->where('question_id', $question->id)
+            ->first();
+    }
+
     protected function username(): Attribute
     {
         return Attribute::make(
@@ -233,17 +286,5 @@ class User extends Authenticatable
             get: fn($value) => Level::findByExperience($this->experience)
                 ->name,
         );
-    }
-
-    protected function nextLevel(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => $this->getNextLevel()->name
-        );
-    }
-
-    private function getNextLevel(): Level
-    {
-        return Level::findNextByExperience($this->experience);
     }
 }
