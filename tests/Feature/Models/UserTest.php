@@ -26,6 +26,7 @@
 namespace Tests\Feature\Models;
 
 use Gamify\Models\Badge;
+use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
@@ -143,5 +144,111 @@ class UserTest extends TestCase
         $user->profile->date_of_birth = null;
 
         $this->assertEmpty($user->present()->birthdate);
+    }
+
+    /**
+     * @test
+     * @dataProvider providesPointsToNextLevelTestCases
+     */
+    public function it_should_return_points_to_the_next_level(
+        int $experience,
+        int $nextLevelExperience,
+        int $want,
+    ): void {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->experience = $experience;
+
+        Level::factory()->create([
+            'required_points' => $nextLevelExperience,
+        ]);
+
+        $this->assertEquals($want, $user->pointsToNextLevel());
+    }
+
+    public function providesPointsToNextLevelTestCases(): \Generator
+    {
+        yield 'next level is above current experience' => [
+            'experience' => 10,
+            'nextLevelExperience' => 15,
+            'want' => 5,
+        ];
+
+        yield 'next level is equal current experience' => [
+            'experience' => 10,
+            'nextLevelExperience' => 10,
+            'want' => 0,
+        ];
+
+        yield 'next level is below current experience' => [
+            'experience' => 15,
+            'nextLevelExperience' => 10,
+            'want' => 0,
+        ];
+
+        yield 'current experience is 0' => [
+            'experience' => 0,
+            'nextLevelExperience' => 10,
+            'want' => 10,
+        ];
+
+        yield 'next level is the default level' => [
+            'experience' => 10,
+            'nextLevelExperience' => 0,
+            'want' => 0,
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider providesNextLevelCompletionTestCases
+     */
+    public function it_should_return_level_completion(
+        int $experience,
+        int $nextLevelExperience,
+        int $want,
+    ): void {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->experience = $experience;
+
+        Level::factory()->create([
+            'required_points' => $nextLevelExperience,
+        ]);
+
+        $this->assertEquals($want, $user->nextLevelCompletion());
+    }
+
+    public function providesNextLevelCompletionTestCases(): \Generator
+    {
+        yield 'next level is above current experience' => [
+            'experience' => 10,
+            'nextLevelExperience' => 20,
+            'want' => 50,
+        ];
+
+        yield 'next level is equal current experience' => [
+            'experience' => 10,
+            'nextLevelExperience' => 10,
+            'want' => 100,
+        ];
+
+        yield 'next level is below current experience' => [
+            'experience' => 15,
+            'nextLevelExperience' => 10,
+            'want' => 100,
+        ];
+
+        yield 'current experience is 0' => [
+            'experience' => 0,
+            'nextLevelExperience' => 10,
+            'want' => 0,
+        ];
+
+        yield 'next level is the default level' => [
+            'experience' => 10,
+            'nextLevelExperience' => 0,
+            'want' => 100,
+        ];
     }
 }
