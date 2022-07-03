@@ -26,11 +26,30 @@
 namespace Database\Factories;
 
 use Gamify\Models\Question;
+use Gamify\Models\QuestionChoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Carbon;
 
 class QuestionFactory extends Factory
 {
     protected $model = Question::class;
+
+    public function configure(): self
+    {
+        return $this->afterCreating(function (Question $question) {
+            if ($question->isPublished() || $question->isScheduled()) {
+                QuestionChoice::factory()
+                    ->for($question)
+                    ->count(2)
+                    ->state(new Sequence(
+                        ['score' => $this->faker->numberBetween(1, 5)],
+                        ['score' => $this->faker->numberBetween(-5, -1)],
+                    ))
+                    ->create();
+            }
+        });
+    }
 
     public function definition(): array
     {
@@ -39,8 +58,28 @@ class QuestionFactory extends Factory
             'question' => $this->faker->paragraph,
             'solution' => $this->faker->paragraph,
             'type' => Question::SINGLE_RESPONSE_TYPE,
-            'hidden' => false,
+            'hidden' => $this->faker->boolean,
             'status' => Question::DRAFT_STATUS,
         ];
+    }
+
+    public function published(): Factory
+    {
+        return $this->state(function () {
+            return [
+                'status' => Question::PUBLISH_STATUS,
+                'publication_date' => now()->subWeek(),
+            ];
+        });
+    }
+
+    public function scheduled(): Factory
+    {
+        return $this->state(function () {
+            return [
+                'status' => Question::FUTURE_STATUS,
+                'publication_date' => now()->addWeek(),
+            ];
+        });
     }
 }
