@@ -185,7 +185,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if ($this->canBePublished() === false) {
             throw new QuestionPublishingException();
         }
 
@@ -222,6 +222,7 @@ class Question extends Model
     {
         return $this->publication_date;
     }
+
 
     /**
      * Transits the question to self::PUBLISH_STATUS status.
