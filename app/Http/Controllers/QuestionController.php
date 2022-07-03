@@ -37,44 +37,31 @@ class QuestionController extends Controller
 {
     public function index(): View
     {
-        $user = User::findOrFail(Auth::id());
-        $questions = $user->pendingQuestions();
+        // If we don't refresh the model, the 'experience' field is not available.
+        /** @var User $user */
+        $user = Auth::user()?->refresh();
 
-        // If the user is in the highest level, some hacks needs to be done.
-        try {
-            $next_level = $user->getNextLevel();
-            $next_level_name = $next_level->name;
-            $diff_between_levels = $next_level->required_points - $user->experience;
-            $points_to_next_level = ($diff_between_levels > 0) ? $diff_between_levels : 0;
-            $percentage_to_next_level = ($points_to_next_level > 0)
-                ? round(($diff_between_levels / $next_level->required_points) * 100)
-                : 100;
-        } catch (\Exception $exception) {
-            $next_level_name = $user->level;
-            $points_to_next_level = 0;
-            $percentage_to_next_level = 100;
-        }
-
-        // Questions
-        $number_of_questions = Question::published()->count();
-        $answered_questions = $user->answeredQuestions()->count();
-        $percentage_of_answered_questions = ($number_of_questions > 0)
-            ? round(($answered_questions / $number_of_questions) * 100)
+        $questionsCount = Question::published()->count();
+        $questionsCompletion = ($questionsCount > 0)
+            ? round(($user->answeredQuestionsCount() / $questionsCount) * 100)
             : 0;
 
         return view('question.index', [
-            'questions' => $questions,
-            'next_level_name' => $next_level_name,
-            'points_to_next_level' => $points_to_next_level,
-            'percentage_to_next_level' => $percentage_to_next_level,
-            'answered_questions' => $answered_questions,
-            'percentage_of_answered_questions' => $percentage_of_answered_questions,
+            'questions' => $user->pendingQuestions(),
+            'next_level_name' => $user->nextLevel()->name,
+            'points_to_next_level' => $user->pointsToNextLevel(),
+            'percentage_to_next_level' => $user->nextLevelCompletion(),
+            'answered_questions' => $user->answeredQuestionsCount(),
+            'percentage_of_answered_questions' => $questionsCompletion,
         ]);
     }
 
     public function answer(QuestionAnswerRequest $request, Question $question): View
     {
-        // TODO: If question has been answered can't answer again
+        /** @var User $user */
+        $user = Auth::user()?->refresh();
+
+        abort_if($user->hasAnsweredQuestion($question), 404);
 
         // Obtain how many points has its answer obtained
         $points = 0;
@@ -92,17 +79,14 @@ class QuestionController extends Controller
         }
 
         // Create relation between User and Question
-        /** @var User $user */
-        $user = User::findOrFail($request->user()->id);
         $user->answeredQuestions()->attach($question, [
             'points' => $points,
             'answers' => implode(',', $request->choices),
         ]);
 
         // Trigger an event that will update XP, badges...
-        event(new QuestionAnswered($user, $question, $points, $answerCorrectness));
+        QuestionAnswered::dispatch($user, $question, $points, $answerCorrectness);
 
-        // AI. Add notifications and return view
         return view('question.show-answered', [
             'answer' => $user->answeredQuestions()->find($question->id),
             'question' => $question,
@@ -111,9 +95,11 @@ class QuestionController extends Controller
 
     public function show(Question $question): View
     {
-        // TODO: If question has been answered, not show form
-        $user = User::findOrFail(Auth::id());
-        if ($answer = $user->answeredQuestions()->find($question->id)) {
+        abort_unless($question->isPublished(), 404);
+
+        $user = Auth::user()->refresh();
+
+        if ($answer = $user->answerForQuestion($question)) {
             // User has answered this question
             return view('question.show-answered', [
                 'answer' => $answer,
@@ -121,6 +107,7 @@ class QuestionController extends Controller
             ]);
         }
 
-        return view('question.show', compact('question'));
+        return view('question.show')
+            ->with('question', $question);
     }
 }
