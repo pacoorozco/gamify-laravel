@@ -40,71 +40,97 @@ class QuestionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_scopePublished_returns_correct_data()
+    /** @test */
+    public function it_should_return_only_published_questions()
     {
-        // three non-published Questions
         Question::factory()
-            ->count(3)
-            ->create([
-                'status' => Question::DRAFT_STATUS,
-            ]);
+            ->create();
 
-        // two published Questions
         Question::factory()
+            ->scheduled()
+            ->create();
+
+        // these questions should be shown
+        $want = Question::factory()
+            ->published()
             ->count(2)
-            ->create([
-                'status' => Question::PUBLISH_STATUS,
-            ]);
+            ->create();
 
-        $got = Question::published()->get();
+        $questions = Question::query()
+            ->published()
+            ->get();
 
-        $this->assertCount(2, $got);
+        $this->assertCount(count($want), $questions);
+
+        $this->assertEquals(
+            $want->pluck(['id']),
+            $questions->pluck(['id'])
+        );
     }
 
-    public function test_scopeVisible_returns_correct_data()
+    /** @test */
+    public function it_should_return_only_visible_questions()
     {
-        // this questions should not be shown
         Question::factory()
-            ->count(3)
             ->create([
-                'status' => Question::PUBLISH_STATUS,
                 'hidden' => true,
             ]);
 
-        // this questions should be shown
         Question::factory()
+            ->scheduled()
+            ->create([
+                'hidden' => true,
+            ]);
+
+        // these questions should be shown
+        $want = Question::factory()
             ->count(2)
             ->create([
-                'status' => Question::PUBLISH_STATUS,
                 'hidden' => false,
             ]);
 
-        $got = Question::visible()->get();
+        $questions = Question::query()
+            ->visible()
+            ->get();
 
-        $this->assertCount(2, $got);
+        $this->assertCount(count($want), $questions);
+
+        $this->assertEquals(
+            $want->pluck(['id']),
+            $questions->pluck(['id'])
+        );
     }
 
-    public function test_scopeScheduled_returns_correct_data()
+    /** @test */
+    public function it_should_collect_only_scheduled_questions()
     {
-        // one published Question
         Question::factory()
-            ->create([
-                'status' => Question::PUBLISH_STATUS,
-            ]);
+            ->create();
 
-        // two scheduled Questions
         Question::factory()
+            ->published()
+            ->create();
+
+        // these questions should be shown
+        $want = Question::factory()
+            ->scheduled()
             ->count(2)
-            ->create([
-                'status' => Question::FUTURE_STATUS,
-            ]);
+            ->create();
 
-        $got = Question::scheduled()->get();
+        $questions = Question::query()
+            ->scheduled()
+            ->get();
 
-        $this->assertCount(2, $got);
+        $this->assertCount(count($want), $questions);
+
+        $this->assertEquals(
+            $want->pluck(['id']),
+            $questions->pluck(['id'])
+        );
     }
 
-    public function test_getActionableBadgesForCorrectness_method()
+    /** @test */
+    public function it_should_return_the_actions_for_correct_answer()
     {
         /** @var Question $question */
         $question = Question::factory()->create();
@@ -124,7 +150,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_true_when_question_can_be_published()
+    public function it_should_return_true_if_question_can_be_published()
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -136,10 +162,12 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_false_when_question_can_not_be_published()
+    public function it_should_return_false_if_question_can_not_be_published()
     {
         /** @var Question $question */
-        $question = Question::factory()->create();
+        $question = Question::factory()
+            ->has(QuestionChoice::factory(), 'choices')
+            ->create();
 
         $this->assertFalse($question->canBePublished());
     }
@@ -152,7 +180,8 @@ class QuestionTest extends TestCase
             ->has(QuestionChoice::factory()->correct(), 'choices')
             ->has(QuestionChoice::factory()->incorrect(), 'choices')
             ->create();
-        Event::fake(); // should be fake after question creation
+
+        Event::fake();
 
         $question->publish();
 
@@ -163,12 +192,10 @@ class QuestionTest extends TestCase
     public function it_does_not_trigger_an_event_when_a_question_was_already_published()
     {
         $question = Question::factory()
-            ->has(QuestionChoice::factory()->correct(), 'choices')
-            ->has(QuestionChoice::factory()->incorrect(), 'choices')
-            ->create([
-                'status' => Question::PUBLISH_STATUS,
-            ]);
-        Event::fake(); // should be fake after question creation
+            ->published()
+            ->create();
+
+        Event::fake();
 
         $question->publish();
 
@@ -184,7 +211,8 @@ class QuestionTest extends TestCase
             ->create([
                 'publication_date' => now()->addWeek(),
             ]);
-        Event::fake(); // should be fake after question creation
+
+        Event::fake();
 
         $question->publish();
 
@@ -231,6 +259,7 @@ class QuestionTest extends TestCase
             ->create([
                 'publication_date' => now()->subWeek(),
             ]);
+
         $question->publish();
 
         $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
@@ -246,6 +275,7 @@ class QuestionTest extends TestCase
             ->create([
                 'publication_date' => now()->addWeek(),
             ]);
+
         $question->publish();
 
         $this->assertEquals(Question::FUTURE_STATUS, $question->status);
@@ -259,7 +289,7 @@ class QuestionTest extends TestCase
             ->has(QuestionChoice::factory(), 'choices')
             ->create();
 
-        Event::fake(); // should be fake after question creation
+        Event::fake();
 
         try {
             $question->publish();
