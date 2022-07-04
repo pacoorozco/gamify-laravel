@@ -99,7 +99,7 @@ class QuestionController extends Controller
         abort_unless($question->isPublished(), 404);
 
         /** @var User $user */
-        $user = Auth::user()->refresh();
+        $user = Auth::user()?->refresh();
 
         $response = $user->getResponseForQuestion($question);
 
