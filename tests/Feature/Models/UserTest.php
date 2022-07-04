@@ -29,6 +29,7 @@ use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\User;
+use Gamify\Models\UserBadgeProgress;
 use Gamify\Models\UserProfile;
 use Gamify\Models\UserResponse;
 use Illuminate\Database\Eloquent\Collection;
@@ -258,5 +259,26 @@ class UserTest extends TestCase
         $response = $user->getResponseForQuestion($question);
 
         $this->assertInstanceOf(UserResponse::class, $response);
+    }
+
+    /** @test */
+    public function it_should_return_the_user_progress_for_a_badge(): void
+    {
+        $badge = Badge::factory()
+            ->create([
+                'required_repetitions' => 5,
+            ]);
+
+        /** @var User $user */
+        $user = User::factory()
+            ->create();
+
+        $user->badges()->attach($badge, [
+            'repetitions' => 2,
+        ]);
+
+        $progress = $user->progressToCompleteTheBadge($badge);
+
+        $this->assertInstanceOf(UserBadgeProgress::class, $progress);
     }
 }

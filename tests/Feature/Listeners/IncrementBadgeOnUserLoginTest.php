@@ -25,13 +25,13 @@
 
 namespace Tests\Feature\Listeners;
 
-use Event;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Mockery;
 use Tests\TestCase;
 
@@ -66,7 +66,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
         $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->progress->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
@@ -86,6 +86,6 @@ class IncrementBadgeOnUserLoginTest extends TestCase
         $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
-        $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first());
+        $this->assertNull($user->progressToCompleteTheBadge($badge));
     }
 }

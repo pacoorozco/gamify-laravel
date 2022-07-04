@@ -225,6 +225,14 @@ final class User extends Authenticatable
             ->using(UserBadgeProgress::class);
     }
 
+    public function progressToCompleteTheBadge(Badge $badge): ?UserBadgeProgress
+    {
+        return $this->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ?->progress;
+    }
+
     public function unlockedBadges(): Collection
     {
         return $this->badges()

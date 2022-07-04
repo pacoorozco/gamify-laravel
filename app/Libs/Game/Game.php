@@ -53,23 +53,21 @@ class Game
             return;
         }
 
-        try {
-            $userBadge = $user->badges()
-                ->wherePivot('badge_id', $badge->id)
-                ->firstOrFail();
+        $progress = $user->progressToCompleteTheBadge($badge);
 
-            $repetitions = $userBadge->progress->repetitions + 1;
+        $repetitions = $user->progressToCompleteTheBadge($badge)?->repetitions
+            ?? 0;
 
-            // this badge was initiated before
-            $user->badges()->updateExistingPivot($badge->id, [
+        $repetitions++;
+
+        if (is_null($progress)) {
+            // this is the first occurrence of this badge for this user
+            $user->badges()->attach($badge->id, [
                 'repetitions' => $repetitions,
             ]);
-        } catch (ModelNotFoundException $exception) {
-
-            // this is the first occurrence of this badge for this user
-            $repetitions = 1;
-
-            $user->badges()->attach($badge->id, [
+        } else {
+            // this badge was initiated before
+            $user->badges()->updateExistingPivot($badge->id, [
                 'repetitions' => $repetitions,
             ]);
         }
@@ -117,7 +115,7 @@ class Game
             ->take($numberOfPlayers)
             ->get()
             ->map(
-                fn ($user) => [
+                fn($user) => [
                     'username' => $user->username,
                     'name' => $user->name,
                     'experience' => $user->experience,
