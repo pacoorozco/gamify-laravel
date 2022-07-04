@@ -221,7 +221,8 @@ final class User extends Authenticatable
             'user_id',
             'badge_id')
             ->as('progress')
-            ->withPivot('repetitions', 'unlocked_at');
+            ->withPivot('repetitions', 'unlocked_at')
+            ->using(UserBadgeProgress::class);
     }
 
     public function unlockedBadges(): Collection

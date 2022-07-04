@@ -86,7 +86,7 @@ class BadgePresenter extends Presenter
 
     public function unlockedAt(): string
     {
-        return Carbon::parse($this->model->progress->completed_at)?->toFormattedDateString()
+        return $this->model->progress->completed_at?->toFormattedDateString()
             ?? '';
     }
 }
