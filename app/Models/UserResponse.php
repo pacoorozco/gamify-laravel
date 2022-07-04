@@ -3,7 +3,6 @@
 namespace Gamify\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * It's the response to a question.
