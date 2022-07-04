@@ -28,7 +28,6 @@ namespace Tests\Feature\Models;
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Question;
-use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
 use Gamify\Models\UserProfile;
 use Gamify\Models\UserResponse;
@@ -41,43 +40,31 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function pendingQuestions_returns_a_collection()
+    public function it_should_return_the_pending_questions_to_be_answered()
     {
-        $user = User::factory()->create();
-
-        $this->assertInstanceOf(Collection::class, $user->pendingQuestions());
-    }
-
-    /** @test */
-    public function pendingQuestions_returns_specified_number_of_questions()
-    {
-        // Creates 5 published questions.
-        /** @var User $admin */
-        $admin = User::factory()->admin()->create();
-        $this->actingAs($admin);
-        Question::factory()
-            ->count(5)
-            ->has(QuestionChoice::factory()->correct(), 'choices')
-            ->has(QuestionChoice::factory()->incorrect(), 'choices')
-            ->create([
-                'status' => Question::PUBLISH_STATUS,
-                'publication_date' => now(),
-            ]);
+        $questions = Question::factory()
+            ->published()
+            ->count(3)
+            ->create();
 
         /** @var User $user */
         $user = User::factory()->create();
 
-        // We only want 3 of the 5 created questions.
-        $this->assertCount(3, $user->pendingQuestions(3));
+        $this->assertCount(count($questions), $user->pendingQuestions());
     }
 
     /** @test */
-    public function pendingQuestions_returns_zero_when_no_questions()
+    public function it_should_return_a_portion_of_the_pending_questions_to_be_answered()
     {
+        $questions = Question::factory()
+            ->published()
+            ->count(3)
+            ->create();
+
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount(0, $user->pendingQuestions());
+        $this->assertCount(2, $user->pendingQuestions(2));
     }
 
     /** @test */

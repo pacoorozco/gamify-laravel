@@ -126,6 +126,24 @@ final class User extends Authenticatable
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
+    public function pendingVisibleQuestionsCount(): int
+    {
+        return $this->pendingVisibleQuestions()->count();
+    }
+
+    public function pendingVisibleQuestions(int $limit = 5): Collection
+    {
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
+        return Question::query()
+            ->published()
+            ->visible()
+            ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
+            ->take($limit)
+            ->get();
+    }
+
     public function pendingQuestionsCount(): int
     {
         return $this->pendingQuestions()->count();
@@ -135,7 +153,8 @@ final class User extends Authenticatable
     {
         $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
 
-        return Question::published()->visible()
+        return Question::query()
+            ->published()
             ->whereNotIn('id', $answeredQuestions)
             ->orderBy('publication_date', 'ASC')
             ->take($limit)
@@ -272,21 +291,21 @@ final class User extends Authenticatable
     protected function username(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower($value),
+            set: fn($value) => strtolower($value),
         );
     }
 
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => Hash::make($value),
+            set: fn($value) => Hash::make($value),
         );
     }
 
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Level::findByExperience($this->experience)
+            get: fn($value) => Level::findByExperience($this->experience)
                 ->name,
         );
     }
