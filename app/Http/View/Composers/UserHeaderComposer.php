@@ -31,13 +31,6 @@ use Illuminate\View\View;
 
 class UserHeaderComposer
 {
-    private User $user;
-
-    public function __construct()
-    {
-        $this->user = Auth::user();
-    }
-
     public function compose(View $view): void
     {
         $user = User::with([
@@ -45,7 +38,7 @@ class UserHeaderComposer
                 $query->select('avatar', 'user_id');
             },
         ])->find(
-            $this->user->id,
+            Auth::id(),
             ['id', 'name', 'username', 'experience', 'created_at']
         );
 
