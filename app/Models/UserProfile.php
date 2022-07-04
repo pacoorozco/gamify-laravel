@@ -37,9 +37,8 @@ use QCod\ImageUp\HasImageUploads;
  *
  * @property int $id The object unique id.
  * @property string $bio Short bio information.
- * @property string $url Homepage.
  * @property string $avatarUrl URL of the avatar.
- * @property Carbon $date_of_birth Date of Birth.
+ * @property ?Carbon $date_of_birth Date of Birth.
  * @property string $twitter Twitter username
  * @property string $facebook Facebook username
  * @property string $linkedin LinkedIn username
@@ -62,8 +61,8 @@ class UserProfile extends Model
         'github',
     ];
 
-    protected $dates = [
-        'date_of_birth',
+    protected $casts = [
+        'date_of_birth' => 'datetime',
     ];
 
     protected string $imagesUploadPath = 'avatars';

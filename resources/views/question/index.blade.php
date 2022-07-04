@@ -28,17 +28,10 @@
             <!-- user metrics -->
             <div class="row">
                 <div class="col-md-6">
-                    @include('question/_answered_questions_box', [
-                    'answered_questions' => $answered_questions,
-                    'percentage_of_answered_questions' => $percentage_of_answered_questions,
-                    ])
+                    @include('question/_answered_questions_box')
                 </div>
                 <div class="col-md-6">
-                    @include('question/_next_level_box', [
-                    'next_level_name' => $next_level_name,
-                    'percentage_to_next_level' => $percentage_to_next_level,
-                    'points_to_next_level' => $points_to_next_level,
-                    ])
+                    @include('question/_next_level_box')
                 </div>
             </div>
             <!-- ./user metrics -->

@@ -58,8 +58,8 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property string $public_url The public URL of this question.
  * @property \Gamify\Models\User $creator The User who created this question,
  * @property \Gamify\Models\User $updater The last User who updated this question.
- * @property \Illuminate\Support\Carbon $publication_date The data when the question was published.
- * @property \Illuminate\Support\Carbon $expiration_date The data when the question was expired.
+ * @property ?Carbon $publication_date The data when the question was published.
+ * @property ?Carbon $expiration_date The data when the question was expired.
  * @mixin \Eloquent
  */
 class Question extends Model
@@ -90,16 +90,11 @@ class Question extends Model
         'publication_date',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'publication_date',
-        'expiration_date',
-    ];
-
     protected $casts = [
         'hidden' => 'bool',
+        'publication_date' => 'datetime',
+        'expiration_date' => 'datetime',
+
     ];
 
     public function sluggable(): array
@@ -109,16 +104,6 @@ class Question extends Model
                 'source' => 'name',
             ],
         ];
-    }
-
-    public function actions(): HasMany
-    {
-        return $this->hasMany(QuestionAction::class);
-    }
-
-    public function choices(): HasMany
-    {
-        return $this->hasMany(QuestionChoice::class);
     }
 
     public function excerpt(int $length = 55, string $trailing = '...'): string
@@ -131,6 +116,11 @@ class Question extends Model
         $selectedActions = $this->actions()->pluck('badge_id')->toArray();
 
         return Badge::whereNotIn('id', $selectedActions)->get();
+    }
+
+    public function actions(): HasMany
+    {
+        return $this->hasMany(QuestionAction::class);
     }
 
     public function isPublishedOrScheduled(): bool
@@ -194,7 +184,7 @@ class Question extends Model
             return;
         }
 
-        if (! $this->canBePublished()) {
+        if ($this->canBePublished() === false) {
             throw new QuestionPublishingException();
         }
 
@@ -205,11 +195,6 @@ class Question extends Model
         } catch (\Throwable $exception) {
             throw new QuestionPublishingException($exception);
         }
-    }
-
-    public function publishedAt(): ?Carbon
-    {
-        return $this->publication_date;
     }
 
     /**
@@ -225,6 +210,16 @@ class Question extends Model
         $answers_correct_count = $this->choices()->correct()->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
+    }
+
+    public function choices(): HasMany
+    {
+        return $this->hasMany(QuestionChoice::class);
+    }
+
+    public function publishedAt(): ?Carbon
+    {
+        return $this->publication_date;
     }
 
     /**

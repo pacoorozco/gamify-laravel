@@ -55,6 +55,7 @@ class GameTest extends TestCase
     /** @test */
     public function it_increments_repetitions_for_a_given_badge()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
@@ -64,18 +65,13 @@ class GameTest extends TestCase
 
         Game::incrementBadgeCount($user, $badge);
 
-        $repetitions = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress
-            ->repetitions;
-
-        $this->assertEquals(1, $repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
     public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
@@ -87,18 +83,13 @@ class GameTest extends TestCase
 
         Game::incrementBadgeCount($user, $badge);
 
-        $repetitions = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress
-            ->repetitions;
-
-        $this->assertEquals(2, $repetitions);
+        $this->assertEquals(2, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
     public function it_completes_badge_when_reach_required_repetitions()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
@@ -108,17 +99,13 @@ class GameTest extends TestCase
 
         Game::incrementBadgeCount($user, $badge);
 
-        $userBadge = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress;
-
-        $this->assertNotNull($userBadge->unlocked_at);
+        $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
     /** @test */
     public function it_does_not_complete_badge_when_required_repetitions_are_not_reached()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
@@ -128,19 +115,13 @@ class GameTest extends TestCase
 
         Game::incrementBadgeCount($user, $badge);
 
-        $userBadge = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress;
-
-        $this->assertFalse((bool) $userBadge->completed);
-
-        $this->assertNull($userBadge->unlocked_at);
+        $this->assertFalse($user->hasUnlockedBadge($badge));
     }
 
     /** @test */
     public function it_does_not_update_repetitions_if_badge_was_already_completed()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
@@ -152,35 +133,26 @@ class GameTest extends TestCase
 
         Game::incrementBadgeCount($user, $badge);
 
-        $repetitions = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress
-            ->repetitions;
-
-        $this->assertEquals(1, $repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
     public function it_completes_a_badge_for_a_user()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $badge = Badge::factory()->create();
 
         Game::unlockBadgeFor($user, $badge);
 
-        $userBadge = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress;
-
-        $this->assertNotNull($userBadge->unlocked_at);
+        $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
     /** @test */
     public function it_completes_a_badge_when_a_user_had_already_started_it()
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $badge = Badge::factory()->create([
@@ -191,12 +163,7 @@ class GameTest extends TestCase
 
         Game::unlockBadgeFor($user, $badge);
 
-        $userBadge = $user->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ->progress;
-
-        $this->assertNotNull($userBadge->unlocked_at);
+        $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
     /**

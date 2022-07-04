@@ -53,7 +53,6 @@ return [
     'name' => 'Name',
     'email' => 'Email',
     'date_of_birth' => 'Birthdate',
-    'date_of_birth_not_set' => 'Unknown',
     'image' => 'Avatar',
     'user_since' => 'Member since',
     'roles' => 'Role',

@@ -27,7 +27,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use Gamify\Events\QuestionAnswered;
 use Gamify\Models\Question;
-use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -37,34 +36,22 @@ class QuestionControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private Question $question;
-
     private User $user;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        /** @var User $admin */
-        $admin = User::factory()->admin()->create();
-        $this->actingAs($admin);
-        $this->question = Question::factory()
-            ->has(QuestionChoice::factory()->correct(), 'choices')
-            ->has(QuestionChoice::factory()->incorrect(), 'choices')
-            ->create([
-                'status' => Question::PUBLISH_STATUS,
-                'publication_date' => now(),
-            ]);
-
         $this->user = User::factory()->create();
     }
 
     /** @test */
-    public function index_returns_proper_content()
+    public function it_should_show_the_questions_dashboard()
     {
-        $this->actingAs($this->user)
+        $this
+            ->actingAs($this->user)
             ->get(route('questions.index'))
-            ->assertOK()
+            ->assertSuccessful()
             ->assertViewIs('question.index')
             ->assertViewHasAll([
                 'questions',
@@ -77,72 +64,114 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function show_returns_proper_content()
+    public function it_should_response_not_found_when_question_is_not_published()
     {
-        $this->actingAs($this->user)
-            ->get(route('questions.show', $this->question->short_name))
-            ->assertOk()
-            ->assertViewIs('question.show')
-            ->assertSee($this->question->name);
+        /** @var Question $question */
+        $question = Question::factory()
+            ->create();
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('questions.show', $question->short_name))
+            ->assertNotFound();
     }
 
     /** @test */
-    public function answer_returns_proper_content()
+    public function it_should_show_the_question_when_it_is_not_answered()
     {
-        // Answer with the first choice.
-        $input_data = [
-            'choices' => [$this->question->choices()->first()->id],
-        ];
+        /** @var Question $question */
+        $question = Question::factory()
+            ->published()
+            ->create();
 
-        $this->actingAs($this->user)
-            ->post(route('questions.answer', $this->question->short_name), $input_data)
-            ->assertOk()
-            ->assertViewIs('question.show-answered')
+        $this
+            ->actingAs($this->user)
+            ->get(route('questions.show', $question->short_name))
+            ->assertSuccessful()
+            ->assertViewIs('question.show')
+            ->assertSeeText($question->name);
+    }
+
+    /** @test */
+    public function it_should_add_the_user_response_after_answering()
+    {
+        /** @var Question $question */
+        $question = Question::factory()
+            ->published()
+            ->create();
+
+        $this
+            ->actingAs($this->user)
+            ->post(route('questions.answer', $question->short_name), [
+                // Answer with the first available choice.
+                'choices' => [$question->choices()->first()->id],
+            ])
+            ->assertSuccessful()
+            ->assertViewIs('question.show')
             ->assertViewHasAll([
-                'answer',
+                'response',
                 'question',
             ]);
+
+        $this->assertDatabaseHas('users_questions', [
+            'question_id' => $question->id,
+            'user_id' => $this->user->id,
+        ]);
     }
 
     /** @test */
     public function it_fires_an_event_when_question_is_answered_correctly()
     {
-        // Answer with the correct choice.
-        $input_data = [
-            'choices' => [$this->question->choices()->correct()->first()->id],
-        ];
+        /** @var Question $question */
+        $question = Question::factory()
+            ->published()
+            ->create();
+
+        // Answer with the correct choices.
+        $choices = $question->choices()
+            ->correct()
+            ->pluck('id')
+            ->toArray();
 
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $this->question->short_name), $input_data)
-            ->assertOk();
+            ->post(route('questions.answer', $question->short_name), [
+                'choices' => $choices,
+            ])
+            ->assertSuccessful();
 
-        $question = $this->question;
-        Event::assertDispatched(QuestionAnswered::class, function ($e) use ($question) {
-            return $e->question->id === $question->id &&
-                $e->correctness === true;
+        Event::assertDispatched(function (QuestionAnswered $event) use ($question) {
+            return $event->question->id === $question->id
+                && $event->correctness === true;
         });
     }
 
     /** @test */
     public function it_fires_an_event_when_question_is_answered_incorrectly()
     {
+        /** @var Question $question */
+        $question = Question::factory()
+            ->published()
+            ->create();
+
         // Answer with the incorrect choice.
-        $input_data = [
-            'choices' => [$this->question->choices()->incorrect()->first()->id],
-        ];
+        $choices = $question->choices()
+            ->incorrect()
+            ->pluck('id')
+            ->toArray();
 
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $this->question->short_name), $input_data)
-            ->assertOk();
+            ->post(route('questions.answer', $question->short_name), [
+                'choices' => $choices,
+            ])
+            ->assertSuccessful();
 
-        $question = $this->question;
-        Event::assertDispatched(QuestionAnswered::class, function ($e) use ($question) {
-            return $e->question->id === $question->id &&
-                $e->correctness === false;
+        Event::assertDispatched(function (QuestionAnswered $event) use ($question) {
+            return $event->question->id === $question->id
+                && $event->correctness === false;
         });
     }
 }

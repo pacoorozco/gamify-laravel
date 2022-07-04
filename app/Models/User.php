@@ -49,8 +49,9 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property \Gamify\Enums\Roles $role Role of the user.
  * @property int $experience The reputation of the user.
  * @property UserProfile $profile The user's profile
+ * @property-read string $level The current level of the user.
  */
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     use HasFactory;
     use Presentable;
@@ -70,13 +71,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $dates = [
-        'email_verified_at',
-    ];
-
     protected $casts = [
         'level' => Level::class,
         'role' => Roles::class,
+        'email_verified_at' => 'datetime',
     ];
 
     public static function findByUsername(string $username): self
@@ -128,11 +126,35 @@ class User extends Authenticatable
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
+    public function pendingVisibleQuestionsCount(): int
+    {
+        return $this->pendingVisibleQuestions()->count();
+    }
+
+    public function pendingVisibleQuestions(int $limit = 5): Collection
+    {
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
+        return Question::query()
+            ->published()
+            ->visible()
+            ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
+            ->take($limit)
+            ->get();
+    }
+
+    public function pendingQuestionsCount(): int
+    {
+        return $this->pendingQuestions()->count();
+    }
+
     public function pendingQuestions(int $limit = 5): Collection
     {
         $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
 
-        return Question::published()->visible()
+        return Question::query()
+            ->published()
             ->whereNotIn('id', $answeredQuestions)
             ->orderBy('publication_date', 'ASC')
             ->take($limit)
@@ -157,7 +179,21 @@ class User extends Authenticatable
             'user_id',
             'question_id'
         )
-            ->withPivot('points', 'answers');
+            ->as('response')
+            ->withPivot('points', 'answers')
+            ->using(UserResponse::class);
+    }
+
+    public function hasQuestionsToAnswer(): bool
+    {
+        $answeredQuestions = $this->answeredQuestions()
+            ->pluck('question_id')
+            ->toArray();
+
+        return Question::query()
+            ->published()
+            ->whereNotIn('id', $answeredQuestions)
+            ->exists();
     }
 
     public function answeredQuestionsCount(): int
@@ -185,7 +221,16 @@ class User extends Authenticatable
             'user_id',
             'badge_id')
             ->as('progress')
-            ->withPivot('repetitions', 'unlocked_at');
+            ->withPivot('repetitions', 'unlocked_at')
+            ->using(UserBadgeProgress::class);
+    }
+
+    public function progressToCompleteTheBadge(Badge $badge): ?UserBadgeProgress
+    {
+        return $this->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ?->progress;
     }
 
     public function unlockedBadges(): Collection
@@ -202,12 +247,54 @@ class User extends Authenticatable
             ->get();
     }
 
-    public function isBadgeUnlocked(Badge $badge): bool
+    public function hasUnlockedBadge(Badge $badge): bool
     {
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)
             ->wherePivotNotNull('unlocked_at')
             ->exists();
+    }
+
+    public function nextLevelCompletion(): int
+    {
+        if ($this->nextLevel()->required_points == 0) {
+            return 100;
+        }
+
+        $completion = $this->experience / $this->nextLevel()->required_points;
+
+        return ($completion > 1)
+            ? 100
+            : $completion * 100;
+    }
+
+    public function nextLevel(): Level
+    {
+        return Level::findNextByExperience($this->experience);
+    }
+
+    public function pointsToNextLevel(): int
+    {
+        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
+
+        return ($pointsToNextLevel < 0)
+            ? 0
+            : $pointsToNextLevel;
+    }
+
+    public function hasAnsweredQuestion(Question $question): bool
+    {
+        return $this->answeredQuestions()
+            ->where('question_id', $question->id)
+            ->exists();
+    }
+
+    public function getResponseForQuestion(Question $question): ?UserResponse
+    {
+        return $this->answeredQuestions()
+            ->where('question_id', $question->id)
+            ->first()
+            ?->response;
     }
 
     protected function username(): Attribute
@@ -230,18 +317,5 @@ class User extends Authenticatable
             get: fn ($value) => Level::findByExperience($this->experience)
                 ->name,
         );
-    }
-
-    protected function nextLevel(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $this->getNextLevel()->name
-        );
-    }
-
-    private function getNextLevel(): Level
-    {
-        return Level::findNextByExperience($this->experience)
-            ?? Level::findByExperience($this->experience);
     }
 }

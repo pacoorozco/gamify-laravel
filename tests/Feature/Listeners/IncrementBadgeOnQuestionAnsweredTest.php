@@ -72,7 +72,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->progress->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
@@ -97,7 +97,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first());
+        $this->assertNull($user->progressToCompleteTheBadge($badge));
     }
 
     /** @test */
@@ -122,7 +122,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->progress->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
@@ -147,7 +147,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertEquals(1, $user->badges()->wherePivot('badge_id', $badge->id)->first()->progress->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
@@ -172,7 +172,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first());
+        $this->assertNull($user->progressToCompleteTheBadge($badge));
     }
 
     /** @test */
@@ -196,6 +196,6 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertNull($user->badges()->wherePivot('badge_id', $badge->id)->first());
+        $this->assertNull($user->progressToCompleteTheBadge($badge));
     }
 }

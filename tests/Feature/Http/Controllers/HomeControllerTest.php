@@ -41,11 +41,10 @@ class HomeControllerTest extends TestCase
 
         $this->actingAs($user)
             ->get(route('home'))
-            ->assertOK()
+            ->assertSuccessful()
             ->assertViewIs('dashboard.index')
             ->assertViewHasAll([
                 'questions',
-                'questions_count',
                 'usersInRanking',
             ]);
     }

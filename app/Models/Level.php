@@ -84,8 +84,6 @@ class Level extends Model
         'active' => 'boolean',
     ];
 
-    protected $dates = ['deleted_at'];
-
     protected string $imagesUploadPath = 'levels';
 
     protected bool $autoUploadImages = true;

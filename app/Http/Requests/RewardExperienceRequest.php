@@ -49,9 +49,9 @@ class RewardExperienceRequest extends Request
         ];
     }
 
-    public function userToReward(): User
+    public function userToReward(): string
     {
-        return User::findOrFail($this->input('username'));
+        return $this->input('username');
     }
 
     public function experience(): int
