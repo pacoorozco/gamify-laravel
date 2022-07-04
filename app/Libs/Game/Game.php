@@ -115,7 +115,7 @@ class Game
             ->take($numberOfPlayers)
             ->get()
             ->map(
-                fn($user) => [
+                fn ($user) => [
                     'username' => $user->username,
                     'name' => $user->name,
                     'experience' => $user->experience,
