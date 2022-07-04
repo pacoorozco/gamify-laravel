@@ -45,13 +45,13 @@ class RewardBadgeRequest extends Request
         ];
     }
 
-    public function userToReward(): User
+    public function userToReward(): string
     {
-        return User::findOrFail($this->input('badge_username'));
+        return $this->input('badge_username');
     }
 
-    public function badge(): Badge
+    public function badge(): string
     {
-        return Badge::findOrFail($this->input('badge'));
+        return $this->input('badge');
     }
 }

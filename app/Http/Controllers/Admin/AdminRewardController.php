@@ -66,16 +66,19 @@ class AdminRewardController extends AdminController
 
     public function giveBadge(RewardBadgeRequest $request): RedirectResponse
     {
+        $userToReward = User::findOrFail($request->userToReward());
+        $badge = Badge::findOrFail($request->badge());
+
         Game::incrementBadgeCount(
-            user: $request->userToReward(),
-            badge: $request->badge()
+            user: $userToReward,
+            badge: $badge
         );
 
         return redirect()->route('admin.rewards.index')
             ->with('success',
                 trans('admin/reward/messages.badge_given.success', [
-                    'username' => $request->userToReward()->username,
-                    'badge' => $request->badge()->name,
+                    'username' => $userToReward->username,
+                    'badge' => $badge->name,
                 ]));
     }
 }
