@@ -160,7 +160,9 @@ final class User extends Authenticatable
             'user_id',
             'question_id'
         )
-            ->withPivot('points', 'answers');
+            ->as('response')
+            ->withPivot('points', 'answers')
+            ->using(UserResponse::class);
     }
 
     public function hasQuestionsToAnswer(): bool
@@ -259,11 +261,12 @@ final class User extends Authenticatable
             ->exists();
     }
 
-    public function getAnswerForQuestion(Question $question): Answer
+    public function getResponseForQuestion(Question $question): ?UserResponse
     {
         return $this->answeredQuestions()
             ->where('question_id', $question->id)
-            ->first();
+            ->first()
+            ?->response;
     }
 
     protected function username(): Attribute

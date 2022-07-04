@@ -30,6 +30,7 @@ use Gamify\Http\Requests\QuestionAnswerRequest;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
+use Gamify\Models\UserResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -79,10 +80,12 @@ class QuestionController extends Controller
         }
 
         // Create relation between User and Question
-        $user->answeredQuestions()->attach($question, [
-            'points' => $points,
-            'answers' => implode(',', $request->choices),
-        ]);
+        $user->answeredQuestions()->attach($question,
+            UserResponse::make(
+                score: $points,
+                choices: $request->choices,
+            )
+        );
 
         // Trigger an event that will update XP, badges...
         QuestionAnswered::dispatch($user, $question, $points, $answerCorrectness);
@@ -99,10 +102,12 @@ class QuestionController extends Controller
 
         $user = Auth::user()->refresh();
 
-        if ($answer = $user->answerForQuestion($question)) {
+        $response = $user->getResponseForQuestion($question);
+
+        if ($response instanceof UserResponse) {
             // User has answered this question
             return view('question.show-answered', [
-                'answer' => $answer,
+                'response' => $response,
                 'question' => $question,
             ]);
         }

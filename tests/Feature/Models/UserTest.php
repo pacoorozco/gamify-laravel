@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Models;
 
+use Gamify\Models\UserResponse;
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Question;
@@ -250,5 +251,25 @@ class UserTest extends TestCase
             'nextLevelExperience' => 0,
             'want' => 100,
         ];
+    }
+
+    /** @test */
+    public function it_should_return_the_user_response_of_a_question(): void
+    {
+        $question = Question::factory()
+            ->published()
+            ->create();
+
+        $user = User::factory()
+            ->create();
+
+        $user->answeredQuestions()->attach($question, [
+            'answers' => $question->choices->first(),
+            'points' => 10,
+        ]);
+
+        $response = $user->getResponseForQuestion($question);
+
+        $this->assertInstanceOf(UserResponse::class, $response);
     }
 }
