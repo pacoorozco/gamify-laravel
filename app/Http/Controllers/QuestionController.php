@@ -79,7 +79,6 @@ class QuestionController extends Controller
             $points = 1;
         }
 
-        // Create relation between User and Question
         $user->answeredQuestions()->attach($question,
             UserResponse::make(
                 score: $points,
@@ -90,16 +89,16 @@ class QuestionController extends Controller
         // Trigger an event that will update XP, badges...
         QuestionAnswered::dispatch($user, $question, $points, $answerCorrectness);
 
-        return view('question.show-answered', [
-            'answer' => $user->answeredQuestions()->find($question->id),
-            'question' => $question,
-        ]);
+        return view('question.show-answered')
+            ->with('question', $question)
+            ->with('response', $user->getResponseForQuestion($question));
     }
 
     public function show(Question $question): View
     {
         abort_unless($question->isPublished(), 404);
 
+        /** @var User $user */
         $user = Auth::user()->refresh();
 
         $response = $user->getResponseForQuestion($question);

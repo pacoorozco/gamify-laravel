@@ -48,7 +48,8 @@ class QuestionControllerTest extends TestCase
     /** @test */
     public function it_should_show_the_questions_dashboard()
     {
-        $this->actingAs($this->user)
+        $this
+            ->actingAs($this->user)
             ->get(route('questions.index'))
             ->assertSuccessful()
             ->assertViewIs('question.index')
@@ -69,7 +70,8 @@ class QuestionControllerTest extends TestCase
         $question = Question::factory()
             ->create();
 
-        $this->actingAs($this->user)
+        $this
+            ->actingAs($this->user)
             ->get(route('questions.show', $question->short_name))
             ->assertNotFound();
     }
@@ -82,7 +84,8 @@ class QuestionControllerTest extends TestCase
             ->published()
             ->create();
 
-        $this->actingAs($this->user)
+        $this
+            ->actingAs($this->user)
             ->get(route('questions.show', $question->short_name))
             ->assertSuccessful()
             ->assertViewIs('question.show')
@@ -97,17 +100,16 @@ class QuestionControllerTest extends TestCase
             ->published()
             ->create();
 
-        // Answer with the first choice.
-        $input_data = [
-            'choices' => [$question->choices()->first()->id],
-        ];
-
-        $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), $input_data)
-            ->assertOk()
+        $this
+            ->actingAs($this->user)
+            ->post(route('questions.answer', $question->short_name), [
+                // Answer with the first available choice.
+                'choices' => [$question->choices()->first()->id],
+            ])
+            ->assertSuccessful()
             ->assertViewIs('question.show-answered')
             ->assertViewHasAll([
-                'answer',
+                'response',
                 'question',
             ]);
     }
