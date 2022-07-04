@@ -80,7 +80,7 @@ class QuestionController extends Controller
         }
 
         $user->answeredQuestions()->attach($question,
-            UserResponse::make(
+            UserResponse::asArray(
                 score: $points,
                 choices: $request->choices,
             )

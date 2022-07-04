@@ -35,8 +35,7 @@ class HomeController extends Controller
 
     public function index(): View
     {
-        $questions = Auth::user()
-            ->pendingVisibleQuestions(self::MAX_QUESTIONS_SHOWN);
+        $questions = Auth::user()?->pendingVisibleQuestions(self::MAX_QUESTIONS_SHOWN);
 
         return view('dashboard.index')
             ->with('questions', $questions)

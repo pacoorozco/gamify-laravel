@@ -52,7 +52,7 @@ class UserResponseTest extends TestCase
         $want = $this->faker->numberBetween(-10, 10);
 
         $user->answeredQuestions()->attach($question,
-            UserResponse::make(
+            UserResponse::asArray(
                 score: $want,
                 choices: $question->choices()->pluck('id')->toArray(),
             )
@@ -81,7 +81,7 @@ class UserResponseTest extends TestCase
         $choices = [1, 2];
 
         $user->answeredQuestions()->attach($question,
-            UserResponse::make(
+            UserResponse::asArray(
                 score: $this->faker->numberBetween(-10, 10),
                 choices: $choices,
             )
@@ -110,7 +110,7 @@ class UserResponseTest extends TestCase
         $choices = [2];
 
         $user->answeredQuestions()->attach($question,
-            UserResponse::make(
+            UserResponse::asArray(
                 score: $this->faker->numberBetween(-10, 10),
                 choices: $choices,
             )

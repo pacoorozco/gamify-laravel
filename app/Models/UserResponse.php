@@ -14,7 +14,7 @@ class UserResponse extends Pivot
 {
     const VALUE_SEPARATOR = ',';
 
-    public static function make(int $score, array $choices): array
+    public static function asArray(int $score, array $choices): array
     {
         return [
             'points' => $score,
