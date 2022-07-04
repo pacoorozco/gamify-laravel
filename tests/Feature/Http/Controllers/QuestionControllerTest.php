@@ -93,7 +93,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function answer_returns_proper_content()
+    public function it_should_add_the_user_response_after_answering()
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -107,11 +107,16 @@ class QuestionControllerTest extends TestCase
                 'choices' => [$question->choices()->first()->id],
             ])
             ->assertSuccessful()
-            ->assertViewIs('question.show-answered')
+            ->assertViewIs('question.show')
             ->assertViewHasAll([
                 'response',
                 'question',
             ]);
+
+        $this->assertDatabaseHas('users_questions', [
+            'question_id' => $question->id,
+            'user_id' => $this->user->id,
+        ]);
     }
 
     /** @test */
@@ -122,20 +127,23 @@ class QuestionControllerTest extends TestCase
             ->published()
             ->create();
 
-        // Answer with the correct choice.
-        $input_data = [
-            'choices' => [$question->choices()->correct()->first()->id],
-        ];
+        // Answer with the correct choices.
+        $choices = $question->choices()
+            ->correct()
+            ->pluck('id')
+            ->toArray();
 
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), $input_data)
-            ->assertOk();
+            ->post(route('questions.answer', $question->short_name), [
+                'choices' => $choices,
+            ])
+            ->assertSuccessful();
 
-        Event::assertDispatched(QuestionAnswered::class, function ($e) use ($question) {
-            return $e->question->id === $question->id &&
-                $e->correctness === true;
+        Event::assertDispatched(function (QuestionAnswered $event) use ($question) {
+            return $event->question->id === $question->id
+                && $event->correctness === true;
         });
     }
 
@@ -148,19 +156,22 @@ class QuestionControllerTest extends TestCase
             ->create();
 
         // Answer with the incorrect choice.
-        $input_data = [
-            'choices' => [$question->choices()->incorrect()->first()->id],
-        ];
+        $choices = $question->choices()
+            ->incorrect()
+            ->pluck('id')
+            ->toArray();
 
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), $input_data)
-            ->assertOk();
+            ->post(route('questions.answer', $question->short_name), [
+                'choices' => $choices,
+            ])
+            ->assertSuccessful();
 
-        Event::assertDispatched(QuestionAnswered::class, function ($e) use ($question) {
-            return $e->question->id === $question->id &&
-                $e->correctness === false;
+        Event::assertDispatched(function (QuestionAnswered $event) use ($question) {
+            return $event->question->id === $question->id
+                && $event->correctness === false;
         });
     }
 }

@@ -70,7 +70,7 @@ return [
     'tags_none' => 'None',
 
     // Answers
-    'choices_section' => 'Answer options',
+    'choices_section' => 'UserResponse options',
     'choices_help' => 'These are the options from which the participant can choose. Note that <strong>positive scores will mark option as correct</strong>.',
     'choice_text' => 'Option Text',
     'choice_text_help' => 'Put here the text of this answer option.',

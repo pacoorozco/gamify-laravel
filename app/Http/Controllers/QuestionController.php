@@ -89,7 +89,7 @@ class QuestionController extends Controller
         // Trigger an event that will update XP, badges...
         QuestionAnswered::dispatch($user, $question, $points, $answerCorrectness);
 
-        return view('question.show-answered')
+        return view('question.show')
             ->with('question', $question)
             ->with('response', $user->getResponseForQuestion($question));
     }
@@ -103,15 +103,8 @@ class QuestionController extends Controller
 
         $response = $user->getResponseForQuestion($question);
 
-        if ($response instanceof UserResponse) {
-            // User has answered this question
-            return view('question.show-answered', [
-                'response' => $response,
-                'question' => $question,
-            ]);
-        }
-
         return view('question.show')
-            ->with('question', $question);
+            ->with('question', $question)
+            ->with('response', $response);
     }
 }
