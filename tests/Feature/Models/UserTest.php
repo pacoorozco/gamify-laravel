@@ -25,13 +25,13 @@
 
 namespace Tests\Feature\Models;
 
-use Gamify\Models\UserResponse;
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
 use Gamify\Models\UserProfile;
+use Gamify\Models\UserResponse;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
