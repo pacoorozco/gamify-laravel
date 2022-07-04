@@ -103,7 +103,7 @@ class UserTest extends TestCase
         /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
-        $this->assertFalse($user->isBadgeUnlocked($badge));
+        $this->assertFalse($user->hasUnlockedBadge($badge));
     }
 
     /** @test */
@@ -120,7 +120,7 @@ class UserTest extends TestCase
         // Complete the badge
         $user->badges()->attach($badge->id, ['repetitions' => '1', 'unlocked_at' => now()]);
 
-        $this->assertTrue($user->isBadgeUnlocked($badge));
+        $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
     /** @test */

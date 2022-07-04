@@ -238,7 +238,7 @@ final class User extends Authenticatable
             ->get();
     }
 
-    public function isBadgeUnlocked(Badge $badge): bool
+    public function hasUnlockedBadge(Badge $badge): bool
     {
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)

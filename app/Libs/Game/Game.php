@@ -49,7 +49,7 @@ class Game
 
     public static function incrementBadgeCount(User $user, Badge $badge): void
     {
-        if ($user->isBadgeUnlocked($badge)) {
+        if ($user->hasUnlockedBadge($badge)) {
             return;
         }
 
@@ -81,7 +81,7 @@ class Game
 
     public static function unlockBadgeFor(User $user, Badge $badge): void
     {
-        if ($user->isBadgeUnlocked($badge)) {
+        if ($user->hasUnlockedBadge($badge)) {
             return;
         }
 
