@@ -26,7 +26,6 @@
 namespace Gamify\Presenters;
 
 use Gamify\Enums\BadgeActuators;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
