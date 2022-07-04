@@ -50,8 +50,10 @@ class AdminRewardController extends AdminController
 
     public function giveExperience(RewardExperienceRequest $request): RedirectResponse
     {
+        $userToReward = User::findOrFail($request->userToReward());
+
         Game::addExperienceTo(
-            user: $request->userToReward(),
+            user: $userToReward,
             experience: $request->experience(),
             reason: $request->reason() ?? ''
         );
@@ -59,7 +61,7 @@ class AdminRewardController extends AdminController
         return redirect()->route('admin.rewards.index')
             ->with('success',
                 trans('admin/reward/messages.experience_given.success', [
-                    'username' => $request->userToReward()->username,
+                    'username' => $userToReward->username,
                     'points' => $request->experience(),
                 ]));
     }
