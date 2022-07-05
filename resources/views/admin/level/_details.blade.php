@@ -49,13 +49,13 @@
     <div class="box-footer">
         <a href="{{ route('admin.levels.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> @lang('general.back')
+                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
             </button>
         </a>
         @if ($action == 'show')
             <a href="{{ route('admin.levels.edit', $level) }}">
                 <button type="button" class="btn btn-primary">
-                    <i class="fa fa-pencil"></i> @lang('general.edit')
+                    <i class="fa fa-pencil"></i> {{ __('general.edit') }}
                 </button>
             </a>
         @else

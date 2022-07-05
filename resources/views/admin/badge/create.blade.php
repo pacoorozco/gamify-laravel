@@ -5,24 +5,24 @@
 
 {{-- Content Header --}}
 @section('header')
-    @lang('admin/badge/title.create_a_new_badge')
-    <small>@lang('admin/badge/title.create_a_new_badge_desc')</small>
+    {{ __('admin/badge/title.create_a_new_badge') }}
+    <small>{{ __('admin/badge/title.create_a_new_badge_desc') }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.badges.index') }}">
-            @lang('admin/site.badges')
+            {{ __('admin/site.badges') }}
         </a>
     </li>
     <li class="active">
-        @lang('admin/badge/title.create_a_new_badge')
+        {{ __('admin/badge/title.create_a_new_badge') }}
     </li>
 @endsection
 

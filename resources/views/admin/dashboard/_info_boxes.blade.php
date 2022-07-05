@@ -9,7 +9,7 @@
             <i class="fa fa-users"></i>
         </div>
         <a href="{{ route('admin.users.index') }}"
-           class="small-box-footer">@lang('admin/user/title.user_management') <i
+           class="small-box-footer">{{ __('admin/user/title.user_management') }} <i
                 class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>
@@ -26,7 +26,7 @@
             <i class="fa fa-question"></i>
         </div>
         <a href="{{ route('admin.questions.index') }}"
-           class="small-box-footer">@lang('admin/question/title.question_management') <i
+           class="small-box-footer">{{ __('admin/question/title.question_management') }} <i
                 class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>
@@ -43,7 +43,7 @@
             <i class="fa fa-trophy"></i>
         </div>
         <a href="{{ route('admin.badges.index') }}"
-           class="small-box-footer">@lang('admin/badge/title.badge_management') <i
+           class="small-box-footer">{{ __('admin/badge/title.badge_management') }} <i
                 class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>
@@ -60,7 +60,7 @@
             <i class="fa fa-level-up"></i>
         </div>
         <a href="{{ route('admin.levels.index') }}"
-           class="small-box-footer">@lang('admin/level/title.level_management') <i
+           class="small-box-footer">{{ __('admin/level/title.level_management') }} <i
                 class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>

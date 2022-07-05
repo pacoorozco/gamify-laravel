@@ -5,7 +5,7 @@
 
 {{-- Content Header --}}
 @section('header')
-    @lang('admin/question/title.create_a_new_question')
+    {{ __('admin/question/title.create_a_new_question') }}
     <small>create a new question</small>
 @endsection
 
@@ -13,16 +13,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.questions.index') }}">
-            @lang('admin/site.questions')
+            {{ __('admin/site.questions') }}
         </a>
     </li>
     <li class="active">
-        @lang('admin/question/title.create_a_new_question')
+        {{ __('admin/question/title.create_a_new_question') }}
     </li>
 @endsection
 
@@ -48,13 +48,13 @@
 
                     <fieldset>
                         <legend>
-                            @lang('admin/question/title.general_section')
+                            {{ __('admin/question/title.general_section') }}
                         </legend>
 
                         <!-- name -->
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             {!! Form::label('name', __('admin/question/model.name'), ['class' => 'control-label required']) !!}
-                            <p class="text-muted">@lang('admin/question/model.name_help')</p>
+                            <p class="text-muted">{{ __('admin/question/model.name_help') }}</p>
                             <div class="controls">
                                 {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                 <span class="help-block">{{ $errors->first('name', ':message') }}</span>
@@ -65,7 +65,7 @@
                         <!-- question text -->
                         <div class="form-group {{ $errors->has('question') ? 'has-error' : '' }}">
                             {!! Form::label('question', __('admin/question/model.question'), ['class' => 'control-label required']) !!}
-                            <p class="text-muted">@lang('admin/question/model.question_help')</p>
+                            <p class="text-muted">{{ __('admin/question/model.question_help') }}</p>
                             <div class="controls">
                                 {!! Form::textarea('question', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
                                 <span class="help-block">{{ $errors->first('question', ':message') }}</span>
@@ -90,13 +90,13 @@
 
                     <fieldset>
                         <legend>
-                            @lang('admin/question/title.optional_section')
+                            {{ __('admin/question/title.optional_section') }}
                         </legend>
 
                         <!-- solution -->
                         <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
                             {!! Form::label('solution', __('admin/question/model.solution'), ['class' => 'control-label']) !!}
-                            <p class="text-muted">@lang('admin/question/model.solution_help')</p>
+                            <p class="text-muted">{{ __('admin/question/model.solution_help') }}</p>
                             <div class="controls">
                                 {!! Form::textarea('solution', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
                                 <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
@@ -124,7 +124,7 @@
             <!-- badges section -->
             <div class="box box-solid collapsed-box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">@lang('admin/question/title.badges_section')</h3>
+                    <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-plus"></i>
@@ -136,9 +136,9 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th>@lang('admin/action/table.action')</th>
-                            <th>@lang('admin/action/table.when')</th>
-                            <th>@lang('admin/action/table.actions')</th>
+                            <th>{{ __('admin/action/table.action') }}</th>
+                            <th>{{ __('admin/action/table.when') }}</th>
+                            <th>{{ __('admin/action/table.actions') }}</th>
                         </tr>
 
                         @foreach($globalActions as $badge)
@@ -166,13 +166,13 @@
 
                     <fieldset>
                         <legend>
-                            @lang('admin/question/title.publish_section')
+                            {{ __('admin/question/title.publish_section') }}
                         </legend>
 
                         <!-- save draft and preview -->
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" id="submitDraftBtn">
-                                @lang('button.save_as_draft')
+                                {{ __('button.save_as_draft') }} <i class="fa fa-floppy-o"></i>
                             </button>
                         </div>
                         <!-- ./ save draft and preview -->
@@ -181,7 +181,7 @@
                         <div class="form-group">
                             {!! Form::label('status', __('admin/question/model.status'), ['class' => 'control-label required']) !!}
                             <div class="controls">
-                                <span class="form-control-static">@lang('admin/question/model.status_list.draft')</span>
+                                <span class="form-control-static">{{ __('admin/question/model.status_list.draft') }}</span>
                                 {!! Form::hidden('status','draft') !!}
                             </div>
                         </div>
@@ -190,7 +190,7 @@
                         <!-- visibility -->
                         <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
                             {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
-                            <a href="#" id="enableVisibilityControls">@lang('general.edit')</a>
+                            <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
                             <div id="visibilityStatus">
                             <span class="form-control-static">
                                 {{ old('hidden') === '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
@@ -200,16 +200,16 @@
                                 <div class="radio">
                                     <label class="control-label">
                                         {{ Form::radio('hidden', '0', true, [ 'id' => 'visibilityPublic']) }}
-                                        @lang('admin/question/model.hidden_no')
+                                        {{ __('admin/question/model.hidden_no') }}
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label class="control-label">
                                         {{ Form::radio('hidden', '1', false, [ 'id' => 'visibilityPrivate', 'aria-describedby' => 'helpHiddenYes']) }}
-                                        @lang('admin/question/model.hidden_yes')
+                                        {{ __('admin/question/model.hidden_yes') }}
                                     </label>
                                     <span id="helpHiddenYes"
-                                          class="text-muted">@lang('admin/question/model.hidden_yes_help')</span>
+                                          class="text-muted">{{ __('admin/question/model.hidden_yes_help') }}</span>
                                 </div>
                             </div>
                             <span class="help-block">{{ $errors->first('hidden', ':message') }}</span>
@@ -219,13 +219,13 @@
                         <!-- publication date -->
                         <div class="form-group {{ $errors->has('publication_date') ? 'has-error' : '' }}">
                             {!! Form::label('publication_date', __('admin/question/model.publication_date'), ['class' => 'control-label']) !!}
-                            <a href="#" id="enablePublicationDateControls">@lang('general.edit')</a>
+                            <a href="#" id="enablePublicationDateControls">{{ __('general.edit') }}</a>
                             <div id="publicationDateStatus">
                             <span class="form-control-static">
                             @if (empty(old('publication_date')))
-                                    @lang('admin/question/model.publish_immediately')
+                                    {{ __('admin/question/model.publish_immediately') }}
                                 @else
-                                    @lang('admin/question/model.publish_on', ['datetime' => old('publication_date')])
+                                    {{ __('admin/question/model.publish_on', ['datetime' => old('publication_date')]) }}
                                 @endif
                             </span>
                             </div>
@@ -237,7 +237,7 @@
                                     {!! Form::text('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
                                     <span class="input-group-btn">
                                     <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
-                                        @lang('admin/question/model.publish_immediately')
+                                        {{ __('admin/question/model.publish_immediately') }}
                                     </button>
                                 </span>
                                 </div>
@@ -250,10 +250,10 @@
                 </div>
                 <div class="box-footer">
                     <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
-                        @lang('button.back')
+                        <i class="fa fa-arrow-left"></i> {{ __('button.back') }}
                     </a>
                     <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
-                        @lang('button.publish')
+                        <i class="fa fa-paper-plane-o"></i> {{ __('button.publish') }}
                     </button>
                 </div>
 
@@ -289,7 +289,7 @@
         $(function () {
             $("#tags").select2({
                 tags: true,
-                placeholder: "@lang('admin/question/model.tags_help')",
+                placeholder: "{{ __('admin/question/model.tags_help') }}",
                 tokenSeparators: [',', ' '],
                 allowClear: true,
                 width: "100%"
@@ -317,7 +317,7 @@
                 $("#enableVisibilityControls").addClass("hidden");
             });
 
-            $.datetimepicker.setLocale("@lang('site.dateTimePickerLang')");
+            $.datetimepicker.setLocale("{{ __('site.dateTimePickerLang') }}");
             $("#publication_date").datetimepicker({
                 minDate: 0,
                 format: "Y-m-d H:i",

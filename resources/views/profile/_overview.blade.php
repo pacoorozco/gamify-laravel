@@ -12,7 +12,7 @@
 </div>
 
 <!-- unlocked badges -->
-<h3>@lang('user/profile.unlocked_badges')</h3>
+<h3>{{ __('user/profile.unlocked_badges') }}</h3>
 
 <div class="row">
     @each('profile._badge_unlocked', $user->unlockedBadges(), 'badge', 'profile._badges_none')
@@ -20,7 +20,7 @@
 <!-- ./unlocked badges -->
 
 <!-- locked badges -->
-<h3>@lang('user/profile.locked_badges')</h3>
+<h3>{{ __('user/profile.locked_badges') }}</h3>
 
 <div class="row">
     @each('profile._badge_locked', $user->lockedBadges(), 'badge', 'profile._badges_none')

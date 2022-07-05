@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">@lang('user/profile.about_me')</h3>
+        <h3 class="box-title">{{ __('user/profile.about_me') }}</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -50,28 +50,28 @@
         <table class="table table-condensed table-hover">
             <thead>
             <tr>
-                <th colspan="2">@lang('user/profile.general_info')</th>
+                <th colspan="2">{{ __('user/profile.general_info') }}</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>@lang('user/profile.level'):</td>
+                <td>{{ __('user/profile.level') }}:</td>
                 <td>{{ $user->level }}</td>
             </tr>
             <tr>
-                <td>@lang('user/profile.badges'):</td>
+                <td>{{ __('user/profile.badges') }}:</td>
                 <td>{{ $user->unlockedBadgesCount() }}</td>
             </tr>
             <tr>
-                <td>@lang('user/profile.experience'):</td>
+                <td>{{ __('user/profile.experience') }}:</td>
                 <td>{{ $user->experience }}</td>
             </tr>
             <tr>
-                <td>@lang('user/profile.user_since'):</td>
+                <td>{{ __('user/profile.user_since') }}:</td>
                 <td>{{ $user->present()->createdAt }}</td>
             </tr>
             <tr>
-                <td>@lang('user/profile.roles'):</td>
+                <td>{{ __('user/profile.roles') }}:</td>
                 <td>{{ $user->present()->role }}</td>
             </tr>
             </tbody>
@@ -80,12 +80,12 @@
         <table class="table table-condensed table-hover">
             <thead>
             <tr>
-                <th colspan="2">@lang('user/profile.additional_info')</th>
+                <th colspan="2">{{ __('user/profile.additional_info') }}</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>@lang('user/profile.date_of_birth')</td>
+                <td>{{ __('user/profile.date_of_birth') }}</td>
                 <td>
                     {{ $user->present()->birthdate }}
                 </td>

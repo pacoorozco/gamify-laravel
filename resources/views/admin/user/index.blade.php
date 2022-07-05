@@ -11,20 +11,20 @@
 
 {{-- Content Header --}}
 @section('header')
-    @lang('admin/user/title.user_management')
-    <small>@lang('admin/user/title.user_management_desc')</small>
+    {{ __('admin/user/title.user_management') }}
+    <small>{{ __('admin/user/title.user_management_desc') }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
         <a href="{{ route('admin.users.index') }}">
-            @lang('admin/site.users')
+            {{ __('admin/site.users') }}
         </a>
     </li>
 @endsection
@@ -39,7 +39,7 @@
     <!-- actions -->
     <a href="{{ route('admin.users.create') }}">
         <button type="button" class="btn btn-success margin-bottom">
-            <i class="fa fa-plus"></i> @lang('admin/user/title.create_a_new_user')
+            <i class="fa fa-plus"></i> {{ __('admin/user/title.create_a_new_user') }}
         </button>
     </a>
     <!-- /.actions -->
@@ -49,20 +49,20 @@
             <table id="users" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-md-2">@lang('admin/user/model.username')</th>
-                    <th class="col-md-4">@lang('admin/user/model.name')</th>
-                    <th class="col-md-3">@lang('admin/user/model.email')</th>
-                    <th class="col-md-1">@lang('admin/user/model.role')</th>
-                    <th class="col-md-2">@lang('general.actions')</th>
+                    <th class="col-md-2">{{ __('admin/user/model.username') }}</th>
+                    <th class="col-md-4">{{ __('admin/user/model.name') }}</th>
+                    <th class="col-md-3">{{ __('admin/user/model.email') }}</th>
+                    <th class="col-md-1">{{ __('admin/user/model.role') }}</th>
+                    <th class="col-md-2">{{ __('general.actions') }}</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-2">@lang('admin/user/model.username')</th>
-                    <th class="col-md-4">@lang('admin/user/model.name')</th>
-                    <th class="col-md-3">@lang('admin/user/model.email')</th>
-                    <th class="col-md-1">@lang('admin/user/model.role')</th>
-                    <th class="col-md-2">@lang('general.actions')</th>
+                    <th class="col-md-2">{{ __('admin/user/model.username') }}</th>
+                    <th class="col-md-4">{{ __('admin/user/model.name') }}</th>
+                    <th class="col-md-3">{{ __('admin/user/model.email') }}</th>
+                    <th class="col-md-1">{{ __('admin/user/model.role') }}</th>
+                    <th class="col-md-2">{{ __('general.actions') }}</th>
                 </tr>
                 </tfoot>
             </table>
@@ -81,7 +81,7 @@
         $(function () {
             $('#users').DataTable({
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/@lang('site.dataTablesLang').json"
+                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/{{ __('site.dataTablesLang') }}.json"
                 },
                 "ajax": "{{ route('admin.users.data') }}",
                 "columns": [
@@ -93,7 +93,7 @@
                 ],
                 "aLengthMenu": [
                     [5, 10, 15, 20, -1],
-                    [5, 10, 15, 20, "@lang('general.all')"]
+                    [5, 10, 15, 20, "{{ __('general.all') }}"]
                 ],
                 // set the initial value
                 "iDisplayLength": 10

@@ -10,11 +10,11 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> @lang('site.home')
+            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
         </a>
     </li>
     <li class="active">
-        @lang('user/profile.title')
+        {{ __('user/profile.title') }}
     </li>
 @endsection
 
@@ -76,7 +76,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a href="#overview" data-toggle="tab">@lang('user/profile.overview')</a>
+                        <a href="#overview" data-toggle="tab">{{ __('user/profile.overview') }}</a>
                     </li>
                     {{--
                     <li>
@@ -85,12 +85,12 @@
                     --}}
                     @can('update-profile', $user)
                         <li>
-                            <a href="#settings" data-toggle="tab">@lang('user/profile.edit_account')</a>
+                            <a href="#settings" data-toggle="tab">{{ __('user/profile.edit_account') }}</a>
                         </li>
                     @endcan
                     @can('update-password', $user)
                         <li>
-                            <a href="{{ route('password.change') }}">@lang('user/profile.change_password')</a>
+                            <a href="{{ route('password.change') }}">{{ __('user/profile.change_password') }}</a>
                         </li>
                     @endcan
                 </ul>

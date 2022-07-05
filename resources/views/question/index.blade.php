@@ -5,18 +5,18 @@
 
 {{-- Content Header --}}
 @section('header')
-    @lang('site.play')
+    {{ __('site.play') }}
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> @lang('site.home')
+            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
         </a>
     </li>
     <li class="active">
-        @lang('site.play')
+        {{ __('site.play') }}
     </li>
 @endsection
 

@@ -3,7 +3,7 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <!-- The user image in the navbar-->
         <img src="{{ $user->profile->avatarUrl }}" class="user-image"
-             alt="@lang('user/profile.avatar')"/>
+             alt="{{ __('user/profile.avatar') }}"/>
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
         <span class="hidden-xs">{{ $user->name }}</span>
     </a>
@@ -11,23 +11,23 @@
         <!-- The user image in the menu -->
         <li class="user-header">
             <img src="{{ $user->profile->avatarUrl }}" class="img-circle"
-                 alt="@lang('user/profile.avatar')"/>
+                 alt="{{ __('user/profile.avatar') }}"/>
             <p>
                 {{ $user->name }} - {{ $user->level }}
-                <small>@lang('user/profile.user_since') {{ $user->created_at }}</small>
+                <small>{{ __('user/profile.user_since') }} {{ $user->created_at }}</small>
             </p>
         </li>
         <!-- Menu Body -->
         <li class="user-body">
             <div class="col-xs-12 text-center">
-                <a href="#">@lang('site.my_achievements')</a>
+                <a href="#">{{ __('site.my_achievements') }}</a>
             </div>
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
                 <a href="{{ route('profiles.show', $user->username) }}" class="btn btn-default btn-flat">
-                    @lang('site.my_profile')
+                    {{ __('site.my_profile') }}
                 </a>
             </div>
             <div class="pull-right">

@@ -9,7 +9,7 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li class="active">
-        <i class="fa fa-dashboard"></i> @lang('site.home')
+        <i class="fa fa-dashboard"></i> {{ __('site.home') }}
     </li>
 @endsection
 

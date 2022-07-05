@@ -13,10 +13,10 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>@lang('admin/user/model.username')</th>
-                <th>@lang('admin/user/model.name')</th>
-                <th>@lang('admin/user/model.email')</th>
-                <th>@lang('admin/user/model.created_at')</th>
+                <th>{{ __('admin/user/model.username') }}</th>
+                <th>{{ __('admin/user/model.name') }}</th>
+                <th>{{ __('admin/user/model.email') }}</th>
+                <th>{{ __('admin/user/model.created_at') }}</th>
             </tr>
             </thead>
             @foreach($latest_users as $user)
