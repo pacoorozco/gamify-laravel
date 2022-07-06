@@ -5,7 +5,7 @@
 
 {{-- Content Header --}}
 @section('header')
-    @lang('admin/level/title.level_delete')
+    {{ __('admin/level/title.level_delete') }}
     <small>{{ $level->name }}</small>
 @endsection
 
@@ -13,16 +13,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.levels.index') }}">
-            @lang('admin/site.levels')
+            {{ __('admin/site.levels') }}
         </a>
     </li>
     <li class="active">
-        @lang('admin/level/title.level_delete')
+        {{ __('admin/level/title.level_delete') }}
     </li>
 @endsection
 

@@ -33,10 +33,10 @@
         <!-- Form Actions -->
                 <a href="{{ route('admin.questions.edit', $question) }}">
                     <button type="button" class="btn btn-primary">
-                        <i class="fa fa-arrow-left"></i> @lang('general.back')
+                        <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
                     </button>
                 </a>
-                {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-success')) !!}
+                {!! Form::button(__('button.save') . ' <i class="fa fa-floppy-o"></i>', array('type' => 'submit', 'class' => 'btn btn-success')) !!}
         <!-- ./ form actions -->
     </div>
 </div>

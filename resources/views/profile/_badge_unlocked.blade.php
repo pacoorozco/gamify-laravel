@@ -12,11 +12,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
-                        aria-label="@lang('general.close')">
+                        aria-label="{{ __('general.close') }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="badge-{{ $badge->slug() }}Label">
-                    @lang('user/profile.badge'): {{ $badge->name }}
+                    {{ __('user/profile.badge') }}: {{ $badge->name }}
                 </h4>
             </div>
             <div class="modal-body text-center">
@@ -28,12 +28,12 @@
                      data-toggle="tooltip" data-placement="bottom" title="{{ $badge->name }}">
 
                 <p>
-                    @lang('user/profile.unlocked_at', ['date' => $badge->present()->unlockedAt])
+                    {{ __('user/profile.unlocked_at', ['date' => $badge->present()->unlockedAt]) }}
                 </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-                        data-dismiss="modal">@lang('general.close')</button>
+                        data-dismiss="modal">{{ __('general.close') }}</button>
             </div>
         </div>
     </div>

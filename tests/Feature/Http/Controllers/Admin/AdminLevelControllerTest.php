@@ -68,7 +68,7 @@ class AdminLevelControllerTest extends TestCase
     }
 
     /** @test */
-    public function players_should_not_see_the_new_user_form(): void
+    public function players_should_not_see_the_new_level_form(): void
     {
         $this
             ->actingAs($this->user)
@@ -77,7 +77,7 @@ class AdminLevelControllerTest extends TestCase
     }
 
     /** @test */
-    public function admins_should_see_the_new_user_form(): void
+    public function admins_should_see_the_new_level_form(): void
     {
         $this->user->role = Roles::Admin;
 
@@ -411,12 +411,12 @@ class AdminLevelControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->get(route('admin.levels.destroy', $level))
+            ->delete(route('admin.levels.destroy', $level))
             ->assertForbidden();
     }
 
     /** @test */
-    public function admins_should_delete_users(): void
+    public function admins_should_delete_levels(): void
     {
         $this->user->role = Roles::Admin;
 

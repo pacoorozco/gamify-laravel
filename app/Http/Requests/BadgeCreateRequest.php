@@ -31,19 +31,55 @@ use Illuminate\Validation\Rule;
 
 class BadgeCreateRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', Rule::unique('badges')],
-            'description' => ['required'],
-            'required_repetitions' => ['required', 'integer', 'min:1'],
-            'active' => ['required', 'boolean'],
-            'actuators' => ['required', new EnumValue(BadgeActuators::class)],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('badges'),
+            ],
+            'description' => [
+                'required',
+            ],
+            'required_repetitions' => [
+                'required',
+                'integer',
+                'min:1',
+            ],
+            'active' => [
+                'required',
+                'boolean',
+            ],
+            'actuators' => [
+                'required',
+                new EnumValue(BadgeActuators::class),
+            ],
         ];
+    }
+
+    public function name(): string
+    {
+        return $this->input('name');
+    }
+
+    public function description(): string
+    {
+        return $this->input('description');
+    }
+
+    public function repetitions(): int
+    {
+        return $this->input('required_repetitions');
+    }
+
+    public function active(): bool
+    {
+        return $this->input('active');
+    }
+
+    public function actuators(): string
+    {
+        return $this->input('actuators');
     }
 }

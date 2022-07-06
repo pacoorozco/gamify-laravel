@@ -5,7 +5,7 @@
         <div class="container">
             <div class="navbar-header">
                 <!-- start: LOGO -->
-                <strong><a href="{{ route('home') }}" class="navbar-brand">@lang('site.name')</a></strong>
+                <strong><a href="{{ route('home') }}" class="navbar-brand">{{ __('site.name') }}</a></strong>
                 <!-- end: LOGO -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
@@ -25,7 +25,7 @@
 
                     @can('access-dashboard')
                         <li>
-                            <a href="{{ route('admin.home') }}" title="@lang('site.admin_area')">
+                            <a href="{{ route('admin.home') }}" title="{{ __('site.admin_area') }}">
                                 <i class="fa fa-gears"></i>
                             </a>
                         </li>

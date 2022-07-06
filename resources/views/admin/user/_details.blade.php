@@ -40,17 +40,17 @@
     <div class="box-footer">
         <a href="{{ route('admin.users.index') }}">
             <button type="button" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> @lang('general.back')
+                <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
             </button>
         </a>
         @if ($action == 'show')
             <a href="{{ route('admin.users.edit', $user) }}">
                 <button type="button" class="btn btn-primary">
-                    <i class="fa fa-pencil"></i> @lang('general.edit')
+                    <i class="fa fa-pencil"></i> {{ __('general.edit') }}
                 </button>
             </a>
         @else
-            {!! Form::button(__('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
+            {!! Form::button('<i class="fa fa-trash-o"></i> ' . __('button.delete'), array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
         @endif
     </div>
 </div>

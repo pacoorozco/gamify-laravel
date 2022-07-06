@@ -24,6 +24,7 @@
  */
 
 use Gamify\Http\Controllers\Admin\AdminBadgeController;
+use Gamify\Http\Controllers\Admin\AdminBadgeDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminLevelController;
 use Gamify\Http\Controllers\Admin\AdminLevelDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
@@ -211,10 +212,8 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /badges/{badge_id}
     Route::middleware(['only.ajax'])
-        ->get(
-            'badges/data',
-            [AdminBadgeController::class, 'data']
-        )->name('badges.data');
+        ->get('badges/data', AdminBadgeDataTablesController::class)
+        ->name('badges.data');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {badges} needs

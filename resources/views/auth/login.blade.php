@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 {{-- Web site Title --}}
-@section('title')@lang('auth.login')@endsection
+@section('title'){{ __('auth.login') }}@endsection
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
@@ -10,12 +10,12 @@
 {{-- Content --}}
 @section('content')
     <!-- start: LOGIN BOX -->
-    <p class="login-box-msg">@lang('auth.sign_title')</p>
+    <p class="login-box-msg">{{ __('auth.sign_title') }}</p>
 
     @include('auth._social_login')
 
     <a href="#" class="btn btn-block btn-flat btn-default" role="button" id="email-login-btn">
-        <i class="fa fa-envelope"></i> @lang('social_login.e-mail')
+        <i class="fa fa-envelope"></i> {{ __('social_login.e-mail') }}
     </a>
 
     <div id="email-login" class="hidden">
@@ -40,13 +40,13 @@
         </div>
         @if(Route::has('password.request'))
             <p class="text-right">
-                <a href="{{ route('password.request') }}">@lang('auth.forgot_password')</a>
+                <a href="{{ route('password.request') }}">{{ __('auth.forgot_password') }}</a>
             </p>
         @endif
 
         <div class="checkbox icheck">
             <label>
-                {!! Form::checkbox('remember', '1', false) !!} @lang('auth.remember_me')
+                {!! Form::checkbox('remember', '1', false) !!} {{ __('auth.remember_me') }}
             </label>
         </div>
 
@@ -57,7 +57,7 @@
     <p></p>
     @if(Route::has('register'))
         <p class="text-center">
-            @lang('auth.dont_have_account') <a href="{{ route('register') }}">@lang('auth.create_account')</a>
+            {{ __('auth.dont_have_account') }} <a href="{{ route('register') }}">{{ __('auth.create_account') }}</a>
         </p>
     @endif
 

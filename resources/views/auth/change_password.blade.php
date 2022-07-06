@@ -23,7 +23,7 @@
                             {{-- current password --}}
                             <div class="form-group{{ $errors->has('current-password') ? ' has-error' : '' }}">
                                 <label for="current-password"
-                                       class="col-md-4 control-label">@lang('auth.current_password')</label>
+                                       class="col-md-4 control-label">{{ __('auth.current_password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="current-password" type="password" class="form-control"
@@ -38,7 +38,7 @@
 
                             {{-- new password --}}
                             <div class="form-group{{ $errors->has('new-password') ? ' has-error' : '' }}">
-                                <label for="new-password" class="col-md-4 control-label">@lang('auth.new_password')</label>
+                                <label for="new-password" class="col-md-4 control-label">{{ __('auth.new_password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="new-password" type="password" class="form-control" name="new-password"
@@ -54,7 +54,7 @@
                             {{-- new password confirmation --}}
                             <div class="form-group">
                                 <label for="new-password-confirm"
-                                       class="col-md-4 control-label">@lang('auth.new_password_confirmation')</label>
+                                       class="col-md-4 control-label">{{ __('auth.new_password_confirmation') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="new-password-confirm" type="password" class="form-control"
@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
-                                        @lang('button.update')
+                                        {{ __('button.update') }} <i class="fa fa-pencil-square-o"></i>
                                     </button>
                                 </div>
                             </div>

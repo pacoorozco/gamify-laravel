@@ -5,7 +5,7 @@
 
 {{-- Content Header --}}
 @section('header')
-    @lang('admin/badge/title.badge_edit')
+    {{ __('admin/badge/title.badge_edit') }}
     <small>{{ $badge->name }}</small>
 @endsection
 
@@ -13,16 +13,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.badges.index') }}">
-            @lang('admin/site.badges')
+            {{ __('admin/site.badges') }}
         </a>
     </li>
     <li class="active">
-        @lang('admin/badge/title.badge_edit')
+        {{ __('admin/badge/title.badge_edit') }}
     </li>
 @endsection
 

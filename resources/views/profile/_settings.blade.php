@@ -53,15 +53,15 @@
                     <p>
                     <span class="btn btn-default btn-file">
                         <span class="fileinput-new">
-                            <i class="fa fa-picture-o"></i> @lang('button.pick_image')
+                            <i class="fa fa-picture-o"></i> {{ __('button.pick_image') }}
                         </span>
                         <span class="fileinput-exists">
-                            <i class="fa fa-picture-o"></i> @lang('button.upload_image')
+                            <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
                         </span>
                         {!! Form::file('image') !!}
                     </span>
                         <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
-                            <i class="fa fa-times"></i> @lang('button.delete_image')
+                            <i class="fa fa-times"></i> {{ __('button.delete_image') }}
                         </a>
                     </p>
                 </div>
@@ -74,7 +74,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3>@lang('user/profile.additional_info')</h3>
+        <h3>{{ __('user/profile.additional_info') }}</h3>
         <hr>
     </div>
 </div>
@@ -153,7 +153,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        {!! Form::button(__('button.save'), array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
+        {!! Form::button(__('button.save') . ' <i class="fa fa-floppy-o"></i>', array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
     </div>
 </div>
 

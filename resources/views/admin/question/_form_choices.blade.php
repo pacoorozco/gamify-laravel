@@ -1,8 +1,8 @@
 <!-- choices -->
 <fieldset class="choices">
-    <legend>@lang('admin/question/model.choices_section')</legend>
+    <legend>{{ __('admin/question/model.choices_section') }}</legend>
     <p class="text-muted">
-        @lang('admin/question/model.choices_help')
+        {{ __('admin/question/model.choices_help') }}
     </p>
 
     @error('choices')
@@ -26,7 +26,7 @@
                             {!! Form::number('choices['. $loop->index .'][score]', $choice['score'], ['class' => 'form-control']) !!}
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default remove">
-                                    @lang('button.remove_choice')
+                                    <i class="fa fa-trash-o"></i> {{ __('button.remove_choice') }}
                                 </button>
                             </span>
                         </div>
@@ -45,7 +45,7 @@
                         {!! Form::number('choices[%%choice-count-placeholder%%][score]', '', ['class' => 'form-control']) !!}
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default remove">
-                                @lang('button.remove_choice')
+                                <i class="fa fa-trash-o"></i> {{ __('button.remove_choice') }}
                             </button>
                         </span>
                     </div>
@@ -55,7 +55,7 @@
 
         <div class="form-row">
             <button type="button" class="btn btn-default pull-right add">
-                @lang('button.add_new_choice')
+                <i class="fa fa-plus"></i> {{ __('button.add_new_choice') }}
             </button>
         </div>
     </div>

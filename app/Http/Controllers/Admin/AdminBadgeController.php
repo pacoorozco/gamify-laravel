@@ -25,23 +25,33 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Enums\BadgeActuators;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
 use Gamify\Models\Badge;
 use Gamify\Presenters\BadgePresenter;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
-use Throwable;
-use Yajra\DataTables\DataTables;
 
 class AdminBadgeController extends AdminController
 {
     public function index(): View
     {
         return view('admin.badge.index');
+    }
+
+    public function store(BadgeCreateRequest $request): RedirectResponse
+    {
+        Badge::create([
+            'name' => $request->name(),
+            'description' => $request->description(),
+            'required_repetitions' => $request->repetitions(),
+            'active' => $request->active(),
+            'actuators' => $request->actuators(),
+        ]);
+
+        return redirect()->route('admin.badges.index')
+            ->with('success', __('admin/badge/messages.create.success'));
     }
 
     public function create(): View
@@ -52,105 +62,45 @@ class AdminBadgeController extends AdminController
         ]);
     }
 
-    public function store(BadgeCreateRequest $request): RedirectResponse
-    {
-        try {
-            $badge = new Badge([
-                'name' => $request->input('name'),
-                'description' => $request->input('description'),
-                'required_repetitions' => $request->input('required_repetitions'),
-                'active' => $request->input('active'),
-                'actuators' => BadgeActuators::fromValue($request->input('actuators')),
-            ]);
-            $badge->saveOrFail();
-        } catch (\Throwable $exception) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', __('admin/badge/messages.create.error'));
-        }
-
-        return redirect()->route('admin.badges.index')
-            ->with('success', __('admin/badge/messages.create.success'));
-    }
-
     public function show(Badge $badge): View
     {
-        return view('admin.badge.show', compact('badge'));
+        return view('admin.badge.show')
+            ->with('badge', $badge);
     }
 
     public function edit(Badge $badge): View
     {
-        return view('admin.badge.edit', [
-            'badge' => $badge,
-            'actuators_list' => BadgePresenter::actuatorsSelect(),
-            'selected_actuators' => Arr::pluck($badge->present()->actuators, 'value'),
-        ]);
+        return view('admin.badge.edit')
+            ->with('badge', $badge)
+            ->with('actuators_list', BadgePresenter::actuatorsSelect())
+            ->with('selected_actuators', Arr::pluck($badge->present()->actuators, 'value'));
     }
 
     public function update(BadgeUpdateRequest $request, Badge $badge): RedirectResponse
     {
-        try {
-            $badge->fill([
-                'name' => $request->input('name'),
-                'description' => $request->input('description'),
-                'required_repetitions' => $request->input('required_repetitions'),
-                'active' => $request->input('active'),
-                'actuators' => BadgeActuators::fromValue($request->input('actuators')),
-            ])
-                ->saveOrFail();
-        } catch (\Throwable $exception) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', __('admin/badge/messages.update.error'));
-        }
+        $badge->update([
+            'name' => $request->name(),
+            'description' => $request->description(),
+            'required_repetitions' => $request->repetitions(),
+            'active' => $request->active(),
+            'actuators' => $request->actuators(),
+        ]);
 
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.update.success'));
     }
 
-    public function delete(Badge $badge): View
-    {
-        return view('admin.badge.delete', compact('badge'));
-    }
-
     public function destroy(Badge $badge): RedirectResponse
     {
-        try {
-            $badge->delete();
-        } catch (Throwable $exception) {
-            return redirect()->back()
-                ->with('error', __('admin/badge/messages.delete.error'));
-        }
+        $badge->delete();
 
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.delete.success'));
     }
 
-    public function data(Datatables $dataTable): JsonResponse
+    public function delete(Badge $badge): View
     {
-        $badges = Badge::select([
-            'id',
-            'name',
-            'required_repetitions',
-            'active',
-            'image_url',
-        ])->orderBy('name', 'ASC');
-
-        return $dataTable->eloquent($badges)
-            ->addColumn('image', function (Badge $badge) {
-                return $badge->present()->imageTableThumbnail;
-            })
-            ->editColumn('active', function (Badge $badge) {
-                return $badge->present()->status;
-            })
-            ->addColumn('actions', function (Badge $badge) {
-                return view('admin.partials.actions_dd')
-                    ->with('model', 'badges')
-                    ->with('id', $badge->id)
-                    ->render();
-            })
-            ->rawColumns(['actions', 'image'])
-            ->removeColumn('id', 'image_url')
-            ->toJson();
+        return view('admin.badge.delete')
+            ->with('badge', $badge);
     }
 }

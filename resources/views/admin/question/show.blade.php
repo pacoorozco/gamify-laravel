@@ -10,16 +10,16 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> @lang('admin/site.dashboard')
+            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
         <a href="{{ route('admin.questions.index') }}">
-            @lang('admin/site.questions')
+            {{ __('admin/site.questions') }}
         </a>
     </li>
     <li class="active">
-        @lang('admin/question/title.question_show')
+        {{ __('admin/question/title.question_show') }}
     </li>
 @endsection
 

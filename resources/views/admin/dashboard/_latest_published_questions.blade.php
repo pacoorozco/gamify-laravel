@@ -13,11 +13,11 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>@lang('admin/question/model.name')</th>
-                <th>@lang('admin/question/model.type')</th>
-                <th>@lang('admin/question/model.hidden')</th>
-                <th>@lang('admin/question/model.publication_date')</th>
-                <th>@lang('general.edit')</th>
+                <th>{{ __('admin/question/model.name') }}</th>
+                <th>{{ __('admin/question/model.type') }}</th>
+                <th>{{ __('admin/question/model.hidden') }}</th>
+                <th>{{ __('admin/question/model.publication_date') }}</th>
+                <th>{{ __('general.edit') }}</th>
             </tr>
             </thead>
             @foreach($latest_questions as $question)
@@ -31,7 +31,7 @@
                     </td>
                     <td>
                         @if($question->hidden)
-                            <span class="badge">@lang('admin/question/model.hidden_yes')</span>
+                            <span class="badge">{{ __('admin/question/model.hidden_yes') }}</span>
                         @endif
                     </td>
                     <td>{{ $question->publication_date }}</td>
