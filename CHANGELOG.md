@@ -14,8 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Fixed
 - Error showing Badges with more than one actuator.
+- Issue when uploading badge images. ([#257][i257])
 
 [i256]: https://github.com/pacoorozco/gamify-laravel/pull/256
+[i257]: https://github.com/pacoorozco/gamify-laravel/issues/257
 
 ## 3.0.0 - 2022-06-21
 
