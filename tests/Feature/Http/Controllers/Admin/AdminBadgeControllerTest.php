@@ -26,7 +26,6 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Enums\Roles;
-use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Generator;
