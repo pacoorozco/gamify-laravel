@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Changed
 - Remove sensible information (like gender, url, phone...) from the user's profile. ([#256][i256])
 - Fix HTTP method for the user's profile update to `PUT`.
+- Update dependencies. ([#262][i262], [#263][i263], [#264][i264], [#265][i265], [#266][i266])
 
 ### Fixed
 - Error showing Badges with more than one actuator.
@@ -18,6 +19,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 [i256]: https://github.com/pacoorozco/gamify-laravel/pull/256
 [i257]: https://github.com/pacoorozco/gamify-laravel/issues/257
+[i262]: https://github.com/pacoorozco/gamify-laravel/pull/262
+[i263]: https://github.com/pacoorozco/gamify-laravel/pull/263
+[i264]: https://github.com/pacoorozco/gamify-laravel/pull/264
+[i265]: https://github.com/pacoorozco/gamify-laravel/pull/265
+[i266]: https://github.com/pacoorozco/gamify-laravel/pull/266
 
 ## 3.0.0 - 2022-06-21
 
