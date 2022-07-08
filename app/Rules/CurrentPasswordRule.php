@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CurrentPasswordRule implements Rule
 {
-    /** @var User $user */
+    /** @var User */
     protected User $user;
 
     public function __construct(User $user)

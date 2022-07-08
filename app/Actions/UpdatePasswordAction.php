@@ -25,7 +25,6 @@
 
 namespace Gamify\Actions;
 
-
 use Gamify\Models\User;
 
 class UpdatePasswordAction

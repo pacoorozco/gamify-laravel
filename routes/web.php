@@ -50,7 +50,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::prefix('account')->middleware('auth')->group(function () {
     Route::get('/', function () {
         return redirect()->route('profiles.show', ['username' => Auth::user()->username]);
