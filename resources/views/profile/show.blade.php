@@ -65,8 +65,8 @@
             <!-- /.profile image -->
 
             <!-- About Me -->
-        @include('profile._about_me')
-        <!-- /.about me -->
+            @include('profile._about_me')
+            <!-- /.about me -->
 
         </div>
         <div class="col-md-8">
@@ -78,19 +78,16 @@
                     <li class="active">
                         <a href="#overview" data-toggle="tab">{{ __('user/profile.overview') }}</a>
                     </li>
-                    {{--
-                    <li>
-                        <a href="#timeline" data-toggle="tab">Timeline</a>
-                    </li>
-                    --}}
+
                     @can('update-profile', $user)
                         <li>
                             <a href="#settings" data-toggle="tab">{{ __('user/profile.edit_account') }}</a>
                         </li>
                     @endcan
+
                     @can('update-password', $user)
                         <li>
-                            <a href="{{ route('password.change') }}">{{ __('user/profile.change_password') }}</a>
+                            <a href="{{ route('account.password.index') }}">{{ __('user/profile.change_password') }}</a>
                         </li>
                     @endcan
                 </ul>
@@ -98,11 +95,7 @@
                     <div class="active tab-pane" id="overview">
                         @include('profile._overview')
                     </div>
-                    {{--
-                    <div class="tab-pane" id="timeline">
-                        @include('profile._timeline')
-                    </div>
-                    --}}
+
                     @can('update-profile', $user)
                         <div class="tab-pane" id="settings">
                             @include('profile._settings')

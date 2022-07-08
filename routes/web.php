@@ -32,12 +32,11 @@ use Gamify\Http\Controllers\Admin\AdminQuestionController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
 use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
-use Gamify\Http\Controllers\Auth\ChangePasswordController;
-use Gamify\Http\Controllers\Auth\LoginController;
-use Gamify\Http\Controllers\Auth\SocialAccountController;
+use Gamify\Http\Controllers\ChangePasswordController;
 use Gamify\Http\Controllers\HomeController;
 use Gamify\Http\Controllers\QuestionController;
 use Gamify\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,11 +50,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Password Change Routes...
-Route::get('password/change',
-    [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
-Route::post('password/change',
-    [ChangePasswordController::class, 'change']);
+
+Route::prefix('account')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('profiles.show', ['username' => Auth::user()->username]);
+    })->name('account.index');
+
+    Route::get('password', [ChangePasswordController::class, 'index'])->name('account.password.index');
+    Route::post('password', [ChangePasswordController::class, 'update'])->name('account.password.update');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get(
