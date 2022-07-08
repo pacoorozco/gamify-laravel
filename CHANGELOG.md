@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 - Dispatched event `UserProfileUpdated` when the user's profile has been modified.
+- Add password validation: min. 8 characters, including mixed cased letters, numbers and symbols.
 
 ### Changed
 - Remove sensible information (like gender, url, phone...) from the user's profile. ([#256][i256])
