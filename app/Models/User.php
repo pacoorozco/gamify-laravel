@@ -227,6 +227,7 @@ final class User extends Authenticatable
 
     public function progressToCompleteTheBadge(Badge $badge): ?UserBadgeProgress
     {
+        /** @phpstan-ignore-next-line */
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
@@ -291,6 +292,7 @@ final class User extends Authenticatable
 
     public function getResponseForQuestion(Question $question): ?UserResponse
     {
+        /** @phpstan-ignore-next-line */
         return $this->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()

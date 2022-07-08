@@ -85,6 +85,7 @@ class BadgePresenter extends Presenter
 
     public function unlockedAt(): string
     {
+        /** @phpstan-ignore-next-line */
         return $this->model->progress->completed_at?->toFormattedDateString()
             ?? '';
     }
