@@ -46,7 +46,6 @@ class RouteServiceProvider extends ServiceProvider
             ->configureRateLimiting()
             ->registerBindings()
             ->mapRoutes();
-
     }
 
     protected function mapRoutes(): self
