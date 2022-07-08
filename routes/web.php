@@ -51,92 +51,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* -------------------------------------------
- *  Route model binding.
- *
- *  @see RouteServiceProvider
- *  ------------------------------------------
- */
-
-/* ------------------------------------------
- * Authentication routes
- *
- * Routes to be authenticated
- *  ------------------------------------------
- */
-// Login Routes...
-Route::get('login',
-    [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login',
-    [LoginController::class, 'login']);
-
-// Logout Routes...
-Route::post('logout',
-    [LoginController::class, 'logout'])->name('logout');
-
-// Registration Routes...
-/* DISABLED
-Route::get('register',
-    [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register',
-    [RegisterController::class, 'register']);
-*/
-
 // Password Change Routes...
 Route::get('password/change',
     [ChangePasswordController::class, 'showChangePasswordForm'])->name('password.change');
 Route::post('password/change',
     [ChangePasswordController::class, 'change']);
 
-// Password Reset Routes...
-/* DISABLED
-Route::get('password/reset',
-    [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email',
-    [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}',
-    [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset',
-    [ResetPasswordController::class, 'reset'])->name('password.update');
-*/
-
-// Password Confirmation Routes...
-/* DISABLED
-Route::get('password/confirm',
-    [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
-Route::post('password/confirm',
-    [ConfirmPasswordController::class, 'confirm']);
-*/
-
-// Email Verification Routes...
-/* DISABLED
-Route::get('email/verify',
-    [VerificationController::class, 'show'])->name('verification.notice');
-Route::get('email/verify/{id}/{hash}',
-    [VerificationController::class, 'verify'])->name('verification.verify');
-Route::post('email/resend',
-    [VerificationController::class, 'resend'])->name('verification.resend');
-*/
-
-/* ------------------------------------------
- * Social authentication routes
- *  ------------------------------------------
- */
-Route::get(
-    'login/{provider}',
-    [SocialAccountController::class, 'redirectToProvider']
-)->name('social.login');
-Route::get(
-    'login/{provider}/callback',
-    [SocialAccountController::class, 'handleProviderCallback']
-)->name('social.callback');
-
-/* ------------------------------------------
- * Authenticated routes
- *
- * Routes that need to be authenticated
- *  ------------------------------------------
- */
 Route::middleware(['auth'])->group(function () {
     Route::get(
         '/',

@@ -38,24 +38,56 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * The path to the "home" route for your application.
-     *
-     * This is used by Laravel authentication to redirect users after login.
-     *
-     * @var string
-     */
     public const HOME = '/dashboard';
 
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
     public function boot(): void
     {
-        $this->configureRateLimiting();
+        $this
+            ->configureRateLimiting()
+            ->registerBindings()
+            ->mapRoutes();
 
+    }
+
+    protected function mapRoutes(): self
+    {
+        return $this
+            ->mapAuthRoutes()
+            ->mapApiRoutes()
+            ->mapWebRoutes();
+    }
+
+    protected function mapWebRoutes(): self
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
+
+        return $this;
+    }
+
+    protected function mapApiRoutes(): self
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
+
+        return $this;
+    }
+
+    protected function mapAuthRoutes(): self
+    {
+        Route::prefix('auth')
+            ->middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/auth.php'));
+
+        return $this;
+    }
+
+    protected function registerBindings(): self
+    {
         Route::model('users', User::class);
         Route::model('badges', Badge::class);
         Route::model('levels', Level::class);
@@ -70,27 +102,15 @@ class RouteServiceProvider extends ServiceProvider
             return Question::where('short_name', $value)->firstOrFail();
         });
 
-        $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
-        });
+        return $this;
     }
 
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
-    protected function configureRateLimiting(): void
+    protected function configureRateLimiting(): self
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+
+        return $this;
     }
 }
