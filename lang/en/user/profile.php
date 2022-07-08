@@ -43,8 +43,6 @@ return [
     'general_info' => 'General Info',
     'avatar' => 'Avatar',
 
-    'password' => 'Password',
-    'password_confirmation' => 'Password Confirmation',
     'change_password' => 'Change password',
     'current_password' => 'Current password',
     'new_password' => 'New password',
