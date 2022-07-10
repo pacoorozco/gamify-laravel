@@ -25,14 +25,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Gamify\Events\UserProfileUpdated;
 use Gamify\Models\User;
-use Gamify\Models\UserProfile;
-use Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ShowUserProfileControllerTest extends TestCase
