@@ -31,16 +31,17 @@ use Illuminate\Support\Facades\Hash;
 
 class CurrentPasswordRule implements Rule
 {
-    /** @var User */
-    protected User $user;
-
-    public function __construct(User $user)
+    public function __construct(
+        protected ?User $user)
     {
-        $this->user = $user;
     }
 
     public function passes($attribute, $value): bool
     {
+        if (is_null($this->user)) {
+            return false;
+        }
+
         return Hash::check($value, $this->user->password);
     }
 

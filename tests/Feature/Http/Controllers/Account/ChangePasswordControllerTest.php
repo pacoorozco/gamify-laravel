@@ -23,7 +23,7 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Http\Controllers\Account;
 
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

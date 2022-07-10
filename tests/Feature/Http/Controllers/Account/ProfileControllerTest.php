@@ -23,7 +23,7 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Http\Controllers\Account;
 
 use Gamify\Events\UserProfileUpdated;
 use Gamify\Models\User;
@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class UserControllerTest extends TestCase
+class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -50,67 +50,6 @@ class UserControllerTest extends TestCase
     }
 
     /** @test */
-    public function users_should_see_another_user_profiles_without_edit_buttons(): void
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        $this
-            ->actingAs($this->user)
-            ->get(route('profiles.show', ['username' => $user->username]))
-            ->assertSuccessful()
-            ->assertViewIs('profile.show')
-            ->assertViewHas('user', $user)
-            ->assertDontSeeText(__('user/profile.edit_account'))
-            ->assertDontSeeText(__('user/profile.change_password'));
-    }
-
-    /** @test */
-    public function users_should_see_its_own_profile_edit_buttons(): void
-    {
-        $this
-            ->actingAs($this->user)
-            ->get(route('profiles.show', $this->user->username))
-            ->assertSuccessful()
-            ->assertViewIs('profile.show')
-            ->assertViewHas('user', $this->user)
-            ->assertSeeText(__('user/profile.edit_account'))
-            ->assertSeeText(__('user/profile.change_password'));
-    }
-
-    /** @test */
-    public function users_should_not_update_another_user_profiles(): void
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        /** @var UserProfile $want */
-        $want = UserProfile::factory()->make();
-
-        $this
-            ->actingAs($this->user)
-            ->put(route('profiles.update', $user->username), [
-                'bio' => $want->bio,
-                'date_of_birth' => $want->date_of_birth,
-                'twitter' => $want->twitter,
-                'facebook' => $want->facebook,
-                'linkedin' => $want->linkedin,
-                'github' => $want->github,
-            ])
-            ->assertForbidden();
-
-        $this->assertDatabaseHas(UserProfile::class, [
-            'user_id' => $user->id,
-            'bio' => $user->profile->bio,
-            'date_of_birth' => $user->profile->date_of_birth,
-            'twitter' => $user->profile->twitter,
-            'facebook' => $user->profile->facebook,
-            'linkedin' => $user->profile->linkedin,
-            'github' => $user->profile->github,
-        ]);
-    }
-
-    /** @test */
     public function users_should_update_its_own_profile(): void
     {
         /** @var UserProfile $want */
@@ -118,7 +57,7 @@ class UserControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('profiles.update', $this->user->username), [
+            ->put(route('account.profile.update', $this->user->username), [
                 'bio' => $want->bio,
                 'date_of_birth' => $want->date_of_birth,
                 'twitter' => $want->twitter,
@@ -126,7 +65,7 @@ class UserControllerTest extends TestCase
                 'linkedin' => $want->linkedin,
                 'github' => $want->github,
             ])
-            ->assertRedirect(route('profiles.show', $this->user->username))
+            ->assertRedirect(route('account.index'))
             ->assertValid();
 
         $this->assertDatabaseHas(UserProfile::class, [
@@ -164,7 +103,7 @@ class UserControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('profiles.update', $this->user->username), $formData)
+            ->put(route('account.profile.update', $this->user->username), $formData)
             ->assertInvalid($errors);
 
         $this->assertModelExists($userProfile);
@@ -189,10 +128,10 @@ class UserControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('profiles.update', $this->user->username), [
+            ->put(route('account.profile.update', $this->user->username), [
                 'image' => $file,
             ])
-            ->assertRedirect(route('profiles.show', $this->user->username))
+            ->assertRedirect(route('account.index'))
             ->assertValid();
 
         Storage::disk('public')->assertExists('avatars/' . $file->hashName());
@@ -209,10 +148,10 @@ class UserControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('profiles.update', $this->user->username), [
+            ->put(route('account.profile.update', $this->user->username), [
                 'bio' => 'foo',
             ])
-            ->assertRedirect(route('profiles.show', $this->user->username))
+            ->assertRedirect(route('account.index'))
             ->assertValid();
 
         Event::assertDispatched(UserProfileUpdated::class);
@@ -227,8 +166,8 @@ class UserControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('profiles.update', $this->user->username), [])
-            ->assertRedirect(route('profiles.show', $this->user->username))
+            ->put(route('account.profile.update', $this->user->username), [])
+            ->assertRedirect(route('account.index'))
             ->assertValid();
 
         Event::assertNotDispatched(UserProfileUpdated::class);

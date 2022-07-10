@@ -36,8 +36,7 @@ use Gamify\Http\Controllers\Admin\AdminUserController;
 use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
 use Gamify\Http\Controllers\HomeController;
 use Gamify\Http\Controllers\QuestionController;
-use Gamify\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
+use Gamify\Http\Controllers\ShowUserProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,15 +51,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('account')->middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('profiles.show', ['username' => Auth::user()->username]);
-    })->name('account.index');
-
-    Route::get('password', [ChangePasswordController::class, 'index'])->name('account.password.index');
-    Route::post('password', [ChangePasswordController::class, 'update'])->name('account.password.update');
+    Route::get('/', [ProfileController::class, 'index'])->name('account.index');
 
     Route::get('edit', [ProfileController::class, 'edit'])->name('account.profile.edit');
     Route::put('edit', [ProfileController::class, 'update'])->name('account.profile.update');
+
+    Route::get('password', [ChangePasswordController::class, 'index'])->name('account.password.index');
+    Route::post('password', [ChangePasswordController::class, 'update'])->name('account.password.update');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -74,16 +71,7 @@ Route::middleware(['auth'])->group(function () {
         [HomeController::class, 'index']
     )->name('dashboard');
 
-    // Profiles
-    Route::get(
-        'users/{username}',
-        [UserController::class, 'show']
-    )->name('profiles.show');
-
-    Route::put(
-        'users/{username}',
-        [UserController::class, 'update']
-    )->name('profiles.update');
+    Route::get('users/{username}', ShowUserProfileController::class)->name('profiles.show');
 
     Route::get(
         'questions',

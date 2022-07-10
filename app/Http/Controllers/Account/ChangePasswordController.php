@@ -28,6 +28,8 @@ namespace Gamify\Http\Controllers\Account;
 use Gamify\Actions\UpdatePasswordAction;
 use Gamify\Http\Controllers\Controller;
 use Gamify\Http\Requests\UpdatePasswordRequest;
+use Gamify\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -38,9 +40,9 @@ class ChangePasswordController extends Controller
         return view('account.password.index');
     }
 
-    public function update(UpdatePasswordRequest $request, UpdatePasswordAction $updatePasswordAction)
+    public function update(UpdatePasswordRequest $request, UpdatePasswordAction $updatePasswordAction): RedirectResponse
     {
-        $user = Auth::user()->refresh();
+        $user = User::findOrFail(Auth::id());
 
         $updatePasswordAction->execute($user, $request->newPassword());
 

@@ -28,6 +28,7 @@ namespace Gamify\Http\Controllers\Account;
 use Gamify\Events\UserProfileUpdated;
 use Gamify\Http\Controllers\Controller;
 use Gamify\Http\Requests\ProfileUpdateRequest;
+use Gamify\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -36,7 +37,7 @@ class ProfileController extends Controller
 {
     public function index(): View
     {
-        $user = Auth::user()->refresh();
+        $user = User::findOrFail(Auth::id());
 
         return view('profile.show')
             ->with('user', $user);
@@ -44,7 +45,7 @@ class ProfileController extends Controller
 
     public function edit(): View
     {
-        $user = Auth::user()->refresh();
+        $user = User::findOrFail(Auth::id());
 
         return view('account.profile.edit')
             ->with('user', $user);
@@ -52,7 +53,7 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = Auth::user()->refresh();
+        $user = User::findOrFail(Auth::id());
 
         $user
             ->profile
