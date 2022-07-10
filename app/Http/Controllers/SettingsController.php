@@ -25,11 +25,8 @@
 
 namespace Gamify\Http\Controllers;
 
-use Gamify\Actions\UpdatePasswordAction;
 use Gamify\Events\UserProfileUpdated;
-use Gamify\Http\Requests\UpdatePasswordRequest;
 use Gamify\Http\Requests\UserProfileUpdateRequest;
-use Gamify\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
