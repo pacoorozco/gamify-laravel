@@ -25,10 +25,7 @@
 
 namespace Gamify\Http\Controllers;
 
-use Gamify\Events\UserProfileUpdated;
-use Gamify\Http\Requests\ProfileUpdateRequest;
 use Gamify\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ShowUserProfileController extends Controller
