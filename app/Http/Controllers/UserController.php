@@ -26,7 +26,7 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Events\UserProfileUpdated;
-use Gamify\Http\Requests\UserProfileUpdateRequest;
+use Gamify\Http\Requests\ProfileUpdateRequest;
 use Gamify\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -39,7 +39,7 @@ class UserController extends Controller
             ->with('user', $user);
     }
 
-    public function update(UserProfileUpdateRequest $request, User $user): RedirectResponse
+    public function update(ProfileUpdateRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update-profile', $user);
 

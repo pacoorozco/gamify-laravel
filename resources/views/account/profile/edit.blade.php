@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 {{-- Web site Title --}}
-@section('title', __('account.settings'))
+@section('title', __('user/profile.edit_account'))
 
 {{-- Content Header --}}
 @section('header')
-    {{ __('account.settings') }}
+    {{ __('user/profile.edit_account') }}
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -15,8 +15,15 @@
             <i class="fa fa-dashboard"></i> {{ __('site.home') }}
         </a>
     </li>
+
+    <li>
+        <a href="{{ route('account.index') }}">
+            {{ __('site.my_profile') }}
+        </a>
+    </li>
+
     <li class="active">
-        {{ __('account.settings') }}
+        {{ __('user/profile.edit_account') }}
     </li>
 @endsection
 
@@ -25,36 +32,47 @@
     <div class="box box-default">
         <div class="box-body">
 
-            {!! Form::open(['route' => 'account.settings.update', 'method' => 'post', 'files' => true, 'role' => 'form']) !!}
+            <form method="post" action="{{ route('account.profile.update') }}" enctype="multipart/form-data" role="form">
+                @csrf
+                @method('PUT')
 
             <div class="row">
                 <div class="col-md-6">
 
                     <!-- name -->
                     <div class="form-group">
-                        {!! Form::label('name', __('user/profile.name'), array('class' => 'control-label')) !!}
+                        <label for="name" class="control-label">
+                            {{ __('user/profile.name') }}
+                        </label>
+
                         <div class="controls">
-                            {!! Form::text('name', $user->name, array('class' => 'form-control', 'disabled' => 'disabled')) !!}
+                            <input class="form-control" disabled="disabled" name="name" type="text" value="{{ $user->username }}" id="name">
                         </div>
                     </div>
                     <!-- /.name -->
 
                     <!-- email -->
                     <div class="form-group">
-                        {!! Form::label('email', __('user/profile.email'), array('class' => 'control-label')) !!}
+                        <label for="email" class="control-label">
+                            {{ __('user/profile.email') }}
+                        </label>
+
                         <div class="controls">
-                            {!! Form::email('email', $user->email, array('class' => 'form-control', 'disabled' => 'disabled')) !!}
+                            <input class="form-control" disabled="disabled" name="email" type="email" value="{{ $user->email }}" id="email">
                         </div>
                     </div>
                     <!-- /.email -->
 
                     <!-- date_of_birth -->
                     <div class="form-group {{ $errors->has('date_of_birth') ? 'has-error' : '' }}">
-                        {!! Form::label('date_of_birth', __('user/profile.date_of_birth'), array('class' => 'control-label')) !!}
+                        <label for="date_of_birth" class="control-label">
+                            {{ __('user/profile.date_of_birth') }}
+                        </label>
+
                         <div class="controls">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                {!! Form::text('date_of_birth', $user->profile->date_of_birth, array('class' => 'form-control date-picker')) !!}
+                                <input class="form-control date-picker" name="date_of_birth" type="text" value="{{ $user->profile->date_of_birth }}" id="date_of_birth">
                             </div>
                             <span class="help-block">{{ $errors->first('date_of_birth', ':message') }}</span>
                         </div>
@@ -66,7 +84,10 @@
 
                     <!-- avatar -->
                     <div class="form-group {{ $errors->has('avatar') ? 'has-error' : '' }}">
-                        {!! Form::label('avatar', __('user/profile.image'), array('class' => 'control-label')) !!}
+                        <label for="avatar" class="control-label">
+                            {{ __('user/profile.image') }}
+                        </label>
+
                         <div class="controls">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput"
@@ -81,7 +102,7 @@
                         <span class="fileinput-exists">
                             <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
                         </span>
-                        {!! Form::file('image') !!}
+                        <input name="image" type="file">
                     </span>
                                     <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
                                         <i class="fa fa-times"></i> {{ __('button.delete_image') }}
@@ -106,11 +127,14 @@
 
                     <!-- twitter -->
                     <div class="form-group {{ $errors->has('twitter') ? 'has-error' : '' }}">
-                        {!! Form::label('twitter', __('user/profile.twitter'), array('class' => 'control-label')) !!}
+                        <label for="twitter" class="control-label">
+                            {{ __('user/profile.twitter') }}
+                        </label>
+
                         <div class="controls">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                                {!! Form::text('twitter', null, array('class' => 'form-control')) !!}
+                                <input class="form-control" name="twitter" type="text" value="{{ $user->profile->twitter }}" id="twitter">
                             </div>
                             <span class="help-block">{{ $errors->first('twitter', ':message') }}</span>
                         </div>
@@ -119,11 +143,14 @@
 
                     <!-- facebook -->
                     <div class="form-group {{ $errors->has('facebook') ? 'has-error' : '' }}">
-                        {!! Form::label('facebook', __('user/profile.facebook'), array('class' => 'control-label')) !!}
+                        <label for="facebook" class="control-label">
+                            {{ __('user/profile.facebook') }}
+                        </label>
+
                         <div class="controls">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                                {!! Form::text('facebook', null, array('class' => 'form-control')) !!}
+                                <input class="form-control" name="facebook" type="text" value="{{ $user->profile->facebook }}" id="facebook">
                             </div>
                             <span class="help-block">{{ $errors->first('facebook', ':message') }}</span>
                         </div>
@@ -135,11 +162,14 @@
 
                     <!-- linkedin -->
                     <div class="form-group {{ $errors->has('linkedin') ? 'has-error' : '' }}">
-                        {!! Form::label('linkedin', __('user/profile.linkedin'), array('class' => 'control-label')) !!}
+                        <label for="linkedin" class="control-label">
+                            {{ __('user/profile.linkedin') }}
+                        </label>
+
                         <div class="controls">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-linkedin"></i></span>
-                                {!! Form::text('linkedin', null, array('class' => 'form-control')) !!}
+                                <input class="form-control" name="linkedin" type="text" value="{{ $user->profile->linkedin }}" id="linkedin">
                             </div>
                             <span class="help-block">{{ $errors->first('linkedin', ':message') }}</span>
                         </div>
@@ -148,11 +178,14 @@
 
                     <!-- github -->
                     <div class="form-group {{ $errors->has('github') ? 'has-error' : '' }}">
-                        {!! Form::label('github', __('user/profile.github'), array('class' => 'control-label')) !!}
+                        <label for="github" class="control-label">
+                            {{ __('user/profile.github') }}
+                        </label>
+
                         <div class="controls">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-github"></i></span>
-                                {!! Form::text('github', null, array('class' => 'form-control')) !!}
+                                <input class="form-control" name="github" type="text" value="{{ $user->profile->github }}" id="github">
                             </div>
                             <span class="help-block">{{ $errors->first('github', ':message') }}</span>
                         </div>
@@ -165,9 +198,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group {{ $errors->has('bio') ? 'has-error' : '' }}">
-                        {!! Form::label('bio', __('user/profile.bio'), array('class' => 'control-label')) !!}
+                        <label for="bio" class="control-label">
+                            {{ __('user/profile.bio') }}
+                        </label>
+
                         <div class="controls">
-                            {!! Form::textarea('bio', null, array('class' => 'form-control')) !!}
+                            <textarea class="form-control" name="bio" cols="50" rows="10" id="bio">{{ $user->profile->bio }}</textarea>
                             <span class="help-block">{{ $errors->first('question', ':message') }}</span>
                         </div>
                     </div>
@@ -176,11 +212,13 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    {!! Form::button(__('button.save') . ' <i class="fa fa-floppy-o"></i>', array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('button.save') }} <i class="fa fa-floppy-o"></i>
+                    </button>
                 </div>
             </div>
 
-            {!! Form::close() !!}
+            </form>
 
         </div>
         <!-- /.box-body -->

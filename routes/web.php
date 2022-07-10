@@ -23,6 +23,8 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
+use Gamify\Http\Controllers\Account\ChangePasswordController;
+use Gamify\Http\Controllers\Account\ProfileController;
 use Gamify\Http\Controllers\Admin\AdminBadgeController;
 use Gamify\Http\Controllers\Admin\AdminBadgeDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminLevelController;
@@ -32,7 +34,6 @@ use Gamify\Http\Controllers\Admin\AdminQuestionController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
 use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
-use Gamify\Http\Controllers\ChangePasswordController;
 use Gamify\Http\Controllers\HomeController;
 use Gamify\Http\Controllers\QuestionController;
 use Gamify\Http\Controllers\UserController;
@@ -57,6 +58,9 @@ Route::prefix('account')->middleware('auth')->group(function () {
 
     Route::get('password', [ChangePasswordController::class, 'index'])->name('account.password.index');
     Route::post('password', [ChangePasswordController::class, 'update'])->name('account.password.update');
+
+    Route::get('edit', [ProfileController::class, 'edit'])->name('account.profile.edit');
+    Route::put('edit', [ProfileController::class, 'update'])->name('account.profile.update');
 });
 
 Route::middleware(['auth'])->group(function () {

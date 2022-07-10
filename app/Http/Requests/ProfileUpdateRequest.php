@@ -25,7 +25,7 @@
 
 namespace Gamify\Http\Requests;
 
-class UserProfileUpdateRequest extends Request
+class ProfileUpdateRequest extends Request
 {
     public function rules(): array
     {

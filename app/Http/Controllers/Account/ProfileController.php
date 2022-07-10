@@ -23,27 +23,44 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Controllers;
+namespace Gamify\Http\Controllers\Account;
 
-use Gamify\Actions\UpdatePasswordAction;
-use Gamify\Http\Requests\UpdatePasswordRequest;
+use Gamify\Events\UserProfileUpdated;
+use Gamify\Http\Controllers\Controller;
+use Gamify\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class ChangePasswordController extends Controller
+class ProfileController extends Controller
 {
     public function index(): View
     {
-        return view('account.password.index');
+        $user = Auth::user()->refresh();
+
+        return view('profile.show')
+            ->with('user', $user);
     }
 
-    public function update(UpdatePasswordRequest $request, UpdatePasswordAction $updatePasswordAction)
+    public function edit(): View
     {
         $user = Auth::user()->refresh();
 
-        $updatePasswordAction->execute($user, $request->newPassword());
+        return view('account.profile.edit')
+            ->with('user', $user);
+    }
 
-        return redirect()->action([static::class, 'index'])
-            ->with('success', __('passwords.changed'));
+    public function update(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $user = Auth::user()->refresh();
+
+        $user
+            ->profile
+            ->update($request->validated());
+
+        UserProfileUpdated::dispatchIf($user->profile->wasChanged(), $user);
+
+        return redirect()->route('account.index')
+            ->with('success', __('user/messages.settings_updated'));
     }
 }

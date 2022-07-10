@@ -81,7 +81,7 @@
 
                     @can('update-profile', $user)
                         <li>
-                            <a href="#settings" data-toggle="tab">{{ __('user/profile.edit_account') }}</a>
+                            <a href="{{ route('account.profile.edit') }}">{{ __('user/profile.edit_account') }}</a>
                         </li>
                     @endcan
 
@@ -95,12 +95,6 @@
                     <div class="active tab-pane" id="overview">
                         @include('profile._overview')
                     </div>
-
-                    @can('update-profile', $user)
-                        <div class="tab-pane" id="settings">
-                            @include('profile._settings')
-                        </div>
-                    @endcan
                 </div>
             </div>
         </div>

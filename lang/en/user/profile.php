@@ -35,7 +35,7 @@ return [
 
     'title' => 'User Profile',
     'overview' => 'Overview',
-    'edit_account' => 'Edit Account',
+    'edit_account' => 'Edit profile',
     'badges' => 'Badges',
     'account_info' => 'Account Info',
     'about_me' => 'About Me',
