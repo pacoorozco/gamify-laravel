@@ -135,8 +135,7 @@ class AdminRewardControllerTest extends TestCase
     public function admins_should_get_errors_when_rewarding_experience_with_wrong_data(
         array $data,
         array $errors,
-    ): void
-    {
+    ): void {
         $this->user->role = Roles::Admin;
 
         /** @var User $user */
