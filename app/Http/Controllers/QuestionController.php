@@ -38,9 +38,8 @@ class QuestionController extends Controller
 {
     public function index(): View
     {
-        // If we don't refresh the model, the 'experience' field is not available.
         /** @var User $user */
-        $user = Auth::user()?->refresh();
+        $user = User::findOrFail(Auth::id());
 
         $questionsCount = Question::published()->count();
         $questionsCompletion = ($questionsCount > 0)
@@ -60,7 +59,7 @@ class QuestionController extends Controller
     public function answer(QuestionAnswerRequest $request, Question $question): View
     {
         /** @var User $user */
-        $user = Auth::user()?->refresh();
+        $user = User::findOrFail(Auth::id());
 
         abort_if($user->hasAnsweredQuestion($question), 404);
 
@@ -96,10 +95,10 @@ class QuestionController extends Controller
 
     public function show(Question $question): View
     {
-        abort_unless($question->isPublished(), 404);
-
         /** @var User $user */
-        $user = Auth::user()?->refresh();
+        $user = User::findOrFail(Auth::id());
+
+        abort_unless($question->isPublished(), 404);
 
         $response = $user->getResponseForQuestion($question);
 
