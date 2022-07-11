@@ -262,7 +262,6 @@ class AdminRewardControllerTest extends TestCase
         $this
             ->actingAs($this->user)
             ->post(route('admin.rewards.badge'), $formData)
-            ->dumpSession()
             ->assertInvalid($errors);
 
         $user->refresh();
