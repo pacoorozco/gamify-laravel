@@ -32,6 +32,7 @@
             </div>
             <div class="pull-right">
                 <form method="post" action="{{ route('logout') }}">
+                    @csrf
                     <input class="btn btn-default btn-flat" type="submit" value="{{ __('auth.logout') }}">
                 </form>
             </div>
