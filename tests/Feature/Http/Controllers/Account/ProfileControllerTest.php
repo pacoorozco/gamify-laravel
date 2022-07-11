@@ -50,6 +50,63 @@ class ProfileControllerTest extends TestCase
     }
 
     /** @test */
+    public function guests_should_not_access_profiles(): void
+    {
+        $this
+            ->get(route('account.index'))
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function users_should_see_their_own_profile(): void
+    {
+        $this
+            ->actingAs($this->user)
+            ->get(route('account.index'))
+            ->assertSuccessful()
+            ->assertSeeText($this->user->name)
+            ->assertSeeText(__('user/profile.edit_account'))
+            ->assertSeeText(__('user/profile.change_password'));
+    }
+
+    /** @test */
+    public function guests_should_not_access_the_edit_profile_form(): void
+    {
+        $this
+            ->get(route('account.profile.edit'))
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function users_should_see_the_edit_profile_form(): void
+    {
+        $this
+            ->actingAs($this->user)
+            ->get(route('account.profile.edit'))
+            ->assertSuccessful()
+            ->assertViewIs('account.profile.edit')
+            ->assertViewHas('user', $this->user);
+    }
+
+    /** @test */
+    public function guests_should_not_access_the_update_profile_endpoint(): void
+    {
+        /** @var UserProfile $want */
+        $want = UserProfile::factory()->make();
+
+        $this
+            ->get(route('account.profile.update'), [
+                'bio' => $want->bio,
+                'date_of_birth' => $want->date_of_birth,
+                'twitter' => $want->twitter,
+                'facebook' => $want->facebook,
+                'linkedin' => $want->linkedin,
+                'github' => $want->github,
+            ])
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
     public function users_should_update_its_own_profile(): void
     {
         /** @var UserProfile $want */
@@ -57,7 +114,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('account.profile.update', $this->user->username), [
+            ->put(route('account.profile.update'), [
                 'bio' => $want->bio,
                 'date_of_birth' => $want->date_of_birth,
                 'twitter' => $want->twitter,
@@ -156,7 +213,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('account.profile.update', $this->user->username), [
+            ->put(route('account.profile.update'), [
                 'image' => $file,
             ])
             ->assertRedirect(route('account.index'))
@@ -176,7 +233,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('account.profile.update', $this->user->username), [
+            ->put(route('account.profile.update'), [
                 'bio' => 'foo',
             ])
             ->assertRedirect(route('account.index'))
@@ -194,7 +251,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->put(route('account.profile.update', $this->user->username), [])
+            ->put(route('account.profile.update'), [])
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
