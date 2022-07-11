@@ -23,37 +23,31 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Requests;
+namespace Gamify\Rules;
 
-class UserProfileUpdateRequest extends Request
+use Gamify\Models\User;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+
+class CurrentPasswordRule implements Rule
 {
-    public function rules(): array
+    public function __construct(
+        protected ?User $user
+    ) {
+    }
+
+    public function passes($attribute, $value): bool
     {
-        return [
-            'bio' => [
-                'nullable',
-                'string',
-            ],
-            'date_of_birth' => [
-                'nullable',
-                'date',
-            ],
-            'twitter' => [
-                'nullable',
-                'url',
-            ],
-            'facebook' => [
-                'nullable',
-                'url',
-            ],
-            'linkedin' => [
-                'nullable',
-                'url',
-            ],
-            'github' => [
-                'nullable',
-                'url',
-            ],
-        ];
+        if (is_null($this->user)) {
+            return false;
+        }
+
+        return Hash::check($value, $this->user->password);
+    }
+
+    public function message(): string|array
+    {
+        return __('passwords.invalid')
+            ?? 'Supplied password does not match with the current password.';
     }
 }

@@ -43,8 +43,9 @@ class UsernameRule implements Rule
         return 1 == preg_match(self::VALID_USERNAME_REGEXP, $value);
     }
 
-    public function message(): string
+    public function message(): string|array
     {
-        return 'The :attribute is not a valid POSIX username.';
+        return __('validation.username')
+            ?? 'The :attribute is not a valid POSIX username.';
     }
 }

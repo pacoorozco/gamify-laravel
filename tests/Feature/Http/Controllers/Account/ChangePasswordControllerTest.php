@@ -23,15 +23,18 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Feature\Http\Controllers\Auth;
+namespace Tests\Feature\Http\Controllers\Account;
 
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ChangePasswordControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    const VALID_PASSWORD = 'foo#B4rBaz';
 
     /** @test */
     public function it_shows_password_change_form_for_logged_users()
@@ -40,15 +43,16 @@ class ChangePasswordControllerTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->get(route('password.change'))
-            ->assertOK()
-            ->assertViewIs('auth.change_password');
+            ->get(route('account.password.index'))
+            ->assertSuccessful()
+            ->assertViewIs('account.password.index');
     }
 
     /** @test */
     public function it_shows_error_for_non_logged_users()
     {
-        $this->get(route('password.change'))
+        $this
+            ->get(route('account.password.index'))
             ->assertRedirect(route('login'));
     }
 
@@ -60,13 +64,14 @@ class ChangePasswordControllerTest extends TestCase
             'password' => 'this-is-the-password',
         ]);
 
-        $this->actingAs($user)
-            ->post(route('password.change'), [
+        $this
+            ->actingAs($user)
+            ->post(route('account.password.update'), [
                 'current-password' => 'this-is-not-the-password',
-                'new-password' => 'fooBarBaz',
-                'new-password_confirmation' => 'fooBarBaz',
+                'new-password' => self::VALID_PASSWORD,
+                'new-password_confirmation' => self::VALID_PASSWORD,
             ])
-            ->assertSessionHasErrors('password');
+            ->assertInvalid(['current-password']);
     }
 
     /** @test */
@@ -77,13 +82,14 @@ class ChangePasswordControllerTest extends TestCase
             'password' => 'this-is-the-password',
         ]);
 
-        $this->actingAs($user)
-            ->post(route('password.change'), [
+        $this
+            ->actingAs($user)
+            ->post(route('account.password.update'), [
                 'current-password' => 'this-is-the-password',
-                'new-password' => 'fooBarBaz',
-                'new-password_confirmation' => 'bazBarFoo',
+                'new-password' => 'foo#B4rBaz',
+                'new-password_confirmation' => 'anotherFoo',
             ])
-            ->assertSessionHasErrors('new-password');
+            ->assertInvalid(['new-password']);
     }
 
     /** @test */
@@ -94,14 +100,19 @@ class ChangePasswordControllerTest extends TestCase
             'password' => 'this-is-the-password',
         ]);
 
-        $response = $this->actingAs($user)
-            ->post(route('password.change'), [
+        $want = self::VALID_PASSWORD;
+
+        $this
+            ->actingAs($user)
+            ->post(route('account.password.update'), [
                 'current-password' => 'this-is-the-password',
-                'new-password' => 'fooBarBaz',
-                'new-password_confirmation' => 'fooBarBaz',
+                'new-password' => $want,
+                'new-password_confirmation' => $want,
             ])
-            ->assertRedirect(route('password.change'))
-            ->assertSessionHasNoErrors()
+            ->assertRedirect(route('account.password.index'))
+            ->assertValid()
             ->assertSessionHas('success');
+
+        Hash::check($want, $user->password);
     }
 }

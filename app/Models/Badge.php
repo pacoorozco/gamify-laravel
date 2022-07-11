@@ -106,6 +106,7 @@ class Badge extends Model
 
     public function scopeWithActuatorsIn(Builder $query, array $actuators): Builder
     {
+        /** @phpstan-ignore-next-line */
         return $query
             ->active()
             ->hasAnyFlags('actuators', $actuators);

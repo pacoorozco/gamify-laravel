@@ -25,30 +25,30 @@
   },
   "require": {
     "php": "^8.0.2",
-    "bensampo/laravel-enum": "^5.3.0",
+    "bensampo/laravel-enum": "^5.3.1",
     "cviebrock/eloquent-sluggable": "^9.0.0",
     "cviebrock/eloquent-taggable": "^9.0.0",
-    "doctrine/dbal": "^3.3.6",
+    "doctrine/dbal": "^3.3.7",
     "fruitcake/laravel-cors": "^3.0.0",
     "fakerphp/faker": "^1.19.0",
     "guilhermegonzaga/presenter": "^1.0.6",
-    "laravel/framework": "^9.16.0",
+    "laravel/framework": "^9.19.0",
     "laravel/socialite": "^5.5.2",
-    "laravel/ui": "^3.4.5",
+    "laravel/ui": "^3.4.6",
     "laravelcollective/html": "^6.3.0",
     "predis/predis": "^2.0.0",
     "qcod/laravel-imageup": "^1.2.2",
     "richan-fongdasen/eloquent-blameable": "^1.8.0",
     "socialiteproviders/okta": "^4.2.1",
-    "yajra/laravel-datatables-oracle": "^10.0.7"
+    "yajra/laravel-datatables-oracle": "^10.1.1"
   },
   "require-dev": {
     "brianium/paratest": "^6.4.4",
-    "spatie/laravel-ignition": "^1.2.3",
+    "spatie/laravel-ignition": "^1.2.4",
     "mockery/mockery": "^1.5.0",
     "nunomaduro/collision": "^6.2.0",
-    "nunomaduro/larastan": "^2.1.8",
-    "phpunit/phpunit": "^9.5.20"
+    "nunomaduro/larastan": "^2.1.11",
+    "phpunit/phpunit": "^9.5.21"
   },
   "autoload": {
     "psr-4": {

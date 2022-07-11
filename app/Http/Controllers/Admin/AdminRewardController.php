@@ -39,21 +39,25 @@ class AdminRewardController extends AdminController
     {
         $users = User::query()
             ->player()
-            ->pluck('username', 'id');
+            ->pluck('username', 'username');
 
         $badges = Badge::query()
             ->active()
             ->pluck('name', 'id');
 
-        return view('admin.reward.index', compact('users', 'badges'));
+        return view('admin.reward.index')
+            ->with('users', $users)
+            ->with('badges', $badges);
     }
 
     public function giveExperience(RewardExperienceRequest $request): RedirectResponse
     {
-        $userToReward = User::findOrFail($request->userToReward());
+        /** @var User $user */
+        $user = User::where('username', $request->usernameToReward())
+            ->firstOrFail();
 
         Game::addExperienceTo(
-            user: $userToReward,
+            user: $user,
             experience: $request->experience(),
             reason: $request->reason() ?? ''
         );
@@ -61,25 +65,29 @@ class AdminRewardController extends AdminController
         return redirect()->route('admin.rewards.index')
             ->with('success',
                 trans('admin/reward/messages.experience_given.success', [
-                    'username' => $userToReward->username,
+                    'username' => $user->username,
                     'points' => $request->experience(),
                 ]));
     }
 
     public function giveBadge(RewardBadgeRequest $request): RedirectResponse
     {
-        $userToReward = User::findOrFail($request->userToReward());
+        /** @var User $user */
+        $user = User::where('username', $request->usernameToReward())
+            ->firstOrFail();
+
+        /** @var Badge $badge */
         $badge = Badge::findOrFail($request->badge());
 
         Game::incrementBadgeCount(
-            user: $userToReward,
+            user: $user,
             badge: $badge
         );
 
         return redirect()->route('admin.rewards.index')
             ->with('success',
                 trans('admin/reward/messages.badge_given.success', [
-                    'username' => $userToReward->username,
+                    'username' => $user->username,
                     'badge' => $badge->name,
                 ]));
     }

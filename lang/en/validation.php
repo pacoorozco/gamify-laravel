@@ -173,6 +173,7 @@ return [
     'attributes' => [
         'choices.*.text' => 'answer option text',
         'choices.*.score' => 'answer option score',
+        'new-password' => 'new password',
     ],
 
 ];

@@ -35,7 +35,7 @@ return [
 
     'title' => 'User Profile',
     'overview' => 'Overview',
-    'edit_account' => 'Edit Account',
+    'edit_account' => 'Edit profile',
     'badges' => 'Badges',
     'account_info' => 'Account Info',
     'about_me' => 'About Me',
@@ -43,8 +43,6 @@ return [
     'general_info' => 'General Info',
     'avatar' => 'Avatar',
 
-    'password' => 'Password',
-    'password_confirmation' => 'Password Confirmation',
     'change_password' => 'Change password',
     'current_password' => 'Current password',
     'new_password' => 'New password',

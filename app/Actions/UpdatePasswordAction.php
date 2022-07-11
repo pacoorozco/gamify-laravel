@@ -23,30 +23,18 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Providers;
+namespace Gamify\Actions;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Rules\Password;
+use Gamify\Models\User;
 
-class AppServiceProvider extends ServiceProvider
+class UpdatePasswordAction
 {
-    public function register(): void
+    public function execute(User $user, string $password): User
     {
-        //
-    }
+        $user->password = $password;
 
-    public function boot(): void
-    {
-        Password::defaults(function () {
-            $rule = Password::min(8)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols();
+        $user->save();
 
-            return $this->app->isProduction()
-                ? $rule->uncompromised()
-                : $rule;
-        });
+        return $user;
     }
 }

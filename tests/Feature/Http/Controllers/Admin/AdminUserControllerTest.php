@@ -36,6 +36,8 @@ class AdminUserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    const VALID_PASSWORD = 'foo#B4rBaz';
+
     private User $user;
 
     public function setUp(): void
@@ -100,8 +102,8 @@ class AdminUserControllerTest extends TestCase
                 'username' => $want->username,
                 'name' => $want->name,
                 'email' => $want->email,
-                'password' => 'secret123',
-                'password_confirmation' => 'secret123',
+                'password' => self::VALID_PASSWORD,
+                'password_confirmation' => self::VALID_PASSWORD,
                 'role' => $want->role,
             ])
             ->assertForbidden();
@@ -126,8 +128,8 @@ class AdminUserControllerTest extends TestCase
                 'username' => $want->username,
                 'name' => $want->name,
                 'email' => $want->email,
-                'password' => 'secret123',
-                'password_confirmation' => 'secret123',
+                'password' => self::VALID_PASSWORD,
+                'password_confirmation' => self::VALID_PASSWORD,
                 'role' => $want->role->value,
             ])
             ->assertRedirect(route('admin.users.index'))
@@ -246,7 +248,7 @@ class AdminUserControllerTest extends TestCase
             'errors' => ['password'],
         ];
 
-        yield 'password ! long enough' => [
+        yield 'password ! complex enough' => [
             'data' => [
                 'password' => '1234',
             ],
@@ -350,8 +352,8 @@ class AdminUserControllerTest extends TestCase
             ->put(route('admin.users.update', $user), [
                 'name' => $want->name,
                 'email' => $want->email,
-                'password' => 'new-password-123',
-                'password_confirmation' => 'new-password-123',
+                'password' => self::VALID_PASSWORD,
+                'password_confirmation' => self::VALID_PASSWORD,
                 'role' => $want->role->value,
             ])
             ->assertRedirect(route('admin.users.edit', $user))
@@ -366,7 +368,7 @@ class AdminUserControllerTest extends TestCase
 
         $user->refresh();
 
-        $this->assertTrue(Hash::check('new-password-123', $user->password));
+        $this->assertTrue(Hash::check(self::VALID_PASSWORD, $user->password));
     }
 
     /** @test */

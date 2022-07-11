@@ -23,30 +23,30 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Providers;
+namespace Gamify\Http\Controllers\Account;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Rules\Password;
+use Gamify\Actions\UpdatePasswordAction;
+use Gamify\Http\Controllers\Controller;
+use Gamify\Http\Requests\UpdatePasswordRequest;
+use Gamify\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
-class AppServiceProvider extends ServiceProvider
+class ChangePasswordController extends Controller
 {
-    public function register(): void
+    public function index(): View
     {
-        //
+        return view('account.password.index');
     }
 
-    public function boot(): void
+    public function update(UpdatePasswordRequest $request, UpdatePasswordAction $updatePasswordAction): RedirectResponse
     {
-        Password::defaults(function () {
-            $rule = Password::min(8)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols();
+        $user = User::findOrFail(Auth::id());
 
-            return $this->app->isProduction()
-                ? $rule->uncompromised()
-                : $rule;
-        });
+        $updatePasswordAction->execute($user, $request->newPassword());
+
+        return redirect()->action([static::class, 'index'])
+            ->with('success', __('passwords.changed'));
     }
 }

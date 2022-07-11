@@ -36,7 +36,7 @@ class RewardBadgeRequest extends Request
         return [
             'badge_username' => [
                 'required',
-                Rule::exists(User::class, 'id'),
+                Rule::exists(User::class, 'username'),
             ],
             'badge' => [
                 'required',
@@ -45,7 +45,7 @@ class RewardBadgeRequest extends Request
         ];
     }
 
-    public function userToReward(): string
+    public function usernameToReward(): string
     {
         return $this->input('badge_username');
     }

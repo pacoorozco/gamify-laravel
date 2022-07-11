@@ -23,30 +23,37 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Providers;
+namespace Gamify\Http\Requests;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Rules\Password;
-
-class AppServiceProvider extends ServiceProvider
+class ProfileUpdateRequest extends Request
 {
-    public function register(): void
+    public function rules(): array
     {
-        //
-    }
-
-    public function boot(): void
-    {
-        Password::defaults(function () {
-            $rule = Password::min(8)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols();
-
-            return $this->app->isProduction()
-                ? $rule->uncompromised()
-                : $rule;
-        });
+        return [
+            'bio' => [
+                'nullable',
+                'string',
+            ],
+            'date_of_birth' => [
+                'nullable',
+                'date',
+            ],
+            'twitter' => [
+                'nullable',
+                'url',
+            ],
+            'facebook' => [
+                'nullable',
+                'url',
+            ],
+            'linkedin' => [
+                'nullable',
+                'url',
+            ],
+            'github' => [
+                'nullable',
+                'url',
+            ],
+        ];
     }
 }
