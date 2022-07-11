@@ -36,7 +36,7 @@ class RewardExperienceRequest extends Request
             'username' => [
                 'required',
                 'string',
-                Rule::exists(User::class, 'id'),
+                Rule::exists(User::class, 'username'),
             ],
             'points' => [
                 'required',
@@ -49,7 +49,7 @@ class RewardExperienceRequest extends Request
         ];
     }
 
-    public function userToReward(): string
+    public function usernameToReward(): string
     {
         return $this->input('username');
     }

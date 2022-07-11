@@ -256,6 +256,14 @@ final class User extends Authenticatable
             ->exists();
     }
 
+    public function hasLockedBadge(Badge $badge): bool
+    {
+        return $this->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->wherePivotNull('unlocked_at')
+            ->exists();
+    }
+
     public function nextLevelCompletion(): int
     {
         if ($this->nextLevel()->required_points == 0) {

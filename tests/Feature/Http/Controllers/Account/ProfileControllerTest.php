@@ -117,6 +117,34 @@ class ProfileControllerTest extends TestCase
             ],
             'errors' => ['date_of_birth'],
         ];
+
+        yield 'twitter ! a url' => [
+            'data' => [
+                'twitter' => 'foo',
+            ],
+            'errors' => ['twitter'],
+        ];
+
+        yield 'facebook ! a url' => [
+            'data' => [
+                'facebook' => 'foo',
+            ],
+            'errors' => ['facebook'],
+        ];
+
+        yield 'linkedin ! a url' => [
+            'data' => [
+                'linkedin' => 'foo',
+            ],
+            'errors' => ['linkedin'],
+        ];
+
+        yield 'github ! a url' => [
+            'data' => [
+                'github' => 'foo',
+            ],
+            'errors' => ['github'],
+        ];
     }
 
     /** @test */
