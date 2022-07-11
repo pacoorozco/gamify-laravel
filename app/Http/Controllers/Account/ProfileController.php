@@ -35,12 +35,12 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function index(): View
+    public function index(): RedirectResponse
     {
         $user = User::findOrFail(Auth::id());
 
-        return view('profile.show')
-            ->with('user', $user);
+        return redirect()
+            ->route('profiles.show', ['username' => $user->username]);
     }
 
     public function edit(): View

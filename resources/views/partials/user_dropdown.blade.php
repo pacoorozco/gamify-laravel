@@ -14,7 +14,7 @@
                  alt="{{ __('user/profile.avatar') }}"/>
             <p>
                 {{ $user->name }} - {{ $user->level }}
-                <small>{{ __('user/profile.user_since') }} {{ $user->created_at }}</small>
+                <small>{{ __('user/profile.user_since') }} {{ $user->present()->createdAt }}</small>
             </p>
         </li>
         <!-- Menu Body -->
@@ -26,14 +26,14 @@
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
-                <a href="{{ route('profiles.show', $user->username) }}" class="btn btn-default btn-flat">
+                <a href="{{ route('account.index') }}" class="btn btn-default btn-flat">
                     {{ __('site.my_profile') }}
                 </a>
             </div>
             <div class="pull-right">
-                {{ Form::open(['route' => 'logout']) }}
-                {{ Form::submit(__('auth.logout'), ['class' => 'btn btn-default btn-flat']) }}
-                {{ Form::close() }}
+                <form method="post" action="{{ route('logout') }}">
+                    <input class="btn btn-default btn-flat" type="submit" value="{{ __('auth.logout') }}">
+                </form>
             </div>
         </li>
     </ul>
