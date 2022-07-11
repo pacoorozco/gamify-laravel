@@ -37,6 +37,7 @@ class UserFactory extends Factory
 
     public function configure(): self
     {
+        /** @phpstan-ignore-next-line */
         return $this->afterCreating(function (User $user) {
             UserProfile::factory()
                 ->for($user)
