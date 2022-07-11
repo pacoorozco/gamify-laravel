@@ -63,10 +63,7 @@ class ProfileControllerTest extends TestCase
         $this
             ->actingAs($this->user)
             ->get(route('account.index'))
-            ->assertSuccessful()
-            ->assertSeeText($this->user->name)
-            ->assertSeeText(__('user/profile.edit_account'))
-            ->assertSeeText(__('user/profile.change_password'));
+            ->assertRedirect(route('profiles.show', ['username' => $this->user->username]));
     }
 
     /** @test */
