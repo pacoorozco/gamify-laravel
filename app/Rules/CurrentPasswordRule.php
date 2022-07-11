@@ -32,8 +32,8 @@ use Illuminate\Support\Facades\Hash;
 class CurrentPasswordRule implements Rule
 {
     public function __construct(
-        protected ?User $user)
-    {
+        protected ?User $user
+    ) {
     }
 
     public function passes($attribute, $value): bool
@@ -45,8 +45,9 @@ class CurrentPasswordRule implements Rule
         return Hash::check($value, $this->user->password);
     }
 
-    public function message(): string
+    public function message(): string|array
     {
-        return __('passwords.invalid');
+        return __('passwords.invalid')
+            ?? 'Supplied password does not match with the current password.';
     }
 }
