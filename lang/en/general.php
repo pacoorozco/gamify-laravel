@@ -42,4 +42,9 @@ return [
     'none' => 'None',
     'never' => 'Never',
     'view' => 'View',
+
+    'validation_error' => 'Validation error',
+    'error' => 'Error',
+    'warning' => 'Warning',
+    'success' => 'Success',
 ];
