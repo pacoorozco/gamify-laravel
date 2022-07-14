@@ -2,14 +2,13 @@
 
 namespace Gamify\Http\Controllers\Auth;
 
+use Gamify\Actions\RegisterUserAction;
 use Gamify\Http\Controllers\Controller;
-use Gamify\Models\User;
+use Gamify\Http\Requests\UserRegistrationRequest;
 use Gamify\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
@@ -18,7 +17,7 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.register');
     }
@@ -26,26 +25,18 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  \Gamify\Http\Requests\UserRegistrationRequest  $request
+     * @param  \Gamify\Actions\RegisterUserAction  $registerUserAction
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserRegistrationRequest $request, RegisterUserAction $registerUserAction): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
+        $user = $registerUserAction->execute(
+            username: $request->username(),
+            email: $request->email(),
+            password: $request->password(),
+        );
 
         Auth::login($user);
 
