@@ -44,8 +44,6 @@ return [
     'password'                     => 'Password',
     'change_password'              => 'Change password',
     'forgot_password'              => 'I forgot my password',
-    'forgot_password_title'        => 'Forget Password?',
-    'forgot_password_instructions' => 'Enter your e-mail address below to reset your password.',
     'remember_me'                  => 'Remember me',
     'sign_title'                   => 'Sign in to your account',
     'sign_instructions'            => 'Please enter your name and password to log in.',
