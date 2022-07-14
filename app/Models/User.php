@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laracodes\Presenter\Traits\Presentable;
 
@@ -55,6 +56,7 @@ final class User extends Authenticatable
 {
     use HasFactory;
     use Presentable;
+    use Notifiable;
 
     protected string $presenter = UserPresenter::class;
 
