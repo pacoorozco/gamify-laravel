@@ -27,6 +27,7 @@ namespace Gamify\Models;
 
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -52,7 +53,7 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property UserProfile $profile The user's profile
  * @property-read string $level The current level of the user.
  */
-final class User extends Authenticatable
+final class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
     use Presentable;

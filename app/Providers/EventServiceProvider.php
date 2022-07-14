@@ -33,6 +33,8 @@ use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
 use Gamify\Listeners\UpdateExperience;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use SocialiteProviders\Okta\OktaExtendSocialite;
@@ -45,6 +47,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
         SocialiteWasCalled::class => [
             OktaExtendSocialite::class,
         ],
