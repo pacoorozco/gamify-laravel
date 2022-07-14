@@ -53,4 +53,8 @@ return [
     'failed'   => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'email_verification' => 'Verify your email',
+    'email_verification_instructions' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
+    'email_verification_action' => 'Resend Verification Email',
+
 ];
