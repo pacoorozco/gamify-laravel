@@ -44,7 +44,7 @@ class EmailVerificationTest extends TestCase
         $this
             ->actingAs($user)
             ->get($verificationUrl)
-            ->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
+            ->assertRedirect(RouteServiceProvider::HOME . '?verified=1');
 
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
 
