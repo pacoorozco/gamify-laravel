@@ -1,65 +1,65 @@
 <?php
-/**
- * Gamify - Gamification platform to implement any serious game mechanic.
- *
- * Copyright (c) 2018 by Paco Orozco <paco@pacoorozco.info>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * Some rights reserved. See LICENSE and AUTHORS files.
- *
- * @author             Paco Orozco <paco@pacoorozco.info>
- * @copyright          2018 Paco Orozco
- * @license            GPL-3.0 <http://spdx.org/licenses/GPL-3.0>
- *
- * @link               https://github.com/pacoorozco/gamify-laravel
- */
 
-use Gamify\Http\Controllers\Auth\ForgotPasswordController;
-use Gamify\Http\Controllers\Auth\LoginController;
+use Gamify\Http\Controllers\Auth\AuthenticatedSessionController;
+use Gamify\Http\Controllers\Auth\ConfirmablePasswordController;
+use Gamify\Http\Controllers\Auth\EmailVerificationNotificationController;
+use Gamify\Http\Controllers\Auth\EmailVerificationPromptController;
+use Gamify\Http\Controllers\Auth\NewPasswordController;
+use Gamify\Http\Controllers\Auth\PasswordResetLinkController;
+use Gamify\Http\Controllers\Auth\RegisteredUserController;
 use Gamify\Http\Controllers\Auth\SocialAccountController;
+use Gamify\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login']);
+    /*
+    Route::get('register', [RegisteredUserController::class, 'create'])
+                ->name('register');
+
+    Route::post('register', [RegisteredUserController::class, 'store']);
+    */
+
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+                ->name('login');
+
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('login/{provider}', [SocialAccountController::class, 'redirectToProvider'])
         ->name('social.login');
+
     Route::get('login/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback'])
         ->name('social.callback');
 
-    /*
-    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [RegisterController::class, 'register']);
-    */
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+                ->name('password.request');
 
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+                ->name('password.email');
 
-    /*
-    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [ResetPasswordController::class, 'reset']);
-    */
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+                ->name('password.reset');
+
+    Route::post('reset-password', [NewPasswordController::class, 'store'])
+                ->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('verify-email', EmailVerificationPromptController::class)
+                ->name('verification.notice');
 
-    /*
-    Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+                ->middleware(['signed', 'throttle:6,1'])
+                ->name('verification.verify');
 
-    Route::middleware('throttle:6,1')->group(function () {
-        Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify')->middleware('signed');
-        Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
-    });
-    */
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+                ->middleware('throttle:6,1')
+                ->name('verification.send');
+
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+                ->name('password.confirm');
+
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+                ->name('logout');
 });

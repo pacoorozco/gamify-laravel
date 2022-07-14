@@ -53,8 +53,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('account')->middleware('auth')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('account.index');
 
-    Route::get('edit', [ProfileController::class, 'edit'])->name('account.profile.edit');
-    Route::put('edit', [ProfileController::class, 'update'])->name('account.profile.update');
+    Route::get('edit', [ProfileController::class, 'edit'])->middleware('password.confirm')
+        ->name('account.profile.edit');
+
+    Route::put('edit', [ProfileController::class, 'update'])->middleware('password.confirm')
+        ->name('account.profile.update');
 
     Route::get('password', [ChangePasswordController::class, 'index'])->name('account.password.index');
     Route::post('password', [ChangePasswordController::class, 'update'])->name('account.password.update');

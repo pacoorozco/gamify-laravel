@@ -29,6 +29,7 @@ use Gamify\Events\UserProfileUpdated;
 use Gamify\Models\User;
 use Gamify\Models\UserProfile;
 use Generator;
+use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
@@ -75,10 +76,20 @@ class ProfileControllerTest extends TestCase
     }
 
     /** @test */
+    public function users_should_not_see_the_edit_profile_form_without_password_confirmation(): void
+    {
+        $this
+            ->actingAs($this->user)
+            ->get(route('account.profile.edit'))
+            ->assertRedirect(route('password.confirm'));
+    }
+
+    /** @test */
     public function users_should_see_the_edit_profile_form(): void
     {
         $this
             ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
             ->get(route('account.profile.edit'))
             ->assertSuccessful()
             ->assertViewIs('account.profile.edit')
@@ -104,6 +115,29 @@ class ProfileControllerTest extends TestCase
     }
 
     /** @test */
+    public function users_should_not_update_its_own_profile_without_password_confirm(): void
+    {
+        $userProfile = $this->user->profile;
+
+        /** @var UserProfile $want */
+        $want = UserProfile::factory()->make();
+
+        $this
+            ->actingAs($this->user)
+            ->put(route('account.profile.update'), [
+                'bio' => $want->bio,
+                'date_of_birth' => $want->date_of_birth,
+                'twitter' => $want->twitter,
+                'facebook' => $want->facebook,
+                'linkedin' => $want->linkedin,
+                'github' => $want->github,
+            ])
+            ->assertRedirect(route('password.confirm'));
+
+        $this->assertModelExists($userProfile);
+    }
+
+    /** @test */
     public function users_should_update_its_own_profile(): void
     {
         /** @var UserProfile $want */
@@ -111,6 +145,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
                 'bio' => $want->bio,
                 'date_of_birth' => $want->date_of_birth,
@@ -157,6 +192,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update', $this->user->username), $formData)
             ->assertInvalid($errors);
 
@@ -210,6 +246,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
                 'image' => $file,
             ])
@@ -230,6 +267,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
                 'bio' => 'foo',
             ])
@@ -248,6 +286,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [])
             ->assertRedirect(route('account.index'))
             ->assertValid();

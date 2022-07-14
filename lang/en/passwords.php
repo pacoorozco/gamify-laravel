@@ -53,4 +53,10 @@ return [
 
     'reset_password_action' => 'Reset Password',
 
+    'confirm_password' => 'Confirm password',
+    'confirm_password_action' => 'Confirm password',
+
+    'password' => 'Password',
+
+
 ];
