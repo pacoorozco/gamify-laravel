@@ -42,7 +42,8 @@ class ChangePasswordController extends Controller
 
     public function update(UpdatePasswordRequest $request, UpdatePasswordAction $updatePasswordAction): RedirectResponse
     {
-        $user = User::findOrFail(Auth::id());
+        /** @var User $user */
+        $user = Auth::user();
 
         $updatePasswordAction->execute($user, $request->newPassword());
 

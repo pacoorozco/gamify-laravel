@@ -37,7 +37,8 @@ class ProfileController extends Controller
 {
     public function index(): RedirectResponse
     {
-        $user = User::findOrFail(Auth::id());
+        /** @var User $user */
+        $user = Auth::user();
 
         return redirect()
             ->route('profiles.show', ['username' => $user->username]);
@@ -45,7 +46,8 @@ class ProfileController extends Controller
 
     public function edit(): View
     {
-        $user = User::findOrFail(Auth::id());
+        /** @var User $user */
+        $user = Auth::user();
 
         return view('account.profile.edit')
             ->with('user', $user);
@@ -53,7 +55,8 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = User::findOrFail(Auth::id());
+        /** @var User $user */
+        $user = Auth::user();
 
         $user
             ->profile

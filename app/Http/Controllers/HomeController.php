@@ -26,6 +26,7 @@
 namespace Gamify\Http\Controllers;
 
 use Gamify\Libs\Game\Game;
+use Gamify\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -35,7 +36,10 @@ class HomeController extends Controller
 
     public function index(): View
     {
-        $questions = Auth::user()?->pendingVisibleQuestions(self::MAX_QUESTIONS_SHOWN);
+        /** @var User $user */
+        $user = Auth::user();
+
+        $questions = $user->pendingVisibleQuestions(self::MAX_QUESTIONS_SHOWN);
 
         return view('dashboard.index')
             ->with('questions', $questions)

@@ -3,6 +3,7 @@
 namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
+use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -18,15 +19,15 @@ class VerifyEmailController extends Controller
      */
     public function __invoke(EmailVerificationRequest $request): RedirectResponse
     {
-        /** @phpstan-ignore-next-line */
-        if ($request->user()->hasVerifiedEmail()) {
+        /** @var User $user */
+        $user = $request->user();
+
+        if ($user->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME . '?verified=1');
         }
 
-        /** @phpstan-ignore-next-line */
-        if ($request->user()->markEmailAsVerified()) {
-            /** @phpstan-ignore-next-line */
-            event(new Verified($request->user()));
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
         }
 
         return redirect()->intended(RouteServiceProvider::HOME . '?verified=1');
