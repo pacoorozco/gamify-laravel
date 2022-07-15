@@ -8,16 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Added
 - Dispatched event `UserProfileUpdated` when the user's profile has been modified.
 - Add password validation: min. 8 characters, including mixed cased letters, numbers and symbols.
-
+- Forgot password capability to allow users to recover their accounts..([#284][i284])
+- Implement user's registration, in order to allow users to register themselves.
+- User's notifications after user creation/registration.
 ### Changed
 - Remove sensible information (like gender, url, phone...) from the user's profile. ([#256][i256])
 - Fix HTTP method for the user's profile update to `PUT`.
 - Update dependencies. ([#262][i262], [#263][i263], [#264][i264], [#265][i265], [#266][i266])
-
+- Protect the whole application to ensure users has verified their email address.
+- Protect user's profile edit through password confirmation.
 ### Fixed
 - Error showing Badges with more than one actuator.
 - Issue when uploading badge images. ([#257][i257])
 
+[i284]: https://github.com/pacoorozco/gamify-laravel/issues/284
 [i256]: https://github.com/pacoorozco/gamify-laravel/pull/256
 [i257]: https://github.com/pacoorozco/gamify-laravel/issues/257
 [i262]: https://github.com/pacoorozco/gamify-laravel/pull/262
