@@ -39,7 +39,6 @@ final class CreateUserAction
      * @param  string  $password
      * @param  string  $role
      * @param  bool  $skipEmailVerification
-     *
      * @return \Gamify\Models\User
      */
     public function execute(
@@ -69,5 +68,4 @@ final class CreateUserAction
 
         return $user;
     }
-
 }

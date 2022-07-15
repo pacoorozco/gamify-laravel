@@ -52,7 +52,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
@@ -72,7 +71,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('questions.answer');
 
     Route::prefix('account')->group(function () {
-
         Route::get('/', [ProfileController::class, 'index'])
             ->name('account.index');
 
@@ -89,11 +87,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::post('password', [ChangePasswordController::class, 'update'])
             ->name('account.password.update');
-
     });
-
 });
-
 
 /* ------------------------------------------
  * Admin routes

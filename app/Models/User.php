@@ -98,7 +98,6 @@ final class User extends Authenticatable implements MustVerifyEmail
      * Generates a unique username from the provided base string.
      *
      * @param  string  $name
-     *
      * @return string
      */
     public static function generateUsername(string $name): string
@@ -344,21 +343,21 @@ final class User extends Authenticatable implements MustVerifyEmail
     protected function username(): Attribute
     {
         return Attribute::make(
-            set: fn($value) => strtolower($value),
+            set: fn ($value) => strtolower($value),
         );
     }
 
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn($value) => Hash::make($value),
+            set: fn ($value) => Hash::make($value),
         );
     }
 
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => Level::findByExperience($this->experience)
+            get: fn ($value) => Level::findByExperience($this->experience)
                 ->name,
         );
     }

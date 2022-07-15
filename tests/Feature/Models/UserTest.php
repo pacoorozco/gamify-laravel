@@ -287,7 +287,7 @@ class UserTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create([
-            'username' => 'foo'
+            'username' => 'foo',
         ]);
 
         // when same username's user doesn't exists
