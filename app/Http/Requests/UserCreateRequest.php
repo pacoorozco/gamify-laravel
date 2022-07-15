@@ -29,7 +29,6 @@ use BenSampo\Enum\Rules\EnumValue;
 use Gamify\Enums\Roles;
 use Gamify\Rules\UsernameRule;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UserCreateRequest extends Request
 {
