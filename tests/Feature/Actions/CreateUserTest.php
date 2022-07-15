@@ -57,5 +57,4 @@ class CreateUserTest extends TestCase
 
         $this->assertModelExists($user);
     }
-
 }

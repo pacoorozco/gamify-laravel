@@ -108,5 +108,4 @@ class UsernameRuleTest extends TestCase
             'input' => 'Foo_Bar',
         ];
     }
-
 }
