@@ -53,7 +53,7 @@ class UserRegistrationRequest extends Request
             'terms' => [
                 'accepted',
                 'exclude',
-            ]
+            ],
         ];
     }
 

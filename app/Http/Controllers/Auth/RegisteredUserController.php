@@ -27,7 +27,6 @@ class RegisteredUserController extends Controller
      *
      * @param  \Gamify\Http\Requests\UserRegistrationRequest  $request
      * @param  \Gamify\Actions\RegisterUserAction  $registerUserAction
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserRegistrationRequest $request, RegisterUserAction $registerUserAction): RedirectResponse
