@@ -40,7 +40,6 @@ class SocialAccountService
      *
      * @param  \Laravel\Socialite\Contracts\User  $externalUser
      * @param  string  $provider
-     *
      * @return \Gamify\Models\User
      */
     public function findOrCreate(ExternalUser $externalUser, string $provider): User
@@ -84,5 +83,4 @@ class SocialAccountService
 
         return $user;
     }
-
 }
