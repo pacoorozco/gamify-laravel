@@ -36,8 +36,6 @@ class AdminUserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    const VALID_PASSWORD = 'foo#B4rBaz';
-
     private User $user;
 
     public function setUp(): void
@@ -102,8 +100,6 @@ class AdminUserControllerTest extends TestCase
                 'username' => $want->username,
                 'name' => $want->name,
                 'email' => $want->email,
-                'password' => self::VALID_PASSWORD,
-                'password_confirmation' => self::VALID_PASSWORD,
                 'role' => $want->role,
             ])
             ->assertForbidden();
@@ -128,8 +124,6 @@ class AdminUserControllerTest extends TestCase
                 'username' => $want->username,
                 'name' => $want->name,
                 'email' => $want->email,
-                'password' => self::VALID_PASSWORD,
-                'password_confirmation' => self::VALID_PASSWORD,
                 'role' => $want->role->value,
             ])
             ->assertRedirect(route('admin.users.index'))
@@ -166,8 +160,6 @@ class AdminUserControllerTest extends TestCase
             'username' => $data['username'] ?? $want->username,
             'name' => $data['name'] ?? $want->name,
             'email' => $data['email'] ?? $want->email,
-            'password' => $data['password'] ?? $want->password,
-            'password_confirmation' => $data['password_confirmation'] ?? $want->password,
             'role' => $data['role'] ?? $want->role->value,
         ];
 
@@ -239,28 +231,6 @@ class AdminUserControllerTest extends TestCase
                 'email' => 'john.doe@domain.local',
             ],
             'errors' => ['email'],
-        ];
-
-        yield 'password is empty' => [
-            'data' => [
-                'password' => '',
-            ],
-            'errors' => ['password'],
-        ];
-
-        yield 'password ! complex enough' => [
-            'data' => [
-                'password' => '1234',
-            ],
-            'errors' => ['password'],
-        ];
-
-        yield 'password ! confirmed' => [
-            'data' => [
-                'password' => 'verySecretPassword',
-                'password_confirmation' => 'notSoSecretPassword',
-            ],
-            'errors' => ['password'],
         ];
 
         yield 'role ! a role' => [
@@ -352,8 +322,6 @@ class AdminUserControllerTest extends TestCase
             ->put(route('admin.users.update', $user), [
                 'name' => $want->name,
                 'email' => $want->email,
-                'password' => self::VALID_PASSWORD,
-                'password_confirmation' => self::VALID_PASSWORD,
                 'role' => $want->role->value,
             ])
             ->assertRedirect(route('admin.users.edit', $user))
@@ -365,10 +333,6 @@ class AdminUserControllerTest extends TestCase
             'email' => $want->email,
             'role' => $want->role,
         ]);
-
-        $user->refresh();
-
-        $this->assertTrue(Hash::check(self::VALID_PASSWORD, $user->password));
     }
 
     /** @test */
@@ -416,15 +380,11 @@ class AdminUserControllerTest extends TestCase
         ]);
 
         /** @var User $user */
-        $user = User::factory()->create([
-            'password' => 'veryS3cr3t',
-        ]);
+        $user = User::factory()->create();
 
         $formData = [
             'name' => $data['name'] ?? $user->name,
             'email' => $data['email'] ?? $user->email,
-            'password' => $data['password'] ?? $user->password,
-            'password_confirmation' => $data['password_confirmation'] ?? $user->password,
             'role' => $data['role'] ?? $user->role->value,
         ];
 
@@ -440,10 +400,6 @@ class AdminUserControllerTest extends TestCase
             'email' => $user->email,
             'role' => $user->role,
         ]);
-
-        $user->refresh();
-
-        $this->assertTrue(Hash::check('veryS3cr3t', $user->password));
     }
 
     public function provideWrongDataForUserModification(): Generator
@@ -474,28 +430,6 @@ class AdminUserControllerTest extends TestCase
                 'email' => 'john.doe@domain.local',
             ],
             'errors' => ['email'],
-        ];
-
-        yield 'password is empty' => [
-            'data' => [
-                'password' => '',
-            ],
-            'errors' => ['password'],
-        ];
-
-        yield 'password ! long enough' => [
-            'data' => [
-                'password' => '1234',
-            ],
-            'errors' => ['password'],
-        ];
-
-        yield 'password ! confirmed' => [
-            'data' => [
-                'password' => 'verySecretPassword',
-                'password_confirmation' => 'notSoSecretPassword',
-            ],
-            'errors' => ['password'],
         ];
 
         yield 'role ! a role' => [

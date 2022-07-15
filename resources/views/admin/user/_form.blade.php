@@ -50,26 +50,6 @@
                 </div>
                 <!-- ./ email -->
 
-                <!-- Password -->
-                <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                    {!! Form::label('password', __('admin/user/model.password'), array('class' => 'control-label')) !!}
-                    <div class="controls">
-                        {!! Form::password('password', array('class' => 'form-control')) !!}
-                        <span class="help-block">{{ $errors->first('password', ':message') }}</span>
-                    </div>
-                </div>
-                <!-- ./ password -->
-
-                <!-- Password Confirm -->
-                <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                    {!! Form::label('password_confirmation', __('admin/user/model.password_confirmation'), array('class' => 'control-label')) !!}
-                    <div class="controls">
-                        {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
-                        <span class="help-block">{{ $errors->first('password_confirmation', ':message') }}</span>
-                    </div>
-                </div>
-                <!-- ./ password confirm -->
-
             </div>
             <div class="col-xs-6">
 

@@ -32,6 +32,7 @@ use Gamify\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminUserController extends AdminController
@@ -43,7 +44,7 @@ class AdminUserController extends AdminController
 
     public function create(): View
     {
-        return view('admin/user/create');
+        return view('admin.user.create');
     }
 
     public function store(UserCreateRequest $request, CreateUserAction $createUserAction): RedirectResponse
@@ -52,8 +53,8 @@ class AdminUserController extends AdminController
             $request->username(),
             $request->email(),
             $request->name(),
-            $request->password(),
-            $request->role(),
+            password: Str::random(),
+            role: $request->role(),
             skipEmailVerification: true
         );
 
@@ -73,15 +74,10 @@ class AdminUserController extends AdminController
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        // password is not changed if it's empty.
-        $data = empty($request->input('password'))
-            ? Arr::except($request->validated(), ['password'])
-            : $request->validated();
-
         // users can't change its own role
-        if (Gate::denies('update-role', $user)) {
-            $data = Arr::except($data, ['role']);
-        }
+        $data = Gate::denies('update-role', $user)
+            ? Arr::except($request->validated(), 'role')
+            : $request->validated();
 
         $user->update($data);
 

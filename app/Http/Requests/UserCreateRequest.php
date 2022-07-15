@@ -51,11 +51,6 @@ class UserCreateRequest extends Request
                 'email',
                 Rule::unique('users'),
             ],
-            'password' => [
-                'required',
-                'confirmed',
-                Password::defaults(),
-            ],
             'role' => [
                 'required',
                 new EnumValue(Roles::class),
@@ -76,11 +71,6 @@ class UserCreateRequest extends Request
     public function name(): string
     {
         return $this->input('name');
-    }
-
-    public function password(): string
-    {
-        return $this->input('password');
     }
 
     public function role(): string

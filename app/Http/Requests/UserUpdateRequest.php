@@ -53,11 +53,6 @@ class UserUpdateRequest extends Request
                 'email',
                 Rule::unique('users')->ignore($user),
             ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::default(),
-            ],
             'role' => [
                 'required',
                 new EnumValue(Roles::class),
