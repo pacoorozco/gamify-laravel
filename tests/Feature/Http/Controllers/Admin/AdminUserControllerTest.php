@@ -29,7 +29,6 @@ use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AdminUserControllerTest extends TestCase
