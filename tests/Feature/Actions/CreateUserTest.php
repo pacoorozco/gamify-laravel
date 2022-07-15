@@ -23,31 +23,38 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Controllers\Auth;
+namespace Tests\Feature\Actions;
 
-use Gamify\Http\Controllers\Controller;
-use Gamify\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Gamify\Actions\CreateUserAction;
+use Gamify\Models\User;
+use Gamify\Models\UserProfile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class ResetPasswordController extends Controller
+class CreateUserTest extends TestCase
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
+    use RefreshDatabase;
 
-    use ResetsPasswords;
+    /** @test */
+    public function it_should_create_a_user_with_its_profile(): void
+    {
+        /** @var User $want */
+        $want = User::factory()->make();
 
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+        $createUserAction = app()->make(CreateUserAction::class);
+
+        $user = $createUserAction->execute(
+            username: $want->username,
+            email: $want->email,
+            name: $want->name,
+            password: $want->password,
+            role: $want->role
+        );
+
+        $this->assertInstanceOf(User::class, $user);
+
+        $this->assertInstanceOf(UserProfile::class, $user->profile);
+
+        $this->assertModelExists($user);
+    }
 }

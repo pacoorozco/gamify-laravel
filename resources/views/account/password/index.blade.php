@@ -65,7 +65,11 @@
                                required>
 
                         @if ($errors->has('new-password'))
-                            <span class="help-block">{{ $errors->first('new-password') }}</span>
+                            <ul class="help-block">
+                                @foreach($errors->get('new-password') as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         @endif
                     </div>
                 </div>

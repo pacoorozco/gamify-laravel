@@ -1,80 +1,48 @@
-@if (count($errors) > 0)
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-ban"></i> Error</h4>
-        <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-@if ($message = Session::get('success'))
+@if (session()->has('success'))
     <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-check"></i> Success</h4>
-        @if(is_array($message))
-            @foreach ($message as $m)
-                {{ $m }}
-            @endforeach
-        @else
-            {{ $message }}
-        @endif
+        <h4><i class="icon fa fa-check"></i> {{ __('general.success') }}</h4>
+        {{ session()->get('success') }}
     </div>
 @endif
 
-@if ($message = Session::get('error'))
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-ban"></i> Error!</h4>
-        @if(is_array($message))
-            @foreach ($message as $m)
-                {{ $m }}
-            @endforeach
-        @else
-            {{ $message }}
-        @endif
-    </div>
-@endif
-
-@if ($message = Session::get('warning'))
+@if (session()->has('warning'))
     <div class="alert alert-warning alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-warning"></i> Warning</h4>
-        @if(is_array($message))
-            @foreach ($message as $m)
-                {{ $m }}
-            @endforeach
-        @else
-            {{ $message }}
-        @endif
+        <h4><i class="icon fa fa-warning"></i> {{ __('general.warning') }}</h4>
+        {{ session()->get('warning') }}
     </div>
 @endif
 
-@if ($message = Session::get('info'))
+@if (session()->has('error'))
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-ban"></i> {{ __('general.error') }}</h4>
+        {{ session()->get('error') }}
+    </div>
+@endif
+
+@if (session()->has('info'))
     <div class="alert alert-info alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <h4><i class="icon fa fa-info"></i> Info</h4>
-
-        @if(is_array($message))
-            @foreach ($message as $m)
-                {{ $m }}
-            @endforeach
-        @else
-            {{ $message }}
-        @endif
+        {{ session()->get('info') }}
     </div>
 @endif
 
-@if ($message = Session::get('messages'))
+@if (session()->has('message'))
     <div class="callout callout-info">
-        @if(is_array($message))
-            @foreach ($message as $m)
-                {{ $m }}
+        {{ session()->get('message') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="callout callout-danger">
+        <h4>{{ __('general.validation_error') }}</h4>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
             @endforeach
-        @else
-            {{ $message }}
-        @endif
+        </ul>
     </div>
 @endif

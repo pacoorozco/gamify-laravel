@@ -44,4 +44,18 @@ return [
     'changed' => 'Your password has been changed!',
     'invalid' => 'Supplied password does not match with the current password.',
 
+    'forgot_password_title' => 'Forget Password?',
+    'forgot_password_instructions' => 'Enter your e-mail address below to reset your password.',
+    'forgot_password_action' => 'Email Password Reset Link',
+
+    'new_password' => 'New password',
+    'new_password_confirmation' => 'Confirm new password',
+
+    'reset_password_action' => 'Reset Password',
+
+    'confirm_password' => 'Confirm password',
+    'confirm_password_action' => 'Confirm password',
+
+    'password' => 'Password',
+
 ];

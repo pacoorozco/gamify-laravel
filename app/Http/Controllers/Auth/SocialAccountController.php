@@ -34,13 +34,6 @@ use Laravel\Socialite\Facades\Socialite;
 class SocialAccountController extends Controller
 {
     /**
-     * Where to redirect users after verification.
-     *
-     * @var string
-     */
-    protected string $redirectTo = RouteServiceProvider::HOME;
-
-    /**
      * Redirect the user to the Provider authentication page.
      *
      * @param  string  $provider
@@ -60,19 +53,12 @@ class SocialAccountController extends Controller
      */
     public function handleProviderCallback(SocialAccountService $accountRepository, string $provider): RedirectResponse
     {
-        try {
-            $user = Socialite::with($provider)->user();
-        } catch (\Exception $e) {
-            return redirect()->route('login');
-        }
+        $externalUser = Socialite::driver($provider)->user();
 
-        $authUser = $accountRepository->findOrCreate(
-            $user,
-            $provider
-        );
+        $user = $accountRepository->findOrCreate($externalUser, $provider);
 
-        auth()->login($authUser, true);
+        auth()->login($user, true);
 
-        return redirect()->to($this->redirectTo);
+        return redirect()->to(RouteServiceProvider::HOME);
     }
 }

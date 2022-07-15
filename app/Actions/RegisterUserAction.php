@@ -23,23 +23,26 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Http\Controllers\Auth;
+namespace Gamify\Actions;
 
-use Gamify\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Gamify\Enums\Roles;
+use Gamify\Models\User;
 
-class ForgotPasswordController extends Controller
+final class RegisterUserAction
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset emails and
-    | includes a trait which assists in sending these notifications from
-    | your application to your users. Feel free to explore this trait.
-    |
-    */
+    public function execute(
+        string $username,
+        string $email,
+        string $password,
+    ): User {
+        $createUserAction = app()->make(CreateUserAction::class);
 
-    use SendsPasswordResetEmails;
+        return $createUserAction->execute(
+            $username,
+            $email,
+            $username,
+            $password,
+            Roles::Player,
+        );
+    }
 }

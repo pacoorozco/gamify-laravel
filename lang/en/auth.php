@@ -36,23 +36,27 @@ return [
     |
     */
 
-    'register'                     => 'Register',
-    'login'                        => 'Sign in',
-    'logout'                       => 'Logout',
-    'username'                     => 'Username',
-    'email'                        => 'E-mail',
-    'password'                     => 'Password',
-    'change_password'              => 'Change password',
-    'forgot_password'              => 'I forgot my password',
-    'forgot_password_title'        => 'Forget Password?',
-    'forgot_password_instructions' => 'Enter your e-mail address below to reset your password.',
-    'remember_me'                  => 'Remember me',
-    'sign_title'                   => 'Sign in to your account',
-    'sign_instructions'            => 'Please enter your name and password to log in.',
-    'dont_have_account'            => 'Don\'t have an account yet?',
-    'create_account'               => 'Create an account',
+    'register' => 'Register',
+    'login' => 'Sign in',
+    'logout' => 'Logout',
+    'username' => 'Username',
+    'email' => 'E-mail',
+    'password' => 'Password',
+    'change_password' => 'Change password',
+    'forgot_password' => 'I forgot my password',
+    'remember_me' => 'Remember me',
+    'sign_title' => 'Sign in to your account',
+    'sign_instructions' => 'Please enter your name and password to log in.',
+    'dont_have_account' => 'Don\'t have an account yet?',
+    'create_account' => 'Create an account',
 
-    'failed'   => 'These credentials do not match our records.',
+    'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+
+    'email_verification' => 'Verify your email',
+    'email_verification_instructions' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
+    'email_verification_action' => 'Resend Verification Email',
+
+    'already_signed_in' => 'I already have an account',
 
 ];

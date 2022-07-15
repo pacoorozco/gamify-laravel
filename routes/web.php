@@ -27,6 +27,7 @@ use Gamify\Http\Controllers\Account\ChangePasswordController;
 use Gamify\Http\Controllers\Account\ProfileController;
 use Gamify\Http\Controllers\Admin\AdminBadgeController;
 use Gamify\Http\Controllers\Admin\AdminBadgeDataTablesController;
+use Gamify\Http\Controllers\Admin\AdminDashboardController;
 use Gamify\Http\Controllers\Admin\AdminLevelController;
 use Gamify\Http\Controllers\Admin\AdminLevelDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
@@ -50,41 +51,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('account')->middleware('auth')->group(function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('account.index');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])
+        ->name('home');
 
-    Route::get('edit', [ProfileController::class, 'edit'])->name('account.profile.edit');
-    Route::put('edit', [ProfileController::class, 'update'])->name('account.profile.update');
+    Route::get('dashboard', [HomeController::class, 'index'])
+        ->name('dashboard');
 
-    Route::get('password', [ChangePasswordController::class, 'index'])->name('account.password.index');
-    Route::post('password', [ChangePasswordController::class, 'update'])->name('account.password.update');
-});
+    Route::get('users/{username}', ShowUserProfileController::class)
+        ->name('profiles.show');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get(
-        '/',
-        [HomeController::class, 'index']
-    )->name('home');
+    Route::get('questions', [QuestionController::class, 'index'])
+        ->name('questions.index');
 
-    Route::get(
-        'dashboard',
-        [HomeController::class, 'index']
-    )->name('dashboard');
+    Route::get('questions/{questionname}', [QuestionController::class, 'show'])
+        ->name('questions.show');
 
-    Route::get('users/{username}', ShowUserProfileController::class)->name('profiles.show');
+    Route::post('questions/{questionname}', [QuestionController::class, 'answer'])
+        ->name('questions.answer');
 
-    Route::get(
-        'questions',
-        [QuestionController::class, 'index']
-    )->name('questions.index');
-    Route::get(
-        'questions/{questionname}',
-        [QuestionController::class, 'show']
-    )->name('questions.show');
-    Route::post(
-        'questions/{questionname}',
-        [QuestionController::class, 'answer']
-    )->name('questions.answer');
+    Route::prefix('account')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])
+            ->name('account.index');
+
+        Route::get('edit', [ProfileController::class, 'edit'])
+            ->middleware('password.confirm')
+            ->name('account.profile.edit');
+
+        Route::put('edit', [ProfileController::class, 'update'])
+            ->middleware('password.confirm')
+            ->name('account.profile.update');
+
+        Route::get('password', [ChangePasswordController::class, 'index'])
+            ->name('account.password.index');
+
+        Route::post('password', [ChangePasswordController::class, 'update'])
+            ->name('account.password.update');
+    });
 });
 
 /* ------------------------------------------
@@ -94,25 +97,21 @@ Route::middleware(['auth'])->group(function () {
  *  ------------------------------------------
  */
 Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get(
-        '/',
-        [\Gamify\Http\Controllers\Admin\AdminDashboardController::class, 'index']
-    )->name('home');
+    Route::get('/', [AdminDashboardController::class, 'index'])
+        ->name('home');
 
     /* ------------------------------------------
      *  Users
      *  ------------------------------------------
      */
     // Datatables Ajax route.
-    Route::middleware(['only.ajax'])
-        ->get('users/data', AdminUserDataTablesController::class)
+    Route::get('users/data', AdminUserDataTablesController::class)
+        ->middleware(['only.ajax'])
         ->name('users.data');
 
     // Our special delete confirmation route - uses the show/details view.
-    Route::get(
-        'users/{users}/delete',
-        [AdminUserController::class, 'delete']
-    )->name('users.delete');
+    Route::get('users/{users}/delete', [AdminUserController::class, 'delete'])
+        ->name('users.delete');
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
@@ -125,17 +124,15 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /badges/{badge_id}
-    Route::middleware(['only.ajax'])
-        ->get('badges/data', AdminBadgeDataTablesController::class)
+    Route::get('badges/data', AdminBadgeDataTablesController::class)
+        ->middleware(['only.ajax'])
         ->name('badges.data');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {badges} needs
     // to be used.
-    Route::get(
-        'badges/{badges}/delete',
-        [AdminBadgeController::class, 'delete']
-    )->name('badges.delete');
+    Route::get('badges/{badges}/delete', [AdminBadgeController::class, 'delete'])
+        ->name('badges.delete');
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
@@ -148,17 +145,15 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
     // Datatables Ajax route.
     // NOTE: We must define this route first as it is more specific than
     // the default show resource route for /levels/{level_id}
-    Route::middleware(['only.ajax'])
-        ->get('levels/data', AdminLevelDataTablesController::class)
+    Route::get('levels/data', AdminLevelDataTablesController::class)
+        ->middleware(['only.ajax'])
         ->name('levels.data');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {badges} needs
     // to be used.
-    Route::get(
-        'levels/{levels}/delete',
-        [AdminLevelController::class, 'delete']
-    )->name('levels.delete');
+    Route::get('levels/{levels}/delete', [AdminLevelController::class, 'delete'])
+        ->name('levels.delete');
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
@@ -170,25 +165,19 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      */
 
     // DataTables Ajax route.
-    Route::middleware(['only.ajax'])
-        ->get(
-            'questions/data',
-            [AdminQuestionController::class, 'data']
-        )->name('questions.data');
+    Route::get('questions/data', [AdminQuestionController::class, 'data'])
+        ->middleware(['only.ajax'])
+        ->name('questions.data');
 
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {questions} needs
     // to be used.
-    Route::get(
-        'questions/{questions}/delete',
-        [AdminQuestionController::class, 'delete']
-    )->name('questions.delete');
+    Route::get('questions/{questions}/delete', [AdminQuestionController::class, 'delete'])
+        ->name('questions.delete');
 
     // Nest routes to deal with actions
     Route::resource('questions.actions', AdminQuestionActionController::class)
-        ->only([
-            'create', 'store', 'destroy',
-        ]);
+        ->only(['create', 'store', 'destroy']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
@@ -198,16 +187,12 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      *  Give Experience / Badge
      *  ------------------------------------------
      */
-    Route::get(
-        'rewards',
-        [AdminRewardController::class, 'index']
-    )->name('rewards.index');
-    Route::post(
-        'rewards/experience',
-        [AdminRewardController::class, 'giveExperience']
-    )->name('rewards.experience');
-    Route::post(
-        'rewards/badge',
-        [AdminRewardController::class, 'giveBadge']
-    )->name('rewards.badge');
+    Route::get('rewards', [AdminRewardController::class, 'index'])
+        ->name('rewards.index');
+
+    Route::post('rewards/experience', [AdminRewardController::class, 'giveExperience'])
+        ->name('rewards.experience');
+
+    Route::post('rewards/badge', [AdminRewardController::class, 'giveBadge'])
+        ->name('rewards.badge');
 });
