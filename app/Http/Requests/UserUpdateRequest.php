@@ -29,7 +29,6 @@ use BenSampo\Enum\Rules\EnumValue;
 use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UserUpdateRequest extends Request
 {
@@ -52,11 +51,6 @@ class UserUpdateRequest extends Request
                 'required',
                 'email',
                 Rule::unique('users')->ignore($user),
-            ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::default(),
             ],
             'role' => [
                 'required',

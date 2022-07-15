@@ -20,7 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Fixed
 - Error showing Badges with more than one actuator.
 - Issue when uploading badge images. ([#257][i257])
+### Removed
+- Admins can't create or modify user's password in favor of **Forgot password** capability. ([#285][i285]) 
 
+[i285]: https://github.com/pacoorozco/gamify-laravel/issues/285
 [i284]: https://github.com/pacoorozco/gamify-laravel/issues/284
 [i256]: https://github.com/pacoorozco/gamify-laravel/pull/256
 [i257]: https://github.com/pacoorozco/gamify-laravel/issues/257
