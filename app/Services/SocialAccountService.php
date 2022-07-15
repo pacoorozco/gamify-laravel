@@ -25,8 +25,8 @@
 
 namespace Gamify\Services;
 
+use Gamify\Actions\CreateUserAction;
 use Gamify\Enums\Roles;
-use Gamify\Jobs\CreateUser;
 use Gamify\Models\LinkedSocialAccount;
 use Gamify\Models\User;
 use Illuminate\Support\Str;
@@ -36,10 +36,11 @@ class SocialAccountService
 {
     /**
      * Returns the User object authenticated by a social login.
-     * If the user didn't exist, it will be created.
+     * If the user doesn't exist, it will be created.
      *
      * @param  \Laravel\Socialite\Contracts\User  $externalUser
      * @param  string  $provider
+     *
      * @return \Gamify\Models\User
      */
     public function findOrCreate(ExternalUser $externalUser, string $provider): User
@@ -49,31 +50,34 @@ class SocialAccountService
             ->where('provider_id', $externalUser->getId())
             ->first();
 
-        if (! is_null($account?->user)) {
-            return $account->user;
+        if (is_null($account?->user)) {
+            return $this->createSocialAccount($externalUser, $provider);
         }
 
-        return $this->createSocialAccount($externalUser, $provider);
+        return $account->user;
     }
 
-    private function createSocialAccount(ExternalUser $providerUser, string $provider): User
-    {
+    private function createSocialAccount(
+        ExternalUser $providerUser,
+        string $provider
+    ): User {
         /** @var User $user */
         $user = User::query()
             ->where('email', $providerUser->getEmail())
-            ->first();
+            ->firstOr(function () use ($providerUser) {
+                $createUserAction = app()->make(CreateUserAction::class);
 
-        if (! ($user instanceof User)) {
-            $user = CreateUser::dispatchSync(
-                $this->getUniqueUsername($providerUser->getNickname()),
-                $providerUser->getEmail(),
-                $providerUser->getName(),
-                '',
-                Roles::Player,
-            );
-        }
+                return $createUserAction->execute(
+                    User::generateUsername($providerUser->getNickname()),
+                    $providerUser->getEmail(),
+                    $providerUser->getName(),
+                    password: Str::random(),
+                    role: Roles::Player,
+                    skipEmailVerification: true
+                );
+            });
 
-        $user->accounts()->create([
+        $user->accounts()->updateOrCreate([
             'provider_id' => $providerUser->getId(),
             'provider_name' => $provider,
         ]);
@@ -81,19 +85,4 @@ class SocialAccountService
         return $user;
     }
 
-    /**
-     * Returns an unique username from a given base username.
-     *
-     * @param  string  $baseUsername
-     * @return string
-     */
-    private function getUniqueUsername(string $baseUsername): string
-    {
-        $uniqueUsername = $baseUsername;
-        while (User::where('username', $uniqueUsername)->exists()) {
-            $uniqueUsername = $baseUsername . Str::random(2);
-        }
-
-        return $uniqueUsername;
-    }
 }

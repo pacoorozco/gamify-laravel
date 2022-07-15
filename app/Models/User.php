@@ -27,6 +27,7 @@ namespace Gamify\Models;
 
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
+use Gamify\Rules\UsernameRule;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -38,6 +39,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Laracodes\Presenter\Traits\Presentable;
 
 /**
@@ -88,6 +92,33 @@ final class User extends Authenticatable implements MustVerifyEmail
     public static function findByEmailAddress(string $emailAddress): self
     {
         return static::where('email', $emailAddress)->firstOrFail();
+    }
+
+    /**
+     * Generates a unique username from the provided base string.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    public static function generateUsername(string $name): string
+    {
+        if (Validator::make(
+            ['username' => $name],
+            [
+                'username' => [
+                    'required',
+                    new UsernameRule(),
+                    Rule::unique('users'),
+                ],
+            ]
+        )->passes()) {
+            return $name;
+        }
+
+        $uniqueUserName = Str::studly($name) . '-' . Str::random(2);
+
+        return self::generateUsername($uniqueUserName);
     }
 
     public function profile(): HasOne
@@ -147,23 +178,6 @@ final class User extends Authenticatable implements MustVerifyEmail
             ->get();
     }
 
-    public function pendingQuestionsCount(): int
-    {
-        return $this->pendingQuestions()->count();
-    }
-
-    public function pendingQuestions(int $limit = 5): Collection
-    {
-        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
-
-        return Question::query()
-            ->published()
-            ->whereNotIn('id', $answeredQuestions)
-            ->orderBy('publication_date', 'ASC')
-            ->take($limit)
-            ->get();
-    }
-
     /**
      * These are the User's answered Questions.
      *
@@ -185,6 +199,23 @@ final class User extends Authenticatable implements MustVerifyEmail
             ->as('response')
             ->withPivot('points', 'answers')
             ->using(UserResponse::class);
+    }
+
+    public function pendingQuestionsCount(): int
+    {
+        return $this->pendingQuestions()->count();
+    }
+
+    public function pendingQuestions(int $limit = 5): Collection
+    {
+        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
+
+        return Question::query()
+            ->published()
+            ->whereNotIn('id', $answeredQuestions)
+            ->orderBy('publication_date', 'ASC')
+            ->take($limit)
+            ->get();
     }
 
     public function hasQuestionsToAnswer(): bool
@@ -313,21 +344,21 @@ final class User extends Authenticatable implements MustVerifyEmail
     protected function username(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower($value),
+            set: fn($value) => strtolower($value),
         );
     }
 
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => Hash::make($value),
+            set: fn($value) => Hash::make($value),
         );
     }
 
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Level::findByExperience($this->experience)
+            get: fn($value) => Level::findByExperience($this->experience)
                 ->name,
         );
     }

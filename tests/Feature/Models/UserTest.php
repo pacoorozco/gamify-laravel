@@ -281,4 +281,19 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(UserBadgeProgress::class, $progress);
     }
+
+    /** @test */
+    public function it_should_return_a_unique_username(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create([
+            'username' => 'foo'
+        ]);
+
+        // when same username's user doesn't exists
+        $this->assertEquals('Bar', User::generateUsername('Bar'));
+
+        // when same username's user exists
+        $this->assertNotEquals($user->username, User::generateUsername($user->username));
+    }
 }

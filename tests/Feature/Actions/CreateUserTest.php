@@ -23,26 +23,39 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Actions;
+namespace Tests\Feature\Actions;
 
-use Gamify\Enums\Roles;
+use Gamify\Actions\CreateUserAction;
 use Gamify\Models\User;
+use Gamify\Models\UserProfile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-final class RegisterUserAction
+class CreateUserTest extends TestCase
 {
-    public function execute(
-        string $username,
-        string $email,
-        string $password,
-    ): User {
+    use RefreshDatabase;
+
+    /** @test */
+    public function it_should_create_a_user_with_its_profile(): void
+    {
+        /** @var User $want */
+        $want = User::factory()->make();
+
         $createUserAction = app()->make(CreateUserAction::class);
 
-        return $createUserAction->execute(
-            $username,
-            $email,
-            $username,
-            $password,
-            Roles::Player,
+        $user = $createUserAction->execute(
+            username: $want->username,
+            email: $want->email,
+            name: $want->name,
+            password: $want->password,
+            role: $want->role
         );
+
+        $this->assertInstanceOf(User::class, $user);
+
+        $this->assertInstanceOf(UserProfile::class, $user->profile);
+
+        $this->assertModelExists($user);
     }
+
 }

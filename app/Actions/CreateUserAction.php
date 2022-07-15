@@ -25,24 +25,49 @@
 
 namespace Gamify\Actions;
 
-use Gamify\Enums\Roles;
 use Gamify\Models\User;
+use Illuminate\Auth\Events\Registered;
 
-final class RegisterUserAction
+final class CreateUserAction
 {
+    /**
+     * Creates an User, its profile and dispatch events.
+     *
+     * @param  string  $username
+     * @param  string  $email
+     * @param  string  $name
+     * @param  string  $password
+     * @param  string  $role
+     * @param  bool  $skipEmailVerification
+     *
+     * @return \Gamify\Models\User
+     */
     public function execute(
         string $username,
         string $email,
+        string $name,
         string $password,
+        string $role,
+        bool $skipEmailVerification = false
     ): User {
-        $createUserAction = app()->make(CreateUserAction::class);
+        $user = User::create([
+            'name' => $name,
+            'username' => $username,
+            'email' => $email,
+            'password' => $password,
+            'role' => $role,
+        ]);
 
-        return $createUserAction->execute(
-            $username,
-            $email,
-            $username,
-            $password,
-            Roles::Player,
-        );
+        $user->profile()->create();
+
+        if ($skipEmailVerification) {
+            $user->email_verified_at = now();
+            $user->save();
+        }
+
+        event(new Registered($user));
+
+        return $user;
     }
+
 }
