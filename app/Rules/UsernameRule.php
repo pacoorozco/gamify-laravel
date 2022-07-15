@@ -25,13 +25,18 @@
 
 namespace Gamify\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ImplicitRule;
 use Illuminate\Support\Str;
 
-class UsernameRule implements Rule
+class UsernameRule implements ImplicitRule
 {
-    // Based on 'The Open Group Base Specifications Issue 7, 2018 edition'.
-    // https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_437
+    /**
+     * Based on POSIX set of valid usernames:
+     * Lower and upper case ASCII letters, digits, period, underscore, and hyphen, with the
+     * restriction that hyphen is not allowed as first character of the user name.
+     *
+     * @see https://systemd.io/USER_NAMES/
+     */
     const VALID_USERNAME_REGEXP = '/^[A-Za-z\d][A-Za-z\d._-]*$/';
 
     public function passes($attribute, $value): bool
