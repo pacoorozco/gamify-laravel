@@ -109,5 +109,4 @@ class BadgePresenter extends Presenter
         return $this->model->progress->completed_at?->toFormattedDateString()
             ?? '';
     }
-
 }
