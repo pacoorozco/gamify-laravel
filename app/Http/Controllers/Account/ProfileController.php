@@ -25,6 +25,7 @@
 
 namespace Gamify\Http\Controllers\Account;
 
+use Gamify\Actions\UpdateUserProfileAction;
 use Gamify\Events\UserProfileUpdated;
 use Gamify\Http\Controllers\Controller;
 use Gamify\Http\Requests\ProfileUpdateRequest;
@@ -53,16 +54,12 @@ class ProfileController extends Controller
             ->with('user', $user);
     }
 
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, UpdateUserProfileAction $updateUserProfileAction): RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $user
-            ->profile
-            ->update($request->validated());
-
-        UserProfileUpdated::dispatchIf($user->profile->wasChanged(), $user);
+        $updateUserProfileAction->execute($user, $request->validated());
 
         return redirect()->route('account.index')
             ->with('success', __('user/messages.settings_updated'));
