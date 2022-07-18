@@ -26,7 +26,6 @@
 namespace Gamify\Http\Controllers\Account;
 
 use Gamify\Actions\UpdateUserProfileAction;
-use Gamify\Events\UserProfileUpdated;
 use Gamify\Http\Controllers\Controller;
 use Gamify\Http\Requests\ProfileUpdateRequest;
 use Gamify\Models\User;
