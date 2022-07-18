@@ -97,10 +97,4 @@ class AdminBadgeController extends AdminController
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.delete.success'));
     }
-
-    public function delete(Badge $badge): View
-    {
-        return view('admin.badge.delete')
-            ->with('badge', $badge);
-    }
 }

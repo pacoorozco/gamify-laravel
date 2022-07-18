@@ -58,24 +58,44 @@ class BadgePresenter extends Presenter
     public function status(): string
     {
         return ($this->model->active)
-            ? trans('general.yes')
-            : trans('general.no');
+            ? __('general.yes')
+            : __('general.no');
+    }
+
+    public function nameWithStatusBadge(): HtmlString
+    {
+        return new HtmlString($this->model->active
+            ? $this->name()
+            : $this->name() . ' ' . $this->statusBadge()
+        );
+    }
+
+    public function name(): string
+    {
+        return $this->model->name;
+    }
+
+    public function statusBadge(): HtmlString
+    {
+        return new HtmlString($this->model->active
+            ? ''
+            : '<span class="label label-default">' . __('general.disabled') . '</span>'
+        );
     }
 
     public function imageThumbnail(): HtmlString
     {
-        return new HtmlString((string) $this->model->imageTag('image_url', 'class="img-thumbnail"'));
+        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail"'));
     }
 
     public function imageTag(): HtmlString
     {
-        return new HtmlString((string) $this->model->imageTag('image_url'));
+        return new HtmlString($this->model->imageTag('image_url'));
     }
 
     public function imageTableThumbnail(): HtmlString
     {
-        return new HtmlString((string) $this->model->imageTag('image_url',
-            'class="img-thumbnail center-block"'));
+        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'));
     }
 
     public function actuators(): array
@@ -89,4 +109,5 @@ class BadgePresenter extends Presenter
         return $this->model->progress->completed_at?->toFormattedDateString()
             ?? '';
     }
+
 }

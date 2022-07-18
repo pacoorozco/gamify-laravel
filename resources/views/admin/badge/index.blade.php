@@ -35,10 +35,8 @@
     <!-- ./ notifications -->
 
     <!-- actions -->
-    <a href="{{ route('admin.badges.create') }}">
-        <button type="button" class="btn btn-success margin-bottom">
-            <i class="fa fa-plus"></i> {{ __('admin/badge/title.create_a_new_badge') }}
-        </button>
+    <a href="{{ route('admin.badges.create') }}" class="btn btn-success margin-bottom" role="button">
+        <i class="fa fa-plus"></i> {{ __('admin/badge/title.create_a_new_badge') }}
     </a>
     <!-- /.actions -->
     <div class="box">
@@ -69,10 +67,8 @@
 
 {{-- Scripts --}}
 @push('scripts')
-    <script type="text/javascript"
-            src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
     <script>
         $(function () {

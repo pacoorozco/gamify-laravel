@@ -47,4 +47,6 @@ return [
     'error' => 'Error',
     'warning' => 'Warning',
     'success' => 'Success',
+
+    'disabled' => 'off',
 ];
