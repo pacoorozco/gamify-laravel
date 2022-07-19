@@ -58,8 +58,8 @@ class BadgePresenter extends Presenter
     public function status(): string
     {
         return ($this->model->active)
-            ? __('general.yes')
-            : __('general.no');
+            ? trans('general.yes')
+            : trans('general.no');
     }
 
     public function nameWithStatusBadge(): HtmlString
@@ -79,7 +79,7 @@ class BadgePresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? ''
-            : '<span class="label label-default">' . __('general.disabled') . '</span>'
+            : '<span class="label label-default">' . trans('general.disabled') . '</span>'
         );
     }
 
