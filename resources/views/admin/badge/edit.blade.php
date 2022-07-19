@@ -118,8 +118,8 @@
                                     <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
                                         <i class="fa fa-times"></i> {{ __('button.delete_image') }}
                                     </a>
+                                </p>
                             </div>
-                            </p>
                         </div>
                         <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                     </div>

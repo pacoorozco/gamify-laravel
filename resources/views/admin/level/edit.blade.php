@@ -6,7 +6,6 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/level/title.level_update') }}
-    <small>{{ $level->name }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -41,11 +40,16 @@
 
 
     <div class="box box-solid">
+        <div class="box-header with-border">
+            <h2 class="box-title">
+                {{ $level->present()->nameWithStatusBadge }}
+            </h2>
+        </div>
         <div class="box-body">
-
             <div class="row">
-                <div class="col-xs-6">
 
+                <!-- right column -->
+                <div class="col-xs-6">
                     <!-- name -->
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         {{ Form::label('name', __('admin/level/model.name'),['class' => 'control-label required']) }}
@@ -77,6 +81,9 @@
                     <!-- ./ activation status -->
 
                 </div>
+                <!-- ./left column -->
+
+                <!-- right column -->
                 <div class="col-xs-6">
 
                     <!-- image -->
@@ -87,14 +94,16 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                      style="width: 150px; height: 150px;">
-                                    <img src="{{ $level->image }}">
+                                    {{ $level->present()->imageTag }}
                                 </div>
                                 <p>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileinput-new"><i
-                                        class="fa fa-picture-o"></i> {{ __('button.pick_image') }}</span>
-                                <span class="fileinput-exists"><i
-                                        class="fa fa-picture-o"></i> {{ __('button.upload_image') }}</span>
+                             <span class="btn btn-default btn-file">
+                                <span class="fileinput-new">
+                                    <i class="fa fa-picture-o"></i> {{ __('button.pick_image') }}
+                                </span>
+                                <span class="fileinput-exists">
+                                    <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
+                                </span>
                                 {!! Form::file('image') !!}
                             </span>
                                     <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
@@ -105,25 +114,57 @@
                         </div>
                         <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                     </div>
+                    <!-- ./ image -->
+
+                    <!-- danger zone -->
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <strong>@lang('admin/level/messages.danger_zone_section')</strong>
+                        </div>
+                        <div class="panel-body">
+                            <p><strong>@lang('admin/level/messages.delete_button')</strong></p>
+                            <p>@lang('admin/level/messages.delete_help')</p>
+
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger"
+                                        data-toggle="modal"
+                                        data-target="#confirmationModal">
+                                    @lang('admin/level/messages.delete_button')
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./danger zone -->
+
                 </div>
-                <!-- ./ image -->
+                <!-- ./right column -->
 
             </div>
         </div>
 
         <div class="box-footer">
             <!-- Form Actions -->
-            <a href="{{ route('admin.levels.index') }}">
-                <button type="button" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
-                </button>
+            {{ Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) }}
+            <a href="{{ route('admin.levels.index') }}" class="btn btn-link" role="button">
+                {{ __('general.back') }}
             </a>
-            {{ Form::button(__('button.save') . ' <i class="fa fa-floppy-o"></i>', array('type' => 'submit', 'class' => 'btn btn-success')) }}
             <!-- ./ form actions -->
         </div>
-    </div>
+
     </div>
     {{ Form::close() }}
+
+    <!-- confirmation modal -->
+    <x-modals.confirmation
+        action="{{ route('admin.levels.destroy', $level) }}"
+        confirmationText="{{ $level->name }}"
+        buttonText="{{ __('admin/level/messages.delete_confirmation_button') }}">
+
+        <div class="alert alert-warning" role="alert">
+            @lang('admin/level/messages.delete_confirmation_warning', ['name' => $level->name])
+        </div>
+    </x-modals.confirmation>
+    <!-- ./ confirmation modal -->
 @endsection
 
 {{-- Styles --}}

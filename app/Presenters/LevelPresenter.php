@@ -41,10 +41,46 @@ class LevelPresenter extends Presenter
             $this->model->name));
     }
 
-    public function active(): string
+    public function imageThumbnail(): HtmlString
     {
-        return $this->model->active
+        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail"'));
+    }
+
+    public function imageTag(): HtmlString
+    {
+        return new HtmlString($this->model->imageTag('image_url'));
+    }
+
+    public function imageTableThumbnail(): HtmlString
+    {
+        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'));
+    }
+
+    public function name(): string
+    {
+        return $this->model->name;
+    }
+
+    public function status(): string
+    {
+        return ($this->model->active)
             ? trans('general.yes')
             : trans('general.no');
+    }
+
+    public function nameWithStatusBadge(): HtmlString
+    {
+        return new HtmlString($this->model->active
+            ? $this->name()
+            : $this->name() . ' ' . $this->statusBadge()
+        );
+    }
+
+    public function statusBadge(): HtmlString
+    {
+        return new HtmlString($this->model->active
+            ? ''
+            : '<span class="label label-default">' . trans('general.disabled') . '</span>'
+        );
     }
 }

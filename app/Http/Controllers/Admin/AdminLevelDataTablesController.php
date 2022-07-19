@@ -43,11 +43,14 @@ class AdminLevelDataTablesController extends AdminController
             ->orderBy('required_points', 'ASC');
 
         return $dataTable->eloquent($levels)
+            ->editColumn('name', function (Level $level) {
+                return $level->present()->nameWithStatusBadge;
+            })
             ->addColumn('image', function (Level $level) {
                 return $level->present()->image;
             })
             ->editColumn('active', function (Level $level) {
-                return $level->present()->active;
+                return $level->present()->status;
             })
             ->addColumn('actions', function (Level $level) {
                 return view('admin/partials.actions_dd')
@@ -55,7 +58,7 @@ class AdminLevelDataTablesController extends AdminController
                     ->with('id', $level->id)
                     ->render();
             })
-            ->rawColumns(['actions', 'image'])
+            ->rawColumns(['name', 'actions', 'image'])
             ->removeColumn('id')
             ->toJson();
     }
