@@ -43,4 +43,11 @@ return [
         'error' => 'There was an issue deleting the level. Please try again.',
         'success' => 'The level was deleted successfully.',
     ],
+
+    'danger_zone_section' => 'Danger Zone',
+    'delete_button' => 'Delete this level',
+    'delete_help' => 'Once you delete a level, there is no going back. Please be certain.',
+    'delete_confirmation_warning' => 'This action <strong>cannot</strong> be undone. This will permanently delete the <strong>:name</strong> level.',
+    'delete_confirmation_button' => 'I understand the consequences, delete this level',
+
 ];

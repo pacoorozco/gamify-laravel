@@ -37,10 +37,10 @@
 
     <div class="box box-solid">
         <div class="box-body">
-
             <div class="row">
-                <div class="col-xs-6">
 
+                <!-- right column -->
+                <div class="col-xs-6">
                     <!-- name -->
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         {!! Form::label('name', __('admin/level/model.name'), ['class' => 'control-label required']) !!}
@@ -55,7 +55,7 @@
                     <div class="form-group {{ $errors->has('required_points') ? 'has-error' : '' }}">
                         {!! Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label required']) !!}
                         <div class="controls">
-                            {!! Form::number('required_points', null, ['class' => 'form-control', 'required' => 'required', 'min' => '1']) !!}
+                            {!! Form::number('required_points', null, ['class' => 'form-control', 'required' => 'required', 'min' => '0']) !!}
                             <span class="help-block">{{ $errors->first('required_points', ':message') }}</span>
                         </div>
                     </div>
@@ -66,12 +66,16 @@
                         {!! Form::label('active', __('admin/level/model.active'), ['class' => 'control-label required']) !!}
                         <div class="controls">
                             {!! Form::select('active', ['1' => __('general.yes'), '0' => __('general.no')], null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
+                            <span
+                                class="help-block">{{ $errors->first('active', '<span class="help-inline">:message</span>') }}</span>
                         </div>
                     </div>
                     <!-- ./ activation status -->
 
                 </div>
+                <!-- ./left column -->
+
+                <!-- right column -->
                 <div class="col-xs-6">
 
                     <!-- image -->
@@ -99,25 +103,27 @@
                         </div>
                         <span class="help-block">{{ $errors->first('image', ':message') }}</span>
                     </div>
+                    <!-- ./ image -->
+
                 </div>
-                <!-- ./ image -->
+                <!-- ./right column -->
 
             </div>
         </div>
 
         <div class="box-footer">
             <!-- Form Actions -->
-            <a href="{{ route('admin.levels.index') }}">
-                <button type="button" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> {{ __('general.back') }}
-                </button>
+            {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+
+            <a href="{{ route('admin.levels.index') }}"  class="btn btn-link" role="button">
+                    {{ __('general.back') }}
             </a>
-        {!! Form::button(__('button.save') . ' <i class="fa fa-floppy-o"></i>', ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-        <!-- ./ form actions -->
+            <!-- ./ form actions -->
         </div>
-    </div>
+
     </div>
     {!! Form::close() !!}
+
 @endsection
 
 {{-- Styles --}}
