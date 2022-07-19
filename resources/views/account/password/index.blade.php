@@ -47,9 +47,9 @@
                         <input id="current-password" type="password" class="form-control"
                                name="current-password" required>
 
-                        @if ($errors->has('current-password'))
-                            <span class="help-block">{{ $errors->first('current-password') }}</span>
-                        @endif
+                        @error('current-password')
+                            <span class="help-block">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <!-- /.current password -->
@@ -64,13 +64,13 @@
                         <input id="new-password" type="password" class="form-control" name="new-password"
                                required>
 
-                        @if ($errors->has('new-password'))
+                        @error('new-password')
                             <ul class="help-block">
                                 @foreach($errors->get('new-password') as $error)
                                 <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
-                        @endif
+                        @enderror
                     </div>
                 </div>
                 <!-- /. new password -->

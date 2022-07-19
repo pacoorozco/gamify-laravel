@@ -23,30 +23,20 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-return [
+namespace Gamify\Actions;
 
-    'yes' => 'Yes',
-    'no' => 'No',
-    'must_login' => 'Must be logged in.',
-    'logout' => 'Sign out',
-    'all' => 'All',
-    'show' => 'Show',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
-    'search' => 'Search',
-    'actions' => 'Actions',
-    'add' => 'Add',
-    'remove' => 'Remove',
-    'back' => 'Back',
-    'close' => 'Close',
-    'none' => 'None',
-    'never' => 'Never',
-    'view' => 'View',
+use Gamify\Events\UserProfileUpdated;
+use Gamify\Models\User;
 
-    'validation_error' => 'Validation error',
-    'error' => 'Error',
-    'warning' => 'Warning',
-    'success' => 'Success',
+final class UpdateUserProfileAction
+{
+    public function execute(User $user, array $attributes): User
+    {
+        $user->profile
+            ->update($attributes);
 
-    'disabled' => 'off',
-];
+        UserProfileUpdated::dispatchIf($user->profile->wasChanged(), $user);
+
+        return $user;
+    }
+}

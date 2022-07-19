@@ -42,6 +42,9 @@ class AdminBadgeDataTablesController extends AdminController
         ])->orderBy('name', 'ASC');
 
         return $dataTable->eloquent($badges)
+            ->editColumn('name', function (Badge $badge) {
+                return $badge->present()->nameWithStatusBadge;
+            })
             ->addColumn('image', function (Badge $badge) {
                 return $badge->present()->imageTableThumbnail;
             })
@@ -54,7 +57,7 @@ class AdminBadgeDataTablesController extends AdminController
                     ->with('id', $badge->id)
                     ->render();
             })
-            ->rawColumns(['actions', 'image'])
+            ->rawColumns(['name', 'actions', 'image'])
             ->removeColumn('id', 'image_url')
             ->toJson();
     }

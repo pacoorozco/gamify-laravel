@@ -42,4 +42,11 @@ return [
         'error'   => 'There was an issue deleting the badge. Please try again.',
         'success' => 'The badge was deleted successfully.',
     ],
+
+    'danger_zone_section' => 'Danger Zone',
+    'delete_button' => 'Delete this badge',
+    'delete_help' => 'By deleting a badge, all the players who earned it will lose it from their profiles. You can <strong>disable the badge</strong> instead to avoid this. Once you delete a badge, there is no going back. Please be certain.',
+    'delete_confirmation_warning' => 'This action <strong>cannot</strong> be undone. This will permanently delete the <strong>:name</strong> badge.',
+    'delete_confirmation_button' => 'I understand the consequences, delete this badge',
+
 ];

@@ -128,6 +128,7 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
         ->middleware(['only.ajax'])
         ->name('badges.data');
 
+    // TODO: To be removed
     // Our special delete confirmation route - uses the show/details view.
     // NOTE: For model biding above to work - the plural parameter {badges} needs
     // to be used.
