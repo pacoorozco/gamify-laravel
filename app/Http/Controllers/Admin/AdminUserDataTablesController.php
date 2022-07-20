@@ -39,7 +39,7 @@ class AdminUserDataTablesController extends AdminController
             'username',
             'email',
             'role',
-            'experience'
+            'experience',
         ])->orderBy('username', 'ASC');
 
         return $dataTable->eloquent($users)

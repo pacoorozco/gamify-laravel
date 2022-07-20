@@ -52,5 +52,4 @@ return [
     'delete_confirmation_warning' => 'This action <strong>cannot</strong> be undone. This will permanently delete the <strong>:name</strong> user.',
     'delete_confirmation_button' => 'I understand the consequences, delete this user',
 
-
 ];
