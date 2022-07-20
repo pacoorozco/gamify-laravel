@@ -39,11 +39,15 @@ class AdminUserDataTablesController extends AdminController
             'username',
             'email',
             'role',
+            'experience',
         ])->orderBy('username', 'ASC');
 
         return $dataTable->eloquent($users)
             ->editColumn('role', function (User $user) {
                 return $user->present()->role;
+            })
+            ->addColumn('level', function (User $user) {
+                return $user->present()->level;
             })
             ->addColumn('actions', function (User $user) {
                 return view('admin/partials.actions_dd')
