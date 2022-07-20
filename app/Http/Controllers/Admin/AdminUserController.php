@@ -96,9 +96,4 @@ class AdminUserController extends AdminController
         return redirect()->route('admin.users.index')
             ->with('success', __('admin/user/messages.delete.success'));
     }
-
-    public function delete(User $user): View
-    {
-        return view('admin/user/delete', compact('user'));
-    }
 }

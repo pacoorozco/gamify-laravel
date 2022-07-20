@@ -76,9 +76,4 @@ class AdminLevelController extends AdminController
         return redirect()->route('admin.levels.index')
             ->with('success', __('admin/level/messages.delete.success'));
     }
-
-    public function delete(Level $level): View
-    {
-        return view('admin.level.delete', compact('level'));
-    }
 }
