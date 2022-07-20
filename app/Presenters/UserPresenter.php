@@ -26,6 +26,8 @@
 namespace Gamify\Presenters;
 
 use Gamify\Models\User;
+use Hamcrest\Core\HasToString;
+use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
 class UserPresenter extends Presenter
@@ -54,5 +56,13 @@ class UserPresenter extends Presenter
     {
         return $this->model->profile->bio
             ?? '';
+    }
+
+    public function adminLabel(): HtmlString
+    {
+        return new HtmlString( $this->model->isAdmin()
+            ? '<span class="label label-warning">' . $this->role() .'</span>'
+            : ''
+        );
     }
 }

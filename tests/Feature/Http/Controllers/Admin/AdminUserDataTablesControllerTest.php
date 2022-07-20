@@ -61,7 +61,10 @@ class AdminUserDataTablesControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'username',
+                        'name',
                         'email',
+                        'role',
+                        'level',
                     ],
                 ],
             ]);
