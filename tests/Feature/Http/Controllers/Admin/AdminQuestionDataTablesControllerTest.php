@@ -26,7 +26,6 @@
 namespace Tests\Feature\Http\Controllers\Admin;
 
 use Gamify\Enums\Roles;
-use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

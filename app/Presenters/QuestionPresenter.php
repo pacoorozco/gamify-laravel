@@ -59,7 +59,6 @@ class QuestionPresenter extends Presenter
      *
      * @param  string  $status
      * @param  string  $default
-     *
      * @return string
      */
     protected function mapStatusToLabel(string $status, string $default = 'label-default')
@@ -163,5 +162,4 @@ class QuestionPresenter extends Presenter
             ? ''
             : $this->model->publication_date->format('Y-m-d H:i');
     }
-
 }
