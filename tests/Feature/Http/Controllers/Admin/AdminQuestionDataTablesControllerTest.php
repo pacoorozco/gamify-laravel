@@ -64,7 +64,7 @@ class AdminQuestionDataTablesControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'name',
-                        'status', 
+                        'status',
                         'type',
                         'actions',
                     ],
