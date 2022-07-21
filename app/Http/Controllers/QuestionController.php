@@ -63,6 +63,8 @@ class QuestionController extends Controller
 
         abort_if($user->hasAnsweredQuestion($question), 404);
 
+        abort_unless($question->isPublished() || $user->isAdmin(), 404);
+
         // Obtain how many points has its answer obtained
         $points = 0;
         $answerCorrectness = false;
@@ -98,7 +100,7 @@ class QuestionController extends Controller
         /** @var User $user */
         $user = User::findOrFail(Auth::id());
 
-        abort_unless($question->isPublished(), 404);
+        abort_unless($question->isPublished() || $user->isAdmin(), 404);
 
         $response = $user->getResponseForQuestion($question);
 

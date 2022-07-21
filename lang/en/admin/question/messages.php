@@ -45,4 +45,13 @@ return [
 
     'un-publish_confirmation_button' => 'Yes, un-publish the question',
     'un-publish_confirmation_notice' => 'This question is published, if you proceed it will be un-published. It means that nobody will be able to access to it until you publish it again.',
+
+    'choices_unavailable' => 'There aren\'t choices yet. Consider adding at least two before publishing it.',
+
+    'danger_zone_section' => 'Danger Zone',
+    'delete_button' => 'Delete this question',
+    'delete_help' => 'Deleting a question doesn\'t affect the answers that the users did. But maybe you can <strong>change the status to draft</strong> instead. Once you delete a question, there is no going back. Please be certain.',
+    'delete_confirmation_warning' => 'This action <strong>cannot</strong> be undone. This will permanently delete the <strong>:name</strong> question.',
+    'delete_confirmation_button' => 'I understand the consequences, delete this question',
+
 ];

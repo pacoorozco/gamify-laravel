@@ -34,13 +34,6 @@ class QuestionPresenter extends Presenter
     /** @var Question */
     protected $model;
 
-    public function publicationDate(): string
-    {
-        return empty($this->model->publication_date)
-            ? ''
-            : $this->model->publication_date->format('Y-m-d H:i');
-    }
-
     public function publicUrl(): string
     {
         return route('questions.show', ['questionname' => $this->model->short_name]);
@@ -66,6 +59,7 @@ class QuestionPresenter extends Presenter
      *
      * @param  string  $status
      * @param  string  $default
+     *
      * @return string
      */
     protected function mapStatusToLabel(string $status, string $default = 'label-default')
@@ -88,17 +82,17 @@ class QuestionPresenter extends Presenter
      */
     public function visibilityBadge(): HtmlString
     {
-        if ($this->model->hidden == true) {
-            return new HtmlString(sprintf(
-                '<span class="label label-default">%s</span>',
-                trans('admin/question/model.hidden_yes')
-            ));
-        }
+        return new HtmlString($this->model->hidden
+            ? '<span class="label label-default">' . trans('admin/question/model.hidden_yes') . '</span>'
+            : ''
+        );
+    }
 
-        return new HtmlString(sprintf(
-            '<span class="label label-default hidden">%s</span>',
-            trans('admin/question/model.hidden_no')
-        ));
+    public function visibility(): string
+    {
+        return $this->model->hidden
+            ? trans('admin/question/model.hidden_yes')
+            : trans('admin/question/model.hidden_no');
     }
 
     /**
@@ -151,4 +145,23 @@ class QuestionPresenter extends Presenter
             (string) $this->model->type,
         ));
     }
+
+    public function publicationDateDescription(): string
+    {
+        return match ($this->model->status) {
+            Question::PUBLISH_STATUS => trans('admin/question/model.published_on',
+                ['datetime' => $this->publicationDate()]),
+            Question::FUTURE_STATUS => trans('admin/question/model.scheduled_for',
+                ['datetime' => $this->publicationDate()]),
+            default => trans('admin/question/model.published_not_yet'),
+        };
+    }
+
+    public function publicationDate(): string
+    {
+        return empty($this->model->publication_date)
+            ? ''
+            : $this->model->publication_date->format('Y-m-d H:i');
+    }
+
 }

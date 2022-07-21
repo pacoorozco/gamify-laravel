@@ -58,7 +58,6 @@ class AdminQuestionControllerTest extends TestCase
             ['protocol' => 'GET', 'route' => route('admin.questions.show', $question)],
             ['protocol' => 'GET', 'route' => route('admin.questions.edit', $question)],
             ['protocol' => 'PUT', 'route' => route('admin.questions.update', $question)],
-            ['protocol' => 'GET', 'route' => route('admin.questions.delete', $question)],
             ['protocol' => 'DELETE', 'route' => route('admin.questions.destroy', $question)],
         ];
 
@@ -255,18 +254,6 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function delete_returns_proper_content()
-    {
-        /** @var Question $question */
-        $question = Question::factory()->create();
-
-        $this->get(route('admin.questions.delete', $question))
-            ->assertOk()
-            ->assertViewIs('admin.question.delete')
-            ->assertSee($question->name);
-    }
-
-    /** @test */
     public function destroy_deletes_an_object()
     {
         /** @var Question $question */
@@ -278,28 +265,5 @@ class AdminQuestionControllerTest extends TestCase
             ->assertSessionHas('success');
 
         $this->assertSoftDeleted($question);
-    }
-
-    /** @test */
-    public function data_returns_proper_content()
-    {
-        Question::factory()
-            ->count(3)
-            ->create();
-
-        $this->withoutMiddleware(OnlyAjax::class)
-            ->get(route('admin.questions.data'))
-            ->assertJsonCount(3, 'data');
-    }
-
-    /** @test */
-    public function data_fails_for_non_ajax_calls()
-    {
-        Question::factory()
-            ->count(3)
-            ->create();
-
-        $this->get(route('admin.questions.data'))
-            ->assertForbidden();
     }
 }

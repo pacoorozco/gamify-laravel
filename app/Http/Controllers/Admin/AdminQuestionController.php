@@ -31,12 +31,10 @@ use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
 use Gamify\Models\Badge;
 use Gamify\Models\Question;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Yajra\DataTables\DataTables;
 
 class AdminQuestionController extends AdminController
 {
@@ -116,17 +114,13 @@ class AdminQuestionController extends AdminController
         }
     }
 
-    public function delete(Question $question): View
-    {
-        return view('admin/question/delete', [
-            'question' => $question,
-        ]);
-    }
-
     public function show(Question $question): View
     {
         return view('admin/question/show', [
             'question' => $question,
+            'globalActions' => Badge::query()
+                ->withActuatorsIn(QuestionActuators::asArray())
+                ->get(),
         ]);
     }
 
@@ -201,37 +195,5 @@ class AdminQuestionController extends AdminController
 
         return redirect()->route('admin.questions.index')
             ->with('success', __('admin/question/messages.delete.success'));
-    }
-
-    public function data(Datatables $dataTable): JsonResponse
-    {
-        $question = Question::select([
-            'id',
-            'short_name',
-            'name',
-            'status',
-            'hidden',
-            'type',
-        ])->orderBy('name', 'ASC');
-
-        return $dataTable->eloquent($question)
-            ->editColumn('status', function (Question $question) {
-                return $question->present()->statusBadge . ' ' . $question->present()->visibilityBadge;
-            })
-            ->editColumn('name', function (Question $question) {
-                return $question->present()->name . ' ' . $question->present()->publicUrlLink;
-            })
-            ->editColumn('type', function (Question $question) {
-                return $question->present()->typeIcon;
-            })
-            ->addColumn('actions', function (Question $question) {
-                return view('admin/partials.actions_dd')
-                    ->with('model', 'questions')
-                    ->with('id', $question->id)
-                    ->render();
-            })
-            ->rawColumns(['actions', 'status', 'name', 'type'])
-            ->removeColumn(['id', 'hidden', 'short_name'])
-            ->toJson();
     }
 }

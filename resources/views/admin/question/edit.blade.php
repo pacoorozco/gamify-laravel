@@ -6,7 +6,6 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/question/title.question_edit') }}
-    <small>{{ $question->name }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
@@ -44,6 +43,18 @@
 
             <!-- general section -->
             <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h2 class="box-title">
+                        {{ $question->present()->name }}
+                    </h2>
+                    {{ $question->present()->visibilityBadge }}
+                    {{ $question->present()->statusBadge }}
+
+                    <a href="{{ $question->present()->public_url }}"
+                       class="btn btn-link pull-right" target="_blank">
+                        {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                    </a>
+                </div>
                 <div class="box-body">
 
                     <fieldset>
@@ -204,7 +215,7 @@
                             @if ($question->isPublished())
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#saveAsDraftConfirmationModal">
-                                    {{ __('button.save_as_draft') }} <i class="fa fa-floppy-o"></i>
+                                    {{ __('button.save_as_draft') }}
                                 </button>
                                 <!-- modal: saveAsDraftConfirmationModal -->
                                 <div class="modal fade" id="saveAsDraftConfirmationModal" tabindex="-1" role="dialog"
@@ -237,7 +248,7 @@
                                 </div>
                             @else
                                 <button type="button" class="btn btn-primary" id="submitDraftBtn">
-                                    {{ __('button.save_as_draft') }} <i class="fa fa-floppy-o"></i>
+                                    {{ __('button.save_as_draft') }}
                                 </button>
                             @endif
                         </div>
@@ -328,16 +339,17 @@
 
                 </div>
                 <div class="box-footer">
-                    <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
-                        <i class="fa fa-arrow-left"></i> {{ __('button.back') }}
-                    </a>
-                    <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
+                    <button type="submit" class="btn btn-success" id="submitPublishBtn">
                         @if ($question->isPublishedOrScheduled())
-                            {{ __('button.update') }} <i class="fa fa-pencil-square-o"></i>
+                            {{ __('button.update') }}
                         @else
-                            <i class="fa fa-paper-plane-o"></i> {{ __('button.publish') }}
+                            {{ __('button.publish') }}
                         @endif
                     </button>
+
+                    <a href="{{ route('admin.questions.index') }}" class="btn btn-link">
+                        {{ __('button.back') }}
+                    </a>
                 </div>
 
             </div>
@@ -369,10 +381,42 @@
             </div>
             <!-- ./ other information section -->
 
+            <!-- danger zone -->
+            <div class="box box-solid box-danger">
+                <div class="box-header">
+                    <strong>@lang('admin/question/messages.danger_zone_section')</strong>
+                </div>
+                <div class="box-body">
+                    <p><strong>@lang('admin/question/messages.delete_button')</strong></p>
+                    <p>@lang('admin/question/messages.delete_help')</p>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger"
+                                data-toggle="modal"
+                                data-target="#confirmationModal">
+                            @lang('admin/question/messages.delete_button')
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- ./danger zone -->
+
         </div>
     </div>
 
     {!! Form::close() !!}
+
+    <!-- confirmation modal -->
+    <x-modals.confirmation
+        action="{{ route('admin.questions.destroy', $question) }}"
+        confirmationText="{{ $question->name }}"
+        buttonText="{{ __('admin/question/messages.delete_confirmation_button') }}">
+
+        <div class="alert alert-warning" role="alert">
+            @lang('admin/question/messages.delete_confirmation_warning', ['name' => $question->name])
+        </div>
+    </x-modals.confirmation>
+    <!-- ./ confirmation modal -->
 @endsection
 
 {{-- Styles --}}
