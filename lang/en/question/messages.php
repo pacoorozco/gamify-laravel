@@ -26,8 +26,8 @@
 return [
     'explained_answer' => 'This is the explained answer:',
     'choice_score' => ':points points',
-    'single_choice' => 'These were the possible answers, only one choice was allowed:',
-    'multiple_choices' => 'These were the possible answers, multiple choices were allowed:',
+    'single_choice' => 'These were the possible answers, only one choice is allowed:',
+    'multiple_choices' => 'These were the possible answers, multiple choices are allowed:',
     'obtained_points' => 'Points obtained by answering this question',
     'send' => 'Send',
     'choices' => 'Choose your answer:',

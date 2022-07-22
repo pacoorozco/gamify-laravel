@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Update dependencies. ([#262][i262], [#263][i263], [#264][i264], [#265][i265], [#266][i266])
 - Protect the whole application to ensure users has verified their email address.
 - Protect user's profile edit through password confirmation.
+- The User, Level, Badge and Question screens has been refactored to make it more user friendly.
 ### Fixed
 - Error showing Badges with more than one actuator.
 - Issue when uploading badge images. ([#257][i257])

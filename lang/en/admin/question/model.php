@@ -45,11 +45,12 @@ return [
     'shuffle_choices_help' => 'If enabled, the order of the answers is randomly shuffled for each attempt.',
 
     'publication_date' => 'Publication date',
-    'publication_date_placeholder' => 'Leave it empty to publish immediately',
+    'publication_date_placeholder' => 'Leave it empty to publish immediately.',
     'publish_immediately' => 'Publish immediately',
-    'publish_on' => 'Publish on :datetime',
-    'published_on' => 'Published on :datetime',
-    'scheduled_for' => 'Scheduled for :datetime',
+    'publish_on' => 'Publish on :datetime.',
+    'published_on' => 'Published on :datetime.',
+    'scheduled_for' => 'Scheduled for :datetime.',
+    'published_not_yet' => 'Not published.',
 
     'hidden' => 'Visibility',
     'hidden_yes' => 'Private',
@@ -79,7 +80,9 @@ return [
     'choice_correctness' => 'Correctness',
 
     // Created / last saved
-    'created_by' => 'Created by :who on :when',
-    'updated_by' => 'Last saved by :who on :when',
+    'created_by' => 'Created by :who on :when.',
+    'updated_by' => 'Updated by :who on :when.',
+
+    'authored' => 'Authored',
 
 ];

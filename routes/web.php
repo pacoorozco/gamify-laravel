@@ -32,6 +32,7 @@ use Gamify\Http\Controllers\Admin\AdminLevelController;
 use Gamify\Http\Controllers\Admin\AdminLevelDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
 use Gamify\Http\Controllers\Admin\AdminQuestionController;
+use Gamify\Http\Controllers\Admin\AdminQuestionDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
 use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
@@ -109,11 +110,6 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
         ->middleware(['only.ajax'])
         ->name('users.data');
 
-    // TODO: To be removed
-    // Our special delete confirmation route - uses the show/details view.
-    Route::get('users/{users}/delete', [AdminUserController::class, 'delete'])
-        ->name('users.delete');
-
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
     Route::resource('users', AdminUserController::class);
@@ -128,13 +124,6 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
     Route::get('badges/data', AdminBadgeDataTablesController::class)
         ->middleware(['only.ajax'])
         ->name('badges.data');
-
-    // TODO: To be removed
-    // Our special delete confirmation route - uses the show/details view.
-    // NOTE: For model biding above to work - the plural parameter {badges} needs
-    // to be used.
-    Route::get('badges/{badges}/delete', [AdminBadgeController::class, 'delete'])
-        ->name('badges.delete');
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
@@ -151,13 +140,6 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
         ->middleware(['only.ajax'])
         ->name('levels.data');
 
-    // TODO: To be removed
-    // Our special delete confirmation route - uses the show/details view.
-    // NOTE: For model biding above to work - the plural parameter {badges} needs
-    // to be used.
-    Route::get('levels/{levels}/delete', [AdminLevelController::class, 'delete'])
-        ->name('levels.delete');
-
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy
     Route::resource('levels', AdminLevelController::class);
@@ -168,15 +150,9 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      */
 
     // DataTables Ajax route.
-    Route::get('questions/data', [AdminQuestionController::class, 'data'])
+    Route::get('questions/data', AdminQuestionDataTablesController::class)
         ->middleware(['only.ajax'])
         ->name('questions.data');
-
-    // Our special delete confirmation route - uses the show/details view.
-    // NOTE: For model biding above to work - the plural parameter {questions} needs
-    // to be used.
-    Route::get('questions/{questions}/delete', [AdminQuestionController::class, 'delete'])
-        ->name('questions.delete');
 
     // Nest routes to deal with actions
     Route::resource('questions.actions', AdminQuestionActionController::class)

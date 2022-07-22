@@ -11,10 +11,4 @@
                     class="fa fa-edit"></i>
         </button>
     </a>
-    <a href="{{ route('admin.' . $model . '.delete', $id) }}">
-        <button type="button" class="btn btn-xs btn-danger"
-                data-toggle="tooltip" data-placement="top" title="{{ __('general.delete') }}"><i
-                    class="fa fa-trash-o"></i>
-        </button>
-    </a>
 </div>
