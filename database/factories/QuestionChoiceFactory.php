@@ -44,7 +44,7 @@ class QuestionChoiceFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'text' => 'correct: ' . $attributes['text'],
+                'text' => 'correct: '.$attributes['text'],
             ];
         });
     }
@@ -53,7 +53,7 @@ class QuestionChoiceFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'text' => 'incorrect: ' . $attributes['text'],
+                'text' => 'incorrect: '.$attributes['text'],
                 'score' => -1 * $attributes['score'],
             ];
         });

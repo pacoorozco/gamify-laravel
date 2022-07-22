@@ -37,7 +37,7 @@ class LevelFactory extends Factory
         $color = $this->faker->unique()->safeColorName;
 
         return [
-            'name' => 'Level ' . $color,
+            'name' => 'Level '.$color,
             'required_points' => $this->faker->unique()->randomNumber() + 5,
             'active' => true,
         ];

@@ -178,7 +178,7 @@ class GameTest extends TestCase
         User::factory()
             ->count(5)
             ->sequence(fn ($sequence) => [
-                'name' => 'User ' . ($sequence->index + 1) * 10,
+                'name' => 'User '.($sequence->index + 1) * 10,
                 'experience' => ($sequence->index + 1) * 10,
             ])
             ->create();

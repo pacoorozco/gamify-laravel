@@ -40,7 +40,7 @@ return new class extends Migration
 
         $collation = match ($driver) {
             'pgsql' => '',
-            default => $charset . '_bin',
+            default => $charset.'_bin',
         };
 
         if (! Schema::connection($connection)->hasTable($taggableTagsTable)) {

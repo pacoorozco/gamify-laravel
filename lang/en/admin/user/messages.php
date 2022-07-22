@@ -25,12 +25,12 @@
 
 return [
 
-    'already_exists'          => 'User already exists!',
-    'does_not_exist'          => 'User does not exist.',
-    'login_required'          => 'The login field is required',
-    'password_required'       => 'The password is required.',
+    'already_exists' => 'User already exists!',
+    'does_not_exist' => 'User does not exist.',
+    'login_required' => 'The login field is required',
+    'password_required' => 'The password is required.',
     'password_does_not_match' => 'The passwords provided do not match.',
-    'roles_help'          => 'Select a role to assign to the user, remember that a user takes on the permissions of the role they are assigned.',
+    'roles_help' => 'Select a role to assign to the user, remember that a user takes on the permissions of the role they are assigned.',
 
     'create' => [
         'success' => 'User created successfully.',
@@ -38,12 +38,12 @@ return [
 
     'edit' => [
         'impossible' => 'You cannot edit yourself.',
-        'success'    => 'The user was edited successfully.',
+        'success' => 'The user was edited successfully.',
     ],
 
     'delete' => [
         'impossible' => 'You cannot delete yourself.',
-        'success'    => 'The user was deleted successfully.',
+        'success' => 'The user was deleted successfully.',
     ],
 
     'danger_zone_section' => 'Danger Zone',

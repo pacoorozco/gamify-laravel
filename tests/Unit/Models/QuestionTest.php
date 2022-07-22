@@ -95,7 +95,7 @@ class QuestionTest extends TestCase
         ];
 
         foreach ($test_data as $words => $want) {
-            $this->assertEquals($want, $m->excerpt($words), 'Test case: ' . $words . ' words.');
+            $this->assertEquals($want, $m->excerpt($words), 'Test case: '.$words.' words.');
         }
     }
 }

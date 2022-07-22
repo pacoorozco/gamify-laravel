@@ -37,6 +37,7 @@ class SocialAccountServiceTest extends TestCase
     use RefreshDatabase;
 
     const PROVIDER_NAME = 'testing-provider';
+
     const EXTERNAL_USER_ID = 'external-id';
 
     /** @test * */

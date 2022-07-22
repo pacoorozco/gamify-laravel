@@ -115,7 +115,7 @@ final class User extends Authenticatable implements MustVerifyEmail
             return $name;
         }
 
-        $uniqueUserName = Str::studly($name) . '-' . Str::random(2);
+        $uniqueUserName = Str::studly($name).'-'.Str::random(2);
 
         return self::generateUsername($uniqueUserName);
     }

@@ -253,9 +253,9 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
-        Storage::disk('public')->assertExists('avatars/' . $file->hashName());
+        Storage::disk('public')->assertExists('avatars/'.$file->hashName());
 
-        $this->assertEquals(Storage::url('avatars/' . $file->hashName()), $this->user->profile->avatarUrl);
+        $this->assertEquals(Storage::url('avatars/'.$file->hashName()), $this->user->profile->avatarUrl);
     }
 
     /** @test */

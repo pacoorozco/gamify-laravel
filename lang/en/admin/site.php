@@ -25,12 +25,12 @@
 
 return [
     'dashboard' => 'Dashboard',
-    'users'     => 'Users',
-    'roles'     => 'Roles',
-    'badges'    => 'Badges',
-    'levels'    => 'Levels',
+    'users' => 'Users',
+    'roles' => 'Roles',
+    'badges' => 'Badges',
+    'levels' => 'Levels',
     'questions' => 'Questions',
-    'rewards'   => 'Rewards',
+    'rewards' => 'Rewards',
     'play_area' => 'Go to play area',
 
 ];

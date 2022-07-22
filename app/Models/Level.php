@@ -73,7 +73,9 @@ class Level extends Model
             'file_input' => 'image',
         ],
     ];
+
     protected string $presenter = LevelPresenter::class;
+
     protected $fillable = [
         'name',
         'required_points',

@@ -60,7 +60,7 @@ class UserPresenter extends Presenter
     public function adminLabel(): HtmlString
     {
         return new HtmlString($this->model->isAdmin()
-            ? '<span class="label label-warning">' . $this->role() . '</span>'
+            ? '<span class="label label-warning">'.$this->role().'</span>'
             : ''
         );
     }
