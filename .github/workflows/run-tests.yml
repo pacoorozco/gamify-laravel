@@ -1,4 +1,4 @@
-name: Testing with MySQL
+name: Tests Runner
 
 on:
   push:

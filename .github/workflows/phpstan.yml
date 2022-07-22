@@ -1,4 +1,4 @@
-name: PHPstan
+name: Static Code Analyzer
 
 on:
   push:
