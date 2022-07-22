@@ -72,7 +72,7 @@ class LevelPresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? $this->name()
-            : $this->name() . ' ' . $this->statusBadge()
+            : $this->name().' '.$this->statusBadge()
         );
     }
 
@@ -80,7 +80,7 @@ class LevelPresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? ''
-            : '<span class="label label-default">' . trans('general.disabled') . '</span>'
+            : '<span class="label label-default">'.trans('general.disabled').'</span>'
         );
     }
 }

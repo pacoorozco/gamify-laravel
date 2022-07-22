@@ -40,7 +40,9 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
 {
     /** Actuators based on question's events */
     const OnQuestionAnswered = 1 << 0;
+
     const OnQuestionCorrectlyAnswered = 1 << 1;
+
     const OnQuestionIncorrectlyAnswered = 1 << 2;
 
     /** Actuators based on user's events */

@@ -24,12 +24,12 @@
  */
 
 return [
-    'action'      => 'Badge',
-    'when'        => 'Fired',
+    'action' => 'Badge',
+    'when' => 'Fired',
     'when_values' => [
-        'always'    => 'Always',
-        'correct'   => 'On Correct',
+        'always' => 'Always',
+        'correct' => 'On Correct',
         'incorrect' => 'On Failed',
     ],
-    'actions'     => 'Delete',
+    'actions' => 'Delete',
 ];

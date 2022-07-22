@@ -42,7 +42,7 @@ class LevelSeeder extends Seeder
         foreach (range(1, 4) as $index) {
             Level::factory()
                 ->create([
-                    'name' => 'Level ' . $index,
+                    'name' => 'Level '.$index,
                     'required_points' => ($index * 10),
                 ]);
         }

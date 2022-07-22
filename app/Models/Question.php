@@ -72,11 +72,15 @@ class Question extends Model
     use HasFactory;
 
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
+
     const PUBLISH_STATUS = 'publish'; // Published.
+
     const PENDING_STATUS = 'pending'; // Awaiting a user with the publish_posts capability (typically a user assigned the Editor role) to publish.
+
     const FUTURE_STATUS = 'future';  // Scheduled to be published in a future date.
 
     const SINGLE_RESPONSE_TYPE = 'single'; // Only one answer is correct.
+
     const MULTI_RESPONSE_TYPE = 'multi'; // Multiple answers are correct.
 
     protected string $presenter = QuestionPresenter::class;

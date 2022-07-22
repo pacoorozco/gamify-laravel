@@ -50,7 +50,7 @@ class QuestionPresenter extends Presenter
         return new HtmlString(sprintf(
             '<span class="label %s">%s</span>',
             $this->mapStatusToLabel($this->model->status),
-            trans('admin/question/model.status_list.' . $this->model->status)
+            trans('admin/question/model.status_list.'.$this->model->status)
         ));
     }
 
@@ -82,7 +82,7 @@ class QuestionPresenter extends Presenter
     public function visibilityBadge(): HtmlString
     {
         return new HtmlString($this->model->hidden
-            ? '<span class="label label-default">' . trans('admin/question/model.hidden_yes') . '</span>'
+            ? '<span class="label label-default">'.trans('admin/question/model.hidden_yes').'</span>'
             : ''
         );
     }
@@ -140,7 +140,7 @@ class QuestionPresenter extends Presenter
     {
         return new HtmlString(sprintf(
             '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
-            trans('admin/question/model.type_list.' . $this->model->type),
+            trans('admin/question/model.type_list.'.$this->model->type),
             (string) $this->model->type,
         ));
     }

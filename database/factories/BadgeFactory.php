@@ -36,7 +36,7 @@ class BadgeFactory extends Factory
 
         return [
             'name' => $color,
-            'description' => 'This badge is for people who think about ' . $color . ' :D',
+            'description' => 'This badge is for people who think about '.$color.' :D',
             'required_repetitions' => 5,
             'active' => $this->faker->boolean,
             'actuators' => $this->faker->randomElement(BadgeActuators::getValues()),

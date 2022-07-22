@@ -37,6 +37,8 @@ final class QuestionActuators extends Enum implements LocalizedEnum
 {
     /** Actuators based on question's events */
     const OnQuestionAnswered = 1;
+
     const OnQuestionCorrectlyAnswered = 2;
+
     const OnQuestionIncorrectlyAnswered = 3;
 }
