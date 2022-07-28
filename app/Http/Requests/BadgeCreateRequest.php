@@ -95,6 +95,6 @@ class BadgeCreateRequest extends Request
 
     public function tags(): array
     {
-        return $this->input('tags');
+        return $this->input('tags', []);
     }
 }
