@@ -139,7 +139,7 @@ class AdminQuestionControllerTest extends TestCase
         ])->first();
 
         $this->assertInstanceOf(Question::class, $newQuestion);
-        $this->assertCount(3, $newQuestion->tags);
+        $this->assertEquals($input_data['tags'], $newQuestion->tagArray);
         $this->assertCount(2, $newQuestion->choices);
     }
 
@@ -185,13 +185,18 @@ class AdminQuestionControllerTest extends TestCase
             ->assertSee($question->name);
     }
 
-    /** @test */
-    public function update_edits_an_object()
-    {
+    /**
+     * @test
+     * @dataProvider providesTestCasesForEdition
+     */
+    public function update_edits_an_object(
+        array $want
+    ) {
         /** @var Question $question */
         $question = Question::factory()->create([
             'name' => 'Question gold',
         ]);
+        $question->tag(['tag1', 'tag2']);
 
         $input_data = [
             'name' => 'Question silver',
@@ -201,11 +206,7 @@ class AdminQuestionControllerTest extends TestCase
             'status' => $question->status,
 
             // Tags
-            'tags' => [
-                'tag_1',
-                'tag_2',
-                'tag_3',
-            ],
+            'tags' => $want['tags'],
 
             // Choices
             'choices' => [
@@ -229,8 +230,23 @@ class AdminQuestionControllerTest extends TestCase
 
         $this->assertInstanceOf(Question::class, $question);
         $this->assertEquals('Question silver', $question->name);
-        $this->assertCount(3, $question->tags);
+        $this->assertEquals($want['tags'], $question->tagArray);
         $this->assertCount(2, $question->choices);
+    }
+
+    public function providesTestCasesForEdition(): \Generator
+    {
+        yield 'tags are changed' => [
+            'want' => [
+                'tags' => ['foo', 'bar'],
+            ],
+        ];
+
+        yield 'tags are removed' => [
+            'want' => [
+                'tags' => [],
+            ],
+        ];
     }
 
     /** @test */

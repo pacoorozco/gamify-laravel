@@ -66,10 +66,7 @@ class AdminQuestionController extends AdminController
         try {
             $question->saveOrFail();
 
-            // Store tags
-            if ($request->has('tags')) {
-                $question->tag($request->input('tags'));
-            }
+            $question->tag($request->tags());
 
             // Store question choices
             if ($request->has('choices')) {
@@ -149,12 +146,7 @@ class AdminQuestionController extends AdminController
         try {
             $question->saveOrFail();
 
-            // Save Question Tags
-            if (is_array($request->tags())) {
-                $question->retag($request->tags());
-            } else {
-                $question->detag();
-            }
+            $question->retag($request->tags());
 
             // Save Question Choices
             if ($request->has('choices')) {
