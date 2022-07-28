@@ -133,7 +133,7 @@
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
                                                          :placeholder="__('admin/question/model.tags_help')"
-                                                         :selected-tags="old('tags', $question->tags->all())"
+                                                         :selected-tags="old('tags', $question->tagArray)"
                                                          class="form-control"
                                 />
                             </div>
