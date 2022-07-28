@@ -108,7 +108,12 @@
                         <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
                             {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
                             <div class="controls">
-                                {!! Form::select('tags[]', $availableTags, null, ['class' => 'form-control', 'multiple' => 'multiple', 'id' => 'tags']) !!}
+                                <x-tags.form-select-tags name="tags"
+                                                         :placeholder="__('admin/question/model.tags_help')"
+                                                         :available-tags="$availableTags"
+                                                         :selected-tags="old('tags', [])"
+                                                         class="form-control"
+                                />
                             </div>
                         </div>
                         <!-- ./ tags -->
@@ -268,8 +273,6 @@
 
 {{-- Styles --}}
 @push('styles')
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
           href="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
     <link rel="stylesheet"
@@ -279,22 +282,11 @@
 {{-- Scripts --}}
 @push('scripts')
     <script
-        src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
-    <script
         src="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
     <script
         src="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.full.min.js') }}"></script>
 
     <script>
-        $(function () {
-            $("#tags").select2({
-                tags: true,
-                placeholder: "{{ __('admin/question/model.tags_help') }}",
-                tokenSeparators: [',', ' '],
-                allowClear: true,
-                width: "100%"
-            });
-
             $('.editor').wysihtml5({
                 toolbar: {
                     "font-styles": false,
