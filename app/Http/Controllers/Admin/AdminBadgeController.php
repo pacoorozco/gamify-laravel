@@ -42,13 +42,15 @@ class AdminBadgeController extends AdminController
 
     public function store(BadgeCreateRequest $request): RedirectResponse
     {
-        Badge::create([
+        $badge = Badge::create([
             'name' => $request->name(),
             'description' => $request->description(),
             'required_repetitions' => $request->repetitions(),
             'active' => $request->active(),
             'actuators' => $request->actuators(),
         ]);
+
+        $badge->tag($request->tags());
 
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.create.success'));
@@ -85,6 +87,8 @@ class AdminBadgeController extends AdminController
             'active' => $request->active(),
             'actuators' => $request->actuators(),
         ]);
+
+        $badge->retag($request->tags());
 
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.update.success'));

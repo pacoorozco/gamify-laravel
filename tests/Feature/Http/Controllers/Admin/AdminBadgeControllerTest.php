@@ -118,6 +118,8 @@ class AdminBadgeControllerTest extends TestCase
         /** @var Badge $want */
         $want = Badge::factory()->make();
 
+        $wantTags = ['tag1', 'tag2'];
+
         $this
             ->actingAs($this->user)
             ->post(route('admin.badges.store'), [
@@ -126,17 +128,24 @@ class AdminBadgeControllerTest extends TestCase
                 'required_repetitions' => $want->required_repetitions,
                 'active' => $want->active,
                 'actuators' => $want->actuators->value,
+                'tags' => $wantTags,
             ])
             ->assertRedirect(route('admin.badges.index'))
             ->assertValid();
 
-        $this->assertDatabaseHas(Badge::class, [
-            'name' => $want->name,
-            'description' => $want->description,
-            'required_repetitions' => $want->required_repetitions,
-            'active' => $want->active,
-            'actuators' => $want->actuators,
-        ]);
+        $badge = Badge::query()
+            ->where([
+                'name' => $want->name,
+                'description' => $want->description,
+                'required_repetitions' => $want->required_repetitions,
+                'active' => $want->active,
+                'actuators' => $want->actuators,
+            ])
+            ->first();
+
+        $this->assertInstanceOf(Badge::class, $badge);
+
+        $this->assertEquals($wantTags, $badge->tagArray);
     }
 
     /**
@@ -314,8 +323,13 @@ class AdminBadgeControllerTest extends TestCase
         $this->assertModelExists($want);
     }
 
-    /** @test */
-    public function admins_should_update_badges(): void
+    /**
+     * @test
+     * @dataProvider providesDataForBadgeEdition
+     */
+    public function admins_should_update_badges(
+        array $wantData,
+    ): void
     {
         $this->user->role = Roles::Admin;
 
@@ -333,6 +347,7 @@ class AdminBadgeControllerTest extends TestCase
                 'required_repetitions' => $want->required_repetitions,
                 'active' => $want->active,
                 'actuators' => $want->actuators->value,
+                'tags' => $wantData['tags'],
             ])
             ->assertRedirect(route('admin.badges.index'))
             ->assertValid();
@@ -345,6 +360,23 @@ class AdminBadgeControllerTest extends TestCase
             'active' => $want->active,
             'actuators' => $want->actuators->value,
         ]);
+
+        $this->assertEquals($wantData['tags'], $badge->tagArray);
+    }
+
+    public function providesDataForBadgeEdition(): \Generator
+    {
+        yield 'tags are changed' => [
+            'want' => [
+                'tags' => ['foo', 'bar'],
+            ],
+        ];
+
+        yield 'tags are removed' => [
+            'want' => [
+                'tags' => [],
+            ],
+        ];
     }
 
     /**

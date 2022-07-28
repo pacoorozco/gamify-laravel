@@ -26,6 +26,7 @@
 namespace Gamify\Models;
 
 use BenSampo\Enum\Traits\QueriesFlaggedEnums;
+use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,6 +56,7 @@ class Badge extends Model
     use HasFactory;
     use Presentable;
     use QueriesFlaggedEnums;
+    use Taggable;
 
     const DEFAULT_IMAGE = '/images/missing_badge.png';
 
@@ -120,7 +122,7 @@ class Badge extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn($value) => $this->imageUrl()
         );
     }
 }

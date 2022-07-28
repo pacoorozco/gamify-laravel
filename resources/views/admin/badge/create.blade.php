@@ -85,6 +85,19 @@
                     </div>
                     <!-- ./ actuators -->
 
+                    <!-- tags -->
+                    <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
+                        {!! Form::label('tags', __('admin/badge/model.tags'), ['class' => 'control-label']) !!}
+                        <div class="controls">
+                            <x-tags.form-select-tags name="tags"
+                                                     :placeholder="__('admin/badge/model.tags_help')"
+                                                     :selected-tags="old('tags', [])"
+                                                     class="form-control"
+                            />
+                        </div>
+                    </div>
+                    <!-- ./ tags -->
+
                 </div>
                 <!-- ./left column -->
 
