@@ -45,14 +45,8 @@ class AdminQuestionController extends AdminController
 
     public function create(): View
     {
-        return view('admin.question.create', [
-            'availableTags' => Question::allTagModels()
-                ->pluck('name', 'normalized')
-                ->toArray(),
-            'globalActions' => Badge::query()
-                ->withActuatorsIn(QuestionActuators::asArray())
-                ->get(),
-        ]);
+        return view('admin.question.create')
+            ->with('globalActions', Badge::query()->withActuatorsIn(QuestionActuators::asArray())->get());
     }
 
     public function store(QuestionCreateRequest $request): RedirectResponse
@@ -134,7 +128,6 @@ class AdminQuestionController extends AdminController
 
         return view('admin/question/edit', [
             'question' => $question,
-            'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
             'selectedTags' => $question->tagArray,
             'availableActions' => $availableActions,
             'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
@@ -157,8 +150,8 @@ class AdminQuestionController extends AdminController
             $question->saveOrFail();
 
             // Save Question Tags
-            if (is_array($request->input('tags'))) {
-                $question->retag($request->input('tags'));
+            if (is_array($request->tags())) {
+                $question->retag($request->tags());
             } else {
                 $question->detag();
             }

@@ -90,8 +90,7 @@ class AdminQuestionControllerTest extends TestCase
     {
         $this->get(route('admin.questions.create'))
             ->assertOk()
-            ->assertViewIs('admin.question.create')
-            ->assertViewHasAll(['availableTags']);
+            ->assertViewIs('admin.question.create');
     }
 
     /** @test */

@@ -23,22 +23,29 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Unit\Views\Components\Tags;
+namespace Tests\Feature\Views\Components\Tags;
 
+use Gamify\Models\Question;
 use Gamify\View\Components\Tags\FormSelectTags;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class FormSelectTagsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function it_should_render_the_tags_component()
     {
+        // Create some tags by tagging a model.
         $wantAvailableTags = ['foo', 'bar'];
+
+        $question = Question::factory()->create();
+        $question->tag($wantAvailableTags);
 
         $this->component(FormSelectTags::class, [
             'name' => 'test',
             'placeholder' => '',
-            'availableTags' => $wantAvailableTags,
             'selectedTags' => [],
         ])
             ->assertSee('id="test"', false)

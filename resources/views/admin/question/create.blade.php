@@ -110,7 +110,6 @@
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
                                                          :placeholder="__('admin/question/model.tags_help')"
-                                                         :available-tags="$availableTags"
                                                          :selected-tags="old('tags', [])"
                                                          class="form-control"
                                 />

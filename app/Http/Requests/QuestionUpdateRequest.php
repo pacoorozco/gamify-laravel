@@ -98,4 +98,9 @@ class QuestionUpdateRequest extends Request
             ],
         ];
     }
+
+    public function tags(): array
+    {
+        return $this->input('tags', []);
+    }
 }
