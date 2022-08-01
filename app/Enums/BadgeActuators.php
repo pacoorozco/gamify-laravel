@@ -65,7 +65,6 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      * Only Question based actuators can be filtered.
      *
      * @param  string  $actuator
-     *
      * @return bool
      */
     public static function isTagsFiltered(string $actuator): bool
@@ -73,9 +72,9 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
         $actuator = self::coerce($actuator);
 
         return $actuator?->in([
-                self::OnQuestionAnswered,
-                self::OnQuestionCorrectlyAnswered,
-                self::OnQuestionIncorrectlyAnswered,
-            ]) ?? false;
+            self::OnQuestionAnswered,
+            self::OnQuestionCorrectlyAnswered,
+            self::OnQuestionIncorrectlyAnswered,
+        ]) ?? false;
     }
 }

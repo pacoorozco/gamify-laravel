@@ -329,8 +329,7 @@ class AdminBadgeControllerTest extends TestCase
      */
     public function admins_should_update_badges(
         array $wantData,
-    ): void
-    {
+    ): void {
         $this->user->role = Roles::Admin;
 
         /** @var Badge $badge */
@@ -364,7 +363,7 @@ class AdminBadgeControllerTest extends TestCase
         $this->assertEquals($wantData['tags'], $badge->tagArray);
     }
 
-    public function providesDataForBadgeEdition(): \Generator
+    public function providesDataForBadgeEdition(): Generator
     {
         yield 'tags are changed' => [
             'want' => [

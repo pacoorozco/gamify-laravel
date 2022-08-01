@@ -52,5 +52,4 @@ class FormSelectTagsTest extends TestCase
             ->assertSee('name="test[]"', false)
             ->assertSeeTextInOrder($wantAvailableTags);
     }
-
 }

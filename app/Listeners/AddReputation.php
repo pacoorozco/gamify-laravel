@@ -28,13 +28,11 @@ namespace Gamify\Listeners;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Libs\Game\Game;
 
+/**
+ * Add XP to a user when a Question has been answered.
+ */
 class AddReputation
 {
-    public function __construct()
-    {
-        //
-    }
-
     public function handle(QuestionAnswered $event): void
     {
         // Add XP to user

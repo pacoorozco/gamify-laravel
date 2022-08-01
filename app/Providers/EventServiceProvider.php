@@ -27,7 +27,6 @@ namespace Gamify\Providers;
 
 use Gamify\Events\PointCreated;
 use Gamify\Events\QuestionAnswered;
-use Gamify\Listeners\AddAchievements;
 use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
@@ -58,7 +57,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         QuestionAnswered::class => [
             AddReputation::class,
-            AddAchievements::class,
             IncrementBadgesOnQuestionAnswered::class,
         ],
         PointCreated::class => [

@@ -27,7 +27,6 @@ class FormSelectTags extends Component
      * Determine if the given tag is one of the currently selected tags.
      *
      * @param  string  $tag
-     *
      * @return bool
      */
     public function isSelected(string $tag): bool
