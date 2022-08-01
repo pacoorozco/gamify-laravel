@@ -44,12 +44,12 @@ class BadgePresenter extends Presenter
     {
         return [
             BadgeActuators::None()->value => BadgeActuators::None()->description,
-            trans('admin/badge/model.actuators_related_with_question_events') => [
+            trans('enums.actuators_related_with_question_events') => [
                 BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
                 BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
                 BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
             ],
-            trans('admin/badge/model.actuators_related_with_user_events') => [
+            trans('enums.actuators_related_with_user_events') => [
                 BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
             ],
         ];

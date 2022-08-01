@@ -29,10 +29,16 @@ use Gamify\Enums\Roles;
 
 return [
 
+    'actuators_related_with_question_events' => 'Question related events',
+    'actuators_related_with_user_events' => 'User related events',
+
     BadgeActuators::class => [
+        BadgeActuators::None => 'None, I will trigger it by my own',
+
         BadgeActuators::OnQuestionAnswered => 'Question has been answered',
         BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
         BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
+
         BadgeActuators::OnUserLogin => 'User has logged in',
     ],
 

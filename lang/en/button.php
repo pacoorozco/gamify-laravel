@@ -35,8 +35,8 @@ return [
     'actions' => 'Actions',
     'submit' => 'Submit',
 
-    'pick_image' => 'Pick Image',
-    'delete_image' => 'Delete',
+    'pick_image' => 'Select image',
+    'delete_image' => 'Remove',
     'upload_image' => 'Change',
 
     'publish' => 'Publish',
