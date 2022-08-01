@@ -5,24 +5,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+> NOTE: The way that a Badge is triggered after a Question is answered has changed. Currently, Questions will trigger the completion of the Badge that contains, at least, on matching tag.
+
 ### Added
 - Dispatched event `UserProfileUpdated` when the user's profile has been modified.
 - Add password validation: min. 8 characters, including mixed cased letters, numbers and symbols.
 - Forgot password capability to allow users to recover their accounts..([#284][i284])
 - Implement user's registration, in order to allow users to register themselves.
 - User's notifications after user creation/registration.
+- Badges can be tagged in order to filter which Questions will trigger the completion. ([#309][i309])
 ### Changed
 - Remove sensible information (like gender, url, phone...) from the user's profile. ([#256][i256])
 - Fix HTTP method for the user's profile update to `PUT`.
 - Update dependencies. ([#262][i262], [#263][i263], [#264][i264], [#265][i265], [#266][i266])
 - Protect the whole application to ensure users has verified their email address.
 - Protect user's profile edit through password confirmation.
-- The User, Level, Badge and Question screens has been refactored to make it more user friendly.
+- The User, Level, Badge and Question screens has been refactored to make it more user-friendly.
+- 
 ### Fixed
 - Error showing Badges with more than one actuator.
 - Issue when uploading badge images. ([#257][i257])
 ### Removed
 - Admins can't create or modify user's password in favor of **Forgot password** capability. ([#285][i285]) 
+- Question's actions has been removed in favor of the use of Tagging. ([#309][i309])
 
 [i285]: https://github.com/pacoorozco/gamify-laravel/issues/285
 [i284]: https://github.com/pacoorozco/gamify-laravel/issues/284
@@ -33,6 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 [i264]: https://github.com/pacoorozco/gamify-laravel/pull/264
 [i265]: https://github.com/pacoorozco/gamify-laravel/pull/265
 [i266]: https://github.com/pacoorozco/gamify-laravel/pull/266
+[i309]: https://github.com/pacoorozco/gamify-laravel/issues/309
 
 ## 3.0.0 - 2022-06-21
 
