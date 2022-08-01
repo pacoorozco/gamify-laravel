@@ -117,16 +117,9 @@ class AdminQuestionController extends AdminController
 
     public function edit(Question $question): View
     {
-        $availableActions = [];
-        // get actions that hasn't not been used
-        foreach ($question->getAvailableActions() as $action) {
-            $availableActions[$action->id] = $action->name;
-        }
-
         return view('admin/question/edit', [
             'question' => $question,
             'selectedTags' => $question->tagArray,
-            'availableActions' => $availableActions,
             'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
         ]);
     }

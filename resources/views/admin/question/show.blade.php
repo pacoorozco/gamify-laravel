@@ -117,14 +117,7 @@
                                 @foreach($globalActions as $badge)
                                     <tr>
                                         <td>{{ $badge->name }}</td>
-                                        <td>{{ $badge->actuators->description }} (Global)</td>
-                                    </tr>
-                                @endforeach
-
-                                @foreach ($question->actions as $action)
-                                    <tr>
-                                        <td>{{ \Gamify\Models\Badge::findOrFail($action->badge_id)->name }}</td>
-                                        <td>{{ \Gamify\Enums\QuestionActuators::getDescription($action->when) }}</td>
+                                        <td>{{ $badge->actuators->description }}</td>
                                     </tr>
                                 @endforeach
 

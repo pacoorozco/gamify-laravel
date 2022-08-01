@@ -30,11 +30,6 @@ use Illuminate\Validation\Rule;
 
 class QuestionUpdateRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         /** @var Question $question */
@@ -85,16 +80,6 @@ class QuestionUpdateRequest extends Request
             'tags.*' => [
                 'required',
                 'alpha_dash',
-            ],
-
-            // Choices
-            'choices.*.text' => [
-                'required',
-                'string',
-            ],
-            'choices.*.score' => [
-                'required',
-                'integer',
             ],
         ];
     }

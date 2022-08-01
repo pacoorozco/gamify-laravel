@@ -130,26 +130,6 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_the_actions_for_correct_answer()
-    {
-        /** @var Question $question */
-        $question = Question::factory()->create();
-
-        /** @var Badge $badge */
-        $badge = Badge::factory()->create();
-
-        $question->actions()->create([
-            'when' => BadgeActuators::OnQuestionAnswered,
-            'badge_id' => $badge->id,
-        ]);
-
-        $got = $question->getActionableBadgesForCorrectness(true);
-
-        $this->assertInstanceOf(Collection::class, $got);
-        $this->assertCount(1, $got);
-    }
-
-    /** @test */
     public function it_should_return_true_if_question_can_be_published()
     {
         /** @var Question $question */

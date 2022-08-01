@@ -78,16 +78,6 @@ class QuestionCreateRequest extends Request
                 'required',
                 'alpha_dash',
             ],
-
-            // Choices
-            'choices.*.text' => [
-                'required',
-                'string',
-            ],
-            'choices.*.score' => [
-                'required',
-                'integer',
-            ],
         ];
     }
 
