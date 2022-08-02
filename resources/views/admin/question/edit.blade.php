@@ -314,20 +314,38 @@
                 </div>
                 <div class="box-body">
 
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>{{ __('admin/action/table.action') }}</th>
-                            <th>{{ __('admin/action/table.when') }}</th>
-                        </tr>
+                    <dl>
+                        <dt>{{ __('admin/question/model.tags') }}</dt>
+                        <dd>
+                            @forelse($question->tagArray as $tag)
+                                <span class="label label-primary">{{ $tag }}</span>
+                            @empty
+                                {{ __('admin/question/model.tags_none') }}
+                            @endforelse
+                        </dd>
+                    </dl>
 
-                        @foreach($globalActions as $badge)
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{ __('admin/badge/model.name') }}</th>
+                            <th>{{ __('admin/badge/model.actuators') }}</th>
+                            <th>{{ __('admin/badge/model.tags') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($relatedBadges as $badge)
                             <tr>
                                 <td>{{ $badge->name }}</td>
                                 <td>{{ $badge->actuators->description }}</td>
+                                <td>
+                                    @foreach($badge->matchingTags($question->tagArray) as $tag)
+                                        <span class="label label-primary">{{ $tag }}</span>
+                                    @endforeach
+                                </td>
                             </tr>
                         @endforeach
-
                         </tbody>
                     </table>
 

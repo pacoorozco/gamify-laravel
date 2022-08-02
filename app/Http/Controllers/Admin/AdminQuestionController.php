@@ -33,6 +33,7 @@ use Gamify\Models\Badge;
 use Gamify\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -45,8 +46,7 @@ class AdminQuestionController extends AdminController
 
     public function create(): View
     {
-        return view('admin.question.create')
-            ->with('globalActions', Badge::query()->withActuatorsIn(QuestionActuators::asArray())->get());
+        return view('admin.question.create');
     }
 
     public function store(QuestionCreateRequest $request): RedirectResponse
@@ -107,20 +107,22 @@ class AdminQuestionController extends AdminController
 
     public function show(Question $question): View
     {
-        return view('admin/question/show', [
-            'question' => $question,
-            'globalActions' => Badge::query()
-                ->withActuatorsIn(QuestionActuators::asArray())
-                ->get(),
-        ]);
+        return view('admin.question.show')
+            ->with('question', $question)
+            ->with('relatedBadges', $this->relatedBadgesForQuestion($question));
+    }
+
+    private function relatedBadgesForQuestion(Question $question): Collection
+    {
+        return Badge::triggeredByQuestionsWithTagsIn($question->tagArray);
     }
 
     public function edit(Question $question): View
     {
-        return view('admin/question/edit', [
+        return view('admin.question.edit', [
             'question' => $question,
             'selectedTags' => $question->tagArray,
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
+            'relatedBadges' => $this->relatedBadgesForQuestion($question),
         ]);
     }
 

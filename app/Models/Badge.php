@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
@@ -101,6 +102,24 @@ class Badge extends Model
 
     protected bool $autoUploadImages = true;
 
+    public static function triggeredByQuestionsWithTagsIn(array $tags): Collection
+    {
+        return self::query()
+            ->active()
+            ->hasAnyFlags('actuators', BadgeActuators::triggeredByQuestions())
+            ->when($tags, function ($query) use ($tags) {
+                $query->withAnyTags($tags);
+            }, function ($query) {
+                $query->isNotTagged();
+            })
+            ->get();
+    }
+
+    public function matchingTags(array $tags): array
+    {
+        return array_intersect($this->tagArray, $tags);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);
@@ -122,7 +141,7 @@ class Badge extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn($value) => $this->imageUrl()
         );
     }
 }

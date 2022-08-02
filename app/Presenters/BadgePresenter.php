@@ -26,6 +26,7 @@
 namespace Gamify\Presenters;
 
 use Gamify\Enums\BadgeActuators;
+use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
@@ -66,7 +67,7 @@ class BadgePresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? $this->name()
-            : $this->name().' '.$this->statusBadge()
+            : $this->name() . ' ' . $this->statusBadge()
         );
     }
 
@@ -79,7 +80,7 @@ class BadgePresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? ''
-            : '<span class="label label-default">'.trans('general.disabled').'</span>'
+            : '<span class="label label-default">' . trans('general.disabled') . '</span>'
         );
     }
 
