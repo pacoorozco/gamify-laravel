@@ -94,6 +94,21 @@
                     </dl>
                     <!-- ./ actuators -->
 
+                    @if(\Gamify\Enums\BadgeActuators::canBeFiltered($badge->actuators))
+                    <dl>
+                        <!-- tags -->
+                        <dt>{{ __('admin/badge/model.tags') }}</dt>
+                        <dd>
+                            @forelse($badge->tagArray as $tag)
+                                <span class="label label-primary">{{ $tag }}</span>
+                            @empty
+                                {{ __('admin/badge/model.tags_none') }}
+                            @endforelse
+                        </dd>
+                        <!-- ./ tags -->
+                    </dl>
+                    @endif
+
                     <!-- Activation Status -->
                     <dl>
                         <dt>

@@ -73,18 +73,12 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      * Returns if the provided $actuator can be filtered by Tags.
      * Only Question based actuators can be filtered.
      *
-     * @param  string  $actuator
+     * @param  \Gamify\Enums\BadgeActuators  $actuator
      *
      * @return bool
      */
-    public static function isTagsFiltered(string $actuator): bool
+    public static function canBeFiltered(BadgeActuators $actuator): bool
     {
-        $actuator = self::coerce($actuator);
-
-        return $actuator?->in([
-                self::OnQuestionAnswered,
-                self::OnQuestionCorrectlyAnswered,
-                self::OnQuestionIncorrectlyAnswered,
-            ]) ?? false;
+        return $actuator->in(self::triggeredByQuestions()) ?? false;
     }
 }

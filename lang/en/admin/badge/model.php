@@ -40,4 +40,5 @@ return [
     'tags' => 'Tags',
     'tags_placeholder' => 'Enter the tags separated by commas.',
     'tags_help' => 'Only the questions matching with one of these tags will trigger the completion of the badge.',
+    'tags_none' => 'None',
 ];
