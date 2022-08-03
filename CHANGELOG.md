@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 3.1.0 - 2022-08-03
+
 > NOTE: The way that a Badge is triggered after a Question is answered has changed. Currently, Questions will trigger the completion of the Badge that contains, at least, on matching tag.
 
 ### Added
@@ -21,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Protect the whole application to ensure users has verified their email address.
 - Protect user's profile edit through password confirmation.
 - The User, Level, Badge and Question screens has been refactored to make it more user-friendly.
-- 
+- Improved test coverage.
 ### Fixed
 - Error showing Badges with more than one actuator.
 - Issue when uploading badge images. ([#257][i257])
