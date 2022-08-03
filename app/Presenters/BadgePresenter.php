@@ -25,8 +25,6 @@
 
 namespace Gamify\Presenters;
 
-use Gamify\Enums\BadgeActuators;
-use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Laracodes\Presenter\Presenter;
 
@@ -34,27 +32,6 @@ class BadgePresenter extends Presenter
 {
     /** @var \Gamify\Models\Badge */
     protected $model;
-
-    /**
-     * Returns an array of values to be used on <select>. It's filtering some actuators and adding <optgroups> to group
-     * them.
-     *
-     * @return array
-     */
-    public static function actuatorsSelect(): array
-    {
-        return [
-            BadgeActuators::None()->value => BadgeActuators::None()->description,
-            trans('enums.actuators_related_with_question_events') => [
-                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
-                BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
-                BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
-            ],
-            trans('enums.actuators_related_with_user_events') => [
-                BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
-            ],
-        ];
-    }
 
     public function status(): string
     {
@@ -67,7 +44,7 @@ class BadgePresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? $this->name()
-            : $this->name() . ' ' . $this->statusBadge()
+            : $this->name().' '.$this->statusBadge()
         );
     }
 
@@ -80,7 +57,7 @@ class BadgePresenter extends Presenter
     {
         return new HtmlString($this->model->active
             ? ''
-            : '<span class="label label-default">' . trans('general.disabled') . '</span>'
+            : '<span class="label label-default">'.trans('general.disabled').'</span>'
         );
     }
 

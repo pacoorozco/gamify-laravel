@@ -90,9 +90,9 @@ class BadgeUpdateRequest extends Request
         return $this->input('active');
     }
 
-    public function actuators(): BadgeActuators
+    public function actuators(): string
     {
-        return BadgeActuators::fromValue($this->input('actuators'));
+        return $this->input('actuators');
     }
 
     public function tags(): array

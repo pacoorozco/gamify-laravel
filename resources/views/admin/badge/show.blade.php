@@ -82,19 +82,12 @@
                             {{ __('admin/badge/model.actuators') }}
                         </dt>
                         <dd>
-                            <ul class="list-unstyled">
-                                @forelse($badge->present()->actuators as $actuator)
-                                    <li>{{ $actuator->description }}</li>
-                                @empty
-                                    <li>{{ __('general.none') }}</li>
-                                @endforelse
-                            </ul>
-
+                            {{ $badge->actuators->description }}
                         </dd>
                     </dl>
                     <!-- ./ actuators -->
 
-                    @if(\Gamify\Enums\BadgeActuators::canBeFiltered($badge->actuators))
+                    @if(\Gamify\Enums\BadgeActuators::canBeTagged($badge->actuators))
                     <dl>
                         <!-- tags -->
                         <dt>{{ __('admin/badge/model.tags') }}</dt>

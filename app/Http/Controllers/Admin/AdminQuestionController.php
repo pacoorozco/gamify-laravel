@@ -25,7 +25,6 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Enums\QuestionActuators;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;

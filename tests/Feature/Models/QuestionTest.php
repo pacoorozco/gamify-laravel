@@ -25,13 +25,10 @@
 
 namespace Tests\Feature\Models;
 
-use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
-use Gamify\Models\Badge;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;

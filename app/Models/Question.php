@@ -262,7 +262,7 @@ class Question extends Model
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 

@@ -34,7 +34,7 @@ return [
 
     'image_help' => 'Image will be used as 220px, 128px and 64px squared sizes.',
 
-    'actuators' => 'Events',
+    'actuators' => 'Event',
     'actuators_help' => 'The badge will listen to the selected event and add one repetition. Or you can trigger it by your own.',
 
     'tags' => 'Tags',

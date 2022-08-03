@@ -81,7 +81,7 @@
                         <div class="form-group {{ $errors->has('actuators') ? 'has-error' : '' }}">
                             {!! Form::label('actuators', __('admin/badge/model.actuators'), ['class' => 'control-label']) !!}
                             <div class="controls">
-                                {!! Form::select('actuators', $actuators_list, $selected_actuators, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::select('actuators', \Gamify\Enums\BadgeActuators::toSelectArray(), null, ['class' => 'form-control', 'required' => 'required']) !!}
                                 <p class="text-muted">{{ __('admin/badge/model.actuators_help') }}</p>
                                 <span class="help-block">{{ $errors->first('actuators', ':message') }}</span>
                             </div>
@@ -89,7 +89,7 @@
                         <!-- ./ actuators -->
 
                         <!-- tags -->
-                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}" id="tags-selector">
                             {!! Form::label('tags', __('admin/badge/model.tags'), ['class' => 'control-label']) !!}
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
@@ -188,4 +188,35 @@
 @push('scripts')
     <script
         src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
+
+    <script>
+        $(function () {
+
+            $('#actuators').change(function () {
+                $(this).find("option:selected").each(function () {
+                    let optionValue = parseInt($(this).attr("value"));
+                    if (isTaggable(optionValue)) {
+                        enableTags();
+                    } else {
+                        disableTags();
+                    }
+                });
+            }).change();
+
+            function isTaggable(value) {
+                return !($.inArray(value, [{{ \Gamify\Enums\BadgeActuators::triggeredByQuestionsList() }}]) === -1);
+            }
+
+            function enableTags() {
+                $('#tags-selector').show();
+                $('#tags').prop('disabled', false)
+            }
+
+            function disableTags() {
+                $('#tags-selector').hide();
+                $('#tags').prop('disabled', true)
+            }
+
+        });
+    </script>
 @endpush

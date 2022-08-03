@@ -27,7 +27,7 @@ namespace Gamify\Enums;
 
 use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\FlaggedEnum;
-use Gamify\Presenters\BadgePresenter;
+use Illuminate\Support\Arr;
 
 /**
  * @method static static OnQuestionAnswered()
@@ -52,12 +52,25 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      * Returns an array of values to be used on <select> with <optgroups> and filtered options.
      *
      * @return array
-     *
-     * @see BadgePresenter::actuatorsSelect()
      */
     public static function toSelectArray(): array
     {
-        return BadgePresenter::actuatorsSelect();
+        return [
+            BadgeActuators::None()->value => BadgeActuators::None()->description,
+            trans('enums.actuators_related_with_question_events') => [
+                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
+                BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
+                BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
+            ],
+            trans('enums.actuators_related_with_user_events') => [
+                BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
+            ],
+        ];
+    }
+
+    public static function triggeredByQuestionsList(): string
+    {
+        return Arr::join(self::triggeredByQuestions(), ',');
     }
 
     public static function triggeredByQuestions(): array
@@ -74,11 +87,10 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      * Only Question based actuators can be filtered.
      *
      * @param  \Gamify\Enums\BadgeActuators  $actuator
-     *
      * @return bool
      */
-    public static function canBeFiltered(BadgeActuators $actuator): bool
+    public static function canBeTagged(BadgeActuators $actuator): bool
     {
-        return $actuator->in(self::triggeredByQuestions()) ?? false;
+        return $actuator->in(self::triggeredByQuestions());
     }
 }
