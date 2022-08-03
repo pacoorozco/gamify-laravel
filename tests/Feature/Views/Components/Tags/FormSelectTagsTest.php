@@ -23,22 +23,33 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Database\Factories;
+namespace Tests\Feature\Views\Components\Tags;
 
-use Gamify\Enums\QuestionActuators;
-use Gamify\Models\Badge;
-use Gamify\Models\QuestionAction;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Gamify\Models\Question;
+use Gamify\View\Components\Tags\FormSelectTags;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class QuestionActionFactory extends Factory
+class FormSelectTagsTest extends TestCase
 {
-    protected $model = QuestionAction::class;
+    use RefreshDatabase;
 
-    public function definition(): array
+    /** @test */
+    public function it_should_render_the_tags_component()
     {
-        return [
-            'when' => QuestionActuators::getRandomInstance(),
-            'badge_id' => Badge::factory(),
-        ];
+        // Create some tags by tagging a model.
+        $wantAvailableTags = ['foo', 'bar'];
+
+        $question = Question::factory()->create();
+        $question->tag($wantAvailableTags);
+
+        $this->component(FormSelectTags::class, [
+            'name' => 'test',
+            'placeholder' => '',
+            'selectedTags' => [],
+        ])
+            ->assertSee('id="test"', false)
+            ->assertSee('name="test[]"', false)
+            ->assertSeeTextInOrder($wantAvailableTags);
     }
 }

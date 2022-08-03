@@ -31,13 +31,11 @@ use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 
+/**
+ * Trigger Badges with an actuator related to Questions (OnQuestion[*]) and the mathcing tags.
+ */
 class IncrementBadgesOnQuestionAnswered
 {
-    public function __construct()
-    {
-        //
-    }
-
     public function handle(QuestionAnswered $event): void
     {
         /** @var User $user */
@@ -48,11 +46,13 @@ class IncrementBadgesOnQuestionAnswered
             ($event->correctness === true)
                 ? BadgeActuators::OnQuestionCorrectlyAnswered
                 : BadgeActuators::OnQuestionIncorrectlyAnswered,
-        ])->get();
-
-        $badges = $badges->merge(
-            $event->question->getActionableBadgesForCorrectness($event->correctness)
-        );
+        ])
+            ->when($event->question->tagArray, function ($query) use ($event) {
+                $query->withAnyTags($event->question->tagArray);
+            }, function ($query) {
+                $query->isNotTagged();
+            })
+            ->get();
 
         Game::incrementManyBadgesCount($user, $badges);
     }

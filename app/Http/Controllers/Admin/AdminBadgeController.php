@@ -28,9 +28,7 @@ namespace Gamify\Http\Controllers\Admin;
 use Gamify\Http\Requests\BadgeCreateRequest;
 use Gamify\Http\Requests\BadgeUpdateRequest;
 use Gamify\Models\Badge;
-use Gamify\Presenters\BadgePresenter;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\View\View;
 
 class AdminBadgeController extends AdminController
@@ -42,7 +40,7 @@ class AdminBadgeController extends AdminController
 
     public function store(BadgeCreateRequest $request): RedirectResponse
     {
-        Badge::create([
+        $badge = Badge::create([
             'name' => $request->name(),
             'description' => $request->description(),
             'required_repetitions' => $request->repetitions(),
@@ -50,16 +48,15 @@ class AdminBadgeController extends AdminController
             'actuators' => $request->actuators(),
         ]);
 
+        $badge->tag($request->tags());
+
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.create.success'));
     }
 
     public function create(): View
     {
-        return view('admin.badge.create', [
-            'actuators_list' => BadgePresenter::actuatorsSelect(),
-            'selected_actuators' => null,
-        ]);
+        return view('admin.badge.create');
     }
 
     public function show(Badge $badge): View
@@ -71,9 +68,7 @@ class AdminBadgeController extends AdminController
     public function edit(Badge $badge): View
     {
         return view('admin.badge.edit')
-            ->with('badge', $badge)
-            ->with('actuators_list', BadgePresenter::actuatorsSelect())
-            ->with('selected_actuators', Arr::pluck($badge->present()->actuators, 'value'));
+            ->with('badge', $badge);
     }
 
     public function update(BadgeUpdateRequest $request, Badge $badge): RedirectResponse
@@ -85,6 +80,8 @@ class AdminBadgeController extends AdminController
             'active' => $request->active(),
             'actuators' => $request->actuators(),
         ]);
+
+        $badge->retag($request->tags());
 
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.update.success'));

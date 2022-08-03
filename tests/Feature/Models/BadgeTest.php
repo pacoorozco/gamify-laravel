@@ -86,4 +86,27 @@ class BadgeTest extends TestCase
 
         $this->assertEquals($want->pluck('name'), $badges->pluck('name'));
     }
+
+    /** @test */
+    public function it_should_return_only_active_badges_with_the_question_actuators_and_specified_tags()
+    {
+        // active but without tags
+        Badge::factory()
+            ->active()
+            ->withActuators([BadgeActuators::OnQuestionAnswered])
+            ->create();
+
+        // active and with one matching tag: 'tag1'
+        $want = Badge::factory()
+            ->active()
+            ->withActuators([BadgeActuators::OnQuestionAnswered])
+            ->create();
+        $want->each(function ($badge) {
+            $badge->tag(['tag1', 'foo']);
+        });
+
+        $badges = Badge::triggeredByQuestionsWithTagsIn(['tag1', 'bar']);
+
+        $this->assertEquals($want->pluck('name'), $badges->pluck('name'));
+    }
 }

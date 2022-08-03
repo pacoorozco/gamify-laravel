@@ -35,19 +35,12 @@ class QuestionAnswered
     use Dispatchable;
     use SerializesModels;
 
-    public User $user;
-
-    public Question $question;
-
-    public int $points;
-
-    public bool $correctness;
-
-    public function __construct(User $user, Question $question, int $points, bool $correctness)
-    {
-        $this->user = $user;
-        $this->question = $question;
-        $this->points = $points;
-        $this->correctness = $correctness;
+    public function __construct(
+        public User $user,
+        public Question $question,
+        public int $points,
+        public bool $correctness
+    ) {
+        //
     }
 }

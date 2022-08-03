@@ -66,13 +66,6 @@ class QuestionTest extends TestCase
         ], $m->sluggable());
     }
 
-    public function test_actions_relation()
-    {
-        $m = new Question();
-        $r = $m->actions();
-        $this->assertInstanceOf(HasMany::class, $r);
-    }
-
     public function test_choices_relation()
     {
         $m = new Question();

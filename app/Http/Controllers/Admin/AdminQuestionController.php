@@ -25,7 +25,6 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
-use Gamify\Enums\QuestionActuators;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Http\Requests\QuestionCreateRequest;
 use Gamify\Http\Requests\QuestionUpdateRequest;
@@ -33,6 +32,7 @@ use Gamify\Models\Badge;
 use Gamify\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -45,14 +45,7 @@ class AdminQuestionController extends AdminController
 
     public function create(): View
     {
-        return view('admin.question.create', [
-            'availableTags' => Question::allTagModels()
-                ->pluck('name', 'normalized')
-                ->toArray(),
-            'globalActions' => Badge::query()
-                ->withActuatorsIn(QuestionActuators::asArray())
-                ->get(),
-        ]);
+        return view('admin.question.create');
     }
 
     public function store(QuestionCreateRequest $request): RedirectResponse
@@ -72,10 +65,7 @@ class AdminQuestionController extends AdminController
         try {
             $question->saveOrFail();
 
-            // Store tags
-            if ($request->has('tags')) {
-                $question->tag($request->input('tags'));
-            }
+            $question->tag($request->tags());
 
             // Store question choices
             if ($request->has('choices')) {
@@ -116,28 +106,22 @@ class AdminQuestionController extends AdminController
 
     public function show(Question $question): View
     {
-        return view('admin/question/show', [
-            'question' => $question,
-            'globalActions' => Badge::query()
-                ->withActuatorsIn(QuestionActuators::asArray())
-                ->get(),
-        ]);
+        return view('admin.question.show')
+            ->with('question', $question)
+            ->with('relatedBadges', $this->relatedBadgesForQuestion($question));
+    }
+
+    private function relatedBadgesForQuestion(Question $question): Collection
+    {
+        return Badge::triggeredByQuestionsWithTagsIn($question->tagArray);
     }
 
     public function edit(Question $question): View
     {
-        $availableActions = [];
-        // get actions that hasn't not been used
-        foreach ($question->getAvailableActions() as $action) {
-            $availableActions[$action->id] = $action->name;
-        }
-
-        return view('admin/question/edit', [
+        return view('admin.question.edit', [
             'question' => $question,
-            'availableTags' => Question::allTagModels()->pluck('name', 'normalized')->toArray(),
             'selectedTags' => $question->tagArray,
-            'availableActions' => $availableActions,
-            'globalActions' => Badge::withActuatorsIn(QuestionActuators::asArray())->get(),
+            'relatedBadges' => $this->relatedBadgesForQuestion($question),
         ]);
     }
 
@@ -156,12 +140,7 @@ class AdminQuestionController extends AdminController
         try {
             $question->saveOrFail();
 
-            // Save Question Tags
-            if (is_array($request->input('tags'))) {
-                $question->retag($request->input('tags'));
-            } else {
-                $question->detag();
-            }
+            $question->retag($request->tags());
 
             // Save Question Choices
             if ($request->has('choices')) {

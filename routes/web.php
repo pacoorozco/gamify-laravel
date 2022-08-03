@@ -30,7 +30,6 @@ use Gamify\Http\Controllers\Admin\AdminBadgeDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminDashboardController;
 use Gamify\Http\Controllers\Admin\AdminLevelController;
 use Gamify\Http\Controllers\Admin\AdminLevelDataTablesController;
-use Gamify\Http\Controllers\Admin\AdminQuestionActionController;
 use Gamify\Http\Controllers\Admin\AdminQuestionController;
 use Gamify\Http\Controllers\Admin\AdminQuestionDataTablesController;
 use Gamify\Http\Controllers\Admin\AdminRewardController;
@@ -153,10 +152,6 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
     Route::get('questions/data', AdminQuestionDataTablesController::class)
         ->middleware(['only.ajax'])
         ->name('questions.data');
-
-    // Nest routes to deal with actions
-    Route::resource('questions.actions', AdminQuestionActionController::class)
-        ->only(['create', 'store', 'destroy']);
 
     // Pre-baked resource controller actions for index, create, store,
     // show, edit, update, destroy

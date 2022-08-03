@@ -41,7 +41,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_listen_for_login_events()
+    public function it_should_listen_for_the_event(): void
     {
         Event::fake();
         Event::assertListening(
@@ -50,49 +50,132 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_should_increment_badges_with_OnQuestionAnswered_actuator()
-    {
+    /**
+     * @test
+     * @dataProvider provideTestCasesThatShouldTriggerABadge
+     */
+    public function it_should_increment_badges_when_criteria_is_met(
+        array $badgeAttributes,
+        array $questionAttributes,
+    ) {
         /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnQuestionAnswered,
+            'actuators' => $badgeAttributes['actuators'],
         ]);
+        $badge->tag($badgeAttributes['tags']);
 
         /** @var Question $question */
         $question = Question::factory()->create();
+        $question->tag($questionAttributes['tags']);
 
         $event = Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
         $event->question = $question;
-        $event->correctness = true;
+        $event->correctness = $questionAttributes['correctness'];
 
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
 
-        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
+        $this->assertNotNull($user->progressToCompleteTheBadge($badge));
     }
 
-    /** @test */
-    public function it_should_not_increment_badges_without_OnQuestionAnswered_actuator()
+    public function provideTestCasesThatShouldTriggerABadge(): \Generator
     {
+        yield 'OnQuestionAnswered & no tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => true,
+            ],
+        ];
+
+        yield 'OnQuestionAnswered & matching tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'tags' => ['tag', 'foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => ['tag', 'bar'],
+                'correctness' => true,
+            ],
+        ];
+
+        yield 'OnQuestionCorrectlyAnswered & no tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => true,
+            ],
+        ];
+
+        yield 'OnQuestionCorrectlyAnswered & matching tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'tags' => ['tag', 'foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => ['tag', 'bar'],
+                'correctness' => true,
+            ],
+        ];
+
+        yield 'OnQuestionIncorrectlyAnswered & no tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => false,
+            ],
+        ];
+
+        yield 'OnQuestionIncorrectlyAnswered & matching tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'tags' => ['tag', 'foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => ['tag', 'bar'],
+                'correctness' => false,
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideTestCasesThatShouldNotTriggerABadge
+     */
+    public function it_should_not_increment_badges_when_criteria_is_not_met(
+        array $badgeAttributes,
+        array $questionAttributes,
+    ) {
         /** @var User $user */
         $user = User::factory()->create();
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::None,
+            'actuators' => $badgeAttributes['actuators'],
         ]);
+        $badge->tag($badgeAttributes['tags']);
 
         /** @var Question $question */
         $question = Question::factory()->create();
+        $question->tag($questionAttributes['tags']);
 
         $event = Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
         $event->question = $question;
-        $event->correctness = true;
+        $event->correctness = $questionAttributes['correctness'];
 
         $listener = new IncrementBadgesOnQuestionAnswered();
         $listener->handle($event);
@@ -100,102 +183,94 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $this->assertNull($user->progressToCompleteTheBadge($badge));
     }
 
-    /** @test */
-    public function it_should_increment_badges_with_OnQuestionCorrectlyAnswered_actuator_when_answer_is_correct()
+    public function provideTestCasesThatShouldNotTriggerABadge(): \Generator
     {
-        /** @var User $user */
-        $user = User::factory()->create();
+        yield 'different actuator' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::None,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => true,
+            ],
+        ];
 
-        /** @var Badge $badge */
-        $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
-        ]);
+        yield 'OnQuestionAnswered & non matching tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'tags' => ['foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => ['bar'],
+                'correctness' => true,
+            ],
+        ];
 
-        /** @var Question $question */
-        $question = Question::factory()->create();
+        yield 'OnQuestionAnswered & only question has tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => ['bar'],
+                'correctness' => true,
+            ],
+        ];
 
-        $event = Mockery::mock(QuestionAnswered::class);
-        $event->user = $user;
-        $event->question = $question;
-        $event->correctness = true;
+        yield 'OnQuestionAnswered & only badge has tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'tags' => ['foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => true,
+            ],
+        ];
 
-        $listener = new IncrementBadgesOnQuestionAnswered();
-        $listener->handle($event);
+        yield 'OnQuestionCorrectlyAnswered & answer is not correct' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => false,
+            ],
+        ];
 
-        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
-    }
+        yield 'OnQuestionCorrectlyAnswered & non matching tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'tags' => ['foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => ['bar'],
+                'correctness' => true,
+            ],
+        ];
 
-    /** @test */
-    public function it_should_increment_badges_with_OnQuestionIncorrectlyAnswered_actuator_when_answer_is_incorrect()
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
+        yield 'OnQuestionIncorrectlyAnswered & answer is correct' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'tags' => [],
+            ],
+            'questionAttributes' => [
+                'tags' => [],
+                'correctness' => true,
+            ],
+        ];
 
-        /** @var Badge $badge */
-        $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
-        ]);
-
-        /** @var Question $question */
-        $question = Question::factory()->create();
-
-        $event = Mockery::mock(QuestionAnswered::class);
-        $event->user = $user;
-        $event->question = $question;
-        $event->correctness = false;
-
-        $listener = new IncrementBadgesOnQuestionAnswered();
-        $listener->handle($event);
-
-        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
-    }
-
-    /** @test */
-    public function it_should_not_increment_badges_with_OnQuestionCorrectlyAnswered_actuator_when_answer_is_incorrect()
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        /** @var Badge $badge */
-        $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
-        ]);
-
-        /** @var Question $question */
-        $question = Question::factory()->create();
-
-        $event = Mockery::mock(QuestionAnswered::class);
-        $event->user = $user;
-        $event->question = $question;
-        $event->correctness = false;
-
-        $listener = new IncrementBadgesOnQuestionAnswered();
-        $listener->handle($event);
-
-        $this->assertNull($user->progressToCompleteTheBadge($badge));
-    }
-
-    /** @test */
-    public function it_should_not_increment_badges_with_OnQuestionIncorrectlyAnswered_actuator_when_answer_is_correct()
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        /** @var Badge $badge */
-        $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
-        ]);
-        /** @var Question $question */
-        $question = Question::factory()->create();
-
-        $event = Mockery::mock(QuestionAnswered::class);
-        $event->user = $user;
-        $event->question = $question;
-        $event->correctness = true;
-
-        $listener = new IncrementBadgesOnQuestionAnswered();
-        $listener->handle($event);
-
-        $this->assertNull($user->progressToCompleteTheBadge($badge));
+        yield 'OnQuestionIncorrectlyAnswered & non matching tags' => [
+            'badgeAttributes' => [
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'tags' => ['foo'],
+            ],
+            'questionAttributes' => [
+                'tags' => ['bar'],
+                'correctness' => false,
+            ],
+        ];
     }
 }

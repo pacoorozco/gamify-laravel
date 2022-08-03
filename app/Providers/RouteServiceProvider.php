@@ -28,7 +28,6 @@ namespace Gamify\Providers;
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Question;
-use Gamify\Models\QuestionAction;
 use Gamify\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -91,7 +90,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('badges', Badge::class);
         Route::model('levels', Level::class);
         Route::model('questions', Question::class);
-        Route::model('actions', QuestionAction::class);
 
         Route::bind('username', function ($value) {
             return User::where('username', $value)->firstOrFail();

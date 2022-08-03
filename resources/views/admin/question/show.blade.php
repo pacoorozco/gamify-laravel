@@ -30,24 +30,27 @@
     @include('partials.notifications')
     <!-- /.notifications -->
 
-    <div class="box box-solid">
-        <div class="box-header with-border">
-            <h2 class="box-title">
-                {{ $question->present()->name }}
-            </h2>
-            {{ $question->present()->visibilityBadge }}
-            {{ $question->present()->statusBadge }}
+    <div class="row">
 
-            <a href="{{ $question->present()->public_url }}"
-               class="btn btn-link pull-right" target="_blank">
-                {{ __('general.view') }} <i class="fa fa-external-link"></i>
-            </a>
-        </div>
-        <div class="box-body">
-            <div class="row">
+        <!-- left column -->
+        <div class="col-xs-8">
 
-                <!-- left column -->
-                <div class="col-xs-6">
+            <!-- general section -->
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h2 class="box-title">
+                        {{ $question->present()->name }}
+                    </h2>
+                    {{ $question->present()->visibilityBadge }}
+                    {{ $question->present()->statusBadge }}
+
+                    <a href="{{ $question->present()->public_url }}"
+                       class="btn btn-link pull-right" target="_blank">
+                        {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                    </a>
+                </div>
+                <div class="box-body">
+                    <h3>{{ __('admin/question/title.general_section') }}</h3>
 
                     <dl>
 
@@ -57,10 +60,10 @@
                         <!-- ./ statement -->
 
                         @if($question->solution)
-                        <!-- solution -->
-                        <dt>{{ __('question/messages.explained_answer') }}</dt>
-                        <dd>{{ $question->present()->explanation }}</dd>
-                        <!-- ./ solution -->
+                            <!-- solution -->
+                            <dt>{{ __('question/messages.explained_answer') }}</dt>
+                            <dd>{{ $question->present()->explanation }}</dd>
+                            <!-- ./ solution -->
                         @endif
 
                         <!-- choices -->
@@ -71,6 +74,7 @@
                                 {{ __('question/messages.multiple_choices') }}
                             @endif
                         </dt>
+
                         <dd>
                             <ul class="list-group">
                                 @forelse($question->choices as $choice)
@@ -104,105 +108,136 @@
                         </dd>
                         <!-- ./ choices -->
 
-                        <!-- badges -->
-                        <dt>{{ __('admin/question/title.badges_section') }}</dt>
-                        <dd>
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <th>{{ __('admin/action/table.action') }}</th>
-                                    <th>{{ __('admin/action/table.when') }}</th>
-                                </tr>
-
-                                @foreach($globalActions as $badge)
-                                    <tr>
-                                        <td>{{ $badge->name }}</td>
-                                        <td>{{ $badge->actuators->description }} (Global)</td>
-                                    </tr>
-                                @endforeach
-
-                                @foreach ($question->actions as $action)
-                                    <tr>
-                                        <td>{{ \Gamify\Models\Badge::findOrFail($action->badge_id)->name }}</td>
-                                        <td>{{ \Gamify\Enums\QuestionActuators::getDescription($action->when) }}</td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
-                        </dd>
-                        <!-- ./ badges -->
-
                     </dl>
-
-            </div>
-            <!-- ./ left column -->
-
-            <!-- right column -->
-            <div class="col-xs-6">
-
-                <dl class="dl-horizontal">
-
-                    <!-- status -->
-                    <dt>{{ __('admin/question/model.status') }}</dt>
-                    <dd>
-                        {{ $question->present()->statusBadge }}
-                    </dd>
-                    <!-- ./ status -->
-
-                    <!-- visibility -->
-                    <dt>{{ __('admin/question/model.hidden') }}</dt>
-                    <dd>{{ $question->present()->visibility }}</dd>
-                    <!-- ./ visibility -->
-
-                    <!-- authored -->
-                    <dt>{{ __('admin/question/model.authored') }}</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            <li>{{ __('admin/question/model.created_by', ['who' => $question->creator->username, 'when' => $question->created_at]) }}</li>
-                            <li>{{ __('admin/question/model.updated_by', ['who' => $question->updater->username, 'when' => $question->updated_at]) }}</li>
-                            <li>{{ $question->present()->publicationDateDescription }}</li>
-                        </ul>
-                    </dd>
-                    <!-- ./ authored -->
-
-                </dl>
-
-
-                <!-- danger zone -->
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        <strong>@lang('admin/question/messages.danger_zone_section')</strong>
-                    </div>
-                    <div class="panel-body">
-                        <p><strong>@lang('admin/question/messages.delete_button')</strong></p>
-                        <p>@lang('admin/question/messages.delete_help')</p>
-
-                        <div class="text-center">
-                            <button type="button" class="btn btn-danger"
-                                    data-toggle="modal"
-                                    data-target="#confirmationModal">
-                                @lang('admin/question/messages.delete_button')
-                            </button>
-                        </div>
-                    </div>
                 </div>
-                <!-- ./danger zone -->
+
+                <div class="box-footer">
+                    <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary" role="button">
+                        {{ __('general.edit') }}
+                    </a>
+                    <a href="{{ route('admin.questions.index') }}" class="btn btn-link" role="button">
+                        {{ __('general.back') }}
+                    </a>
+                </div>
 
             </div>
-            <!-- ./ right column -->
+            <!-- ./ general section -->
 
         </div>
-    </div>
+        <!-- left column -->
 
-    <div class="box-footer">
-        <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary" role="button">
-            {{ __('general.edit') }}
-        </a>
-        <a href="{{ route('admin.questions.index') }}" class="btn btn-link" role="button">
-            {{ __('general.back') }}
-        </a>
-    </div>
+        <!-- right column -->
+        <div class="col-xs-4">
+
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
+                </div>
+                    <div class="box-body">
+
+                    <dl>
+                        <!-- tags -->
+                        <dt>{{ __('admin/question/model.tags') }}</dt>
+                        <dd>
+                            @foreach($question->tagArray as $tag)
+                                <span class="label label-primary">{{ $tag }}</span>
+                            @endforeach
+                        </dd>
+                        <!-- ./ tags -->
+                    </dl>
+
+                        <!-- badges -->
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{ __('admin/badge/model.name') }}</th>
+                                    <th>{{ __('admin/badge/model.actuators') }}</th>
+                                    <th>{{ __('admin/badge/model.tags') }}</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @foreach($relatedBadges as $badge)
+                                    <tr>
+                                        <td>{{ $badge->name }}</td>
+                                        <td>{{ $badge->actuators->description }}</td>
+                                        <td>
+                                            @foreach($badge->matchingTags($question->tagArray) as $tag)
+                                                <span class="label label-primary">{{ $tag }}</span>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        <!-- ./ badges -->
+                </div>
+            </div>
+
+            <!-- other information section -->
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ __('admin/question/title.other_section') }}</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+
+                    <dl class="dl-horizontal">
+
+                        <!-- status -->
+                        <dt>{{ __('admin/question/model.status') }}</dt>
+                        <dd>
+                            {{ $question->present()->statusBadge }}
+                        </dd>
+                        <!-- ./ status -->
+
+                        <!-- visibility -->
+                        <dt>{{ __('admin/question/model.hidden') }}</dt>
+                        <dd>{{ $question->present()->visibility }}</dd>
+                        <!-- ./ visibility -->
+
+                        <!-- authored -->
+                        <dt>{{ __('admin/question/model.authored') }}</dt>
+                        <dd>
+                            <ul class="list-unstyled">
+                                <li>{{ __('admin/question/model.created_by', ['who' => $question->creator->username, 'when' => $question->created_at]) }}</li>
+                                <li>{{ __('admin/question/model.updated_by', ['who' => $question->updater->username, 'when' => $question->updated_at]) }}</li>
+                                <li>{{ $question->present()->publicationDateDescription }}</li>
+                            </ul>
+                        </dd>
+                        <!-- ./ authored -->
+
+                    </dl>
+                </div>
+            </div>
+            <!-- ./ other information section -->
+
+
+            <!-- danger zone -->
+            <div class="box box-solid box-danger">
+                <div class="box-header">
+                    <strong>@lang('admin/question/messages.danger_zone_section')</strong>
+                </div>
+                <div class="box-body">
+                    <p><strong>@lang('admin/question/messages.delete_button')</strong></p>
+                    <p>@lang('admin/question/messages.delete_help')</p>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger"
+                                data-toggle="modal"
+                                data-target="#confirmationModal">
+                            @lang('admin/question/messages.delete_button')
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- ./danger zone -->
+
+        </div>
     </div>
 
     <!-- confirmation modal -->

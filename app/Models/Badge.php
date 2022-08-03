@@ -26,6 +26,7 @@
 namespace Gamify\Models;
 
 use BenSampo\Enum\Traits\QueriesFlaggedEnums;
+use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
@@ -55,6 +57,7 @@ class Badge extends Model
     use HasFactory;
     use Presentable;
     use QueriesFlaggedEnums;
+    use Taggable;
 
     const DEFAULT_IMAGE = '/images/missing_badge.png';
 
@@ -98,6 +101,24 @@ class Badge extends Model
     protected string $imagesUploadPath = 'badges';
 
     protected bool $autoUploadImages = true;
+
+    public static function triggeredByQuestionsWithTagsIn(array $tags): Collection
+    {
+        return self::query()
+            ->active()
+            ->hasAnyFlags('actuators', BadgeActuators::triggeredByQuestions())
+            ->when($tags, function ($query) use ($tags) {
+                $query->withAnyTags($tags);
+            }, function ($query) {
+                $query->isNotTagged();
+            })
+            ->get();
+    }
+
+    public function matchingTags(array $tags): array
+    {
+        return array_intersect($this->tagArray, $tags);
+    }
 
     public function scopeActive(Builder $query): Builder
     {

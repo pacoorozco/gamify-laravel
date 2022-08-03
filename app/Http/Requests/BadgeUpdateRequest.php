@@ -57,6 +57,16 @@ class BadgeUpdateRequest extends Request
                 'required',
                 new EnumValue(BadgeActuators::class),
             ],
+
+            // Tags
+            'tags' => [
+                'nullable',
+                'array',
+            ],
+            'tags.*' => [
+                'required',
+                'alpha_dash',
+            ],
         ];
     }
 
@@ -80,8 +90,13 @@ class BadgeUpdateRequest extends Request
         return $this->input('active');
     }
 
-    public function actuators(): BadgeActuators
+    public function actuators(): string
     {
-        return BadgeActuators::fromValue($this->input('actuators'));
+        return $this->input('actuators');
+    }
+
+    public function tags(): array
+    {
+        return $this->input('tags', []);
     }
 }

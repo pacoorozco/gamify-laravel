@@ -133,8 +133,7 @@
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
                                                          :placeholder="__('admin/question/model.tags_help')"
-                                                         :available-tags="$availableTags"
-                                                         :selected-tags="old('tags', $question->tags->all())"
+                                                         :selected-tags="old('tags', $question->tagArray)"
                                                          class="form-control"
                                 />
                             </div>
@@ -148,63 +147,6 @@
 
         </div>
         <div class="col-xs-4">
-
-            <!-- badges section -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>{{ __('admin/action/table.action') }}</th>
-                            <th>{{ __('admin/action/table.when') }}</th>
-                            <th>{{ __('admin/action/table.actions') }}</th>
-                        </tr>
-
-                        @foreach($globalActions as $badge)
-                            <tr>
-                                <td>{{ $badge->name }}</td>
-                                <td>{{ $badge->actuators->description }}</td>
-                                <td>Global</td>
-                            </tr>
-                        @endforeach
-
-                        @foreach ($question->actions as $action)
-                            <tr>
-                                <td>{{ \Gamify\Models\Badge::findOrFail($action->badge_id)->name }}</td>
-                                <td>{{ \Gamify\Enums\QuestionActuators::getDescription($action->when) }}</td>
-                                <td>
-                                    <a href="{{ route('admin.questions.actions.destroy', [$question, $action]) }}"
-                                       rel="nofollow" data-method="delete"
-                                       data-confirm="{{ __('admin/action/messages.confirm_delete') }}">
-                                        <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip"
-                                                data-placement="top" title="{{ __('general.delete') }}">
-                                            <i class="fa fa-times fa fa-white"></i>
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        </tbody>
-                    </table>
-
-                    <a href="{{ route('admin.questions.actions.create', $question) }}"
-                       class="btn btn-default pull-right">
-                        <i class="fa fa-plus"></i> {{ __('admin/action/title.create_new') }}
-                    </a>
-
-                </div>
-            </div>
-            <!-- ./ badges section -->
 
             <!-- publish section -->
             <div class="box box-solid">
@@ -359,6 +301,58 @@
 
             </div>
             <!-- ./ publish section -->
+
+            <!-- badges section -->
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+
+                    <dl>
+                        <dt>{{ __('admin/question/model.tags') }}</dt>
+                        <dd>
+                            @forelse($question->tagArray as $tag)
+                                <span class="label label-primary">{{ $tag }}</span>
+                            @empty
+                                {{ __('admin/question/model.tags_none') }}
+                            @endforelse
+                        </dd>
+                    </dl>
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{ __('admin/badge/model.name') }}</th>
+                            <th>{{ __('admin/badge/model.actuators') }}</th>
+                            <th>{{ __('admin/badge/model.tags') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($relatedBadges as $badge)
+                            <tr>
+                                <td>{{ $badge->name }}</td>
+                                <td>{{ $badge->actuators->description }}</td>
+                                <td>
+                                    @foreach($badge->matchingTags($question->tagArray) as $tag)
+                                        <span class="label label-primary">{{ $tag }}</span>
+                                    @endforeach
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- ./ badges section -->
+
 
             <!-- other information section -->
             <div class="box box-solid collapsed-box">

@@ -28,13 +28,11 @@ namespace Gamify\Models;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
-use Gamify\Enums\QuestionActuators;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Presenters\QuestionPresenter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -115,18 +113,6 @@ class Question extends Model
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
     }
 
-    public function getAvailableActions(): Collection
-    {
-        $selectedActions = $this->actions()->pluck('badge_id')->toArray();
-
-        return Badge::whereNotIn('id', $selectedActions)->get();
-    }
-
-    public function actions(): HasMany
-    {
-        return $this->hasMany(QuestionAction::class);
-    }
-
     public function isPublishedOrScheduled(): bool
     {
         return $this->isPublished() || $this->isScheduled();
@@ -155,25 +141,6 @@ class Question extends Model
     public function scopeVisible(Builder $query): Builder
     {
         return $query->where('hidden', false);
-    }
-
-    /**
-     * Returns the Badges that can be actionable depending if the answer was correct or not.
-     *
-     * @param  bool  $correctness
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getActionableBadgesForCorrectness(bool $correctness = false): Collection
-    {
-        $filter = ($correctness === true) ? QuestionActuators::OnQuestionCorrectlyAnswered : QuestionActuators::OnQuestionIncorrectlyAnswered;
-
-        $actionable_actions = $this->actions()
-            ->whereIn('when', [QuestionActuators::OnQuestionAnswered, $filter])
-            ->pluck('badge_id')
-            ->toArray();
-
-        return Badge::whereIn('id', $actionable_actions)
-            ->get();
     }
 
     /**

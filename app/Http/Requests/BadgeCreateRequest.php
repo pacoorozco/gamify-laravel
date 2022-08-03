@@ -55,6 +55,16 @@ class BadgeCreateRequest extends Request
                 'required',
                 new EnumValue(BadgeActuators::class),
             ],
+
+            // Tags
+            'tags' => [
+                'nullable',
+                'array',
+            ],
+            'tags.*' => [
+                'required',
+                'alpha_dash',
+            ],
         ];
     }
 
@@ -81,5 +91,10 @@ class BadgeCreateRequest extends Request
     public function actuators(): string
     {
         return $this->input('actuators');
+    }
+
+    public function tags(): array
+    {
+        return $this->input('tags', []);
     }
 }

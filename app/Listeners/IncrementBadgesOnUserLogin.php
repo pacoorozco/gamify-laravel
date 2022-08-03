@@ -31,18 +31,18 @@ use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
 
+/**
+ * Trigger the badges with the OnUserLogin actuator when the use logs in.
+ */
 class IncrementBadgesOnUserLogin
 {
-    public function __construct()
-    {
-        //
-    }
-
     public function handle(Login $event): void
     {
         /** @var User $user */
         $user = User::findOrFail($event->user->getAuthIdentifier());
+
         $badges = Badge::whereActuators(BadgeActuators::OnUserLogin)->get();
+
         Game::incrementManyBadgesCount($user, $badges);
     }
 }

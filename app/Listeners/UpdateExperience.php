@@ -27,6 +27,11 @@ namespace Gamify\Listeners;
 
 use Gamify\Events\PointCreated;
 
+/**
+ * Update User's experience field everytime a Point is created.
+ *
+ * User's experience field is a counter to avoid to calculate the experience based on the Points table.
+ */
 class UpdateExperience
 {
     public function handle(PointCreated $event): void
