@@ -67,14 +67,14 @@ class BadgeTest extends TestCase
         Badge::factory()
             ->inactive()
             ->create([
-                'actuators' => BadgeActuators::OnQuestionAnswered
+                'actuators' => BadgeActuators::OnQuestionAnswered,
             ]);
 
         $want = Badge::factory()
             ->active()
             ->count(2)
             ->create([
-                'actuators' => BadgeActuators::OnUserLogin
+                'actuators' => BadgeActuators::OnUserLogin,
             ]);
 
         $badges = Badge::query()
@@ -93,7 +93,7 @@ class BadgeTest extends TestCase
         Badge::factory()
             ->active()
             ->create([
-                'actuators' => BadgeActuators::OnQuestionAnswered
+                'actuators' => BadgeActuators::OnQuestionAnswered,
             ]);
 
         // active and with one matching tag: 'tag1'
@@ -101,7 +101,7 @@ class BadgeTest extends TestCase
             ->active()
             ->count(2)
             ->create([
-                'actuators' => BadgeActuators::OnQuestionAnswered
+                'actuators' => BadgeActuators::OnQuestionAnswered,
             ]);
 
         $want->each(function ($badge) {

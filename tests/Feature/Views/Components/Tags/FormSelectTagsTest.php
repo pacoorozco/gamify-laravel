@@ -40,6 +40,7 @@ class FormSelectTagsTest extends TestCase
         // Create some tags by tagging a model.
         $wantAvailableTags = ['foo', 'bar'];
 
+        /** @var Question $question */
         $question = Question::factory()->create();
         $question->tag($wantAvailableTags);
 

@@ -166,7 +166,6 @@ class UserTest extends TestCase
         $m->username = $input;
 
         $this->assertEquals($want, $m->getAttribute('username'));
-
     }
 
     public function provideTestCasesForUsername(): Generator

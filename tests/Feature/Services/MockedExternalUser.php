@@ -23,37 +23,43 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Database\Factories;
+namespace Tests\Feature\Services;
 
-use Gamify\Enums\BadgeActuators;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravel\Socialite\Contracts\User;
 
-class BadgeFactory extends Factory
+final class MockedExternalUser implements User
 {
-    public function definition(): array
-    {
-        $color = $this->faker->unique()->safeColorName;
-
-        return [
-            'name' => $color,
-            'description' => 'This badge is for people who think about '.$color.' :D',
-            'required_repetitions' => 5,
-            'active' => $this->faker->boolean,
-            'actuators' => $this->faker->randomElement(BadgeActuators::getValues()),
-        ];
+    public function __construct(
+        private string $id,
+        private string $nickname,
+        private string $name,
+        private string $email,
+        private string $avatar = 'external-avatar',
+    ) {
     }
 
-    public function active(): Factory
+    public function getId(): string
     {
-        return $this->state(fn () => [
-            'active' => true,
-        ]);
+        return $this->id;
     }
 
-    public function inactive(): Factory
+    public function getNickname(): string
     {
-        return $this->state(fn () => [
-            'active' => false,
-        ]);
+        return $this->nickname;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->avatar;
     }
 }

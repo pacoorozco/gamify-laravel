@@ -75,7 +75,7 @@ class UsernameRuleTest extends TestCase
      */
     public function it_should_pass_valid_usernames(
         string $input
-    ):void {
+    ): void {
         $this->assertTrue(Validator::make(
             ['username' => $input],
             ['username' => new UsernameRule()]
