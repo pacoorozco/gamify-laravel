@@ -42,6 +42,7 @@ class AdminQuestionControllerTest extends TestCase
 
         /** @var User $admin */
         $admin = User::factory()->admin()->create();
+
         $this->actingAs($admin);
     }
 
@@ -130,6 +131,7 @@ class AdminQuestionControllerTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
 
+        /** @var Question $newQuestion */
         $newQuestion = Question::where([
             'name' => $question->name,
             'question' => $question->question,
@@ -139,7 +141,9 @@ class AdminQuestionControllerTest extends TestCase
         ])->first();
 
         $this->assertInstanceOf(Question::class, $newQuestion);
+
         $this->assertEquals($input_data['tags'], $newQuestion->tagArray);
+
         $this->assertCount(2, $newQuestion->choices);
     }
 

@@ -16,6 +16,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_email_verification_screen_can_be_rendered(): void
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'email_verified_at' => null,
         ]);
@@ -46,7 +47,9 @@ class EmailVerificationTest extends TestCase
             ->get($verificationUrl)
             ->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
 
-        $this->assertTrue($user->fresh()->hasVerifiedEmail());
+        $user->fresh();
+
+        $this->assertTrue($user->hasVerifiedEmail());
 
         Event::assertDispatched(Verified::class);
     }
@@ -68,6 +71,8 @@ class EmailVerificationTest extends TestCase
             ->actingAs($user)
             ->get($verificationUrl);
 
-        $this->assertFalse($user->fresh()->hasVerifiedEmail());
+        $user->fresh();
+
+        $this->assertFalse($user->hasVerifiedEmail());
     }
 }

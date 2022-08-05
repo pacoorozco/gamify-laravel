@@ -46,8 +46,10 @@ class ProfileControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()
-            ->create();
+        /** @var User user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */

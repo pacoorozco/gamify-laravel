@@ -44,7 +44,10 @@ class AdminRewardControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        /** @var User user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
@@ -59,7 +62,7 @@ class AdminRewardControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_index_view(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $users = User::factory()
             ->count(2)
@@ -104,7 +107,7 @@ class AdminRewardControllerTest extends TestCase
     /** @test */
     public function admins_should_reward_experience(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var User $user */
         $user = User::factory()->create();
@@ -136,7 +139,7 @@ class AdminRewardControllerTest extends TestCase
         array $data,
         array $errors,
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var User $user */
         $user = User::factory()->create([
@@ -215,7 +218,7 @@ class AdminRewardControllerTest extends TestCase
     /** @test */
     public function admins_should_reward_badges(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var User $user */
         $user = User::factory()->create();
@@ -244,7 +247,7 @@ class AdminRewardControllerTest extends TestCase
         array $data,
         array $errors,
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var User $user */
         $user = User::factory()->create([

@@ -42,7 +42,10 @@ class QuestionControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
@@ -104,6 +107,7 @@ class QuestionControllerTest extends TestCase
             ->actingAs($this->user)
             ->post(route('questions.answer', $question->short_name), [
                 // Answer with the first available choice.
+                /** @phpstan-ignore-next-line */
                 'choices' => [$question->choices()->first()->id],
             ])
             ->assertSuccessful()

@@ -41,13 +41,16 @@ class AdminBadgeDataTablesControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        /** @var User user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
     public function admins_should_get_data_tables_data(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $badges = Badge::factory()
             ->count(3)
@@ -57,7 +60,7 @@ class AdminBadgeDataTablesControllerTest extends TestCase
             ->actingAs($this->user)
             ->ajaxGet(route('admin.badges.data'))
             ->assertSuccessful()
-            ->assertJsonCount(count($badges), 'data')
+            ->assertJsonCount($badges->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
                     '*' => [

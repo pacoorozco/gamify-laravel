@@ -42,8 +42,10 @@ class AdminBadgeControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()
-            ->create();
+        /** @var User user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
@@ -58,7 +60,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_index_view(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $this
             ->actingAs($this->user)
@@ -79,7 +81,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_new_badge_form(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $this
             ->actingAs($this->user)
@@ -113,7 +115,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function admins_should_create_badges(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var Badge $want */
         $want = Badge::factory()->make();
@@ -133,6 +135,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertRedirect(route('admin.badges.index'))
             ->assertValid();
 
+        /** @var Badge $badge */
         $badge = Badge::query()
             ->where([
                 'name' => $want->name,
@@ -156,7 +159,7 @@ class AdminBadgeControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         // Badge to validate unique rules...
         Badge::factory()->create([
@@ -272,7 +275,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function admins_should_see_any_badge(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $badge = Badge::factory()->create();
 
@@ -298,7 +301,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_edit_badge_form(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $badge = Badge::factory()->create();
 
@@ -313,6 +316,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function players_should_not_update_badges(): void
     {
+        /** @var Badge $want */
         $want = Badge::factory()->create();
 
         $this
@@ -330,7 +334,7 @@ class AdminBadgeControllerTest extends TestCase
     public function admins_should_update_badges(
         array $wantData,
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create();
@@ -386,14 +390,14 @@ class AdminBadgeControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         // Badge to validate unique rules...
         Badge::factory()->create([
             'name' => 'my badge',
         ]);
 
-        /** @var Badge $level */
+        /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
         /** @var Badge $want */
@@ -502,7 +506,7 @@ class AdminBadgeControllerTest extends TestCase
     /** @test */
     public function admins_should_delete_badges(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $badge = Badge::factory()->create();
 

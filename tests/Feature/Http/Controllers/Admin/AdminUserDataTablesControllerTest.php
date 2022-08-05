@@ -40,13 +40,16 @@ class AdminUserDataTablesControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
     public function admins_should_get_data_tables_data(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $users = User::factory()
             ->count(3)
@@ -56,7 +59,7 @@ class AdminUserDataTablesControllerTest extends TestCase
             ->actingAs($this->user)
             ->ajaxGet(route('admin.users.data'))
             ->assertSuccessful()
-            ->assertJsonCount(count($users) + 1, 'data')
+            ->assertJsonCount($users->count() + 1, 'data')
             ->assertJsonStructure([
                 'data' => [
                     '*' => [

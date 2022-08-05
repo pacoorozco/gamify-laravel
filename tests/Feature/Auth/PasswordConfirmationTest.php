@@ -12,6 +12,7 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_confirm_password_screen_can_be_rendered(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $this
@@ -22,6 +23,7 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_can_be_confirmed(): void
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => 'Very$3cret',
         ]);
@@ -37,6 +39,7 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_is_not_confirmed_with_invalid_password(): void
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => 'Very$3cret',
         ]);

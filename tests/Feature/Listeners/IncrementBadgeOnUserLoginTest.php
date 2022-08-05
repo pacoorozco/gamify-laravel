@@ -67,6 +67,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
         $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
+        /** @phpstan-ignore-next-line */
         $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
@@ -81,6 +82,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
             'actuators' => BadgeActuators::None,
         ]);
 
+        /** @var \Illuminate\Auth\Events\Login $event */
         $event = Mockery::mock(Login::class);
         $event->user = $user;
 

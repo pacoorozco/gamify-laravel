@@ -42,8 +42,10 @@ class AdminLevelControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()
-            ->create();
+        /** @var User user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
@@ -58,7 +60,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_index_view(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $this
             ->actingAs($this->user)
@@ -79,7 +81,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_new_level_form(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $this
             ->actingAs($this->user)
@@ -112,7 +114,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_create_levels(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var Level $want */
         $want = Level::factory()->make();
@@ -142,7 +144,7 @@ class AdminLevelControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         // Level to validate unique rules...
         Level::factory()->create([
@@ -236,7 +238,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_see_any_level(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $level = Level::factory()->create();
 
@@ -262,7 +264,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_see_the_edit_level_form(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $level = Level::factory()->create();
 
@@ -277,6 +279,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function players_should_not_update_levels(): void
     {
+        /** @var Level $want */
         $want = Level::factory()->create();
 
         $this
@@ -290,7 +293,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_update_levels(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         /** @var Level $level */
         $level = Level::factory()->create();
@@ -324,7 +327,7 @@ class AdminLevelControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         // Level to validate unique rules...
         Level::factory()->create([
@@ -418,7 +421,7 @@ class AdminLevelControllerTest extends TestCase
     /** @test */
     public function admins_should_delete_levels(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $level = Level::factory()->create();
 
