@@ -28,6 +28,7 @@ namespace Tests\Unit\Models;
 use Gamify\Enums\Roles;
 use Gamify\Models\Level;
 use Gamify\Models\User;
+use Generator;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -79,25 +80,25 @@ class UserTest extends TestCase
      * @dataProvider provideDataToTestAdminMembership
      */
     public function it_should_return_if_user_is_admin(
-        Roles $role,
+        string $role,
         bool $shouldBeAdmin,
     ): void {
         $m = new User();
 
-        $m->role = $role;
+        $m->role = Roles::fromValue($role);
 
         $this->assertEquals($shouldBeAdmin, $m->isAdmin());
     }
 
-    public function provideDataToTestAdminMembership(): \Generator
+    public function provideDataToTestAdminMembership(): Generator
     {
         yield 'Administrator' => [
-            'role' => Roles::Admin(),
+            'role' => Roles::Admin,
             'shouldBeAdmin' => true,
         ];
 
         yield 'Player' => [
-            'role' => Roles::Player(),
+            'role' => Roles::Player,
             'shouldBeAdmin' => false,
         ];
     }
@@ -168,7 +169,7 @@ class UserTest extends TestCase
 
     }
 
-    public function provideTestCasesForUsername(): \Generator
+    public function provideTestCasesForUsername(): Generator
     {
         yield 'User' => [
             'input' => 'User',
