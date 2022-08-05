@@ -46,7 +46,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function access_is_restricted_to_admins()
+    public function access_is_restricted_to_admins(): void
     {
         /** @var Question $question */
         $question = Question::factory()->create();
@@ -78,7 +78,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function index_returns_proper_content()
+    public function index_returns_proper_content(): void
     {
         $this->get(route('admin.questions.index'))
             ->assertOK()
@@ -86,7 +86,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function create_returns_proper_content()
+    public function create_returns_proper_content(): void
     {
         $this->get(route('admin.questions.create'))
             ->assertOk()
@@ -94,7 +94,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function store_creates_an_object()
+    public function store_creates_an_object(): void
     {
         /** @var Question $question */
         $question = Question::factory()->make();
@@ -144,7 +144,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function store_returns_errors_on_invalid_data()
+    public function store_returns_errors_on_invalid_data(): void
     {
         /** @var Question $want */
         $want = Question::factory()->make();
@@ -162,7 +162,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function show_returns_proper_content()
+    public function show_returns_proper_content(): void
     {
         /** @var Question $question */
         $question = Question::factory()->create();
@@ -174,7 +174,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function edit_returns_proper_content()
+    public function edit_returns_proper_content(): void
     {
         /** @var Question $question */
         $question = Question::factory()->create();
@@ -191,7 +191,7 @@ class AdminQuestionControllerTest extends TestCase
      */
     public function update_edits_an_object(
         array $want
-    ) {
+    ): void {
         /** @var Question $question */
         $question = Question::factory()->create([
             'name' => 'Question gold',
@@ -250,7 +250,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function update_returns_errors_on_invalid_data()
+    public function update_returns_errors_on_invalid_data(): void
     {
         /** @var Question $question */
         $question = Question::factory()->create([
@@ -269,7 +269,7 @@ class AdminQuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function destroy_deletes_an_object()
+    public function destroy_deletes_an_object(): void
     {
         /** @var Question $question */
         $question = Question::factory()->create();

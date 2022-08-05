@@ -35,7 +35,7 @@ class BadgeTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_return_the_default_image_if_badge_has_not_image()
+    public function it_should_return_the_default_image_if_badge_has_not_image(): void
     {
         /** @var Badge $badge */
         $badge = Badge::factory()->create();
@@ -46,7 +46,7 @@ class BadgeTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_only_active_badges()
+    public function it_should_return_only_active_badges(): void
     {
         Badge::factory()
             ->inactive()
@@ -62,21 +62,20 @@ class BadgeTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_only_active_badges_with_the_specified_actuators()
+    public function it_should_return_only_active_badges_with_the_specified_actuators(): void
     {
         Badge::factory()
             ->inactive()
-            ->withActuators([BadgeActuators::OnUserLogin])
-            ->create();
+            ->create([
+                'actuators' => BadgeActuators::OnQuestionAnswered
+            ]);
 
         $want = Badge::factory()
             ->active()
-            ->withActuators([
-                BadgeActuators::OnUserLogin,
-                BadgeActuators::OnQuestionAnswered,
-            ])
             ->count(2)
-            ->create();
+            ->create([
+                'actuators' => BadgeActuators::OnUserLogin
+            ]);
 
         $badges = Badge::query()
             ->withActuatorsIn([
@@ -88,25 +87,32 @@ class BadgeTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_only_active_badges_with_the_question_actuators_and_specified_tags()
+    public function it_should_return_only_active_badges_with_the_question_actuators_and_specified_tags(): void
     {
         // active but without tags
         Badge::factory()
             ->active()
-            ->withActuators([BadgeActuators::OnQuestionAnswered])
-            ->create();
+            ->create([
+                'actuators' => BadgeActuators::OnQuestionAnswered
+            ]);
 
         // active and with one matching tag: 'tag1'
         $want = Badge::factory()
             ->active()
-            ->withActuators([BadgeActuators::OnQuestionAnswered])
-            ->create();
+            ->count(2)
+            ->create([
+                'actuators' => BadgeActuators::OnQuestionAnswered
+            ]);
+
         $want->each(function ($badge) {
+            /** @var Badge $badge */
             $badge->tag(['tag1', 'foo']);
         });
 
-        $badges = Badge::triggeredByQuestionsWithTagsIn(['tag1', 'bar']);
+        $got = Badge::triggeredByQuestionsWithTagsIn(['tag1', 'bar']);
 
-        $this->assertEquals($want->pluck('name'), $badges->pluck('name'));
+        $this->assertEquals($want->count(), $got->count());
+
+        $this->assertEquals($want->pluck('name'), $got->pluck('name'));
     }
 }

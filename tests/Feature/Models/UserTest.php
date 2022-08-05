@@ -41,7 +41,7 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_return_the_pending_questions_to_be_answered()
+    public function it_should_return_the_pending_questions_to_be_answered(): void
     {
         $questions = Question::factory()
             ->published()
@@ -51,11 +51,11 @@ class UserTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount(count($questions), $user->pendingQuestions());
+        $this->assertCount($questions->count(), $user->pendingQuestions());
     }
 
     /** @test */
-    public function it_should_return_a_portion_of_the_pending_questions_to_be_answered()
+    public function it_should_return_a_portion_of_the_pending_questions_to_be_answered(): void
     {
         $questions = Question::factory()
             ->published()
@@ -78,7 +78,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function getCompletedBadges_returns_a_collection()
+    public function getCompletedBadges_returns_a_collection(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -87,7 +87,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function getCompletedBadges_returns_empty_collection_when_no_badges()
+    public function getCompletedBadges_returns_empty_collection_when_no_badges(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -96,7 +96,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function hasBadgeCompleted_returns_false_when_badge_is_not_completed()
+    public function hasBadgeCompleted_returns_false_when_badge_is_not_completed(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -108,7 +108,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function hasBadgeCompleted_returns_false_when_badge_is_completed()
+    public function hasBadgeCompleted_returns_false_when_badge_is_completed(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -125,7 +125,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_should_get_empty_string_when_birthdate_is_not_set()
+    public function it_should_get_empty_string_when_birthdate_is_not_set(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -244,10 +244,12 @@ class UserTest extends TestCase
     /** @test */
     public function it_should_return_the_user_response_of_a_question(): void
     {
+        /** @var Question $question */
         $question = Question::factory()
             ->published()
             ->create();
 
+        /** @var User $user */
         $user = User::factory()
             ->create();
 
@@ -264,6 +266,7 @@ class UserTest extends TestCase
     /** @test */
     public function it_should_return_the_user_progress_for_a_badge(): void
     {
+        /** @var Badge $badge */
         $badge = Badge::factory()
             ->create([
                 'required_repetitions' => 5,

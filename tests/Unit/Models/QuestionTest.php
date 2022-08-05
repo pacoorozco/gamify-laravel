@@ -31,7 +31,7 @@ use Tests\TestCase;
 
 class QuestionTest extends TestCase
 {
-    public function test_contains_valid_fillable_properties()
+    public function test_contains_valid_fillable_properties(): void
     {
         $m = new Question();
         $this->assertEquals([
@@ -44,7 +44,7 @@ class QuestionTest extends TestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_casts_properties()
+    public function test_contains_valid_casts_properties(): void
     {
         $m = new Question();
         $this->assertEquals([
@@ -56,7 +56,7 @@ class QuestionTest extends TestCase
         ], $m->getCasts());
     }
 
-    public function test_contains_valid_sluggable_configuration()
+    public function test_contains_valid_sluggable_configuration(): void
     {
         $m = new Question();
         $this->assertEquals([
@@ -66,14 +66,14 @@ class QuestionTest extends TestCase
         ], $m->sluggable());
     }
 
-    public function test_choices_relation()
+    public function test_choices_relation(): void
     {
         $m = new Question();
         $r = $m->choices();
         $this->assertInstanceOf(HasMany::class, $r);
     }
 
-    public function test_excerpt_method()
+    public function test_excerpt_method(): void
     {
         $m = new Question();
 

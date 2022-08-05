@@ -38,7 +38,7 @@ class QuestionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_return_only_published_questions()
+    public function it_should_return_only_published_questions(): void
     {
         Question::factory()
             ->create();
@@ -57,7 +57,7 @@ class QuestionTest extends TestCase
             ->published()
             ->get();
 
-        $this->assertCount(count($want), $questions);
+        $this->assertCount($want->count(), $questions);
 
         $this->assertEquals(
             $want->pluck(['id']),
@@ -66,7 +66,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_only_visible_questions()
+    public function it_should_return_only_visible_questions(): void
     {
         Question::factory()
             ->create([
@@ -90,7 +90,7 @@ class QuestionTest extends TestCase
             ->visible()
             ->get();
 
-        $this->assertCount(count($want), $questions);
+        $this->assertCount($want->count(), $questions);
 
         $this->assertEquals(
             $want->pluck(['id']),
@@ -99,7 +99,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_collect_only_scheduled_questions()
+    public function it_should_collect_only_scheduled_questions(): void
     {
         Question::factory()
             ->create();
@@ -118,7 +118,7 @@ class QuestionTest extends TestCase
             ->scheduled()
             ->get();
 
-        $this->assertCount(count($want), $questions);
+        $this->assertCount($want->count(), $questions);
 
         $this->assertEquals(
             $want->pluck(['id']),
@@ -127,7 +127,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_true_if_question_can_be_published()
+    public function it_should_return_true_if_question_can_be_published(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -139,7 +139,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_false_if_question_can_not_be_published()
+    public function it_should_return_false_if_question_can_not_be_published(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -150,7 +150,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_triggers_an_event_when_a_question_is_published()
+    public function it_triggers_an_event_when_a_question_is_published(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -166,8 +166,9 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_trigger_an_event_when_a_question_was_already_published()
+    public function it_does_not_trigger_an_event_when_a_question_was_already_published(): void
     {
+        /** @var Question $question */
         $question = Question::factory()
             ->published()
             ->create();
@@ -180,8 +181,9 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_trigger_an_event_when_a_question_is_scheduled()
+    public function it_does_not_trigger_an_event_when_a_question_is_scheduled(): void
     {
+        /** @var Question $question */
         $question = Question::factory()
             ->has(QuestionChoice::factory()->correct(), 'choices')
             ->has(QuestionChoice::factory()->incorrect(), 'choices')
@@ -197,7 +199,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_an_exception_when_trying_to_publish_a_question_without_at_least_two_choices()
+    public function it_throws_an_exception_when_trying_to_publish_a_question_without_at_least_two_choices(): void
     {
         $this->withoutExceptionHandling();
 
@@ -212,7 +214,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_an_exception_when_trying_to_publish_a_question_without_a_correct_choice()
+    public function it_throws_an_exception_when_trying_to_publish_a_question_without_a_correct_choice(): void
     {
         $this->withoutExceptionHandling();
 
@@ -227,7 +229,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_publishes_question_when_date_is_on_the_past()
+    public function it_publishes_question_when_date_is_on_the_past(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -243,7 +245,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_schedules_question_publication_when_date_is_in_the_future()
+    public function it_schedules_question_publication_when_date_is_in_the_future(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -259,7 +261,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_trigger_an_event_when_publish_fails()
+    public function it_does_not_trigger_an_event_when_publish_fails(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -284,7 +286,7 @@ class QuestionTest extends TestCase
      */
 
     /** @test */
-    public function it_returns_formatted_publication_date_using_presenter()
+    public function it_returns_formatted_publication_date_using_presenter(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -296,7 +298,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter()
+    public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -308,7 +310,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_formatted_public_url_using_presenter()
+    public function it_returns_formatted_public_url_using_presenter(): void
     {
         /** @var Question $question */
         $question = Question::factory()

@@ -46,7 +46,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_show_the_questions_dashboard()
+    public function it_should_show_the_questions_dashboard(): void
     {
         $this
             ->actingAs($this->user)
@@ -64,7 +64,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_response_not_found_when_question_is_not_published()
+    public function it_should_response_not_found_when_question_is_not_published(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -77,7 +77,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_show_the_question_when_it_is_not_answered()
+    public function it_should_show_the_question_when_it_is_not_answered(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -93,7 +93,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_add_the_user_response_after_answering()
+    public function it_should_add_the_user_response_after_answering(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -120,7 +120,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_an_event_when_question_is_answered_correctly()
+    public function it_fires_an_event_when_question_is_answered_correctly(): void
     {
         /** @var Question $question */
         $question = Question::factory()
@@ -148,7 +148,7 @@ class QuestionControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_an_event_when_question_is_answered_incorrectly()
+    public function it_fires_an_event_when_question_is_answered_incorrectly(): void
     {
         /** @var Question $question */
         $question = Question::factory()

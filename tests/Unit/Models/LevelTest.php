@@ -30,7 +30,7 @@ use Tests\TestCase;
 
 class LevelTest extends TestCase
 {
-    public function test_contains_valid_fillable_properties()
+    public function test_contains_valid_fillable_properties(): void
     {
         $m = new Level();
         $this->assertEquals([
@@ -40,7 +40,7 @@ class LevelTest extends TestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_casts_properties()
+    public function test_contains_valid_casts_properties(): void
     {
         $m = new Level();
         $this->assertEquals([
@@ -51,7 +51,7 @@ class LevelTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_the_default_level()
+    public function it_returns_the_default_level(): void
     {
         $level = Level::defaultLevel();
 

@@ -219,8 +219,9 @@ class LevelTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_the_default_image_if_level_has_not_image()
+    public function it_should_return_the_default_image_if_level_has_not_image(): void
     {
+        /** @var Level $level */
         $level = Level::factory()->create();
 
         $this->assertNull($level->getOriginal('image_url'));

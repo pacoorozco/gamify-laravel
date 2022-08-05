@@ -20,7 +20,7 @@ class PasswordConfirmationTest extends TestCase
             ->assertSuccessful();
     }
 
-    public function test_password_can_be_confirmed()
+    public function test_password_can_be_confirmed(): void
     {
         $user = User::factory()->create([
             'password' => 'Very$3cret',
@@ -35,7 +35,7 @@ class PasswordConfirmationTest extends TestCase
             ->assertValid();
     }
 
-    public function test_password_is_not_confirmed_with_invalid_password()
+    public function test_password_is_not_confirmed_with_invalid_password(): void
     {
         $user = User::factory()->create([
             'password' => 'Very$3cret',

@@ -38,7 +38,7 @@ class GameTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_add_experience_to_the_user()
+    public function it_should_add_experience_to_the_user(): void
     {
         $user = User::factory()
             ->create();
@@ -53,7 +53,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_repetitions_for_a_given_badge()
+    public function it_increments_repetitions_for_a_given_badge(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -69,7 +69,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated()
+    public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -87,7 +87,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_completes_badge_when_reach_required_repetitions()
+    public function it_completes_badge_when_reach_required_repetitions(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -103,7 +103,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_complete_badge_when_required_repetitions_are_not_reached()
+    public function it_does_not_complete_badge_when_required_repetitions_are_not_reached(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -119,7 +119,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_update_repetitions_if_badge_was_already_completed()
+    public function it_does_not_update_repetitions_if_badge_was_already_completed(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -137,7 +137,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_completes_a_badge_for_a_user()
+    public function it_completes_a_badge_for_a_user(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -150,7 +150,7 @@ class GameTest extends TestCase
     }
 
     /** @test */
-    public function it_completes_a_badge_when_a_user_had_already_started_it()
+    public function it_completes_a_badge_when_a_user_had_already_started_it(): void
     {
         /** @var User $user */
         $user = User::factory()->create();

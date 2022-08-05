@@ -66,7 +66,7 @@ class PublishScheduledQuestionsTest extends TestCase
     }
 
     /** @test */
-    public function onlyPublishQuestionsScheduledOnThePast()
+    public function onlyPublishQuestionsScheduledOnThePast(): void
     {
         \Artisan::call(PublishScheduledQuestions::class);
 

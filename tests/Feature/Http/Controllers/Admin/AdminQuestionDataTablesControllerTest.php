@@ -46,7 +46,7 @@ class AdminQuestionDataTablesControllerTest extends TestCase
     }
 
     /** @test */
-    public function admins_should_get_data_tables_data()
+    public function admins_should_get_data_tables_data(): void
     {
         $this->user->role = Roles::Admin;
 
@@ -81,7 +81,7 @@ class AdminQuestionDataTablesControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_fail_if_ajax_is_not_used()
+    public function it_should_fail_if_ajax_is_not_used(): void
     {
         $this
             ->get(route('admin.questions.data'))

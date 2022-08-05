@@ -36,7 +36,7 @@ class BadgeFactory extends Factory
 
         return [
             'name' => $color,
-            'description' => 'This badge is for people who think about '.$color.' :D',
+            'description' => 'This badge is for people who think about ' . $color . ' :D',
             'required_repetitions' => 5,
             'active' => $this->faker->boolean,
             'actuators' => $this->faker->randomElement(BadgeActuators::getValues()),
@@ -45,24 +45,15 @@ class BadgeFactory extends Factory
 
     public function active(): Factory
     {
-        return $this->state(fn () => [
+        return $this->state(fn() => [
             'active' => true,
         ]);
     }
 
     public function inactive(): Factory
     {
-        return $this->state(fn () => [
+        return $this->state(fn() => [
             'active' => false,
         ]);
-    }
-
-    public function withActuators(array $actuators): Factory
-    {
-        return $this->state(function () use ($actuators) {
-            return [
-                'actuators' => BadgeActuators::flags($actuators),
-            ];
-        });
     }
 }

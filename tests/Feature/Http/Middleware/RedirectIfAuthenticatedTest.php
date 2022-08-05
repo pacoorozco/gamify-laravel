@@ -48,7 +48,7 @@ class RedirectIfAuthenticatedTest extends TestCase
     }
 
     /** @test */
-    public function it_response_ok_for_non_authenticated_users()
+    public function it_response_ok_for_non_authenticated_users(): void
     {
         $response = $this->get(self::TEST_ENDPOINT);
 
@@ -57,7 +57,7 @@ class RedirectIfAuthenticatedTest extends TestCase
     }
 
     /** @test */
-    public function it_redirects_to_home_for_authenticated_users_requests()
+    public function it_redirects_to_home_for_authenticated_users_requests(): void
     {
         /** @var User $user */
         $user = User::factory()->create();

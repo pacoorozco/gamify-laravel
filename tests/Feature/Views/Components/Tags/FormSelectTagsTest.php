@@ -35,7 +35,7 @@ class FormSelectTagsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_render_the_tags_component()
+    public function it_should_render_the_tags_component(): void
     {
         // Create some tags by tagging a model.
         $wantAvailableTags = ['foo', 'bar'];

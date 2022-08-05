@@ -31,7 +31,7 @@ use Tests\TestCase;
 
 class UserProfileTest extends TestCase
 {
-    public function test_contains_valid_fillable_properties()
+    public function test_contains_valid_fillable_properties(): void
     {
         $m = new UserProfile();
         $this->assertEquals([
@@ -44,7 +44,7 @@ class UserProfileTest extends TestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_casts_properties()
+    public function test_contains_valid_casts_properties(): void
     {
         $m = new UserProfile();
         $this->assertEquals([
@@ -53,7 +53,7 @@ class UserProfileTest extends TestCase
         ], $m->getCasts());
     }
 
-    public function test_user_relation()
+    public function test_user_relation(): void
     {
         $m = new UserProfile();
         $r = $m->user();

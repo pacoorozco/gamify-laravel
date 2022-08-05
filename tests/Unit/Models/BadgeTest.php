@@ -31,7 +31,7 @@ use Tests\TestCase;
 
 class BadgeTest extends TestCase
 {
-    public function test_contains_valid_fillable_properties()
+    public function test_contains_valid_fillable_properties(): void
     {
         $m = new Badge();
         $this->assertEquals([
@@ -43,7 +43,7 @@ class BadgeTest extends TestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_casts_properties()
+    public function test_contains_valid_casts_properties(): void
     {
         $m = new Badge();
         $this->assertEquals([

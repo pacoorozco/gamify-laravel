@@ -37,6 +37,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => 'Very$3cret',
         ]);

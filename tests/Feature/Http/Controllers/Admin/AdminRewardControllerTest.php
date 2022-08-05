@@ -57,7 +57,7 @@ class AdminRewardControllerTest extends TestCase
     }
 
     /** @test */
-    public function admins_should_see_the_index_view()
+    public function admins_should_see_the_index_view(): void
     {
         $this->user->role = Roles::Admin;
 

@@ -37,7 +37,7 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     /** @test */
-    public function contains_valid_fillable_properties()
+    public function contains_valid_fillable_properties(): void
     {
         $m = new User();
 
@@ -51,7 +51,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function contains_valid_hidden_properties()
+    public function contains_valid_hidden_properties(): void
     {
         $m = new User();
 
@@ -62,7 +62,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function contains_valid_casts_properties()
+    public function contains_valid_casts_properties(): void
     {
         $m = new User();
 
@@ -79,9 +79,9 @@ class UserTest extends TestCase
      * @dataProvider provideDataToTestAdminMembership
      */
     public function it_should_return_if_user_is_admin(
-        string $role,
+        Roles $role,
         bool $shouldBeAdmin,
-    ) {
+    ): void {
         $m = new User();
 
         $m->role = $role;
@@ -92,18 +92,18 @@ class UserTest extends TestCase
     public function provideDataToTestAdminMembership(): \Generator
     {
         yield 'Administrator' => [
-            'role' => Roles::Admin,
-            'want' => true,
+            'role' => Roles::Admin(),
+            'shouldBeAdmin' => true,
         ];
 
         yield 'Player' => [
-            'role' => Roles::Player,
-            'want' => false,
+            'role' => Roles::Player(),
+            'shouldBeAdmin' => false,
         ];
     }
 
     /** @test */
-    public function profile_relation()
+    public function profile_relation(): void
     {
         $m = new User();
 
@@ -113,7 +113,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function answeredQuestions_relation()
+    public function answeredQuestions_relation(): void
     {
         $m = new User();
 
@@ -123,7 +123,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function badges_relation()
+    public function badges_relation(): void
     {
         $m = new User();
 
@@ -133,7 +133,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function points_relation()
+    public function points_relation(): void
     {
         $m = new User();
 
@@ -143,7 +143,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function accounts_relation()
+    public function accounts_relation(): void
     {
         $m = new User();
 
@@ -152,28 +152,47 @@ class UserTest extends TestCase
         $this->assertInstanceOf(HasMany::class, $r);
     }
 
-    /** @test */
-    public function lowercase_username_when_set()
-    {
+    /**
+     * @test
+     * @dataProvider provideTestCasesForUsername
+     */
+    public function lowercase_username_when_set(
+        string $input,
+        string $want,
+    ): void {
         $m = new User();
 
-        $test_data = [
-            'User' => 'user',
-            'ADMIN' => 'admin',
-            'user' => 'user',
-            'admin' => 'admin',
-            '12345' => '12345',
+        $m->username = $input;
+
+        $this->assertEquals($want, $m->getAttribute('username'));
+
+    }
+
+    public function provideTestCasesForUsername(): \Generator
+    {
+        yield 'User' => [
+            'input' => 'User',
+            'want' => 'user',
         ];
 
-        foreach ($test_data as $input => $want) {
-            $m->username = $input;
+        yield 'ADMIN' => [
+            'input' => 'ADMIN',
+            'want' => 'admin',
+        ];
 
-            $this->assertEquals($want, $m->getAttribute('username'));
-        }
+        yield 'user' => [
+            'input' => 'user',
+            'want' => 'user',
+        ];
+
+        yield '12345' => [
+            'input' => '12345',
+            'want' => '12345',
+        ];
     }
 
     /** @test */
-    public function hashes_password_when_set()
+    public function hashes_password_when_set(): void
     {
         Hash::shouldReceive('make')->once()->andReturn('hashed');
 
