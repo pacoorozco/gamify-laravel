@@ -43,7 +43,7 @@ class AdminDashboardControllerTest extends TestCase
     }
 
     /** @test */
-    public function access_is_restricted_to_admins()
+    public function access_is_restricted_to_admins(): void
     {
         $test_data = [
             ['protocol' => 'GET', 'route' => route('admin.home')],
@@ -60,7 +60,7 @@ class AdminDashboardControllerTest extends TestCase
     }
 
     /** @test */
-    public function index_returns_proper_content()
+    public function index_returns_proper_content(): void
     {
         $this->get(route('admin.home'))
             ->assertOK()

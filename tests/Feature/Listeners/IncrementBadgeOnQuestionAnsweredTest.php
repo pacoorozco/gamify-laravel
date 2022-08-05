@@ -57,7 +57,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_should_increment_badges_when_criteria_is_met(
         array $badgeAttributes,
         array $questionAttributes,
-    ) {
+    ): void {
         /** @var User $user */
         $user = User::factory()->create();
 
@@ -71,6 +71,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $question = Question::factory()->create();
         $question->tag($questionAttributes['tags']);
 
+        /** @var QuestionAnswered $event */
         $event = Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
         $event->question = $question;
@@ -158,7 +159,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
     public function it_should_not_increment_badges_when_criteria_is_not_met(
         array $badgeAttributes,
         array $questionAttributes,
-    ) {
+    ): void {
         /** @var User $user */
         $user = User::factory()->create();
 
@@ -172,6 +173,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $question = Question::factory()->create();
         $question->tag($questionAttributes['tags']);
 
+        /** @var QuestionAnswered $event */
         $event = Mockery::mock(QuestionAnswered::class);
         $event->user = $user;
         $event->question = $question;

@@ -23,40 +23,43 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Unit\Models;
+namespace Tests\Feature\Services;
 
-use Gamify\Models\UserProfile;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Tests\TestCase;
+use Laravel\Socialite\Contracts\User;
 
-class UserProfileTest extends TestCase
+final class MockedExternalUser implements User
 {
-    public function test_contains_valid_fillable_properties(): void
-    {
-        $m = new UserProfile();
-        $this->assertEquals([
-            'bio',
-            'date_of_birth',
-            'twitter',
-            'facebook',
-            'linkedin',
-            'github',
-        ], $m->getFillable());
+    public function __construct(
+        private string $id,
+        private string $nickname,
+        private string $name,
+        private string $email,
+        private string $avatar = 'external-avatar',
+    ) {
     }
 
-    public function test_contains_valid_casts_properties(): void
+    public function getId(): string
     {
-        $m = new UserProfile();
-        $this->assertEquals([
-            'id' => 'int',
-            'date_of_birth' => 'datetime',
-        ], $m->getCasts());
+        return $this->id;
     }
 
-    public function test_user_relation(): void
+    public function getNickname(): string
     {
-        $m = new UserProfile();
-        $r = $m->user();
-        $this->assertInstanceOf(BelongsTo::class, $r);
+        return $this->nickname;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->avatar;
     }
 }

@@ -38,7 +38,7 @@ class UsernameRuleTest extends TestCase
      */
     public function it_should_not_pass_wrong_usernames(
         string $input
-    ) {
+    ): void {
         $this->assertFalse(Validator::make(
             ['username' => $input],
             ['username' => new UsernameRule()]
@@ -75,7 +75,7 @@ class UsernameRuleTest extends TestCase
      */
     public function it_should_pass_valid_usernames(
         string $input
-    ) {
+    ): void {
         $this->assertTrue(Validator::make(
             ['username' => $input],
             ['username' => new UsernameRule()]

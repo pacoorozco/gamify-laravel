@@ -41,14 +41,16 @@ class AdminLevelDataTablesControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()
-            ->create();
+        /** @var User user */
+        $user = User::factory()->create();
+
+        $this->user = $user;
     }
 
     /** @test */
-    public function admins_should_get_data_tables_data()
+    public function admins_should_get_data_tables_data(): void
     {
-        $this->user->role = Roles::Admin;
+        $this->user->role = Roles::Admin();
 
         $levels = Level::factory()
             ->count(3)
@@ -58,7 +60,7 @@ class AdminLevelDataTablesControllerTest extends TestCase
             ->actingAs($this->user)
             ->ajaxGet(route('admin.levels.data'))
             ->assertSuccessful()
-            ->assertJsonCount(count($levels), 'data')
+            ->assertJsonCount($levels->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
                     '*' => [
@@ -81,7 +83,7 @@ class AdminLevelDataTablesControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_fail_if_ajax_is_not_used()
+    public function it_should_fail_if_ajax_is_not_used(): void
     {
         $this
             ->get(route('admin.levels.data'))

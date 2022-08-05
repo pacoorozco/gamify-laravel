@@ -45,7 +45,7 @@ class OnlyAjaxTest extends TestCase
     }
 
     /** @test */
-    public function it_forbids_non_ajax_requests()
+    public function it_forbids_non_ajax_requests(): void
     {
         $this->withoutExceptionHandling();
         $exceptionCount = 0;
@@ -65,7 +65,7 @@ class OnlyAjaxTest extends TestCase
     }
 
     /** @test */
-    public function it_passes_with_ajax_requests()
+    public function it_passes_with_ajax_requests(): void
     {
         $httpVerbs = ['get', 'put', 'post', 'patch', 'delete'];
 

@@ -31,7 +31,8 @@ use Tests\TestCase;
 
 class PointTest extends TestCase
 {
-    public function test_contains_valid_fillable_properties()
+    /** @test */
+    public function it_should_contain_valid_fillable_properties(): void
     {
         $m = new Point();
         $this->assertEquals([
@@ -40,7 +41,8 @@ class PointTest extends TestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_casts_properties()
+    /** @test */
+    public function it_should_contain_valid_casts_properties(): void
     {
         $m = new Point();
         $this->assertEquals([
@@ -48,7 +50,8 @@ class PointTest extends TestCase
         ], $m->getCasts());
     }
 
-    public function test_user_relation()
+    /** @test */
+    public function it_should_have_a_user_relation(): void
     {
         $m = new Point();
         $r = $m->user();

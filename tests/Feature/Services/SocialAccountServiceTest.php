@@ -29,7 +29,6 @@ use Gamify\Models\LinkedSocialAccount;
 use Gamify\Models\User;
 use Gamify\Services\SocialAccountService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class SocialAccountServiceTest extends TestCase
@@ -46,20 +45,16 @@ class SocialAccountServiceTest extends TestCase
         /** @var User $want */
         $want = User::factory()->make();
 
-        $mockExternalUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
-        $mockExternalUser
-            ->shouldReceive('getId')
-            ->andReturn(self::EXTERNAL_USER_ID)
-            ->shouldReceive('getEmail')
-            ->andReturn($want->email)
-            ->shouldReceive('getNickname')
-            ->andReturn($want->username)
-            ->shouldReceive('getName')
-            ->andReturn($want->name);
+        $mockedExternalUser = new MockedExternalUser(
+            id: self::EXTERNAL_USER_ID,
+            nickname: $want->username,
+            name: $want->name,
+            email: $want->email,
+        );
 
         $serv = new SocialAccountService();
 
-        $user = $serv->findOrCreate($mockExternalUser, self::PROVIDER_NAME);
+        $user = $serv->findOrCreate($mockedExternalUser, self::PROVIDER_NAME);
 
         $this->assertDatabaseHas(User::class, [
             'username' => $want->username,
@@ -80,20 +75,16 @@ class SocialAccountServiceTest extends TestCase
         /** @var User $want */
         $want = User::factory()->create();
 
-        $mockExternalUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
-        $mockExternalUser
-            ->shouldReceive('getId')
-            ->andReturn(self::EXTERNAL_USER_ID)
-            ->shouldReceive('getEmail')
-            ->andReturn($want->email)
-            ->shouldReceive('getNickname')
-            ->andReturn($want->username)
-            ->shouldReceive('getName')
-            ->andReturn($want->name);
+        $mockedExternalUser = new MockedExternalUser(
+            id: self::EXTERNAL_USER_ID,
+            nickname: $want->username,
+            name: $want->name,
+            email: $want->email,
+        );
 
         $serv = new SocialAccountService();
 
-        $user = $serv->findOrCreate($mockExternalUser, self::PROVIDER_NAME);
+        $user = $serv->findOrCreate($mockedExternalUser, self::PROVIDER_NAME);
 
         $this->assertTrue($user->is($want));
 
@@ -107,32 +98,32 @@ class SocialAccountServiceTest extends TestCase
     /** @test * */
     public function it_creates_an_user_with_an_unique_username_when_the_username_is_already_in_use(): void
     {
-        /** @var User $want */
-        $want = User::factory()->create([
-            'username' => 'original username',
+        User::factory()->create([
+            'username' => 'foo',
         ]);
 
-        $mockExternalUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
-        $mockExternalUser
-            ->shouldReceive('getId')
-            ->andReturn(self::EXTERNAL_USER_ID)
-            ->shouldReceive('getEmail')
-            ->andReturn('other.email@domain.local')
-            ->shouldReceive('getNickname')
-            ->andReturn($want->username)
-            ->shouldReceive('getName')
-            ->andReturn('other name');
+        /** @var User $want */
+        $want = User::factory()->make([
+            'username' => 'foo',
+        ]);
+
+        $mockedExternalUser = new MockedExternalUser(
+            id: self::EXTERNAL_USER_ID,
+            nickname: $want->username,
+            name: $want->name,
+            email: $want->email,
+        );
 
         $serv = new SocialAccountService();
 
-        $user = $serv->findOrCreate($mockExternalUser, self::PROVIDER_NAME);
+        $user = $serv->findOrCreate($mockedExternalUser, self::PROVIDER_NAME);
 
         $this->assertNotEquals($want->username, $user->username);
 
         $this->assertDatabaseHas(User::class, [
             'username' => $user->username,
-            'email' => 'other.email@domain.local',
-            'name' => 'other name',
+            'email' => $want->email,
+            'name' => $want->name,
         ]);
 
         $this->assertDatabaseHas(LinkedSocialAccount::class, [
@@ -147,25 +138,22 @@ class SocialAccountServiceTest extends TestCase
     {
         /** @var User $want */
         $want = User::factory()->create();
+
         $want->accounts()->create([
             'provider_name' => self::PROVIDER_NAME,
             'provider_id' => self::EXTERNAL_USER_ID,
         ]);
 
-        $mockExternalUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
-        $mockExternalUser
-            ->shouldReceive('getId')
-            ->andReturn(self::EXTERNAL_USER_ID)
-            ->shouldReceive('getEmail')
-            ->andReturn($want->email)
-            ->shouldReceive('getNickname')
-            ->andReturn($want->username)
-            ->shouldReceive('getName')
-            ->andReturn($want->name);
+        $mockedExternalUser = new MockedExternalUser(
+            id: self::EXTERNAL_USER_ID,
+            nickname: $want->username,
+            name: $want->name,
+            email: $want->email,
+        );
 
         $serv = new SocialAccountService();
 
-        $user = $serv->findOrCreate($mockExternalUser, self::PROVIDER_NAME);
+        $user = $serv->findOrCreate($mockedExternalUser, self::PROVIDER_NAME);
 
         $this->assertTrue($user->is($want));
 

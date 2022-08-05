@@ -31,7 +31,7 @@ use Tests\TestCase;
 
 class QuestionChoiceTest extends TestCase
 {
-    public function test_contains_valid_fillable_properties()
+    public function test_contains_valid_fillable_properties(): void
     {
         $m = new QuestionChoice();
         $this->assertEquals([
@@ -40,7 +40,7 @@ class QuestionChoiceTest extends TestCase
         ], $m->getFillable());
     }
 
-    public function test_contains_valid_casts_properties()
+    public function test_contains_valid_casts_properties(): void
     {
         $m = new QuestionChoice();
         $this->assertEquals([
@@ -48,7 +48,7 @@ class QuestionChoiceTest extends TestCase
         ], $m->getCasts());
     }
 
-    public function test_question_relation()
+    public function test_question_relation(): void
     {
         $m = new QuestionChoice();
         $r = $m->question();
@@ -56,7 +56,7 @@ class QuestionChoiceTest extends TestCase
     }
 
     /** @test */
-    public function it_is_considered_correct_when_score_is_positive()
+    public function it_is_considered_correct_when_score_is_positive(): void
     {
         $m = new QuestionChoice();
         $m->score = 5;
@@ -65,7 +65,7 @@ class QuestionChoiceTest extends TestCase
     }
 
     /** @test */
-    public function it_is_considered_incorrect_when_score_is_zero()
+    public function it_is_considered_incorrect_when_score_is_zero(): void
     {
         $m = new QuestionChoice();
         $m->score = 0;
@@ -74,7 +74,7 @@ class QuestionChoiceTest extends TestCase
     }
 
     /** @test */
-    public function it_is_considered_incorrect_when_score_is_negative()
+    public function it_is_considered_incorrect_when_score_is_negative(): void
     {
         $m = new QuestionChoice();
         $m->score = -5;

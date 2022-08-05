@@ -37,7 +37,7 @@ class ChangePasswordControllerTest extends TestCase
     const VALID_PASSWORD = 'foo#B4rBaz';
 
     /** @test */
-    public function it_shows_password_change_form_for_logged_users()
+    public function it_shows_password_change_form_for_logged_users(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -49,7 +49,7 @@ class ChangePasswordControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_shows_error_for_non_logged_users()
+    public function it_shows_error_for_non_logged_users(): void
     {
         $this
             ->get(route('account.password.index'))
@@ -57,7 +57,7 @@ class ChangePasswordControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_shows_validation_error_if_current_password_is_invalid()
+    public function it_shows_validation_error_if_current_password_is_invalid(): void
     {
         /** @var User $user */
         $user = User::factory()->create([
@@ -75,7 +75,7 @@ class ChangePasswordControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_shows_validation_error_if_new_password_confirmation_does_not_match()
+    public function it_shows_validation_error_if_new_password_confirmation_does_not_match(): void
     {
         /** @var User $user */
         $user = User::factory()->create([
@@ -93,7 +93,7 @@ class ChangePasswordControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_has_success_key_on_session_when_password_has_been_changed()
+    public function it_has_success_key_on_session_when_password_has_been_changed(): void
     {
         /** @var User $user */
         $user = User::factory()->create([

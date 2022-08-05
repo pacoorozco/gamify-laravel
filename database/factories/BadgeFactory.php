@@ -56,13 +56,4 @@ class BadgeFactory extends Factory
             'active' => false,
         ]);
     }
-
-    public function withActuators(array $actuators): Factory
-    {
-        return $this->state(function () use ($actuators) {
-            return [
-                'actuators' => BadgeActuators::flags($actuators),
-            ];
-        });
-    }
 }

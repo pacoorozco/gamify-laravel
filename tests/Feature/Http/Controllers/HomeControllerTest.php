@@ -34,7 +34,7 @@ class HomeControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function index_returns_proper_content()
+    public function index_returns_proper_content(): void
     {
         /** @var User $user */
         $user = User::factory()->create();

@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+### Changed
+- Update dependencies. ([#311][i311], [#312][i312], [#313][i313], [#314][i314])
+
+[i311]: https://github.com/pacoorozco/gamify-laravel/pull/311
+[i312]: https://github.com/pacoorozco/gamify-laravel/pull/312
+[i313]: https://github.com/pacoorozco/gamify-laravel/pull/313
+[i314]: https://github.com/pacoorozco/gamify-laravel/pull/314
+
 ## 3.1.0 - 2022-08-03
 
 > NOTE: The way that a Badge is triggered after a Question is answered has changed. Currently, Questions will trigger the completion of the Badge that contains, at least, on matching tag.

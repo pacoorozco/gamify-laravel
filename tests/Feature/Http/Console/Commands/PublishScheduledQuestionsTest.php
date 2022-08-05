@@ -36,19 +36,21 @@ class PublishScheduledQuestionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    private Question $questionScheduledOnThePast;
-
-    private Question $questionScheduledOnTheFuture;
-
     public function setUp(): void
     {
         parent::setUp();
 
         /** @var User $admin */
         $admin = User::factory()->admin()->create();
-        $this->actingAs($admin);
 
-        $this->questionScheduledOnThePast = Question::factory()
+        $this->actingAs($admin);
+    }
+
+    /** @test */
+    public function onlyPublishQuestionsScheduledOnThePast(): void
+    {
+        /** @var Question $questionScheduledOnThePast */
+        $questionScheduledOnThePast = Question::factory()
             ->has(QuestionChoice::factory()->correct(), 'choices')
             ->has(QuestionChoice::factory()->incorrect(), 'choices')
             ->create([
@@ -56,21 +58,18 @@ class PublishScheduledQuestionsTest extends TestCase
                 'publication_date' => now()->subDay(),
             ]);
 
-        $this->questionScheduledOnTheFuture = Question::factory()
+        /** @var Question $questionScheduledOnTheFuture */
+        $questionScheduledOnTheFuture = Question::factory()
             ->has(QuestionChoice::factory()->correct(), 'choices')
             ->has(QuestionChoice::factory()->incorrect(), 'choices')
             ->create([
                 'status' => Question::FUTURE_STATUS,
                 'publication_date' => now()->addDay(),
             ]);
-    }
 
-    /** @test */
-    public function onlyPublishQuestionsScheduledOnThePast()
-    {
         \Artisan::call(PublishScheduledQuestions::class);
 
-        $this->assertTrue(Question::findOrFail($this->questionScheduledOnThePast->id)->isPublished());
-        $this->assertFalse(Question::findOrFail($this->questionScheduledOnTheFuture->id)->isPublished());
+        $this->assertTrue(Question::findOrFail($questionScheduledOnThePast->id)->isPublished());
+        $this->assertFalse(Question::findOrFail($questionScheduledOnTheFuture->id)->isPublished());
     }
 }

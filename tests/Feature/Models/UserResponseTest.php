@@ -58,6 +58,7 @@ class UserResponseTest extends TestCase
             )
         );
 
+        /** @phpstan-ignore-next-line */
         $response = $user->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()
@@ -87,6 +88,7 @@ class UserResponseTest extends TestCase
             )
         );
 
+        /** @phpstan-ignore-next-line */
         $response = $user->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()
@@ -116,6 +118,7 @@ class UserResponseTest extends TestCase
             )
         );
 
+        /** @phpstan-ignore-next-line */
         $response = $user->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()

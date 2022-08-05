@@ -40,7 +40,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_listen_for_login_events()
+    public function it_should_listen_for_login_events(): void
     {
         Event::fake();
         Event::assertListening(
@@ -50,7 +50,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_badges_when_user_logs_in()
+    public function it_increments_badges_when_user_logs_in(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -60,17 +60,19 @@ class IncrementBadgeOnUserLoginTest extends TestCase
             'actuators' => BadgeActuators::OnUserLogin,
         ]);
 
+        /** @var \Illuminate\Auth\Events\Login $event */
         $event = Mockery::mock(Login::class);
         $event->user = $user;
 
         $listener = new IncrementBadgesOnUserLogin();
         $listener->handle($event);
 
+        /** @phpstan-ignore-next-line */
         $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
     /** @test */
-    public function it_does_not_increment_badges_when_user_logs_in()
+    public function it_does_not_increment_badges_when_user_logs_in(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -80,6 +82,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
             'actuators' => BadgeActuators::None,
         ]);
 
+        /** @var \Illuminate\Auth\Events\Login $event */
         $event = Mockery::mock(Login::class);
         $event->user = $user;
 
