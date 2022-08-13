@@ -68,7 +68,7 @@ Prior this installation, you **need to have installed** this software:
     
 1. Go to `http://localhost`. Enjoy!
 
-   > **NOTE**: Default credentials are `admin@example.com/admin` or `user@example.com/user`
+   > **NOTE**: Default credentials are `admin@domain.local/admin` or `player@domain.local/player`
 
 ## Reporting issues
 
