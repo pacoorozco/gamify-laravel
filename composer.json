@@ -25,7 +25,7 @@
   },
   "require": {
     "php": "^8.0.2",
-    "bensampo/laravel-enum": "^5.3.1",
+    "bensampo/laravel-enum": "^6.0.0",
     "cviebrock/eloquent-sluggable": "^9.0.0",
     "cviebrock/eloquent-taggable": "^9.0.0",
     "doctrine/dbal": "^3.3.7",
