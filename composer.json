@@ -42,7 +42,7 @@
     "yajra/laravel-datatables-oracle": "^10.1.2"
   },
   "require-dev": {
-    "brianium/paratest": "^6.6.3",
+    "brianium/paratest": "^6.4.4",
     "laravel/breeze": "^1.12.0",
     "laravel/pint": "^1.1.2",
     "mockery/mockery": "^1.5.0",
