@@ -36,6 +36,7 @@ use Gamify\Http\Controllers\Admin\AdminRewardController;
 use Gamify\Http\Controllers\Admin\AdminUserController;
 use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
 use Gamify\Http\Controllers\HomeController;
+use Gamify\Http\Controllers\LeaderBoardController;
 use Gamify\Http\Controllers\QuestionController;
 use Gamify\Http\Controllers\ShowUserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/leaderboard', LeaderBoardController::class)
+    ->name('leaderboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])

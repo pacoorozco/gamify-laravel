@@ -18,6 +18,7 @@
                 @include('partials.sidebar')
             </div>
             <!-- end: TOP LEFT NAVIGATION MENU -->
+
             <!-- start: TOP RIGHT NAVIGATION MENU -->
             <div class="navbar-custom-menu">
                 <!-- start: TOP NAVIGATION MENU -->
@@ -36,12 +37,26 @@
                     <!-- end: NOTIFICATION DROPDOWN -->
                     --}}
 
-                    <!-- start: USER DROPDOWN -->
-                    @include('partials.user_dropdown')
-                    <!-- end: USER DROPDOWN -->
+                    @auth
+                        <!-- start: USER DROPDOWN -->
+                        @include('partials.user_dropdown')
+                        <!-- end: USER DROPDOWN -->
+                    @endauth
+
+                    @guest
+                        <li>
+                            <a href="{{ route('login') }}" title="{{ __('auth.login') }}">
+                                {{ __('auth.login') }}
+                            </a>
+                        </li>
+                    @endguest
+
+
                 </ul>
                 <!-- end: TOP RIGHT NAVIGATION MENU -->
             </div>
+
+
         </div>
         <!-- end: CONTAINER -->
     </nav>
