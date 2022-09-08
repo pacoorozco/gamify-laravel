@@ -5,13 +5,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 3.2.0 - 2022-09-08
+
+### Added
+- New endpoint (`/leaderbodar`) to get the Leader Board. It's accessible for guests. ([#324][i324])
+- Documentation about how to customize application views. See [HOWTO file](https://github.com/pacoorozco/gamify-laravel/blob/main/HOWTO.md).
+
 ### Changed
-- Update dependencies. ([#311][i311], [#312][i312], [#313][i313], [#314][i314])
+- Update dependencies. ([#311][i311], [#312][i312], [#313][i313], [#314][i314], [#325][i325], [#326][i326], [#329][i329], [#330][i330], [#331][i331], [#332][i332])
 
 [i311]: https://github.com/pacoorozco/gamify-laravel/pull/311
 [i312]: https://github.com/pacoorozco/gamify-laravel/pull/312
 [i313]: https://github.com/pacoorozco/gamify-laravel/pull/313
 [i314]: https://github.com/pacoorozco/gamify-laravel/pull/314
+[i325]: https://github.com/pacoorozco/gamify-laravel/pull/325
+[i326]: https://github.com/pacoorozco/gamify-laravel/pull/326
+[i329]: https://github.com/pacoorozco/gamify-laravel/pull/329
+[i330]: https://github.com/pacoorozco/gamify-laravel/pull/330
+[i331]: https://github.com/pacoorozco/gamify-laravel/pull/331
+[i332]: https://github.com/pacoorozco/gamify-laravel/pull/332
+[i324]: https://github.com/pacoorozco/gamify-laravel/issue/324
 
 ## 3.1.0 - 2022-08-03
 
