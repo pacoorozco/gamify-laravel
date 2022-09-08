@@ -96,7 +96,6 @@ class Game
             // this badge was initiated before
             $user->badges()->updateExistingPivot($badge->id, $data);
         } catch (ModelNotFoundException $exception) {
-
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, $data);
         }
