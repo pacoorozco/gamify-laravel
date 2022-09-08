@@ -36,7 +36,8 @@ class UserPresenter extends Presenter
 
     public function role(): string
     {
-        return $this->model->role->description;
+        return $this->model->role->description
+            ?? '';
     }
 
     public function createdAt(): string

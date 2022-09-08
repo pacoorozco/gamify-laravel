@@ -56,14 +56,14 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
     public static function toSelectArray(): array
     {
         return [
-            BadgeActuators::None()->value => BadgeActuators::None()->description,
+            self::None => self::None()->description,
             trans('enums.actuators_related_with_question_events') => [
-                BadgeActuators::OnQuestionAnswered()->value => BadgeActuators::OnQuestionAnswered()->description,
-                BadgeActuators::OnQuestionCorrectlyAnswered()->value => BadgeActuators::OnQuestionCorrectlyAnswered()->description,
-                BadgeActuators::OnQuestionIncorrectlyAnswered()->value => BadgeActuators::OnQuestionIncorrectlyAnswered()->description,
+                self::OnQuestionAnswered => self::OnQuestionAnswered()->description,
+                self::OnQuestionCorrectlyAnswered => self::OnQuestionCorrectlyAnswered()->description,
+                self::OnQuestionIncorrectlyAnswered => self::OnQuestionIncorrectlyAnswered()->description,
             ],
             trans('enums.actuators_related_with_user_events') => [
-                BadgeActuators::OnUserLogin()->value => BadgeActuators::OnUserLogin()->description,
+                self::OnUserLogin => self::OnUserLogin()->description,
             ],
         ];
     }
