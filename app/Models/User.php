@@ -27,7 +27,6 @@ namespace Gamify\Models;
 
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
-use Gamify\Rules\UsernameRule;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -39,9 +38,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Laracodes\Presenter\Traits\Presentable;
 
 /**
@@ -92,32 +88,6 @@ final class User extends Authenticatable implements MustVerifyEmail
     public static function findByEmailAddress(string $emailAddress): self
     {
         return static::where('email', $emailAddress)->firstOrFail();
-    }
-
-    /**
-     * Generates a unique username from the provided base string.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    public static function generateUsername(string $name): string
-    {
-        if (Validator::make(
-            ['username' => $name],
-            [
-                'username' => [
-                    'required',
-                    new UsernameRule(),
-                    Rule::unique('users'),
-                ],
-            ]
-        )->passes()) {
-            return $name;
-        }
-
-        $uniqueUserName = Str::studly($name).'-'.Str::random(2);
-
-        return self::generateUsername($uniqueUserName);
     }
 
     public function profile(): HasOne
