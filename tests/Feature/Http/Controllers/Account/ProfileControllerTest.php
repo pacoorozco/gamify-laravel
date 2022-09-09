@@ -78,15 +78,6 @@ class ProfileControllerTest extends TestCase
     }
 
     /** @test */
-    public function users_should_not_see_the_edit_profile_form_without_password_confirmation(): void
-    {
-        $this
-            ->actingAs($this->user)
-            ->get(route('account.profile.edit'))
-            ->assertRedirect(route('password.confirm'));
-    }
-
-    /** @test */
     public function users_should_see_the_edit_profile_form(): void
     {
         $this
@@ -106,6 +97,7 @@ class ProfileControllerTest extends TestCase
 
         $this
             ->get(route('account.profile.update'), [
+                'name' => 'Foo Bar Baz',
                 'bio' => $want->bio,
                 'date_of_birth' => $want->date_of_birth,
                 'twitter' => $want->twitter,
@@ -114,29 +106,6 @@ class ProfileControllerTest extends TestCase
                 'github' => $want->github,
             ])
             ->assertRedirect(route('login'));
-    }
-
-    /** @test */
-    public function users_should_not_update_its_own_profile_without_password_confirm(): void
-    {
-        $userProfile = $this->user->profile;
-
-        /** @var UserProfile $want */
-        $want = UserProfile::factory()->make();
-
-        $this
-            ->actingAs($this->user)
-            ->put(route('account.profile.update'), [
-                'bio' => $want->bio,
-                'date_of_birth' => $want->date_of_birth,
-                'twitter' => $want->twitter,
-                'facebook' => $want->facebook,
-                'linkedin' => $want->linkedin,
-                'github' => $want->github,
-            ])
-            ->assertRedirect(route('password.confirm'));
-
-        $this->assertModelExists($userProfile);
     }
 
     /** @test */
@@ -149,6 +118,7 @@ class ProfileControllerTest extends TestCase
             ->actingAs($this->user)
             ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
+                'name' => 'Foo Bar Baz',
                 'bio' => $want->bio,
                 'date_of_birth' => $want->date_of_birth,
                 'twitter' => $want->twitter,
@@ -158,6 +128,11 @@ class ProfileControllerTest extends TestCase
             ])
             ->assertRedirect(route('account.index'))
             ->assertValid();
+
+        $this->assertDatabaseHas(User::class, [
+            'id' => $this->user->id,
+            'name' => 'Foo Bar Baz',
+        ]);
 
         $this->assertDatabaseHas(UserProfile::class, [
             'user_id' => $this->user->id,
@@ -184,6 +159,7 @@ class ProfileControllerTest extends TestCase
         $want = UserProfile::factory()->make();
 
         $formData = [
+            'name' => $data['name'] ?? 'Foo Bar Baz',
             'bio' => $data['bio'] ?? $want->bio,
             'date_of_birth' => $data['date_of_birth'] ?? $want->date_of_birth,
             'twitter' => $data['twitter'] ?? $want->twitter,
@@ -203,6 +179,13 @@ class ProfileControllerTest extends TestCase
 
     public function provideWrongDataForUserProfileModification(): Generator
     {
+        yield 'empty name' => [
+            'data' => [
+                'name' => '',
+            ],
+            'errors' => ['name'],
+        ];
+
         yield 'birthdate ! a date' => [
             'data' => [
                 'date_of_birth' => 'foo',
@@ -250,6 +233,7 @@ class ProfileControllerTest extends TestCase
             ->actingAs($this->user)
             ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
+                'name' => $this->user->name,
                 'image' => $file,
             ])
             ->assertRedirect(route('account.index'))
@@ -271,7 +255,27 @@ class ProfileControllerTest extends TestCase
             ->actingAs($this->user)
             ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
+                'name' => $this->user->name,
                 'bio' => 'foo',
+            ])
+            ->assertRedirect(route('account.index'))
+            ->assertValid();
+
+        Event::assertDispatched(UserProfileUpdated::class);
+    }
+
+    /** @test */
+    public function event_should_be_dispatched_when_user_is_updating_at_least_one_attribute(): void
+    {
+        Event::fake([
+            UserProfileUpdated::class,
+        ]);
+
+        $this
+            ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->put(route('account.profile.update'), [
+                'name' => 'Foo Bar Baz',
             ])
             ->assertRedirect(route('account.index'))
             ->assertValid();
@@ -289,7 +293,9 @@ class ProfileControllerTest extends TestCase
         $this
             ->actingAs($this->user)
             ->withoutMiddleware(RequirePassword::class)
-            ->put(route('account.profile.update'), [])
+            ->put(route('account.profile.update'), [
+                'name' => $this->user->name,
+            ])
             ->assertRedirect(route('account.index'))
             ->assertValid();
 

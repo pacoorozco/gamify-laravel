@@ -32,10 +32,17 @@ final class UpdateUserProfileAction
 {
     public function execute(User $user, array $attributes): User
     {
+        $user->update([
+            'name' => $attributes['name'],
+        ]);
+
         $user->profile
             ->update($attributes);
 
-        UserProfileUpdated::dispatchIf($user->profile->wasChanged(), $user);
+        UserProfileUpdated::dispatchIf(
+            $user->wasChanged('name') || $user->profile->wasChanged(),
+            $user
+        );
 
         return $user;
     }

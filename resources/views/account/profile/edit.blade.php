@@ -39,17 +39,17 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <!-- name -->
+                    <!-- username -->
                     <div class="form-group">
-                        <label for="name" class="control-label">
-                            {{ __('user/profile.name') }}
+                        <label for="username" class="control-label">
+                            {{ __('user/profile.username') }}
                         </label>
 
                         <div class="controls">
-                            <input class="form-control" disabled="disabled" name="name" type="text" value="{{ $user->username }}" id="name">
+                            <input class="form-control" disabled="disabled" name="username" type="text" value="{{ $user->username }}" id="username">
                         </div>
                     </div>
-                    <!-- /.name -->
+                    <!-- /.username -->
 
                     <!-- email -->
                     <div class="form-group">
@@ -62,6 +62,18 @@
                         </div>
                     </div>
                     <!-- /.email -->
+
+                    <!-- name -->
+                    <div class="form-group">
+                        <label for="name" class="control-label">
+                            {{ __('user/profile.name') }}
+                        </label>
+
+                        <div class="controls">
+                            <input class="form-control" name="name" type="text" value="{{ $user->name }}" id="name">
+                        </div>
+                    </div>
+                    <!-- /.name -->
 
                     <!-- date_of_birth -->
                     <div class="form-group {{ $errors->has('date_of_birth') ? 'has-error' : '' }}">

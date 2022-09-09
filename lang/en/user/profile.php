@@ -48,6 +48,7 @@ return [
     'new_password' => 'New password',
     'new_password_confirm' => 'Confirm new password',
 
+    'username' => 'Username',
     'name' => 'Name',
     'email' => 'Email',
     'date_of_birth' => 'Birthdate',

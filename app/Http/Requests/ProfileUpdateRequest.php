@@ -30,6 +30,10 @@ class ProfileUpdateRequest extends Request
     public function rules(): array
     {
         return [
+            'name' => [
+                'required',
+                'string',
+            ],
             'bio' => [
                 'nullable',
                 'string',

@@ -79,11 +79,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('account.index');
 
         Route::get('edit', [ProfileController::class, 'edit'])
-            ->middleware('password.confirm')
             ->name('account.profile.edit');
 
         Route::put('edit', [ProfileController::class, 'update'])
-            ->middleware('password.confirm')
             ->name('account.profile.update');
 
         Route::get('password', [ChangePasswordController::class, 'index'])
