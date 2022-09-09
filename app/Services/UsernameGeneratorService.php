@@ -105,4 +105,19 @@ class UsernameGeneratorService
                 ->get('username')
             : $duplicate;
     }
+
+    /**
+     * Create the username from the received text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+    public function fromText(string $text): string
+    {
+        $username = empty($text)
+            ? 'player'
+            : $text;
+
+        return $username.$this->getUsernamePrefix($username);
+    }
 }

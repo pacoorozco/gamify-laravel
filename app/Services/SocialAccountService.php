@@ -67,8 +67,12 @@ class SocialAccountService
                 $createUserAction = app()->make(CreateUserAction::class);
                 $generator = app()->make(UsernameGeneratorService::class);
 
+                $username = empty($providerUser->getNickname())
+                    ? $generator->fromEmail($providerUser->getEmail())
+                    : $generator->fromText($providerUser->getNickname());
+
                 return $createUserAction->execute(
-                    $generator->fromEmail($providerUser->getEmail()),
+                    $username,
                     $providerUser->getEmail(),
                     $providerUser->getName(),
                     password: Str::random(),
