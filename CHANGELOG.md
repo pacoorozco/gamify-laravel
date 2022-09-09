@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 3.2.1 - 2022-09-09
+
+### Fixed
+- A user can not edit its own name. ([#338][i338])
+- Endless loop when using Social login. ([#336][i336])
+
+[i338]: https://github.com/pacoorozco/gamify-laravel/issue/338
+[i336]: https://github.com/pacoorozco/gamify-laravel/issue/336
+
 ## 3.2.0 - 2022-09-08
 
 ### Added
