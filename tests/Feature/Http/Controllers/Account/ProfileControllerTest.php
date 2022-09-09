@@ -78,15 +78,6 @@ class ProfileControllerTest extends TestCase
     }
 
     /** @test */
-    public function users_should_not_see_the_edit_profile_form_without_password_confirmation(): void
-    {
-        $this
-            ->actingAs($this->user)
-            ->get(route('account.profile.edit'))
-            ->assertRedirect(route('password.confirm'));
-    }
-
-    /** @test */
     public function users_should_see_the_edit_profile_form(): void
     {
         $this
@@ -115,30 +106,6 @@ class ProfileControllerTest extends TestCase
                 'github' => $want->github,
             ])
             ->assertRedirect(route('login'));
-    }
-
-    /** @test */
-    public function users_should_not_update_its_own_profile_without_password_confirm(): void
-    {
-        $userProfile = $this->user->profile;
-
-        /** @var UserProfile $want */
-        $want = UserProfile::factory()->make();
-
-        $this
-            ->actingAs($this->user)
-            ->put(route('account.profile.update'), [
-                'name' => 'Foo Bar Baz',
-                'bio' => $want->bio,
-                'date_of_birth' => $want->date_of_birth,
-                'twitter' => $want->twitter,
-                'facebook' => $want->facebook,
-                'linkedin' => $want->linkedin,
-                'github' => $want->github,
-            ])
-            ->assertRedirect(route('password.confirm'));
-
-        $this->assertModelExists($userProfile);
     }
 
     /** @test */
