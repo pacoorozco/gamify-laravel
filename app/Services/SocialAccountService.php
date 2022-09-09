@@ -65,9 +65,14 @@ class SocialAccountService
             ->where('email', $providerUser->getEmail())
             ->firstOr(function () use ($providerUser) {
                 $createUserAction = app()->make(CreateUserAction::class);
+                $generator = app()->make(UsernameGeneratorService::class);
+
+                $username = empty($providerUser->getNickname())
+                    ? $generator->fromEmail($providerUser->getEmail())
+                    : $generator->fromText($providerUser->getNickname());
 
                 return $createUserAction->execute(
-                    User::generateUsername($providerUser->getNickname()),
+                    $username,
                     $providerUser->getEmail(),
                     $providerUser->getName(),
                     password: Str::random(),
