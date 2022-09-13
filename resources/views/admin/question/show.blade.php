@@ -204,8 +204,8 @@
                         <dt>{{ __('admin/question/model.authored') }}</dt>
                         <dd>
                             <ul class="list-unstyled">
-                                <li>{{ __('admin/question/model.created_by', ['who' => $question->creator->username, 'when' => $question->created_at]) }}</li>
-                                <li>{{ __('admin/question/model.updated_by', ['who' => $question->updater->username, 'when' => $question->updated_at]) }}</li>
+                                <li>{{ __('admin/question/model.created_by', ['who' => $question->present()->creator(), 'when' => $question->created_at->toDayDateTimeString()]) }}</li>
+                                <li>{{ __('admin/question/model.updated_by', ['who' => $question->present()->updater(), 'when' => $question->updated_at->toDayDateTimeString()]) }}</li>
                                 <li>{{ $question->present()->publicationDateDescription }}</li>
                             </ul>
                         </dd>

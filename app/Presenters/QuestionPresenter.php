@@ -162,4 +162,14 @@ class QuestionPresenter extends Presenter
             ? ''
             : $this->model->publication_date->format('Y-m-d H:i');
     }
+
+    public function creator(): string
+    {
+        return $this->model->creator->username ?? 'N/A';
+    }
+
+    public function updater(): string
+    {
+        return $this->model->updater->username ?? 'N/A';
+    }
 }
