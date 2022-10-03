@@ -40,7 +40,7 @@ class AdminQuestionDataTablesController extends AdminController
             'status',
             'hidden',
             'type',
-            'publication_date'
+            'publication_date',
         ])->orderBy('name', 'ASC');
 
         return $dataTable->eloquent($questions)
