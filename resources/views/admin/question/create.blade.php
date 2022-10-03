@@ -287,6 +287,5 @@
                 $("#publication_date").val("");
                 $("#publication_date").change();
             });
-        });
     </script>
 @endpush
