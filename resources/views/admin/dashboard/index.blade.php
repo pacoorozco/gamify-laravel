@@ -21,13 +21,19 @@
     <!-- ./info boxes -->
 
     <div class="row">
-        <div class="col-md-6">
-            @include('admin.dashboard._latest_published_questions')
-        </div>
-        <div class="col-md-6">
-            @include('admin.dashboard._latest_registered_users')
-        </div>
+        <section class="col-md-6 connectedSortable ui-sortable">
 
+                @include('admin.dashboard._latest_published_questions')
+
+                @include('admin.dashboard._next_scheduled_questions')
+
+        </section>
+
+        <section class="col-md-6 connectedSortable ui-sortable">
+
+            @include('admin.dashboard._latest_registered_users')
+
+        </section>
     </div>
 
 

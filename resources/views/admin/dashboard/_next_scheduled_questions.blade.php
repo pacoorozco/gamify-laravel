@@ -1,7 +1,7 @@
 <div class="box">
     <div class="box-header ui-sortable-handle">
-        <i class="fa fa-comments"></i>
-        <h3 class="box-title">Recently published questions</h3>
+        <i class="fa fa-clock-o"></i>
+        <h3 class="box-title">Next scheduled questions</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-sm" data-widget="collapse">
                 <i class="fa fa-minus"></i>
@@ -20,7 +20,7 @@
                 <th>{{ __('general.edit') }}</th>
             </tr>
             </thead>
-            @foreach($latest_questions as $question)
+            @foreach($next_scheduled_questions as $question)
                 <tr>
                     <td>
                         {{ $question->present()->name }}
@@ -41,9 +41,4 @@
         </table>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-        <a href="{{ route('admin.questions.index') }}" class="btn btn-default pull-right">
-            {{ __('admin/question/title.question_management') }}
-        </a>
-    </div>
 </div>
