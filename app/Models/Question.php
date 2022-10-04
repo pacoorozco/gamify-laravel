@@ -135,7 +135,9 @@ class Question extends Model
 
     public function scopeScheduled(Builder $query): Builder
     {
-        return $query->where('status', self::FUTURE_STATUS);
+        return $query
+            ->where('status', self::FUTURE_STATUS)
+            ->whereNotNull('publication_date');
     }
 
     public function scopeVisible(Builder $query): Builder
@@ -156,7 +158,7 @@ class Question extends Model
         }
 
         if ($this->canBePublished() === false) {
-            throw new QuestionPublishingException();
+            throw new QuestionPublishingException('Question does not meet the publication requirements');
         }
 
         try {
