@@ -40,6 +40,7 @@ class AdminQuestionDataTablesController extends AdminController
             'status',
             'hidden',
             'type',
+            'publication_date',
         ])->orderBy('name', 'ASC');
 
         return $dataTable->eloquent($questions)
@@ -51,6 +52,9 @@ class AdminQuestionDataTablesController extends AdminController
             })
             ->editColumn('type', function (Question $question) {
                 return $question->present()->typeIcon;
+            })
+            ->editColumn('publication_date', function (Question $question) {
+                return $question->present()->publicationDate();
             })
             ->addColumn('actions', function (Question $question) {
                 return view('admin/partials.actions_dd')

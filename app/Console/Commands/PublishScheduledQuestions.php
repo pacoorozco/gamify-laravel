@@ -2,6 +2,8 @@
 
 namespace Gamify\Console\Commands;
 
+use Gamify\Actions\PublishQuestionAction;
+use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Models\Question;
 use Illuminate\Console\Command;
 
@@ -11,18 +13,26 @@ class PublishScheduledQuestions extends Command
 
     protected $description = 'Publish scheduled questions';
 
-    public function __construct()
+    public function handle(PublishQuestionAction $publisher): int
     {
-        parent::__construct();
-    }
+        $questions = Question::scheduled()
+            ->where('publication_date', '<', now())
+            ->get();
 
-    public function handle(): int
-    {
-        $questions = Question::scheduled()->orderBy('publication_date')->get();
+        $published = 0;
         foreach ($questions as $question) {
-            $question->publish();
+            try {
+                $publisher->execute($question);
+                $published++;
+            } catch (QuestionPublishingException $exception) {
+                $this->error("Scheduled question '{$question->name}' can not be published, reason: {$exception->getMessage()}");
+            }
         }
 
-        return 0;
+        ($published > 0)
+            ? $this->info("{$published} of {$questions->count()} scheduled questions were sent to publication successfully!")
+            : $this->info('No scheduled questions were ready for publication!');
+
+        return ($questions->count() - $published > 0) ? self::FAILURE : self::SUCCESS;
     }
 }

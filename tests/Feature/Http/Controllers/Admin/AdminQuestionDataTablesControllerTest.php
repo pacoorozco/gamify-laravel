@@ -67,6 +67,7 @@ class AdminQuestionDataTablesControllerTest extends TestCase
                         'name',
                         'status',
                         'type',
+                        'publication_date',
                         'actions',
                     ],
                 ],
