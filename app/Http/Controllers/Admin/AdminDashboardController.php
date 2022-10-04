@@ -42,6 +42,7 @@ class AdminDashboardController extends AdminController
             'levels_count' => Level::active()->count(),
             'latest_users' => User::orderBy('created_at', 'desc')->take(5)->get(),
             'latest_questions' => Question::published()->orderBy('publication_date', 'desc')->take(5)->get(),
+            'next_scheduled_questions' => Question::scheduled()->orderBy('publication_date', 'asc')->take(5)->get(),
         ]);
     }
 }
