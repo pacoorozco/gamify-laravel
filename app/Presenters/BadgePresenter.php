@@ -46,7 +46,7 @@ class BadgePresenter extends Presenter
     {
         $badge = $this->model->active
             ? $this->name()
-            : $this->name() . ' ' . $this->statusBadge();
+            : $this->name().' '.$this->statusBadge();
 
         return Str::of($badge)
             ->toHtmlString();
@@ -61,7 +61,7 @@ class BadgePresenter extends Presenter
     {
         $badge = $this->model->active
             ? ''
-            : '<span class="label label-default">' . trans('general.disabled') . '</span>';
+            : '<span class="label label-default">'.trans('general.disabled').'</span>';
 
         return Str::of($badge)
             ->toHtmlString();
@@ -99,7 +99,7 @@ class BadgePresenter extends Presenter
     public function tags(): HtmlString
     {
         return Str::of(collect($this->model->tagArray)
-            ->map(fn($value) => '<span class="label label-primary">' . $value . '</span>')
+            ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
             ->implode(' '))
             ->toHtmlString();
     }
