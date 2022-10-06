@@ -27,6 +27,7 @@ namespace Gamify\Presenters;
 
 use Gamify\Models\Question;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Laracodes\Presenter\Presenter;
 
 class QuestionPresenter extends Presenter
@@ -43,15 +44,17 @@ class QuestionPresenter extends Presenter
      * Returns the question status as a badge.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function statusBadge(): HtmlString
     {
-        return new HtmlString(sprintf(
-            '<span class="label %s">%s</span>',
+        $badge = sprintf('<span class="label %s">%s</span>',
             $this->mapStatusToLabel($this->model->status),
             trans('admin/question/model.status_list.'.$this->model->status)
-        ));
+        );
+
+        return Str::of($badge)
+            ->toHtmlString();
     }
 
     /**
@@ -77,14 +80,16 @@ class QuestionPresenter extends Presenter
      * Returns the question visibility as a badge.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function visibilityBadge(): HtmlString
     {
-        return new HtmlString($this->model->hidden
+        $badge = $this->model->hidden
             ? '<span class="label label-default">'.trans('admin/question/model.hidden_yes').'</span>'
-            : ''
-        );
+            : '';
+
+        return Str::of($badge)
+            ->toHtmlString();
     }
 
     public function visibility(): string
@@ -98,51 +103,55 @@ class QuestionPresenter extends Presenter
      * Returns the statement of the question.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function statement(): HtmlString
     {
-        return new HtmlString((string) $this->model->question);
+        return Str::of($this->model->question)
+            ->toHtmlString();
     }
 
     /**
      * Returns the explanation of the question.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function explanation(): HtmlString
     {
-        return new HtmlString((string) $this->model->solution);
+        return Str::of($this->model->solution)
+            ->toHtmlString();
     }
 
     /**
      * Returns the public link to the question.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function publicUrlLink(): HtmlString
     {
-        return new HtmlString(sprintf(
+        return Str::of(sprintf(
             '<a href="%s" target="_blank" class="text-muted"><i class="fa fa-link"></i></a>',
             route('questions.show', ['questionname' => $this->model->short_name]),
-        ));
+        ))
+            ->toHtmlString();
     }
 
     /**
      * Returns an icon depending question type.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function typeIcon(): HtmlString
     {
-        return new HtmlString(sprintf(
+        return Str::of(sprintf(
             '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
             trans('admin/question/model.type_list.'.$this->model->type),
             (string) $this->model->type,
-        ));
+        ))
+            ->toHtmlString();
     }
 
     public function publicationDateDescription(): string
@@ -171,5 +180,13 @@ class QuestionPresenter extends Presenter
     public function updater(): string
     {
         return $this->model->updater->username ?? 'N/A';
+    }
+
+    public function tags(): HtmlString
+    {
+        return Str::of(collect($this->model->tagArray)
+            ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
+            ->implode(' '))
+            ->toHtmlString();
     }
 }
