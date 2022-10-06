@@ -32,7 +32,7 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    const MAX_QUESTIONS_SHOWN = 10;
+    const MAX_QUESTIONS_SHOWN = 5;
 
     public function index(): View
     {
