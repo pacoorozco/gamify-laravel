@@ -139,7 +139,7 @@ final class User extends Authenticatable implements MustVerifyEmail
         return Question::query()
             ->published()
             ->whereNotIn('id', $answeredQuestions)
-            ->when($filterHiddenQuestions, fn ($query) => $query->visible())
+            ->when($filterHiddenQuestions, fn ($query) => $query->public())
             ->inRandomOrder()
             ->simplePaginate($perPageLimit);
     }

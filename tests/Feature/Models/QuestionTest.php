@@ -66,28 +66,25 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_only_visible_questions(): void
+    public function it_should_return_only_public_published_questions(): void
     {
         Question::factory()
-            ->create([
-                'hidden' => true,
-            ]);
+            ->private()
+            ->create();
 
         Question::factory()
             ->scheduled()
-            ->create([
-                'hidden' => true,
-            ]);
+            ->private()
+            ->create();
 
         // these questions should be shown
         $want = Question::factory()
+            ->public()
             ->count(2)
-            ->create([
-                'hidden' => false,
-            ]);
+            ->create();
 
         $questions = Question::query()
-            ->visible()
+            ->public()
             ->get();
 
         $this->assertCount($want->count(), $questions);

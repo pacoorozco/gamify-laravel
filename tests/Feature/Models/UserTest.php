@@ -44,7 +44,7 @@ class UserTest extends TestCase
      * @test
      * @dataProvider providesPendingVisibleQuestionsPaginationTestCases
      */
-    public function it_should_paginate_the_visible_questions_pending_to_be_answered(
+    public function it_should_paginate_the_public_questions_pending_to_be_answered(
         int $questions_count,
         int $per_page_limit,
         int $expected,
