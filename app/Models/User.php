@@ -142,7 +142,7 @@ final class User extends Authenticatable implements MustVerifyEmail
             ->published()
             ->visible()
             ->whereNotIn('id', $answeredQuestions)
-            ->orderBy('publication_date', 'ASC')
+            ->inRandomOrder()
             ->take($limit)
             ->get();
     }
