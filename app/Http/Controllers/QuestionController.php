@@ -47,7 +47,7 @@ class QuestionController extends Controller
             : 0;
 
         return view('question.index', [
-            'questions' => $user->pendingVisibleQuestions(),
+            'questions' => $user->pendingQuestions(),
             'next_level_name' => $user->nextLevel()->name,
             'points_to_next_level' => $user->pointsToNextLevel(),
             'percentage_to_next_level' => $user->nextLevelCompletion(),

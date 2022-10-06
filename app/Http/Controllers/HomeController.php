@@ -39,7 +39,7 @@ class HomeController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $questions = $user->pendingVisibleQuestions(self::MAX_QUESTIONS_SHOWN);
+        $questions = $user->pendingQuestions(self::MAX_QUESTIONS_SHOWN);
 
         return view('dashboard.index')
             ->with('questions', $questions)

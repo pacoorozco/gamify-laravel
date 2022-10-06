@@ -130,7 +130,7 @@ final class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
-    public function pendingVisibleQuestions(int $perPageLimit = 5, bool $withHiddenQuestions = false): Paginator
+    public function pendingQuestions(int $perPageLimit = 5, bool $filterHiddenQuestions = true): Paginator
     {
         $answeredQuestions = $this->answeredQuestions()
             ->pluck('question_id')
@@ -139,7 +139,7 @@ final class User extends Authenticatable implements MustVerifyEmail
         return Question::query()
             ->published()
             ->whereNotIn('id', $answeredQuestions)
-            ->when($withHiddenQuestions, fn ($query) => $query->visible())
+            ->when($filterHiddenQuestions, fn ($query) => $query->public())
             ->inRandomOrder()
             ->simplePaginate($perPageLimit);
     }

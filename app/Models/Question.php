@@ -140,7 +140,7 @@ class Question extends Model
             ->whereNotNull('publication_date');
     }
 
-    public function scopeVisible(Builder $query): Builder
+    public function scopePublic(Builder $query): Builder
     {
         return $query->where('hidden', false);
     }

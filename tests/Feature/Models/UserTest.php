@@ -44,22 +44,27 @@ class UserTest extends TestCase
      * @test
      * @dataProvider providesPendingVisibleQuestionsPaginationTestCases
      */
-    public function it_should_paginate_the_visible_questions_pending_to_be_answered(
+    public function it_should_paginate_the_public_questions_pending_to_be_answered(
         int $questions_count,
         int $per_page_limit,
         int $expected,
     ): void {
         Question::factory()
             ->published()
+            ->public()
             ->count($questions_count)
-            ->create([
-                'hidden' => false,
-            ]);
+            ->create();
+
+        // This question is always filtered due to the private visibility.
+        Question::factory()
+            ->published()
+            ->private()
+            ->create();
 
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount($expected, $user->pendingVisibleQuestions($per_page_limit));
+        $this->assertCount($expected, $user->pendingQuestions($per_page_limit));
     }
 
     public function providesPendingVisibleQuestionsPaginationTestCases(): \Generator
