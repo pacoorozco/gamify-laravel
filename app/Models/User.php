@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
 use Laracodes\Presenter\Traits\Presentable;
 
@@ -132,6 +133,19 @@ final class User extends Authenticatable implements MustVerifyEmail
     public function pendingVisibleQuestionsCount(): int
     {
         return $this->pendingVisibleQuestions()->count();
+    }
+
+    public function pendingVisibleQuestionsPaginate(int $limit = 5): Paginator {
+        $answeredQuestions = $this->answeredQuestions()
+            ->pluck('question_id')
+            ->toArray();
+
+        return Question::query()
+            ->published()
+            ->visible()
+            ->whereNotIn('id', $answeredQuestions)
+            ->inRandomOrder()
+            ->simplePaginate($limit);
     }
 
     public function pendingVisibleQuestions(int $limit = 5): Collection
