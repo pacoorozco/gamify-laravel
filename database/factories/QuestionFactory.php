@@ -82,4 +82,22 @@ class QuestionFactory extends Factory
             ];
         });
     }
+
+    public function public(): Factory
+    {
+        return $this->state(function () {
+            return [
+                'hidden' => false,
+            ];
+        });
+    }
+
+    public function private(): Factory
+    {
+        return $this->state(function () {
+            return [
+                'hidden' => true,
+            ];
+        });
+    }
 }

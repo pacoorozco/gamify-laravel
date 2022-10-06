@@ -51,15 +51,20 @@ class UserTest extends TestCase
     ): void {
         Question::factory()
             ->published()
+            ->public()
             ->count($questions_count)
-            ->create([
-                'hidden' => false,
-            ]);
+            ->create();
+
+        // This question is always filtered due to the private visibility.
+        Question::factory()
+            ->published()
+            ->private()
+            ->create();
 
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount($expected, $user->pendingVisibleQuestions($per_page_limit));
+        $this->assertCount($expected, $user->pendingQuestions($per_page_limit));
     }
 
     public function providesPendingVisibleQuestionsPaginationTestCases(): \Generator
