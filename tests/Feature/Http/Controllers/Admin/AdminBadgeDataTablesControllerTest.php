@@ -69,6 +69,8 @@ class AdminBadgeDataTablesControllerTest extends TestCase
                         'active',
                         'image',
                         'actions',
+                        'actuators',
+                        'tags',
                     ],
                 ],
             ]);

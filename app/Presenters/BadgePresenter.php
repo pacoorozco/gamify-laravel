@@ -25,12 +25,14 @@
 
 namespace Gamify\Presenters;
 
+use Gamify\Models\Badge;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Laracodes\Presenter\Presenter;
 
 class BadgePresenter extends Presenter
 {
-    /** @var \Gamify\Models\Badge */
+    /** @var Badge */
     protected $model;
 
     public function status(): string
@@ -42,10 +44,12 @@ class BadgePresenter extends Presenter
 
     public function nameWithStatusBadge(): HtmlString
     {
-        return new HtmlString($this->model->active
+        $badge = $this->model->active
             ? $this->name()
-            : $this->name().' '.$this->statusBadge()
-        );
+            : $this->name().' '.$this->statusBadge();
+
+        return Str::of($badge)
+            ->toHtmlString();
     }
 
     public function name(): string
@@ -55,10 +59,12 @@ class BadgePresenter extends Presenter
 
     public function statusBadge(): HtmlString
     {
-        return new HtmlString($this->model->active
+        $badge = $this->model->active
             ? ''
-            : '<span class="label label-default">'.trans('general.disabled').'</span>'
-        );
+            : '<span class="label label-default">'.trans('general.disabled').'</span>';
+
+        return Str::of($badge)
+            ->toHtmlString();
     }
 
     public function imageThumbnail(): HtmlString
@@ -68,12 +74,14 @@ class BadgePresenter extends Presenter
 
     public function imageTag(): HtmlString
     {
-        return new HtmlString($this->model->imageTag('image_url'));
+        return Str::of($this->model->imageTag('image_url'))
+            ->toHtmlString();
     }
 
     public function imageTableThumbnail(): HtmlString
     {
-        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'));
+        return Str::of($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'))
+            ->toHtmlString();
     }
 
     public function actuators(): array
@@ -86,5 +94,13 @@ class BadgePresenter extends Presenter
         /** @phpstan-ignore-next-line */
         return $this->model->progress->completed_at?->toFormattedDateString()
             ?? '';
+    }
+
+    public function tags(): HtmlString
+    {
+        return Str::of(collect($this->model->tagArray)
+            ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
+            ->implode(' '))
+            ->toHtmlString();
     }
 }

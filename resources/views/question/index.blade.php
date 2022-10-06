@@ -41,10 +41,7 @@
                 @forelse($questions as $question)
                     <a href="{{ $question->present()->publicUrl }}" class="list-group-item">
                         <h4 class="list-group-item-heading">{{ $question->name }}</h4>
-                        <p class="list-group-item-text">
-                            <span></span>
-                            {{ $question->present()->tags() }}
-                        </p>
+                        <p class="list-group-item-text"></p>
                     </a>
                 @empty
                     @include('question/_empty-list')
