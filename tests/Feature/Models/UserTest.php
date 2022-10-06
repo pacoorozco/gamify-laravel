@@ -40,32 +40,47 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function it_should_return_the_pending_questions_to_be_answered(): void
-    {
-        $questions = Question::factory()
+    /**
+     * @test
+     * @dataProvider providesPendingVisibleQuestionsPaginationTestCases
+     */
+    public function it_should_paginate_the_visible_questions_pending_to_be_answered(
+        int $questions_count,
+        int $per_page_limit,
+        int $expected,
+    ): void {
+        Question::factory()
             ->published()
-            ->count(3)
-            ->create();
+            ->count($questions_count)
+            ->create([
+                'hidden' => false,
+            ]);
 
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount($questions->count(), $user->pendingQuestions());
+        $this->assertCount($expected, $user->pendingVisibleQuestions($per_page_limit));
     }
 
-    /** @test */
-    public function it_should_return_a_portion_of_the_pending_questions_to_be_answered(): void
+    public function providesPendingVisibleQuestionsPaginationTestCases(): \Generator
     {
-        $questions = Question::factory()
-            ->published()
-            ->count(3)
-            ->create();
+        yield 'less questions than per-page limit' => [
+            'questions_count' => 3,
+            'per_page_limit' => 5,
+            'expected' => 3,
+        ];
 
-        /** @var User $user */
-        $user = User::factory()->create();
+        yield 'more questions than per-page limit' => [
+            'questions_count' => 6,
+            'per_page_limit' => 3,
+            'expected' => 3,
+        ];
 
-        $this->assertCount(2, $user->pendingQuestions(2));
+        yield 'as many questions than per-page limit' => [
+            'questions_count' => 3,
+            'per_page_limit' => 3,
+            'expected' => 3,
+        ];
     }
 
     /** @test */

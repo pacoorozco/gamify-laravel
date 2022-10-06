@@ -51,7 +51,14 @@
                 @endforelse
             </div>
             <!-- ./available-questions -->
+
         </div>
         <!-- ./box-body -->
+
+        <!-- pagination-links -->
+        <div class="box-footer clearfix">
+            {{ $questions->links('partials.simple-pager') }}
+        </div>
+        <!-- ./pagination-links -->
     </div>
 @endsection

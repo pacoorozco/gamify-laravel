@@ -130,35 +130,18 @@ final class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
-    public function pendingVisibleQuestionsCount(): int
+    public function pendingVisibleQuestions(int $perPageLimit = 5, bool $withHiddenQuestions = false): Paginator
     {
-        return $this->pendingVisibleQuestions()->count();
-    }
-
-    public function pendingVisibleQuestionsPaginate(int $limit = 5): Paginator {
         $answeredQuestions = $this->answeredQuestions()
             ->pluck('question_id')
             ->toArray();
 
         return Question::query()
             ->published()
-            ->visible()
             ->whereNotIn('id', $answeredQuestions)
+            ->when($withHiddenQuestions, fn ($query) => $query->visible())
             ->inRandomOrder()
-            ->simplePaginate($limit);
-    }
-
-    public function pendingVisibleQuestions(int $limit = 5): Collection
-    {
-        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
-
-        return Question::query()
-            ->published()
-            ->visible()
-            ->whereNotIn('id', $answeredQuestions)
-            ->inRandomOrder()
-            ->take($limit)
-            ->get();
+            ->simplePaginate($perPageLimit);
     }
 
     /**
@@ -182,23 +165,6 @@ final class User extends Authenticatable implements MustVerifyEmail
             ->as('response')
             ->withPivot('points', 'answers')
             ->using(UserResponse::class);
-    }
-
-    public function pendingQuestionsCount(): int
-    {
-        return $this->pendingQuestions()->count();
-    }
-
-    public function pendingQuestions(int $limit = 5): Collection
-    {
-        $answeredQuestions = $this->answeredQuestions()->pluck('question_id')->toArray();
-
-        return Question::query()
-            ->published()
-            ->whereNotIn('id', $answeredQuestions)
-            ->orderBy('publication_date', 'ASC')
-            ->take($limit)
-            ->get();
     }
 
     public function hasQuestionsToAnswer(): bool
