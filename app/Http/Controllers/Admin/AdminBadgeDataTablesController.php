@@ -25,6 +25,7 @@
 
 namespace Gamify\Http\Controllers\Admin;
 
+use Gamify\Enums\BadgeActuators;
 use Gamify\Models\Badge;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\DataTables;
@@ -39,6 +40,7 @@ class AdminBadgeDataTablesController extends AdminController
             'required_repetitions',
             'active',
             'image_url',
+            'actuators',
         ])->orderBy('name', 'ASC');
 
         return $dataTable->eloquent($badges)
@@ -51,13 +53,21 @@ class AdminBadgeDataTablesController extends AdminController
             ->editColumn('active', function (Badge $badge) {
                 return $badge->present()->status;
             })
+            ->editColumn('actuators', function (Badge $badge) {
+                return $badge->actuators->description;
+            })
+            ->addColumn('tags', function (Badge $badge) {
+                return BadgeActuators::canBeTagged($badge->actuators)
+                    ? $badge->present()->tags()
+                    : '';
+            })
             ->addColumn('actions', function (Badge $badge) {
                 return view('admin.partials.actions_dd')
                     ->with('model', 'badges')
                     ->with('id', $badge->id)
                     ->render();
             })
-            ->rawColumns(['name', 'actions', 'image'])
+            ->rawColumns(['name', 'actions', 'image', 'tags'])
             ->removeColumn('id', 'image_url')
             ->toJson();
     }

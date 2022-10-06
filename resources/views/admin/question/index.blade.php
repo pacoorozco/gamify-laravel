@@ -50,7 +50,8 @@
             <table id="questions" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-md-6">{{ __('admin/question/model.name') }}</th>
+                    <th class="col-md-4">{{ __('admin/question/model.name') }}</th>
+                    <th class="col-md-2">{{ __('admin/question/model.tags') }}</th>
                     <th class="col-md-1">{{ __('admin/question/model.type') }}</th>
                     <th class="col-md-1">{{ __('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ __('admin/question/model.publication_date') }}</th>
@@ -59,7 +60,8 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-6">{{ __('admin/question/model.name') }}</th>
+                    <th class="col-md-4">{{ __('admin/question/model.name') }}</th>
+                    <th class="col-md-2">{{ __('admin/question/model.tags') }}</th>
                     <th class="col-md-1">{{ __('admin/question/model.type') }}</th>
                     <th class="col-md-1">{{ __('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ __('admin/question/model.publication_date') }}</th>
@@ -87,6 +89,7 @@
                 "ajax": "{{ route('admin.questions.data') }}",
                 "columns": [
                     {data: "name"},
+                    {data: "tags"},
                     {data: "type"},
                     {data: "status"},
                     {data: "publication_date"},

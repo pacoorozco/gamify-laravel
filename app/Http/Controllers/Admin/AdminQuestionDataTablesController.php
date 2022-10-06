@@ -56,13 +56,16 @@ class AdminQuestionDataTablesController extends AdminController
             ->editColumn('publication_date', function (Question $question) {
                 return $question->present()->publicationDate();
             })
+            ->addColumn('tags', function (Question $question) {
+                return $question->present()->tags();
+            })
             ->addColumn('actions', function (Question $question) {
                 return view('admin/partials.actions_dd')
                     ->with('model', 'questions')
                     ->with('id', $question->id)
                     ->render();
             })
-            ->rawColumns(['actions', 'status', 'name', 'type'])
+            ->rawColumns(['actions', 'status', 'name', 'type', 'tags'])
             ->removeColumn(['id', 'hidden', 'short_name'])
             ->toJson();
     }
