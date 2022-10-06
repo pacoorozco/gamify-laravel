@@ -36,15 +36,29 @@
             </div>
             <!-- ./user metrics -->
 
-            <ul class="list-group">
+            <!-- available-questions -->
+            <div class="list-group">
                 @forelse($questions as $question)
-                    <li class="list-group-item"><a
-                            href="{{ $question->present()->publicUrl }}">{{ $question->name }}</a></li>
+                    <a href="{{ $question->present()->publicUrl }}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{ $question->name }}</h4>
+                        <p class="list-group-item-text">
+                            <span></span>
+                            {{ $question->present()->tags() }}
+                        </p>
+                    </a>
                 @empty
                     @include('question/_empty-list')
                 @endforelse
-            </ul>
+            </div>
+            <!-- ./available-questions -->
+
         </div>
-        <!-- /.box-body -->
+        <!-- ./box-body -->
+
+        <!-- pagination-links -->
+        <div class="box-footer clearfix">
+            {{ $questions->links('partials.simple-pager') }}
+        </div>
+        <!-- ./pagination-links -->
     </div>
 @endsection
