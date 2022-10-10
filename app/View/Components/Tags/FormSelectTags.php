@@ -20,7 +20,7 @@ class FormSelectTags extends Component
     public function render(): View
     {
         return view('components.tags.form-select-tags')
-            ->with('availableTags', $this->tagService->getAllTagsArray());
+            ->with('availableTags', $this->tagService->getAllTagsArrayNormalized());
     }
 
     /**

@@ -148,7 +148,7 @@ class AdminBadgeControllerTest extends TestCase
 
         $this->assertInstanceOf(Badge::class, $badge);
 
-        $this->assertEquals($wantTags, $badge->tagArray);
+        $this->assertEquals($wantTags, $badge->tagArrayNormalized);
     }
 
     /**

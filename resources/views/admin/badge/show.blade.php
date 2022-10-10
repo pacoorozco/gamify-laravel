@@ -92,11 +92,7 @@
                         <!-- tags -->
                         <dt>{{ __('admin/badge/model.tags') }}</dt>
                         <dd>
-                            @forelse($badge->tagArray as $tag)
-                                <span class="label label-primary">{{ $tag }}</span>
-                            @empty
-                                {{ __('admin/badge/model.tags_none') }}
-                            @endforelse
+                            {{ $badge->present()->tags() }}
                         </dd>
                         <!-- ./ tags -->
                     </dl>

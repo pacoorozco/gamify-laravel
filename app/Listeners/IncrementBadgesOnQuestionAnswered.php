@@ -47,8 +47,8 @@ class IncrementBadgesOnQuestionAnswered
                 ? BadgeActuators::OnQuestionCorrectlyAnswered
                 : BadgeActuators::OnQuestionIncorrectlyAnswered,
         ])
-            ->when($event->question->tagArray, function ($query) use ($event) {
-                $query->withAnyTags($event->question->tagArray);
+            ->when($event->question->tagArrayNormalized, function ($query) use ($event) {
+                $query->withAnyTags($event->question->tagArrayNormalized);
             }, function ($query) {
                 $query->isNotTagged();
             })

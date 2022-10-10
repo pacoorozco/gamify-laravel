@@ -99,7 +99,7 @@
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
                                                          :placeholder="__('admin/badge/model.tags_placeholder')"
-                                                         :selected-tags="old('tags', $badge->tagArray)"
+                                                         :selected-tags="old('tags', $badge->tagArrayNormalized)"
                                                          class="form-control"
                                 />
                                 <p class="text-muted">{{ __('admin/badge/model.tags_help') }}</p>

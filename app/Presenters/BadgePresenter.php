@@ -98,8 +98,16 @@ class BadgePresenter extends Presenter
 
     public function tags(): HtmlString
     {
-        return Str::of(collect($this->model->tagArray)
+        return Str::of(collect($this->model->tagArrayNormalized)
             ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
+            ->implode(' '))
+            ->toHtmlString();
+    }
+
+    public function tagsIn(array $tags): HtmlString
+    {
+        return Str::of(collect($this->model->tagArrayNormalized)->intersect($tags)
+            ->map(fn ($value) => '<span class="label label-default">'.$value.'</span>')
             ->implode(' '))
             ->toHtmlString();
     }

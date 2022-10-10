@@ -133,7 +133,7 @@
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
                                                          :placeholder="__('admin/question/model.tags_help')"
-                                                         :selected-tags="old('tags', $question->tagArray)"
+                                                         :selected-tags="old('tags', $question->tagArrayNormalized)"
                                                          class="form-control"
                                 />
                             </div>
@@ -317,11 +317,7 @@
                     <dl>
                         <dt>{{ __('admin/question/model.tags') }}</dt>
                         <dd>
-                            @forelse($question->tagArray as $tag)
-                                <span class="label label-primary">{{ $tag }}</span>
-                            @empty
-                                {{ __('admin/question/model.tags_none') }}
-                            @endforelse
+                            {{ $question->present()->tags() }}
                         </dd>
                     </dl>
 
@@ -340,9 +336,7 @@
                                 <td>{{ $badge->name }}</td>
                                 <td>{{ $badge->actuators->description }}</td>
                                 <td>
-                                    @foreach($badge->matchingTags($question->tagArray) as $tag)
-                                        <span class="label label-primary">{{ $tag }}</span>
-                                    @endforeach
+                                    {{ $badge->present()->tagsIn($question->tagArrayNormalized) }}
                                 </td>
                             </tr>
                         @endforeach

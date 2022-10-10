@@ -113,14 +113,14 @@ class AdminQuestionController extends AdminController
 
     private function relatedBadgesForQuestion(Question $question): Collection
     {
-        return Badge::triggeredByQuestionsWithTagsIn($question->tagArray);
+        return Badge::triggeredByQuestionsWithTagsIn($question->tagArrayNormalized);
     }
 
     public function edit(Question $question): View
     {
         return view('admin.question.edit', [
             'question' => $question,
-            'selectedTags' => $question->tagArray,
+            'selectedTags' => $question->tagArrayNormalized,
             'relatedBadges' => $this->relatedBadgesForQuestion($question),
         ]);
     }

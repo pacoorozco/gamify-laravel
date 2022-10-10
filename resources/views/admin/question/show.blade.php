@@ -139,9 +139,7 @@
                         <!-- tags -->
                         <dt>{{ __('admin/question/model.tags') }}</dt>
                         <dd>
-                            @foreach($question->tagArray as $tag)
-                                <span class="label label-primary">{{ $tag }}</span>
-                            @endforeach
+                            {{ $question->present()->tags() }}
                         </dd>
                         <!-- ./ tags -->
                     </dl>
@@ -162,9 +160,7 @@
                                         <td>{{ $badge->name }}</td>
                                         <td>{{ $badge->actuators->description }}</td>
                                         <td>
-                                            @foreach($badge->matchingTags($question->tagArray) as $tag)
-                                                <span class="label label-primary">{{ $tag }}</span>
-                                            @endforeach
+                                            {{ $badge->present()->tagsIn($question->tagArrayNormalized) }}
                                         </td>
                                     </tr>
                                 @endforeach

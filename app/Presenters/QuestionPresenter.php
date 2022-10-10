@@ -168,7 +168,7 @@ class QuestionPresenter extends Presenter
 
     public function tags(): HtmlString
     {
-        return Str::of(collect($this->model->tagArray)
+        return Str::of(collect($this->model->tagArrayNormalized)
             ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
             ->implode(' '))
             ->toHtmlString();
