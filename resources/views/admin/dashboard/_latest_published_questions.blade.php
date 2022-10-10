@@ -31,13 +31,19 @@
                         @endif
                     </td>
                     <td>{{ $question->present()->publication_date }}</td>
-                    <td><a href="{{ route('admin.questions.edit', $question) }}"><i class="fa fa-edit"></i></a></td>
+                    <td>
+                        <a href="{{ route('admin.questions.edit', $question) }}">
+                            <button type="button" class="btn btn-xs btn-primary" title="{{ __('general.edit') }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </a>
+                    </td>
                 </tr>
-                @empty
-                    <tr class="warning">
-                        <td colspan="5" class="text-center">{{ __('admin/question/messages.no_published_questions') }}</td>
-                    </tr>
-                @endforelse
+            @empty
+                <tr class="warning">
+                    <td colspan="5" class="text-center">{{ __('admin/question/messages.no_published_questions') }}</td>
+                </tr>
+            @endforelse
         </table>
     </div>
     <!-- /.box-body -->
