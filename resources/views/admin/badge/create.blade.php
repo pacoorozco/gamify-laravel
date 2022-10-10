@@ -40,7 +40,7 @@
             <div class="row">
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <fieldset>
                         <!-- name -->
@@ -107,7 +107,7 @@
                 <!-- ./left column -->
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- image -->
                     <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">

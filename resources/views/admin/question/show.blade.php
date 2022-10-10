@@ -33,7 +33,7 @@
     <div class="row">
 
         <!-- left column -->
-        <div class="col-xs-8">
+        <div class="col-md-8">
 
             <!-- general section -->
             <div class="box box-solid">
@@ -127,7 +127,7 @@
         <!-- left column -->
 
         <!-- right column -->
-        <div class="col-xs-4">
+        <div class="col-md-4">
 
             <div class="box box-solid">
                 <div class="box-header with-border">

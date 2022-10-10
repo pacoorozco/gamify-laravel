@@ -42,7 +42,7 @@
             <div class="row">
 
                 <!-- left column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- username -->
                     <dl>
@@ -92,7 +92,7 @@
                 <!-- ./ left column -->
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <dl class="dl-horizontal">
 

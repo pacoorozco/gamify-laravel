@@ -41,7 +41,7 @@
         <div class="box-body">
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- name -->
                     <dl>
@@ -77,7 +77,7 @@
                     <!-- ./ activation status -->
 
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- image -->
                     <dl>

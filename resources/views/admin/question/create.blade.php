@@ -40,7 +40,7 @@
                 ]) !!}
 
     <div class="row">
-        <div class="col-xs-8">
+        <div class="col-md-8">
 
             <!-- general section -->
             <div class="box box-solid">
@@ -123,7 +123,7 @@
             <!-- ./ general section -->
 
         </div>
-        <div class="col-xs-4">
+        <div class="col-md-4">
 
             <!-- publish section -->
             <div class="box box-solid">

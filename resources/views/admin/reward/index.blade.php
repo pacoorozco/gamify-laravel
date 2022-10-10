@@ -31,10 +31,10 @@
     <!-- ./ notifications -->
 
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-md-6">
             @include('admin/reward/_form_experience')
         </div>
-        <div class="col-xs-6">
+        <div class="col-md-6">
             @include('admin/reward/_form_badge')
         </div>
     </div>
