@@ -95,7 +95,8 @@
                     [5, 10, 15, 20, "{{ __('general.all') }}"]
                 ],
                 // set the initial value
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                "autoWidth": false
             });
         });
     </script>
