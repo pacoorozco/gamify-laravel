@@ -14,7 +14,6 @@
             <thead>
             <tr>
                 <th>{{ __('admin/question/model.name') }}</th>
-                <th>{{ __('admin/question/model.type') }}</th>
                 <th>{{ __('admin/question/model.hidden') }}</th>
                 <th>{{ __('admin/question/model.publication_date') }}</th>
                 <th>{{ __('general.edit') }}</th>
@@ -25,9 +24,6 @@
                     <td>
                         {{ $question->present()->name }}
                         {{ $question->present()->publicUrlLink }}
-                    </td>
-                    <td>
-                        {{ $question->present()->typeIcon }}
                     </td>
                     <td>
                         @if($question->hidden)

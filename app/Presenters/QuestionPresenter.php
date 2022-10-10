@@ -138,22 +138,6 @@ class QuestionPresenter extends Presenter
             ->toHtmlString();
     }
 
-    /**
-     * Returns an icon depending question type.
-     * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
-     */
-    public function typeIcon(): HtmlString
-    {
-        return Str::of(sprintf(
-            '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
-            trans('admin/question/model.type_list.'.$this->model->type),
-            (string) $this->model->type,
-        ))
-            ->toHtmlString();
-    }
-
     public function publicationDateDescription(): string
     {
         return match ($this->model->status) {
