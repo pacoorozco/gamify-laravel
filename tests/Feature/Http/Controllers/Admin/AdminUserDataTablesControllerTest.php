@@ -68,6 +68,7 @@ class AdminUserDataTablesControllerTest extends TestCase
                         'email',
                         'role',
                         'level',
+                        'experience',
                     ],
                 ],
             ]);

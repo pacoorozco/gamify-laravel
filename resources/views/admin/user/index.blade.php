@@ -51,9 +51,10 @@
                 <tr>
                     <th class="col-md-2">{{ __('admin/user/model.username') }}</th>
                     <th class="col-md-3">{{ __('admin/user/model.name') }}</th>
-                    <th class="col-md-3">{{ __('admin/user/model.email') }}</th>
+                    <th class="col-md-2">{{ __('admin/user/model.email') }}</th>
                     <th class="col-md-1">{{ __('admin/user/model.role') }}</th>
                     <th class="col-md-1">{{ __('user/profile.level') }}</th>
+                    <th class="col-md-1">{{ __('user/profile.experience') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
                 </tr>
                 </thead>
@@ -61,9 +62,10 @@
                 <tr>
                     <th class="col-md-2">{{ __('admin/user/model.username') }}</th>
                     <th class="col-md-3">{{ __('admin/user/model.name') }}</th>
-                    <th class="col-md-3">{{ __('admin/user/model.email') }}</th>
+                    <th class="col-md-2">{{ __('admin/user/model.email') }}</th>
                     <th class="col-md-1">{{ __('admin/user/model.role') }}</th>
                     <th class="col-md-1">{{ __('user/profile.level') }}</th>
+                    <th class="col-md-1">{{ __('user/profile.experience') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
                 </tr>
                 </tfoot>
@@ -92,6 +94,7 @@
                     {data: "email"},
                     {data: "role"},
                     {data: "level"},
+                    {data: "experience"},
                     {data: "actions", "orderable": false, "searchable": false}
                 ],
                 "aLengthMenu": [
@@ -99,7 +102,8 @@
                     [5, 10, 15, 20, "{{ __('general.all') }}"]
                 ],
                 // set the initial value
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                "autoWidth": false
             });
         });
     </script>

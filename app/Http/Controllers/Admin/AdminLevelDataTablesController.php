@@ -47,7 +47,7 @@ class AdminLevelDataTablesController extends AdminController
                 return $level->present()->nameWithStatusBadge;
             })
             ->addColumn('image', function (Level $level) {
-                return $level->present()->image;
+                return $level->present()->imageThumbnail();
             })
             ->editColumn('active', function (Level $level) {
                 return $level->present()->status;

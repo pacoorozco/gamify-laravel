@@ -71,13 +71,12 @@ return [
     'tags_none' => 'None',
 
     // Answers
-    'choices_section' => 'UserResponse options',
-    'choices_help' => 'These are the options from which the participant can choose. Note that <strong>positive scores will mark option as correct</strong>.',
-    'choice_text' => 'Option Text',
+    'choices_section' => 'Answers options',
+    'choices_help' => 'These are the answers from which the participant can choose.',
+    'choice_text' => 'Answer option text',
     'choice_text_help' => 'Put here the text of this answer option.',
     'choice_score' => 'Score',
-    'choice_score_help' => 'Choices with positive points are considered as correct.',
-    'choice_correctness' => 'Correctness',
+    'choice_score_help' => 'Note that positive scores will mark answer as correct.',
 
     // Created / last saved
     'created_by' => 'Created by :who on :when.',

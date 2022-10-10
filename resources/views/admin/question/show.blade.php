@@ -33,7 +33,7 @@
     <div class="row">
 
         <!-- left column -->
-        <div class="col-xs-8">
+        <div class="col-md-8">
 
             <!-- general section -->
             <div class="box box-solid">
@@ -127,7 +127,7 @@
         <!-- left column -->
 
         <!-- right column -->
-        <div class="col-xs-4">
+        <div class="col-md-4">
 
             <div class="box box-solid">
                 <div class="box-header with-border">
@@ -139,9 +139,7 @@
                         <!-- tags -->
                         <dt>{{ __('admin/question/model.tags') }}</dt>
                         <dd>
-                            @foreach($question->tagArray as $tag)
-                                <span class="label label-primary">{{ $tag }}</span>
-                            @endforeach
+                            {{ $question->present()->tags() }}
                         </dd>
                         <!-- ./ tags -->
                     </dl>
@@ -162,9 +160,7 @@
                                         <td>{{ $badge->name }}</td>
                                         <td>{{ $badge->actuators->description }}</td>
                                         <td>
-                                            @foreach($badge->matchingTags($question->tagArray) as $tag)
-                                                <span class="label label-primary">{{ $tag }}</span>
-                                            @endforeach
+                                            {{ $badge->present()->tagsIn($question->tagArrayNormalized) }}
                                         </td>
                                     </tr>
                                 @endforeach

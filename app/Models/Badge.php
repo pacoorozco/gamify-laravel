@@ -115,11 +115,6 @@ class Badge extends Model
             ->get();
     }
 
-    public function matchingTags(array $tags): array
-    {
-        return array_intersect($this->tagArray, $tags);
-    }
-
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);

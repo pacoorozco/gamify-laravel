@@ -40,7 +40,7 @@
             <div class="row">
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <!-- name -->
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         {!! Form::label('name', __('admin/level/model.name'), ['class' => 'control-label required']) !!}
@@ -76,7 +76,7 @@
                 <!-- ./left column -->
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- image -->
                     <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">

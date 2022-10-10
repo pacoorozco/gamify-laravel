@@ -48,7 +48,7 @@ class AdminBadgeDataTablesController extends AdminController
                 return $badge->present()->nameWithStatusBadge;
             })
             ->addColumn('image', function (Badge $badge) {
-                return $badge->present()->imageTableThumbnail;
+                return $badge->present()->imageThumbnail;
             })
             ->editColumn('active', function (Badge $badge) {
                 return $badge->present()->status;

@@ -40,6 +40,6 @@ return [
     'upload_image' => 'Change',
 
     'publish' => 'Publish',
-    'remove_choice' => '',
+    'remove_choice' => 'Remove this answer option',
     'add_new_choice' => 'Add an option',
 ];

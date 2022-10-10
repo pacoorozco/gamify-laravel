@@ -47,7 +47,7 @@
             <div class="row">
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <!-- username -->
                     <div class="form-group">
                         {!! Form::label('username', __('admin/user/model.username'), ['class' => 'control-label']) !!}
@@ -96,7 +96,7 @@
                 <!-- ./left column -->
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <dl class="dl-horizontal">
 

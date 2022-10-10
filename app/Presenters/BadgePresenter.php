@@ -69,18 +69,18 @@ class BadgePresenter extends Presenter
 
     public function imageThumbnail(): HtmlString
     {
-        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail"'));
+        $imageTag = sprintf('<img class="img-thumbnail" src="%s" alt="%s" title="%s">',
+            $this->model->imageUrl('image_url'),
+            $this->model->description,
+            $this->model->name);
+
+        return Str::of($imageTag)
+            ->toHtmlString();
     }
 
     public function imageTag(): HtmlString
     {
         return Str::of($this->model->imageTag('image_url'))
-            ->toHtmlString();
-    }
-
-    public function imageTableThumbnail(): HtmlString
-    {
-        return Str::of($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'))
             ->toHtmlString();
     }
 
@@ -98,8 +98,16 @@ class BadgePresenter extends Presenter
 
     public function tags(): HtmlString
     {
-        return Str::of(collect($this->model->tagArray)
+        return Str::of(collect($this->model->tagArrayNormalized)
             ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
+            ->implode(' '))
+            ->toHtmlString();
+    }
+
+    public function tagsIn(array $tags): HtmlString
+    {
+        return Str::of(collect($this->model->tagArrayNormalized)->intersect($tags)
+            ->map(fn ($value) => '<span class="label label-default">'.$value.'</span>')
             ->implode(' '))
             ->toHtmlString();
     }

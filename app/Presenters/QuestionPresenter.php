@@ -132,24 +132,8 @@ class QuestionPresenter extends Presenter
     public function publicUrlLink(): HtmlString
     {
         return Str::of(sprintf(
-            '<a href="%s" target="_blank" class="text-muted"><i class="fa fa-link"></i></a>',
+            '<a href="%s" target="_blank" class="text-muted" title="Preview"><i class="fa fa-link"></i></a>',
             route('questions.show', ['questionname' => $this->model->short_name]),
-        ))
-            ->toHtmlString();
-    }
-
-    /**
-     * Returns an icon depending question type.
-     * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
-     */
-    public function typeIcon(): HtmlString
-    {
-        return Str::of(sprintf(
-            '<i class="fa fa-tags" data-toggle="tooltip" title="%s"></i><span class="hidden">%s</span>',
-            trans('admin/question/model.type_list.'.$this->model->type),
-            (string) $this->model->type,
         ))
             ->toHtmlString();
     }
@@ -184,7 +168,7 @@ class QuestionPresenter extends Presenter
 
     public function tags(): HtmlString
     {
-        return Str::of(collect($this->model->tagArray)
+        return Str::of(collect($this->model->tagArrayNormalized)
             ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
             ->implode(' '))
             ->toHtmlString();

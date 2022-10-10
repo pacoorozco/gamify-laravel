@@ -46,8 +46,8 @@
             <table id="levels" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/level/model.name') }}</th>
-                    <th class="col-md-4">{{ __('admin/level/model.image') }}</th>
+                    <th class="col-md-7">{{ __('admin/level/model.name') }}</th>
+                    <th class="col-md-1">{{ __('admin/level/model.image') }}</th>
                     <th class="col-md-1">{{ __('admin/level/model.required_points') }}</th>
                     <th class="col-md-1">{{ __('admin/level/model.active') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -55,8 +55,8 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/level/model.name') }}</th>
-                    <th class="col-md-4">{{ __('admin/level/model.image') }}</th>
+                    <th class="col-md-7">{{ __('admin/level/model.name') }}</th>
+                    <th class="col-md-1">{{ __('admin/level/model.image') }}</th>
                     <th class="col-md-1">{{ __('admin/level/model.required_points') }}</th>
                     <th class="col-md-1">{{ __('admin/level/model.active') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -94,7 +94,8 @@
                     [5, 10, 15, 20, "{{ __('general.all') }}"]
                 ],
                 // set the initial value
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                "autoWidth": false
             });
         });
     </script>

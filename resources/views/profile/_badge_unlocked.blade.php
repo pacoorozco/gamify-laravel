@@ -1,7 +1,6 @@
 <div class="col-xs-2">
     <a href="#badge-{{ $badge->slug() }}" data-toggle="modal">
-        <img src="{{ $badge->image }}" class="img-thumbnail" alt="{{ $badge->name }}"
-             data-toggle="tooltip" data-placement="bottom" title="{{ $badge->name }}">
+        {{ $badge->present()->imageThumbnail() }}
     </a>
 </div>
 
@@ -24,8 +23,7 @@
                     {{ $badge->description }}
                 </p>
 
-                <img src="{{ $badge->image }}" alt="{{ $badge->name }}"
-                     data-toggle="tooltip" data-placement="bottom" title="{{ $badge->name }}">
+                <img src="{{ $badge->image }}" alt="{{ $badge->name }}" title="{{ $badge->name }}">
 
                 <p>
                     {{ __('user/profile.unlocked_at', ['date' => $badge->present()->unlockedAt]) }}

@@ -41,7 +41,7 @@
         <div class="box-body">
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- name -->
                     <dl>
@@ -92,11 +92,7 @@
                         <!-- tags -->
                         <dt>{{ __('admin/badge/model.tags') }}</dt>
                         <dd>
-                            @forelse($badge->tagArray as $tag)
-                                <span class="label label-primary">{{ $tag }}</span>
-                            @empty
-                                {{ __('admin/badge/model.tags_none') }}
-                            @endforelse
+                            {{ $badge->present()->tags() }}
                         </dd>
                         <!-- ./ tags -->
                     </dl>
@@ -114,7 +110,7 @@
                     <!-- ./ activation status -->
 
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- image -->
                     <dl>

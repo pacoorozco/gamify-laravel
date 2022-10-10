@@ -3,6 +3,6 @@
         <div class="pull-right hidden-xs">
             Just play. Have fun. Enjoy the game.
         </div>
-        Powered by <a href="https://github.com/pacoorozco/gamify-laravel" rel="nofollow">gamify</a>
+        <strong>Powered by <a href="https://github.com/pacoorozco/gamify-laravel" rel="nofollow">gamify</a>.</strong>
     </div>
 </footer>

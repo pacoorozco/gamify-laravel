@@ -22,18 +22,4 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-// Allow bootstrap tabs to be linkable.
-$(document).ready(function () {
-    function onHashChange() {
-        let hash = window.location.hash;
-
-        if (hash) {
-            // using ES6 template string syntax
-            $(`[data-toggle="tab"][href="${hash}"]`).trigger('click');
-        }
-    }
-
-    window.addEventListener('hashchange', onHashChange, false);
-    onHashChange();
-});
 

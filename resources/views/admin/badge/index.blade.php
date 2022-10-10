@@ -44,10 +44,10 @@
             <table id="badges" class="table table-striped table-bordered table-hover table-full-width">
                 <thead>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/badge/model.name') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.actuators') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.tags') }}</th>
-                    <th class="col-md-2">{{ __('admin/badge/model.image') }}</th>
+                    <th class="col-md-3">{{ __('admin/badge/model.name') }}</th>
+                    <th class="col-md-1">{{ __('admin/badge/model.image') }}</th>
+                    <th class="col-md-2">{{ __('admin/badge/model.actuators') }}</th>
+                    <th class="col-md-2">{{ __('admin/badge/model.tags') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.required_repetitions') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.active') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -55,10 +55,10 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th class="col-md-4">{{ __('admin/badge/model.name') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.actuators') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.tags') }}</th>
-                    <th class="col-md-2">{{ __('admin/badge/model.image') }}</th>
+                    <th class="col-md-3">{{ __('admin/badge/model.name') }}</th>
+                    <th class="col-md-1">{{ __('admin/badge/model.image') }}</th>
+                    <th class="col-md-2">{{ __('admin/badge/model.actuators') }}</th>
+                    <th class="col-md-2">{{ __('admin/badge/model.tags') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.required_repetitions') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.active') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -83,9 +83,9 @@
                 "ajax": "{{ route('admin.badges.data') }}",
                 "columns": [
                     {data: "name"},
+                    {data: "image", "orderable": false, "searchable": false},
                     {data: "actuators"},
                     {data: "tags"},
-                    {data: "image", "orderable": false, "searchable": false},
                     {data: "required_repetitions"},
                     {data: "active"},
                     {data: "actions", "orderable": false, "searchable": false}
@@ -95,7 +95,8 @@
                     [5, 10, 15, 20, "{{ __('general.all') }}"]
                 ],
                 // set the initial value
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                "autoWidth": false
             });
         });
     </script>

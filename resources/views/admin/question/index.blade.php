@@ -51,8 +51,7 @@
                 <thead>
                 <tr>
                     <th class="col-md-4">{{ __('admin/question/model.name') }}</th>
-                    <th class="col-md-2">{{ __('admin/question/model.tags') }}</th>
-                    <th class="col-md-1">{{ __('admin/question/model.type') }}</th>
+                    <th class="col-md-3">{{ __('admin/question/model.tags') }}</th>
                     <th class="col-md-1">{{ __('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ __('admin/question/model.publication_date') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -61,8 +60,7 @@
                 <tfoot>
                 <tr>
                     <th class="col-md-4">{{ __('admin/question/model.name') }}</th>
-                    <th class="col-md-2">{{ __('admin/question/model.tags') }}</th>
-                    <th class="col-md-1">{{ __('admin/question/model.type') }}</th>
+                    <th class="col-md-3">{{ __('admin/question/model.tags') }}</th>
                     <th class="col-md-1">{{ __('admin/question/model.status') }}</th>
                     <th class="col-md-2">{{ __('admin/question/model.publication_date') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -90,7 +88,6 @@
                 "columns": [
                     {data: "name"},
                     {data: "tags"},
-                    {data: "type"},
                     {data: "status"},
                     {data: "publication_date"},
                     {data: "actions", "orderable": false, "searchable": false}
@@ -100,7 +97,8 @@
                     [5, 10, 15, 20, "{{ __('general.all') }}"]
                 ],
                 // set the initial value
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                "autoWidth": false
             });
         });
     </script>

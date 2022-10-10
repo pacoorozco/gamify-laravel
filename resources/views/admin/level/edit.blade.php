@@ -49,7 +49,7 @@
             <div class="row">
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <!-- name -->
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         {{ Form::label('name', __('admin/level/model.name'),['class' => 'control-label required']) }}
@@ -84,7 +84,7 @@
                 <!-- ./left column -->
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- image -->
                     <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
@@ -94,7 +94,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                      style="width: 150px; height: 150px;">
-                                    {{ $level->present()->imageTag }}
+                                    {{ $level->present()->imageTag() }}
                                 </div>
                                 <p>
                              <span class="btn btn-default btn-file">

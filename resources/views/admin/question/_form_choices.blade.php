@@ -3,6 +3,7 @@
     <legend>{{ __('admin/question/model.choices_section') }}</legend>
     <p class="text-muted">
         {{ __('admin/question/model.choices_help') }}
+        <strong>{{ __('admin/question/model.choice_score_help') }}</strong>
     </p>
 
     @error('choices')
@@ -25,8 +26,8 @@
                         <div class="input-group">
                             {!! Form::number('choices['. $loop->index .'][score]', $choice['score'], ['class' => 'form-control']) !!}
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default remove">
-                                    <i class="fa fa-trash-o"></i> {{ __('button.remove_choice') }}
+                                <button type="button" class="btn btn-default remove" title="{{ __('button.remove_choice') }}">
+                                    <i class="fa fa-trash-o"></i>
                                 </button>
                             </span>
                         </div>
@@ -44,9 +45,9 @@
                     <div class="input-group">
                         {!! Form::number('choices[%%choice-count-placeholder%%][score]', '', ['class' => 'form-control']) !!}
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default remove">
-                                <i class="fa fa-trash-o"></i> {{ __('button.remove_choice') }}
-                            </button>
+                            <button type="button" class="btn btn-default remove" title="{{ __('button.remove_choice') }}">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
                         </span>
                     </div>
                 </div>

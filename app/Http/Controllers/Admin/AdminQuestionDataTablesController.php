@@ -39,7 +39,6 @@ class AdminQuestionDataTablesController extends AdminController
             'name',
             'status',
             'hidden',
-            'type',
             'publication_date',
         ])->orderBy('name', 'ASC');
 
@@ -49,9 +48,6 @@ class AdminQuestionDataTablesController extends AdminController
             })
             ->editColumn('name', function (Question $question) {
                 return $question->present()->name.' '.$question->present()->publicUrlLink;
-            })
-            ->editColumn('type', function (Question $question) {
-                return $question->present()->typeIcon;
             })
             ->editColumn('publication_date', function (Question $question) {
                 return $question->present()->publicationDate();
@@ -65,7 +61,7 @@ class AdminQuestionDataTablesController extends AdminController
                     ->with('id', $question->id)
                     ->render();
             })
-            ->rawColumns(['actions', 'status', 'name', 'type', 'tags'])
+            ->rawColumns(['actions', 'status', 'name', 'tags'])
             ->removeColumn(['id', 'hidden', 'short_name'])
             ->toJson();
     }

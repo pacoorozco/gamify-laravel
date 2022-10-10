@@ -45,7 +45,7 @@
             <div class="row">
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <fieldset>
                         <!-- name -->
@@ -99,7 +99,7 @@
                             <div class="controls">
                                 <x-tags.form-select-tags name="tags"
                                                          :placeholder="__('admin/badge/model.tags_placeholder')"
-                                                         :selected-tags="old('tags', $badge->tagArray)"
+                                                         :selected-tags="old('tags', $badge->tagArrayNormalized)"
                                                          class="form-control"
                                 />
                                 <p class="text-muted">{{ __('admin/badge/model.tags_help') }}</p>
@@ -112,7 +112,7 @@
                 <!-- ./left column -->
 
                 <!-- right column -->
-                <div class="col-xs-6">
+                <div class="col-md-6">
 
                     <!-- image -->
                     <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
@@ -122,7 +122,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                      style="width: 150px; height: 150px;">
-                                    {{ $badge->present()->imageThumbnail }}
+                                    {{ $badge->present()->imageTag() }}
                                 </div>
 
                                 <!-- image buttons -->
