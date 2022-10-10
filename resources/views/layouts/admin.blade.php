@@ -81,13 +81,12 @@
 <!-- start: GLOBAL JAVASCRIPT -->
 <script src="{{ asset('vendor/AdminLTE/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <!-- end: GLOBAL JAVASCRIPT -->
 <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 @stack('scripts')
 <!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
-<!-- start: MAIN JAVASCRIPT -->
-<script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js') }}"></script>
-<!-- end: MAIN JAVASCRIPT -->
 </body>
 <!-- end: BODY -->
 </html>
