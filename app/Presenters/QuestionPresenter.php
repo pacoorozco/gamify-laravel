@@ -132,7 +132,7 @@ class QuestionPresenter extends Presenter
     public function publicUrlLink(): HtmlString
     {
         return Str::of(sprintf(
-            '<a href="%s" target="_blank" class="text-muted"><i class="fa fa-link"></i></a>',
+            '<a href="%s" target="_blank" class="text-muted" title="Preview"><i class="fa fa-link"></i></a>',
             route('questions.show', ['questionname' => $this->model->short_name]),
         ))
             ->toHtmlString();

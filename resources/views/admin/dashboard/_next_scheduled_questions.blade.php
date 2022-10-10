@@ -1,9 +1,9 @@
 <div class="box">
-    <div class="box-header ui-sortable-handle">
+    <div class="box-header">
         <i class="fa fa-clock-o"></i>
         <h3 class="box-title">Next scheduled questions</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-sm" data-widget="collapse">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
             </button>
         </div>
@@ -26,12 +26,16 @@
                         {{ $question->present()->publicUrlLink }}
                     </td>
                     <td>
-                        @if($question->hidden)
-                            <span class="badge">{{ __('admin/question/model.hidden_yes') }}</span>
-                        @endif
+                        {{ $question->present()->visibilityBadge() }}
                     </td>
                     <td>{{ $question->present()->publication_date }}</td>
-                    <td><a href="{{ route('admin.questions.edit', $question) }}"><i class="fa fa-edit"></i></a></td>
+                    <td>
+                        <a href="{{ route('admin.questions.edit', $question) }}">
+                            <button type="button" class="btn btn-xs btn-primary" title="{{ __('general.edit') }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </a>
+                    </td>
                 </tr>
             @empty
                 <tr class="warning">

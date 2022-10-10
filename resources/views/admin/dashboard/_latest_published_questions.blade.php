@@ -1,9 +1,9 @@
 <div class="box">
-    <div class="box-header ui-sortable-handle">
+    <div class="box-header">
         <i class="fa fa-comments"></i>
         <h3 class="box-title">Recently published questions</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-sm" data-widget="collapse">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
             </button>
         </div>
@@ -26,9 +26,7 @@
                         {{ $question->present()->publicUrlLink }}
                     </td>
                     <td>
-                        @if($question->hidden)
-                            <span class="badge">{{ __('admin/question/model.hidden_yes') }}</span>
-                        @endif
+                        {{ $question->present()->visibilityBadge() }}
                     </td>
                     <td>{{ $question->present()->publication_date }}</td>
                     <td>
@@ -47,9 +45,4 @@
         </table>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-        <a href="{{ route('admin.questions.index') }}" class="btn btn-default pull-right">
-            {{ __('admin/question/title.question_management') }}
-        </a>
-    </div>
 </div>

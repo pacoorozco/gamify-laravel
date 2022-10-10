@@ -45,9 +45,9 @@
                 <thead>
                 <tr>
                     <th class="col-md-3">{{ __('admin/badge/model.name') }}</th>
+                    <th class="col-md-1">{{ __('admin/badge/model.image') }}</th>
                     <th class="col-md-2">{{ __('admin/badge/model.actuators') }}</th>
                     <th class="col-md-2">{{ __('admin/badge/model.tags') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.image') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.required_repetitions') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.active') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -56,9 +56,9 @@
                 <tfoot>
                 <tr>
                     <th class="col-md-3">{{ __('admin/badge/model.name') }}</th>
+                    <th class="col-md-1">{{ __('admin/badge/model.image') }}</th>
                     <th class="col-md-2">{{ __('admin/badge/model.actuators') }}</th>
                     <th class="col-md-2">{{ __('admin/badge/model.tags') }}</th>
-                    <th class="col-md-1">{{ __('admin/badge/model.image') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.required_repetitions') }}</th>
                     <th class="col-md-1">{{ __('admin/badge/model.active') }}</th>
                     <th class="col-md-2">{{ __('general.actions') }}</th>
@@ -83,9 +83,9 @@
                 "ajax": "{{ route('admin.badges.data') }}",
                 "columns": [
                     {data: "name"},
+                    {data: "image", "orderable": false, "searchable": false},
                     {data: "actuators"},
                     {data: "tags"},
-                    {data: "image", "orderable": false, "searchable": false},
                     {data: "required_repetitions"},
                     {data: "active"},
                     {data: "actions", "orderable": false, "searchable": false}
