@@ -94,7 +94,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                      style="width: 150px; height: 150px;">
-                                    {{ $level->present()->imageTag }}
+                                    {{ $level->present()->imageTag() }}
                                 </div>
                                 <p>
                              <span class="btn btn-default btn-file">

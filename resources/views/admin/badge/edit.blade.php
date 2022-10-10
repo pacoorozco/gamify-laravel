@@ -122,7 +122,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                      style="width: 150px; height: 150px;">
-                                    {{ $badge->present()->imageThumbnail }}
+                                    {{ $badge->present()->imageTag() }}
                                 </div>
 
                                 <!-- image buttons -->

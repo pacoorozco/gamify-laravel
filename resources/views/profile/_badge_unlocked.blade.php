@@ -1,6 +1,6 @@
 <div class="col-xs-2">
     <a href="#badge-{{ $badge->slug() }}" data-toggle="modal">
-        <img src="{{ $badge->image }}" class="img-thumbnail" alt="{{ $badge->name }}" title="{{ $badge->name }}">
+        {{ $badge->present()->imageThumbnail() }}
     </a>
 </div>
 

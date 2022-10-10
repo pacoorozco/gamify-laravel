@@ -69,18 +69,18 @@ class BadgePresenter extends Presenter
 
     public function imageThumbnail(): HtmlString
     {
-        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail"'));
+        $imageTag = sprintf('<img class="img-thumbnail" src="%s" alt="%s" title="%s">',
+            $this->model->imageUrl('image_url'),
+            $this->model->description,
+            $this->model->name);
+
+        return Str::of($imageTag)
+            ->toHtmlString();
     }
 
     public function imageTag(): HtmlString
     {
         return Str::of($this->model->imageTag('image_url'))
-            ->toHtmlString();
-    }
-
-    public function imageTableThumbnail(): HtmlString
-    {
-        return Str::of($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'))
             ->toHtmlString();
     }
 

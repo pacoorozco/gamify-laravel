@@ -27,6 +27,7 @@ namespace Gamify\Presenters;
 
 use Gamify\Models\Level;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Laracodes\Presenter\Presenter;
 
 class LevelPresenter extends Presenter
@@ -34,31 +35,21 @@ class LevelPresenter extends Presenter
     /** @var Level */
     protected $model;
 
-    public function image(): HtmlString
-    {
-        return new HtmlString(sprintf('<img src="%s" width="96" class="img-thumbnail" alt="%s">',
-            $this->model->imageUrl(),
-            $this->model->name));
-    }
-
     public function imageThumbnail(): HtmlString
     {
-        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail"'));
+        $imageTag = sprintf('<img class="img-thumbnail" src="%s" alt="%s" title="%s">',
+            $this->model->imageUrl('image_url'),
+            $this->model->name,
+            $this->model->name);
+
+        return Str::of($imageTag)
+            ->toHtmlString();
     }
 
     public function imageTag(): HtmlString
     {
-        return new HtmlString($this->model->imageTag('image_url'));
-    }
-
-    public function imageTableThumbnail(): HtmlString
-    {
-        return new HtmlString($this->model->imageTag('image_url', 'class="img-thumbnail center-block"'));
-    }
-
-    public function name(): string
-    {
-        return $this->model->name;
+        return Str::of($this->model->imageTag('image_url'))
+            ->toHtmlString();
     }
 
     public function status(): string
@@ -70,17 +61,26 @@ class LevelPresenter extends Presenter
 
     public function nameWithStatusBadge(): HtmlString
     {
-        return new HtmlString($this->model->active
+        $badge = $this->model->active
             ? $this->name()
-            : $this->name().' '.$this->statusBadge()
-        );
+            : $this->name().' '.$this->statusBadge();
+
+        return Str::of($badge)
+            ->toHtmlString();
+    }
+
+    public function name(): string
+    {
+        return $this->model->name;
     }
 
     public function statusBadge(): HtmlString
     {
-        return new HtmlString($this->model->active
+        $badge = $this->model->active
             ? ''
-            : '<span class="label label-default">'.trans('general.disabled').'</span>'
-        );
+            : '<span class="label label-default">'.trans('general.disabled').'</span>';
+
+        return Str::of($badge)
+            ->toHtmlString();
     }
 }
