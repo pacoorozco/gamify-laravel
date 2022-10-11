@@ -36,8 +36,6 @@ return [
     |
     */
 
-    'title' => 'gamify',
-    'name' => 'gamify',
     'home' => 'Home',
     'my_profile' => 'My Profile',
     'user_profile' => 'User Profile',

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title', 'Administration Dashboard') :: {{ __('site.title') }}</title>
+    <title>@yield('title', 'Administration Dashboard') :: {{ config('app.name', 'gamify') }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- start: META -->
@@ -38,7 +38,7 @@
 <!-- start: LOGIN BOX -->
 <div class="login-box">
     <div class="login-logo">
-        <strong>{{ __('site.name') }}</strong> v3
+        <strong>{{ config('app.name', 'gamify') }}</strong>
     </div>
 
     <!-- start: NOTIFICATIONS -->
