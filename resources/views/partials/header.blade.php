@@ -5,7 +5,7 @@
         <div class="container">
             <div class="navbar-header">
                 <!-- start: LOGO -->
-                <strong><a href="{{ route('home') }}" class="navbar-brand">{{ __('site.name') }}</a></strong>
+                <strong><a href="{{ route('home') }}" class="navbar-brand">{{ config('app.name', 'gamify') }}</a></strong>
                 <!-- end: LOGO -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
