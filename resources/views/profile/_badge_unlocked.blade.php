@@ -19,14 +19,14 @@
                 </h4>
             </div>
             <div class="modal-body text-center">
-                <p>
-                    {{ $badge->description }}
+                <p class="lead">
+                    {{ __('user/profile.congrats_message', ['name' => $badge->name]) }}
                 </p>
 
-                <img src="{{ $badge->image }}" alt="{{ $badge->name }}" title="{{ $badge->name }}">
+                <p>{{ $badge->present()->imageThumbnail() }}</p>
 
                 <p>
-                    {{ __('user/profile.unlocked_at', ['date' => $badge->present()->unlockedAt]) }}
+                    {{ $badge->description }}
                 </p>
             </div>
             <div class="modal-footer">

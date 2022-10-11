@@ -71,6 +71,7 @@ return [
     'unlocked_badges' => 'Unlocked badges',
     'locked_badges' => 'Locked badges',
     'no_badges_yet' => 'None as yet',
-    'unlocked_at' => 'It was unlocked the :date',
+    'congrats_message' => 'Congrats! You unlocked the badge \':name\'.',
+    'badge_detail_help' => 'Click on the badges below to see the details.',
 
 ];
