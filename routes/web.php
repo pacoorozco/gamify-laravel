@@ -37,6 +37,7 @@ use Gamify\Http\Controllers\Admin\AdminUserController;
 use Gamify\Http\Controllers\Admin\AdminUserDataTablesController;
 use Gamify\Http\Controllers\HomeController;
 use Gamify\Http\Controllers\LeaderBoardController;
+use Gamify\Http\Controllers\MarkNotificationAsReadController;
 use Gamify\Http\Controllers\QuestionController;
 use Gamify\Http\Controllers\ShowUserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +91,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('password', [ChangePasswordController::class, 'update'])
             ->name('account.password.update');
     });
+
+    Route::patch('notifications', MarkNotificationAsReadController::class)
+        ->name('notifications.read');
 });
 
 /* ------------------------------------------

@@ -58,6 +58,9 @@
 
             <!-- start: PAGE CONTENT -->
             <section class="content">
+
+                @include('partials.notifications')
+
                 @yield('content')
             </section>
             <!-- end: PAGE CONTENT-->

@@ -1,3 +1,45 @@
+@auth
+    @foreach (Auth::user()->unreadNotifications as $notification)
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <strong>
+                {{ __('notifications.badge_unlocked_title') }}
+                <small class="pull-right time">
+                    <i class="fa fa-clock-o"></i>
+                    {{ $notification->created_at->diffForHumans() }}
+                </small>
+            </strong>
+            <p>
+                {!! $notification->data['message'] !!}
+                <a href="#" class="pull-right mark-as-read" data-id="{{ $notification->id }}" data-dismiss="alert">
+                    {{ __('notifications.mark_as_read') }}
+                </a>
+            </p>
+        </div>
+    @endforeach
+
+    @pushonce('scripts')
+        <script>
+            function sendMarkRequest(id = null) {
+                return $.ajax({
+                    url: "{{ route('notifications.read') }}",
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'PATCH',
+                        id: id
+                    }
+                });
+            }
+
+            $(function () {
+                $('.mark-as-read').click(function () {
+                    sendMarkRequest($(this).data('id'));
+                });
+            });
+        </script>
+    @endpushonce
+@endauth
+
 @if (session()->has('success'))
     <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -46,3 +88,5 @@
         </ul>
     </div>
 @endif
+
+
