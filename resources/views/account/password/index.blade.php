@@ -26,10 +26,6 @@
 @endsection
 
 @section('content')
-    <!-- Notifications -->
-    @include('partials.notifications')
-    <!-- ./ notifications -->
-
     <!-- panel -->
     <div class="panel panel-default">
         <div class="panel-body">

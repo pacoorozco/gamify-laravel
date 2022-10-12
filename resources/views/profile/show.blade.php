@@ -70,9 +70,6 @@
 
         </div>
         <div class="col-md-8">
-            <!-- notifications -->
-            @include('partials.notifications')
-            <!-- ./notifications -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active">

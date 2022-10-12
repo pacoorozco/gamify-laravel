@@ -1,5 +1,6 @@
 <ul class="nav navbar-nav">
 
+    @auth
     <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
         <a href="{{ route('dashboard') }}">
             {{ __('site.home') }}
@@ -9,7 +10,6 @@
         </a>
     </li>
 
-    @auth
     <li class="{{ request()->is('questions*') ? 'active' : '' }}">
         <a href="{{ route('questions.index') }}">
             {{ __('site.play') }}

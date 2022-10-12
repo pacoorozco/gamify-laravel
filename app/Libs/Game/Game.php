@@ -27,6 +27,7 @@ namespace Gamify\Libs\Game;
 
 use Gamify\Models\Badge;
 use Gamify\Models\User;
+use Gamify\Notifications\BadgeUnlocked;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -99,6 +100,8 @@ class Game
             // this is the first occurrence of this badge for this user
             $user->badges()->attach($badge->id, $data);
         }
+
+        $user->notify(new BadgeUnlocked($badge));
     }
 
     public static function getTopExperiencedPlayers(int $numberOfPlayers = 10): \Illuminate\Support\Collection
