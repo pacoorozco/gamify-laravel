@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Laracodes\Presenter\Traits\Presentable;
 use QCod\ImageUp\HasImageUploads;
 
@@ -92,21 +93,27 @@ class Level extends Model
 
     public static function findNextByExperience(int $experience): Level
     {
-        return self::query()
+        return Cache::rememberForever('levels', function () {
+            return self::query()
                 ->active()
-                ->where('required_points', '>', $experience)
-                ->orderBy('required_points', 'asc')
-                ->first()
+                ->orderBy('required_points', 'ASC')
+                ->get();
+        })
+            ->where('required_points', '>', $experience)
+            ->first()
             ?? self::findByExperience($experience);
     }
 
     public static function findByExperience(int $experience): Level
     {
-        return self::query()
+        return Cache::rememberForever('levels', function () {
+            return self::query()
                 ->active()
-                ->where('required_points', '<=', $experience)
-                ->orderBy('required_points', 'desc')
-                ->first()
+                ->orderBy('required_points', 'ASC')
+                ->get();
+        })
+            ->where('required_points', '<=', $experience)
+            ->last()
             ?? self::defaultLevel();
     }
 
@@ -133,7 +140,7 @@ class Level extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn($value) => $this->imageUrl()
         );
     }
 }

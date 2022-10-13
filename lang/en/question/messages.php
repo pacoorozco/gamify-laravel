@@ -31,8 +31,8 @@ return [
     'obtained_points' => 'Points obtained by answering this question',
     'send' => 'Send',
     'choices' => 'Choose your answer:',
-    'no_pending_questions' => 'Well done!. You have answered all questions.',
-    'only_hidden_questions_pending' => 'You have answered almost all questions, maybe be there are hidden questions pending.',
+
+    'no_pending_questions' => 'Well done!. You have answered all the public questions. Have you though about the hidden ones?',
 
     'legend' => 'Legend:',
     'correct_answer' => 'Correct answer.',
