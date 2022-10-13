@@ -25,6 +25,8 @@
 
 namespace Gamify\Providers;
 
+use Gamify\Models\Level;
+use Gamify\Observers\LevelObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -51,5 +53,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Paginator::useBootstrapFour();
+
+        Level::observe(LevelObserver::class);
     }
 }
