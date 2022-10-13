@@ -168,18 +168,6 @@ final class User extends Authenticatable implements MustVerifyEmail
             ->using(UserResponse::class);
     }
 
-    public function hasQuestionsToAnswer(): bool
-    {
-        $answeredQuestions = $this->answeredQuestions()
-            ->pluck('question_id')
-            ->toArray();
-
-        return Question::query()
-            ->published()
-            ->whereNotIn('id', $answeredQuestions)
-            ->exists();
-    }
-
     public function answeredQuestionsCount(): int
     {
         return $this->answeredQuestions()->count();

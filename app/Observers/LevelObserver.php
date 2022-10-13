@@ -9,22 +9,22 @@ class LevelObserver
 {
     public function created(Level $level): void
     {
-        Cache::forget('levels.active');
+        Cache::forget('levels');
     }
 
     public function updated(Level $level): void
     {
-        Cache::forget('levels.active');
+        Cache::forget('levels');
     }
 
     public function deleted(Level $level): void
     {
-        Cache::forget('levels.active');
+        Cache::forget('levels');
     }
 
     public function restored(Level $level): void
     {
-        Cache::forget('levels.active');
+        Cache::forget('levels');
     }
 
     public function forceDeleted(Level $level): void

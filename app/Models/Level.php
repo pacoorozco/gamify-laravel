@@ -93,10 +93,10 @@ class Level extends Model
 
     public static function findNextByExperience(int $experience): Level
     {
-        return Cache::rememberForever('levels.active', function () {
+        return Cache::rememberForever('levels', function () {
             return self::query()
                 ->active()
-                ->orderBy('required_points', 'asc')
+                ->orderBy('required_points', 'ASC')
                 ->get();
         })
             ->where('required_points', '>', $experience)
@@ -106,13 +106,14 @@ class Level extends Model
 
     public static function findByExperience(int $experience): Level
     {
-        return Cache::rememberForever('levels.active', function () {
+        return Cache::rememberForever('levels', function () {
             return self::query()
                 ->active()
-                ->orderBy('required_points', 'asc')
+                ->orderBy('required_points', 'ASC')
                 ->get();
-        })->where('required_points', '<=', $experience)
-            ->first()
+        })
+            ->where('required_points', '<=', $experience)
+            ->last()
             ?? self::defaultLevel();
     }
 
