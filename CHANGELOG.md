@@ -5,6 +5,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 3.3.0 - 2022-10-17
+### Added
+- Config flag to set the Laravel app time zone.
+- Publication dates in the Question's table.
+- New panel showing scheduled questions in the Admin dashboard.
+- The title and other SEO fields should be driven by the configuration instead of language files. ([#364][i364]) 
+- Add notifications when a badge is unlocked enhancement. ([#359][i359])
+
+### Changed
+- Shuffle pending questions before listing them. ([#354][i354])
+- Reduce the number of questions in the homepage to 5.
+- Small changes related the look&feel of the application.
+- Reduce number of queries in order to increase performance. ([#369][i369])
+- Responsiveness improvements. ([#361][i361])
+- Refactor to always use **lowercase** tags.
+- Use [Summernote](https://summernote.org/) as WYSIWYG editor
+
+### Fixed
+- Scheduled questions are not published on time bug. ([#348][i348])
+- Admin dashboard look&feel on mobile devices.
+
+### Removed
+- Remove unused code in app.js.
+- Remove unused action resources.
+- Hide Home link for guests.
+
+[i348]: https://github.com/pacoorozco/gamify-laravel/issue/348
+[i369]: https://github.com/pacoorozco/gamify-laravel/issue/369
+[i364]: https://github.com/pacoorozco/gamify-laravel/issue/364
+[i361]: https://github.com/pacoorozco/gamify-laravel/issue/361
+[i359]: https://github.com/pacoorozco/gamify-laravel/issue/359
+[i354]: https://github.com/pacoorozco/gamify-laravel/issue/354
+
 ## 3.2.1 - 2022-09-09
 
 ### Fixed
