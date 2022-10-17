@@ -140,7 +140,7 @@ class Level extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->imageUrl()
+            get: fn ($value) => $this->imageUrl()
         );
     }
 }

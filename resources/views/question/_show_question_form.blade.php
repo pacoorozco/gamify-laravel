@@ -4,7 +4,9 @@
         <h3 class="box-title">{{ $question->name }}</h3>
     </div>
     <div class="box-body">
-        {{ $question->present()->statement }}
+        <div id="question_statement">
+            {{ $question->present()->statement }}
+        </div>
 
         <fieldset id="choicesGroup">
             <p>

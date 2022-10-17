@@ -415,25 +415,21 @@
 {{-- Styles --}}
 @push('styles')
     <link rel="stylesheet"
-          href="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
-    <link rel="stylesheet"
           href="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('vendor/summernote/summernote.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
     <script
-        src="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
-    <script
         src="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.full.min.js') }}"></script>
+
+    <script src="{{ asset('vendor/summernote/summernote.min.js') }}"></script>
 
     <script>
         $(function () {
-            $('.editor').wysihtml5({
-                toolbar: {
-                    "font-styles": false,
-                },
-            });
+            $('.editor').summernote();
 
             $("#submitDraftBtn").click(function () {
                 $("#status").val("draft");

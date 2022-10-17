@@ -56,13 +56,13 @@
 
                         <!-- statement -->
                         <dt>{{ __('admin/question/model.question') }}</dt>
-                        <dd>{{ $question->present()->statement }}</dd>
+                        <dd id="question_statement">{{ $question->present()->statement }}</dd>
                         <!-- ./ statement -->
 
                         @if($question->solution)
                             <!-- solution -->
                             <dt>{{ __('question/messages.explained_answer') }}</dt>
-                            <dd>{{ $question->present()->explanation }}</dd>
+                            <dd id="question_explanation">{{ $question->present()->explanation }}</dd>
                             <!-- ./ solution -->
                         @endif
 
