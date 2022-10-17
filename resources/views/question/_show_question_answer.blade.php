@@ -3,10 +3,12 @@
         <h3 class="box-title">{{ $question->name }}</h3>
     </div>
     <div class="box-body">
-        {{ $question->present()->statement }}
+        <div id="question_statement">
+            {{ $question->present()->statement }}
+        </div>
 
         @if($question->solution)
-            <div class="callout callout-success">
+            <div id="question_explanation" class="bg-success">
                 <h4>{{ __('question/messages.explained_answer') }}</h4>
                 {{ $question->present()->explanation }}
             </div>

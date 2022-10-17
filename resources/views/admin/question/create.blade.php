@@ -85,8 +85,8 @@
                     </fieldset>
 
                     <!-- options -->
-                @include('admin/question/_form_choices')
-                <!-- ./ options -->
+                    @include('admin/question/_form_choices')
+                    <!-- ./ options -->
 
                     <fieldset>
                         <legend>
@@ -146,7 +146,8 @@
                         <div class="form-group">
                             {!! Form::label('status', __('admin/question/model.status'), ['class' => 'control-label required']) !!}
                             <div class="controls">
-                                <span class="form-control-static">{{ __('admin/question/model.status_list.draft') }}</span>
+                                <span
+                                    class="form-control-static">{{ __('admin/question/model.status_list.draft') }}</span>
                                 {!! Form::hidden('status','draft') !!}
                             </div>
                         </div>
@@ -234,24 +235,21 @@
 {{-- Styles --}}
 @push('styles')
     <link rel="stylesheet"
-          href="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
-    <link rel="stylesheet"
           href="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('vendor/summernote/summernote.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
     <script
-        src="{{ asset('vendor/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
-    <script
         src="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.full.min.js') }}"></script>
 
+    <script src="{{ asset('vendor/summernote/summernote.min.js') }}"></script>
+
     <script>
-            $('.editor').wysihtml5({
-                toolbar: {
-                    "font-styles": false,
-                },
-            });
+        $(function () {
+            $('.editor').summernote();
 
             $("#submitDraftBtn").click(function () {
                 $("#status").val("draft");
@@ -287,5 +285,6 @@
                 $("#publication_date").val("");
                 $("#publication_date").change();
             });
+        });
     </script>
 @endpush
