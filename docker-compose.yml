@@ -18,10 +18,7 @@ services:
         - ./:/var/www
       environment:
         DB_HOST: database
-        DB_DATABASE: homestead
-        DB_USERNAME: homestead
-        DB_PASSWORD: secret
-        REDIS_HOST: redis
+        #REDIS_HOST: redis
       ports:
         - "9000:9000"
       depends_on:
@@ -42,28 +39,27 @@ services:
       depends_on:
         - app
 
-### DATABASE: Database server #######################################
-    database:
+### MYSQL: Database server #######################################
+    mysql:
       image: mysql:5
       volumes:
             - dbdata:/var/lib/mysql
       environment:
-        MYSQL_ROOT_PASSWORD: verysecret
-        MYSQL_DATABASE: homestead
-        MYSQL_USER: homestead
-        MYSQL_PASSWORD: secret
+        MYSQL_DATABASE: 'laravel'
+        MYSQL_ROOT_PASSWORD: ''
+        MYSQL_ALLOW_EMPTY_PASSWORD: 1
       ports:
         - "3306:3306"
 
 ### REDIS: Redis server #############################################
-    redis:
-      image: redis:5
-      ports:
-        - "6379:6379"
+#    redis:
+#      image: redis:5
+#      ports:
+#        - "6379:6379"
 
-### REDIS: Redis server #############################################
-    mailhog:
-      image: mailhog/mailhog:latest
-      ports:
-        - "1025:1025"
-        - "8025:8025"
+### MAILHOG: Redis server #############################################
+#    mailhog:
+#      image: mailhog/mailhog:latest
+#      ports:
+#        - "1025:1025"
+#        - "8025:8025"

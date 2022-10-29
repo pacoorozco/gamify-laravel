@@ -76,10 +76,8 @@
       "@php artisan package:discover --ansi"
     ],
     "test": [
-      "@php artisan test --parallel"
-    ],
-    "test-coverage": [
-      "@php artisan test --parallel --coverage-html test-coverage"
+      "php artisan migrate --env=testing",
+      "php artisan test --parallel --runner WrapperRunner"
     ],
     "build": [
       "@composer archive --format=zip --dir=dist"

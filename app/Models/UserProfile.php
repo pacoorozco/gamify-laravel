@@ -62,7 +62,7 @@ class UserProfile extends Model
     ];
 
     protected $casts = [
-        'date_of_birth' => 'datetime',
+        'date_of_birth' => 'date',
     ];
 
     protected string $imagesUploadPath = 'avatars';

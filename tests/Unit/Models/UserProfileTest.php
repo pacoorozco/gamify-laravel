@@ -49,7 +49,7 @@ class UserProfileTest extends TestCase
         $m = new UserProfile();
         $this->assertEquals([
             'id' => 'int',
-            'date_of_birth' => 'datetime',
+            'date_of_birth' => 'date',
         ], $m->getCasts());
     }
 
