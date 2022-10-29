@@ -17,7 +17,7 @@ services:
       volumes:
         - ./:/var/www
       environment:
-        DB_HOST: database
+        DB_HOST: mysql
         #REDIS_HOST: redis
       ports:
         - "9000:9000"
