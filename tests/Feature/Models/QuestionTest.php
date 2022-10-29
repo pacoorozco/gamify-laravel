@@ -29,14 +29,11 @@ use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class QuestionTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_return_only_published_questions(): void
     {

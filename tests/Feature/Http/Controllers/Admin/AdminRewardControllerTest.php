@@ -29,13 +29,11 @@ use Gamify\Enums\Roles;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Generator;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class AdminRewardControllerTest extends TestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     private User $user;

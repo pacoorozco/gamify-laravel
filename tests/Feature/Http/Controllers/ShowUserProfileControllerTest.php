@@ -26,13 +26,10 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class ShowUserProfileControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
 
     public function setUp(): void

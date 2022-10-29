@@ -28,14 +28,11 @@ namespace Tests\Feature\Http\Controllers\Admin;
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\DataGenerator\QuestionDataGenerator;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class AdminQuestionControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function setUp(): void
     {
         parent::setUp();

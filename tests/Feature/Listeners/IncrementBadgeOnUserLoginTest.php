@@ -30,15 +30,12 @@ use Gamify\Listeners\IncrementBadgesOnUserLogin;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Mockery;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class IncrementBadgeOnUserLoginTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_listen_for_login_events(): void
     {

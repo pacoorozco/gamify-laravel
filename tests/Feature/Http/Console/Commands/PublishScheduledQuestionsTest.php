@@ -29,13 +29,10 @@ use Gamify\Console\Commands\PublishScheduledQuestions;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class PublishScheduledQuestionsTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function setUp(): void
     {
         parent::setUp();

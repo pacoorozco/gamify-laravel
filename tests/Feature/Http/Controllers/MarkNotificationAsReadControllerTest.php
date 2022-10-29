@@ -28,13 +28,10 @@ namespace Tests\Feature\Http\Controllers;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Gamify\Notifications\BadgeUnlocked;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class MarkNotificationAsReadControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_mark_a_notification_as_read(): void
     {

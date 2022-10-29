@@ -28,13 +28,11 @@ namespace Tests\Feature\Models;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Gamify\Models\UserResponse;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class UserResponseTest extends TestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     /** @test */

@@ -27,13 +27,10 @@ namespace Tests\Feature\Views\Components\Tags;
 
 use Gamify\Models\Question;
 use Gamify\View\Components\Tags\FormSelectTags;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class FormSelectTagsTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_render_the_tags_component(): void
     {

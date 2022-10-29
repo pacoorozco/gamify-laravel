@@ -29,13 +29,10 @@ use Gamify\Enums\Roles;
 use Gamify\Models\Level;
 use Gamify\Models\User;
 use Generator;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class AdminLevelControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
 
     public function setUp(): void

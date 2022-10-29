@@ -28,13 +28,10 @@ namespace Tests\Feature\Services;
 use Gamify\Models\LinkedSocialAccount;
 use Gamify\Models\User;
 use Gamify\Services\SocialAccountService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class SocialAccountServiceTest extends TestCase
 {
-    use RefreshDatabase;
-
     const PROVIDER_NAME = 'testing-provider';
 
     const EXTERNAL_USER_ID = 'external-id';
