@@ -17,7 +17,8 @@ class UserResponse extends Pivot
     public static function asArray(int $score, array $choices): array
     {
         return [
-            'points' => $score,
+            // We always get 1 XP for each user's response, even if it was the wrong one.
+            'points' => ($score > 0) ? $score : 1,
             'answers' => implode(self::VALUE_SEPARATOR, $choices),
         ];
     }
