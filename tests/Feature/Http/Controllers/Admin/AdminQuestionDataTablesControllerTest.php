@@ -28,13 +28,10 @@ namespace Tests\Feature\Http\Controllers\Admin;
 use Gamify\Enums\Roles;
 use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class AdminQuestionDataTablesControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
 
     public function setUp(): void

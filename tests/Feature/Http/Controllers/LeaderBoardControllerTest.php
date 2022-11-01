@@ -25,13 +25,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class LeaderBoardControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_be_accessible_for_guests(): void
     {

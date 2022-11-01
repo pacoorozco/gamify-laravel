@@ -30,14 +30,11 @@ use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Models\Question;
 use Gamify\Models\QuestionChoice;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class PublishQuestionActionTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_triggers_an_event_when_a_question_is_published(): void
     {

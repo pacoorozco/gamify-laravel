@@ -27,13 +27,10 @@ namespace Tests\Feature\Models;
 
 use Gamify\Enums\BadgeActuators;
 use Gamify\Models\Badge;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class BadgeTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_return_the_default_image_if_badge_has_not_image(): void
     {

@@ -29,14 +29,11 @@ use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Generator;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class GameTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_add_experience_to_the_user(): void
     {

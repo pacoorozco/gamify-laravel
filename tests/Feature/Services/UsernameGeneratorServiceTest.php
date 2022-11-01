@@ -27,13 +27,10 @@ namespace Tests\Feature\Services;
 
 use Gamify\Models\User;
 use Gamify\Services\UsernameGeneratorService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class UsernameGeneratorServiceTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @dataProvider providesTestCasesForUsernameCreationFromText

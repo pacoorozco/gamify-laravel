@@ -4,13 +4,10 @@ namespace Tests\Feature\Auth;
 
 use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_login_screen_can_be_rendered(): void
     {
         $this

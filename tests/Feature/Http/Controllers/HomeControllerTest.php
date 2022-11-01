@@ -26,13 +26,10 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function index_returns_proper_content(): void
     {

@@ -31,15 +31,12 @@ use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Models\Badge;
 use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Mockery;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class IncrementBadgeOnQuestionAnsweredTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_listen_for_the_event(): void
     {

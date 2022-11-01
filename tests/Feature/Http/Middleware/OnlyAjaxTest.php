@@ -29,7 +29,7 @@ use Gamify\Http\Middleware\OnlyAjax;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response as ResponseCode;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class OnlyAjaxTest extends TestCase
 {

@@ -15,28 +15,26 @@ on:
       - '**.yml'
 
 jobs:
-  ssham:
+  app:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
     env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
       DB_DATABASE: testing
       DB_USERNAME: root
       DB_PASSWORD: password
-      BROADCAST_DRIVER: log
-      CACHE_DRIVER: redis
-      QUEUE_CONNECTION: redis
-      SESSION_DRIVER: redis
 
     services:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: testing
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
       redis:
         image: redis
         ports:
@@ -63,8 +61,7 @@ jobs:
 
       - name: Prepare the application
         run: |
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
-          php artisan key:generate
+          php -r "copy('.env.testing', '.env');"
       - name: Run Migration
         run: php artisan migrate --verbose
         env:
@@ -73,7 +70,7 @@ jobs:
 
       - name: Run PHPUnit
         run: |
-          vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml
+          php artisan test --parallel --runner WrapperRunner --stop-on-failure --coverage-text --coverage-clover=clover.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}

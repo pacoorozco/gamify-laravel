@@ -30,16 +30,13 @@ use Gamify\Models\User;
 use Gamify\Models\UserProfile;
 use Generator;
 use Illuminate\Auth\Middleware\RequirePassword;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class ProfileControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
 
     public function setUp(): void

@@ -27,13 +27,10 @@ namespace Tests\Feature\Presenters;
 
 use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class QuestionPresenterTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_return_not_available_when_the_creator_is_not_set(): void
     {

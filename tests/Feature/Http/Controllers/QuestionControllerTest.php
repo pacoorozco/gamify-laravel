@@ -28,14 +28,11 @@ namespace Tests\Feature\Http\Controllers;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Models\Question;
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class QuestionControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
 
     public function setUp(): void

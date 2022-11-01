@@ -26,13 +26,10 @@
 namespace Tests\Feature\Console\Commands;
 
 use Gamify\Models\Question;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class PublishScheduledQuestionsTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_should_not_publish_questions_if_it_is_not_the_right_time_yet(): void
     {

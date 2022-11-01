@@ -26,14 +26,11 @@
 namespace Tests\Feature\Http\Controllers\Account;
 
 use Gamify\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class ChangePasswordControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     const VALID_PASSWORD = 'foo#B4rBaz';
 
     /** @test */

@@ -27,13 +27,11 @@ namespace Tests\Feature\Models;
 
 use Gamify\Models\Level;
 use Generator;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class LevelTest extends TestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     /** @test */

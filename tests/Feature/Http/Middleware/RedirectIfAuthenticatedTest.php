@@ -28,14 +28,11 @@ namespace Tests\Feature\Http\Middleware;
 use Gamify\Http\Middleware\RedirectIfAuthenticated;
 use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
-use Tests\TestCase;
+use Tests\Feature\TestCase;
 
 class RedirectIfAuthenticatedTest extends TestCase
 {
-    use RefreshDatabase;
-
     const TEST_ENDPOINT = '/_test/only_for_guests';
 
     protected function setUp(): void
