@@ -35,9 +35,14 @@ class UserResponseTest extends TestCase
 {
     use WithFaker;
 
-    /** @test */
-    public function it_should_return_the_user_response_score_of_a_question(): void
-    {
+    /**
+     * @test
+     * @dataProvider providesScoreForUserResponseTest
+     */
+    public function it_should_return_the_user_response_score_of_a_question(
+        int $score,
+        int $want,
+    ): void {
         /** @var Question $question */
         $question = Question::factory()
             ->published()
@@ -47,11 +52,9 @@ class UserResponseTest extends TestCase
         $user = User::factory()
             ->create();
 
-        $want = $this->faker->numberBetween(-10, 10);
-
         $user->answeredQuestions()->attach($question,
             UserResponse::asArray(
-                score: $want,
+                score: $score,
                 choices: $question->choices()->pluck('id')->toArray(),
             )
         );
@@ -63,6 +66,24 @@ class UserResponseTest extends TestCase
             ->response;
 
         $this->assertEquals($want, $response->score());
+    }
+
+    public function providesScoreForUserResponseTest(): \Generator
+    {
+        yield 'score < 0' => [
+            'score' => -2,
+            'want' => 1,
+        ];
+
+        yield 'score == 0' => [
+            'score' => 0,
+            'want' => 1,
+        ];
+
+        yield 'score > 0' => [
+            'score' => 5,
+            'want' => 5,
+        ];
     }
 
     /** @test */
