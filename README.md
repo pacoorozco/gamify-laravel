@@ -3,7 +3,7 @@
 [![Testing with MySQL](https://github.com/pacoorozco/gamify-laravel/actions/workflows/run-tests.yml/badge.svg)](https://github.com/pacoorozco/gamify-laravel/actions/workflows/run-tests.yml)
 [![codecov](https://codecov.io/gh/pacoorozco/gamify-laravel/branch/main/graph/badge.svg?token=ugLXCazFWC)](https://codecov.io/gh/pacoorozco/gamify-laravel)
 [![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](LICENSE)
-[![Laravel Version](https://img.shields.io/badge/Laravel-8.x-orange.svg)](https://laravel.com/docs/8.x)
+[![Laravel Version](https://img.shields.io/badge/Laravel-9.x-orange.svg)](https://laravel.com/docs/8.x)
 [![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-laravel.svg?style=flat-square)](https://github.com/pacoorozco/gamify-laravel/releases)
 
 ## Presentation
@@ -11,8 +11,6 @@
 **Game of Work**, _aka GoW!_, was a gamification platform created by **Emilio Ampudia** (eampudia _at_ gmail.com) and **Paco Orozco** (paco _at_ pacoorozco.info). 
 
 We wanted to teach, learn and share some fun with our colleagues, so we created a game based on questions about our organization (process, services, teams...). This was the birth of **gamify**, a platform implementing a levels & badge game at [UPCnet](https://www.upcnet.es).
-
-After that I've been developing it as a _pet project_. Nowadays, it's a [Laravel](https://laravel.com) application, based on the deprecated PHP5 [original version](https://github.com/pacoorozco/gamify).
 
 As much as possible, I've tried to keep a clean code to work everywhere out of the box. You are not obliged to use my tools and you are free to change the code in order to use it at your own feeling.
 
@@ -26,47 +24,61 @@ See [CHANGELOG](CHANGELOG.md) file in order to know what changes are implemented
 
 ## How to run gamify
 
-This will create several [Docker](https://www.docker.com/) containers to implement all **gamify** needs. An application server, a web server and a database server.
+[Laravel Sail](https://laravel.com/docs/9.x/sail) is a light-weight command-line interface for interacting with
+Laravel's default Docker development environment. This will create several containers to implement the application needs. An
+application server and a database server.
 
-Prior this installation, you **need to have installed** this software:
+Prior to this installation, you **need to have installed** this software:
 
 * [Docker](https://www.docker.com/)
-* [Docker Compose](https://docs.docker.com/compose/)
 
 1. Clone the repository locally
 
-    ```bash
-    $ git clone https://github.com/pacoorozco/gamify-laravel.git gamify
-    $ cd gamify
     ```
-1. Copy [`.env.example`](.env.example) to `.env`.
-
-    > **NOTE**: You don't need to touch anything from this file. It works with default settings.
-
-1. Start all containers with [Docker Compose](https://docs.docker.com/compose/)
-
-    > **NOTE**: You **must** export the `DOCKER_APP_UID` variable if your user ID is different from `1000`. This will allow the docker to get permissions over your files.
-
-    ```bash
-    $ export DOCKER_APP_UID="$(id -u)"
-    $ docker-compose build
-    $ docker-compose up -d
+    git clone https://github.com/pacoorozco/gamify-laravel.git gamify
+    cd gamify
     ```
 
-1. Install dependencies with:
+2. Copy [`.env.example`](.env.example) to `.env`.
 
-    ```bash
-    $ docker-compose exec app composer install
+   > **NOTE**: You don't need to touch anything from this file. It works with default settings.
+
+3. Install PHP dependencies with:
+
+   > **NOTE**: You don't need to install neither _PHP_ nor _Composer_, we are going to use
+   a [Composer image](https://hub.docker.com/_/composer/) instead.
+
+    ```
+    docker run --rm \                  
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php80-composer:latest \
+    composer install --ignore-platform-reqs
     ```
 
-1. Seed database in order to play with some data
+4. Start all containers with the `sail` command.
 
-    ```bash
-    $ docker-compose exec app php artisan key:generate 
-    $ docker-compose exec app php artisan migrate:fresh --seed
     ```
-    
-1. Go to `http://localhost`. Enjoy!
+    ./vendor/bin/sail up -d
+    ```
+
+5. Seed database in order to play with some data
+
+    ```
+    php artisan key:generate 
+    php artisan migrate --seed
+    ```
+
+   **If you are using Sail, you should execute those commands using Sail**:
+
+    ```
+   # Running Artisan commands within Laravel Sail...
+   sail artisan key:generate 
+   sail artisan migrate --seed
+    ```
+
+6. Point your browser to `http://localhost`. Enjoy!
 
    > **NOTE**: Default credentials are `admin@domain.local/admin` or `player@domain.local/player`
 
