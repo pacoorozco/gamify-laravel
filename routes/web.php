@@ -57,7 +57,6 @@ Route::get('/leaderboard', LeaderBoardController::class)
     ->name('leaderboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
     Route::get('/', HomeController::class)
         ->name('home');
 
@@ -76,7 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('account')->group(function () {
-
         Route::controller(ProfileController::class)->group(function () {
             Route::get('/', 'index')
                 ->name('account.index');
@@ -95,7 +93,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('password', 'update')
                 ->name('account.password.update');
         });
-
     });
 
     Route::patch('notifications', MarkNotificationAsReadController::class)
@@ -183,5 +180,4 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
         Route::post('rewards/badge', 'giveBadge')
             ->name('rewards.badge');
     });
-
 });
