@@ -57,39 +57,49 @@ Route::get('/leaderboard', LeaderBoardController::class)
     ->name('leaderboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [HomeController::class, 'index'])
+
+    Route::get('/', HomeController::class)
         ->name('home');
 
-    Route::get('dashboard', [HomeController::class, 'index'])
-        ->name('dashboard');
+    Route::get('dashboard', function () {
+        return to_route('home');
+    })->name('dashboard');
 
     Route::get('users/{username}', ShowUserProfileController::class)
         ->name('profiles.show');
 
-    Route::get('questions', [QuestionController::class, 'index'])
-        ->name('questions.index');
+    Route::controller(QuestionController::class)->group(function () {
+        Route::get('questions', 'index')
+            ->name('questions.index');
 
-    Route::get('questions/{questionname}', [QuestionController::class, 'show'])
-        ->name('questions.show');
+        Route::get('questions/{questionname}', 'show')
+            ->name('questions.show');
 
-    Route::post('questions/{questionname}', [QuestionController::class, 'answer'])
-        ->name('questions.answer');
+        Route::post('questions/{questionname}', 'answer')
+            ->name('questions.answer');
+    });
 
     Route::prefix('account')->group(function () {
-        Route::get('/', [ProfileController::class, 'index'])
-            ->name('account.index');
 
-        Route::get('edit', [ProfileController::class, 'edit'])
-            ->name('account.profile.edit');
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/', 'index')
+                ->name('account.index');
 
-        Route::put('edit', [ProfileController::class, 'update'])
-            ->name('account.profile.update');
+            Route::get('edit', 'edit')
+                ->name('account.profile.edit');
 
-        Route::get('password', [ChangePasswordController::class, 'index'])
-            ->name('account.password.index');
+            Route::put('edit', 'update')
+                ->name('account.profile.update');
+        });
 
-        Route::post('password', [ChangePasswordController::class, 'update'])
-            ->name('account.password.update');
+        Route::controller(ChangePasswordController::class)->group(function () {
+            Route::get('password', 'index')
+                ->name('account.password.index');
+
+            Route::post('password', 'update')
+                ->name('account.password.update');
+        });
+
     });
 
     Route::patch('notifications', MarkNotificationAsReadController::class)
@@ -167,12 +177,15 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      *  Give Experience / Badge
      *  ------------------------------------------
      */
-    Route::get('rewards', [AdminRewardController::class, 'index'])
-        ->name('rewards.index');
+    Route::controller(AdminRewardController::class)->group(function () {
+        Route::get('rewards', 'index')
+            ->name('rewards.index');
 
-    Route::post('rewards/experience', [AdminRewardController::class, 'giveExperience'])
-        ->name('rewards.experience');
+        Route::post('rewards/experience', 'giveExperience')
+            ->name('rewards.experience');
 
-    Route::post('rewards/badge', [AdminRewardController::class, 'giveBadge'])
-        ->name('rewards.badge');
+        Route::post('rewards/badge', 'giveBadge')
+            ->name('rewards.badge');
+    });
+
 });
