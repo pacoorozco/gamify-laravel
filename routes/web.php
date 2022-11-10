@@ -113,7 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
  *  ------------------------------------------
  */
 Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminDashboardController::class, 'index'])
+    Route::get('/', AdminDashboardController::class)
         ->name('home');
 
     /* ------------------------------------------

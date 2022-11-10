@@ -33,7 +33,7 @@ use Illuminate\View\View;
 
 class AdminDashboardController extends AdminController
 {
-    public function index(): View
+    public function __invoke(): View
     {
         return view('admin.dashboard.index', [
             'badges_count' => Badge::active()->count(),
