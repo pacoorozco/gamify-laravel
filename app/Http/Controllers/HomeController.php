@@ -34,7 +34,7 @@ class HomeController extends Controller
 {
     const MAX_QUESTIONS_SHOWN = 5;
 
-    public function index(): View
+    public function __invoke(): View
     {
         /** @var User $user */
         $user = Auth::user();
