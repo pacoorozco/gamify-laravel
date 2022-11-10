@@ -61,10 +61,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', HomeController::class)
         ->name('home');
 
-    Route::get('dashboard', function () {
-        return to_route('home');
-    })->name('dashboard');
-
     Route::get('users/{username}', ShowUserProfileController::class)
         ->name('profiles.show');
 

@@ -1,10 +1,10 @@
 <ul class="nav navbar-nav">
 
     @auth
-    <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-        <a href="{{ route('dashboard') }}">
+    <li class="{{ request()->is('/') ? 'active' : '' }}">
+        <a href="{{ route('home') }}">
             {{ __('site.home') }}
-            @if( request()->is('dashboard'))
+            @if( request()->is('/'))
                 <span class="sr-only">(current)</span>
             @endif
         </a>
