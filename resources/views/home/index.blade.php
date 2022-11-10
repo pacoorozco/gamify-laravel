@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-6">
             <!-- Carousel -->
-        @include('dashboard._carousel')
+        @include('home._carousel')
         <!-- ./carousel -->
 
             <!-- Welcome -->
@@ -56,7 +56,7 @@
                     <h3 class="box-title"><i class="fa fa-gamepad"></i> Play with us</h3>
                 </div>
                 <div class="box-body">
-                    @include('dashboard._questions')
+                    @include('home._questions')
                 </div>
             </div>
             <!-- ./pending questions -->
@@ -72,7 +72,7 @@
                     <h3 class="box-title"><i class="fa fa-trophy"></i> Ranking</h3>
                 </div>
                 <div class="box-body">
-                    @include('dashboard._ranking')
+                    @include('home._ranking')
                 </div>
             </div>
             <!-- ./ranking -->

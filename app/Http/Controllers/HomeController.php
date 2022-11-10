@@ -41,7 +41,7 @@ class HomeController extends Controller
 
         $questions = $user->pendingQuestions(self::MAX_QUESTIONS_SHOWN);
 
-        return view('dashboard.index')
+        return view('home.index')
             ->with('questions', $questions)
             ->with('usersInRanking', Game::getTopExperiencedPlayers());
     }
