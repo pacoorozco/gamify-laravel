@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this
-            ->configureRateLimiting()
+//            ->configureRateLimiting()
             ->registerBindings()
             ->mapRoutes();
     }

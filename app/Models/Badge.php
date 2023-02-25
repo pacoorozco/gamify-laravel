@@ -26,6 +26,8 @@
 namespace Gamify\Models;
 
 use BenSampo\Enum\Traits\QueriesFlaggedEnums;
+use Coderflex\LaravelPresenter\Concerns\CanPresent;
+use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
@@ -50,14 +52,15 @@ use QCod\ImageUp\HasImageUploads;
  * @property bool $active Is this badge enabled?
  * @property BadgeActuators $actuators Events that triggers this badge completion.
  */
-class Badge extends Model
+class Badge extends Model implements CanPresent
 {
     use SoftDeletes;
-    use HasImageUploads;
+//    use HasImageUploads;
     use HasFactory;
-    use Presentable;
+//    use Presentable;
     use QueriesFlaggedEnums;
     use Taggable;
+    use UsesPresenters;
 
     const DEFAULT_IMAGE = '/images/missing_badge.png';
 
@@ -83,7 +86,9 @@ class Badge extends Model
         ],
     ];
 
-    protected string $presenter = BadgePresenter::class;
+    protected array $presenters = [
+        'default' => BadgePresenter::class,
+    ];
 
     protected $fillable = [
         'name',

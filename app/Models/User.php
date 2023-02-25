@@ -25,6 +25,8 @@
 
 namespace Gamify\Models;
 
+use Coderflex\LaravelPresenter\Concerns\CanPresent;
+use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Gamify\Enums\Roles;
 use Gamify\Presenters\UserPresenter;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -39,7 +41,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
-use Laracodes\Presenter\Traits\Presentable;
 
 /**
  * User model, represents a Gamify user.
@@ -55,13 +56,15 @@ use Laracodes\Presenter\Traits\Presentable;
  * @property-read string $level The current level of the user.
  * @property-read Collection $unreadNotifications The user's unread notifications.
  */
-final class User extends Authenticatable implements MustVerifyEmail
+final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 {
     use HasFactory;
-    use Presentable;
     use Notifiable;
+    use UsesPresenters;
 
-    protected string $presenter = UserPresenter::class;
+    protected array $presenters = [
+        'default' => UserPresenter::class,
+    ];
 
     protected $fillable = [
         'name',

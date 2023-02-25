@@ -28,7 +28,7 @@ namespace Gamify\Presenters;
 use Gamify\Models\Question;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Laracodes\Presenter\Presenter;
+use Coderflex\LaravelPresenter\Presenter;
 
 class QuestionPresenter extends Presenter
 {
@@ -155,7 +155,7 @@ class QuestionPresenter extends Presenter
             ? ''
             : $this->model->publication_date->format('Y-m-d H:i');
     }
-
+    
     public function creator(): string
     {
         return $this->model->creator->username ?? 'N/A';

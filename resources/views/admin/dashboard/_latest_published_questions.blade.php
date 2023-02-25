@@ -28,7 +28,7 @@
                     <td>
                         {{ $question->present()->visibilityBadge() }}
                     </td>
-                    <td>{{ $question->present()->publication_date }}</td>
+                    <td>{{ $question->present()->publicationDate }}</td>
                     <td>
                         <a href="{{ route('admin.questions.edit', $question) }}">
                             <button type="button" class="btn btn-xs btn-primary" title="{{ __('general.edit') }}">

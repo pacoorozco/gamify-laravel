@@ -25,6 +25,8 @@
 
 namespace Gamify\Models;
 
+use Coderflex\LaravelPresenter\Concerns\CanPresent;
+use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Gamify\Presenters\LevelPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -32,8 +34,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
-use Laracodes\Presenter\Traits\Presentable;
-use QCod\ImageUp\HasImageUploads;
+//use QCod\ImageUp\HasImageUploads;
 
 /**
  * Model that represents a level.
@@ -44,12 +45,12 @@ use QCod\ImageUp\HasImageUploads;
  * @property string $image URL of the level's image
  * @property bool $active Is this level enabled?
  */
-class Level extends Model
+class Level extends Model implements CanPresent
 {
     use SoftDeletes;
-    use HasImageUploads;
+//    use HasImageUploads;
     use HasFactory;
-    use Presentable;
+use UsesPresenters;
 
     const DEFAULT_IMAGE = '/images/missing_level.png';
 
@@ -75,7 +76,9 @@ class Level extends Model
         ],
     ];
 
-    protected string $presenter = LevelPresenter::class;
+    protected array $presenters = [
+        'default' => LevelPresenter::class,
+    ];
 
     protected $fillable = [
         'name',

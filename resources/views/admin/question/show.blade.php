@@ -44,7 +44,7 @@
                     {{ $question->present()->visibilityBadge }}
                     {{ $question->present()->statusBadge }}
 
-                    <a href="{{ $question->present()->public_url }}"
+                    <a href="{{ $question->present()->publicUrl }}"
                        class="btn btn-link pull-right" target="_blank">
                         {{ __('general.view') }} <i class="fa fa-external-link"></i>
                     </a>

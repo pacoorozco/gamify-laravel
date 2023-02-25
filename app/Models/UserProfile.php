@@ -47,7 +47,7 @@ use QCod\ImageUp\HasImageUploads;
  */
 class UserProfile extends Model
 {
-    use HasImageUploads;
+//    use HasImageUploads;
     use HasFactory;
 
     const DEFAULT_IMAGE = '/images/missing_profile.png';

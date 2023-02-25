@@ -288,7 +288,7 @@ class QuestionTest extends TestCase
                 'publication_date' => '2020-01-02 03:04:05',
             ]);
 
-        $this->assertEquals('2020-01-02 03:04', $question->present()->publication_date);
+        $this->assertEquals('2020-01-02 03:04', $question->present()->publicationDate);
     }
 
     /** @test */
@@ -300,7 +300,7 @@ class QuestionTest extends TestCase
                 'publication_date' => null,
             ]);
 
-        $this->assertEquals('', $question->present()->publication_date);
+        $this->assertEquals('', $question->present()->publicationDate);
     }
 
     /** @test */
@@ -312,6 +312,6 @@ class QuestionTest extends TestCase
                 'name' => 'test question number 1',
             ]);
 
-        $this->assertEquals('http://localhost/questions/test-question-number-1', $question->present()->public_url);
+        $this->assertEquals('http://localhost/questions/test-question-number-1', $question->present()->publicUrl);
     }
 }

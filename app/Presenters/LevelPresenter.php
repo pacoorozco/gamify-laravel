@@ -28,7 +28,7 @@ namespace Gamify\Presenters;
 use Gamify\Models\Level;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Laracodes\Presenter\Presenter;
+use Coderflex\LaravelPresenter\Presenter;
 
 class LevelPresenter extends Presenter
 {
