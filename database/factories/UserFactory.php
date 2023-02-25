@@ -45,12 +45,17 @@ class UserFactory extends Factory
         });
     }
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'username' => $this->faker->userName,
-            'email' => $this->faker->unique()->safeEmail,
+            'name' => fake()->name,
+            'username' => fake()->userName,
+            'email' => fake()->unique()->safeEmail,
             'password' => bcrypt('secret'),
             'remember_token' => Str::random(10),
             'email_verified_at' => now(),

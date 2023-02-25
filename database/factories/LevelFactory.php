@@ -32,13 +32,18 @@ class LevelFactory extends Factory
 {
     protected $model = Level::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
-        $color = $this->faker->unique()->safeColorName;
+        $color = fake()->unique()->safeColorName;
 
         return [
             'name' => 'Level '.$color,
-            'required_points' => $this->faker->unique()->randomNumber() + 5,
+            'required_points' => fake()->unique()->randomNumber() + 5,
             'active' => true,
         ];
     }

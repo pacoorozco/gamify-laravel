@@ -24,34 +24,33 @@
     "issues": "https://github.com/pacoorozco/gamify-laravel/issues"
   },
   "require": {
-    "php": "^8.0.2",
+    "php": "^8.1.0",
     "bensampo/laravel-enum": "^6.0.0",
-    "cviebrock/eloquent-sluggable": "^9.0.0",
-    "cviebrock/eloquent-taggable": "^9.0.0",
+    "cviebrock/eloquent-sluggable": "^10.0.0",
+    "cviebrock/eloquent-taggable": "^10.0.0",
     "doctrine/dbal": "^3.4.4",
-    "fruitcake/laravel-cors": "^3.0.0",
-    "fakerphp/faker": "^1.20.0",
+    "fakerphp/faker": "^1.21.0",
     "guilhermegonzaga/presenter": "^1.0.6",
-    "laravel/framework": "^9.21.0",
-    "laravel/socialite": "^5.5.5",
-    "laravelcollective/html": "^6.3.0",
-    "predis/predis": "^2.0.1",
+    "laravel/framework": "^10.1.1",
+    "laravel/socialite": "^5.6.1",
+    "laravelcollective/html": "^6.4.0",
+    "predis/predis": "^2.1.1",
     "qcod/laravel-imageup": "^1.2.2",
     "richan-fongdasen/eloquent-blameable": "^1.8.0",
     "socialiteproviders/okta": "^4.2.1",
-    "yajra/laravel-datatables-oracle": "^10.1.2"
+    "yajra/laravel-datatables-oracle": "^10.3.1"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^3.7",
-    "brianium/paratest": "^6.4.4",
-    "laravel/breeze": "^1.12.0",
-    "laravel/pint": "^1.1.2",
-    "laravel/sail": "^1.16",
-    "mockery/mockery": "^1.5.0",
-    "nunomaduro/collision": "^6.3.0",
-    "nunomaduro/larastan": "^2.2.0",
-    "phpunit/phpunit": "^9.5.24",
-    "spatie/laravel-ignition": "^1.4.1"
+    "barryvdh/laravel-debugbar": "^3.8.1",
+    "brianium/paratest": "^7.0.6",
+    "laravel/breeze": "^1.19.2",
+    "laravel/pint": "^1.6.0",
+    "laravel/sail": "^1.21.0",
+    "mockery/mockery": "^1.5.1",
+    "nunomaduro/collision": "^7.0.5",
+    "nunomaduro/larastan": "^2.4.1",
+    "phpunit/phpunit": "^10.0",
+    "spatie/laravel-ignition": "^2.0"
   },
   "autoload": {
     "psr-4": {
@@ -70,7 +69,7 @@
       "dont-discover": []
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "scripts": {
     "post-autoload-dump": [

@@ -39,7 +39,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Laracodes\Presenter\Traits\Presentable;
-use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
  * Class Question.
@@ -63,7 +62,6 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 class Question extends Model
 {
     use SoftDeletes;
-    use BlameableTrait;
     use Sluggable;
     use Taggable;
     use Presentable;

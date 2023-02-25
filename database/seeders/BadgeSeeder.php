@@ -32,10 +32,8 @@ class BadgeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         Badge::factory()
             ->count(5)

@@ -44,19 +44,14 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @return void
      */
     public function boot(): void
     {
-        $this->registerPolicies();
         $this->registerGamifyAbilities();
     }
 
     /**
      * Register custom Gamify authorization abilities.
-     *
-     * @return void
      */
     protected function registerGamifyAbilities(): void
     {

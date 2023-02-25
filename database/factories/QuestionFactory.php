@@ -43,22 +43,27 @@ class QuestionFactory extends Factory
                     ->for($question)
                     ->count(2)
                     ->state(new Sequence(
-                        ['score' => $this->faker->numberBetween(1, 5)],
-                        ['score' => $this->faker->numberBetween(-5, -1)],
+                        ['score' => fake()->numberBetween(1, 5)],
+                        ['score' => fake()->numberBetween(-5, -1)],
                     ))
                     ->create();
             }
         });
     }
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->sentence,
-            'question' => $this->faker->paragraph,
-            'solution' => $this->faker->paragraph,
+            'name' => fake()->sentence,
+            'question' => fake()->paragraph,
+            'solution' => fake()->paragraph,
             'type' => Question::SINGLE_RESPONSE_TYPE,
-            'hidden' => $this->faker->boolean,
+            'hidden' => fake()->boolean,
             'status' => Question::DRAFT_STATUS,
         ];
     }
