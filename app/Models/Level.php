@@ -34,7 +34,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
-//use QCod\ImageUp\HasImageUploads;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * Model that represents a level.
@@ -45,36 +46,32 @@ use Illuminate\Support\Facades\Cache;
  * @property string $image URL of the level's image
  * @property bool $active Is this level enabled?
  */
-class Level extends Model implements CanPresent
+class Level extends Model implements HasMedia
 {
     use SoftDeletes;
-//    use HasImageUploads;
+    use InteractsWithMedia;
     use HasFactory;
 use UsesPresenters;
 
-    const DEFAULT_IMAGE = '/images/missing_level.png';
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('image')
+            ->singleFile()
+            ->useFallbackUrl('/images/missing_level.png')
+            ->useFallbackPath(public_path('/images/missing_level.png'))
+            ->registerMediaConversions(function () {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->width(150)
+                    ->height(150);
 
-    protected static array $imageFields = [
-        'image_url' => [
-            // width to resize image after upload
-            'width' => 150,
-
-            // height to resize image after upload
-            'height' => 150,
-
-            // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
-            'crop' => true,
-
-            // placeholder image if image field is empty
-            'placeholder' => self::DEFAULT_IMAGE,
-
-            // validation rules when uploading image
-            'rules' => 'image|max:2000',
-
-            // if request file is don't have same name, default will be the field name
-            'file_input' => 'image',
-        ],
-    ];
+                $this
+                    ->addMediaConversion('detail')
+                    ->width(300)
+                    ->height(300);
+            });
+    }
 
     protected array $presenters = [
         'default' => LevelPresenter::class,
@@ -89,10 +86,6 @@ use UsesPresenters;
     protected $casts = [
         'active' => 'boolean',
     ];
-
-    protected string $imagesUploadPath = 'levels';
-
-    protected bool $autoUploadImages = true;
 
     public static function findNextByExperience(int $experience): Level
     {
@@ -143,7 +136,7 @@ use UsesPresenters;
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn ($value) => $this->getFirstMediaUrl('image', 'detail')
         );
     }
 }

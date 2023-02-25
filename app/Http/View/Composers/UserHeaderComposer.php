@@ -34,9 +34,7 @@ class UserHeaderComposer
     public function compose(View $view): void
     {
         $user = User::with([
-            'profile' => function ($query) {
-                $query->select('avatar', 'user_id');
-            },
+            'profile',
         ])->find(
             Auth::id(),
             ['id', 'name', 'username', 'experience', 'created_at']

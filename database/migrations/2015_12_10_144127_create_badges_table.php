@@ -35,7 +35,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('image_url')->nullable();
             $table->unsignedInteger('required_repetitions');
             $table->boolean('active')->default(true);
             $table->unsignedTinyInteger('actuators')->default(0);

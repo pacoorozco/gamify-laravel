@@ -222,8 +222,6 @@ class LevelTest extends TestCase
         /** @var Level $level */
         $level = Level::factory()->create();
 
-        $this->assertNull($level->getOriginal('image_url'));
-
-        $this->assertEquals(Level::DEFAULT_IMAGE, $level->image);
+        $this->assertEquals('/images/missing_level.png', $level->image);
     }
 }

@@ -40,7 +40,12 @@ class AdminLevelController extends AdminController
 
     public function store(LevelCreateRequest $request): RedirectResponse
     {
-        Level::create($request->validated());
+        $level = Level::create($request->validated());
+
+        if ($request->has('image')) {
+            $level->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
 
         return redirect()->route('admin.levels.index')
             ->with('success', __('admin/level/messages.create.success'));
@@ -64,6 +69,11 @@ class AdminLevelController extends AdminController
     public function update(LevelUpdateRequest $request, Level $level): RedirectResponse
     {
         $level->update($request->validated());
+
+        if ($request->has('image')) {
+            $level->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
 
         return redirect()->route('admin.levels.index')
             ->with('success', __('admin/level/messages.update.success'));

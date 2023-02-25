@@ -46,6 +46,9 @@ class LevelCreateRequest extends Request
                 'required',
                 'boolean',
             ],
+            'image' => [
+                'image',
+            ],
         ];
     }
 }

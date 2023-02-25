@@ -38,7 +38,7 @@ class LevelPresenter extends Presenter
     public function imageThumbnail(): HtmlString
     {
         $imageTag = sprintf('<img class="img-thumbnail" src="%s" alt="%s" title="%s">',
-            $this->model->imageUrl('image_url'),
+            $this->model->getFirstMediaUrl('image', 'thumb'),
             $this->model->name,
             $this->model->name);
 
@@ -48,7 +48,12 @@ class LevelPresenter extends Presenter
 
     public function imageTag(): HtmlString
     {
-        return Str::of($this->model->imageTag('image_url'))
+        $imageTag = sprintf('<img src="%s" alt="%s" title="%s">',
+            $this->model->getFirstMediaUrl('image', 'detail'),
+            $this->model->name,
+            $this->model->name);
+
+        return Str::of($imageTag)
             ->toHtmlString();
     }
 

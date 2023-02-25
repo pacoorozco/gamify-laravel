@@ -37,9 +37,7 @@ class BadgeTest extends TestCase
         /** @var Badge $badge */
         $badge = Badge::factory()->create();
 
-        $this->assertNull($badge->getOriginal('image_url'));
-
-        $this->assertEquals(Badge::DEFAULT_IMAGE, $badge->image);
+        $this->assertEquals('/images/missing_badge.png', $badge->image);
     }
 
     /** @test */

@@ -231,14 +231,12 @@ class ProfileControllerTest extends TestCase
             ->withoutMiddleware(RequirePassword::class)
             ->put(route('account.profile.update'), [
                 'name' => $this->user->name,
-                'image' => $file,
+                'avatar' => $file,
             ])
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
-        Storage::disk('public')->assertExists('avatars/'.$file->hashName());
-
-        $this->assertEquals(Storage::url('avatars/'.$file->hashName()), $this->user->profile->avatarUrl);
+        $this->assertStringEndsWith('avatar-thumb.jpg', $this->user->profile->avatarUrl);
     }
 
     /** @test */

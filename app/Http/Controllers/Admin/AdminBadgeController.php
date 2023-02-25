@@ -50,6 +50,11 @@ class AdminBadgeController extends AdminController
 
         $badge->tag($request->tags());
 
+        if ($request->has('image')) {
+            $badge->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
+
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.create.success'));
     }
@@ -82,6 +87,11 @@ class AdminBadgeController extends AdminController
         ]);
 
         $badge->retag($request->tags());
+
+        if ($request->has('image')) {
+            $badge->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
 
         return redirect()->route('admin.badges.index')
             ->with('success', __('admin/badge/messages.update.success'));

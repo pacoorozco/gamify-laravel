@@ -27,6 +27,7 @@ namespace Gamify\Actions;
 
 use Gamify\Events\UserProfileUpdated;
 use Gamify\Models\User;
+use Illuminate\Support\Arr;
 
 final class UpdateUserProfileAction
 {
@@ -38,6 +39,12 @@ final class UpdateUserProfileAction
 
         $user->profile
             ->update($attributes);
+
+        if (Arr::has($attributes, 'avatar')) {
+            $user->profile
+                ->addMedia($attributes['avatar'])
+                ->toMediaCollection('avatar');
+        }
 
         UserProfileUpdated::dispatchIf(
             $user->wasChanged('name') || $user->profile->wasChanged(),

@@ -30,7 +30,6 @@ use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Gamify\Models\UserBadgeProgress;
-use Gamify\Models\UserProfile;
 use Gamify\Models\UserResponse;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\Feature\TestCase;
@@ -91,7 +90,7 @@ class UserTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertEquals(UserProfile::DEFAULT_IMAGE, $user->profile->avatarUrl);
+        $this->assertEquals('/images/missing_profile.png', $user->profile->avatarUrl);
     }
 
     /** @test */
