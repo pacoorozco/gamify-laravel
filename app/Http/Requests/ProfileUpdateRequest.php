@@ -58,6 +58,9 @@ class ProfileUpdateRequest extends Request
                 'nullable',
                 'url',
             ],
+            'avatar' => [
+                'image',
+            ],
         ];
     }
 }

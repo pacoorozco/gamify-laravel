@@ -37,7 +37,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laracodes\Presenter\Traits\Presentable;
-use QCod\ImageUp\HasImageUploads;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * Model that represents a badge.
@@ -50,38 +51,34 @@ use QCod\ImageUp\HasImageUploads;
  * @property bool $active Is this badge enabled?
  * @property BadgeActuators $actuators Events that triggers this badge completion.
  */
-class Badge extends Model
+class Badge extends Model implements HasMedia
 {
     use SoftDeletes;
-    use HasImageUploads;
+    use InteractsWithMedia;
     use HasFactory;
     use Presentable;
     use QueriesFlaggedEnums;
     use Taggable;
 
-    const DEFAULT_IMAGE = '/images/missing_badge.png';
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('image')
+            ->singleFile()
+            ->useFallbackUrl('/images/missing_badge.png')
+            ->useFallbackPath(public_path('/images/missing_badge.png'))
+            ->registerMediaConversions(function () {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->width(150)
+                    ->height(150);
 
-    protected static array $imageFields = [
-        'image_url' => [
-            // width to resize image after upload
-            'width' => 150,
-
-            // height to resize image after upload
-            'height' => 150,
-
-            // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
-            'crop' => true,
-
-            // placeholder image if image field is empty
-            'placeholder' => self::DEFAULT_IMAGE,
-
-            // validation rules when uploading image
-            'rules' => 'image|max:2000',
-
-            // if request file is don't have same name, default will be the field name
-            'file_input' => 'image',
-        ],
-    ];
+                $this
+                    ->addMediaConversion('detail')
+                    ->width(300)
+                    ->height(300);
+            });
+    }
 
     protected string $presenter = BadgePresenter::class;
 
@@ -97,10 +94,6 @@ class Badge extends Model
         'active' => 'boolean',
         'actuators' => BadgeActuators::class,
     ];
-
-    protected string $imagesUploadPath = 'badges';
-
-    protected bool $autoUploadImages = true;
 
     public static function triggeredByQuestionsWithTagsIn(array $tags): Collection
     {
@@ -136,7 +129,7 @@ class Badge extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn ($value) => $this->getFirstMediaUrl('image', 'detail')
         );
     }
 }

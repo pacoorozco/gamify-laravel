@@ -114,7 +114,7 @@
                         <span class="fileinput-exists">
                             <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
                         </span>
-                        <input name="image" type="file">
+                        <input name="avatar" type="file">
                     </span>
                                     <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
                                         <i class="fa fa-times"></i> {{ __('button.delete_image') }}

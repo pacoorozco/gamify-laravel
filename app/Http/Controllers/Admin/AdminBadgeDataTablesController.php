@@ -39,7 +39,6 @@ class AdminBadgeDataTablesController extends AdminController
             'name',
             'required_repetitions',
             'active',
-            'image_url',
             'actuators',
         ])->orderBy('name', 'ASC');
 
@@ -68,7 +67,7 @@ class AdminBadgeDataTablesController extends AdminController
                     ->render();
             })
             ->rawColumns(['name', 'actions', 'image', 'tags'])
-            ->removeColumn('id', 'image_url')
+            ->removeColumn('id')
             ->toJson();
     }
 }

@@ -38,7 +38,6 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->text('bio')->nullable();
             $table->string('url')->nullable();
-            $table->string('avatar')->nullable();
             $table->string('phone')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->enum('gender', ['male', 'female', 'unspecified'])->default('unspecified');

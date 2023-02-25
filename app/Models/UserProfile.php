@@ -30,7 +30,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
-use QCod\ImageUp\HasImageUploads;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * Role model, represents a role.
@@ -45,12 +46,25 @@ use QCod\ImageUp\HasImageUploads;
  * @property string $github GitHub username
  * @property User $user User wo belongs to.
  */
-class UserProfile extends Model
+class UserProfile extends Model implements HasMedia
 {
-    use HasImageUploads;
+    use InteractsWithMedia;
     use HasFactory;
 
-    const DEFAULT_IMAGE = '/images/missing_profile.png';
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('avatar')
+            ->singleFile()
+            ->useFallbackUrl('/images/missing_profile.png')
+            ->useFallbackPath(public_path('/images/missing_profile.png'))
+            ->registerMediaConversions(function () {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->width(150)
+                    ->height(150);
+            });
+    }
 
     protected $fillable = [
         'bio',
@@ -65,32 +79,6 @@ class UserProfile extends Model
         'date_of_birth' => 'date',
     ];
 
-    protected string $imagesUploadPath = 'avatars';
-
-    protected bool $autoUploadImages = true;
-
-    protected static array $imageFields = [
-        'avatar' => [
-            // width to resize image after upload
-            'width' => 150,
-
-            // height to resize image after upload
-            'height' => 150,
-
-            // set true to crop image with the given width/height and you can also pass arr [x,y] coordinate for crop.
-            'crop' => true,
-
-            // placeholder image if image field is empty
-            'placeholder' => self::DEFAULT_IMAGE,
-
-            // validation rules when uploading image
-            'rules' => 'image|max:2000',
-
-            // if request file is don't have same name, default will be the field name
-            'file_input' => 'image',
-        ],
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -99,7 +87,7 @@ class UserProfile extends Model
     protected function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->imageUrl()
+            get: fn ($value) => $this->getFirstMediaUrl('avatar', 'thumb')
         );
     }
 }

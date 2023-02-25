@@ -50,6 +50,9 @@ class LevelUpdateRequest extends Request
                 'required',
                 'boolean',
             ],
+            'image' => [
+                'image',
+            ],
         ];
     }
 }

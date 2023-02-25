@@ -70,7 +70,7 @@ class BadgePresenter extends Presenter
     public function imageThumbnail(): HtmlString
     {
         $imageTag = sprintf('<img class="img-thumbnail" src="%s" alt="%s" title="%s">',
-            $this->model->imageUrl('image_url'),
+            $this->model->getFirstMediaUrl('image', 'thumb'),
             $this->model->description,
             $this->model->name);
 
@@ -80,7 +80,12 @@ class BadgePresenter extends Presenter
 
     public function imageTag(): HtmlString
     {
-        return Str::of($this->model->imageTag('image_url'))
+        $imageTag = sprintf('<imgsrc="%s" alt="%s" title="%s">',
+            $this->model->getFirstMediaUrl('image', 'detail'),
+            $this->model->description,
+            $this->model->name);
+
+        return Str::of($imageTag)
             ->toHtmlString();
     }
 

@@ -36,7 +36,6 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedInteger('required_points')->unique();
             $table->boolean('active')->default(true);
-            $table->string('image_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
