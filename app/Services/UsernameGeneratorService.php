@@ -27,21 +27,19 @@ namespace Gamify\Services;
 
 use Gamify\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use InvalidArgumentException;
 
 class UsernameGeneratorService
 {
     /**
      * Create the username from the received email.
      *
-     * @param  string  $email
-     * @return string
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function fromEmail(string $email): string
     {
         if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'The value provided does not have a valid email format.'
             );
         }

@@ -25,6 +25,7 @@
 
 namespace Gamify\Services;
 
+use Exception;
 use Gamify\Actions\CreateUserAction;
 use Gamify\Enums\Roles;
 use Gamify\Models\LinkedSocialAccount;
@@ -37,10 +38,6 @@ class SocialAccountService
     /**
      * Returns the User object authenticated by a social login.
      * If the user doesn't exist, it will be created.
-     *
-     * @param  \Laravel\Socialite\Contracts\User  $externalUser
-     * @param  string  $provider
-     * @return \Gamify\Models\User
      */
     public function findOrCreate(ExternalUser $externalUser, string $provider): User
     {
@@ -56,10 +53,20 @@ class SocialAccountService
         return $account->user;
     }
 
+    /**
+     * Creates a User with the data provided by the authentication provider
+     *
+     * @throws Exception
+     */
     private function createSocialAccount(
         ExternalUser $providerUser,
         string $provider
     ): User {
+
+        if(is_null($providerUser->getEmail())) {
+            throw new Exception('The external user has not a valid email address');
+        }
+
         /** @var User $user */
         $user = User::query()
             ->where('email', $providerUser->getEmail())
@@ -74,7 +81,7 @@ class SocialAccountService
                 return $createUserAction->execute(
                     $username,
                     $providerUser->getEmail(),
-                    $providerUser->getName(),
+                    $providerUser->getName() ?? 'User ' . $username,
                     password: Str::random(),
                     role: Roles::Player,
                     skipEmailVerification: true
