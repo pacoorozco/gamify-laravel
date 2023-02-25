@@ -80,7 +80,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $this->assertNotNull($user->progressToCompleteTheBadge($badge));
     }
 
-    public function provideTestCasesThatShouldTriggerABadge(): \Generator
+    public static function provideTestCasesThatShouldTriggerABadge(): \Generator
     {
         yield 'OnQuestionAnswered & no tags' => [
             'badgeAttributes' => [
@@ -182,7 +182,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $this->assertNull($user->progressToCompleteTheBadge($badge));
     }
 
-    public function provideTestCasesThatShouldNotTriggerABadge(): \Generator
+    public static function provideTestCasesThatShouldNotTriggerABadge(): \Generator
     {
         yield 'different actuator' => [
             'badgeAttributes' => [

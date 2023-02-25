@@ -61,7 +61,7 @@ class RegistrationTest extends TestCase
         $this->assertGuest();
     }
 
-    public function provideWrongDataForUserRegistration(): Generator
+    public static function provideWrongDataForUserRegistration(): Generator
     {
         yield 'username is empty' => [
             'data' => [

@@ -235,7 +235,7 @@ class AdminQuestionControllerTest extends TestCase
         $this->assertCount(2, $question->choices);
     }
 
-    public function providesTestCasesForEdition(): \Generator
+    public static function providesTestCasesForEdition(): \Generator
     {
         yield 'tags are changed' => [
             'want' => [

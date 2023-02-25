@@ -195,7 +195,7 @@ class GameTest extends TestCase
         });
     }
 
-    public function provideRankingTestCases(): Generator
+    public static function provideRankingTestCases(): Generator
     {
         yield 'top players is zero' => [
             'numberOfPlayers' => 0,

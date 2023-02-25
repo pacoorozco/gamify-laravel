@@ -48,7 +48,7 @@ class UsernameGeneratorServiceTest extends TestCase
         $this->assertEquals($want, $generator->fromText($input));
     }
 
-    public function providesTestCasesForUsernameCreationFromText(): \Generator
+    public static function providesTestCasesForUsernameCreationFromText(): \Generator
     {
         yield 'return the same username if not duplicated' => [
             'input' => 'bar',
@@ -83,7 +83,7 @@ class UsernameGeneratorServiceTest extends TestCase
         $this->assertEquals($want, $generator->fromEmail($input));
     }
 
-    public function providesTestCasesForUsernameCreationFromEmail(): \Generator
+    public static function providesTestCasesForUsernameCreationFromEmail(): \Generator
     {
         yield 'return the same username if not duplicated' => [
             'input' => 'bar@domain.local',

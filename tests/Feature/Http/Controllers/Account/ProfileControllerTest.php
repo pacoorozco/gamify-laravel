@@ -174,7 +174,7 @@ class ProfileControllerTest extends TestCase
         $this->assertModelExists($userProfile);
     }
 
-    public function provideWrongDataForUserProfileModification(): Generator
+    public static function provideWrongDataForUserProfileModification(): Generator
     {
         yield 'empty name' => [
             'data' => [

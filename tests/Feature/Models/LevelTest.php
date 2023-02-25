@@ -86,7 +86,7 @@ class LevelTest extends TestCase
         $this->assertEquals($want, $level->name);
     }
 
-    public function provideFindLevelTestCases(): Generator
+    public static function provideFindLevelTestCases(): Generator
     {
         yield 'minimum level when experience 0' => [
             'levels' => [
@@ -163,7 +163,7 @@ class LevelTest extends TestCase
         $this->assertEquals($want, $level->name);
     }
 
-    public function provideFindNextLevelTestCases(): Generator
+    public  static function provideFindNextLevelTestCases(): Generator
     {
         yield 'middle level when experience 0' => [
             'levels' => [

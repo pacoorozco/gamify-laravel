@@ -64,7 +64,7 @@ class UserTest extends TestCase
         $this->assertCount($expected, $user->pendingQuestions($per_page_limit));
     }
 
-    public function providesPendingVisibleQuestionsPaginationTestCases(): \Generator
+    public static function providesPendingVisibleQuestionsPaginationTestCases(): \Generator
     {
         yield 'less questions than per-page limit' => [
             'questions_count' => 3,
@@ -172,7 +172,7 @@ class UserTest extends TestCase
         $this->assertEquals($want, $user->pointsToNextLevel());
     }
 
-    public function providesPointsToNextLevelTestCases(): \Generator
+    public static function providesPointsToNextLevelTestCases(): \Generator
     {
         yield 'next level is above current experience' => [
             'experience' => 10,
@@ -225,7 +225,7 @@ class UserTest extends TestCase
         $this->assertEquals($want, $user->nextLevelCompletion());
     }
 
-    public function providesNextLevelCompletionTestCases(): \Generator
+    public static function providesNextLevelCompletionTestCases(): \Generator
     {
         yield 'next level is above current experience' => [
             'experience' => 10,
