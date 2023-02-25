@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
  * Class Question.
@@ -67,6 +68,7 @@ class Question extends Model implements CanPresent
     use Taggable;
     use HasFactory;
     use UsesPresenters;
+    use BlameableTrait;
 
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
 
