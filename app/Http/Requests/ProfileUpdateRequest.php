@@ -59,7 +59,7 @@ class ProfileUpdateRequest extends Request
                 'url',
             ],
             'avatar' => [
-                'image'
+                'image',
             ],
         ];
     }

@@ -236,7 +236,7 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
-        $this->assertStringEndsWith($file->name, $this->user->profile->avatarUrl);
+        $this->assertStringEndsWith('avatar-thumb.jpg', $this->user->profile->avatarUrl);
     }
 
     /** @test */
