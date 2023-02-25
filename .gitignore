@@ -4,9 +4,10 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 
-# Laravel 5 & Lumen specific
+# Laravel specific
 /vendor
 /public/storage
+/public/media
 /public/hot
 /storage/*.key
 /storage/debugbar
