@@ -4,26 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f53280cb5c23763e30dbd30df0b8bf03",
+    "content-hash": "457b216b15e6412c4e3bfd4304e4672b",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
-            "version": "v6.3.1",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "b7a69853b1c8f2dcc8c03270a7d5229cb575f594"
+                "reference": "5a6d643a20a123b899893af779d0431f8f9e8dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/b7a69853b1c8f2dcc8c03270a7d5229cb575f594",
-                "reference": "b7a69853b1c8f2dcc8c03270a7d5229cb575f594",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/5a6d643a20a123b899893af779d0431f8f9e8dd9",
+                "reference": "5a6d643a20a123b899893af779d0431f8f9e8dd9",
                 "shasum": ""
             },
             "require": {
                 "composer/class-map-generator": "^1",
-                "illuminate/contracts": "^9 || ^10",
-                "illuminate/support": "^9 || ^10",
+                "illuminate/contracts": "^9",
+                "illuminate/support": "^9",
                 "laminas/laminas-code": "^3.4 || ^4",
                 "nikic/php-parser": "^4.13",
                 "php": "^8"
@@ -33,7 +33,7 @@
                 "ergebnis/composer-normalize": "^2.28.3",
                 "mockery/mockery": "^1.5",
                 "nunomaduro/larastan": "^2.1.12",
-                "orchestra/testbench": "^7.6.1 || ^8",
+                "orchestra/testbench": "^7.6.1",
                 "phpstan/phpstan": "^1.8.2",
                 "phpstan/phpstan-mockery": "^1.1",
                 "phpstan/phpstan-phpunit": "^1.1.1",
@@ -42,6 +42,9 @@
             },
             "type": "library",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
                 "laravel": {
                     "providers": [
                         "BenSampo\\Enum\\EnumServiceProvider"
@@ -80,7 +83,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BenSampo/laravel-enum/issues",
-                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.3.1"
+                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.0.0"
             },
             "funding": [
                 {
@@ -88,7 +91,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-13T14:09:29+00:00"
+            "time": "2022-08-12T13:55:55+00:00"
         },
         {
             "name": "brick/math",
