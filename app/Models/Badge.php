@@ -54,12 +54,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property BadgeActuators $actuators Events that triggers this badge completion.
  */
 
-class Badge extends Model implements HasMedia
+class Badge extends Model implements HasMedia, CanPresent
 {
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
-//    use Presentable;
     use QueriesFlaggedEnums;
     use Taggable;
     use UsesPresenters;

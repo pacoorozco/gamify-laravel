@@ -46,12 +46,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string $image URL of the level's image
  * @property bool $active Is this level enabled?
  */
-class Level extends Model implements HasMedia
+class Level extends Model implements HasMedia, CanPresent
 {
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
-use UsesPresenters;
+    use UsesPresenters;
 
     public function registerMediaCollections(): void
     {
