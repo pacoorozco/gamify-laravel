@@ -172,7 +172,7 @@ class AdminUserControllerTest extends TestCase
         ]);
     }
 
-    public function provideWrongDataForUserCreation(): Generator
+    public static function provideWrongDataForUserCreation(): Generator
     {
         yield 'username is empty' => [
             'data' => [
@@ -401,7 +401,7 @@ class AdminUserControllerTest extends TestCase
         ]);
     }
 
-    public function provideWrongDataForUserModification(): Generator
+    public static function provideWrongDataForUserModification(): Generator
     {
         yield 'name is empty' => [
             'data' => [

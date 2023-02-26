@@ -26,6 +26,8 @@
 namespace Gamify\Models;
 
 use Carbon\Carbon;
+use Coderflex\LaravelPresenter\Concerns\CanPresent;
+use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Events\QuestionPendingReview;
@@ -38,7 +40,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Laracodes\Presenter\Traits\Presentable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
@@ -53,21 +54,21 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property string $type The question type ['single'. 'multi'].
  * @property bool $hidden The visibility of the question.
  * @property string $status The status of the question.
- * @property string $public_url The public URL of this question.
+ * @property string $publicUrl The public URL of this question.
  * @property \Gamify\Models\User $creator The User who created this question,
  * @property \Gamify\Models\User $updater The last User who updated this question.
  * @property ?Carbon $publication_date The data when the question was published.
  * @property ?Carbon $expiration_date The data when the question was expired.
  * @mixin \Eloquent
  */
-class Question extends Model
+class Question extends Model implements CanPresent
 {
     use SoftDeletes;
-    use BlameableTrait;
     use Sluggable;
     use Taggable;
-    use Presentable;
     use HasFactory;
+    use UsesPresenters;
+    use BlameableTrait;
 
     const DRAFT_STATUS = 'draft'; // Incomplete viewable by anyone with proper user role.
 
@@ -81,7 +82,9 @@ class Question extends Model
 
     const MULTI_RESPONSE_TYPE = 'multi'; // Multiple answers are correct.
 
-    protected string $presenter = QuestionPresenter::class;
+    protected array $presenters = [
+        'default' => QuestionPresenter::class,
+    ];
 
     protected $fillable = [
         'name',

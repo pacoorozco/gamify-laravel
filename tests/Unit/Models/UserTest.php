@@ -90,7 +90,7 @@ class UserTest extends TestCase
         $this->assertEquals($shouldBeAdmin, $m->isAdmin());
     }
 
-    public function provideDataToTestAdminMembership(): Generator
+    public static function provideDataToTestAdminMembership(): Generator
     {
         yield 'Administrator' => [
             'role' => Roles::Admin,
@@ -168,7 +168,7 @@ class UserTest extends TestCase
         $this->assertEquals($want, $m->getAttribute('username'));
     }
 
-    public function provideTestCasesForUsername(): Generator
+    public static function provideTestCasesForUsername(): Generator
     {
         yield 'User' => [
             'input' => 'User',

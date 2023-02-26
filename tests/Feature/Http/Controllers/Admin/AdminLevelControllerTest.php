@@ -169,7 +169,7 @@ class AdminLevelControllerTest extends TestCase
         ]);
     }
 
-    public function provideWrongDataForLevelCreation(): Generator
+    public static function provideWrongDataForLevelCreation(): Generator
     {
         yield 'name is empty' => [
             'data' => [
@@ -352,7 +352,7 @@ class AdminLevelControllerTest extends TestCase
         $this->assertModelExists($level);
     }
 
-    public function provideWrongDataForLevelModification(): Generator
+    public static function provideWrongDataForLevelModification(): Generator
     {
         yield 'name is empty' => [
             'data' => [

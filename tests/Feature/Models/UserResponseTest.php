@@ -68,7 +68,7 @@ class UserResponseTest extends TestCase
         $this->assertEquals($want, $response->score());
     }
 
-    public function providesScoreForUserResponseTest(): \Generator
+    public static function providesScoreForUserResponseTest(): \Generator
     {
         yield 'score < 0' => [
             'score' => -2,

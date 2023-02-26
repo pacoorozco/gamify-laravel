@@ -17,6 +17,7 @@ package-lock.json
 .env
 .env.backup
 .phpunit.result.cache
+/.phpunit.cache
 
 # Homestead deployment. https://laravel.com/docs/master/homestead
 Homestead.yaml

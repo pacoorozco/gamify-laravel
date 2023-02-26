@@ -34,10 +34,8 @@ class LevelSeeder extends Seeder
      * Run the database seeds.
      *
      * Create four Levels in order to start your Gamify app
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         foreach (range(1, 4) as $index) {
             Level::factory()

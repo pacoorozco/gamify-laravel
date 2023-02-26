@@ -25,6 +25,8 @@
 
 namespace Gamify\Models;
 
+use Coderflex\LaravelPresenter\Concerns\CanPresent;
+use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Gamify\Presenters\LevelPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -32,7 +34,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
-use Laracodes\Presenter\Traits\Presentable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -45,12 +46,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string $image URL of the level's image
  * @property bool $active Is this level enabled?
  */
-class Level extends Model implements HasMedia
+class Level extends Model implements HasMedia, CanPresent
 {
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
-    use Presentable;
+    use UsesPresenters;
 
     public function registerMediaCollections(): void
     {
@@ -72,7 +73,9 @@ class Level extends Model implements HasMedia
             });
     }
 
-    protected string $presenter = LevelPresenter::class;
+    protected array $presenters = [
+        'default' => LevelPresenter::class,
+    ];
 
     protected $fillable = [
         'name',

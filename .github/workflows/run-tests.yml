@@ -44,7 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [ '8.0' ]
+        php-versions: [ '8.1' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -70,7 +70,7 @@ jobs:
 
       - name: Run PHPUnit
         run: |
-          php artisan test --parallel --runner WrapperRunner --stop-on-failure --coverage-text --coverage-clover=clover.xml
+          vendor/bin/phpunit
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}

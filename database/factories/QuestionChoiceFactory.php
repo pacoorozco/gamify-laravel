@@ -32,11 +32,16 @@ class QuestionChoiceFactory extends Factory
 {
     protected $model = QuestionChoice::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'text' => $this->faker->sentence,
-            'score' => $this->faker->numberBetween(1, 10),
+            'text' => fake()->sentence,
+            'score' => fake()->numberBetween(1, 10),
         ];
     }
 

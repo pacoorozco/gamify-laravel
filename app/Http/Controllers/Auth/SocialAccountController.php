@@ -35,21 +35,14 @@ class SocialAccountController extends Controller
 {
     /**
      * Redirect the user to the Provider authentication page.
-     *
-     * @param  string  $provider
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirectToProvider(string $provider): RedirectResponse
+    public function redirectToProvider(string $provider): \Symfony\Component\HttpFoundation\RedirectResponse|RedirectResponse
     {
         return Socialite::driver($provider)->redirect();
     }
 
     /**
      * Obtain the user information.
-     *
-     * @param  \Gamify\Services\SocialAccountService  $accountRepository
-     * @param  string  $provider
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function handleProviderCallback(SocialAccountService $accountRepository, string $provider): RedirectResponse
     {

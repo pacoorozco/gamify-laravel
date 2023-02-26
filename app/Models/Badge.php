@@ -26,6 +26,8 @@
 namespace Gamify\Models;
 
 use BenSampo\Enum\Traits\QueriesFlaggedEnums;
+use Coderflex\LaravelPresenter\Concerns\CanPresent;
+use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Presenters\BadgePresenter;
@@ -51,14 +53,15 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property bool $active Is this badge enabled?
  * @property BadgeActuators $actuators Events that triggers this badge completion.
  */
-class Badge extends Model implements HasMedia
+
+class Badge extends Model implements HasMedia, CanPresent
 {
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
-    use Presentable;
     use QueriesFlaggedEnums;
     use Taggable;
+    use UsesPresenters;
 
     public function registerMediaCollections(): void
     {
@@ -80,7 +83,9 @@ class Badge extends Model implements HasMedia
             });
     }
 
-    protected string $presenter = BadgePresenter::class;
+    protected array $presenters = [
+        'default' => BadgePresenter::class,
+    ];
 
     protected $fillable = [
         'name',

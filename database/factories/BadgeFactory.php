@@ -30,16 +30,21 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BadgeFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
-        $color = $this->faker->unique()->safeColorName;
+        $color = fake()->unique()->safeColorName;
 
         return [
             'name' => $color,
             'description' => 'This badge is for people who think about '.$color.' :D',
             'required_repetitions' => 5,
-            'active' => $this->faker->boolean,
-            'actuators' => $this->faker->randomElement(BadgeActuators::getValues()),
+            'active' => fake()->boolean,
+            'actuators' => fake()->randomElement(BadgeActuators::getValues()),
         ];
     }
 

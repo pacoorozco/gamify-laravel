@@ -45,7 +45,7 @@ class UsernameRuleTest extends TestCase
         )->passes());
     }
 
-    public function providesWrongUsernames(): Generator
+    public static function providesWrongUsernames(): Generator
     {
         yield 'empty input' => [
             'input' => '',
@@ -82,7 +82,7 @@ class UsernameRuleTest extends TestCase
         )->passes());
     }
 
-    public function providesValidUsernames(): Generator
+    public static function providesValidUsernames(): Generator
     {
         yield 'input lowercase' => [
             'input' => 'foo',

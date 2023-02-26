@@ -160,7 +160,7 @@ class AdminRewardControllerTest extends TestCase
         $this->assertEquals(0, $user->experience);
     }
 
-    public function provideWrongDataForExperienceRewarding(): Generator
+    public static function provideWrongDataForExperienceRewarding(): Generator
     {
         yield 'username is empty' => [
             'data' => [
@@ -270,7 +270,7 @@ class AdminRewardControllerTest extends TestCase
         $this->assertEquals(0, $user->badges()->count());
     }
 
-    public function provideWrongDataForBadgeRewarding(): Generator
+    public static function provideWrongDataForBadgeRewarding(): Generator
     {
         yield 'badge_username is empty' => [
             'data' => [

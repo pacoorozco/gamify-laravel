@@ -185,7 +185,7 @@ class AdminBadgeControllerTest extends TestCase
         ]);
     }
 
-    public function provideWrongDataForBadgeCreation(): Generator
+    public static function provideWrongDataForBadgeCreation(): Generator
     {
         yield 'name is empty' => [
             'data' => [
@@ -364,7 +364,7 @@ class AdminBadgeControllerTest extends TestCase
         $this->assertEquals($wantData['tags'], $badge->tagArray);
     }
 
-    public function providesDataForBadgeEdition(): Generator
+    public static function providesDataForBadgeEdition(): Generator
     {
         yield 'tags are changed' => [
             'want' => [
@@ -416,7 +416,7 @@ class AdminBadgeControllerTest extends TestCase
         $this->assertModelExists($badge);
     }
 
-    public function provideWrongDataForBadgeModification(): Generator
+    public static function provideWrongDataForBadgeModification(): Generator
     {
         yield 'name is empty' => [
             'data' => [
