@@ -42,14 +42,14 @@
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.8.1",
-    "brianium/paratest": "^6.9.0",
+    "brianium/paratest": "^7.0.6",
     "laravel/breeze": "^1.19.2",
     "laravel/pint": "^1.6.0",
     "laravel/sail": "^1.21.0",
     "mockery/mockery": "^1.5.1",
     "nunomaduro/collision": "^7.0.5",
     "nunomaduro/larastan": "^2.4.1",
-    "phpunit/phpunit": "^9.5.6",
+    "phpunit/phpunit": "^10.0.12",
     "spatie/laravel-ignition": "^2.0"
   },
   "autoload": {
