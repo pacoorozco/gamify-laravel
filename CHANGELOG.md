@@ -5,6 +5,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 4.0.0 - 2023-02-26
+
+> NOTE: This release has **non-backwards compatible** changes. It may include some changes in the database tables.
+> 
+### Added
+- Optimizing user's profile, badge and level image size thanks to the [spatie/medialibrary](https://spatie.be/docs/laravel-medialibrary/v10/introduction).
+
+### Changed
+- **Important**: The required minimum version of PHP is v8.1.
+- **Important**: This application has been upgraded to [Laravel 10.x](https://laravel.com/docs).
+- **Important**: Database schema has been modified in a **non-backwards compatible way**.
+  - The `password_resets` table renamed to `password_resets_tokens`.
+  - Removed `avatar` column in `user_profiles` table. Using `spatie/medialibrary` package instead.
+  - Removed `image_url` column in `levels` table. Using `spatie/medialibrary` package instead. 
+  - Removed `image_url` column in `badges` table. Using `spatie/medialibrary` package instead.
+- Test running against a real database instead of memory (SQLite).
+- Use of `coderflexx/laravel-presenter` as Presenter.
+- Use of `spatie/medialibrary` instead of `qcod/imageup` as Image Manager.
+
+### Fixed
+- Bug when creation User's response with invalid score.
+- Some flaky tests.
+
+### Removed
+- Unused `fuitcake/cors` dependency.
+
 ## 3.3.0 - 2022-10-17
 ### Added
 - Config flag to set the Laravel app time zone.

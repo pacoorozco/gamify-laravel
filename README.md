@@ -3,7 +3,7 @@
 [![Testing with MySQL](https://github.com/pacoorozco/gamify-laravel/actions/workflows/run-tests.yml/badge.svg)](https://github.com/pacoorozco/gamify-laravel/actions/workflows/run-tests.yml)
 [![codecov](https://codecov.io/gh/pacoorozco/gamify-laravel/branch/main/graph/badge.svg?token=ugLXCazFWC)](https://codecov.io/gh/pacoorozco/gamify-laravel)
 [![License](https://img.shields.io/github/license/pacoorozco/gamify-laravel.svg)](LICENSE)
-[![Laravel Version](https://img.shields.io/badge/Laravel-9.x-orange.svg)](https://laravel.com/docs/8.x)
+[![Laravel Version](https://img.shields.io/badge/Laravel-10.x-orange.svg)](https://laravel.com/docs/10.x)
 [![GitHub release](https://img.shields.io/github/release/pacoorozco/gamify-laravel.svg?style=flat-square)](https://github.com/pacoorozco/gamify-laravel/releases)
 
 ## Presentation
@@ -24,7 +24,7 @@ See [CHANGELOG](CHANGELOG.md) file in order to know what changes are implemented
 
 ## How to run gamify
 
-[Laravel Sail](https://laravel.com/docs/9.x/sail) is a light-weight command-line interface for interacting with
+[Laravel Sail](https://laravel.com/docs/10.x/sail) is a light-weight command-line interface for interacting with
 Laravel's default Docker development environment. This will create several containers to implement the application needs. An
 application server and a database server.
 
