@@ -71,7 +71,7 @@ jobs:
 
       - name: Run PHPUnit
         run: |
-          php artisan test --parallel
+          php artisan test --parallel --coverage
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
