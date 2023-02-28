@@ -70,7 +70,7 @@ jobs:
 
       - name: Run PHPUnit
         run: |
-          vendor/bin/phpunit
+          vendor/bin/phpunit --parallel --runner WrapperRunner --stop-on-failure --coverage-text --coverage-clover=clover.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
