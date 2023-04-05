@@ -23,27 +23,21 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Listeners;
+namespace Gamify\Events;
 
-use Gamify\Enums\BadgeActuators;
-use Gamify\Events\SocialLogin;
-use Gamify\Libs\Game\Game;
-use Gamify\Models\Badge;
 use Gamify\Models\User;
-use Illuminate\Auth\Events\Login;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
-/**
- * Trigger the badges with the OnUserLogin actuator when the use logs in.
- */
-class IncrementBadgesOnUserLogin
+class SocialLogin
 {
-    public function handle(Login|SocialLogin $event): void
-    {
-        /** @var User $user */
-        $user = User::findOrFail($event->user->getAuthIdentifier());
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
-        $badges = Badge::whereActuators(BadgeActuators::OnUserLogin)->get();
-
-        Game::incrementManyBadgesCount($user, $badges);
+    public function __construct(
+        public User $user
+    ) {
     }
 }

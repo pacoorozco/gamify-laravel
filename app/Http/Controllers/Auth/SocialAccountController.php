@@ -25,6 +25,7 @@
 
 namespace Gamify\Http\Controllers\Auth;
 
+use Gamify\Events\SocialLogin;
 use Gamify\Http\Controllers\Controller;
 use Gamify\Providers\RouteServiceProvider;
 use Gamify\Services\SocialAccountService;
@@ -50,7 +51,9 @@ class SocialAccountController extends Controller
 
         $user = $accountRepository->findOrCreate($externalUser, $provider);
 
-        auth()->login($user, true);
+        auth()->login($user, false);
+
+        SocialLogin::dispatch($user);
 
         return redirect()->to(RouteServiceProvider::HOME);
     }

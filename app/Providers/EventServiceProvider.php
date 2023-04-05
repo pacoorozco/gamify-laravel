@@ -27,6 +27,7 @@ namespace Gamify\Providers;
 
 use Gamify\Events\PointCreated;
 use Gamify\Events\QuestionAnswered;
+use Gamify\Events\SocialLogin;
 use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
@@ -61,6 +62,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PointCreated::class => [
             UpdateExperience::class,
+        ],
+        SocialLogin::class => [
+            IncrementBadgesOnUserLogin::class,
         ],
     ];
 
