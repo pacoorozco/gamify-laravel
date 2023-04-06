@@ -4,6 +4,8 @@ namespace Tests\Feature\Auth;
 
 use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -22,12 +24,16 @@ class AuthenticationTest extends TestCase
             'password' => 'Very$3cret',
         ]);
 
+        Event::fake();
+
         $this
             ->post(route('login'), [
                 'email' => $user->email,
                 'password' => 'Very$3cret',
             ])
             ->assertRedirect(RouteServiceProvider::HOME);
+
+        Event::assertDispatched(Login::class);
 
         $this->assertAuthenticated();
     }
@@ -39,11 +45,15 @@ class AuthenticationTest extends TestCase
             'password' => 'Very$3cret',
         ]);
 
+        Event::fake();
+
         $this
             ->post(route('login'), [
                 'email' => $user->email,
                 'password' => 'wrong-password',
             ]);
+
+        Event::assertNotDispatched(Login::class);
 
         $this->assertGuest();
     }

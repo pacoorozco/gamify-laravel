@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Changed
+- Bump `aglipanci/laravel-pint-action` from 2.1.0 to 2.2.0 ([#413][i413])
+- Bump `laravel/framework` from 10.1.5 to 10.5.1 ([#414][i414])
+- Bump `spatie/laravel-medialibrary` from 10.7.11 to 10.7.16 ([#415][i415])
+- Bump `laravel/sail` from 1.21.0 to 1.21.3 ([#416][i416])
+- Bump `brianium/paratest` from 7.0.6 to 7.1.2 ([#417][i417])
+- Bump `phpunit/phpunit` from 10.0.12 to 10.0.19 ([#418][i418])
+
+[i413]: https://github.com/pacoorozco/gamify-laravel/pull/413
+[i414]: https://github.com/pacoorozco/gamify-laravel/pull/414
+[i415]: https://github.com/pacoorozco/gamify-laravel/pull/415
+[i416]: https://github.com/pacoorozco/gamify-laravel/pull/416
+[i417]: https://github.com/pacoorozco/gamify-laravel/pull/417
+[i418]: https://github.com/pacoorozco/gamify-laravel/pull/418
 
 ## 4.0.0 - 2023-02-26
 
