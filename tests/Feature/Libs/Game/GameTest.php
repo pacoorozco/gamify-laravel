@@ -171,6 +171,7 @@ class GameTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideRankingTestCases
      */
     public function it_should_return_the_first_players_with_the_highest_score(

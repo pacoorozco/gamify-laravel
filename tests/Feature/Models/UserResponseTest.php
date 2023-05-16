@@ -37,6 +37,7 @@ class UserResponseTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesScoreForUserResponseTest
      */
     public function it_should_return_the_user_response_score_of_a_question(

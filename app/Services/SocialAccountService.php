@@ -63,7 +63,7 @@ class SocialAccountService
         string $provider
     ): User {
 
-        if(is_null($providerUser->getEmail())) {
+        if (is_null($providerUser->getEmail())) {
             throw new Exception('The external user has not a valid email address');
         }
 
@@ -81,7 +81,7 @@ class SocialAccountService
                 return $createUserAction->execute(
                     $username,
                     $providerUser->getEmail(),
-                    $providerUser->getName() ?? 'User ' . $username,
+                    $providerUser->getName() ?? 'User '.$username,
                     password: Str::random(),
                     role: Roles::Player,
                     skipEmailVerification: true

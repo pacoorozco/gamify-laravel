@@ -32,14 +32,6 @@ final class CreateUserAction
 {
     /**
      * Creates an User, its profile and dispatch events.
-     *
-     * @param  string  $username
-     * @param  string  $email
-     * @param  string  $name
-     * @param  string  $password
-     * @param  string  $role
-     * @param  bool  $skipEmailVerification
-     * @return \Gamify\Models\User
      */
     public function execute(
         string $username,

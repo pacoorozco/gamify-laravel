@@ -25,9 +25,9 @@
 
 namespace Gamify\Presenters;
 
+use Coderflex\LaravelPresenter\Presenter;
 use Gamify\Models\User;
 use Illuminate\Support\HtmlString;
-use Coderflex\LaravelPresenter\Presenter;
 
 class UserPresenter extends Presenter
 {

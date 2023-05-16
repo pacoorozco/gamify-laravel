@@ -38,6 +38,7 @@ class UserTest extends TestCase
 {
     /**
      * @test
+     *
      * @dataProvider providesPendingVisibleQuestionsPaginationTestCases
      */
     public function it_should_paginate_the_public_questions_pending_to_be_answered(
@@ -153,6 +154,7 @@ class UserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesPointsToNextLevelTestCases
      */
     public function it_should_return_points_to_the_next_level(
@@ -206,6 +208,7 @@ class UserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesNextLevelCompletionTestCases
      */
     public function it_should_return_level_completion(

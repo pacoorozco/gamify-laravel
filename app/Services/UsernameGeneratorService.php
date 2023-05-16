@@ -52,9 +52,6 @@ class UsernameGeneratorService
 
     /**
      * Check if the user already exists and return a differentiating number.
-     *
-     * @param  string  $username
-     * @return string
      */
     protected function getUsernamePrefix(string $username): string
     {
@@ -87,9 +84,6 @@ class UsernameGeneratorService
 
     /**
      * Search for similar or repeated username.
-     *
-     * @param  string  $username
-     * @return Collection
      */
     protected function findDuplicateUsername(string $username): Collection
     {
@@ -106,9 +100,6 @@ class UsernameGeneratorService
 
     /**
      * Create the username from the received text.
-     *
-     * @param  string  $text
-     * @return string
      */
     public function fromText(string $text): string
     {

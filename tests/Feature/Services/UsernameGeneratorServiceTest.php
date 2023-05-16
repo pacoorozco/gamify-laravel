@@ -33,6 +33,7 @@ class UsernameGeneratorServiceTest extends TestCase
 {
     /**
      * @test
+     *
      * @dataProvider providesTestCasesForUsernameCreationFromText
      */
     public function it_should_return_a_username_from_the_text(
@@ -68,6 +69,7 @@ class UsernameGeneratorServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesTestCasesForUsernameCreationFromEmail
      */
     public function it_should_return_a_username_from_the_email(

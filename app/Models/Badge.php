@@ -38,7 +38,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Laracodes\Presenter\Traits\Presentable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -53,7 +52,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property bool $active Is this badge enabled?
  * @property BadgeActuators $actuators Events that triggers this badge completion.
  */
-
 class Badge extends Model implements HasMedia, CanPresent
 {
     use SoftDeletes;

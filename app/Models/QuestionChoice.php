@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property string $text The text of this choice.
  * @property int $score How many points are added by this choice.
+ *
  * @mixin \Eloquent
  *
  * @property-read \Gamify\Models\Question $question

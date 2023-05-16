@@ -131,6 +131,7 @@ class AdminRewardControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForExperienceRewarding
      */
     public function admins_should_get_errors_when_rewarding_experience_with_wrong_data(
@@ -239,6 +240,7 @@ class AdminRewardControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForBadgeRewarding
      */
     public function admins_should_get_errors_when_rewarding_badges_with_wrong_data(

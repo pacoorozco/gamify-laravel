@@ -144,6 +144,7 @@ class ProfileControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForUserProfileModification
      */
     public function users_should_get_errors_when_updating_its_own_profile_with_wrong_data(

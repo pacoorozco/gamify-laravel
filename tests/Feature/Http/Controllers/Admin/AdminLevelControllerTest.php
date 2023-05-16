@@ -135,6 +135,7 @@ class AdminLevelControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForLevelCreation
      */
     public function admins_should_get_errors_when_creating_levels_with_wrong_data(
@@ -318,6 +319,7 @@ class AdminLevelControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForLevelModification
      */
     public function admins_should_get_errors_when_updating_levels_with_wrong_data(

@@ -32,6 +32,7 @@ class RegistrationTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForUserRegistration
      */
     public function it_should_get_errors_when_registering_with_wrong_data(

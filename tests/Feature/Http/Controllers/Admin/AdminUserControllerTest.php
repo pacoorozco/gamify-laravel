@@ -137,6 +137,7 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForUserCreation
      */
     public function admins_should_get_errors_when_creating_users_with_wrong_data(
@@ -364,6 +365,7 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForUserModification
      */
     public function admins_should_get_errors_when_updating_users_with_wrong_data(

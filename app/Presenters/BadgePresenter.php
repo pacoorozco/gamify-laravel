@@ -25,10 +25,10 @@
 
 namespace Gamify\Presenters;
 
+use Coderflex\LaravelPresenter\Presenter;
 use Gamify\Models\Badge;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Coderflex\LaravelPresenter\Presenter;
 
 class BadgePresenter extends Presenter
 {
