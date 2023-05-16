@@ -1,4 +1,4 @@
-name: Tests Runner
+name: Testing w/ MySQL
 
 on:
   push:
@@ -27,19 +27,13 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: testing
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
-      redis:
-        image: redis
-        ports:
-          - 6379/tcp
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
       fail-fast: false
@@ -70,7 +64,7 @@ jobs:
 
       - name: Run PHPUnit
         run: |
-          vendor/bin/phpunit
+          php artisan test --parallel --runner WrapperRunner --stop-on-failure --coverage-text --coverage-clover=clover.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
