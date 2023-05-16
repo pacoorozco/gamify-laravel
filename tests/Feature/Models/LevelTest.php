@@ -64,6 +64,7 @@ class LevelTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideFindLevelTestCases
      */
     public function it_should_return_the_proper_level_based_on_experience(
@@ -141,6 +142,7 @@ class LevelTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideFindNextLevelTestCases
      */
     public function it_should_return_the_next_level_based_on_experience(
@@ -163,7 +165,7 @@ class LevelTest extends TestCase
         $this->assertEquals($want, $level->name);
     }
 
-    public  static function provideFindNextLevelTestCases(): Generator
+    public static function provideFindNextLevelTestCases(): Generator
     {
         yield 'middle level when experience 0' => [
             'levels' => [

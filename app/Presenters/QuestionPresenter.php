@@ -25,10 +25,10 @@
 
 namespace Gamify\Presenters;
 
+use Coderflex\LaravelPresenter\Presenter;
 use Gamify\Models\Question;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Coderflex\LaravelPresenter\Presenter;
 
 class QuestionPresenter extends Presenter
 {
@@ -43,8 +43,6 @@ class QuestionPresenter extends Presenter
     /**
      * Returns the question status as a badge.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
      */
     public function statusBadge(): HtmlString
     {
@@ -60,8 +58,6 @@ class QuestionPresenter extends Presenter
     /**
      * Map a Question status to a color label.
      *
-     * @param  string  $status
-     * @param  string  $default
      * @return string
      */
     protected function mapStatusToLabel(string $status, string $default = 'label-default')
@@ -79,8 +75,6 @@ class QuestionPresenter extends Presenter
     /**
      * Returns the question visibility as a badge.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
      */
     public function visibilityBadge(): HtmlString
     {
@@ -102,8 +96,6 @@ class QuestionPresenter extends Presenter
     /**
      * Returns the statement of the question.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
      */
     public function statement(): HtmlString
     {
@@ -114,8 +106,6 @@ class QuestionPresenter extends Presenter
     /**
      * Returns the explanation of the question.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
      */
     public function explanation(): HtmlString
     {
@@ -126,8 +116,6 @@ class QuestionPresenter extends Presenter
     /**
      * Returns the public link to the question.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
-     *
-     * @return HtmlString
      */
     public function publicUrlLink(): HtmlString
     {
@@ -155,7 +143,7 @@ class QuestionPresenter extends Presenter
             ? ''
             : $this->model->publication_date->format('Y-m-d H:i');
     }
-    
+
     public function creator(): string
     {
         return $this->model->creator->username ?? 'N/A';

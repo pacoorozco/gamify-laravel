@@ -150,6 +150,7 @@ class AdminBadgeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForBadgeCreation
      */
     public function admins_should_get_errors_when_creating_badges_with_wrong_data(
@@ -326,6 +327,7 @@ class AdminBadgeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesDataForBadgeEdition
      */
     public function admins_should_update_badges(
@@ -381,6 +383,7 @@ class AdminBadgeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideWrongDataForBadgeModification
      */
     public function admins_should_get_errors_when_updating_badges_with_wrong_data(

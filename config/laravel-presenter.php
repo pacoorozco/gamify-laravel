@@ -14,5 +14,5 @@ return [
     |
     */
 
-    'presenter_namespace'   => 'Gamify\\Presenters',
+    'presenter_namespace' => 'Gamify\\Presenters',
 ];

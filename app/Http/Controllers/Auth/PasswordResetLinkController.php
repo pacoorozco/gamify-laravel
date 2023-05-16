@@ -12,8 +12,6 @@ class PasswordResetLinkController extends Controller
 {
     /**
      * Display the password reset link request view.
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -22,9 +20,6 @@ class PasswordResetLinkController extends Controller
 
     /**
      * Handle an incoming password reset link request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -42,6 +37,6 @@ class PasswordResetLinkController extends Controller
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('success', __($status))
                     : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+                        ->withErrors(['email' => __($status)]);
     }
 }

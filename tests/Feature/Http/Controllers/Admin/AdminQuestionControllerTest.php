@@ -188,6 +188,7 @@ class AdminQuestionControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesTestCasesForEdition
      */
     public function update_edits_an_object(

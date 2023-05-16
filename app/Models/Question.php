@@ -59,6 +59,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  * @property \Gamify\Models\User $updater The last User who updated this question.
  * @property ?Carbon $publication_date The data when the question was published.
  * @property ?Carbon $expiration_date The data when the question was expired.
+ *
  * @mixin \Eloquent
  */
 class Question extends Model implements CanPresent
@@ -177,8 +178,6 @@ class Question extends Model implements CanPresent
      * Return if a question can be published.
      * 1. It has at least to choices
      * 2. It has at least one correct choice.
-     *
-     * @return bool
      */
     public function canBePublished(): bool
     {

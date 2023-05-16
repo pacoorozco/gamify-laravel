@@ -77,6 +77,7 @@ class UserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideDataToTestAdminMembership
      */
     public function it_should_return_if_user_is_admin(
@@ -155,6 +156,7 @@ class UserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideTestCasesForUsername
      */
     public function lowercase_username_when_set(

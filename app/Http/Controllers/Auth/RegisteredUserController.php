@@ -14,8 +14,6 @@ class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -24,10 +22,6 @@ class RegisteredUserController extends Controller
 
     /**
      * Handle an incoming registration request.
-     *
-     * @param  \Gamify\Http\Requests\UserRegistrationRequest  $request
-     * @param  \Gamify\Actions\RegisterUserAction  $registerUserAction
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserRegistrationRequest $request, RegisterUserAction $registerUserAction): RedirectResponse
     {

@@ -50,8 +50,6 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
 
     /**
      * Returns an array of values to be used on <select> with <optgroups> and filtered options.
-     *
-     * @return array
      */
     public static function toSelectArray(): array
     {
@@ -87,7 +85,6 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      * Only Question based actuators can be filtered.
      *
      * @param  \Gamify\Enums\BadgeActuators  $actuator
-     * @return bool
      */
     public static function canBeTagged(BadgeActuators $actuator): bool
     {

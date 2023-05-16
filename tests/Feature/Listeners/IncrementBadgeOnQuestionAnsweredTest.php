@@ -49,6 +49,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideTestCasesThatShouldTriggerABadge
      */
     public function it_should_increment_badges_when_criteria_is_met(
@@ -151,6 +152,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideTestCasesThatShouldNotTriggerABadge
      */
     public function it_should_not_increment_badges_when_criteria_is_not_met(

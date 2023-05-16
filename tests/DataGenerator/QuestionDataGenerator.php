@@ -31,9 +31,6 @@ class QuestionDataGenerator
 {
     /**
      * Generate sample form request data.
-     *
-     * @param  array  $overrides
-     * @return array
      */
     public static function FormRequestData(array $overrides = []): array
     {

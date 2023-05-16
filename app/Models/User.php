@@ -87,12 +87,12 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 
     public static function findByUsername(string $username): self
     {
-        return static::where('username', $username)->firstOrFail();
+        return self::where('username', $username)->firstOrFail();
     }
 
     public static function findByEmailAddress(string $emailAddress): self
     {
-        return static::where('email', $emailAddress)->firstOrFail();
+        return self::where('email', $emailAddress)->firstOrFail();
     }
 
     public function profile(): HasOne
@@ -104,8 +104,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
      * These are the User's Points relationship.
      *
      * Results are grouped by user_is and it selects the sum of all points
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function points(): HasMany
     {
@@ -126,8 +124,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 
     /**
      * Linked Social Accounts (facebook, twitter, github...).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function accounts(): HasMany
     {
@@ -155,8 +151,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
      *
      * points: int - how many points was obtained
      * answers: string - which answers was supplied
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function answeredQuestions(): BelongsToMany
     {

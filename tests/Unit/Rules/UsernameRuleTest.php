@@ -34,6 +34,7 @@ class UsernameRuleTest extends TestCase
 {
     /**
      * @test
+     *
      * @dataProvider providesWrongUsernames
      */
     public function it_should_not_pass_wrong_usernames(
@@ -71,6 +72,7 @@ class UsernameRuleTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider providesValidUsernames
      */
     public function it_should_pass_valid_usernames(
