@@ -25,13 +25,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     /**
      * Make ajax GET request.
