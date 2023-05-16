@@ -1,6 +1,6 @@
 # Code contibution to this app
 
-Contributions are **welcomed** and will be fully **credited** (see [AUTHORS](AUTHORS)).
+Contributions are **welcomed** and will be fully **credited**.
 
 We accept contributions via Pull Requests on [GitHub Repository][github].
 
