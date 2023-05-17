@@ -35,7 +35,7 @@
     <div class="box">
         <div class="box-header with-border">
             <h2 class="box-title">
-                {{ $user->present()->username }} {{ $user->present()->adminLabel }}
+                {{ $user->username }} {{ $user->present()->adminLabel() }}
             </h2>
         </div>
         <div class="box-body">
@@ -50,7 +50,7 @@
                             {{ __('admin/user/model.username') }}
                         </dt>
                         <dd>
-                            {{ $user->present()->username }}
+                            {{ $user->username }}
                         </dd>
                     </dl>
                     <!-- ./ username -->
@@ -61,7 +61,7 @@
                             {{  __('admin/user/model.name') }}
                         </dt>
                         <dd>
-                            {{ $user->present()->name }}
+                            {{ $user->name }}
                         </dd>
                     </dl>
                     <!-- ./ name -->
@@ -72,7 +72,7 @@
                             {{ __('admin/user/model.email') }}
                         </dt>
                         <dd>
-                            {{ $user->present()->email }}
+                            {{ $user->email }}
                         </dd>
                     </dl>
                     <!-- ./ email -->
@@ -83,7 +83,7 @@
                             {{ __('admin/user/model.role') }}
                         </dt>
                         <dd>
-                            {{ $user->present()->role }}
+                            {{ $user->present()->role() }}
                         </dd>
                     </dl>
                     <!-- ./ role -->
@@ -108,7 +108,7 @@
 
                         <!-- experience -->
                         <dt>{{ __('user/profile.experience') }}:</dt>
-                        <dd>{{ $user->present()->experience }}</dd>
+                        <dd>{{ $user->experience }}</dd>
                         <!-- ./ experience -->
 
                         <!-- created_at -->

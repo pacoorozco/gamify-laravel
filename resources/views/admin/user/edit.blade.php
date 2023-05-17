@@ -40,7 +40,7 @@
     <div class="box box-solid">
         <div class="box-header with-border">
             <h2 class="box-title">
-                {{ $user->present()->username }} {{ $user->present()->adminLabel }}
+                {{ $user->username }} {{ $user->present()->adminLabel }}
             </h2>
         </div>
         <div class="box-body">
@@ -112,7 +112,7 @@
 
                         <!-- experience -->
                         <dt>{{ __('user/profile.experience') }}:</dt>
-                        <dd>{{ $user->present()->experience }}</dd>
+                        <dd>{{ $user->experience }}</dd>
                         <!-- ./ experience -->
 
                         <!-- created_at -->
