@@ -108,11 +108,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
-    /**
-     * These are the User's Points relationship.
-     *
-     * Results are grouped by user_is and it selects the sum of all points
-     */
     public function points(): HasMany
     {
         return $this->hasMany(Point::class);
