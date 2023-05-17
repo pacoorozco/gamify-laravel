@@ -38,7 +38,7 @@
     <div class="box box-solid">
         <div class="box-header with-border">
             <h2 class="box-title">
-                {{ $badge->present()->nameWithStatusBadge }}
+                {{ $badge->present()->nameWithStatusBadge() }}
             </h2>
         </div>
         <div class="box-body">
