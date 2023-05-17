@@ -2,7 +2,6 @@
 
 namespace Gamify\Http\Requests;
 
-use Gamify\Rules\CurrentPasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -13,7 +12,7 @@ class UpdatePasswordRequest extends FormRequest
         return [
             'current-password' => [
                 'required',
-                new CurrentPasswordRule($this->user()),
+                'current_password',
             ],
             'new-password' => [
                 'required',
