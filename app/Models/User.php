@@ -50,7 +50,7 @@ use Illuminate\Support\Facades\Hash;
  * @property string $username The username of this user.
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
- * @property \Gamify\Enums\Roles $role Role of the user.
+ * @property Roles $role Role of the user.
  * @property int $experience The reputation of the user.
  * @property UserProfile $profile The user's profile
  * @property-read string $level The current level of the user.
@@ -84,16 +84,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         'role' => Roles::class,
         'email_verified_at' => 'datetime',
     ];
-
-    public static function findByUsername(string $username): self
-    {
-        return self::where('username', $username)->firstOrFail();
-    }
-
-    public static function findByEmailAddress(string $emailAddress): self
-    {
-        return self::where('email', $emailAddress)->firstOrFail();
-    }
 
     public function profile(): HasOne
     {
