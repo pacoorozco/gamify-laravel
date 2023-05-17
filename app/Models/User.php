@@ -120,17 +120,17 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
             ->groupBy('user_id');
     }
 
-    public function nextLevelCompletion(): int
+    public function nextLevelCompletionPercentage(): int
     {
-        if ($this->nextLevel()->required_points == 0) {
+        $nextLevel = $this->nextLevel();
+
+        if ($nextLevel->required_points === 0) {
             return 100;
         }
 
-        $completion = $this->experience / $this->nextLevel()->required_points;
+        $completion = min(($this->experience / $nextLevel->required_points) * 100, 100);
 
-        return ($completion > 1)
-            ? 100
-            : $completion * 100;
+        return (int) $completion;
     }
 
     public function nextLevel(): Level
@@ -142,9 +142,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     {
         $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
 
-        return ($pointsToNextLevel < 0)
-            ? 0
-            : $pointsToNextLevel;
+        return max($pointsToNextLevel, 0);
     }
 
     public function pendingQuestions(int $perPageLimit = 5, bool $filterHiddenQuestions = true): Paginator

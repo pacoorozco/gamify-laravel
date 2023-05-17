@@ -224,7 +224,7 @@ class UserTest extends TestCase
             'required_points' => $nextLevelExperience,
         ]);
 
-        $this->assertEquals($want, $user->nextLevelCompletion());
+        $this->assertEquals($want, $user->nextLevelCompletionPercentage());
     }
 
     public static function providesNextLevelCompletionTestCases(): \Generator
