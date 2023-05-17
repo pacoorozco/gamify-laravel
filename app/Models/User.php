@@ -85,9 +85,27 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         'email_verified_at' => 'datetime',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->role->is(Roles::Admin);
+    }
+
+    public function scopePlayer(Builder $query): Builder
+    {
+        return $query->where('role', Roles::Player);
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(UserProfile::class);
+    }
+
+    /**
+     * Linked Social Accounts (facebook, twitter, github...).
+     */
+    public function accounts(): HasMany
+    {
+        return $this->hasMany(LinkedSocialAccount::class);
     }
 
     /**
@@ -100,127 +118,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->hasMany(Point::class)
             ->selectRaw('sum(points) as sum, user_id')
             ->groupBy('user_id');
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->role->is(Roles::Admin);
-    }
-
-    public function scopePlayer(Builder $query): Builder
-    {
-        return $query->where('role', Roles::Player);
-    }
-
-    /**
-     * Linked Social Accounts (facebook, twitter, github...).
-     */
-    public function accounts(): HasMany
-    {
-        return $this->hasMany(LinkedSocialAccount::class);
-    }
-
-    public function pendingQuestions(int $perPageLimit = 5, bool $filterHiddenQuestions = true): Paginator
-    {
-        $answeredQuestions = $this->answeredQuestions()
-            ->pluck('question_id')
-            ->toArray();
-
-        return Question::query()
-            ->published()
-            ->whereNotIn('id', $answeredQuestions)
-            ->when($filterHiddenQuestions, fn ($query) => $query->public())
-            ->inRandomOrder()
-            ->simplePaginate($perPageLimit);
-    }
-
-    /**
-     * These are the User's answered Questions.
-     *
-     * It uses a pivot table with these values:
-     *
-     * points: int - how many points was obtained
-     * answers: string - which answers was supplied
-     */
-    public function answeredQuestions(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Question::class,
-            'users_questions',
-            'user_id',
-            'question_id'
-        )
-            ->as('response')
-            ->withPivot('points', 'answers')
-            ->using(UserResponse::class);
-    }
-
-    public function answeredQuestionsCount(): int
-    {
-        return $this->answeredQuestions()->count();
-    }
-
-    public function unlockedBadgesCount(): int
-    {
-        return $this->getCompletedBadges()->count();
-    }
-
-    public function getCompletedBadges(): Collection
-    {
-        return $this->badges()
-            ->wherePivotNotNull('unlocked_at')
-            ->get();
-    }
-
-    public function badges(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Badge::class,
-            'users_badges',
-            'user_id',
-            'badge_id')
-            ->as('progress')
-            ->withPivot('repetitions', 'unlocked_at')
-            ->using(UserBadgeProgress::class);
-    }
-
-    public function progressToCompleteTheBadge(Badge $badge): ?UserBadgeProgress
-    {
-        /** @phpstan-ignore-next-line */
-        return $this->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->first()
-            ?->progress;
-    }
-
-    public function unlockedBadges(): Collection
-    {
-        return $this->badges()
-            ->wherePivotNotNull('unlocked_at')
-            ->get();
-    }
-
-    public function lockedBadges(): Collection
-    {
-        return $this->badges()
-            ->wherePivotNull('unlocked_at')
-            ->get();
-    }
-
-    public function hasUnlockedBadge(Badge $badge): bool
-    {
-        return $this->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->wherePivotNotNull('unlocked_at')
-            ->exists();
-    }
-
-    public function hasLockedBadge(Badge $badge): bool
-    {
-        return $this->badges()
-            ->wherePivot('badge_id', $badge->id)
-            ->wherePivotNull('unlocked_at')
-            ->exists();
     }
 
     public function nextLevelCompletion(): int
@@ -250,6 +147,41 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
             : $pointsToNextLevel;
     }
 
+    public function pendingQuestions(int $perPageLimit = 5, bool $filterHiddenQuestions = true): Paginator
+    {
+        $answeredQuestions = $this->answeredQuestions()
+            ->pluck('question_id')
+            ->toArray();
+
+        return Question::query()
+            ->published()
+            ->whereNotIn('id', $answeredQuestions)
+            ->when($filterHiddenQuestions, fn ($query) => $query->public())
+            ->inRandomOrder()
+            ->simplePaginate($perPageLimit);
+    }
+
+    /**
+     * These are the User's answered Questions.
+     *
+     * It uses a pivot table with these values:
+     *
+     * points: int - how many points was obtained
+     * answers: string - which answers was supplied
+     */
+    public function answeredQuestions(): BelongsToMany
+    {
+        return $this->belongsToMany(Question::class, 'users_questions')
+            ->as('response')
+            ->withPivot(['points', 'answers'])
+            ->using(UserResponse::class);
+    }
+
+    public function answeredQuestionsCount(): int
+    {
+        return $this->answeredQuestions()->count();
+    }
+
     public function hasAnsweredQuestion(Question $question): bool
     {
         return $this->answeredQuestions()
@@ -259,13 +191,66 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 
     public function getResponseForQuestion(Question $question): ?UserResponse
     {
-        /** @phpstan-ignore-next-line */
         return $this->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()
-            ?->response;
+            ->response ?? null;
     }
 
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class, 'users_badges')
+            ->as('progress')
+            ->withPivot(['repetitions', 'unlocked_at'])
+            ->using(UserBadgeProgress::class);
+    }
+
+    public function progressToCompleteTheBadge(Badge $badge): ?UserBadgeProgress
+    {
+        return $this->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->first()
+            ->progress ?? null;
+    }
+
+    public function unlockedBadges(): Collection
+    {
+        return $this->badges()
+            ->wherePivotNotNull('unlocked_at')
+            ->get();
+    }
+
+    public function unlockedBadgesCount(): int
+    {
+        return $this->unlockedBadges()->count();
+    }
+
+    public function lockedBadges(): Collection
+    {
+        return $this->badges()
+            ->wherePivotNull('unlocked_at')
+            ->get();
+    }
+
+    public function hasUnlockedBadge(Badge $badge): bool
+    {
+        return $this->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->wherePivotNotNull('unlocked_at')
+            ->exists();
+    }
+
+    public function hasLockedBadge(Badge $badge): bool
+    {
+        return $this->badges()
+            ->wherePivot('badge_id', $badge->id)
+            ->wherePivotNull('unlocked_at')
+            ->exists();
+    }
+
+    /**
+     * Ensure username is stored in lower cases.
+     */
     protected function username(): Attribute
     {
         return Attribute::make(
@@ -273,6 +258,9 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         );
     }
 
+    /**
+     * Ensure password is stored encrypted.
+     */
     protected function password(): Attribute
     {
         return Attribute::make(

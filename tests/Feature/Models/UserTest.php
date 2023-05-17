@@ -100,7 +100,7 @@ class UserTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertInstanceOf(Collection::class, $user->getCompletedBadges());
+        $this->assertInstanceOf(Collection::class, $user->unlockedBadges());
     }
 
     /** @test */
@@ -109,7 +109,7 @@ class UserTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount(0, $user->getCompletedBadges());
+        $this->assertCount(0, $user->unlockedBadges());
     }
 
     /** @test */
