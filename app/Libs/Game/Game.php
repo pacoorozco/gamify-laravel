@@ -28,8 +28,6 @@ namespace Gamify\Libs\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Gamify\Notifications\BadgeUnlocked;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Game
 {
@@ -41,40 +39,24 @@ class Game
         ]);
     }
 
-    public static function incrementManyBadgesCount(User $user, Collection $badges): void
+    public static function incrementBadgeCount(User $user, Badge $badgeToIncrement): void
     {
-        $badges->each(function ($badge) use ($user) {
-            self::incrementBadgeCount($user, $badge);
-        });
-    }
-
-    public static function incrementBadgeCount(User $user, Badge $badge): void
-    {
-        if ($user->hasUnlockedBadge($badge)) {
+        if ($user->hasUnlockedBadge($badgeToIncrement)) {
             return;
         }
 
-        $progress = $user->progressToCompleteTheBadge($badge);
-
-        $repetitions = $user->progressToCompleteTheBadge($badge)?->repetitions
-            ?? 0;
-
+        $progress = $user->progressToCompleteTheBadge($badgeToIncrement);
+        $repetitions = $progress?->repetitions ?? 0;
         $repetitions++;
 
-        if (is_null($progress)) {
-            // this is the first occurrence of this badge for this user
-            $user->badges()->attach($badge->id, [
-                'repetitions' => $repetitions,
-            ]);
-        } else {
-            // this badge was initiated before
-            $user->badges()->updateExistingPivot($badge->id, [
-                'repetitions' => $repetitions,
-            ]);
-        }
+        $badgeData = ['repetitions' => $repetitions];
 
-        if ($repetitions === $badge->required_repetitions) {
-            self::unlockBadgeFor($user, $badge);
+        $user->badges()->syncWithoutDetaching([
+            $badgeToIncrement->id => $badgeData,
+        ]);
+
+        if ($repetitions === $badgeToIncrement->required_repetitions) {
+            self::unlockBadgeFor($user, $badgeToIncrement);
         }
     }
 
@@ -84,22 +66,14 @@ class Game
             return;
         }
 
-        $data = [
+        $badgeData = [
             'repetitions' => $badge->required_repetitions,
             'unlocked_at' => now(),
         ];
 
-        try {
-            $user->badges()
-                ->wherePivot('badge_id', $badge->id)
-                ->firstOrFail();
-
-            // this badge was initiated before
-            $user->badges()->updateExistingPivot($badge->id, $data);
-        } catch (ModelNotFoundException $exception) {
-            // this is the first occurrence of this badge for this user
-            $user->badges()->attach($badge->id, $data);
-        }
+        $user->badges()->syncWithoutDetaching([
+            $badge->id => $badgeData,
+        ]);
 
         $user->notify(new BadgeUnlocked($badge));
     }

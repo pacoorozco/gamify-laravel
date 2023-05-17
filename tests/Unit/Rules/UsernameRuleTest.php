@@ -37,13 +37,15 @@ class UsernameRuleTest extends TestCase
      *
      * @dataProvider providesWrongUsernames
      */
-    public function it_should_not_pass_wrong_usernames(
+    public function it_should_fail_with_wrong_usernames(
         string $input
     ): void {
-        $this->assertFalse(Validator::make(
+        $validator = Validator::make(
             ['username' => $input],
             ['username' => new UsernameRule()]
-        )->passes());
+        );
+
+        $this->assertTrue($validator->fails());
     }
 
     public static function providesWrongUsernames(): Generator
@@ -57,8 +59,7 @@ class UsernameRuleTest extends TestCase
         ];
 
         yield 'input > 255 chars' => [
-            'input' => '01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012
-34567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345',
+            'input' => '0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345',
         ];
 
         yield 'input contains invalid characters' => [
@@ -78,10 +79,12 @@ class UsernameRuleTest extends TestCase
     public function it_should_pass_valid_usernames(
         string $input
     ): void {
-        $this->assertTrue(Validator::make(
+        $validator = Validator::make(
             ['username' => $input],
             ['username' => new UsernameRule()]
-        )->passes());
+        );
+
+        $this->assertTrue($validator->passes());
     }
 
     public static function providesValidUsernames(): Generator

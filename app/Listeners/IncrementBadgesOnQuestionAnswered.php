@@ -41,19 +41,21 @@ class IncrementBadgesOnQuestionAnswered
         /** @var User $user */
         $user = User::findOrFail($event->user->getAuthIdentifier());
 
-        $badges = Badge::whereIn('actuators', [
-            BadgeActuators::OnQuestionAnswered,
-            ($event->correctness === true)
-                ? BadgeActuators::OnQuestionCorrectlyAnswered
-                : BadgeActuators::OnQuestionIncorrectlyAnswered,
-        ])
+        Badge::query()
+            ->whereIn('actuators', [
+                BadgeActuators::OnQuestionAnswered,
+                ($event->correctness === true)
+                    ? BadgeActuators::OnQuestionCorrectlyAnswered
+                    : BadgeActuators::OnQuestionIncorrectlyAnswered,
+            ])
             ->when($event->question->tagArrayNormalized, function ($query) use ($event) {
                 $query->withAnyTags($event->question->tagArrayNormalized);
             }, function ($query) {
                 $query->isNotTagged();
             })
-            ->get();
-
-        Game::incrementManyBadgesCount($user, $badges);
+            ->get()
+            ->each(function ($badge) use ($user) {
+                Game::incrementBadgeCount($user, $badge);
+            });
     }
 }

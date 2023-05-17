@@ -81,7 +81,7 @@ class AdminRewardController extends AdminController
 
         Game::incrementBadgeCount(
             user: $user,
-            badge: $badge
+            badgeToIncrement: $badge
         );
 
         return redirect()->route('admin.rewards.index')

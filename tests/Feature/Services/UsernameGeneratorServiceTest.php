@@ -40,9 +40,14 @@ class UsernameGeneratorServiceTest extends TestCase
         string $input,
         string $want
     ): void {
-        User::factory()->create([
-            'username' => 'foo',
-        ]);
+        User::factory()
+            ->count(3)
+            ->sequence(
+                ['username' => 'foo3'],
+                ['username' => 'foo1'],
+                ['username' => 'foo'],
+            )
+            ->create();
 
         $generator = new UsernameGeneratorService();
 
@@ -58,7 +63,7 @@ class UsernameGeneratorServiceTest extends TestCase
 
         yield 'return a prefixed username if duplicated' => [
             'input' => 'foo',
-            'want' => 'foo1',
+            'want' => 'foo2',
         ];
 
         yield 'return a default username if input is empty' => [

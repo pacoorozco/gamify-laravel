@@ -47,55 +47,7 @@ class UsernameGeneratorService
         $username = preg_replace('/(@.*)$/', '', $email)
             ?? 'player';
 
-        return $username.$this->getUsernamePrefix($username);
-    }
-
-    /**
-     * Check if the user already exists and return a differentiating number.
-     */
-    protected function getUsernamePrefix(string $username): string
-    {
-        $length = strlen($username);
-        $users = $this->findDuplicateUsername($username);
-        $prefix = '';
-
-        if ($users->isNotEmpty()) {
-            $users = $users->filter(function ($user) use ($length) {
-                return is_numeric(
-                    substr($user->username, $length)
-                );
-            });
-
-            if ($users->isNotEmpty()) {
-                $user = $users
-                    ->sortByDesc(function ($user) use ($length) {
-                        return substr($user->username, $length);
-                    })
-                    ->first();
-
-                $prefix = strval((int) substr($user->username, $length) + 1);
-            } else {
-                $prefix = '1';
-            }
-        }
-
-        return $prefix;
-    }
-
-    /**
-     * Search for similar or repeated username.
-     */
-    protected function findDuplicateUsername(string $username): Collection
-    {
-        $duplicate = User::query()
-            ->where('username', $username)
-            ->get('username');
-
-        return $duplicate->isNotEmpty()
-            ? User::query()
-                ->where('username', 'LIKE', "$username%")
-                ->get('username')
-            : $duplicate;
+        return $this->generateUniqueUsername($username);
     }
 
     /**
@@ -107,6 +59,37 @@ class UsernameGeneratorService
             ? 'player'
             : $text;
 
-        return $username.$this->getUsernamePrefix($username);
+        return $this->generateUniqueUsername($username);
+    }
+
+    /**
+     * Check if the user already exists and return a differentiating number.
+     */
+    protected function generateUniqueUsername(string $username): string
+    {
+        $proposedUsername = $username;
+        $existingUsernames = $this->findDuplicatedUsernames($username)
+            ->pluck('username')
+            ->toArray();
+
+        while (in_array($proposedUsername, $existingUsernames, true)) {
+            $suffix = strval((int) substr($proposedUsername, -1) + 1);
+            $proposedUsername = $username.$suffix;
+        }
+
+        return $proposedUsername;
+    }
+
+    /**
+     * Search for similar or repeated username.
+     */
+    protected function findDuplicatedUsernames(string $username): Collection
+    {
+        $lowercaseUsername = strtolower($username);
+
+        return User::query()
+            ->whereRaw('LOWER(username) LIKE ?', [$lowercaseUsername.'%'])
+            ->orWhereRaw('LOWER(username) = ?', [$lowercaseUsername])
+            ->get('username');
     }
 }
