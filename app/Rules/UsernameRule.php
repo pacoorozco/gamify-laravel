@@ -33,8 +33,6 @@ class UsernameRule implements ValidationRule
 {
     /**
      * Indicates whether the rule should be implicit.
-     *
-     * @var bool
      */
     public bool $implicit = true;
 
@@ -48,19 +46,16 @@ class UsernameRule implements ValidationRule
      */
     const VALID_USERNAME_REGEXP = '/^[A-Za-z\d][A-Za-z\d._-]{2,254}$/';
 
-
     /**
      * Run the validation rule.
      *
-     * @param string $attribute
-     * @param mixed $value
-     * @param Closure(string): PotentiallyTranslatedString $fail
+     * @param  Closure(string): PotentiallyTranslatedString  $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match(self::VALID_USERNAME_REGEXP, $value)) {
+        if (! preg_match(self::VALID_USERNAME_REGEXP, $value)) {
             $fail('validation.username')->translate([
-                'value' => 'The :attribute is not a valid POSIX username.'
+                'value' => 'The :attribute is not a valid POSIX username.',
             ], 'en');
         }
     }

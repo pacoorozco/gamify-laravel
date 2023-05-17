@@ -62,7 +62,6 @@ class UsernameGeneratorService
         return $this->generateUniqueUsername($username);
     }
 
-
     /**
      * Check if the user already exists and return a differentiating number.
      */
@@ -75,7 +74,7 @@ class UsernameGeneratorService
 
         while (in_array($proposedUsername, $existingUsernames, true)) {
             $suffix = strval((int) substr($proposedUsername, -1) + 1);
-            $proposedUsername = $username . $suffix;
+            $proposedUsername = $username.$suffix;
         }
 
         return $proposedUsername;
@@ -89,7 +88,7 @@ class UsernameGeneratorService
         $lowercaseUsername = strtolower($username);
 
         return User::query()
-            ->whereRaw('LOWER(username) LIKE ?', [$lowercaseUsername . '%'])
+            ->whereRaw('LOWER(username) LIKE ?', [$lowercaseUsername.'%'])
             ->orWhereRaw('LOWER(username) = ?', [$lowercaseUsername])
             ->get('username');
     }
