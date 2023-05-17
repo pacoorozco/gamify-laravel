@@ -115,9 +115,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
      */
     public function points(): HasMany
     {
-        return $this->hasMany(Point::class)
-            ->selectRaw('sum(points) as sum, user_id')
-            ->groupBy('user_id');
+        return $this->hasMany(Point::class);
     }
 
     public function nextLevelCompletionPercentage(): int
