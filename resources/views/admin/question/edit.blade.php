@@ -45,12 +45,12 @@
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h2 class="box-title">
-                        {{ $question->present()->name }}
+                        {{ $question->name }}
                     </h2>
-                    {{ $question->present()->visibilityBadge }}
-                    {{ $question->present()->statusBadge }}
+                    {{ $question->present()->visibilityBadge() }}
+                    {{ $question->present()->statusBadge() }}
 
-                    <a href="{{ $question->present()->publicUrl }}"
+                    <a href="{{ $question->present()->publicUrl() }}"
                        class="btn btn-link pull-right" target="_blank">
                         {{ __('general.view') }} <i class="fa fa-external-link"></i>
                     </a>
@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <p class="text-muted">
                                 <b>{{ __('admin/question/model.permanent_link') }}</b>: {{  $question->present()->publicUrl }}
-                                <a href="{{ $question->present()->publicUrl }}"
+                                <a href="{{ $question->present()->publicUrl() }}"
                                    class="btn btn-default btn-xs" target="_blank">
                                     {{ __('general.view') }} <i class="fa fa-external-link"></i>
                                 </a>
@@ -254,14 +254,14 @@
                                         @if (empty(old('publication_date')))
                                             {{ __('admin/question/model.publish_immediately') }}
                                         @else
-                                            {{ __('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->present()->publicationDate)]) }}
+                                            {{ __('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
                                         @endif
                                         @break
                                     @case(\Gamify\Models\Question::PUBLISH_STATUS)
-                                        {{ __('admin/question/model.published_on', ['datetime' => old('publication_date', $question->present()->publicationDate)]) }}
+                                        {{ __('admin/question/model.published_on', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
                                         @break
                                     @case(\Gamify\Models\Question::FUTURE_STATUS)
-                                        {{ __('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->present()->publicationDate)]) }}
+                                        {{ __('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
                                         @break
                                 @endswitch
                             </span>
@@ -271,7 +271,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    {!! Form::text('publication_date', $question->present()->publicationDate, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
+                                    {!! Form::text('publication_date', $question->present()->publicationDate(), ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
                                     <span class="input-group-btn">
                                     <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
                                         {{ __('admin/question/model.publish_immediately') }}
@@ -361,7 +361,7 @@
                 <div class="box-body">
                     @if($question->isPublished())
                         <p>
-                            {{ __('admin/question/model.published_on', ['datetime' => $question->publicationDate->toDayDateTimeString()]) }}
+                            {{ __('admin/question/model.published_on', ['datetime' => $question->present()->publicationDate()]) }}
                         </p>
                     @endif
                     <p>

@@ -39,12 +39,12 @@
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h2 class="box-title">
-                        {{ $question->present()->name }}
+                        {{ $question->name }}
                     </h2>
-                    {{ $question->present()->visibilityBadge }}
-                    {{ $question->present()->statusBadge }}
+                    {{ $question->present()->visibilityBadge() }}
+                    {{ $question->present()->statusBadge() }}
 
-                    <a href="{{ $question->present()->publicUrl }}"
+                    <a href="{{ $question->present()->publicUrl() }}"
                        class="btn btn-link pull-right" target="_blank">
                         {{ __('general.view') }} <i class="fa fa-external-link"></i>
                     </a>
@@ -56,13 +56,13 @@
 
                         <!-- statement -->
                         <dt>{{ __('admin/question/model.question') }}</dt>
-                        <dd id="question_statement">{{ $question->present()->statement }}</dd>
+                        <dd id="question_statement">{{ $question->present()->statement() }}</dd>
                         <!-- ./ statement -->
 
                         @if($question->solution)
                             <!-- solution -->
                             <dt>{{ __('question/messages.explained_answer') }}</dt>
-                            <dd id="question_explanation">{{ $question->present()->explanation }}</dd>
+                            <dd id="question_explanation">{{ $question->present()->explanation() }}</dd>
                             <!-- ./ solution -->
                         @endif
 
@@ -187,13 +187,13 @@
                         <!-- status -->
                         <dt>{{ __('admin/question/model.status') }}</dt>
                         <dd>
-                            {{ $question->present()->statusBadge }}
+                            {{ $question->present()->statusBadge() }}
                         </dd>
                         <!-- ./ status -->
 
                         <!-- visibility -->
                         <dt>{{ __('admin/question/model.hidden') }}</dt>
-                        <dd>{{ $question->present()->visibility }}</dd>
+                        <dd>{{ $question->present()->visibility() }}</dd>
                         <!-- ./ visibility -->
 
                         <!-- authored -->
@@ -202,7 +202,7 @@
                             <ul class="list-unstyled">
                                 <li>{{ __('admin/question/model.created_by', ['who' => $question->present()->creator(), 'when' => $question->created_at->toDayDateTimeString()]) }}</li>
                                 <li>{{ __('admin/question/model.updated_by', ['who' => $question->present()->updater(), 'when' => $question->updated_at->toDayDateTimeString()]) }}</li>
-                                <li>{{ $question->present()->publicationDateDescription }}</li>
+                                <li>{{ $question->present()->publicationDateDescription() }}</li>
                             </ul>
                         </dd>
                         <!-- ./ authored -->
