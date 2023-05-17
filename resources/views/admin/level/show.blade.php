@@ -35,7 +35,7 @@
     <div class="box box-solid">
         <div class="box-header with-border">
             <h2 class="box-title">
-                {{ $level->present()->nameWithStatusBadge }}
+                {{ $level->present()->nameWithStatusBadge() }}
             </h2>
         </div>
         <div class="box-body">
@@ -49,7 +49,7 @@
                             {{ __('admin/level/model.name') }}
                         </dt>
                         <dd>
-                            {{ $level->present()->name }}
+                            {{ $level->name }}
                         </dd>
                     </dl>
                     <!-- ./ name -->
@@ -60,7 +60,7 @@
                             {{ __('admin/level/model.required_points') }}
                         </dt>
                         <dd>
-                            {{ $level->present()->required_points }}
+                            {{ $level->required_points }}
                         </dd>
                     </dl>
                     <!-- ./ required_points -->
@@ -71,7 +71,7 @@
                             {{ __('admin/level/model.active') }}
                         </dt>
                         <dd>
-                            {{ $level->present()->status }}
+                            {{ $level->present()->status() }}
                         </dd>
                     </dl>
                     <!-- ./ activation status -->
@@ -85,7 +85,7 @@
                             {{ __('admin/level/model.image') }}
                         </dt>
                         <dd>
-                            {{ $level->present()->imageThumbnail }}
+                            {{ $level->present()->imageThumbnail() }}
                         </dd>
                     </dl>
                     <!-- ./ image -->

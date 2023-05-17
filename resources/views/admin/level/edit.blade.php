@@ -42,7 +42,7 @@
     <div class="box box-solid">
         <div class="box-header with-border">
             <h2 class="box-title">
-                {{ $level->present()->nameWithStatusBadge }}
+                {{ $level->present()->nameWithStatusBadge() }}
             </h2>
         </div>
         <div class="box-body">
