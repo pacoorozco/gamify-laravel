@@ -49,7 +49,7 @@
                             {{ __('admin/badge/model.name') }}
                         </dt>
                         <dd>
-                            {{ $badge->present()->name }}
+                            {{ $badge->name }}
                         </dd>
                     </dl>
                     <!-- ./ name -->
@@ -60,7 +60,7 @@
                             {{ __('admin/badge/model.description') }}
                         </dt>
                         <dd>
-                            {{ $badge->present()->description }}
+                            {{ $badge->description }}
                         </dd>
                     </dl>
                     <!-- ./ description -->
@@ -71,7 +71,7 @@
                             {{ __('admin/badge/model.required_repetitions') }}
                         </dt>
                         <dd>
-                            {{ $badge->present()->required_repetitions }}
+                            {{ $badge->required_repetitions }}
                         </dd>
                     </dl>
                     <!-- ./ required_repetitions -->
@@ -104,7 +104,7 @@
                             {{ __('admin/badge/model.active') }}
                         </dt>
                         <dd>
-                            {{ $badge->present()->status }}
+                            {{ $badge->present()->status() }}
                         </dd>
                     </dl>
                     <!-- ./ activation status -->
@@ -118,7 +118,7 @@
                             {{ __('admin/badge/model.image') }}
                         </dt>
                         <dd>
-                            {{ $badge->present()->imageThumbnail }}
+                            {{ $badge->present()->imageThumbnail() }}
                         </dd>
                     </dl>
                     <!-- ./ image -->

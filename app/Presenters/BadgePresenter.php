@@ -45,16 +45,11 @@ class BadgePresenter extends Presenter
     public function nameWithStatusBadge(): HtmlString
     {
         $badge = $this->model->active
-            ? $this->name()
-            : $this->name().' '.$this->statusBadge();
+            ? $this->model->name
+            : $this->model->name.' '.$this->statusBadge();
 
         return Str::of($badge)
             ->toHtmlString();
-    }
-
-    public function name(): string
-    {
-        return $this->model->name;
     }
 
     public function statusBadge(): HtmlString

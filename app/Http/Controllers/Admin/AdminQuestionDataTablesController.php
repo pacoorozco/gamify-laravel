@@ -44,10 +44,10 @@ class AdminQuestionDataTablesController extends AdminController
 
         return $dataTable->eloquent($questions)
             ->editColumn('status', function (Question $question) {
-                return $question->present()->statusBadge.' '.$question->present()->visibilityBadge;
+                return $question->present()->statusBadge().' '.$question->present()->visibilityBadge();
             })
             ->editColumn('name', function (Question $question) {
-                return $question->present()->name.' '.$question->present()->publicUrlLink;
+                return $question->name.' '.$question->present()->publicUrlLink();
             })
             ->editColumn('publication_date', function (Question $question) {
                 return $question->present()->publicationDate();
