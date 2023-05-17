@@ -28,6 +28,7 @@ namespace Tests\Feature\Http\Controllers;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Gamify\Notifications\BadgeUnlocked;
+use Illuminate\Notifications\Notification;
 use Tests\Feature\TestCase;
 
 class MarkNotificationAsReadControllerTest extends TestCase
@@ -46,6 +47,7 @@ class MarkNotificationAsReadControllerTest extends TestCase
         $user->notify(new BadgeUnlocked($badge));
 
         // We want to mark only one as read.
+        /** @var Notification $notification */
         $notification = $user->unreadNotifications->first();
 
         $this

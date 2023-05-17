@@ -50,17 +50,22 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
 
     /**
      * Returns an array of values to be used on <select> with <optgroups> and filtered options.
+     *
+     * @return array<int|string, array<int, string>|string>
      */
     public static function toSelectArray(): array
     {
+        $questionEventsKey = (string) __('enums.actuators_related_with_question_events');
+        $userEventsKey = (string) __('enums.actuators_related_with_user_events');
+
         return [
             self::None => self::None()->description,
-            trans('enums.actuators_related_with_question_events') => [
+            $questionEventsKey => [
                 self::OnQuestionAnswered => self::OnQuestionAnswered()->description,
                 self::OnQuestionCorrectlyAnswered => self::OnQuestionCorrectlyAnswered()->description,
                 self::OnQuestionIncorrectlyAnswered => self::OnQuestionIncorrectlyAnswered()->description,
             ],
-            trans('enums.actuators_related_with_user_events') => [
+            $userEventsKey => [
                 self::OnUserLogin => self::OnUserLogin()->description,
             ],
         ];
@@ -83,8 +88,6 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
     /**
      * Returns if the provided $actuator can be filtered by Tags.
      * Only Question based actuators can be filtered.
-     *
-     * @param  \Gamify\Enums\BadgeActuators  $actuator
      */
     public static function canBeTagged(BadgeActuators $actuator): bool
     {
