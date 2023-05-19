@@ -37,7 +37,7 @@ class UserHeaderComposer
             'profile',
         ])->find(
             Auth::id(),
-            ['id', 'name', 'username', 'experience', 'created_at']
+            ['id', 'name', 'username', 'created_at']
         );
 
         $view->with('user', $user);

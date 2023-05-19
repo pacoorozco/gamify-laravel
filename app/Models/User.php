@@ -51,7 +51,6 @@ use Illuminate\Support\Facades\Hash;
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
  * @property Roles $role Role of the user.
- * @property int $experience The reputation of the user.
  * @property UserProfile $profile The user's profile
  * @property-read string $level The current level of the user.
  * @property-read Collection $unreadNotifications The user's unread notifications.
@@ -113,6 +112,11 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->hasMany(Point::class);
     }
 
+    public function experience(): int
+    {
+        return $this->points()->sum('points');
+    }
+
     public function nextLevelCompletionPercentage(): int
     {
         $nextLevel = $this->nextLevel();
@@ -121,19 +125,19 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
             return 100;
         }
 
-        $completion = min(($this->experience / $nextLevel->required_points) * 100, 100);
+        $completion = min(($this->experience() / $nextLevel->required_points) * 100, 100);
 
         return (int) $completion;
     }
 
     public function nextLevel(): Level
     {
-        return Level::findNextByExperience($this->experience);
+        return Level::findNextByExperience($this->experience());
     }
 
     public function pointsToNextLevel(): int
     {
-        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
+        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience();
 
         return max($pointsToNextLevel, 0);
     }
@@ -262,7 +266,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Level::findByExperience($this->experience)
+            get: fn ($value) => Level::findByExperience($this->experience())
                 ->name,
         );
     }

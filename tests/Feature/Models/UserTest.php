@@ -27,6 +27,7 @@ namespace Tests\Feature\Models;
 
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
+use Gamify\Models\Point;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Gamify\Models\UserBadgeProgress;
@@ -162,13 +163,17 @@ class UserTest extends TestCase
         int $nextLevelExperience,
         int $want,
     ): void {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->experience = $experience;
-
         Level::factory()->create([
             'required_points' => $nextLevelExperience,
         ]);
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        Point::factory()
+            ->for($user)
+            ->create([
+                'points' => $experience,
+            ]);
 
         $this->assertEquals($want, $user->pointsToNextLevel());
     }
@@ -216,13 +221,17 @@ class UserTest extends TestCase
         int $nextLevelExperience,
         int $want,
     ): void {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->experience = $experience;
-
         Level::factory()->create([
             'required_points' => $nextLevelExperience,
         ]);
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        Point::factory()
+            ->for($user)
+            ->create([
+                'points' => $experience,
+            ]);
 
         $this->assertEquals($want, $user->nextLevelCompletionPercentage());
     }

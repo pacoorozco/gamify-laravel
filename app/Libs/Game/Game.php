@@ -28,6 +28,7 @@ namespace Gamify\Libs\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Gamify\Notifications\BadgeUnlocked;
+use Illuminate\Support\Collection;
 
 class Game
 {
@@ -78,25 +79,23 @@ class Game
         $user->notify(new BadgeUnlocked($badge));
     }
 
-    public static function getTopExperiencedPlayers(int $numberOfPlayers = 10): \Illuminate\Support\Collection
+    public static function getTopExperiencedPlayers(int $maxNumberOfPlayers = 10): Collection
     {
         return User::query()
             ->player()
-            ->select([
-                'name',
-                'username',
-                'experience',
-            ])
-            ->orderBy('experience', 'DESC')
-            ->take($numberOfPlayers)
+            ->select(['username', 'name'])
+            ->withSum('points as total_points', 'points')
+            ->orderByDesc('total_points')
+            ->take($maxNumberOfPlayers)
             ->get()
-            ->map(
-                fn ($user) => [
+            ->map(function ($user) {
+                return [
                     'username' => $user->username,
                     'name' => $user->name,
-                    'experience' => $user->experience,
+                    /** @phpstan-ignore-next-line */
+                    'experience' => $user->total_points,
                     'level' => $user->level,
-                ]
-            );
+                ];
+            });
     }
 }
