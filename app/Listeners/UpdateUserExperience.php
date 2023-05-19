@@ -34,6 +34,6 @@ class UpdateUserExperience
     public function handle(PointCreated|PointDeleted $event): void
     {
         $user = $event->point->user;
-        Cache::put('user_experience_' . $user->id, $user->points()->sum('points'), 60);
+        Cache::put('user_experience_'.$user->id, $user->points()->sum('points'), 60);
     }
 }

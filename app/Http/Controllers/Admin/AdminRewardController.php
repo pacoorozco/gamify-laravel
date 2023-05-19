@@ -58,7 +58,7 @@ class AdminRewardController extends AdminController
 
         $user->points()->create([
             'points' => $request->experience(),
-            'description' => $request->reason()
+            'description' => $request->reason(),
         ]);
 
         return redirect()->route('admin.rewards.index')

@@ -114,8 +114,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->hasMany(Point::class);
     }
 
-
-
     public function nextLevelCompletionPercentage(): int
     {
         $nextLevel = $this->nextLevel();
@@ -269,10 +267,11 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
                 ->name,
         );
     }
+
     protected function experience(): Attribute
     {
         return Attribute::make(
-            get: fn () => Cache::remember('user_experience_' . $this->id, 60, function () {
+            get: fn () => Cache::remember('user_experience_'.$this->id, 60, function () {
                 return $this->points()->sum('points');
             })
         );
