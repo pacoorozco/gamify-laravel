@@ -271,7 +271,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     protected function experience(): Attribute
     {
         return Attribute::make(
-            get: fn () => Cache::remember('user_experience_'.$this->id, 60, function () {
+            get: fn () => Cache::remember('user_experience_'.$this->id, 600, function () {
                 return $this->points()->sum('points');
             })
         );
