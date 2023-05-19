@@ -42,7 +42,7 @@ class AdminRewardControllerTest extends TestCase
     {
         parent::setUp();
 
-        /** @var User user */
+        /** @var User $user */
         $user = User::factory()->create();
 
         $this->user = $user;
@@ -189,6 +189,13 @@ class AdminRewardControllerTest extends TestCase
                 'points' => 'not-a-number',
             ],
             'errors' => ['points'],
+        ];
+
+        yield 'message is empty' => [
+            'data' => [
+                'message' => '',
+            ],
+            'errors' => ['message'],
         ];
     }
 
