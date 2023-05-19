@@ -23,19 +23,19 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Listeners;
+namespace Gamify\Events;
 
-use Gamify\Events\PointCreated;
+use Gamify\Models\Point;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
-/**
- * Update User's experience field everytime a Point is created.
- *
- * User's experience field is a counter to avoid to calculate the experience based on the Points table.
- */
-class UpdateExperience
+class PointDeleted
 {
-    public function handle(PointCreated $event): void
+    use Dispatchable;
+    use SerializesModels;
+
+    public function __construct(public Point $point)
     {
-        $event->user->increment('experience', $event->points);
+        //
     }
 }

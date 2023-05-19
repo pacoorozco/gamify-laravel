@@ -27,6 +27,7 @@ namespace Tests\Feature\Libs\Game;
 
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
+use Gamify\Models\Point;
 use Gamify\Models\User;
 use Generator;
 use Illuminate\Support\Arr;
@@ -34,22 +35,6 @@ use Tests\Feature\TestCase;
 
 class GameTest extends TestCase
 {
-    /** @test */
-    public function it_should_add_experience_to_the_user(): void
-    {
-        /** @var User $user */
-        $user = User::factory()
-            ->create();
-
-        Game::addExperienceTo(
-            user: $user,
-            experience: 5,
-            reason: 'test'
-        );
-
-        $this->assertEquals(5, $user->points()->sum('points'));
-    }
-
     /** @test */
     public function it_increments_repetitions_for_a_given_badge(): void
     {
@@ -178,14 +163,7 @@ class GameTest extends TestCase
         int $numberOfPlayers,
         array $expectedPlayers,
     ): void {
-        // Users: 'User 10' has 10 points, ..., 'User 50' has 50 points
-        User::factory()
-            ->count(5)
-            ->sequence(fn ($sequence) => [
-                'name' => 'User '.($sequence->index + 1) * 10,
-                'experience' => ($sequence->index + 1) * 10,
-            ])
-            ->create();
+        $this->prepareUsersWithExperience();
 
         $got = Game::getTopExperiencedPlayers($numberOfPlayers);
 
@@ -212,5 +190,24 @@ class GameTest extends TestCase
             'numberOfPlayers' => 6,
             'expectedPlayers' => ['User 50', 'User 40', 'User 30', 'User 20', 'User 10'],
         ];
+    }
+
+    private function prepareUsersWithExperience(): void
+    {
+        $points = 10;
+
+        for ($i = 0; $i < 5; $i++) {
+            $user = User::factory()->create([
+                'name' => 'User '.$points,
+            ]);
+
+            Point::factory()
+                ->for($user)
+                ->create([
+                    'points' => $points,
+                ]);
+
+            $points += 10;
+        }
     }
 }

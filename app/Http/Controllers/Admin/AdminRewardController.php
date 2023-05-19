@@ -56,11 +56,10 @@ class AdminRewardController extends AdminController
         $user = User::where('username', $request->usernameToReward())
             ->firstOrFail();
 
-        Game::addExperienceTo(
-            user: $user,
-            experience: $request->experience(),
-            reason: $request->reason() ?? ''
-        );
+        $user->points()->create([
+            'points' => $request->experience(),
+            'description' => $request->reason(),
+        ]);
 
         return redirect()->route('admin.rewards.index')
             ->with('success',

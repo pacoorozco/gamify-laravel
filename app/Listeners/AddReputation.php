@@ -26,7 +26,6 @@
 namespace Gamify\Listeners;
 
 use Gamify\Events\QuestionAnswered;
-use Gamify\Libs\Game\Game;
 
 /**
  * Add XP to a user when a Question has been answered.
@@ -35,7 +34,11 @@ class AddReputation
 {
     public function handle(QuestionAnswered $event): void
     {
-        // Add XP to user
-        Game::addExperienceTo($event->user, $event->points, 'has earned '.$event->points.' points.');
+        $user = $event->user;
+
+        $user->points()->create([
+            'points' => $event->points,
+            'description' => 'has earned '.$event->points.' points.',
+        ]);
     }
 }

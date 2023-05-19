@@ -27,6 +27,7 @@ namespace Tests\Feature\Models;
 
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
+use Gamify\Models\Point;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Gamify\Models\UserBadgeProgress;
@@ -100,7 +101,7 @@ class UserTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertInstanceOf(Collection::class, $user->getCompletedBadges());
+        $this->assertInstanceOf(Collection::class, $user->unlockedBadges());
     }
 
     /** @test */
@@ -109,7 +110,7 @@ class UserTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $this->assertCount(0, $user->getCompletedBadges());
+        $this->assertCount(0, $user->unlockedBadges());
     }
 
     /** @test */
@@ -162,13 +163,17 @@ class UserTest extends TestCase
         int $nextLevelExperience,
         int $want,
     ): void {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->experience = $experience;
-
         Level::factory()->create([
             'required_points' => $nextLevelExperience,
         ]);
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        Point::factory()
+            ->for($user)
+            ->create([
+                'points' => $experience,
+            ]);
 
         $this->assertEquals($want, $user->pointsToNextLevel());
     }
@@ -216,15 +221,19 @@ class UserTest extends TestCase
         int $nextLevelExperience,
         int $want,
     ): void {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->experience = $experience;
-
         Level::factory()->create([
             'required_points' => $nextLevelExperience,
         ]);
 
-        $this->assertEquals($want, $user->nextLevelCompletion());
+        /** @var User $user */
+        $user = User::factory()->create();
+        Point::factory()
+            ->for($user)
+            ->create([
+                'points' => $experience,
+            ]);
+
+        $this->assertEquals($want, $user->nextLevelCompletionPercentage());
     }
 
     public static function providesNextLevelCompletionTestCases(): \Generator

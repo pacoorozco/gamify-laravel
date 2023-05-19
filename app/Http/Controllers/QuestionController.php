@@ -50,7 +50,7 @@ class QuestionController extends Controller
             'questions' => $user->pendingQuestions(),
             'next_level_name' => $user->nextLevel()->name,
             'points_to_next_level' => $user->pointsToNextLevel(),
-            'percentage_to_next_level' => $user->nextLevelCompletion(),
+            'percentage_to_next_level' => $user->nextLevelCompletionPercentage(),
             'answered_questions' => $user->answeredQuestionsCount(),
             'percentage_of_answered_questions' => $questionsCompletion,
         ]);

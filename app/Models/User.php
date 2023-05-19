@@ -40,19 +40,20 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 /**
  * User model, represents a Gamify user.
  *
- * @property int $id The object unique id.
  * @property string $name The name of this user.
  * @property string $username The username of this user.
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
- * @property \Gamify\Enums\Roles $role Role of the user.
- * @property int $experience The reputation of the user.
+ * @property Roles $role Role of the user.
  * @property UserProfile $profile The user's profile
+ * @property-read int $id The object unique id.
+ * @property-read int $experience The experience points of the user.
  * @property-read string $level The current level of the user.
  * @property-read Collection $unreadNotifications The user's unread notifications.
  */
@@ -85,33 +86,6 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         'email_verified_at' => 'datetime',
     ];
 
-    public static function findByUsername(string $username): self
-    {
-        return self::where('username', $username)->firstOrFail();
-    }
-
-    public static function findByEmailAddress(string $emailAddress): self
-    {
-        return self::where('email', $emailAddress)->firstOrFail();
-    }
-
-    public function profile(): HasOne
-    {
-        return $this->hasOne(UserProfile::class);
-    }
-
-    /**
-     * These are the User's Points relationship.
-     *
-     * Results are grouped by user_is and it selects the sum of all points
-     */
-    public function points(): HasMany
-    {
-        return $this->hasMany(Point::class)
-            ->selectRaw('sum(points) as sum, user_id')
-            ->groupBy('user_id');
-    }
-
     public function isAdmin(): bool
     {
         return $this->role->is(Roles::Admin);
@@ -122,12 +96,47 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $query->where('role', Roles::Player);
     }
 
+    public function profile(): HasOne
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
     /**
      * Linked Social Accounts (facebook, twitter, github...).
      */
     public function accounts(): HasMany
     {
         return $this->hasMany(LinkedSocialAccount::class);
+    }
+
+    public function points(): HasMany
+    {
+        return $this->hasMany(Point::class);
+    }
+
+    public function nextLevelCompletionPercentage(): int
+    {
+        $nextLevel = $this->nextLevel();
+
+        if ($nextLevel->required_points === 0) {
+            return 100;
+        }
+
+        $completion = min(($this->experience / $nextLevel->required_points) * 100, 100);
+
+        return (int) $completion;
+    }
+
+    public function nextLevel(): Level
+    {
+        return Level::findNextByExperience($this->experience);
+    }
+
+    public function pointsToNextLevel(): int
+    {
+        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
+
+        return max($pointsToNextLevel, 0);
     }
 
     public function pendingQuestions(int $perPageLimit = 5, bool $filterHiddenQuestions = true): Paginator
@@ -154,14 +163,9 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
      */
     public function answeredQuestions(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Question::class,
-            'users_questions',
-            'user_id',
-            'question_id'
-        )
+        return $this->belongsToMany(Question::class, 'users_questions')
             ->as('response')
-            ->withPivot('points', 'answers')
+            ->withPivot(['points', 'answers'])
             ->using(UserResponse::class);
     }
 
@@ -170,37 +174,35 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->answeredQuestions()->count();
     }
 
-    public function unlockedBadgesCount(): int
+    public function hasAnsweredQuestion(Question $question): bool
     {
-        return $this->getCompletedBadges()->count();
+        return $this->answeredQuestions()
+            ->where('question_id', $question->id)
+            ->exists();
     }
 
-    public function getCompletedBadges(): Collection
+    public function getResponseForQuestion(Question $question): ?UserResponse
     {
-        return $this->badges()
-            ->wherePivotNotNull('unlocked_at')
-            ->get();
+        return $this->answeredQuestions()
+            ->where('question_id', $question->id)
+            ->first()
+            ->response ?? null;
     }
 
     public function badges(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Badge::class,
-            'users_badges',
-            'user_id',
-            'badge_id')
+        return $this->belongsToMany(Badge::class, 'users_badges')
             ->as('progress')
-            ->withPivot('repetitions', 'unlocked_at')
+            ->withPivot(['repetitions', 'unlocked_at'])
             ->using(UserBadgeProgress::class);
     }
 
     public function progressToCompleteTheBadge(Badge $badge): ?UserBadgeProgress
     {
-        /** @phpstan-ignore-next-line */
         return $this->badges()
             ->wherePivot('badge_id', $badge->id)
             ->first()
-            ?->progress;
+            ->progress ?? null;
     }
 
     public function unlockedBadges(): Collection
@@ -208,6 +210,11 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->badges()
             ->wherePivotNotNull('unlocked_at')
             ->get();
+    }
+
+    public function unlockedBadgesCount(): int
+    {
+        return $this->unlockedBadges()->count();
     }
 
     public function lockedBadges(): Collection
@@ -233,49 +240,9 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
             ->exists();
     }
 
-    public function nextLevelCompletion(): int
-    {
-        if ($this->nextLevel()->required_points == 0) {
-            return 100;
-        }
-
-        $completion = $this->experience / $this->nextLevel()->required_points;
-
-        return ($completion > 1)
-            ? 100
-            : $completion * 100;
-    }
-
-    public function nextLevel(): Level
-    {
-        return Level::findNextByExperience($this->experience);
-    }
-
-    public function pointsToNextLevel(): int
-    {
-        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
-
-        return ($pointsToNextLevel < 0)
-            ? 0
-            : $pointsToNextLevel;
-    }
-
-    public function hasAnsweredQuestion(Question $question): bool
-    {
-        return $this->answeredQuestions()
-            ->where('question_id', $question->id)
-            ->exists();
-    }
-
-    public function getResponseForQuestion(Question $question): ?UserResponse
-    {
-        /** @phpstan-ignore-next-line */
-        return $this->answeredQuestions()
-            ->where('question_id', $question->id)
-            ->first()
-            ?->response;
-    }
-
+    /**
+     * Ensure username is stored in lower cases.
+     */
     protected function username(): Attribute
     {
         return Attribute::make(
@@ -283,6 +250,9 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         );
     }
 
+    /**
+     * Ensure password is stored encrypted.
+     */
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -295,6 +265,15 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return Attribute::make(
             get: fn ($value) => Level::findByExperience($this->experience)
                 ->name,
+        );
+    }
+
+    protected function experience(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Cache::remember('user_experience_'.$this->id, 600, function () {
+                return $this->points()->sum('points');
+            })
         );
     }
 }

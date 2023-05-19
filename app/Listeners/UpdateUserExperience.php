@@ -23,30 +23,17 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Enums\Roles;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Gamify\Listeners;
 
-return new class extends Migration
+use Gamify\Events\PointCreated;
+use Gamify\Events\PointDeleted;
+use Illuminate\Support\Facades\Cache;
+
+class UpdateUserExperience
 {
-    public function up(): void
+    public function handle(PointCreated|PointDeleted $event): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('role')->default(Roles::Player);
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        $user = $event->point->user;
+        Cache::put('user_experience_'.$user->id, $user->points()->sum('points'), 600);
     }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('users');
-    }
-};
+}
