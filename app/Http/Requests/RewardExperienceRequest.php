@@ -43,7 +43,7 @@ class RewardExperienceRequest extends Request
                 'integer',
             ],
             'message' => [
-                'nullable',
+                'required',
                 'string',
             ],
         ];
@@ -59,7 +59,7 @@ class RewardExperienceRequest extends Request
         return $this->input('points');
     }
 
-    public function reason(): ?string
+    public function reason(): string
     {
         return $this->input('message');
     }
