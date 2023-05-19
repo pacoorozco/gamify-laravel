@@ -84,8 +84,7 @@ class Game
                 return [
                     'username' => $user->username,
                     'name' => $user->name,
-                    /** @phpstan-ignore-next-line */
-                    'experience' => $user->total_points,
+                    'experience' => $user->total_points ?? 0,
                     'level' => $user->level,
                 ];
             });
