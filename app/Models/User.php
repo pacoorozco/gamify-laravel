@@ -40,18 +40,20 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 /**
  * User model, represents a Gamify user.
  *
- * @property int $id The object unique id.
  * @property string $name The name of this user.
  * @property string $username The username of this user.
  * @property string $email The email address of this user.
  * @property string $password Encrypted password of this user.
  * @property Roles $role Role of the user.
  * @property UserProfile $profile The user's profile
+ * @property-read int $id The object unique id.
+ * @property-read int $experience The experience points of the user.
  * @property-read string $level The current level of the user.
  * @property-read Collection $unreadNotifications The user's unread notifications.
  */
@@ -112,10 +114,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return $this->hasMany(Point::class);
     }
 
-    public function experience(): int
-    {
-        return $this->points()->sum('points');
-    }
+
 
     public function nextLevelCompletionPercentage(): int
     {
@@ -125,19 +124,19 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
             return 100;
         }
 
-        $completion = min(($this->experience() / $nextLevel->required_points) * 100, 100);
+        $completion = min(($this->experience / $nextLevel->required_points) * 100, 100);
 
         return (int) $completion;
     }
 
     public function nextLevel(): Level
     {
-        return Level::findNextByExperience($this->experience());
+        return Level::findNextByExperience($this->experience);
     }
 
     public function pointsToNextLevel(): int
     {
-        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience();
+        $pointsToNextLevel = $this->nextLevel()->required_points - $this->experience;
 
         return max($pointsToNextLevel, 0);
     }
@@ -266,8 +265,16 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Level::findByExperience($this->experience())
+            get: fn ($value) => Level::findByExperience($this->experience)
                 ->name,
+        );
+    }
+    protected function experience(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Cache::remember('user_experience_' . $this->id, 60, function () {
+                return $this->points()->sum('points');
+            })
         );
     }
 }

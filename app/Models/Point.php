@@ -26,6 +26,7 @@
 namespace Gamify\Models;
 
 use Gamify\Events\PointCreated;
+use Gamify\Events\PointDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id Object unique id..
  * @property int $points How many points has been given.
  * @property string $description Reason to obtain the points.
+ * @property-read User $user
  */
 class Point extends Model
 {
@@ -49,6 +51,7 @@ class Point extends Model
 
     protected $dispatchesEvents = [
         'created' => PointCreated::class,
+        'deleted' => PointDeleted::class,
     ];
 
     public function user(): BelongsTo

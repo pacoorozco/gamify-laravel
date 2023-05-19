@@ -32,14 +32,6 @@ use Illuminate\Support\Collection;
 
 class Game
 {
-    public static function addExperienceTo(User $user, int $experience, string $reason): void
-    {
-        $user->points()->create([
-            'points' => $experience,
-            'description' => $reason,
-        ]);
-    }
-
     public static function incrementBadgeCount(User $user, Badge $badgeToIncrement): void
     {
         if ($user->hasUnlockedBadge($badgeToIncrement)) {

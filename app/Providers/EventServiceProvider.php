@@ -31,7 +31,7 @@ use Gamify\Events\SocialLogin;
 use Gamify\Listeners\AddReputation;
 use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
 use Gamify\Listeners\IncrementBadgesOnUserLogin;
-use Gamify\Listeners\UpdateExperience;
+use Gamify\Listeners\UpdateUserExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -61,7 +61,7 @@ class EventServiceProvider extends ServiceProvider
             IncrementBadgesOnQuestionAnswered::class,
         ],
         PointCreated::class => [
-            UpdateExperience::class,
+            UpdateUserExperience::class,
         ],
         SocialLogin::class => [
             IncrementBadgesOnUserLogin::class,

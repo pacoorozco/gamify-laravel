@@ -46,7 +46,7 @@ class AdminUserDataTablesController extends AdminController
                 return $user->present()->role;
             })
             ->addColumn('experience', function (User $user) {
-                return $user->experience();
+                return $user->experience;
             })
             ->addColumn('level', function (User $user) {
                 return $user->present()->level;

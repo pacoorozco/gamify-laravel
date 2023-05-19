@@ -26,16 +26,14 @@
 namespace Gamify\Listeners;
 
 use Gamify\Events\PointCreated;
+use Gamify\Events\PointDeleted;
+use Illuminate\Support\Facades\Cache;
 
-/**
- * Update User's experience field everytime a Point is created.
- *
- * User's experience field is a counter to avoid to calculate the experience based on the Points table.
- */
-class UpdateExperience
+class UpdateUserExperience
 {
-    public function handle(PointCreated $event): void
+    public function handle(PointCreated|PointDeleted $event): void
     {
-        $event->user->increment('experience', $event->points);
+        $user = $event->point->user;
+        Cache::put('user_experience_' . $user->id, $user->points()->sum('points'), 60);
     }
 }

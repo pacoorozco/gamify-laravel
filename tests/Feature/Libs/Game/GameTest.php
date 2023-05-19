@@ -36,22 +36,6 @@ use Tests\Feature\TestCase;
 class GameTest extends TestCase
 {
     /** @test */
-    public function it_should_add_experience_to_the_user(): void
-    {
-        /** @var User $user */
-        $user = User::factory()
-            ->create();
-
-        Game::addExperienceTo(
-            user: $user,
-            experience: 5,
-            reason: 'test'
-        );
-
-        $this->assertEquals(5, $user->experience());
-    }
-
-    /** @test */
     public function it_increments_repetitions_for_a_given_badge(): void
     {
         /** @var User $user */

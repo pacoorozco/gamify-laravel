@@ -23,30 +23,19 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-use Gamify\Enums\Roles;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Gamify\Events;
 
-return new class extends Migration
+use Gamify\Models\Point;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class PointDeleted
 {
-    public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('role')->default(Roles::Player);
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
+    use Dispatchable;
+    use SerializesModels;
 
-    public function down(): void
+    public function __construct(public Point $point)
     {
-        Schema::dropIfExists('users');
+        //
     }
-};
+}
