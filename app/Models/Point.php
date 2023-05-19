@@ -26,6 +26,7 @@
 namespace Gamify\Models;
 
 use Gamify\Events\PointCreated;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -39,6 +40,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Point extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'points',
         'description',
