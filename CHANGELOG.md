@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 4.1.0 - 2023-05-19
+
+### Added
+- Add a new event to be used on Social Login
+
 ### Changed
 - Bump `aglipanci/laravel-pint-action` from 2.1.0 to 2.2.0 ([#413][i413])
 - Bump `laravel/framework` from 10.1.5 to 10.5.1 ([#414][i414])
@@ -11,6 +17,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - Bump `laravel/sail` from 1.21.0 to 1.21.3 ([#416][i416])
 - Bump `brianium/paratest` from 7.0.6 to 7.1.2 ([#417][i417])
 - Bump `phpunit/phpunit` from 10.0.12 to 10.0.19 ([#418][i418])
+- Refactor UsernameGeneratorService to reduce # of queries
+- Replace deprecated ImplicitRule rule by ValidationRule in Laravel 10
+- Simplify methods pointsToNextLevel() and nextLevelCompletion() in User model
+- [CI] Replace deprecated create release action
+- [CI] Upgrade mysql to 8.0 on CI/CD.
+- [CI] Replace DatabaseTransactions by RefreshDatabase trait
+
+### Fixed
+- Fix broken link in CONTRIBUTING guide.
+- Fix missing UserPresenter methods
+- Fix missing BadgePresenter methods
+- Fix missing LevelPresenter methods
+- Fix missing QuestionPresenter methods
+- Fix broken image on locked badges
+- Fix incorrect database when testing
+- Fix required reason field when rewarding points
+
+### Removed
+- Remove unused methods findBy*
+- Remove duplicated methods in User model
+- Remove the sum of points when using points()
+- Remove the `experience` in the `users` table in favor of a calculated attribute
 
 [i413]: https://github.com/pacoorozco/gamify-laravel/pull/413
 [i414]: https://github.com/pacoorozco/gamify-laravel/pull/414
