@@ -13,7 +13,7 @@
         <div class="panel-body">
             {!! $question->excerpt() !!}
 
-            <a href="{{ route('questions.show', $question->short_name) }}"
+            <a href="{{ $question->publicUrl }}"
                class="btn btn-primary pull-right">More...</a>
         </div>
     </div>

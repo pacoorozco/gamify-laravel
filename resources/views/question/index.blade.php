@@ -39,7 +39,7 @@
             <!-- available-questions -->
             <div class="list-group">
                 @forelse($questions as $question)
-                    <a href="{{ $question->present()->publicUrl }}" class="list-group-item">
+                    <a href="{{ $question->publicUrl }}" class="list-group-item">
                         <h4 class="list-group-item-heading">{{ $question->name }}</h4>
                         <p class="list-group-item-text"></p>
                     </a>
