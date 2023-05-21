@@ -34,7 +34,6 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('short_name')->unique();
             $table->string('name');
             $table->text('question');
             $table->text('solution')->nullable();

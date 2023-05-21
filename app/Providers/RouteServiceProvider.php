@@ -30,7 +30,6 @@ use Gamify\Models\Level;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Gamify\Services\HashIdService;
-use Hashids\Hashids;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -107,15 +106,12 @@ class RouteServiceProvider extends ServiceProvider
             return User::where('username', $value)->firstOrFail();
         });
 
-//        Route::bind('questionname', function (string $value) {
-//            return Question::where('short_name', $value)->firstOrFail();
-//        });
-
-        Route::bind('post_hash', function (string $value) {
+        Route::bind('q_hash', function (string $value) {
             try {
                 $id = (new HashIdService())->decode($value);
+
                 return Question::findOrFail($id);
-            } catch(\Throwable) {
+            } catch (\Throwable) {
                 abort(404);
             }
         });

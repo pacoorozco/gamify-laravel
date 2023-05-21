@@ -35,7 +35,6 @@ class AdminQuestionDataTablesController extends AdminController
     {
         $questions = Question::select([
             'id',
-            'short_name',
             'name',
             'status',
             'hidden',
@@ -62,7 +61,7 @@ class AdminQuestionDataTablesController extends AdminController
                     ->render();
             })
             ->rawColumns(['actions', 'status', 'name', 'tags'])
-            ->removeColumn(['id', 'hidden', 'short_name'])
+            ->removeColumn(['id', 'hidden'])
             ->toJson();
     }
 }

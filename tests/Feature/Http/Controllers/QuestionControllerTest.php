@@ -72,7 +72,7 @@ class QuestionControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->get(route('questions.show', $question->short_name))
+            ->get(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]))
             ->assertNotFound();
     }
 
@@ -86,7 +86,7 @@ class QuestionControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->get(route('questions.show', $question->short_name))
+            ->get(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]))
             ->assertSuccessful()
             ->assertViewIs('question.show')
             ->assertSeeText($question->name);
@@ -102,7 +102,7 @@ class QuestionControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), [
+            ->post(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]), [
                 // Answer with the first available choice.
                 /** @phpstan-ignore-next-line */
                 'choices' => [$question->choices()->first()->id],
@@ -137,7 +137,7 @@ class QuestionControllerTest extends TestCase
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), [
+            ->post(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]), [
                 'choices' => $choices,
             ])
             ->assertSuccessful();
@@ -165,7 +165,7 @@ class QuestionControllerTest extends TestCase
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), [
+            ->post(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]), [
                 'choices' => $choices,
             ])
             ->assertSuccessful();

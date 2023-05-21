@@ -67,13 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('questions', 'index')
             ->name('questions.index');
 
-//        Route::get('questions/{questionname}', 'show')
-//            ->name('questions.show');
-
-        Route::get('questions/{post_hash}/{slug}', 'show')
+        Route::get('questions/{q_hash}/{slug?}', 'show')
             ->name('questions.show');
 
-        Route::post('questions/{questionname}', 'answer')
+        Route::post('questions/{q_hash}/{slug?}', 'answer')
             ->name('questions.answer');
     });
 

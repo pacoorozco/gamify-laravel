@@ -1,4 +1,4 @@
-{!! Form::open(array('route' => ['questions.answer', $question->short_name])) !!}
+{!! Form::open(array('route' => ['questions.answer', ['q_hash' => $question->hash, 'slug' => $question->slug]])) !!}
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">{{ $question->name }}</h3>

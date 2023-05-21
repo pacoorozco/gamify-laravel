@@ -302,16 +302,4 @@ class QuestionTest extends TestCase
 
         $this->assertEquals('', $question->present()->publicationDate);
     }
-
-    /** @test */
-    public function it_returns_formatted_public_url_using_presenter(): void
-    {
-        /** @var Question $question */
-        $question = Question::factory()
-            ->create([
-                'name' => 'test question number 1',
-            ]);
-
-        $this->assertEquals('http://localhost/questions/test-question-number-1', $question->present()->publicUrl);
-    }
 }

@@ -28,7 +28,6 @@ namespace Gamify\Models;
 use Carbon\Carbon;
 use Coderflex\LaravelPresenter\Concerns\CanPresent;
 use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentTaggable\Taggable;
 use Gamify\Events\QuestionPendingReview;
 use Gamify\Events\QuestionPublished;
@@ -43,31 +42,30 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
+use Throwable;
 
 /**
  * Class Question.
  *
- *
- * @property int $id The object unique id.
+ * @property-read int $id The object unique id.
  * @property string $name The name of the question.
- * @property string $short_name The slugged name of the question.
  * @property string $question The text for the question.
- * @property string $solution The test for the solution.
+ * @property string $solution The text for the solution.
  * @property string $type The question type ['single'. 'multi'].
  * @property bool $hidden The visibility of the question.
  * @property string $status The status of the question.
- * @property string $publicUrl The public URL of this question.
- * @property \Gamify\Models\User $creator The User who created this question,
- * @property \Gamify\Models\User $updater The last User who updated this question.
- * @property ?Carbon $publication_date The data when the question was published.
- * @property ?Carbon $expiration_date The data when the question was expired.
+ * @property-read string $hash The unique hash of this question.
+ * @property-read string $slug The title's slug of this question.
+ * @property-read User $creator The User who created this question,
+ * @property-read User $updater The last User who updated this question.
+ * @property Carbon|null $publication_date The data when the question was published.
+ * @property Carbon|null $expiration_date The data when the question was expired.
  *
- * @mixin \Eloquent
+ * @mixin Model
  */
 class Question extends Model implements CanPresent
 {
     use SoftDeletes;
-    use Sluggable;
     use Taggable;
     use HasFactory;
     use UsesPresenters;
@@ -105,23 +103,9 @@ class Question extends Model implements CanPresent
 
     ];
 
-    public function sluggable(): array
-    {
-        return [
-            'short_name' => [
-                'source' => 'name',
-            ],
-        ];
-    }
-
     public function excerpt(int $length = 55, string $trailing = '...'): string
     {
         return ($length > 0) ? Str::words($this->question, $length, $trailing) : '';
-    }
-
-    public function isPublishedOrScheduled(): bool
-    {
-        return $this->isPublished() || $this->isScheduled();
     }
 
     public function isPublished(): bool
@@ -155,7 +139,7 @@ class Question extends Model implements CanPresent
      * Publishes or schedules a question using transitions to desired status.
      * It verifies all requirements before it.
      *
-     * @throws \Gamify\Exceptions\QuestionPublishingException
+     * @throws QuestionPublishingException
      */
     public function publish(): void
     {
@@ -171,7 +155,7 @@ class Question extends Model implements CanPresent
             (is_null($this->publishedAt()) || $this->publishedAt()->lessThanOrEqualTo(now()))
                 ? $this->transitionToPublishedStatus()
                 : $this->transitionToScheduledStatus();
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new QuestionPublishingException($exception);
         }
     }
@@ -203,9 +187,9 @@ class Question extends Model implements CanPresent
      * Transits the question to self::PUBLISH_STATUS status.
      * Requirements have been verified before, send events once is published.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @see \Gamify\Models\Question::publish()
+     * @see Question::publish
      */
     private function transitionToPublishedStatus(): void
     {
@@ -224,9 +208,9 @@ class Question extends Model implements CanPresent
      * Transits the question to self:FUTURE_STATUS status.
      * Requirements have been verified before.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @see \Gamify\Models\Question::publish()
+     * @see Question::publish
      */
     private function transitionToScheduledStatus(): void
     {
@@ -241,7 +225,7 @@ class Question extends Model implements CanPresent
     /**
      * Transits a question to self::DRAFT_STATUS status.
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function transitionToDraftStatus(): void
     {
@@ -259,8 +243,8 @@ class Question extends Model implements CanPresent
     /**
      * Transits a question to self::PENDING_STATUS status.
      *
-     * @throws \Gamify\Exceptions\QuestionPublishingException
-     * @throws \Throwable
+     * @throws QuestionPublishingException
+     * @throws Throwable
      */
     public function transitionToPendingStatus(): void
     {
@@ -268,7 +252,7 @@ class Question extends Model implements CanPresent
             return;
         }
 
-        if (!$this->canBePublished()) {
+        if (! $this->canBePublished()) {
             throw new QuestionPublishingException();
         }
 
@@ -279,13 +263,17 @@ class Question extends Model implements CanPresent
         QuestionPendingReview::dispatch($this);
     }
 
-    protected function publicUrl(): Attribute
+    protected function hash(): Attribute
     {
         return Attribute::make(
-            get: fn() => route('questions.show', [
-                'post_hash' => ((new HashIdService())->encode($this->id)),
-                'slug' => Str::slug($this->name),
-            ])
+            get: fn () => ((new HashIdService())->encode($this->id)),
+        );
+    }
+
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Str::slug($this->name),
         );
     }
 }

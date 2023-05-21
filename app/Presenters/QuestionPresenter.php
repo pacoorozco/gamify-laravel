@@ -35,11 +35,6 @@ class QuestionPresenter extends Presenter
     /** @var Question */
     protected $model;
 
-    public function publicUrl(): string
-    {
-        return route('questions.show', ['questionname' => $this->model->short_name]);
-    }
-
     /**
      * Returns the question status as a badge.
      * Note: It returns an HtmlString to be able to use `{{ }}` on blade.
@@ -121,7 +116,10 @@ class QuestionPresenter extends Presenter
     {
         return Str::of(sprintf(
             '<a href="%s" target="_blank" class="text-muted" title="Preview"><i class="fa fa-link"></i></a>',
-            route('questions.show', ['questionname' => $this->model->short_name]),
+            route('questions.show', [
+                'q_hash' => $this->model->hash,
+                'slug' => $this->model->slug,
+            ]),
         ))
             ->toHtmlString();
     }

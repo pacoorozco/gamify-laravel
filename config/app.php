@@ -81,7 +81,6 @@ return [
         // 'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     ],
 
-
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
