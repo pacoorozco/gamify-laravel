@@ -83,15 +83,6 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_the_hash_of_the_question(): void
-    {
-        /** @var Question $question */
-        $question = Question::factory()->make();
-
-        $this->assertNotNull($question->hash);
-    }
-
-    /** @test */
     public function it_should_return_the_slug_of_the_question(): void
     {
         /** @var Question $question */

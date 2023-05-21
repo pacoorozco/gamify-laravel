@@ -302,4 +302,13 @@ class QuestionTest extends TestCase
 
         $this->assertEquals('', $question->present()->publicationDate);
     }
+
+    /** @test */
+    public function it_should_return_the_hash_of_the_question(): void
+    {
+        /** @var Question $question */
+        $question = Question::factory()->create();
+
+        $this->assertNotNull($question->hash);
+    }
 }
