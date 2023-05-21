@@ -22,7 +22,7 @@
             @forelse($next_scheduled_questions as $question)
                 <tr>
                     <td>
-                        {{ $question->present()->name }}
+                        {{ $question->name }}
                         {{ $question->present()->publicUrlLink }}
                     </td>
                     <td>

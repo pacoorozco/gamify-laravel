@@ -50,7 +50,7 @@
                     {{ $question->present()->visibilityBadge() }}
                     {{ $question->present()->statusBadge() }}
 
-                    <a href="{{ $question->present()->publicUrl() }}"
+                    <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                        class="btn btn-link pull-right" target="_blank">
                         {{ __('general.view') }} <i class="fa fa-external-link"></i>
                     </a>
@@ -76,8 +76,8 @@
                         <!-- link -->
                         <div class="form-group">
                             <p class="text-muted">
-                                <b>{{ __('admin/question/model.permanent_link') }}</b>: {{  $question->present()->publicUrl }}
-                                <a href="{{ $question->present()->publicUrl() }}"
+                                <b>{{ __('admin/question/model.permanent_link') }}</b>: {{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}
+                                <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                                    class="btn btn-default btn-xs" target="_blank">
                                     {{ __('general.view') }} <i class="fa fa-external-link"></i>
                                 </a>
@@ -287,7 +287,7 @@
                 </div>
                 <div class="box-footer">
                     <button type="submit" class="btn btn-success" id="submitPublishBtn">
-                        @if ($question->isPublishedOrScheduled())
+                        @if ($question->isPublished() || $question->isScheduled())
                             {{ __('button.update') }}
                         @else
                             {{ __('button.publish') }}

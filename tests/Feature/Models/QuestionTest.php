@@ -304,14 +304,11 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_formatted_public_url_using_presenter(): void
+    public function it_should_return_the_hash_of_the_question(): void
     {
         /** @var Question $question */
-        $question = Question::factory()
-            ->create([
-                'name' => 'test question number 1',
-            ]);
+        $question = Question::factory()->create();
 
-        $this->assertEquals('http://localhost/questions/test-question-number-1', $question->present()->publicUrl);
+        $this->assertNotNull($question->hash);
     }
 }

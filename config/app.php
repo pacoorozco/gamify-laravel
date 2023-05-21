@@ -64,6 +64,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application HashIds
+    |--------------------------------------------------------------------------
+    |
+    | These values determine how URLs are "obfuscated" (e.g. in questions).
+    | The uniqueness of these URLs depends on having a unique salt. Note
+    | that if you change any of these values the "obfuscated" URLs will
+    | change as well. This could be a problem, if a user bookmarked a
+    | URL previously.
+    |
+    */
+
+    'hashids' => [
+        'salt' => '4420d1918bbcf7686defdf9560bb5087d20076de5f77b7cb4c3b40bf46ec428b',
+        'length' => 8,
+        // 'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |

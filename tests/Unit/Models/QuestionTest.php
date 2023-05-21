@@ -56,16 +56,6 @@ class QuestionTest extends TestCase
         ], $m->getCasts());
     }
 
-    public function test_contains_valid_sluggable_configuration(): void
-    {
-        $m = new Question();
-        $this->assertEquals([
-            'short_name' => [
-                'source' => 'name',
-            ],
-        ], $m->sluggable());
-    }
-
     public function test_choices_relation(): void
     {
         $m = new Question();
@@ -90,5 +80,14 @@ class QuestionTest extends TestCase
         foreach ($test_data as $words => $want) {
             $this->assertEquals($want, $m->excerpt($words), 'Test case: '.$words.' words.');
         }
+    }
+
+    /** @test */
+    public function it_should_return_the_slug_of_the_question(): void
+    {
+        /** @var Question $question */
+        $question = Question::factory()->make();
+
+        $this->assertNotNull($question->slug);
     }
 }

@@ -28,6 +28,7 @@ namespace Tests\Feature\Http\Controllers;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Models\Question;
 use Gamify\Models\User;
+use Gamify\Services\HashIdService;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
@@ -72,7 +73,7 @@ class QuestionControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->get(route('questions.show', $question->short_name))
+            ->get(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]))
             ->assertNotFound();
     }
 
@@ -86,7 +87,7 @@ class QuestionControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->get(route('questions.show', $question->short_name))
+            ->get(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]))
             ->assertSuccessful()
             ->assertViewIs('question.show')
             ->assertSeeText($question->name);
@@ -102,7 +103,7 @@ class QuestionControllerTest extends TestCase
 
         $this
             ->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), [
+            ->post(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]), [
                 // Answer with the first available choice.
                 /** @phpstan-ignore-next-line */
                 'choices' => [$question->choices()->first()->id],
@@ -137,7 +138,7 @@ class QuestionControllerTest extends TestCase
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), [
+            ->post(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]), [
                 'choices' => $choices,
             ])
             ->assertSuccessful();
@@ -165,7 +166,7 @@ class QuestionControllerTest extends TestCase
         Event::fake();
 
         $this->actingAs($this->user)
-            ->post(route('questions.answer', $question->short_name), [
+            ->post(route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]), [
                 'choices' => $choices,
             ])
             ->assertSuccessful();
@@ -174,5 +175,28 @@ class QuestionControllerTest extends TestCase
             return $event->question->id === $question->id
                 && $event->correctness === false;
         });
+    }
+
+    /** @test */
+    public function it_should_response_404_when_hashids_service_fails(): void
+    {
+        /** @var Question $question */
+        $question = Question::factory()
+            ->published()
+            ->create();
+
+        $invalidHashId = 'invalid_hash_id';
+
+        // Mock the HashIdService to always throw an exception
+        $hashIdService = $this->mock(HashIdService::class);
+        /** @phpstan-ignore-next-line */
+        $hashIdService->shouldReceive('decode')
+            ->with($invalidHashId)
+            ->andThrow(\Exception::class);
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('questions.show', ['q_hash' => $invalidHashId, 'slug' => $question->slug]))
+            ->assertNotFound();
     }
 }
