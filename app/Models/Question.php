@@ -151,13 +151,10 @@ class Question extends Model implements CanPresent
             throw new QuestionPublishingException('Question does not meet the publication requirements');
         }
 
-        try {
-            (is_null($this->publishedAt()) || $this->publishedAt()->lessThanOrEqualTo(now()))
-                ? $this->transitionToPublishedStatus()
-                : $this->transitionToScheduledStatus();
-        } catch (Throwable $exception) {
-            throw new QuestionPublishingException($exception);
-        }
+        (is_null($this->publishedAt()) || $this->publishedAt()->lessThanOrEqualTo(now()))
+            ? $this->transitionToPublishedStatus()
+            : $this->transitionToScheduledStatus();
+
     }
 
     /**
@@ -187,8 +184,6 @@ class Question extends Model implements CanPresent
      * Transits the question to self::PUBLISH_STATUS status.
      * Requirements have been verified before, send events once is published.
      *
-     * @throws Throwable
-     *
      * @see Question::publish
      */
     private function transitionToPublishedStatus(): void
@@ -199,7 +194,7 @@ class Question extends Model implements CanPresent
 
         $this->status = self::PUBLISH_STATUS;
         $this->publication_date = now();
-        $this->saveOrFail(); // throws exception on error
+        $this->save();
 
         QuestionPublished::dispatch($this);
     }
@@ -207,8 +202,6 @@ class Question extends Model implements CanPresent
     /**
      * Transits the question to self:FUTURE_STATUS status.
      * Requirements have been verified before.
-     *
-     * @throws Throwable
      *
      * @see Question::publish
      */
@@ -219,7 +212,7 @@ class Question extends Model implements CanPresent
         }
 
         $this->status = self::FUTURE_STATUS;
-        $this->saveOrFail(); // throws exception on error
+        $this->save();
     }
 
     /**
