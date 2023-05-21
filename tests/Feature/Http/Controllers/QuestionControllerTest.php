@@ -28,6 +28,7 @@ namespace Tests\Feature\Http\Controllers;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Models\Question;
 use Gamify\Models\User;
+use Gamify\Services\HashIdService;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
@@ -174,5 +175,28 @@ class QuestionControllerTest extends TestCase
             return $event->question->id === $question->id
                 && $event->correctness === false;
         });
+    }
+
+    /** @test */
+    public function it_should_response_404_when_hashids_service_fails(): void
+    {
+        /** @var Question $question */
+        $question = Question::factory()
+            ->published()
+            ->create();
+
+        $invalidHashId = 'invalid_hash_id';
+
+        // Mock the HashIdService to always throw an exception
+        $hashIdService = $this->mock(HashIdService::class);
+        /** @phpstan-ignore-next-line */
+        $hashIdService->shouldReceive('decode')
+            ->with($invalidHashId)
+            ->andThrow(\Exception::class);
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('questions.show', ['q_hash' => $invalidHashId, 'slug' => $question->slug]))
+            ->assertNotFound();
     }
 }

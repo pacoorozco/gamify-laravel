@@ -108,7 +108,9 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('q_hash', function (string $value) {
             try {
-                $id = (new HashIdService())->decode($value);
+                $hashIdService = app(HashIdService::class);
+
+                $id = $hashIdService->decode($value);
 
                 return Question::findOrFail($id);
             } catch (\Throwable) {
