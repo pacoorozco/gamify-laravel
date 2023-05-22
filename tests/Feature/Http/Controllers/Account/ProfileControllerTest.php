@@ -25,7 +25,8 @@
 
 namespace Tests\Feature\Http\Controllers\Account;
 
-use Gamify\Events\UserProfileUpdated;
+use Gamify\Events\AvatarUploaded;
+use Gamify\Events\ProfileUpdated;
 use Gamify\Models\User;
 use Gamify\Models\UserProfile;
 use Generator;
@@ -244,7 +245,7 @@ class ProfileControllerTest extends TestCase
     public function event_should_be_dispatched_when_user_profile_is_updating_at_least_one_attribute(): void
     {
         Event::fake([
-            UserProfileUpdated::class,
+            ProfileUpdated::class,
         ]);
 
         $this
@@ -257,14 +258,14 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
-        Event::assertDispatched(UserProfileUpdated::class);
+        Event::assertDispatched(ProfileUpdated::class);
     }
 
     /** @test */
     public function event_should_be_dispatched_when_user_is_updating_at_least_one_attribute(): void
     {
         Event::fake([
-            UserProfileUpdated::class,
+            ProfileUpdated::class,
         ]);
 
         $this
@@ -276,14 +277,14 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
-        Event::assertDispatched(UserProfileUpdated::class);
+        Event::assertDispatched(ProfileUpdated::class);
     }
 
     /** @test */
     public function event_should_not_be_dispatched_when_user_profile_is_not_updating_any_attribute(): void
     {
         Event::fake([
-            UserProfileUpdated::class,
+            ProfileUpdated::class,
         ]);
 
         $this
@@ -295,6 +296,49 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('account.index'))
             ->assertValid();
 
-        Event::assertNotDispatched(UserProfileUpdated::class);
+        Event::assertNotDispatched(ProfileUpdated::class);
+    }
+
+    /** @test */
+    public function event_should_be_dispatched_when_the_user_uploads_an_avatar(): void
+    {
+        Event::fake();
+
+        Storage::fake('public');
+
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
+        $this
+            ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->put(route('account.profile.update'), [
+                'name' => $this->user->name,
+                'avatar' => $file,
+            ])
+            ->assertRedirect(route('account.index'))
+            ->assertValid();
+
+        $this->assertStringEndsWith('avatar-thumb.jpg', $this->user->profile->avatarUrl);
+
+        Event::assertDispatched(AvatarUploaded::class);
+        Event::assertNotDispatched(ProfileUpdated::class);
+    }
+
+    /** @test */
+    public function event_should_not_be_dispatched_when_the_user_does_not_upload_an_avatar(): void
+    {
+        Event::fake();
+
+        $this
+            ->actingAs($this->user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->put(route('account.profile.update'), [
+                'name' => $this->user->name,
+            ])
+            ->assertRedirect(route('account.index'))
+            ->assertValid();
+
+        Event::assertNotDispatched(AvatarUploaded::class);
+        Event::assertNotDispatched(ProfileUpdated::class);
     }
 }

@@ -28,7 +28,7 @@ namespace Gamify\Events;
 use Gamify\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 
-class UserAvatarUploaded
+class ProfileUpdated
 {
     use Dispatchable;
 

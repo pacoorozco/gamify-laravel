@@ -26,33 +26,18 @@
 namespace Gamify\Listeners;
 
 use Gamify\Enums\BadgeActuators;
-use Gamify\Events\QuestionAnswered;
+use Gamify\Events\ProfileUpdated;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
-use Gamify\Models\User;
 
-/**
- * Trigger Badges with an actuator related to Questions (OnQuestion[*]) and the mathcing tags.
- */
-class IncrementBadgesOnQuestionAnswered
+class AddBadgesOnProfileUpdated
 {
-    public function handle(QuestionAnswered $event): void
+    public function handle(ProfileUpdated $event): void
     {
-        /** @var User $user */
-        $user = User::findOrFail($event->user->getAuthIdentifier());
+        $user = $event->user;
 
         Badge::query()
-            ->whereIn('actuators', [
-                BadgeActuators::OnQuestionAnswered,
-                ($event->correctness === true)
-                    ? BadgeActuators::OnQuestionCorrectlyAnswered
-                    : BadgeActuators::OnQuestionIncorrectlyAnswered,
-            ])
-            ->when($event->question->tagArrayNormalized, function ($query) use ($event) {
-                $query->withAnyTags($event->question->tagArrayNormalized);
-            }, function ($query) {
-                $query->isNotTagged();
-            })
+            ->whereActuators(BadgeActuators::OnUserProfileUpdated)
             ->get()
             ->each(function ($badge) use ($user) {
                 Game::incrementBadgeCount($user, $badge);

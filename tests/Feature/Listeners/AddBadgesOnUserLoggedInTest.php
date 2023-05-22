@@ -27,7 +27,7 @@ namespace Tests\Feature\Listeners;
 
 use Gamify\Enums\BadgeActuators;
 use Gamify\Events\SocialLogin;
-use Gamify\Listeners\IncrementBadgesOnUserLogin;
+use Gamify\Listeners\AddBadgesOnUserLoggedIn;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Login;
@@ -35,25 +35,19 @@ use Illuminate\Support\Facades\Event;
 use Mockery;
 use Tests\Feature\TestCase;
 
-class IncrementBadgeOnUserLoginTest extends TestCase
+class AddBadgesOnUserLoggedInTest extends TestCase
 {
     /** @test */
-    public function it_should_listen_for_login_events(): void
+    public function it_should_listen_for_the_proper_event(): void
     {
         Event::fake();
         Event::assertListening(
             expectedEvent: Login::class,
-            expectedListener: IncrementBadgesOnUserLogin::class
+            expectedListener: AddBadgesOnUserLoggedIn::class
         );
-    }
-
-    /** @test */
-    public function it_should_listen_for_social_login_events(): void
-    {
-        Event::fake();
         Event::assertListening(
             expectedEvent: SocialLogin::class,
-            expectedListener: IncrementBadgesOnUserLogin::class
+            expectedListener: AddBadgesOnUserLoggedIn::class
         );
     }
 
@@ -65,18 +59,17 @@ class IncrementBadgeOnUserLoginTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserLogin,
+            'actuators' => BadgeActuators::OnUserLoggedIn,
         ]);
 
         /** @var Login $event */
         $event = Mockery::mock(Login::class);
         $event->user = $user;
 
-        $listener = new IncrementBadgesOnUserLogin();
+        $listener = new AddBadgesOnUserLoggedIn();
         $listener->handle($event);
 
-        /** @phpstan-ignore-next-line */
-        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)?->repetitions);
     }
 
     /** @test */
@@ -94,7 +87,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
         $event = Mockery::mock(Login::class);
         $event->user = $user;
 
-        $listener = new IncrementBadgesOnUserLogin();
+        $listener = new AddBadgesOnUserLoggedIn();
         $listener->handle($event);
 
         $this->assertNull($user->progressToCompleteTheBadge($badge));
@@ -108,18 +101,17 @@ class IncrementBadgeOnUserLoginTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserLogin,
+            'actuators' => BadgeActuators::OnUserLoggedIn,
         ]);
 
         /** @var SocialLogin $event */
         $event = Mockery::mock(SocialLogin::class);
         $event->user = $user;
 
-        $listener = new IncrementBadgesOnUserLogin();
+        $listener = new AddBadgesOnUserLoggedIn();
         $listener->handle($event);
 
-        /** @phpstan-ignore-next-line */
-        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)?->repetitions);
     }
 
     /** @test */
@@ -137,7 +129,7 @@ class IncrementBadgeOnUserLoginTest extends TestCase
         $event = Mockery::mock(SocialLogin::class);
         $event->user = $user;
 
-        $listener = new IncrementBadgesOnUserLogin();
+        $listener = new AddBadgesOnUserLoggedIn();
         $listener->handle($event);
 
         $this->assertNull($user->progressToCompleteTheBadge($badge));

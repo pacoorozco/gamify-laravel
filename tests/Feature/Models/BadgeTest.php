@@ -69,12 +69,12 @@ class BadgeTest extends TestCase
             ->active()
             ->count(2)
             ->create([
-                'actuators' => BadgeActuators::OnUserLogin,
+                'actuators' => BadgeActuators::OnUserLoggedIn,
             ]);
 
         $badges = Badge::query()
             ->withActuatorsIn([
-                BadgeActuators::OnUserLogin,
+                BadgeActuators::OnUserLoggedIn,
             ])
             ->get();
 

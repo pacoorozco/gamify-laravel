@@ -39,9 +39,9 @@ return [
         BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
         BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
 
-        BadgeActuators::OnUserLogin => 'User has logged in',
-        BadgeActuators::OnUserUpdatedProfile => 'User has updated its profile',
-        BadgeActuators::OnUserUploadedAvatar => 'User has uploaded an avatar',
+        BadgeActuators::OnUserLoggedIn => 'User has logged in',
+        BadgeActuators::OnUserProfileUpdated => 'User has updated its profile',
+        BadgeActuators::OnUserAvatarUploaded => 'User has uploaded an avatar',
     ],
 
     QuestionActuators::class => [

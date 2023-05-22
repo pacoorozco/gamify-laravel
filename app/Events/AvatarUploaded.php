@@ -23,26 +23,19 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Listeners;
+namespace Gamify\Events;
 
-use Gamify\Enums\BadgeActuators;
-use Gamify\Events\UserProfileUpdated;
-use Gamify\Libs\Game\Game;
-use Gamify\Models\Badge;
 use Gamify\Models\User;
+use Illuminate\Foundation\Events\Dispatchable;
 
-class IncrementBadgesOnUserUploadedAvatar
+class AvatarUploaded
 {
-    public function handle(UserProfileUpdated $event): void
-    {
-        /** @var User $user */
-        $user = User::findOrFail($event->user->getAuthIdentifier());
+    use Dispatchable;
 
-        Badge::query()
-            ->whereActuators(BadgeActuators::OnUserUploadedAvatar)
-            ->get()
-            ->each(function ($badge) use ($user) {
-                Game::incrementBadgeCount($user, $badge);
-            });
+    public function __construct(
+        public User $user
+    )
+    {
+        //
     }
 }

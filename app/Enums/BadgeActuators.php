@@ -33,9 +33,9 @@ use Illuminate\Support\Arr;
  * @method static static OnQuestionAnswered()
  * @method static static OnQuestionCorrectlyAnswered()
  * @method static static OnQuestionIncorrectlyAnswered()
- * @method static static OnUserLogin()
- * @method static static OnUserUpdatedProfile()
- * @method static static OnUserUploadedAvatar()
+ * @method static static OnUserLoggedIn()
+ * @method static static OnUserProfileUpdated()
+ * @method static static OnUserAvatarUploaded()
  * @method static static None()
  */
 final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
@@ -48,9 +48,11 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
     const OnQuestionIncorrectlyAnswered = 1 << 2;
 
     /** Actuators based on user's events */
-    const OnUserLogin = 1 << 3;
-    const OnUserUpdatedProfile = 1 << 4;
-    const OnUserUploadedAvatar = 1 << 5;
+    const OnUserLoggedIn = 1 << 3;
+
+    const OnUserProfileUpdated = 1 << 4;
+
+    const OnUserAvatarUploaded = 1 << 5;
 
     /**
      * Returns an array of values to be used on <select> with <optgroups> and filtered options.
@@ -70,9 +72,9 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
                 self::OnQuestionIncorrectlyAnswered => self::OnQuestionIncorrectlyAnswered()->description,
             ],
             $userEventsKey => [
-                self::OnUserLogin => self::OnUserLogin()->description,
-                self::OnUserUpdatedProfile => self::OnUserUpdatedProfile()->description,
-                self::OnUserUploadedAvatar => self::OnUserUploadedAvatar()->description,
+                self::OnUserLoggedIn => self::OnUserLoggedIn()->description,
+                self::OnUserProfileUpdated => self::OnUserProfileUpdated()->description,
+                self::OnUserAvatarUploaded => self::OnUserAvatarUploaded()->description,
             ],
         ];
     }

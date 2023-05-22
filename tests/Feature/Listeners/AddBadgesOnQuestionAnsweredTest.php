@@ -27,7 +27,7 @@ namespace Tests\Feature\Listeners;
 
 use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionAnswered;
-use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
+use Gamify\Listeners\AddBadgesOnQuestionAnswered;
 use Gamify\Models\Badge;
 use Gamify\Models\Question;
 use Gamify\Models\User;
@@ -35,15 +35,15 @@ use Illuminate\Support\Facades\Event;
 use Mockery;
 use Tests\Feature\TestCase;
 
-class IncrementBadgeOnQuestionAnsweredTest extends TestCase
+class AddBadgesOnQuestionAnsweredTest extends TestCase
 {
     /** @test */
-    public function it_should_listen_for_the_event(): void
+    public function it_should_listen_for_the_proper_event(): void
     {
         Event::fake();
         Event::assertListening(
             expectedEvent: QuestionAnswered::class,
-            expectedListener: IncrementBadgesOnQuestionAnswered::class
+            expectedListener: AddBadgesOnQuestionAnswered::class
         );
     }
 
@@ -75,7 +75,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $event->question = $question;
         $event->correctness = $questionAttributes['correctness'];
 
-        $listener = new IncrementBadgesOnQuestionAnswered();
+        $listener = new AddBadgesOnQuestionAnswered();
         $listener->handle($event);
 
         $this->assertNotNull($user->progressToCompleteTheBadge($badge));
@@ -178,7 +178,7 @@ class IncrementBadgeOnQuestionAnsweredTest extends TestCase
         $event->question = $question;
         $event->correctness = $questionAttributes['correctness'];
 
-        $listener = new IncrementBadgesOnQuestionAnswered();
+        $listener = new AddBadgesOnQuestionAnswered();
         $listener->handle($event);
 
         $this->assertNull($user->progressToCompleteTheBadge($badge));

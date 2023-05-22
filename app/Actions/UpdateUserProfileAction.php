@@ -25,8 +25,8 @@
 
 namespace Gamify\Actions;
 
-use Gamify\Events\UserAvatarUploaded;
-use Gamify\Events\UserProfileUpdated;
+use Gamify\Events\AvatarUploaded;
+use Gamify\Events\ProfileUpdated;
 use Gamify\Models\User;
 use Illuminate\Support\Arr;
 
@@ -46,10 +46,10 @@ final class UpdateUserProfileAction
                 ->addMedia($attributes['avatar'])
                 ->toMediaCollection('avatar');
 
-            UserAvatarUploaded::dispatch($user);
+            AvatarUploaded::dispatch($user);
         }
 
-        UserProfileUpdated::dispatchIf(
+        ProfileUpdated::dispatchIf(
             $user->wasChanged('name') || $user->profile->wasChanged(),
             $user
         );

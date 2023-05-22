@@ -26,24 +26,23 @@
 namespace Tests\Feature\Listeners;
 
 use Gamify\Enums\BadgeActuators;
-use Gamify\Events\UserAvatarUploaded;
-use Gamify\Events\UserProfileUpdated;
+use Gamify\Events\AvatarUploaded;
+use Gamify\Listeners\AddBadgesOnAvatarUploaded;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Event;
 use Mockery;
 use Tests\Feature\TestCase;
 
-class IncrementBadgeOnUserAvatarUploaded extends TestCase
+class AddBadgesOnAvatarUploadedTest extends TestCase
 {
     /** @test */
-    public function it_should_listen_for_the_proper_events(): void
+    public function it_should_listen_for_the_proper_event(): void
     {
         Event::fake();
         Event::assertListening(
-            expectedEvent: UserAvatarUploaded::class,
-            expectedListener: IncrementBadgeOnUserAvatarUploaded::class
+            expectedEvent: AvatarUploaded::class,
+            expectedListener: AddBadgesOnAvatarUploaded::class
         );
     }
 
@@ -55,18 +54,17 @@ class IncrementBadgeOnUserAvatarUploaded extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserUploadedAvatar,
+            'actuators' => BadgeActuators::OnUserAvatarUploaded,
         ]);
 
-        /** @var Login $event */
-        $event = Mockery::mock(UserAvatarUploaded::class);
+        /** @var AvatarUploaded $event */
+        $event = Mockery::mock(AvatarUploaded::class);
         $event->user = $user;
 
-        $listener = new IncrementBadgeOnUserAvatarUploaded();
+        $listener = new AddBadgesOnAvatarUploaded();
         $listener->handle($event);
 
-        /** @phpstan-ignore-next-line */
-        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
+        $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)?->repetitions);
     }
 
     /** @test */
@@ -80,11 +78,11 @@ class IncrementBadgeOnUserAvatarUploaded extends TestCase
             'actuators' => BadgeActuators::None,
         ]);
 
-        /** @var Login $event */
-        $event = Mockery::mock(UserAvatarUploaded::class);
+        /** @var AvatarUploaded $event */
+        $event = Mockery::mock(AvatarUploaded::class);
         $event->user = $user;
 
-        $listener = new IncrementBadgeOnUserAvatarUploaded();
+        $listener = new AddBadgesOnAvatarUploaded();
         $listener->handle($event);
 
         $this->assertNull($user->progressToCompleteTheBadge($badge));
