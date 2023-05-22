@@ -23,37 +23,19 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Actions;
+namespace Gamify\Events;
 
-use Gamify\Events\AvatarUploaded;
-use Gamify\Events\ProfileUpdated;
 use Gamify\Models\User;
-use Illuminate\Support\Arr;
+use Illuminate\Foundation\Events\Dispatchable;
 
-final class UpdateUserProfileAction
+class ProfileUpdated
 {
-    public function execute(User $user, array $attributes): User
+    use Dispatchable;
+
+    public function __construct(
+        public User $user
+    )
     {
-        $user->update([
-            'name' => $attributes['name'],
-        ]);
-
-        $user->profile
-            ->update($attributes);
-
-        if (Arr::has($attributes, 'avatar')) {
-            $user->profile
-                ->addMedia($attributes['avatar'])
-                ->toMediaCollection('avatar');
-
-            AvatarUploaded::dispatch($user);
-        }
-
-        ProfileUpdated::dispatchIf(
-            $user->wasChanged('name') || $user->profile->wasChanged(),
-            $user
-        );
-
-        return $user;
+        //
     }
 }

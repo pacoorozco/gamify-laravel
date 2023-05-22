@@ -25,15 +25,22 @@
 
 namespace Gamify\Listeners;
 
-use Gamify\Events\PointCreated;
-use Gamify\Events\PointDeleted;
-use Illuminate\Support\Facades\Cache;
+use Gamify\Enums\BadgeActuators;
+use Gamify\Events\ProfileUpdated;
+use Gamify\Libs\Game\Game;
+use Gamify\Models\Badge;
 
-class UpdateUserExperience
+class AddBadgesOnProfileUpdated
 {
-    public function handle(PointCreated|PointDeleted $event): void
+    public function handle(ProfileUpdated $event): void
     {
-        $user = $event->point->user;
-        Cache::put('user_experience_'.$user->id, $user->points()->sum('points'), 600);
+        $user = $event->user;
+
+        Badge::query()
+            ->whereActuators(BadgeActuators::OnUserProfileUpdated)
+            ->get()
+            ->each(function ($badge) use ($user) {
+                Game::incrementBadgeCount($user, $badge);
+            });
     }
 }

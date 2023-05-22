@@ -25,13 +25,18 @@
 
 namespace Gamify\Providers;
 
+use Gamify\Events\AvatarUploaded;
 use Gamify\Events\PointCreated;
+use Gamify\Events\PointDeleted;
+use Gamify\Events\ProfileUpdated;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Events\SocialLogin;
+use Gamify\Listeners\AddBadgesOnAvatarUploaded;
+use Gamify\Listeners\AddBadgesOnProfileUpdated;
+use Gamify\Listeners\AddBadgesOnQuestionAnswered;
+use Gamify\Listeners\AddBadgesOnUserLoggedIn;
 use Gamify\Listeners\AddReputation;
-use Gamify\Listeners\IncrementBadgesOnQuestionAnswered;
-use Gamify\Listeners\IncrementBadgesOnUserLogin;
-use Gamify\Listeners\UpdateUserExperience;
+use Gamify\Listeners\UpdateCachedUserExperience;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -54,17 +59,26 @@ class EventServiceProvider extends ServiceProvider
             OktaExtendSocialite::class,
         ],
         Login::class => [
-            IncrementBadgesOnUserLogin::class,
+            AddBadgesOnUserLoggedIn::class,
         ],
         QuestionAnswered::class => [
             AddReputation::class,
-            IncrementBadgesOnQuestionAnswered::class,
+            AddBadgesOnQuestionAnswered::class,
         ],
         PointCreated::class => [
-            UpdateUserExperience::class,
+            UpdateCachedUserExperience::class,
+        ],
+        PointDeleted::class => [
+            UpdateCachedUserExperience::class,
         ],
         SocialLogin::class => [
-            IncrementBadgesOnUserLogin::class,
+            AddBadgesOnUserLoggedIn::class,
+        ],
+        AvatarUploaded::class => [
+            AddBadgesOnAvatarUploaded::class,
+        ],
+        ProfileUpdated::class => [
+            AddBadgesOnProfileUpdated::class,
         ],
     ];
 

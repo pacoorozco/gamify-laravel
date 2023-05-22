@@ -23,37 +23,18 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Gamify\Actions;
+namespace Gamify\Listeners;
 
-use Gamify\Events\AvatarUploaded;
-use Gamify\Events\ProfileUpdated;
-use Gamify\Models\User;
-use Illuminate\Support\Arr;
+use Gamify\Events\PointCreated;
+use Gamify\Events\PointDeleted;
+use Illuminate\Support\Facades\Cache;
 
-final class UpdateUserProfileAction
+class UpdateCachedUserExperience
 {
-    public function execute(User $user, array $attributes): User
+    public function handle(PointCreated|PointDeleted $event): void
     {
-        $user->update([
-            'name' => $attributes['name'],
-        ]);
+        $user = $event->point->user;
 
-        $user->profile
-            ->update($attributes);
-
-        if (Arr::has($attributes, 'avatar')) {
-            $user->profile
-                ->addMedia($attributes['avatar'])
-                ->toMediaCollection('avatar');
-
-            AvatarUploaded::dispatch($user);
-        }
-
-        ProfileUpdated::dispatchIf(
-            $user->wasChanged('name') || $user->profile->wasChanged(),
-            $user
-        );
-
-        return $user;
+        Cache::put('user_experience_'.$user->id, $user->points()->sum('points'), 600);
     }
 }

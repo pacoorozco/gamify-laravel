@@ -29,17 +29,15 @@ use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
-use Gamify\Models\User;
 
 /**
  * Trigger Badges with an actuator related to Questions (OnQuestion[*]) and the mathcing tags.
  */
-class IncrementBadgesOnQuestionAnswered
+class AddBadgesOnQuestionAnswered
 {
     public function handle(QuestionAnswered $event): void
     {
-        /** @var User $user */
-        $user = User::findOrFail($event->user->getAuthIdentifier());
+        $user = $event->user;
 
         Badge::query()
             ->whereIn('actuators', [

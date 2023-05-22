@@ -26,24 +26,18 @@
 namespace Gamify\Listeners;
 
 use Gamify\Enums\BadgeActuators;
-use Gamify\Events\SocialLogin;
+use Gamify\Events\AvatarUploaded;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
-use Gamify\Models\User;
-use Illuminate\Auth\Events\Login;
 
-/**
- * Trigger the badges with the OnUserLogin actuator when the use logs in.
- */
-class IncrementBadgesOnUserLogin
+class AddBadgesOnAvatarUploaded
 {
-    public function handle(Login|SocialLogin $event): void
+    public function handle(AvatarUploaded $event): void
     {
-        /** @var User $user */
-        $user = User::findOrFail($event->user->getAuthIdentifier());
+        $user = $event->user;
 
         Badge::query()
-            ->whereActuators(BadgeActuators::OnUserLogin)
+            ->whereActuators(BadgeActuators::OnUserAvatarUploaded)
             ->get()
             ->each(function ($badge) use ($user) {
                 Game::incrementBadgeCount($user, $badge);
