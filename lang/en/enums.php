@@ -40,6 +40,8 @@ return [
         BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
 
         BadgeActuators::OnUserLogin => 'User has logged in',
+        BadgeActuators::OnUserUpdatedProfile => 'User has updated its profile',
+        BadgeActuators::OnUserUploadedAvatar => 'User has uploaded an avatar',
     ],
 
     QuestionActuators::class => [

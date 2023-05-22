@@ -34,6 +34,8 @@ use Illuminate\Support\Arr;
  * @method static static OnQuestionCorrectlyAnswered()
  * @method static static OnQuestionIncorrectlyAnswered()
  * @method static static OnUserLogin()
+ * @method static static OnUserUpdatedProfile()
+ * @method static static OnUserUploadedAvatar()
  * @method static static None()
  */
 final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
@@ -47,6 +49,8 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
 
     /** Actuators based on user's events */
     const OnUserLogin = 1 << 3;
+    const OnUserUpdatedProfile = 1 << 4;
+    const OnUserUploadedAvatar = 1 << 5;
 
     /**
      * Returns an array of values to be used on <select> with <optgroups> and filtered options.
@@ -67,6 +71,8 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
             ],
             $userEventsKey => [
                 self::OnUserLogin => self::OnUserLogin()->description,
+                self::OnUserUpdatedProfile => self::OnUserUpdatedProfile()->description,
+                self::OnUserUploadedAvatar => self::OnUserUploadedAvatar()->description,
             ],
         ];
     }
