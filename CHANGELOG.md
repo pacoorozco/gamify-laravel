@@ -5,6 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 4.1.1 - 2023-10-06
+
+### Added
+- Change the public URL of Questions using unique ids
+- New actuators to assign badges: on profile updated and on avatar uploaded
+
+### Changed
+- Bump `aglipanci/laravel-pint-action` from 2.2.0 to 2.3.0
+- Bump `spatie/laravel-ignition` from 2.1.2 to 2.2.0
+- Bump `laravel/socialite` from 5.6.1 to 5.6.3
+- Bump `laravel/framework` from 10.11.0 to 10.14.1
+- Bump `spatie/laravel-medialibrary` from 10.7.16 to 10.10.1
+- Bump `yajra/laravel-datatables-oracle` from 10.4.0 to 10.7.0
+- Bump `laravel/breeze` from 1.21.0 to 1.21.2
+- Bump `predis/predis` from 2.1.2 to 2.2.0
+- Bump `doctrine/dbal` from 3.6.2 to 3.6.5
+- Bump `bensampo/laravel-enum` from 6.3.2 to 6.6.0
+- [CI] Bump `actions/checkout` from 3 to 4
+
 ## 4.1.0 - 2023-05-19
 
 ### Added
