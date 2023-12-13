@@ -44,11 +44,12 @@
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.9.2",
     "brianium/paratest": "^7.3.1",
+    "larastan/larastan": "^2.7.0",
     "laravel/breeze": "^1.26.3",
     "laravel/pint": "^1.13.7",
     "laravel/sail": "^1.26.3",
     "mockery/mockery": "^1.6.7",
-    "larastan/larastan": "^2.7.0",
+    "nunomaduro/collision": "^6.0",
     "phpunit/phpunit": "^10.4.0",
     "spatie/laravel-ignition": "^2.3.1"
   },
