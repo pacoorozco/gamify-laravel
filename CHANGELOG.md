@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 4.1.2 - 2023-12-13
+
+### Changed
+- **Important**: The required minimum version of PHP is v8.2.
+- Bump `bensampo/laravel-enum` to version 6.7.0
+- Bump `doctrine/dbal` to version 3.7.2
+- Bump `laravel/framework` to version 10.37.1
+- Bump `laravel/socialite` to version 5.11.0
+- Bump `socialiteproviders/okta` to version 4.4.0
+- Bump `spatie/laravel-medialibrary` to version 10.15.0
+- Bump `yajra/laravel-datatables-oracle`to version 10.11.2
+
 ## 4.1.1 - 2023-10-06
 
 ### Added
