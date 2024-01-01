@@ -38,7 +38,7 @@
     "predis/predis": "^2.2.2",
     "richan-fongdasen/eloquent-blameable": "^1.9.0",
     "socialiteproviders/okta": "^4.4.0",
-    "spatie/laravel-medialibrary": "^10.15.0",
+    "spatie/laravel-medialibrary": "^11.0.3",
     "yajra/laravel-datatables-oracle": "^10.11.2"
   },
   "require-dev": {
