@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 4.1.3 - 2024-01-13
+### Changed
+- Update [sail](https://laravel.com/docs/10.x/sail) to use PHP 8.2
+- Bump `aglipanci/laravel-pint-action` to version 2.3.1
+- Bump `laravel/framework` to version 10.39.0
+- Bump `spatie/laravel-medialibrary` to version 11.0.3
+- Bump `phpunit/phpunit` to version 10.5.5
+- Bump `yajra/laravel-datatables-oracle` to version 10.11.3
+- Bump `spatie/laravel-ignition` to version 2.4.1
+
 ## 4.1.2 - 2023-12-13
 
 ### Changed
