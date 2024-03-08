@@ -30,7 +30,7 @@ use Gamify\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\Feature\TestCase;
 
-class ChangePasswordControllerTest extends TestCase
+final class ChangePasswordControllerTest extends TestCase
 {
     const VALID_PASSWORD = 'foo#B4rBaz';
 

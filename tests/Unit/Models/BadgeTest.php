@@ -29,7 +29,7 @@ use Gamify\Enums\BadgeActuators;
 use Gamify\Models\Badge;
 use Tests\TestCase;
 
-class BadgeTest extends TestCase
+final class BadgeTest extends TestCase
 {
     public function test_contains_valid_fillable_properties(): void
     {

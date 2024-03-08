@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Mockery;
 use Tests\Feature\TestCase;
 
-class SocialAuthenticationTest extends TestCase
+final class SocialAuthenticationTest extends TestCase
 {
     #[Test]
     public function it_should_authenticate_users_using_social_login(): void

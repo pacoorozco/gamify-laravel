@@ -31,7 +31,7 @@ use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminBadgeDataTablesControllerTest extends TestCase
+final class AdminBadgeDataTablesControllerTest extends TestCase
 {
     private User $user;
 

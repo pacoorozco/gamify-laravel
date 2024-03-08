@@ -32,7 +32,7 @@ use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Tests\Feature\TestCase;
 
-class RedirectIfAuthenticatedTest extends TestCase
+final class RedirectIfAuthenticatedTest extends TestCase
 {
     const TEST_ENDPOINT = '/_test/only_for_guests';
 

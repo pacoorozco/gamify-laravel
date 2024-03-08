@@ -34,7 +34,7 @@ use Generator;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\TestCase;
 
-class AdminRewardControllerTest extends TestCase
+final class AdminRewardControllerTest extends TestCase
 {
     use WithFaker;
 

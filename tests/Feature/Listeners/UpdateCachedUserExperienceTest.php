@@ -34,7 +34,7 @@ use Gamify\Models\User;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class UpdateCachedUserExperienceTest extends TestCase
+final class UpdateCachedUserExperienceTest extends TestCase
 {
     #[Test]
     public function it_should_listen_for_the_proper_event(): void

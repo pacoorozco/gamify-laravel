@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
     #[Test]
     public function contains_valid_fillable_properties(): void

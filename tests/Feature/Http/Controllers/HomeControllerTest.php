@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class HomeControllerTest extends TestCase
+final class HomeControllerTest extends TestCase
 {
     #[Test]
     public function index_returns_proper_content(): void

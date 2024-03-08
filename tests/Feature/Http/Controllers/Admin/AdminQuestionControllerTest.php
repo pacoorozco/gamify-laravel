@@ -33,7 +33,7 @@ use Gamify\Models\User;
 use Tests\DataGenerator\QuestionDataGenerator;
 use Tests\Feature\TestCase;
 
-class AdminQuestionControllerTest extends TestCase
+final class AdminQuestionControllerTest extends TestCase
 {
     protected function setUp(): void
     {

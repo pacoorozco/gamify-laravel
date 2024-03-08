@@ -31,7 +31,7 @@ use Gamify\Models\User;
 use Gamify\Services\UsernameGeneratorService;
 use Tests\Feature\TestCase;
 
-class UsernameGeneratorServiceTest extends TestCase
+final class UsernameGeneratorServiceTest extends TestCase
 {
     #[Test]
     #[DataProvider('providesTestCasesForUsernameCreationFromText')]

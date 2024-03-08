@@ -37,7 +37,7 @@ use Gamify\Models\UserResponse;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\Feature\TestCase;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
     #[Test]
     #[DataProvider('providesPendingVisibleQuestionsPaginationTestCases')]

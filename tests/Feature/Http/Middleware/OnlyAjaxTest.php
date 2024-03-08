@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseCode;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\Feature\TestCase;
 
-class OnlyAjaxTest extends TestCase
+final class OnlyAjaxTest extends TestCase
 {
     const TEST_ENDPOINT = '/_test/ajax';
 

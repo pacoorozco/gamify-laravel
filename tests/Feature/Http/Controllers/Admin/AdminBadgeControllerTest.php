@@ -33,7 +33,7 @@ use Gamify\Models\User;
 use Generator;
 use Tests\Feature\TestCase;
 
-class AdminBadgeControllerTest extends TestCase
+final class AdminBadgeControllerTest extends TestCase
 {
     private User $user;
 

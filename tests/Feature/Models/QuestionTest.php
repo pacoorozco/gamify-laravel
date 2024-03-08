@@ -33,7 +33,7 @@ use Gamify\Models\QuestionChoice;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class QuestionTest extends TestCase
+final class QuestionTest extends TestCase
 {
     #[Test]
     public function it_should_return_only_published_questions(): void

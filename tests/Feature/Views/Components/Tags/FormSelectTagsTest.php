@@ -30,7 +30,7 @@ use Gamify\Models\Question;
 use Gamify\View\Components\Tags\FormSelectTags;
 use Tests\Feature\TestCase;
 
-class FormSelectTagsTest extends TestCase
+final class FormSelectTagsTest extends TestCase
 {
     #[Test]
     public function it_should_render_the_tags_component(): void

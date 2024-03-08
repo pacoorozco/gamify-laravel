@@ -30,7 +30,7 @@ use Gamify\Models\Point;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 
-class PointTest extends TestCase
+final class PointTest extends TestCase
 {
     #[Test]
     public function it_should_contain_valid_fillable_properties(): void

@@ -30,7 +30,7 @@ use Gamify\Models\Question;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class QuestionPresenterTest extends TestCase
+final class QuestionPresenterTest extends TestCase
 {
     #[Test]
     public function it_should_return_not_available_when_the_creator_is_not_set(): void

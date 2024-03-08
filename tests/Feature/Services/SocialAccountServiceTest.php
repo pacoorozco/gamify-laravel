@@ -31,7 +31,7 @@ use Gamify\Models\User;
 use Gamify\Services\SocialAccountService;
 use Tests\Feature\TestCase;
 
-class SocialAccountServiceTest extends TestCase
+final class SocialAccountServiceTest extends TestCase
 {
     const PROVIDER_NAME = 'testing-provider';
 

@@ -34,7 +34,7 @@ use Gamify\Models\QuestionChoice;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class PublishQuestionActionTest extends TestCase
+final class PublishQuestionActionTest extends TestCase
 {
     #[Test]
     public function it_triggers_an_event_when_a_question_is_published(): void

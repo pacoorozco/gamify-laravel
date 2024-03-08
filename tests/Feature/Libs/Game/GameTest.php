@@ -35,7 +35,7 @@ use Generator;
 use Illuminate\Support\Arr;
 use Tests\Feature\TestCase;
 
-class GameTest extends TestCase
+final class GameTest extends TestCase
 {
     #[Test]
     public function it_increments_repetitions_for_a_given_badge(): void

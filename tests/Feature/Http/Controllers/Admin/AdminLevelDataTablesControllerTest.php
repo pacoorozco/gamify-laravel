@@ -31,7 +31,7 @@ use Gamify\Models\Level;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminLevelDataTablesControllerTest extends TestCase
+final class AdminLevelDataTablesControllerTest extends TestCase
 {
     private User $user;
 

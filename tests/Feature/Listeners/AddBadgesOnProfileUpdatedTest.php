@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Event;
 use Mockery;
 use Tests\Feature\TestCase;
 
-class AddBadgesOnProfileUpdatedTest extends TestCase
+final class AddBadgesOnProfileUpdatedTest extends TestCase
 {
     #[Test]
     public function it_should_listen_for_the_proper_events(): void

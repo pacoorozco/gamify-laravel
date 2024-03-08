@@ -29,7 +29,7 @@ use Gamify\Models\UserProfile;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 
-class UserProfileTest extends TestCase
+final class UserProfileTest extends TestCase
 {
     public function test_contains_valid_fillable_properties(): void
     {

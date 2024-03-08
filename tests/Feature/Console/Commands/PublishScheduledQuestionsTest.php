@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Question;
 use Tests\Feature\TestCase;
 
-class PublishScheduledQuestionsTest extends TestCase
+final class PublishScheduledQuestionsTest extends TestCase
 {
     #[Test]
     public function it_should_not_publish_questions_if_it_is_not_the_right_time_yet(): void

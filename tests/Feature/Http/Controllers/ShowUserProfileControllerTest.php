@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class ShowUserProfileControllerTest extends TestCase
+final class ShowUserProfileControllerTest extends TestCase
 {
     private User $user;
 

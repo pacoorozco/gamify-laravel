@@ -32,7 +32,7 @@ use Generator;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
-class UsernameRuleTest extends TestCase
+final class UsernameRuleTest extends TestCase
 {
     #[Test]
     #[DataProvider('providesWrongUsernames')]

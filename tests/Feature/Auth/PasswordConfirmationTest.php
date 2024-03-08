@@ -5,7 +5,7 @@ namespace Tests\Feature\Auth;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class PasswordConfirmationTest extends TestCase
+final class PasswordConfirmationTest extends TestCase
 {
     public function test_confirm_password_screen_can_be_rendered(): void
     {

@@ -33,7 +33,7 @@ use Gamify\Models\UserResponse;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\TestCase;
 
-class UserResponseTest extends TestCase
+final class UserResponseTest extends TestCase
 {
     use WithFaker;
 

@@ -30,7 +30,7 @@ use Gamify\Models\QuestionChoice;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 
-class QuestionChoiceTest extends TestCase
+final class QuestionChoiceTest extends TestCase
 {
     public function test_contains_valid_fillable_properties(): void
     {

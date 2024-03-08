@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Gamify\Services\HashIdService;
 use Tests\TestCase;
 
-class HashIdServiceTest extends TestCase
+final class HashIdServiceTest extends TestCase
 {
     #[Test]
     public function it_should_get_the_same_number_after_encoding_it_and_decoding_it(): void

@@ -30,7 +30,7 @@ use Gamify\Enums\BadgeActuators;
 use Gamify\Models\Badge;
 use Tests\Feature\TestCase;
 
-class BadgeTest extends TestCase
+final class BadgeTest extends TestCase
 {
     #[Test]
     public function it_should_return_the_default_image_if_badge_has_not_image(): void

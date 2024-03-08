@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminDashboardControllerTest extends TestCase
+final class AdminDashboardControllerTest extends TestCase
 {
     protected function setUp(): void
     {

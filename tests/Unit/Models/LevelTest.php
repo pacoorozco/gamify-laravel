@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Level;
 use Tests\TestCase;
 
-class LevelTest extends TestCase
+final class LevelTest extends TestCase
 {
     public function test_contains_valid_fillable_properties(): void
     {

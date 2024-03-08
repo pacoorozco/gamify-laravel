@@ -32,7 +32,7 @@ use Generator;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\TestCase;
 
-class LevelTest extends TestCase
+final class LevelTest extends TestCase
 {
     use WithFaker;
 

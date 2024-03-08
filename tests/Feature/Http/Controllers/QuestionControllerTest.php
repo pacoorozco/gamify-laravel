@@ -33,7 +33,7 @@ use Gamify\Services\HashIdService;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class QuestionControllerTest extends TestCase
+final class QuestionControllerTest extends TestCase
 {
     private User $user;
 

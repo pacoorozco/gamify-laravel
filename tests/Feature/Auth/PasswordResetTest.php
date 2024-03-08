@@ -7,7 +7,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 use Tests\Feature\TestCase;
 
-class PasswordResetTest extends TestCase
+final class PasswordResetTest extends TestCase
 {
     public function test_reset_password_link_screen_can_be_rendered(): void
     {

@@ -32,7 +32,7 @@ use Gamify\Notifications\BadgeUnlocked;
 use Illuminate\Notifications\Notification;
 use Tests\Feature\TestCase;
 
-class MarkNotificationAsReadControllerTest extends TestCase
+final class MarkNotificationAsReadControllerTest extends TestCase
 {
     #[Test]
     public function it_should_mark_a_notification_as_read(): void

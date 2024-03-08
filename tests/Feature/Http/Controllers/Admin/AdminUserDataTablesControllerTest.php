@@ -30,7 +30,7 @@ use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminUserDataTablesControllerTest extends TestCase
+final class AdminUserDataTablesControllerTest extends TestCase
 {
     private User $user;
 

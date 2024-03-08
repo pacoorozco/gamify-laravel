@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Tests\Feature\TestCase;
 
-class ProfileControllerTest extends TestCase
+final class ProfileControllerTest extends TestCase
 {
     private User $user;
 
