@@ -25,16 +25,17 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\Level;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminLevelDataTablesControllerTest extends TestCase
+final class AdminLevelDataTablesControllerTest extends TestCase
 {
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +45,7 @@ class AdminLevelDataTablesControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_get_data_tables_data(): void
     {
         $this->user->role = Roles::Admin();
@@ -70,7 +71,7 @@ class AdminLevelDataTablesControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function users_should_not_get_data_tables_data(): void
     {
         $this
@@ -79,7 +80,7 @@ class AdminLevelDataTablesControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_fail_if_ajax_is_not_used(): void
     {
         $this

@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
@@ -32,13 +34,13 @@ use Generator;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\TestCase;
 
-class AdminRewardControllerTest extends TestCase
+final class AdminRewardControllerTest extends TestCase
 {
     use WithFaker;
 
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +50,7 @@ class AdminRewardControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_index_view(): void
     {
         $this
@@ -57,7 +59,7 @@ class AdminRewardControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_index_view(): void
     {
         $this->user->role = Roles::Admin();
@@ -77,7 +79,7 @@ class AdminRewardControllerTest extends TestCase
             ->assertViewIs('admin.reward.index');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_reward_experience(): void
     {
         /** @var User $user */
@@ -102,7 +104,7 @@ class AdminRewardControllerTest extends TestCase
         $this->assertEquals(0, $user->experience);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_reward_experience(): void
     {
         $this->user->role = Roles::Admin();
@@ -129,11 +131,8 @@ class AdminRewardControllerTest extends TestCase
         $this->assertEquals($want['points'], $user->experience);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForExperienceRewarding
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForExperienceRewarding')]
     public function admins_should_get_errors_when_rewarding_experience_with_wrong_data(
         array $data,
         array $errors,
@@ -199,7 +198,7 @@ class AdminRewardControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_reward_badges(): void
     {
         /** @var User $user */
@@ -221,7 +220,7 @@ class AdminRewardControllerTest extends TestCase
         $this->assertEquals(0, $user->badges()->count());
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_reward_badges(): void
     {
         $this->user->role = Roles::Admin();
@@ -245,11 +244,8 @@ class AdminRewardControllerTest extends TestCase
         $this->assertEquals(1, $user->badges()->count());
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForBadgeRewarding
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForBadgeRewarding')]
     public function admins_should_get_errors_when_rewarding_badges_with_wrong_data(
         array $data,
         array $errors,

@@ -25,15 +25,16 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Gamify\Notifications\BadgeUnlocked;
 use Illuminate\Notifications\Notification;
 use Tests\Feature\TestCase;
 
-class MarkNotificationAsReadControllerTest extends TestCase
+final class MarkNotificationAsReadControllerTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_mark_a_notification_as_read(): void
     {
         /** @var User $user */
@@ -58,7 +59,7 @@ class MarkNotificationAsReadControllerTest extends TestCase
         $this->assertCount(1, $user->refresh()->unreadNotifications);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_mark_all_notifications_as_read(): void
     {
         /** @var User $user */

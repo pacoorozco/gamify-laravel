@@ -2,12 +2,14 @@
 
 namespace Tests\Feature\Auth;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
 use Generator;
 use Tests\Feature\TestCase;
 
-class RegistrationTest extends TestCase
+final class RegistrationTest extends TestCase
 {
     public function test_registration_screen_can_be_rendered(): void
     {
@@ -30,11 +32,8 @@ class RegistrationTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForUserRegistration
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForUserRegistration')]
     public function it_should_get_errors_when_registering_with_wrong_data(
         array $data,
         array $errors

@@ -25,12 +25,13 @@
 
 namespace Tests\Unit\Services;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Services\HashIdService;
 use Tests\TestCase;
 
-class HashIdServiceTest extends TestCase
+final class HashIdServiceTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_get_the_same_number_after_encoding_it_and_decoding_it(): void
     {
         $input = fake()->randomNumber();
@@ -41,7 +42,7 @@ class HashIdServiceTest extends TestCase
         $this->assertEquals($input, $s->decode($hash));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_hash_of_the_input(): void
     {
         $number = fake()->randomNumber();
@@ -51,7 +52,7 @@ class HashIdServiceTest extends TestCase
         $this->assertNotEquals($number, $s->encode($number));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_same_if_input_is_not_a_hash(): void
     {
         $number = fake()->randomNumber();

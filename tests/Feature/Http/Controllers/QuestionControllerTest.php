@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Models\Question;
 use Gamify\Models\User;
@@ -32,11 +33,11 @@ use Gamify\Services\HashIdService;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class QuestionControllerTest extends TestCase
+final class QuestionControllerTest extends TestCase
 {
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +47,7 @@ class QuestionControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function it_should_show_the_questions_dashboard(): void
     {
         $this
@@ -64,7 +65,7 @@ class QuestionControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_response_not_found_when_question_is_not_published(): void
     {
         /** @var Question $question */
@@ -77,7 +78,7 @@ class QuestionControllerTest extends TestCase
             ->assertNotFound();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_show_the_question_when_it_is_not_answered(): void
     {
         /** @var Question $question */
@@ -93,7 +94,7 @@ class QuestionControllerTest extends TestCase
             ->assertSeeText($question->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_add_the_user_response_after_answering(): void
     {
         /** @var Question $question */
@@ -121,7 +122,7 @@ class QuestionControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_an_event_when_question_is_answered_correctly(): void
     {
         /** @var Question $question */
@@ -149,7 +150,7 @@ class QuestionControllerTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_an_event_when_question_is_answered_incorrectly(): void
     {
         /** @var Question $question */
@@ -177,7 +178,7 @@ class QuestionControllerTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_should_response_404_when_hashids_service_fails(): void
     {
         /** @var Question $question */

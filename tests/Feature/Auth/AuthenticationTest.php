@@ -8,7 +8,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class AuthenticationTest extends TestCase
+final class AuthenticationTest extends TestCase
 {
     public function test_login_screen_can_be_rendered(): void
     {

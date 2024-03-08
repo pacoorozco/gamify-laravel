@@ -25,17 +25,19 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\Badge;
 use Gamify\Models\User;
 use Generator;
 use Tests\Feature\TestCase;
 
-class AdminBadgeControllerTest extends TestCase
+final class AdminBadgeControllerTest extends TestCase
 {
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -45,7 +47,7 @@ class AdminBadgeControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_index_view(): void
     {
         $this
@@ -54,7 +56,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_index_view(): void
     {
         $this->user->role = Roles::Admin();
@@ -66,7 +68,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertViewIs('admin.badge.index');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_new_badge_form(): void
     {
         $this
@@ -75,7 +77,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_new_badge_form(): void
     {
         $this->user->role = Roles::Admin();
@@ -87,7 +89,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertViewIs('admin.badge.create');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_create_badges(): void
     {
         /** @var Badge $want */
@@ -109,7 +111,7 @@ class AdminBadgeControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_create_badges(): void
     {
         $this->user->role = Roles::Admin();
@@ -148,11 +150,8 @@ class AdminBadgeControllerTest extends TestCase
         $this->assertEquals($wantTags, $badge->tagArrayNormalized);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForBadgeCreation
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForBadgeCreation')]
     public function admins_should_get_errors_when_creating_badges_with_wrong_data(
         array $data,
         array $errors
@@ -259,7 +258,7 @@ class AdminBadgeControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_any_badge(): void
     {
         $want = Badge::factory()->create();
@@ -270,7 +269,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_any_badge(): void
     {
         $this->user->role = Roles::Admin();
@@ -285,7 +284,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertViewHas('badge', $badge);
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_edit_badge_form(): void
     {
         $want = Badge::factory()->create();
@@ -296,7 +295,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_edit_badge_form(): void
     {
         $this->user->role = Roles::Admin();
@@ -311,7 +310,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertViewHas('badge', $badge);
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_update_badges(): void
     {
         /** @var Badge $want */
@@ -325,11 +324,8 @@ class AdminBadgeControllerTest extends TestCase
         $this->assertModelExists($want);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider providesDataForBadgeEdition
-     */
+    #[Test]
+    #[DataProvider('providesDataForBadgeEdition')]
     public function admins_should_update_badges(
         array $wantData,
     ): void {
@@ -381,11 +377,8 @@ class AdminBadgeControllerTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForBadgeModification
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForBadgeModification')]
     public function admins_should_get_errors_when_updating_badges_with_wrong_data(
         array $data,
         array $errors
@@ -492,7 +485,7 @@ class AdminBadgeControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_delete_levels(): void
     {
         $badge = Badge::factory()->create();
@@ -503,7 +496,7 @@ class AdminBadgeControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_delete_badges(): void
     {
         $this->user->role = Roles::Admin();

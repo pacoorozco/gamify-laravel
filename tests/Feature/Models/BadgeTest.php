@@ -25,13 +25,14 @@
 
 namespace Tests\Feature\Models;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Models\Badge;
 use Tests\Feature\TestCase;
 
-class BadgeTest extends TestCase
+final class BadgeTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_return_the_default_image_if_badge_has_not_image(): void
     {
         /** @var Badge $badge */
@@ -40,7 +41,7 @@ class BadgeTest extends TestCase
         $this->assertEquals('/images/missing_badge.png', $badge->image);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_only_active_badges(): void
     {
         Badge::factory()
@@ -56,7 +57,7 @@ class BadgeTest extends TestCase
         $this->assertEquals($want->pluck('name'), Badge::active()->pluck('name'));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_only_active_badges_with_the_specified_actuators(): void
     {
         Badge::factory()
@@ -81,7 +82,7 @@ class BadgeTest extends TestCase
         $this->assertEquals($want->pluck('name'), $badges->pluck('name'));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_only_active_badges_with_the_question_actuators_and_specified_tags(): void
     {
         // active but without tags

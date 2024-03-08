@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Models;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Badge;
 use Gamify\Models\Level;
 use Gamify\Models\Point;
@@ -35,13 +37,10 @@ use Gamify\Models\UserResponse;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\Feature\TestCase;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @dataProvider providesPendingVisibleQuestionsPaginationTestCases
-     */
+    #[Test]
+    #[DataProvider('providesPendingVisibleQuestionsPaginationTestCases')]
     public function it_should_paginate_the_public_questions_pending_to_be_answered(
         int $questions_count,
         int $per_page_limit,
@@ -86,7 +85,7 @@ class UserTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_default_image_when_avatar_is_not_set(): void
     {
         /** @var User $user */
@@ -95,7 +94,7 @@ class UserTest extends TestCase
         $this->assertEquals('/images/missing_profile.png', $user->profile->avatarUrl);
     }
 
-    /** @test */
+    #[Test]
     public function getCompletedBadges_returns_a_collection(): void
     {
         /** @var User $user */
@@ -104,7 +103,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf(Collection::class, $user->unlockedBadges());
     }
 
-    /** @test */
+    #[Test]
     public function getCompletedBadges_returns_empty_collection_when_no_badges(): void
     {
         /** @var User $user */
@@ -113,7 +112,7 @@ class UserTest extends TestCase
         $this->assertCount(0, $user->unlockedBadges());
     }
 
-    /** @test */
+    #[Test]
     public function hasBadgeCompleted_returns_false_when_badge_is_not_completed(): void
     {
         /** @var User $user */
@@ -125,7 +124,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->hasUnlockedBadge($badge));
     }
 
-    /** @test */
+    #[Test]
     public function hasBadgeCompleted_returns_false_when_badge_is_completed(): void
     {
         /** @var User $user */
@@ -142,7 +141,7 @@ class UserTest extends TestCase
         $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_get_empty_string_when_birthdate_is_not_set(): void
     {
         /** @var User $user */
@@ -153,11 +152,8 @@ class UserTest extends TestCase
         $this->assertEmpty($user->present()->birthdate);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider providesPointsToNextLevelTestCases
-     */
+    #[Test]
+    #[DataProvider('providesPointsToNextLevelTestCases')]
     public function it_should_return_points_to_the_next_level(
         int $experience,
         int $nextLevelExperience,
@@ -211,11 +207,8 @@ class UserTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider providesNextLevelCompletionTestCases
-     */
+    #[Test]
+    #[DataProvider('providesNextLevelCompletionTestCases')]
     public function it_should_return_level_completion(
         int $experience,
         int $nextLevelExperience,
@@ -269,7 +262,7 @@ class UserTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_user_response_of_a_question(): void
     {
         /** @var Question $question */
@@ -291,7 +284,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf(UserResponse::class, $response);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_user_progress_for_a_badge(): void
     {
         /** @var Badge $badge */

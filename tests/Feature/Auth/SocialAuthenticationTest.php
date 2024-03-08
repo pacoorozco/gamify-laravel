@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Events\SocialLogin;
 use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -9,9 +10,9 @@ use Laravel\Socialite\Facades\Socialite;
 use Mockery;
 use Tests\Feature\TestCase;
 
-class SocialAuthenticationTest extends TestCase
+final class SocialAuthenticationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_authenticate_users_using_social_login(): void
     {
         $this->mockSocialLogin();

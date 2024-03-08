@@ -25,17 +25,16 @@
 
 namespace Tests\Feature\Services;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Gamify\Services\UsernameGeneratorService;
 use Tests\Feature\TestCase;
 
-class UsernameGeneratorServiceTest extends TestCase
+final class UsernameGeneratorServiceTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @dataProvider providesTestCasesForUsernameCreationFromText
-     */
+    #[Test]
+    #[DataProvider('providesTestCasesForUsernameCreationFromText')]
     public function it_should_return_a_username_from_the_text(
         string $input,
         string $want
@@ -72,11 +71,8 @@ class UsernameGeneratorServiceTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider providesTestCasesForUsernameCreationFromEmail
-     */
+    #[Test]
+    #[DataProvider('providesTestCasesForUsernameCreationFromEmail')]
     public function it_should_return_a_username_from_the_email(
         string $input,
         string $want
@@ -103,7 +99,7 @@ class UsernameGeneratorServiceTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_should_raise_exception_if_email_is_not_valid(): void
     {
         $generator = new UsernameGeneratorService();

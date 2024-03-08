@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Models;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
 use Gamify\Models\Question;
@@ -32,9 +33,9 @@ use Gamify\Models\QuestionChoice;
 use Illuminate\Support\Facades\Event;
 use Tests\Feature\TestCase;
 
-class QuestionTest extends TestCase
+final class QuestionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_return_only_published_questions(): void
     {
         Question::factory()
@@ -62,7 +63,7 @@ class QuestionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_only_public_published_questions(): void
     {
         Question::factory()
@@ -92,7 +93,7 @@ class QuestionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_should_collect_only_scheduled_questions(): void
     {
         Question::factory()
@@ -120,7 +121,7 @@ class QuestionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_true_if_question_can_be_published(): void
     {
         /** @var Question $question */
@@ -132,7 +133,7 @@ class QuestionTest extends TestCase
         $this->assertTrue($question->canBePublished());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_false_if_question_can_not_be_published(): void
     {
         /** @var Question $question */
@@ -143,7 +144,7 @@ class QuestionTest extends TestCase
         $this->assertFalse($question->canBePublished());
     }
 
-    /** @test */
+    #[Test]
     public function it_triggers_an_event_when_a_question_is_published(): void
     {
         /** @var Question $question */
@@ -159,7 +160,7 @@ class QuestionTest extends TestCase
         Event::assertDispatched(QuestionPublished::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_trigger_an_event_when_a_question_was_already_published(): void
     {
         /** @var Question $question */
@@ -174,7 +175,7 @@ class QuestionTest extends TestCase
         Event::assertNotDispatched(QuestionPublished::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_trigger_an_event_when_a_question_is_scheduled(): void
     {
         /** @var Question $question */
@@ -192,7 +193,7 @@ class QuestionTest extends TestCase
         Event::assertNotDispatched(QuestionPublished::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_trying_to_publish_a_question_without_at_least_two_choices(): void
     {
         $this->withoutExceptionHandling();
@@ -207,7 +208,7 @@ class QuestionTest extends TestCase
         $question->publish();
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_trying_to_publish_a_question_without_a_correct_choice(): void
     {
         $this->withoutExceptionHandling();
@@ -222,7 +223,7 @@ class QuestionTest extends TestCase
         $question->publish();
     }
 
-    /** @test */
+    #[Test]
     public function it_publishes_question_when_date_is_on_the_past(): void
     {
         /** @var Question $question */
@@ -238,7 +239,7 @@ class QuestionTest extends TestCase
         $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_schedules_question_publication_when_date_is_in_the_future(): void
     {
         /** @var Question $question */
@@ -254,7 +255,7 @@ class QuestionTest extends TestCase
         $this->assertEquals(Question::FUTURE_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_trigger_an_event_when_publish_fails(): void
     {
         /** @var Question $question */
@@ -279,7 +280,7 @@ class QuestionTest extends TestCase
      * @see \Gamify\Presenters\QuestionPresenter
      */
 
-    /** @test */
+    #[Test]
     public function it_returns_formatted_publication_date_using_presenter(): void
     {
         /** @var Question $question */
@@ -291,7 +292,7 @@ class QuestionTest extends TestCase
         $this->assertEquals('2020-01-02 03:04', $question->present()->publicationDate);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_empty_string_when_publication_date_is_not_set_using_presenter(): void
     {
         /** @var Question $question */
@@ -303,7 +304,7 @@ class QuestionTest extends TestCase
         $this->assertEquals('', $question->present()->publicationDate);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_hash_of_the_question(): void
     {
         /** @var Question $question */

@@ -29,7 +29,7 @@ use Gamify\Models\LinkedSocialAccount;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 
-class LinkedSocialAccountTest extends TestCase
+final class LinkedSocialAccountTest extends TestCase
 {
     public function test_contains_valid_fillable_properties(): void
     {

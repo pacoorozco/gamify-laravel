@@ -25,12 +25,13 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class HomeControllerTest extends TestCase
+final class HomeControllerTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function index_returns_proper_content(): void
     {
         /** @var User $user */

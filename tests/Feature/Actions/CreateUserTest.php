@@ -25,14 +25,15 @@
 
 namespace Tests\Feature\Actions;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Actions\CreateUserAction;
 use Gamify\Models\User;
 use Gamify\Models\UserProfile;
 use Tests\Feature\TestCase;
 
-class CreateUserTest extends TestCase
+final class CreateUserTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_create_a_user_with_its_profile(): void
     {
         /** @var User $want */

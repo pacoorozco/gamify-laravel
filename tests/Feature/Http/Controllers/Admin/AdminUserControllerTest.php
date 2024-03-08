@@ -25,16 +25,18 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Generator;
 use Tests\Feature\TestCase;
 
-class AdminUserControllerTest extends TestCase
+final class AdminUserControllerTest extends TestCase
 {
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +46,7 @@ class AdminUserControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_index_view(): void
     {
         $this
@@ -53,7 +55,7 @@ class AdminUserControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_index_view(): void
     {
         $this->user->role = Roles::Admin();
@@ -65,7 +67,7 @@ class AdminUserControllerTest extends TestCase
             ->assertViewIs('admin.user.index');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_new_user_form(): void
     {
         $this
@@ -74,7 +76,7 @@ class AdminUserControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_new_user_form(): void
     {
         $this->user->role = Roles::Admin();
@@ -86,7 +88,7 @@ class AdminUserControllerTest extends TestCase
             ->assertViewIs('admin.user.create');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_create_users(): void
     {
         /** @var User $want */
@@ -108,7 +110,7 @@ class AdminUserControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_create_users(): void
     {
         $this->user->role = Roles::Admin();
@@ -135,11 +137,8 @@ class AdminUserControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForUserCreation
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForUserCreation')]
     public function admins_should_get_errors_when_creating_users_with_wrong_data(
         array $data,
         array $errors
@@ -240,7 +239,7 @@ class AdminUserControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_any_user(): void
     {
         $want = User::factory()->create();
@@ -251,7 +250,7 @@ class AdminUserControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_any_user(): void
     {
         $this->user->role = Roles::Admin();
@@ -266,7 +265,7 @@ class AdminUserControllerTest extends TestCase
             ->assertViewHas('user', $want);
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_edit_user_form(): void
     {
         $want = User::factory()->create();
@@ -277,7 +276,7 @@ class AdminUserControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_edit_user_form(): void
     {
         $this->user->role = Roles::Admin();
@@ -292,7 +291,7 @@ class AdminUserControllerTest extends TestCase
             ->assertViewHas('user', $want);
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_update_users(): void
     {
         /** @var User $want */
@@ -306,7 +305,7 @@ class AdminUserControllerTest extends TestCase
         $this->assertModelExists($want);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_update_users(): void
     {
         $this->user->role = Roles::Admin();
@@ -335,7 +334,7 @@ class AdminUserControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_not_update_their_own_role(): void
     {
         $this->user->role = Roles::Admin();
@@ -363,11 +362,8 @@ class AdminUserControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForUserModification
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForUserModification')]
     public function admins_should_get_errors_when_updating_users_with_wrong_data(
         array $data,
         array $errors
@@ -441,7 +437,7 @@ class AdminUserControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_delete_users(): void
     {
         /** @var User $user */
@@ -453,7 +449,7 @@ class AdminUserControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_not_delete_themselves(): void
     {
         $this->user->role = Roles::Admin();
@@ -466,7 +462,7 @@ class AdminUserControllerTest extends TestCase
         $this->assertModelExists($this->user);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_delete_users(): void
     {
         $this->user->role = Roles::Admin();

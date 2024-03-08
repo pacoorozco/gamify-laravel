@@ -25,12 +25,13 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminDashboardControllerTest extends TestCase
+final class AdminDashboardControllerTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -39,7 +40,7 @@ class AdminDashboardControllerTest extends TestCase
         $this->actingAs($admin);
     }
 
-    /** @test */
+    #[Test]
     public function access_is_restricted_to_admins(): void
     {
         $test_data = [
@@ -56,7 +57,7 @@ class AdminDashboardControllerTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function index_returns_proper_content(): void
     {
         $this->get(route('admin.home'))

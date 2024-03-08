@@ -25,15 +25,16 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
-class AdminUserDataTablesControllerTest extends TestCase
+final class AdminUserDataTablesControllerTest extends TestCase
 {
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +44,7 @@ class AdminUserDataTablesControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_get_data_tables_data(): void
     {
         $this->user->role = Roles::Admin();
@@ -71,7 +72,7 @@ class AdminUserDataTablesControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function users_should_not_get_data_tables_data(): void
     {
         $this

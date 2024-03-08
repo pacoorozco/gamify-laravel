@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Http\Controllers\Account;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Events\AvatarUploaded;
 use Gamify\Events\ProfileUpdated;
 use Gamify\Models\User;
@@ -36,11 +38,11 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Tests\Feature\TestCase;
 
-class ProfileControllerTest extends TestCase
+final class ProfileControllerTest extends TestCase
 {
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +52,7 @@ class ProfileControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function guests_should_not_access_profiles(): void
     {
         $this
@@ -58,7 +60,7 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function users_should_see_their_own_profile(): void
     {
         $this
@@ -67,7 +69,7 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('profiles.show', ['username' => $this->user->username]));
     }
 
-    /** @test */
+    #[Test]
     public function guests_should_not_access_the_edit_profile_form(): void
     {
         $this
@@ -75,7 +77,7 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function users_should_see_the_edit_profile_form(): void
     {
         $this
@@ -87,7 +89,7 @@ class ProfileControllerTest extends TestCase
             ->assertViewHas('user', $this->user);
     }
 
-    /** @test */
+    #[Test]
     public function guests_should_not_access_the_update_profile_endpoint(): void
     {
         /** @var UserProfile $want */
@@ -106,7 +108,7 @@ class ProfileControllerTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function users_should_update_its_own_profile(): void
     {
         /** @var UserProfile $want */
@@ -143,11 +145,8 @@ class ProfileControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForUserProfileModification
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForUserProfileModification')]
     public function users_should_get_errors_when_updating_its_own_profile_with_wrong_data(
         array $data,
         array $errors
@@ -221,7 +220,7 @@ class ProfileControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function users_should_update_its_own_avatar(): void
     {
         Storage::fake('public');
@@ -241,7 +240,7 @@ class ProfileControllerTest extends TestCase
         $this->assertStringEndsWith('avatar-thumb.jpg', $this->user->profile->avatarUrl);
     }
 
-    /** @test */
+    #[Test]
     public function event_should_be_dispatched_when_user_profile_is_updating_at_least_one_attribute(): void
     {
         Event::fake([
@@ -261,7 +260,7 @@ class ProfileControllerTest extends TestCase
         Event::assertDispatched(ProfileUpdated::class);
     }
 
-    /** @test */
+    #[Test]
     public function event_should_be_dispatched_when_user_is_updating_at_least_one_attribute(): void
     {
         Event::fake([
@@ -280,7 +279,7 @@ class ProfileControllerTest extends TestCase
         Event::assertDispatched(ProfileUpdated::class);
     }
 
-    /** @test */
+    #[Test]
     public function event_should_not_be_dispatched_when_user_profile_is_not_updating_any_attribute(): void
     {
         Event::fake([
@@ -299,7 +298,7 @@ class ProfileControllerTest extends TestCase
         Event::assertNotDispatched(ProfileUpdated::class);
     }
 
-    /** @test */
+    #[Test]
     public function event_should_be_dispatched_when_the_user_uploads_an_avatar(): void
     {
         Event::fake();
@@ -324,7 +323,7 @@ class ProfileControllerTest extends TestCase
         Event::assertNotDispatched(ProfileUpdated::class);
     }
 
-    /** @test */
+    #[Test]
     public function event_should_not_be_dispatched_when_the_user_does_not_upload_an_avatar(): void
     {
         Event::fake();

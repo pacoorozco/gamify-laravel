@@ -25,6 +25,8 @@
 
 namespace Tests\Unit\Models;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\Level;
 use Gamify\Models\User;
@@ -35,9 +37,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function contains_valid_fillable_properties(): void
     {
         $m = new User();
@@ -51,7 +53,7 @@ class UserTest extends TestCase
         ], $m->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function contains_valid_hidden_properties(): void
     {
         $m = new User();
@@ -62,7 +64,7 @@ class UserTest extends TestCase
         ], $m->getHidden());
     }
 
-    /** @test */
+    #[Test]
     public function contains_valid_casts_properties(): void
     {
         $m = new User();
@@ -75,11 +77,8 @@ class UserTest extends TestCase
         ], $m->getCasts());
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideDataToTestAdminMembership
-     */
+    #[Test]
+    #[DataProvider('provideDataToTestAdminMembership')]
     public function it_should_return_if_user_is_admin(
         string $role,
         bool $shouldBeAdmin,
@@ -104,7 +103,7 @@ class UserTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function profile_relation(): void
     {
         $m = new User();
@@ -114,7 +113,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf(HasOne::class, $r);
     }
 
-    /** @test */
+    #[Test]
     public function answeredQuestions_relation(): void
     {
         $m = new User();
@@ -124,7 +123,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf(BelongsToMany::class, $r);
     }
 
-    /** @test */
+    #[Test]
     public function badges_relation(): void
     {
         $m = new User();
@@ -134,7 +133,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf(BelongsToMany::class, $r);
     }
 
-    /** @test */
+    #[Test]
     public function points_relation(): void
     {
         $m = new User();
@@ -144,7 +143,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf(HasMany::class, $r);
     }
 
-    /** @test */
+    #[Test]
     public function accounts_relation(): void
     {
         $m = new User();
@@ -154,11 +153,8 @@ class UserTest extends TestCase
         $this->assertInstanceOf(HasMany::class, $r);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideTestCasesForUsername
-     */
+    #[Test]
+    #[DataProvider('provideTestCasesForUsername')]
     public function lowercase_username_when_set(
         string $input,
         string $want,
@@ -193,7 +189,7 @@ class UserTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function hashes_password_when_set(): void
     {
         Hash::shouldReceive('make')->once()->andReturn('hashed');

@@ -25,16 +25,18 @@
 
 namespace Tests\Feature\Models;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Level;
 use Generator;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\TestCase;
 
-class LevelTest extends TestCase
+final class LevelTest extends TestCase
 {
     use WithFaker;
 
-    /** @test */
+    #[Test]
     public function it_should_find_the_default_level_when_levels_has_not_been_created_yet(): void
     {
         $want = Level::defaultLevel();
@@ -48,7 +50,7 @@ class LevelTest extends TestCase
         $this->assertEquals($want->required_points, $level->required_points);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_find_next_level_even_when_levels_has_not_been_created_yet(): void
     {
         $want = Level::defaultLevel();
@@ -62,11 +64,8 @@ class LevelTest extends TestCase
         $this->assertEquals($want->required_points, $level->required_points);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideFindLevelTestCases
-     */
+    #[Test]
+    #[DataProvider('provideFindLevelTestCases')]
     public function it_should_return_the_proper_level_based_on_experience(
         array $levels,
         int $experience,
@@ -140,11 +139,8 @@ class LevelTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideFindNextLevelTestCases
-     */
+    #[Test]
+    #[DataProvider('provideFindNextLevelTestCases')]
     public function it_should_return_the_next_level_based_on_experience(
         array $levels,
         int $experience,
@@ -218,7 +214,7 @@ class LevelTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_default_image_if_level_has_not_image(): void
     {
         /** @var Level $level */

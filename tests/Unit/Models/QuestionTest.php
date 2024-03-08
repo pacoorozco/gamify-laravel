@@ -25,11 +25,12 @@
 
 namespace Tests\Unit\Models;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Question;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tests\TestCase;
 
-class QuestionTest extends TestCase
+final class QuestionTest extends TestCase
 {
     public function test_contains_valid_fillable_properties(): void
     {
@@ -82,7 +83,7 @@ class QuestionTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_slug_of_the_question(): void
     {
         /** @var Question $question */

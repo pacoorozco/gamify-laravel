@@ -25,13 +25,14 @@
 
 namespace Tests\Feature\Http\Middleware;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Http\Middleware\OnlyAjax;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response as ResponseCode;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\Feature\TestCase;
 
-class OnlyAjaxTest extends TestCase
+final class OnlyAjaxTest extends TestCase
 {
     const TEST_ENDPOINT = '/_test/ajax';
 
@@ -44,7 +45,7 @@ class OnlyAjaxTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_forbids_non_ajax_requests(): void
     {
         $this->withoutExceptionHandling();
@@ -64,7 +65,7 @@ class OnlyAjaxTest extends TestCase
         $this->assertEquals(count($httpVerbs), $exceptionCount, 'Expected a 403 forbidden');
     }
 
-    /** @test */
+    #[Test]
     public function it_passes_with_ajax_requests(): void
     {
         $httpVerbs = ['get', 'put', 'post', 'patch', 'delete'];
