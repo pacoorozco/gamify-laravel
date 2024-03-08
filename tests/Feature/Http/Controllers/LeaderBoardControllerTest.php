@@ -25,11 +25,12 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\TestCase;
 
 class LeaderBoardControllerTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_be_accessible_for_guests(): void
     {
         $this

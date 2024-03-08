@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Services;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\LinkedSocialAccount;
 use Gamify\Models\User;
 use Gamify\Services\SocialAccountService;
@@ -36,7 +37,7 @@ class SocialAccountServiceTest extends TestCase
 
     const EXTERNAL_USER_ID = 'external-id';
 
-    /** @test * */
+    #[Test]
     public function it_creates_social_account_when_the_user_does_not_exist(): void
     {
         /** @var User $want */
@@ -66,7 +67,7 @@ class SocialAccountServiceTest extends TestCase
         ]);
     }
 
-    /** @test * */
+    #[Test]
     public function it_creates_social_account_when_the_user_exists(): void
     {
         /** @var User $want */
@@ -92,7 +93,7 @@ class SocialAccountServiceTest extends TestCase
         ]);
     }
 
-    /** @test * */
+    #[Test]
     public function it_creates_an_user_with_an_unique_username_when_the_username_is_already_in_use(): void
     {
         User::factory()->create([
@@ -130,7 +131,7 @@ class SocialAccountServiceTest extends TestCase
         ]);
     }
 
-    /** @test * */
+    #[Test]
     public function it_returns_the_user_which_has_the_related_social_account(): void
     {
         /** @var User $want */

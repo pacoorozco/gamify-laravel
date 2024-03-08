@@ -25,6 +25,7 @@
 
 namespace Tests\Unit\Models;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\QuestionChoice;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
@@ -55,7 +56,7 @@ class QuestionChoiceTest extends TestCase
         $this->assertInstanceOf(BelongsTo::class, $r);
     }
 
-    /** @test */
+    #[Test]
     public function it_is_considered_correct_when_score_is_positive(): void
     {
         $m = new QuestionChoice();
@@ -64,7 +65,7 @@ class QuestionChoiceTest extends TestCase
         $this->assertTrue($m->isCorrect());
     }
 
-    /** @test */
+    #[Test]
     public function it_is_considered_incorrect_when_score_is_zero(): void
     {
         $m = new QuestionChoice();
@@ -73,7 +74,7 @@ class QuestionChoiceTest extends TestCase
         $this->assertFalse($m->isCorrect());
     }
 
-    /** @test */
+    #[Test]
     public function it_is_considered_incorrect_when_score_is_negative(): void
     {
         $m = new QuestionChoice();

@@ -25,13 +25,14 @@
 
 namespace Tests\Feature\Presenters;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
 class QuestionPresenterTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_return_not_available_when_the_creator_is_not_set(): void
     {
         /** @var Question $question */
@@ -42,7 +43,7 @@ class QuestionPresenterTest extends TestCase
         $this->assertEquals('N/A', $question->present()->creator());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_creator_of_a_question(): void
     {
         /** @var Question $question */
@@ -87,7 +88,7 @@ class QuestionPresenterTest extends TestCase
         $this->assertEquals($user->username, $newQuestion->present()->creator());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_not_available_when_the_updater_is_not_set(): void
     {
         /** @var Question $question */
@@ -98,7 +99,7 @@ class QuestionPresenterTest extends TestCase
         $this->assertEquals('N/A', $question->present()->updater());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_updater_of_a_question(): void
     {
         /** @var Question $question */

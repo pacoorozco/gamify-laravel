@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\User;
 use Tests\Feature\TestCase;
 
@@ -43,7 +44,7 @@ class ShowUserProfileControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function users_should_see_another_user_profiles_without_edit_buttons(): void
     {
         /** @var User $user */
@@ -59,7 +60,7 @@ class ShowUserProfileControllerTest extends TestCase
             ->assertDontSeeText(__('user/profile.change_password'));
     }
 
-    /** @test */
+    #[Test]
     public function users_should_see_its_own_profile_edit_buttons(): void
     {
         $this

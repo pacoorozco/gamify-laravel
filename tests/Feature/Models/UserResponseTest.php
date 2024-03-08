@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Models;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Question;
 use Gamify\Models\User;
 use Gamify\Models\UserResponse;
@@ -35,11 +37,8 @@ class UserResponseTest extends TestCase
 {
     use WithFaker;
 
-    /**
-     * @test
-     *
-     * @dataProvider providesScoreForUserResponseTest
-     */
+    #[Test]
+    #[DataProvider('providesScoreForUserResponseTest')]
     public function it_should_return_the_user_response_score_of_a_question(
         int $score,
         int $want,
@@ -87,7 +86,7 @@ class UserResponseTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_the_user_response_choices_of_a_question(): void
     {
         /** @var Question $question */
@@ -117,7 +116,7 @@ class UserResponseTest extends TestCase
         $this->assertEquals($choices, $response->choices());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_if_a_choice_is_within_the_user_response_of_a_question(): void
     {
         /** @var Question $question */

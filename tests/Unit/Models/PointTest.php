@@ -25,13 +25,14 @@
 
 namespace Tests\Unit\Models;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Point;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 
 class PointTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_contain_valid_fillable_properties(): void
     {
         $m = new Point();
@@ -41,7 +42,7 @@ class PointTest extends TestCase
         ], $m->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_contain_valid_casts_properties(): void
     {
         $m = new Point();
@@ -50,7 +51,7 @@ class PointTest extends TestCase
         ], $m->getCasts());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_have_a_user_relation(): void
     {
         $m = new Point();

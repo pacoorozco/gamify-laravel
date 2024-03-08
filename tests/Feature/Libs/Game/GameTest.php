@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Libs\Game;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Libs\Game\Game;
 use Gamify\Models\Badge;
 use Gamify\Models\Point;
@@ -35,7 +37,7 @@ use Tests\Feature\TestCase;
 
 class GameTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_increments_repetitions_for_a_given_badge(): void
     {
         /** @var User $user */
@@ -52,7 +54,7 @@ class GameTest extends TestCase
         $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
-    /** @test */
+    #[Test]
     public function it_increments_repetitions_for_a_given_badge_that_was_already_initiated(): void
     {
         /** @var User $user */
@@ -71,7 +73,7 @@ class GameTest extends TestCase
         $this->assertEquals(2, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
-    /** @test */
+    #[Test]
     public function it_completes_badge_when_reach_required_repetitions(): void
     {
         /** @var User $user */
@@ -87,7 +89,7 @@ class GameTest extends TestCase
         $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_complete_badge_when_required_repetitions_are_not_reached(): void
     {
         /** @var User $user */
@@ -103,7 +105,7 @@ class GameTest extends TestCase
         $this->assertFalse($user->hasUnlockedBadge($badge));
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_update_repetitions_if_badge_was_already_completed(): void
     {
         /** @var User $user */
@@ -122,7 +124,7 @@ class GameTest extends TestCase
         $this->assertEquals(1, $user->progressToCompleteTheBadge($badge)->repetitions);
     }
 
-    /** @test */
+    #[Test]
     public function it_completes_a_badge_for_a_user(): void
     {
         /** @var User $user */
@@ -136,7 +138,7 @@ class GameTest extends TestCase
         $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
-    /** @test */
+    #[Test]
     public function it_completes_a_badge_when_a_user_had_already_started_it(): void
     {
         /** @var User $user */
@@ -154,11 +156,8 @@ class GameTest extends TestCase
         $this->assertTrue($user->hasUnlockedBadge($badge));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideRankingTestCases
-     */
+    #[Test]
+    #[DataProvider('provideRankingTestCases')]
     public function it_should_return_the_first_players_with_the_highest_score(
         int $numberOfPlayers,
         array $expectedPlayers,

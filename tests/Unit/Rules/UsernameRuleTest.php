@@ -25,6 +25,8 @@
 
 namespace Tests\Unit\Rules;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Rules\UsernameRule;
 use Generator;
 use Illuminate\Support\Facades\Validator;
@@ -32,11 +34,8 @@ use Tests\TestCase;
 
 class UsernameRuleTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @dataProvider providesWrongUsernames
-     */
+    #[Test]
+    #[DataProvider('providesWrongUsernames')]
     public function it_should_fail_with_wrong_usernames(
         string $input
     ): void {
@@ -71,11 +70,8 @@ class UsernameRuleTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider providesValidUsernames
-     */
+    #[Test]
+    #[DataProvider('providesValidUsernames')]
     public function it_should_pass_valid_usernames(
         string $input
     ): void {

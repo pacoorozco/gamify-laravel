@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Listeners;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\BadgeActuators;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Listeners\AddBadgesOnQuestionAnswered;
@@ -37,7 +39,7 @@ use Tests\Feature\TestCase;
 
 class AddBadgesOnQuestionAnsweredTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_listen_for_the_proper_event(): void
     {
         Event::fake();
@@ -47,11 +49,8 @@ class AddBadgesOnQuestionAnsweredTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideTestCasesThatShouldTriggerABadge
-     */
+    #[Test]
+    #[DataProvider('provideTestCasesThatShouldTriggerABadge')]
     public function it_should_increment_badges_when_criteria_is_met(
         array $badgeAttributes,
         array $questionAttributes,
@@ -150,11 +149,8 @@ class AddBadgesOnQuestionAnsweredTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideTestCasesThatShouldNotTriggerABadge
-     */
+    #[Test]
+    #[DataProvider('provideTestCasesThatShouldNotTriggerABadge')]
     public function it_should_not_increment_badges_when_criteria_is_not_met(
         array $badgeAttributes,
         array $questionAttributes,

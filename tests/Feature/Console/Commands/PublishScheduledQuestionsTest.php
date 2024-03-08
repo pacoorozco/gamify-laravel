@@ -25,12 +25,13 @@
 
 namespace Tests\Feature\Console\Commands;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Question;
 use Tests\Feature\TestCase;
 
 class PublishScheduledQuestionsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_not_publish_questions_if_it_is_not_the_right_time_yet(): void
     {
         /** @var Question $question */
@@ -50,7 +51,7 @@ class PublishScheduledQuestionsTest extends TestCase
         $this->assertEquals(Question::FUTURE_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_raise_an_error_when_questions_can_not_be_published(): void
     {
         // Create a question without choices().
@@ -71,7 +72,7 @@ class PublishScheduledQuestionsTest extends TestCase
         $this->assertEquals(Question::FUTURE_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_sent_two_questions_to_publication(): void
     {
         $questions = Question::factory()

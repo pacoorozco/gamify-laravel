@@ -25,13 +25,14 @@
 
 namespace Tests\Feature\Views\Components\Tags;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Models\Question;
 use Gamify\View\Components\Tags\FormSelectTags;
 use Tests\Feature\TestCase;
 
 class FormSelectTagsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_render_the_tags_component(): void
     {
         // Create some tags by tagging a model.

@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Actions;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Actions\PublishQuestionAction;
 use Gamify\Events\QuestionPublished;
 use Gamify\Exceptions\QuestionPublishingException;
@@ -35,7 +36,7 @@ use Tests\Feature\TestCase;
 
 class PublishQuestionActionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_triggers_an_event_when_a_question_is_published(): void
     {
         /** @var Question $question */
@@ -57,7 +58,7 @@ class PublishQuestionActionTest extends TestCase
         $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_trigger_an_event_when_a_question_was_already_published(): void
     {
         /** @var Question $question */
@@ -78,7 +79,7 @@ class PublishQuestionActionTest extends TestCase
         $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_trying_to_publish_a_question_without_at_least_two_choices(): void
     {
         $this->withoutExceptionHandling();
@@ -95,7 +96,7 @@ class PublishQuestionActionTest extends TestCase
         $publisher->execute($question);
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_trying_to_publish_a_question_without_a_correct_choice(): void
     {
         $this->withoutExceptionHandling();
@@ -112,7 +113,7 @@ class PublishQuestionActionTest extends TestCase
         $publisher->execute($question);
     }
 
-    /** @test */
+    #[Test]
     public function it_publishes_question_when_date_is_on_the_past(): void
     {
         /** @var Question $question */
@@ -130,7 +131,7 @@ class PublishQuestionActionTest extends TestCase
         $this->assertEquals(Question::PUBLISH_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_schedules_question_publication_when_date_is_in_the_future(): void
     {
         /** @var Question $question */
@@ -148,7 +149,7 @@ class PublishQuestionActionTest extends TestCase
         $this->assertEquals(Question::FUTURE_STATUS, $question->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_trigger_an_event_when_publish_fails(): void
     {
         /** @var Question $question */

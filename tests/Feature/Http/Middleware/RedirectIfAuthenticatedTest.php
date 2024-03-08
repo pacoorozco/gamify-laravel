@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Http\Middleware;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Http\Middleware\RedirectIfAuthenticated;
 use Gamify\Models\User;
 use Gamify\Providers\RouteServiceProvider;
@@ -44,7 +45,7 @@ class RedirectIfAuthenticatedTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_response_ok_for_non_authenticated_users(): void
     {
         $response = $this->get(self::TEST_ENDPOINT);
@@ -53,7 +54,7 @@ class RedirectIfAuthenticatedTest extends TestCase
         $response->assertSee('Access granted for non authenticated users');
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_to_home_for_authenticated_users_requests(): void
     {
         /** @var User $user */

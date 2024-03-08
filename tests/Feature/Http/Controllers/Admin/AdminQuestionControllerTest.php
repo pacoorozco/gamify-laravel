@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Http\Middleware\OnlyAjax;
 use Gamify\Models\Question;
 use Gamify\Models\User;
@@ -43,7 +45,7 @@ class AdminQuestionControllerTest extends TestCase
         $this->actingAs($admin);
     }
 
-    /** @test */
+    #[Test]
     public function access_is_restricted_to_admins(): void
     {
         /** @var Question $question */
@@ -75,7 +77,7 @@ class AdminQuestionControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function index_returns_proper_content(): void
     {
         $this->get(route('admin.questions.index'))
@@ -83,7 +85,7 @@ class AdminQuestionControllerTest extends TestCase
             ->assertViewIs('admin.question.index');
     }
 
-    /** @test */
+    #[Test]
     public function create_returns_proper_content(): void
     {
         $this->get(route('admin.questions.create'))
@@ -91,7 +93,7 @@ class AdminQuestionControllerTest extends TestCase
             ->assertViewIs('admin.question.create');
     }
 
-    /** @test */
+    #[Test]
     public function store_creates_an_object(): void
     {
         /** @var Question $question */
@@ -144,7 +146,7 @@ class AdminQuestionControllerTest extends TestCase
         $this->assertCount(2, $newQuestion->choices);
     }
 
-    /** @test */
+    #[Test]
     public function store_returns_errors_on_invalid_data(): void
     {
         /** @var Question $want */
@@ -162,7 +164,7 @@ class AdminQuestionControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function show_returns_proper_content(): void
     {
         /** @var Question $question */
@@ -174,7 +176,7 @@ class AdminQuestionControllerTest extends TestCase
             ->assertSee($question->name);
     }
 
-    /** @test */
+    #[Test]
     public function edit_returns_proper_content(): void
     {
         /** @var Question $question */
@@ -186,11 +188,8 @@ class AdminQuestionControllerTest extends TestCase
             ->assertSee($question->name);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider providesTestCasesForEdition
-     */
+    #[Test]
+    #[DataProvider('providesTestCasesForEdition')]
     public function update_edits_an_object(
         array $want
     ): void {
@@ -251,7 +250,7 @@ class AdminQuestionControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function update_returns_errors_on_invalid_data(): void
     {
         /** @var Question $question */
@@ -270,7 +269,7 @@ class AdminQuestionControllerTest extends TestCase
         $this->assertEquals('Question gold', $question->name);
     }
 
-    /** @test */
+    #[Test]
     public function destroy_deletes_an_object(): void
     {
         /** @var Question $question */

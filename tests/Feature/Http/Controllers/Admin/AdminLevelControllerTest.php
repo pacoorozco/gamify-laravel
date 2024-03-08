@@ -25,6 +25,8 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Enums\Roles;
 use Gamify\Models\Level;
 use Gamify\Models\User;
@@ -45,7 +47,7 @@ class AdminLevelControllerTest extends TestCase
         $this->user = $user;
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_index_view(): void
     {
         $this
@@ -54,7 +56,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_index_view(): void
     {
         $this->user->role = Roles::Admin();
@@ -66,7 +68,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertViewIs('admin.level.index');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_new_level_form(): void
     {
         $this
@@ -75,7 +77,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_new_level_form(): void
     {
         $this->user->role = Roles::Admin();
@@ -87,7 +89,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertViewIs('admin.level.create');
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_create_levels(): void
     {
         /** @var Level $want */
@@ -108,7 +110,7 @@ class AdminLevelControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_create_levels(): void
     {
         $this->user->role = Roles::Admin();
@@ -133,11 +135,8 @@ class AdminLevelControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForLevelCreation
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForLevelCreation')]
     public function admins_should_get_errors_when_creating_levels_with_wrong_data(
         array $data,
         array $errors
@@ -222,7 +221,7 @@ class AdminLevelControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_any_level(): void
     {
         $want = Level::factory()->create();
@@ -233,7 +232,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_any_level(): void
     {
         $this->user->role = Roles::Admin();
@@ -248,7 +247,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertViewHas('level', $level);
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_see_the_edit_level_form(): void
     {
         $want = Level::factory()->create();
@@ -259,7 +258,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_see_the_edit_level_form(): void
     {
         $this->user->role = Roles::Admin();
@@ -274,7 +273,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertViewHas('level', $level);
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_update_levels(): void
     {
         /** @var Level $want */
@@ -288,7 +287,7 @@ class AdminLevelControllerTest extends TestCase
         $this->assertModelExists($want);
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_update_levels(): void
     {
         $this->user->role = Roles::Admin();
@@ -317,11 +316,8 @@ class AdminLevelControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider provideWrongDataForLevelModification
-     */
+    #[Test]
+    #[DataProvider('provideWrongDataForLevelModification')]
     public function admins_should_get_errors_when_updating_levels_with_wrong_data(
         array $data,
         array $errors
@@ -406,7 +402,7 @@ class AdminLevelControllerTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function players_should_not_delete_levels(): void
     {
         $level = Level::factory()->create();
@@ -417,7 +413,7 @@ class AdminLevelControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function admins_should_delete_levels(): void
     {
         $this->user->role = Roles::Admin();

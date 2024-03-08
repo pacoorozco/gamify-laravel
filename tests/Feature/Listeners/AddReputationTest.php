@@ -25,6 +25,7 @@
 
 namespace Tests\Feature\Listeners;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gamify\Events\QuestionAnswered;
 use Gamify\Listeners\AddReputation;
 use Gamify\Models\Question;
@@ -35,7 +36,7 @@ use Tests\Feature\TestCase;
 
 class AddReputationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_listen_for_the_proper_event(): void
     {
         Event::fake();
@@ -45,7 +46,7 @@ class AddReputationTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_increments_the_user_experience(): void
     {
         /** @var User $user */
