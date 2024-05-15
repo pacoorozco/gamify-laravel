@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 4.1.4 - 2024-05-15
+### Changed
+- [CI] Bump `codecov/codecov-action` from 3 to 4
+- [CI] Bump `laravel/pint` from 1.13.7 to 1.14.0
+- Bump `cviebrock/eloquent-taggable` from 10.0.0 to 10.0.3
+- Bump `ramsey/composer-install` from 2 to 3
+- [CI] Bump `phpunit/phpunit` from 10.5.5 to 10.5.11
+- [CI] Bump `laravel/sail` from 1.26.3 to 1.29.1
+- Bump `coderflexx/laravel-presenter` from 1.3.1 to 2.0.0
+- [CI] Set return type of base TestCase methods
+- [CI] Adopt PHP attributes in test classes
+- [CI] Define test classes as `final`
+- [CI] Bump `brianium/paratest` from 7.3.1 to 7.4.3
+- [CI] Bump `larastan/larastan` from 2.7.0 to 2.9.5
+- Bump `laravel/socialite` from 5.11.0 to 5.12.1
+- [CI] Bump `aglipanci/laravel-pint-action` from 2.3.1 to 2.4
+- [CI] Bump `mockery/mockery` from 1.6.7 to 1.6.11
+- [CI] Bump `fakerphp/faker` from 1.23.0 to 1.23.1
+- [CI] Bump `doctrine/dbal` from 3.7.2 to 3.8.4
+- Bump `spatie/image-optimizer` from 1.7.2 to 1.7.4
+
 ## 4.1.3 - 2024-01-13
 ### Changed
 - Update [sail](https://laravel.com/docs/10.x/sail) to use PHP 8.2
