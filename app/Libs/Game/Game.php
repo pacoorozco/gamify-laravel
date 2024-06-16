@@ -75,18 +75,16 @@ class Game
     {
         return User::query()
             ->player()
-            ->select(['username', 'name'])
-            ->withSum('points as total_points', 'points')
+            ->select(['username', 'name', 'level'])
+            ->withSum('points', 'points as total_points')
             ->orderByDesc('total_points')
-            ->take($maxNumberOfPlayers)
+            ->limit($maxNumberOfPlayers)
             ->get()
-            ->map(function ($user) {
-                return [
-                    'username' => $user->username,
-                    'name' => $user->name,
-                    'experience' => $user->total_points ?? 0,
-                    'level' => $user->level,
-                ];
-            });
+            ->map(fn($user) => [
+                'username' => $user->username,
+                'name' => $user->name,
+                'experience' => $user->experience ?? 0,
+                'level' => $user->level,
+            ]);
     }
 }
