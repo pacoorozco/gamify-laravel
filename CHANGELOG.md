@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## Unreleased
 
+## 4.1.5 - 2024-06-16
+### Changed
+- Bump `bensampo/laravel-enum` to 6.11.0
+- Bump `cviebrock/eloquent-taggable` to 10.0.3
+- Bump `doctrine/dbal` to 3.8.5
+- Bump `fakerphp/faker` to 1.23.1
+- Bump `laravel/framework` to 10.48.12
+- Bump `laravel/socialite` to 5.14.0
+- Bump `richan-fongdasen/eloquent-blameable` to 1.10.0
+- Bump `spatie/laravel-medialibrary` to 11.6.0
+- Bump `yajra/laravel-datatables-oracle` to 10.11.4
+- [CI] Bump `barryvdh/laravel-debugbar` to 3.13.5
+- [CI] Bump `brianium/paratest` to 7.4.5
+- [CI] Bump `larastan/larastan` to 2.9.7
+- [CI] Bump `laravel/breeze` to 1.29.1
+- [CI] Bump `laravel/pint` to 1.16.0
+- [CI] Bump `laravel/sail` to 1.29.2
+- [CI] Bump `mockery/mockery` to 1.6.12
+- [CI] Bump `phpunit/phpunit` to 10.5.21
+- [CI] Bump `spatie/laravel-ignition` to 2.8.0
+
 ## 4.1.4 - 2024-05-15
 ### Changed
 - [CI] Bump `codecov/codecov-action` from 3 to 4
