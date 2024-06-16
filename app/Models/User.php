@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\Hash;
  * @property-read int $id The object unique id.
  * @property-read int $experience The experience points of the user.
  * @property-read string $level The current level of the user.
- * @property-read Collection $unreadNotifications The user's unread notifications.
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
  */
 final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 {
