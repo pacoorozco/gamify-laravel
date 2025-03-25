@@ -48,7 +48,7 @@ final class AdminBadgeDataTablesControllerTest extends TestCase
     #[Test]
     public function admins_should_get_data_tables_data(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::Admin;
 
         $badges = Badge::factory()
             ->count(3)

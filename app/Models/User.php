@@ -88,12 +88,12 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 
     public function isAdmin(): bool
     {
-        return $this->role->is(Roles::Admin);
+        return $this->role === Roles::Admin;
     }
 
     public function scopePlayer(Builder $query): Builder
     {
-        return $query->where('role', Roles::Player);
+        return $query->where('role', Roles::Player->value);
     }
 
     public function profile(): HasOne

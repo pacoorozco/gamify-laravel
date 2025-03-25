@@ -33,26 +33,26 @@ return [
     'actuators_related_with_user_events' => 'User related events',
 
     BadgeActuators::class => [
-        BadgeActuators::None => 'None, I will trigger it by my own',
+        BadgeActuators::None->value => 'None, I will trigger it by my own',
 
-        BadgeActuators::OnQuestionAnswered => 'Question has been answered',
-        BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
-        BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
+        BadgeActuators::OnQuestionAnswered->value => 'Question has been answered',
+        BadgeActuators::OnQuestionCorrectlyAnswered->value => 'Question has been answered correctly',
+        BadgeActuators::OnQuestionIncorrectlyAnswered->value => 'Question has been answered incorrectly',
 
-        BadgeActuators::OnUserLoggedIn => 'User has logged in',
-        BadgeActuators::OnUserProfileUpdated => 'User has updated its profile',
-        BadgeActuators::OnUserAvatarUploaded => 'User has uploaded an avatar',
+        BadgeActuators::OnUserLoggedIn->value => 'User has logged in',
+        BadgeActuators::OnUserProfileUpdated->value => 'User has updated its profile',
+        BadgeActuators::OnUserAvatarUploaded->value => 'User has uploaded an avatar',
     ],
 
     QuestionActuators::class => [
-        QuestionActuators::OnQuestionAnswered => 'Always',
-        QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
-        QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
+        QuestionActuators::OnQuestionAnswered->value => 'Always',
+        QuestionActuators::OnQuestionCorrectlyAnswered->value => 'On question correctly answered',
+        QuestionActuators::OnQuestionIncorrectlyAnswered->value => 'On question incorrectly answered',
     ],
 
     Roles::class => [
-        Roles::Admin => 'Administrator',
-        Roles::Player => 'Player',
+        Roles::Admin->value => 'Administrator',
+        Roles::Player->value => 'Player',
     ],
 
 ];

@@ -60,7 +60,7 @@ final class AddBadgesOnUserLoggedInTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserLoggedIn,
+            'actuators' => BadgeActuators::OnUserLoggedIn->value,
         ]);
 
         /** @var Login $event */
@@ -81,7 +81,7 @@ final class AddBadgesOnUserLoggedInTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::None,
+            'actuators' => BadgeActuators::None->value,
         ]);
 
         /** @var Login $event */
@@ -102,7 +102,7 @@ final class AddBadgesOnUserLoggedInTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserLoggedIn,
+            'actuators' => BadgeActuators::OnUserLoggedIn->value,
         ]);
 
         /** @var SocialLogin $event */
@@ -123,7 +123,7 @@ final class AddBadgesOnUserLoggedInTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::None,
+            'actuators' => BadgeActuators::None->value,
         ]);
 
         /** @var SocialLogin $event */

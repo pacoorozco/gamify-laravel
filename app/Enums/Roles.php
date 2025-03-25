@@ -28,13 +28,8 @@ namespace Gamify\Enums;
 use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-/**
- * @method static static Admin()
- * @method static static Player()
- */
-final class Roles extends Enum implements LocalizedEnum
+enum Roles : string
 {
-    const Admin = 'administrator';
-
-    const Player = 'user';
+    case Admin = 'administrator';
+    case Player = 'user';
 }
