@@ -42,7 +42,6 @@
     "yajra/laravel-datatables-oracle": "^10.11.2"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^3.9.2",
     "brianium/paratest": "^7.3.1",
     "larastan/larastan": "^2.7.0",
     "laravel/breeze": "^1.26.3",
