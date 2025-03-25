@@ -218,7 +218,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Collective\Html\HtmlServiceProvider::class, // Forms & HTML
         SocialiteProviders\Manager\ServiceProvider::class, // Socialite Providers
 
         /*
