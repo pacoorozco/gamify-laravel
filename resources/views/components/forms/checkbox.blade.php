@@ -1,21 +1,23 @@
 @props([
-    'label' => '',
-    'name' => '',
-    'value' => '',
-    'required' => false,
-    'checked' => false
+    'name',
+    'value',
+    'label',
+    'id',
+    'checked' => false,
+    'disabled' => false
     ])
 
-<div {{ $attributes->merge(['class' => 'checkbox']) }}>
-    <label for="{{ \Illuminate\Support\Str::camel($name.$value) }}">
-        <input type="checkbox" name="{{ $name }}"
-               id="{{ \Illuminate\Support\Str::camel($name.$value) }}"
-               @required($required)
-               @checked($checked)
-               value="{{ $value }}"
+@php
+    $id = $id ?? \Illuminate\Support\Str::camel($name.$value);
+@endphp
 
-        >
-        {{ $label }}
-    </label>
+<div {{ $attributes->class(['checkbox', 'disabled' => $disabled]) }}>
+    <input type="checkbox"
+           name="{{ $name }}"
+           id="{{ $id }}"
+           value="{{ $value }}"
+        @checked($checked)
+    >
+    <label for="{{ $id }}">{{ $label }}</label>
     <x-forms.error name="{{ $name }}"></x-forms.error>
 </div>

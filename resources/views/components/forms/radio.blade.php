@@ -1,26 +1,33 @@
 @props([
+    'name',
+    'value',
     'label',
     'id',
-    'name' => '',
-    'value' => '',
     'help' => '',
     'checked' => false,
+    'disabled' => false
     ])
 
-<div class="radio">
-    <x-forms.label for="{{ $id }}">
-        <input id="{{ $id }}" name="{{ $name }}"
-               type="radio"
+@php
+    $id = $id ?? \Illuminate\Support\Str::camel($name.$value);
+@endphp
+
+<div {{ $attributes->class(['radio', 'disabled' => $disabled]) }}>
+        <input type="radio"
+               name="{{ $name }}"
+               id="{{ $id }}"
                value="{{ $value }}"
             @checked($checked)
             @if($help) aria-describedby="{{ $id . '_help' }}" @endif
         />
+    <label for="{{ $id }}">
         {{ $label }}
         @if($help)
             <span id="{{ $id . '_help' }}" class="text-muted">
                 {{ $help }}
             </span>
         @endif
-    </x-forms.label>
+    </label>
+    <x-forms.error name="{{ $name }}"></x-forms.error>
 </div>
 
