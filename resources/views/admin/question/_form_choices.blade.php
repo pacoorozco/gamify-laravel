@@ -16,17 +16,34 @@
         <div class="choices-container">
             @foreach(old('choices', (isset($question) ? $question->choices->toArray() : [])) as $choice)
                 <div class="row choices-row">
-                    <div class="col-sm-9 form-group {{ $errors->has('choices.'. $loop->index .'.*') ? 'has-error' : '' }}">
-                        {!! Form::label('choices['. $loop->index .'][text]', __('admin/question/model.choice_text'), ['class' => 'control-label']) !!}
-                        {!! Form::text('choices['. $loop->index .'][text]', $choice['text'], ['class' => 'form-control', 'placeholder' => __('admin/question/model.choice_text_help')]) !!}
-                        <span class="help-block">{{ $errors->first('choices.'. $loop->index .'.*', ':message') }}</span>
+                    <div class="col-sm-9 form-group @error('choices.'. $loop->index .'.*') has-error @enderror">
+                        <label for="{{ 'choices['. $loop->index .'][text]' }}" class="control-label">
+                            {{ __('admin/question/model.choice_text') }}
+                        </label>
+                        <input id="{{ 'choices['. $loop->index .'][text]' }}"
+                               name="{{ 'choices['. $loop->index .'][text]' }}"
+                               type="text"
+                               placeholder="{{ __('admin/question/model.choice_text_help') }}"
+                               class="form-control"
+                               value="{{ old('choices['. $loop->index .'][score]', $choice['text']) }}"
+                        />
+                        <x-forms.error name="{{ 'choices.'. $loop->index .'.*' }}"></x-forms.error>
                     </div>
-                    <div class="col-sm-3 form-group {{ $errors->has('choices.'. $loop->index .'.*') ? 'has-error' : '' }}">
-                        {!! Form::label('choices['. $loop->index .'][score]', __('admin/question/model.choice_score'), ['class' => 'control-label']) !!}
+                    <div
+                        class="col-sm-3 form-group {{ $errors->has('choices.'. $loop->index .'.*') ? 'has-error' : '' }}">
+                        <label for="{{ 'choices['. $loop->index .'][score]' }}" class="control-label">
+                            {{ __('admin/question/model.choice_score') }}
+                        </label>
                         <div class="input-group">
-                            {!! Form::number('choices['. $loop->index .'][score]', $choice['score'], ['class' => 'form-control']) !!}
+                            <input id="{{ 'choices['. $loop->index .'][score]' }}"
+                                   name="{{ 'choices['. $loop->index .'][score]' }}"
+                                   type="number"
+                                   class="form-control"
+                                   value="{{ old('choices['. $loop->index .'][score]', $choice['score']) }}"
+                            />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default remove" title="{{ __('button.remove_choice') }}">
+                                <button type="button" class="btn btn-default remove"
+                                        title="{{ __('button.remove_choice') }}">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </span>
@@ -37,18 +54,32 @@
 
             <div class="row form-group choices-template choices-row">
                 <div class="col-sm-9">
-                    {!! Form::label('choices[%%choice-count-placeholder%%][text]', __('admin/question/model.choice_text'), ['class' => 'control-label']) !!}
-                    {!! Form::text('choices[%%choice-count-placeholder%%][text]', '', ['class' => 'form-control', 'placeholder' => __('admin/question/model.choice_text_help')]) !!}
+                    <label for="choices[%%choice-count-placeholder%%][text]" class="control-label">
+                        {{ __('admin/question/model.choice_text') }}
+                    </label>
+                    <input id="choices[%%choice-count-placeholder%%][text]"
+                           name="choices[%%choice-count-placeholder%%][text]"
+                           type="text"
+                           class="form-control"
+                           placeholder="{{ __('admin/question/model.choice_text_help') }}"
+                    />
                 </div>
                 <div class="col-sm-3">
-                    {!! Form::label('choices[%%choice-count-placeholder%%][score]', __('admin/question/model.choice_score'), ['class' => 'control-label']) !!}
+                    <label for="choices[%%choice-count-placeholder%%][score]" class="control-label">
+                        {{ __('admin/question/model.choice_score') }}
+                    </label>
                     <div class="input-group">
-                        {!! Form::number('choices[%%choice-count-placeholder%%][score]', '', ['class' => 'form-control']) !!}
+                        <input id="choices[%%choice-count-placeholder%%][score]"
+                               name="choices[%%choice-count-placeholder%%][score]"
+                               type="number"
+                               class="form-control"
+                        />
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default remove" title="{{ __('button.remove_choice') }}">
+                            <button type="button" class="btn btn-default remove"
+                                    title="{{ __('button.remove_choice') }}">
                                     <i class="fa fa-trash-o"></i>
-                                </button>
-                        </span>
+                            </button>
+                    </span>
                     </div>
                 </div>
             </div>

@@ -218,7 +218,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Collective\Html\HtmlServiceProvider::class, // Forms & HTML
         SocialiteProviders\Manager\ServiceProvider::class, // Socialite Providers
 
         /*
@@ -285,8 +284,6 @@ return [
         /*
          * Third Party Alias
          */
-        'Form' => Collective\Html\FormFacade::class, // Forms
-        'Html' => Collective\Html\HtmlFacade::class, // HTML
         'Socialite' => Laravel\Socialite\Facades\Socialite::class, // Socialite
 
     ],

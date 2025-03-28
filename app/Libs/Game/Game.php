@@ -73,14 +73,16 @@ class Game
 
     public static function getTopExperiencedPlayers(int $maxNumberOfPlayers = 10): Collection
     {
-        return User::query()
+        /** @var \Illuminate\Support\Collection $topUsers */
+        $topUsers = User::query()
             ->player()
             ->select(['username', 'name'])
             ->withSum('points as total_points', 'points')
             ->orderByDesc('total_points')
             ->take($maxNumberOfPlayers)
-            ->get()
-            ->map(function ($user) {
+            ->get();
+
+        return $topUsers->map(function ($user) {
                 return [
                     'username' => $user->username,
                     'name' => $user->name,

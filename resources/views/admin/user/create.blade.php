@@ -37,77 +37,57 @@
     <!-- ./ notifications -->
 
     {{-- Create / Edit User Form --}}
-    {!! Form::open(['route' => ['admin.users.store'], 'method' => 'post']) !!}
+    <x-forms.form method="post" :action="route('admin.users.store')">
 
-    <div class="box box-solid">
-        <div class="box-body">
-            <div class="row">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
 
-                <!-- right column -->
-                <div class="col-md-6">
-                    <!-- username -->
-                    <div class="form-group">
-                        {!! Form::label('username', __('admin/user/model.username'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::text('username', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('username', ':message') }}</span>
-                        </div>
+                    <!-- right column -->
+                    <div class="col-md-6">
+                        <!-- username -->
+                        <x-forms.input name="username" :label="__('admin/user/model.username')" :required="true"/>
+                        <!-- ./ username -->
+
+                        <!-- name -->
+                        <x-forms.input name="name" :label="__('admin/user/model.name')" :required="true"/>
+                        <!-- ./ name -->
+
+                        <!-- Email -->
+                        <x-forms.input name="email" type="email" :label="__('admin/user/model.email')" :required="true"/>
+                        <!-- ./ email -->
+
                     </div>
-                    <!-- ./ username -->
+                    <!-- ./left column -->
 
-                    <!-- name -->
-                    <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                        {!! Form::label('name', __('admin/user/model.name'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('name', ':message') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ name -->
+                    <!-- right column -->
+                    <div class="col-md-6">
 
-                    <!-- Email -->
-                    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                        {!! Form::label('email', __('admin/user/model.email'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('email', ':message') }}</span>
-                        </div>
+                        <!-- role -->
+                        <x-forms.select name='role'
+                                        :label="__('admin/user/model.role')"
+                                        :help="__('admin/user/messages.roles_help')"
+                                        :options="\Gamify\Enums\Roles::asSelectArray()"
+                                        :required="true"/>
+                        <!-- ./ role -->
+
                     </div>
-                    <!-- ./ email -->
+                    <!-- ./right column -->
 
                 </div>
-                <!-- ./left column -->
-
-                <!-- right column -->
-                <div class="col-md-6">
-
-                    <!-- role -->
-                    <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
-                        {!! Form::label('role', __('admin/user/model.role'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::select('role', \Gamify\Enums\Roles::asSelectArray(), \Gamify\Enums\Roles::Player, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <p class="text-muted">{{ __('admin/user/messages.roles_help') }}</p>
-                            <span class="help-block">{{ $errors->first('role', ':message') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ role -->
-
-                </div>
-                <!-- ./right column -->
-
             </div>
-        </div>
 
-        <div class="box-footer">
-            <!-- form actions -->
-            {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-            <a href="{{ route('admin.users.index') }}" class="btn btn-link" role="button">
-                {{ __('general.back') }}
-            </a>
-            <!-- ./ form actions -->
-        </div>
+            <div class="box-footer">
+                <!-- form actions -->
+                <x-forms.submit class="btn btn-success" :value="__('button.save')" />
 
-    </div>
-    {!! Form::close() !!}
+                <a href="{{ route('admin.users.index') }}" class="btn btn-link" role="button">
+                    {{ __('general.back') }}
+                </a>
+                <!-- ./ form actions -->
+            </div>
+
+        </div>
+    </x-forms.form>
 
 @endsection

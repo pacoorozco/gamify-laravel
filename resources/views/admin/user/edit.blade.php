@@ -35,132 +35,111 @@
     <!-- ./ notifications -->
 
     {{-- Create / Edit User Form --}}
-    {!! Form::model($user, ['route' => ['admin.users.update', $user], 'method' => 'put']) !!}
+    <x-forms.form method="put" :action="route('admin.users.update', $user)">
 
-    <div class="box box-solid">
-        <div class="box-header with-border">
-            <h2 class="box-title">
-                {{ $user->username }} {{ $user->present()->adminLabel }}
-            </h2>
-        </div>
-        <div class="box-body">
-            <div class="row">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h2 class="box-title">
+                    {{ $user->username }} {{ $user->present()->adminLabel }}
+                </h2>
+            </div>
+            <div class="box-body">
+                <div class="row">
 
-                <!-- right column -->
-                <div class="col-md-6">
-                    <!-- username -->
-                    <div class="form-group">
-                        {!! Form::label('username', __('admin/user/model.username'), ['class' => 'control-label']) !!}
-                        <div class="controls">
-                            {!! Form::text('username', $user->username, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-                        </div>
+                    <!-- right column -->
+                    <div class="col-md-6">
+                        <!-- username -->
+                        <x-forms.input name="username" :label="__('admin/user/model.username')" value="{{ $user->username }}" :disabled="true"/>
+                        <!-- ./ username -->
+
+                        <!-- name -->
+                        <x-forms.input name="name" :label="__('admin/user/model.name')" value="{{ $user->name }}" :required="true"/>
+                        <!-- ./ name -->
+
+                        <!-- Email -->
+                        <x-forms.input name="email" type="email" :label="__('admin/user/model.email')" value="{{ $user->email }}" :required="true"/>
+                        <!-- ./ email -->
+
+                        <!-- role -->
+                        <x-forms.select name='role'
+                                        :label="__('admin/user/model.role')"
+                                        :help="__('admin/user/messages.roles_help')"
+                                        :options="\Gamify\Enums\Roles::asSelectArray()"
+                                        :required="Auth::user()->can('update-role', $user)"
+                                        :disabled="Auth::user()->cannot('update-role', $user)"
+                        />
+                        <!-- ./ role -->
+
                     </div>
-                    <!-- ./ username -->
+                    <!-- ./left column -->
 
-                    <!-- name -->
-                    <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                        {!! Form::label('name', __('admin/user/model.name'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('name', ':message') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ name -->
+                    <!-- right column -->
+                    <div class="col-md-6">
 
-                    <!-- Email -->
-                    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                        {!! Form::label('email', __('admin/user/model.email'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('email', ':message') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ email -->
+                        <dl class="dl-horizontal">
 
-                    <!-- role -->
-                    <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
-                        {!! Form::label('role', __('admin/user/model.role'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            @cannot('update-role', $user)
-                                {!! Form::select('role', \Gamify\Enums\Roles::asSelectArray(), $user->role, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-                                {!! Form::hidden('role', $user->role) !!}
-                            @else
-                                {!! Form::select('role', \Gamify\Enums\Roles::asSelectArray(), \Gamify\Enums\Roles::Player, ['class' => 'form-control', 'required' => 'required']) !!}
-                                <p class="text-muted">{{ __('admin/user/messages.roles_help') }}</p>
-                            @endcannot
-                        </div>
-                    </div>
-                    <!-- ./ role -->
+                            <!-- level -->
+                            <dt>{{ __('user/profile.level') }}:</dt>
+                            <dd>{{$user->level}}</dd>
+                            <!-- ./ level -->
 
-                </div>
-                <!-- ./left column -->
+                            <!-- badges -->
+                            <dt>{{ __('user/profile.badges') }}:</dt>
+                            <dd>{{ $user->unlockedBadgesCount() }}</dd>
+                            <!-- ./ badges -->
 
-                <!-- right column -->
-                <div class="col-md-6">
+                            <!-- experience -->
+                            <dt>{{ __('user/profile.experience') }}:</dt>
+                            <dd>{{ $user->experience }}</dd>
+                            <!-- ./ experience -->
 
-                    <dl class="dl-horizontal">
+                            <!-- created_at -->
+                            <dt>{{ __('user/profile.user_since') }}:</dt>
+                            <dd>{{ $user->present()->createdAt }}</dd>
+                            <!-- ./ created_at -->
 
-                        <!-- level -->
-                        <dt>{{ __('user/profile.level') }}:</dt>
-                        <dd>{{$user->level}}</dd>
-                        <!-- ./ level -->
+                        </dl>
 
-                        <!-- badges -->
-                        <dt>{{ __('user/profile.badges') }}:</dt>
-                        <dd>{{ $user->unlockedBadgesCount() }}</dd>
-                        <!-- ./ badges -->
+                        <!-- danger zone -->
+                        @can('delete-user', $user)
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <strong>@lang('admin/user/messages.danger_zone_section')</strong>
+                                </div>
+                                <div class="panel-body">
+                                    <p><strong>@lang('admin/user/messages.delete_button')</strong></p>
+                                    <p>@lang('admin/user/messages.delete_help')</p>
 
-                        <!-- experience -->
-                        <dt>{{ __('user/profile.experience') }}:</dt>
-                        <dd>{{ $user->experience }}</dd>
-                        <!-- ./ experience -->
-
-                        <!-- created_at -->
-                        <dt>{{ __('user/profile.user_since') }}:</dt>
-                        <dd>{{ $user->present()->createdAt }}</dd>
-                        <!-- ./ created_at -->
-
-                    </dl>
-
-                    <!-- danger zone -->
-                    @can('delete-user', $user)
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <strong>@lang('admin/user/messages.danger_zone_section')</strong>
-                            </div>
-                            <div class="panel-body">
-                                <p><strong>@lang('admin/user/messages.delete_button')</strong></p>
-                                <p>@lang('admin/user/messages.delete_help')</p>
-
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-danger"
-                                            data-toggle="modal"
-                                            data-target="#confirmationModal">
-                                        @lang('admin/user/messages.delete_button')
-                                    </button>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-danger"
+                                                data-toggle="modal"
+                                                data-target="#confirmationModal">
+                                            @lang('admin/user/messages.delete_button')
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endcan
-                    <!-- ./danger zone -->
+                        @endcan
+                        <!-- ./danger zone -->
+
+                    </div>
+                    <!-- ./right column -->
 
                 </div>
-                <!-- ./right column -->
-
             </div>
-        </div>
 
-        <div class="box-footer">
-            <!-- form actions -->
-            {!! Form::button(__('button.update'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-            <a href="{{ route('admin.users.index') }}" class="btn btn-link" role="button">
-                {{ __('general.back') }}
-            </a>
-            <!-- ./ form actions -->
-        </div>
+            <div class="box-footer">
+                <!-- form actions -->
+                <x-forms.submit class="btn btn-success" :value="__('button.update')" />
 
-    </div>
-    {!! Form::close() !!}
+                <a href="{{ route('admin.users.index') }}" class="btn btn-link" role="button">
+                    {{ __('general.back') }}
+                </a>
+                <!-- ./ form actions -->
+            </div>
+
+        </div>
+    </x-forms.form>
 
     @can('delete-user', $user)
         <!-- confirmation modal -->
@@ -170,7 +149,7 @@
             buttonText="{{ __('admin/user/messages.delete_confirmation_button') }}">
 
             <div class="alert alert-warning" role="alert">
-                @lang('admin/user/messages.delete_confirmation_warning', ['name' => $user->username])
+                {{ __('admin/user/messages.delete_confirmation_warning', ['name' => $user->username]) }}
             </div>
         </x-modals.confirmation>
         <!-- ./ confirmation modal -->

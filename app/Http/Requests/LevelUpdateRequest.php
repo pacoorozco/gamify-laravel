@@ -45,6 +45,7 @@ class LevelUpdateRequest extends Request
                 'required',
                 'integer',
                 Rule::unique('levels')->ignore($level),
+                'min:0'
             ],
             'active' => [
                 'required',

@@ -1,13 +1,19 @@
-<select
-    multiple="multiple"
-    id="{{ $name }}"
-    name="{{ $name . '[]' }}"
-    {{ $attributes }}
->
-    @foreach($availableTags as $tag)
-        <option value="{{ $tag }}" @selected($isSelected($tag))>{{ $tag }}</option>
-    @endforeach
-</select>
+<div class="form-group @error($name) has-error @enderror" id="{{ $name }}-selector">
+    <x-forms.label for="{{ $name }}" value="{{ $label }}"/>
+    <select
+        multiple="multiple"
+        id="{{ $name }}"
+        name="{{ $name . '[]' }}"
+        {{ $attributes }}
+    >
+        @foreach($availableTags as $tag)
+            <option value="{{ $tag }}" @selected($isSelected($tag))>{{ $tag }}</option>
+        @endforeach
+    </select>
+    @if($help)
+        <p class="text-muted">{{ $help }}</p>
+    @endif
+</div>
 
 @pushOnce('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">

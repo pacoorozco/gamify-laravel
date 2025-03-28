@@ -32,12 +32,7 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    {{ Form::model($level, [
-            'route' => ['admin.levels.update', $level],
-            'method' => 'put',
-            'files' => true,
-            ]) }}
-
+    <x-forms.form method="put" :action="route('admin.levels.update', $level)" hasFiles>
 
     <div class="box box-solid">
         <div class="box-header with-border">
@@ -50,34 +45,25 @@
 
                 <!-- right column -->
                 <div class="col-md-6">
+
                     <!-- name -->
-                    <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                        {{ Form::label('name', __('admin/level/model.name'),['class' => 'control-label required']) }}
-                        <div class="controls">
-                            {{ Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) }}
-                            <span class="help-block">{{ $errors->first('name', ':message') }}</span>
-                        </div>
-                    </div>
+                    <x-forms.input name="name" :label="__('admin/level/model.name')" value="{{ $level->name }}" :required="true"/>
                     <!-- ./ name -->
 
                     <!-- required_points -->
-                    <div class="form-group {{ $errors->has('required_points') ? 'has-error' : '' }}">
-                        {{ Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label required']) }}
-                        <div class="controls">
-                            {{ Form::number('required_points', null, array('class' => 'form-control', 'required' => 'required', 'min' => '0')) }}
-                            <span class="help-block">{{ $errors->first('required_points', ':message') }}</span>
-                        </div>
-                    </div>
+                    <x-forms.input type="number" name="required_points"
+                                   :label="__('admin/level/model.required_points')"
+                                   min="0"
+                                   value="{{ $level->required_points }}"
+                                   :required="true"/>
                     <!-- ./ required_points -->
 
                     <!-- activation status -->
-                    <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                        {{ Form::label('active', __('admin/level/model.active'), array('class' => 'control-label required')) }}
-                        <div class="controls">
-                            {{ Form::select('active', array('1' => __('general.yes'), '0' => trans('general.no')), null, array('class' => 'form-control', 'required' => 'required')) }}
-                            {{ $errors->first('active', '<span class="help-inline">:message</span>') }}
-                        </div>
-                    </div>
+                    <x-forms.select name='active'
+                                    :label="__('admin/level/model.active')"
+                                    :options="['1' => __('general.yes'), '0' => __('general.no')]"
+                                    selectedKey="{{ $level->active ? '1' : '0' }}"
+                                    :required="true"/>
                     <!-- ./ activation status -->
 
                 </div>
@@ -87,8 +73,8 @@
                 <div class="col-md-6">
 
                     <!-- image -->
-                    <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                        {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label required']) !!}
+                    <x-forms.input-group :hasError="$errors->has('image')">
+                        <x-forms.label for="image" :value="__('admin/level/model.image')"/>
                         <p class="text-muted">{{ __('admin/level/model.image_help') }}</p>
                         <div class="controls">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -104,16 +90,16 @@
                                 <span class="fileinput-exists">
                                     <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
                                 </span>
-                                {!! Form::file('image') !!}
+                                <input type="file" name="image">
                             </span>
-                                    <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
+                                    <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput" role="button">
                                         <i class="fa fa-times"></i> {{ __('button.delete_image') }}
                                     </a>
                                 </p>
                             </div>
                         </div>
                         <span class="help-block">{{ $errors->first('image', ':message') }}</span>
-                    </div>
+                    </x-forms.input-group>
                     <!-- ./ image -->
 
                     <!-- danger zone -->
@@ -144,7 +130,8 @@
 
         <div class="box-footer">
             <!-- Form Actions -->
-            {{ Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) }}
+            <x-forms.submit type="success" :value="__('button.save')"/>
+
             <a href="{{ route('admin.levels.index') }}" class="btn btn-link" role="button">
                 {{ __('general.back') }}
             </a>
@@ -152,7 +139,7 @@
         </div>
 
     </div>
-    {{ Form::close() }}
+    </x-forms.form>>
 
     <!-- confirmation modal -->
     <x-modals.confirmation

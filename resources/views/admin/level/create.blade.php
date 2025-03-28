@@ -33,96 +33,87 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    {!! Form::open(['route' => ['admin.levels.store'], 'method' => 'post', 'files' => true]) !!}
+    <x-forms.form method="post" :action="route('admin.levels.store')" hasFiles>
 
-    <div class="box box-solid">
-        <div class="box-body">
-            <div class="row">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
 
-                <!-- right column -->
-                <div class="col-md-6">
-                    <!-- name -->
-                    <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                        {!! Form::label('name', __('admin/level/model.name'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('name', ':message') }}</span>
-                        </div>
+                    <!-- right column -->
+                    <div class="col-md-6">
+
+                        <!-- name -->
+                        <x-forms.input name="name" :label="__('admin/level/model.name')" :required="true"/>
+                        <!-- ./ name -->
+
+                        <!-- required_points -->
+                        <x-forms.input type="number" name="required_points"
+                                       :label="__('admin/level/model.required_points')"
+                                       min="0"
+                                       value="0"
+                                       :required="true"/>
+                        <!-- ./ required_points -->
+
+                        <!-- activation status -->
+                        <x-forms.select name='active'
+                                        :label="__('admin/level/model.active')"
+                                        :options="['1' => __('general.yes'), '0' => __('general.no')]"
+                                        selectedKey="1"
+                                        :required="true"/>
+                        <!-- ./ activation status -->
+
                     </div>
-                    <!-- ./ name -->
+                    <!-- ./left column -->
 
-                    <!-- required_points -->
-                    <div class="form-group {{ $errors->has('required_points') ? 'has-error' : '' }}">
-                        {!! Form::label('required_points', __('admin/level/model.required_points'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::number('required_points', null, ['class' => 'form-control', 'required' => 'required', 'min' => '0']) !!}
-                            <span class="help-block">{{ $errors->first('required_points', ':message') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ required_points -->
+                    <!-- right column -->
+                    <div class="col-md-6">
 
-                    <!-- activation status -->
-                    <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                        {!! Form::label('active', __('admin/level/model.active'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::select('active', ['1' => __('general.yes'), '0' => __('general.no')], null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span
-                                class="help-block">{{ $errors->first('active', '<span class="help-inline">:message</span>') }}</span>
-                        </div>
-                    </div>
-                    <!-- ./ activation status -->
-
-                </div>
-                <!-- ./left column -->
-
-                <!-- right column -->
-                <div class="col-md-6">
-
-                    <!-- image -->
-                    <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                        {!! Form::label('image', __('admin/level/model.image'), ['class' => 'control-label required']) !!}
-                        <p class="text-muted">{{ __('admin/level/model.image_help') }}</p>
-                        <div class="controls">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-preview thumbnail" data-trigger="fileinput"
-                                     style="width: 150px; height: 150px;">
-                                </div>
-                                <p>
+                        <!-- image -->
+                        <x-forms.input-group :hasError="$errors->has('image')">
+                            <x-forms.label for="image" :value="__('admin/level/model.image')"/>
+                            <p class="text-muted">{{ __('admin/badge/model.image_help') }}</p>
+                            <div class="controls">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput"
+                                         style="width: 150px; height: 150px;">
+                                    </div>
+                                    <p>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new"><i
                                         class="fa fa-picture-o"></i> {{ __('button.pick_image') }}</span>
                                 <span class="fileinput-exists"><i
                                         class="fa fa-picture-o"></i> {{ __('button.upload_image') }}</span>
-                                {!! Form::file('image') !!}
+                                <input type="file" name="image">
                             </span>
-                                    <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput">
-                                        <i class="fa fa-times"></i> {{ __('button.delete_image') }}
-                                    </a>
-                                </p>
+                                        <a href="#" class="btn fileinput-exists btn-default" data-dismiss="fileinput"
+                                           role="button">
+                                            <i class="fa fa-times"></i> {{ __('button.delete_image') }}
+                                        </a>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <span class="help-block">{{ $errors->first('image', ':message') }}</span>
+                            <span class="help-block">{{ $errors->first('image', ':message') }}</span>
+                        </x-forms.input-group>
+                        <!-- ./ image -->
+
                     </div>
-                    <!-- ./ image -->
+                    <!-- ./right column -->
 
                 </div>
-                <!-- ./right column -->
-
             </div>
-        </div>
 
-        <div class="box-footer">
-            <!-- Form Actions -->
-            {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+            <div class="box-footer">
+                <!-- Form Actions -->
+                <x-forms.submit type="success" :value="__('button.save')"/>
 
-            <a href="{{ route('admin.levels.index') }}"  class="btn btn-link" role="button">
+                <a href="{{ route('admin.levels.index') }}" class="btn btn-link" role="button">
                     {{ __('general.back') }}
-            </a>
-            <!-- ./ form actions -->
-        </div>
+                </a>
+                <!-- ./ form actions -->
+            </div>
 
-    </div>
-    {!! Form::close() !!}
+        </div>
+    </x-forms.form>
 
 @endsection
 

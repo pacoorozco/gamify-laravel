@@ -23,32 +23,36 @@
  * @link               https://github.com/pacoorozco/gamify-laravel
  */
 
-namespace Tests\Feature\Views\Components\Tags;
+namespace Gamify\View\Components\Forms;
 
-use PHPUnit\Framework\Attributes\Test;
-use Gamify\Models\Question;
-use Gamify\View\Components\Tags\FormSelectTags;
-use Tests\Feature\TestCase;
+use Cviebrock\EloquentTaggable\Services\TagService;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
-final class FormSelectTagsTest extends TestCase
+class SelectTags extends Component
 {
-    #[Test]
-    public function it_should_render_the_tags_component(): void
+    public function __construct(
+        private readonly TagService $tagService,
+        public string               $name,
+        public array                $selectedTags,
+        public string               $placeholder,
+        public string               $help,
+        public string               $label,
+    )
     {
-        // Create some tags by tagging a model.
-        $wantAvailableTags = ['foo', 'bar'];
+    }
 
-        /** @var Question $question */
-        $question = Question::factory()->create();
-        $question->tag($wantAvailableTags);
+    public function render(): View
+    {
+        return view('components.forms.select-tags')
+            ->with('availableTags', $this->tagService->getAllTagsArrayNormalized());
+    }
 
-        $this->component(FormSelectTags::class, [
-            'name' => 'test',
-            'placeholder' => '',
-            'selectedTags' => [],
-        ])
-            ->assertSee('id="test"', false)
-            ->assertSee('name="test[]"', false)
-            ->assertSeeTextInOrder($wantAvailableTags);
+    /**
+     * Determine if the given tag is one of the currently selected tags.
+     */
+    public function isSelected(string $tag): bool
+    {
+        return in_array($tag, $this->selectedTags);
     }
 }

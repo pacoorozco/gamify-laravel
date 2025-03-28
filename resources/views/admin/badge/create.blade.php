@@ -32,89 +32,69 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    {{-- Edit Badge Form --}}
-    {!! Form::open(['route' => 'admin.badges.store', 'method' => 'post', 'files' => true]) !!}
+    {{-- Create Badge Form --}}
+    <x-forms.form method="post" :action="route('admin.badges.store')" hasFiles>
 
-    <div class="box box-solid">
-        <div class="box-body">
-            <div class="row">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
 
-                <!-- right column -->
-                <div class="col-md-6">
+                    <!-- right column -->
+                    <div class="col-md-6">
 
-                    <fieldset>
-                        <!-- name -->
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                            {!! Form::label('name', __('admin/badge/model.name'), ['class' => 'control-label required']) !!}
-                            <div class="controls">
-                                {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                <span class="help-block">{{ $errors->first('name', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ name -->
+                        <fieldset>
+                            <!-- name -->
+                            <x-forms.input name="name" :label="__('admin/badge/model.name')" :required="true"/>
+                            <!-- ./ name -->
 
-                        <!-- description -->
-                        <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                            {!! Form::label('description', __('admin/badge/model.description'), ['class' => 'control-label required']) !!}
-                            <div class="controls">
-                                {!! Form::textarea('description', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                <span class="help-block">{{ $errors->first('description', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ description -->
-                    </fieldset>
+                            <!-- description -->
+                            <x-forms.textarea name="description" :label="__('admin/badge/model.description')"
+                                              :required="true"/>
+                            <!-- ./ description -->
+                        </fieldset>
 
-                    <fieldset>
-                        <!-- required_repetitions -->
-                        <div class="form-group {{ $errors->has('required_repetitions') ? 'has-error' : '' }}">
-                            {!! Form::label('required_repetitions', __('admin/badge/model.required_repetitions'), ['class' => 'control-label required']) !!}
-                            <div class="controls">
-                                {!! Form::number('required_repetitions', null, ['class' => 'form-control', 'required' => 'required', 'min' => '1']) !!}
-                                <p class="text-muted">{{ __('admin/badge/model.required_repetitions_help') }}</p>
-                                <span class="help-block">{{ $errors->first('required_repetitions', ':message') }}</span>
+                        <fieldset>
+                            <!-- required_repetitions -->
+                            <x-forms.input type="number" name="required_repetitions"
+                                           :label="__('admin/badge/model.required_repetitions')"
+                                           :help="__('admin/badge/model.required_repetitions_help')"
+                                           min="1"
+                                           :required="true"/>
+                            <!-- ./ required_repetitions -->
 
-                            </div>
-                        </div>
-                        <!-- ./ required_repetitions -->
 
-                        <!-- actuators -->
-                        <div class="form-group {{ $errors->has('actuators') ? 'has-error' : '' }}">
-                            {!! Form::label('actuators', __('admin/badge/model.actuators'), ['class' => 'control-label']) !!}
-                            <div class="controls">
-                                {!! Form::select('actuators', \Gamify\Enums\BadgeActuators::toSelectArray(), null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                <p class="text-muted">{{ __('admin/badge/model.actuators_help') }}</p>
-                                <span class="help-block">{{ $errors->first('actuators', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ actuators -->
+                            <!-- actuators -->
+                            <x-forms.select name='actuators'
+                                            :label="__('admin/badge/model.actuators')"
+                                            :help="__('admin/badge/model.actuators_help')"
+                                            :options="\Gamify\Enums\BadgeActuators::toSelectArray()"
+                                            class="tags-actuators"
+                                            :required="true"/>
+                            <!-- ./ actuators -->
 
-                        <!-- tags -->
-                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}" id="tags-selector">
-                            {!! Form::label('tags', __('admin/badge/model.tags'), ['class' => 'control-label']) !!}
-                            <div class="controls">
-                                <x-tags.form-select-tags name="tags"
-                                                         :placeholder="__('admin/badge/model.tags_placeholder')"
-                                                         :selected-tags="old('tags', [])"
-                                                         class="form-control"
-                                />
-                                <p class="text-muted">{{ __('admin/badge/model.tags_help') }}</p>
-                            </div>
-                        </div>
-                        <!-- ./ tags -->
-                    </fieldset>
+                            <!-- tags -->
+                            <x-forms.select-tags name="tags"
+                                                 :label="__('admin/badge/model.tags')"
+                                                 :help="__('admin/badge/model.tags_help')"
+                                                 :placeholder="__('admin/badge/model.tags_placeholder')"
+                                                 :selected-tags="old('tags', [])"
+                                                 class="form-control"
+                            />
+                            <!-- ./ tags -->
+                        </fieldset>
 
-                </div>
-                <!-- ./left column -->
+                    </div>
+                    <!-- ./left column -->
 
-                <!-- right column -->
-                <div class="col-md-6">
+                    <!-- right column -->
+                    <div class="col-md-6">
 
-                    <!-- image -->
-                    <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
-                        {!! Form::label('image', __('admin/badge/model.image'), ['class' => 'control-label required']) !!}
-                        <p class="text-muted">{{ __('admin/badge/model.image_help') }}</p>
-                        <div class="controls">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <!-- image -->
+                        <x-forms.input-group :hasError="$errors->has('image')">
+                            <x-forms.label for="image" :value="__('admin/badge/model.image')"/>
+                            <p class="text-muted">{{ __('admin/badge/model.image_help') }}</p>
+
+                            <p class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new">
                                     <img src="{{ asset('images/missing_badge.png') }}" class="img-thumbnail"
                                          style="width: 150px; height: 150px;" alt="default image">
@@ -124,57 +104,54 @@
                                 </div>
 
                                 <!-- image buttons -->
-                                <div class="clearfix">
-
-                                <span class="btn btn-default btn-file">
-                                    <span class="fileinput-new">
-                                        <i class="fa fa-picture-o"></i> {{ __('button.pick_image') }}
-                                    </span>
-                                    <span class="fileinput-exists">
-                                        <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
-                                    </span>
-                                    <input type="file" name="image">
-                                </span>
-                                    <a href="#" class="fileinput-exists btn btn-default" data-dismiss="fileinput" role="button">
+                                <p>
+                                                        <span class="btn btn-default btn-file">
+                                                            <span class="fileinput-new">
+                                                                <i class="fa fa-picture-o"></i> {{ __('button.pick_image') }}
+                                                            </span>
+                                                            <span class="fileinput-exists">
+                                                                <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
+                                                            </span>
+                                                            <input type="file" name="image">
+                                                        </span>
+                                    <a href="#" class="fileinput-exists btn btn-default" data-dismiss="fileinput"
+                                       role="button">
                                         <i class="fa fa-times"></i> {{ __('button.delete_image') }}
                                     </a>
 
-                                </div>
+                                </p>
                                 <!-- ./image buttons -->
 
-                            </div>
-                        </div>
-                        <span class="help-block">{{ $errors->first('image', ':message') }}</span>
-                    </div>
-                    <!-- ./ image -->
+                            <span class="help-block">{{ $errors->first('image', ':message') }}</span>
+                        </x-forms.input-group>
+                        <!-- ./ image -->
 
-                    <!-- status -->
-                    <div class="form-group {{ $errors->has('active') ? 'has-error' : '' }}">
-                        {!! Form::label('active', __('admin/badge/model.active'), ['class' => 'control-label required']) !!}
-                        <div class="controls">
-                            {!! Form::select('active', ['1' => __('general.yes'), '0' => __('general.no')], null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            <span class="help-block">{{ $errors->first('active', ':message') }}</span>
-                        </div>
+                        <!-- status -->
+                        <x-forms.select name='active'
+                                        :label="__('admin/badge/model.active')"
+                                        :options="['1' => __('general.yes'), '0' => __('general.no')]"
+                                        :required="true"/>
+                        <!-- ./status -->
+
                     </div>
-                    <!-- ./status -->
+                    <!-- ./right column -->
 
                 </div>
-                <!-- ./right column -->
-
             </div>
+
+            <div class="box-footer">
+                <!-- form actions -->
+                <x-forms.submit type="success" :value="__('button.save')"/>
+
+                <a href="{{ route('admin.badges.index') }}" class="btn btn-link" role="button">
+                    {{ __('general.back') }}
+                </a>
+                <!-- ./ form actions -->
+            </div>
+
         </div>
 
-        <div class="box-footer">
-            <!-- form actions -->
-            {!! Form::button(__('button.save'), ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-            <a href="{{ route('admin.badges.index') }}" class="btn btn-link" role="button">
-                {{ __('general.back') }}
-            </a>
-            <!-- ./ form actions -->
-        </div>
-
-    </div>
-    {!! Form::close() !!}
+    </x-forms.form>
 
 @endsection
 
@@ -192,7 +169,7 @@
     <script>
         $(function () {
 
-            $('#actuators').change(function () {
+            $('.tags-actuators').change(function () {
                 $(this).find("option:selected").each(function () {
                     let optionValue = parseInt($(this).attr("value"));
                     if (isTaggable(optionValue)) {
