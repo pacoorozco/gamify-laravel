@@ -33,160 +33,141 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    {!! Form::open([
-                'id' => 'formCreateQuestion',
-                'route' => ['admin.questions.store'],
-                'method' => 'post',
-                ]) !!}
+    <x-forms.form method="post" :action="route('admin.questions.store')" id="formCreateQuestion">
 
-    <div class="row">
-        <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8">
 
-            <!-- general section -->
-            <div class="box box-solid">
-                <div class="box-body">
+                <!-- general section -->
+                <div class="box box-solid">
+                    <div class="box-body">
 
-                    <fieldset>
-                        <legend>
-                            {{ __('admin/question/title.general_section') }}
-                        </legend>
+                        <fieldset>
+                            <legend>
+                                {{ __('admin/question/title.general_section') }}
+                            </legend>
 
-                        <!-- name -->
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                            {!! Form::label('name', __('admin/question/model.name'), ['class' => 'control-label required']) !!}
-                            <p class="text-muted">{{ __('admin/question/model.name_help') }}</p>
-                            <div class="controls">
-                                {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                <span class="help-block">{{ $errors->first('name', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ name -->
+                            <!-- name -->
+                            <x-forms.input
+                                name="name"
+                                :label="__('admin/question/model.name')"
+                                :help="__('admin/question/model.name_help')"
+                                :required="true"/>
+                            <!-- ./ name -->
 
-                        <!-- question text -->
-                        <div class="form-group {{ $errors->has('question') ? 'has-error' : '' }}">
-                            {!! Form::label('question', __('admin/question/model.question'), ['class' => 'control-label required']) !!}
-                            <p class="text-muted">{{ __('admin/question/model.question_help') }}</p>
-                            <div class="controls">
-                                {!! Form::textarea('question', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
-                                <span class="help-block">{{ $errors->first('question', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ question text -->
+                            <!-- question text -->
+                            <x-forms.textarea
+                                name="question"
+                                :label="__('admin/question/model.question')"
+                                :help="__('admin/question/model.question_help')"
+                                style="width: 100%"
+                                :required="true"/>
+                            <!-- ./ question text -->
 
-                        <!-- type -->
-                        <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                            {!! Form::label('type', __('admin/question/model.type'), ['class' => 'control-label required']) !!}
-                            <div class="controls">
-                                {!! Form::select('type', __('admin/question/model.type_list'), null, ['class' => 'form-control']) !!}
-                                <span class="help-block">{{ $errors->first('type', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ type -->
-                    </fieldset>
+                            <!-- type -->
+                            <x-forms.select name='type'
+                                            :label="__('admin/question/model.type')"
+                                            :options="__('admin/question/model.type_list')"
+                                            :required="true"/>
+                            <!-- ./ type -->
+                        </fieldset>
 
-                    <!-- options -->
-                    @include('admin/question/_form_choices')
-                    <!-- ./ options -->
+                        <!-- options -->
+                        @include('admin/question/_form_choices')
+                        <!-- ./ options -->
 
-                    <fieldset>
-                        <legend>
-                            {{ __('admin/question/title.optional_section') }}
-                        </legend>
+                        <fieldset>
+                            <legend>
+                                {{ __('admin/question/title.optional_section') }}
+                            </legend>
 
-                        <!-- solution -->
-                        <div class="form-group {{ $errors->has('solution') ? 'has-error' : '' }}">
-                            {!! Form::label('solution', __('admin/question/model.solution'), ['class' => 'control-label']) !!}
-                            <p class="text-muted">{{ __('admin/question/model.solution_help') }}</p>
-                            <div class="controls">
-                                {!! Form::textarea('solution', null, ['class' => 'form-control editor', 'style' => 'width:100%']) !!}
-                                <span class="help-block">{{ $errors->first('solution', ':message') }}</span>
-                            </div>
-                        </div>
-                        <!-- ./ solution -->
+                            <!-- solution -->
+                            <x-forms.textarea
+                                name="solution"
+                                :label="__('admin/question/model.solution')"
+                                :help="__('admin/question/model.solution_help')"
+                                class="editor"
+                                style="width: 100%"
+                                :required="true"/>
+                            <!-- ./ solution -->
 
-                        <!-- tags -->
-                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
-                            {!! Form::label('tags', __('admin/question/model.tags'), ['class' => 'control-label']) !!}
-                            <div class="controls">
-                                <x-tags.form-select-tags name="tags"
-                                                         :placeholder="__('admin/question/model.tags_help')"
-                                                         :selected-tags="old('tags', [])"
-                                                         class="form-control"
-                                />
-                            </div>
-                        </div>
-                        <!-- ./ tags -->
+                            <!-- tags -->
+                            <x-forms.select-tags name="tags"
+                                                 :label="__('admin/question/model.tags')"
+                                                 :help="__('admin/badge/model.tags_help')"
+                                                 :placeholder="__('admin/question/model.tags_help')"
+                                                 :selected-tags="old('tags', [])"
+                                                 class="form-control"
+                            />
+                            <!-- ./ tags -->
 
-                    </fieldset>
+                        </fieldset>
+                    </div>
                 </div>
+                <!-- ./ general section -->
+
             </div>
-            <!-- ./ general section -->
+            <div class="col-md-4">
 
-        </div>
-        <div class="col-md-4">
+                <!-- publish section -->
+                <div class="box box-solid">
+                    <div class="box-body">
 
-            <!-- publish section -->
-            <div class="box box-solid">
-                <div class="box-body">
+                        <fieldset>
+                            <legend>
+                                {{ __('admin/question/title.publish_section') }}
+                            </legend>
 
-                    <fieldset>
-                        <legend>
-                            {{ __('admin/question/title.publish_section') }}
-                        </legend>
+                            <!-- save draft and preview -->
+                            <div class="form-group">
+                                <x-forms.submit type="primary" :value="__('button.save')" id="submitDraftBtn">
+                                    {{ __('button.save_as_draft') }} <i class="fa fa-floppy-o"></i>
+                                </x-forms.submit>
+                            </div>
+                            <!-- ./ save draft and preview -->
 
-                        <!-- save draft and preview -->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary" id="submitDraftBtn">
-                                {{ __('button.save_as_draft') }} <i class="fa fa-floppy-o"></i>
-                            </button>
-                        </div>
-                        <!-- ./ save draft and preview -->
-
-                        <!-- status -->
-                        <div class="form-group">
-                            {!! Form::label('status', __('admin/question/model.status'), ['class' => 'control-label required']) !!}
-                            <div class="controls">
+                            <!-- status -->
+                            <div class="form-group">
+                                <x-forms.label for="status">{{ __('admin/question/model.status') }}</x-forms.label>
                                 <span
                                     class="form-control-static">{{ __('admin/question/model.status_list.draft') }}</span>
-                                {!! Form::hidden('status','draft') !!}
+                                <x-forms.input-hidden name="status" value="draft" />
                             </div>
-                        </div>
-                        <!-- ./ status -->
+                            <!-- ./ status -->
 
-                        <!-- visibility -->
-                        <div class="form-group {{ $errors->has('hidden') ? 'has-error' : '' }}">
-                            {!! Form::label('hidden', __('admin/question/model.hidden'), ['class' => 'control-label required']) !!}
-                            <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
-                            <div id="visibilityStatus">
+                            <!-- visibility -->
+                            <div class="form-group @error('hidden') has-error @enderror">
+                                <x-forms.label for="hidden">{{ __('admin/question/model.hidden') }}</x-forms.label>
+                                <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
+                                <div id="visibilityStatus">
                             <span class="form-control-static">
-                                {{ old('hidden') === '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
+                                {{ old('hidden') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
                             </span>
-                            </div>
-                            <div class="controls hidden" id="visibilityControls">
-                                <div class="radio">
-                                    <label class="control-label">
-                                        {{ Form::radio('hidden', '0', true, [ 'id' => 'visibilityPublic']) }}
-                                        {{ __('admin/question/model.hidden_no') }}
-                                    </label>
                                 </div>
-                                <div class="radio">
-                                    <label class="control-label">
-                                        {{ Form::radio('hidden', '1', false, [ 'id' => 'visibilityPrivate', 'aria-describedby' => 'helpHiddenYes']) }}
-                                        {{ __('admin/question/model.hidden_yes') }}
-                                    </label>
-                                    <span id="helpHiddenYes"
-                                          class="text-muted">{{ __('admin/question/model.hidden_yes_help') }}</span>
-                                </div>
-                            </div>
-                            <span class="help-block">{{ $errors->first('hidden', ':message') }}</span>
-                        </div>
-                        <!-- ./ visibility -->
+                                <div class="controls hidden" id="visibilityControls">
+                                    <x-forms.radio
+                                        name="hidden"
+                                        :label="__('admin/question/model.hidden_no')"
+                                        value="0"
+                                        :checked="true"
+                                        id="visibilityPublic"/>
 
-                        <!-- publication date -->
-                        <div class="form-group {{ $errors->has('publication_date') ? 'has-error' : '' }}">
-                            {!! Form::label('publication_date', __('admin/question/model.publication_date'), ['class' => 'control-label']) !!}
-                            <a href="#" id="enablePublicationDateControls">{{ __('general.edit') }}</a>
-                            <div id="publicationDateStatus">
+                                    <x-forms.radio
+                                        name="hidden"
+                                        :label="__('admin/question/model.hidden_yes')"
+                                        :help="__('admin/question/model.hidden_yes_help')"
+                                        value="1"
+                                        id="visibilityPrivate"/>
+                                </div>
+                                <x-forms.error name="hidden"></x-forms.error>
+                            </div>
+                            <!-- ./ visibility -->
+
+                            <!-- publication date -->
+                            <div class="form-group @error('publication_date') has-error @enderror">
+                                <x-forms.label for="publication_date">{{ __('admin/question/model.publication_date') }}</x-forms.label>
+                                <a href="#" id="enablePublicationDateControls">{{ __('general.edit') }}</a>
+                                <div id="publicationDateStatus">
                             <span class="form-control-static">
                             @if (empty(old('publication_date')))
                                     {{ __('admin/question/model.publish_immediately') }}
@@ -194,42 +175,49 @@
                                     {{ __('admin/question/model.publish_on', ['datetime' => old('publication_date')]) }}
                                 @endif
                             </span>
-                            </div>
-                            <div class="controls hidden" id="publicationDateControls">
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    {!! Form::text('publication_date', null, ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => __('admin/question/model.publication_date_placeholder')]) !!}
-                                    <span class="input-group-btn">
+                                </div>
+                                <div class="controls hidden" id="publicationDateControls">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input name="publication_date"
+                                               id="publication_date"
+                                               type="text"
+                                               class="form-control"
+                                               autocomplete="off"
+                                               placeholder="{{ __('admin/question/model.publication_date_placeholder') }}"
+                                               value="{{ old('publication_date') }}"
+                                        />
+                                        <span class="input-group-btn">
                                     <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
                                         {{ __('admin/question/model.publish_immediately') }}
                                     </button>
                                 </span>
+                                    </div>
                                 </div>
+                                <x-forms.error name="publication_date"></x-forms.error>
                             </div>
-                            <span class="help-block">{{ $errors->first('publication_date', ':message') }}</span>
-                        </div>
-                        <!-- ./ publication date -->
-                    </fieldset>
+                            <!-- ./ publication date -->
+                        </fieldset>
+
+                    </div>
+                    <div class="box-footer">
+                        <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
+                            <i class="fa fa-arrow-left"></i> {{ __('button.back') }}
+                        </a>
+                        <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
+                            <i class="fa fa-paper-plane-o"></i> {{ __('button.publish') }}
+                        </button>
+                    </div>
 
                 </div>
-                <div class="box-footer">
-                    <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
-                        <i class="fa fa-arrow-left"></i> {{ __('button.back') }}
-                    </a>
-                    <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
-                        <i class="fa fa-paper-plane-o"></i> {{ __('button.publish') }}
-                    </button>
-                </div>
+                <!-- ./ publish section -->
 
             </div>
-            <!-- ./ publish section -->
-
         </div>
-    </div>
 
-    {!! Form::close() !!}
+    </x-forms.form>
 @endsection
 
 {{-- Styles --}}

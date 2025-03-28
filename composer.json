@@ -34,7 +34,6 @@
     "hashids/hashids": "^5.0.2",
     "laravel/framework": "^10.37.1",
     "laravel/socialite": "^5.11.0",
-    "laravelcollective/html": "^6.4.1",
     "predis/predis": "^2.2.2",
     "richan-fongdasen/eloquent-blameable": "^1.9.0",
     "socialiteproviders/okta": "^4.4.0",

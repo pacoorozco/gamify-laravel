@@ -41,6 +41,7 @@ class LevelCreateRequest extends Request
                 'required',
                 'integer',
                 Rule::unique('levels'),
+                'min:1',
             ],
             'active' => [
                 'required',

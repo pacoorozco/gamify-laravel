@@ -20,38 +20,34 @@
 
     <div id="email-login" class="hidden">
 
-        {!! Form::open(['route' => 'login']) !!}
+        <x-forms.form method="post" :action="route('login')">
+
         <div class="form-group has-feedback">
-            {!! Form::text('email', null, [
-                        'class' => 'form-control',
-                        'placeholder' => __('auth.email'),
-                        'required' => 'required',
-                        'autofocus' => 'autofocus',
-                        ]) !!}
+            <x-forms.input name="email"
+                           :placeholder="__('auth.email')"
+                           autofocus="autofocus"
+                           :required="true"/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {!! Form::password('password', [
-                        'class' => 'form-control password',
-                        'placeholder' => __('auth.password'),
-                        'required' => 'required',
-                        ]) !!}
+            <x-forms.input name="password"
+                           type="password"
+                           :placeholder="__('auth.password')"
+                           :required="true"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
+
         @if(Route::has('password.request'))
             <p class="text-right">
                 <a href="{{ route('password.request') }}">{{ __('auth.forgot_password') }}</a>
             </p>
         @endif
 
-        <div class="checkbox icheck">
-            <label>
-                {!! Form::checkbox('remember', '1', false) !!} {{ __('auth.remember_me') }}
-            </label>
-        </div>
+            <x-forms.checkbox name="remember" :label="__('auth.remember_me')" value="1" :checked="false" class="icheck"/>
 
-        {!! Form::submit(__('auth.login'), ['class' => 'btn btn-primary btn-block btn-flat', 'id' => 'loginButton']) !!}
-        {!! Form::close() !!}
+            <x-forms.submit type="primary" :value="__('auth.login')" class="btn-block btn-flat" id="loginButton"/>
+
+        </x-forms.form>
     </div>
 
     <p></p>
@@ -70,7 +66,6 @@
         $(function () {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
             });
 
