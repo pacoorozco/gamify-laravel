@@ -1,11 +1,12 @@
 @props([
-    'label' =>'',
+    'label',
     'name' => '',
     'value' => '',
     'help' => '',
     'type' => 'text',
     'required' => false,
     'readonly' => false,
+    'disabled' => false,
     ])
 
 <div class="form-group @error($name) has-error @enderror">
@@ -19,6 +20,7 @@
            value="{{ old($name, $value) }}"
         @required($required)
         @readonly($readonly)
+        @disabled($disabled)
 
     />
     @if($help)

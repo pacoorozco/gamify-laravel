@@ -23,17 +23,23 @@
         <x-forms.form method="post" :action="route('login')">
 
         <div class="form-group has-feedback">
-            <x-forms.input name="email"
-                           :placeholder="__('auth.email')"
-                           autofocus="autofocus"
-                           :required="true"/>
+            <input id="email" name="email"
+                   type="email"
+                   placeholder="{{ __('auth.email') }}"
+                   class="form-control"
+                   value="{{ old('email') }}"
+                   autofocus="autofocus"
+                   required
+            />
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <x-forms.input name="password"
-                           type="password"
-                           :placeholder="__('auth.password')"
-                           :required="true"/>
+            <input id="password" name="password"
+                   type="password"
+                   placeholder="{{ __('auth.password') }}"
+                   class="form-control"
+                   required
+            />
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
 
