@@ -1,5 +1,5 @@
 @props([
-    'label',
+    'label' =>'',
     'name' => '',
     'value' => '',
     'help' => '',
@@ -12,10 +12,14 @@
     <x-forms.label for="{{ \Illuminate\Support\Str::camel($name) }}">{{ $label }}</x-forms.label>
     <input id="{{ \Illuminate\Support\Str::camel($name) }}" name="{{ $name }}"
            type="{{ $type }}"
+           @if($type == 'number')
+               {{ $attributes }}
+           @endif
            {{ $attributes->class(['form-control'])->only(['class', 'placeholder']) }}
            value="{{ old($name, $value) }}"
         @required($required)
         @readonly($readonly)
+
     />
     @if($help)
         <p class="text-muted">{{ $help }}</p>
