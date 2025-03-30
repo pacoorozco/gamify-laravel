@@ -83,6 +83,13 @@ return [
             'report' => false,
         ],
 
+        // Used to upload media files - spatie/laravel-medialibrary
+        'media' => [
+            'driver' => 'local',
+            'root' => public_path('media'),
+            'url' => env('APP_URL').'/media',
+        ],
+
     ],
 
     /*
