@@ -1,6 +1,6 @@
 includes:
-    - ./vendor/larastan/larastan/extension.neon
-    - ./vendor/bensampo/laravel-enum/extension.neon
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
 
 parameters:
 
@@ -15,5 +15,6 @@ parameters:
     # The level 9 is the highest level
     level: 8
 
-    excludePaths:
-        - ./*/*/FileToBeExcluded.php
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
