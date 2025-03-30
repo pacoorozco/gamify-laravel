@@ -39,7 +39,7 @@ class Game
         }
 
         $progress = $user->progressToCompleteTheBadge($badgeToIncrement);
-        $repetitions = $progress?->repetitions ?? 0;
+        $repetitions = $progress->repetitions ?? 0;
         $repetitions++;
 
         $badgeData = ['repetitions' => $repetitions];

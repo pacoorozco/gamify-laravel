@@ -308,8 +308,10 @@ final class QuestionTest extends TestCase
     public function it_should_return_the_hash_of_the_question(): void
     {
         /** @var Question $question */
-        $question = Question::factory()->create();
+        $question = Question::factory()->create([
+            'name' => 'This is a test question',
+        ]);
 
-        $this->assertNotNull($question->hash);
+        $this->assertEquals('qGK2qN0d', $question->hash);
     }
 }

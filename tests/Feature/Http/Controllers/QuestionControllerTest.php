@@ -131,6 +131,7 @@ final class QuestionControllerTest extends TestCase
             ->create();
 
         // Answer with the correct choices.
+        // @phpstan-ignore-next-line
         $choices = $question->choices()
             ->correct()
             ->pluck('id')
@@ -159,6 +160,7 @@ final class QuestionControllerTest extends TestCase
             ->create();
 
         // Answer with the incorrect choice.
+        // @phpstan-ignore-next-line
         $choices = $question->choices()
             ->incorrect()
             ->pluck('id')

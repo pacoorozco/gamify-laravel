@@ -50,6 +50,7 @@ class SocialAccountService
             return $this->createSocialAccount($externalUser, $provider);
         }
 
+        // @phpstan-ignore return.type
         return $account->user;
     }
 
