@@ -3,6 +3,7 @@
 namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
+use Gamify\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,12 +31,12 @@ class ConfirmablePasswordController extends Controller
             'password' => $request->input('password'),
         ])) {
             throw ValidationException::withMessages([
-                'password' => __('auth.password'),
+                'password' => __('passwords.invalid'),
             ]);
         }
 
         $request->session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }
