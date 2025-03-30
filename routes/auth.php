@@ -8,6 +8,7 @@ use Gamify\Http\Controllers\Auth\NewPasswordController;
 use Gamify\Http\Controllers\Auth\PasswordController;
 use Gamify\Http\Controllers\Auth\PasswordResetLinkController;
 use Gamify\Http\Controllers\Auth\RegisteredUserController;
+use Gamify\Http\Controllers\Auth\SocialAccountController;
 use Gamify\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,12 @@ Route::middleware('guest')->group(function () {
         ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('login/{provider}', [SocialAccountController::class, 'redirectToProvider'])
+        ->name('social.login');
+
+    Route::get('login/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback'])
+        ->name('social.callback');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
