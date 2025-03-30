@@ -20,6 +20,7 @@ class PasswordResetLinkController extends Controller
 
     /**
      * Handle an incoming password reset link request.
+     *
      */
     public function store(Request $request): RedirectResponse
     {

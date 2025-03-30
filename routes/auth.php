@@ -5,9 +5,9 @@ use Gamify\Http\Controllers\Auth\ConfirmablePasswordController;
 use Gamify\Http\Controllers\Auth\EmailVerificationNotificationController;
 use Gamify\Http\Controllers\Auth\EmailVerificationPromptController;
 use Gamify\Http\Controllers\Auth\NewPasswordController;
+use Gamify\Http\Controllers\Auth\PasswordController;
 use Gamify\Http\Controllers\Auth\PasswordResetLinkController;
 use Gamify\Http\Controllers\Auth\RegisteredUserController;
-use Gamify\Http\Controllers\Auth\SocialAccountController;
 use Gamify\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,12 +22,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('login/{provider}', [SocialAccountController::class, 'redirectToProvider'])
-        ->name('social.login');
-
-    Route::get('login/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback'])
-        ->name('social.callback');
-
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 
@@ -38,10 +32,10 @@ Route::middleware('guest')->group(function () {
         ->name('password.reset');
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.update');
+        ->name('password.store');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -57,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
         ->name('password.confirm');
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');

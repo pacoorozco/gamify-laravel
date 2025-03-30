@@ -3,6 +3,7 @@
 namespace Gamify\Http\Controllers\Auth;
 
 use Gamify\Http\Controllers\Controller;
+use Gamify\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,8 +25,6 @@ class NewPasswordController extends Controller
     /**
      * Handle an incoming new password request.
      *
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -37,10 +36,10 @@ class NewPasswordController extends Controller
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        // database. Otherwise, we will parse the error and return the response.
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
+            function (User $user) use ($request) {
                 $user->forceFill([
                     'password' => $request->input('password'),
                     'remember_token' => Str::random(60),

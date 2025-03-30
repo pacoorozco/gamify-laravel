@@ -7,7 +7,9 @@
 
 {{-- Content --}}
 @section('content')
-    <p class="login-box-msg">{{ __('auth.email_verification_instructions') }}</p>
+    @if (session('success') == 'verification-link-sent')
+        <p class="login-box-msg">{{ __('auth.email_verification_instructions') }}</p>
+    @endif
 
     <form method="POST" action="{{ route('verification.send') }}">
         @csrf

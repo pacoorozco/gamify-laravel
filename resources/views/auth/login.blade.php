@@ -30,6 +30,7 @@
                    value="{{ old('email') }}"
                    autofocus="autofocus"
                    required
+                   autocomplete="username"
             />
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
@@ -39,6 +40,7 @@
                    placeholder="{{ __('auth.password') }}"
                    class="form-control"
                    required
+                   autocomplete="password"
             />
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>

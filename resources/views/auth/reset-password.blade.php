@@ -7,20 +7,20 @@
 
 {{-- Content --}}
 @section('content')
-    <form method="POST" action="{{ route('password.update') }}">
+    <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
         <div class="form-group has-feedback">
             <input class="form-control" placeholder="{{ __('auth.email') }}" required="required"
-                   name="email" type="text" value="{{ old('email', $request->input('email')) }}">
+                   name="email" type="text" value="{{ old('email', $request->input('email')) }}" autocomplete="username">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
 
         <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
                 <input type="password" class="form-control password" placeholder="{{ __('passwords.new_password') }}"
-                       required="required" name="password" autofocus="autofocus">
+                       required="required" name="password" autofocus="autofocus" autocomplete="new-password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                 @if ($errors->has('password'))
@@ -34,7 +34,7 @@
 
         <div class="form-group has-feedback">
             <input type="password" class="form-control password" placeholder="{{ __('passwords.new_password_confirmation') }}"
-                   required="required" name="password_confirmation">
+                   required="required" name="password_confirmation" autocomplete="new-password">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
 
