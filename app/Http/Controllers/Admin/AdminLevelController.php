@@ -58,12 +58,12 @@ class AdminLevelController extends AdminController
 
     public function show(Level $level): View
     {
-        return view('admin.level.show', compact('level'));
+        return view('admin.level.show', ['level' => $level]);
     }
 
     public function edit(Level $level): View
     {
-        return view('admin.level.edit', compact('level'));
+        return view('admin.level.edit', ['level' => $level]);
     }
 
     public function update(LevelUpdateRequest $request, Level $level): RedirectResponse

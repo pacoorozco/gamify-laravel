@@ -42,7 +42,7 @@ class AddBadgesOnQuestionAnswered
         Badge::query()
             ->whereIn('actuators', [
                 BadgeActuators::OnQuestionAnswered,
-                ($event->correctness === true)
+                ($event->correctness)
                     ? BadgeActuators::OnQuestionCorrectlyAnswered
                     : BadgeActuators::OnQuestionIncorrectlyAnswered,
             ])

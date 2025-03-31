@@ -64,12 +64,12 @@ class AdminUserController extends AdminController
 
     public function show(User $user): View
     {
-        return view('admin/user/show', compact('user'));
+        return view('admin/user/show', ['user' => $user]);
     }
 
     public function edit(User $user): View
     {
-        return view('admin/user/edit', compact('user'));
+        return view('admin/user/edit', ['user' => $user]);
     }
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse

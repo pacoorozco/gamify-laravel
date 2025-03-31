@@ -55,7 +55,7 @@ class UsernameGeneratorService
      */
     public function fromText(string $text): string
     {
-        $username = empty($text)
+        $username = $text === '' || $text === '0'
             ? 'player'
             : $text;
 
