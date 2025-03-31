@@ -87,8 +87,10 @@ final class QuestionTest extends TestCase
     public function it_should_return_the_slug_of_the_question(): void
     {
         /** @var Question $question */
-        $question = Question::factory()->make();
+        $question = Question::factory()->make([
+            'name' => 'This is a test question',
+        ]);
 
-        $this->assertNotNull($question->slug);
+        $this->assertEquals('this-is-a-test-question', $question->slug);
     }
 }

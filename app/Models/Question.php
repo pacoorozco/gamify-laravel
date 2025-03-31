@@ -165,6 +165,7 @@ class Question extends Model implements CanPresent
     public function canBePublished(): bool
     {
         $answers_count = $this->choices()->count();
+        // @phpstan-ignore-next-line
         $answers_correct_count = $this->choices()->correct()->count();
 
         return ($answers_count > 1) && ($answers_correct_count > 0);
