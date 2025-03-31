@@ -365,13 +365,13 @@ final class AdminBadgeControllerTest extends TestCase
     public static function providesDataForBadgeEdition(): Generator
     {
         yield 'tags are changed' => [
-            'want' => [
+            'wantData' => [
                 'tags' => ['foo', 'bar'],
             ],
         ];
 
         yield 'tags are removed' => [
-            'want' => [
+            'wantData' => [
                 'tags' => [],
             ],
         ];

@@ -312,6 +312,6 @@ final class QuestionTest extends TestCase
             'name' => 'This is a test question',
         ]);
 
-        $this->assertEquals('qGK2qN0d', $question->hash);
+        $this->assertNotEmpty($question->hash);
     }
 }

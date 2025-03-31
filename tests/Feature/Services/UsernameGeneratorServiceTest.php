@@ -67,7 +67,7 @@ final class UsernameGeneratorServiceTest extends TestCase
 
         yield 'return a default username if input is empty' => [
             'input' => '',
-            'output' => 'player',
+            'want' => 'player',
         ];
     }
 
