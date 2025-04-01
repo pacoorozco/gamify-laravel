@@ -39,7 +39,7 @@ class AddBadgesOnProfileUpdated
         Badge::query()
             ->whereActuators(BadgeActuators::OnUserProfileUpdated)
             ->get()
-            ->each(function ($badge) use ($user) {
+            ->each(function ($badge) use ($user): void {
                 Game::incrementBadgeCount($user, $badge);
             });
     }

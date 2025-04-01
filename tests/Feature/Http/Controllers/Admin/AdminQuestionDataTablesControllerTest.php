@@ -48,7 +48,7 @@ final class AdminQuestionDataTablesControllerTest extends TestCase
     #[Test]
     public function admins_should_get_data_tables_data(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $questions = Question::factory()
             ->count(3)

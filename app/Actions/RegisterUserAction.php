@@ -42,7 +42,7 @@ final class RegisterUserAction
             $email,
             $username,
             $password,
-            Roles::Player,
+            Roles::PLAYER,
         );
     }
 }

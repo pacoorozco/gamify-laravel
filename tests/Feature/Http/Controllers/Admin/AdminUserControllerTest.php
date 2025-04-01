@@ -58,7 +58,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_see_the_index_view(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $this
             ->actingAs($this->user)
@@ -79,7 +79,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_see_the_new_user_form(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $this
             ->actingAs($this->user)
@@ -100,7 +100,7 @@ final class AdminUserControllerTest extends TestCase
                 'username' => $want->username,
                 'name' => $want->name,
                 'email' => $want->email,
-                'role' => $want->role,
+                'role' => $want->role->value,
             ])
             ->assertForbidden();
 
@@ -113,7 +113,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_create_users(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         /** @var User $want */
         $want = User::factory()->make();
@@ -143,7 +143,7 @@ final class AdminUserControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         // User to validate unique rules...
         User::factory()->create([
@@ -253,7 +253,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_see_any_user(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $want = User::factory()->create();
 
@@ -279,7 +279,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_see_the_edit_user_form(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $want = User::factory()->create();
 
@@ -308,7 +308,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_update_users(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         /** @var User $user */
         $user = User::factory()->create();
@@ -337,7 +337,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_not_update_their_own_role(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $this->user->save();
 
@@ -349,7 +349,7 @@ final class AdminUserControllerTest extends TestCase
             ->put(route('admin.users.update', $this->user), [
                 'name' => $want->name,
                 'email' => $want->email,
-                'role' => Roles::Player,
+                'role' => Roles::PLAYER->value,
             ])
             ->assertRedirect(route('admin.users.edit', $this->user))
             ->assertValid();
@@ -368,7 +368,7 @@ final class AdminUserControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         // User to validate unique rules...
         User::factory()->create([
@@ -452,7 +452,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_not_delete_themselves(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $this
             ->actingAs($this->user)
@@ -465,7 +465,7 @@ final class AdminUserControllerTest extends TestCase
     #[Test]
     public function admins_should_delete_users(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         /** @var User $user */
         $user = User::factory()->create();

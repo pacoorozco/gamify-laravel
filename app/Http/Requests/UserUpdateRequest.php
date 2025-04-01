@@ -54,7 +54,7 @@ class UserUpdateRequest extends Request
             ],
             'role' => [
                 'required',
-                new EnumValue(Roles::class),
+                Rule::enum(Roles::class),
             ],
         ];
     }

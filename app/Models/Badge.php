@@ -68,7 +68,7 @@ class Badge extends Model implements HasMedia, CanPresent
             ->singleFile()
             ->useFallbackUrl('/images/missing_badge.png')
             ->useFallbackPath(public_path('/images/missing_badge.png'))
-            ->registerMediaConversions(function () {
+            ->registerMediaConversions(function (): void {
                 $this
                     ->addMediaConversion('thumb')
                     ->width(150)
@@ -103,9 +103,9 @@ class Badge extends Model implements HasMedia, CanPresent
         return self::query()
             ->active()
             ->hasAnyFlags('actuators', BadgeActuators::triggeredByQuestions())
-            ->when($tags, function ($query) use ($tags) {
+            ->when($tags, function ($query) use ($tags): void {
                 $query->withAnyTags($tags);
-            }, function ($query) {
+            }, function ($query): void {
                 $query->isNotTagged();
             })
             ->get();

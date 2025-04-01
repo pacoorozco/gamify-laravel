@@ -56,14 +56,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/leaderboard', LeaderBoardController::class)
     ->name('leaderboard');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/', HomeController::class)
         ->name('home');
 
     Route::get('users/{username}', ShowUserProfileController::class)
         ->name('profiles.show');
 
-    Route::controller(QuestionController::class)->group(function () {
+    Route::controller(QuestionController::class)->group(function (): void {
         Route::get('questions', 'index')
             ->name('questions.index');
 
@@ -74,8 +74,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('questions.answer');
     });
 
-    Route::prefix('account')->group(function () {
-        Route::controller(ProfileController::class)->group(function () {
+    Route::prefix('account')->group(function (): void {
+        Route::controller(ProfileController::class)->group(function (): void {
             Route::get('/', 'index')
                 ->name('account.index');
 
@@ -86,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->name('account.profile.update');
         });
 
-        Route::controller(ChangePasswordController::class)->group(function () {
+        Route::controller(ChangePasswordController::class)->group(function (): void {
             Route::get('password', 'index')
                 ->name('account.password.index');
 
@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
  * Routes that User needs to be administrator
  *  ------------------------------------------
  */
-Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->group(function (): void {
     Route::get('/', AdminDashboardController::class)
         ->name('home');
 
@@ -170,7 +170,7 @@ Route::middleware(['can:access-dashboard'])->prefix('admin')->name('admin.')->gr
      *  Give Experience / Badge
      *  ------------------------------------------
      */
-    Route::controller(AdminRewardController::class)->group(function () {
+    Route::controller(AdminRewardController::class)->group(function (): void {
         Route::get('rewards', 'index')
             ->name('rewards.index');
 

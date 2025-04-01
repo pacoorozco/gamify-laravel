@@ -100,7 +100,7 @@ final class BadgeTest extends TestCase
                 'actuators' => BadgeActuators::OnQuestionAnswered,
             ]);
 
-        $want->each(function ($badge) {
+        $want->each(function ($badge): void {
             /** @var Badge $badge */
             $badge->tag(['tag1', 'foo']);
         });

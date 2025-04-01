@@ -39,7 +39,7 @@ class AddBadgesOnAvatarUploaded
         Badge::query()
             ->whereActuators(BadgeActuators::OnUserAvatarUploaded)
             ->get()
-            ->each(function ($badge) use ($user) {
+            ->each(function ($badge) use ($user): void {
                 Game::incrementBadgeCount($user, $badge);
             });
     }

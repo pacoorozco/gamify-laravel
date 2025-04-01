@@ -38,7 +38,7 @@ class UserFactory extends Factory
     public function configure(): self
     {
         /** @phpstan-ignore-next-line */
-        return $this->afterCreating(function (User $user) {
+        return $this->afterCreating(function (User $user): void {
             UserProfile::factory()
                 ->for($user)
                 ->create();
@@ -59,7 +59,7 @@ class UserFactory extends Factory
             'password' => bcrypt('secret'),
             'remember_token' => Str::random(10),
             'email_verified_at' => now(),
-            'role' => Roles::Player,
+            'role' => Roles::PLAYER,
         ];
     }
 
@@ -67,7 +67,7 @@ class UserFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'role' => Roles::Admin,
+                'role' => Roles::ADMIN,
             ];
         });
     }

@@ -168,7 +168,7 @@ final class GameTest extends TestCase
 
         $this->assertEquals($expectedPlayers, $got->pluck('name')->toArray());
 
-        $got->each(function ($item) {
+        $got->each(function ($item): void {
             $this->assertTrue(Arr::has($item, ['username', 'name', 'experience', 'level']));
         });
     }

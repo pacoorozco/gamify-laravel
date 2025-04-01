@@ -50,9 +50,9 @@ return [
         QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
     ],
 
-    Roles::class => [
-        Roles::Admin => 'Administrator',
-        Roles::Player => 'Player',
+    'roles' => [
+        'admin' => 'Administrator',
+        'player' => 'Player',
     ],
 
 ];

@@ -26,6 +26,7 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Actions\CreateUserAction;
+use Gamify\Enums\Roles;
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\Models\User;

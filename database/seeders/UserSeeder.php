@@ -41,13 +41,13 @@ class UserSeeder extends Seeder
                 'username' => 'admin',
                 'email' => 'admin@domain.local',
                 'password' => 'admin',
-                'role' => Roles::Admin,
+                'role' => Roles::ADMIN,
             ],
             [
                 'username' => 'player',
                 'email' => 'player@domain.local',
                 'password' => 'player',
-                'role' => Roles::Player,
+                'role' => Roles::PLAYER,
             ],
         ];
 

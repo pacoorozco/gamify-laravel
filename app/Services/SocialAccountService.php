@@ -84,7 +84,7 @@ class SocialAccountService
                     $providerUser->getEmail(),
                     $providerUser->getName() ?? 'User '.$username,
                     password: Str::random(),
-                    role: Roles::Player,
+                    role: Roles::PLAYER,
                     skipEmailVerification: true
                 );
             });

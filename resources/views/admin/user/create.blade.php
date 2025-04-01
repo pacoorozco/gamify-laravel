@@ -67,7 +67,7 @@
                         <x-forms.select name='role'
                                         :label="__('admin/user/model.role')"
                                         :help="__('admin/user/messages.roles_help')"
-                                        :options="\Gamify\Enums\Roles::asSelectArray()"
+                                        :options="\Gamify\Enums\Roles::options()"
                                         :required="true"/>
                         <!-- ./ role -->
 

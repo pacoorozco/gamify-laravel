@@ -46,13 +46,13 @@ class AddBadgesOnQuestionAnswered
                     ? BadgeActuators::OnQuestionCorrectlyAnswered
                     : BadgeActuators::OnQuestionIncorrectlyAnswered,
             ])
-            ->when($event->question->tagArrayNormalized, function ($query) use ($event) {
+            ->when($event->question->tagArrayNormalized, function ($query) use ($event): void {
                 $query->withAnyTags($event->question->tagArrayNormalized);
-            }, function ($query) {
+            }, function ($query): void {
                 $query->isNotTagged();
             })
             ->get()
-            ->each(function ($badge) use ($user) {
+            ->each(function ($badge) use ($user): void {
                 Game::incrementBadgeCount($user, $badge);
             });
     }
