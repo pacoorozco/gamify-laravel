@@ -44,7 +44,7 @@ class BadgeFactory extends Factory
             'description' => 'This badge is for people who think about '.$color.' :D',
             'required_repetitions' => 5,
             'active' => fake()->boolean,
-            'actuators' => fake()->randomElement(BadgeActuators::getValues()),
+            'actuators' => fake()->randomElement(BadgeActuators::cases()),
         ];
     }
 

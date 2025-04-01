@@ -26,6 +26,7 @@
 namespace Gamify\Http\Controllers\Admin;
 
 use Gamify\Actions\CreateUserAction;
+use Gamify\Enums\Roles;
 use Gamify\Http\Requests\UserCreateRequest;
 use Gamify\Http\Requests\UserUpdateRequest;
 use Gamify\Models\User;
@@ -64,12 +65,12 @@ class AdminUserController extends AdminController
 
     public function show(User $user): View
     {
-        return view('admin/user/show', compact('user'));
+        return view('admin/user/show', ['user' => $user]);
     }
 
     public function edit(User $user): View
     {
-        return view('admin/user/edit', compact('user'));
+        return view('admin/user/edit', ['user' => $user]);
     }
 
     public function update(UserUpdateRequest $request, User $user): RedirectResponse

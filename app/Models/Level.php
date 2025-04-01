@@ -60,7 +60,7 @@ class Level extends Model implements HasMedia, CanPresent
             ->singleFile()
             ->useFallbackUrl('/images/missing_level.png')
             ->useFallbackPath(public_path('/images/missing_level.png'))
-            ->registerMediaConversions(function () {
+            ->registerMediaConversions(function (): void {
                 $this
                     ->addMediaConversion('thumb')
                     ->width(150)
@@ -116,8 +116,6 @@ class Level extends Model implements HasMedia, CanPresent
     /**
      * The default level could be overridden by creating another Level with
      * required_points = 0.
-     *
-     * @return \Gamify\Models\Level
      */
     public static function defaultLevel(): Level
     {

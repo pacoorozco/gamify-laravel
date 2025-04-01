@@ -29,6 +29,7 @@ use BenSampo\Enum\Rules\EnumValue;
 use Gamify\Enums\Roles;
 use Gamify\Rules\UsernameRule;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class UserCreateRequest extends Request
 {
@@ -52,7 +53,7 @@ class UserCreateRequest extends Request
             ],
             'role' => [
                 'required',
-                new EnumValue(Roles::class),
+                Rule::enum((Roles::class)),
             ],
         ];
     }
@@ -72,8 +73,8 @@ class UserCreateRequest extends Request
         return $this->input('name');
     }
 
-    public function role(): string
+    public function role(): Roles
     {
-        return $this->input('role');
+        return $this->enum('role', Roles::class) ?? Roles::PLAYER;
     }
 }

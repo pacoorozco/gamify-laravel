@@ -25,20 +25,21 @@
 
 namespace Gamify\Actions;
 
+use Gamify\Enums\Roles;
 use Gamify\Models\User;
 use Illuminate\Auth\Events\Registered;
 
 final class CreateUserAction
 {
     /**
-     * Creates an User, its profile and dispatch events.
+     * Creates a User, its profile and dispatch events.
      */
     public function execute(
         string $username,
         string $email,
         string $name,
         string $password,
-        string $role,
+        Roles $role,
         bool $skipEmailVerification = false
     ): User {
         $user = User::create([

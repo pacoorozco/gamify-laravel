@@ -58,7 +58,7 @@ final class AddBadgesOnProfileUpdatedTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserProfileUpdated,
+            'actuators' => BadgeActuators::OnUserProfileUpdated->value,
         ]);
 
         /** @var ProfileUpdated $event */
@@ -80,7 +80,7 @@ final class AddBadgesOnProfileUpdatedTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::None,
+            'actuators' => BadgeActuators::None->value,
         ]);
 
         /** @var ProfileUpdated $event */

@@ -25,7 +25,6 @@
   },
   "require": {
     "php": "^8.2.0",
-    "bensampo/laravel-enum": "^6.12.0",
     "coderflexx/laravel-presenter": "^2.0.0",
     "cviebrock/eloquent-sluggable": "^11.0",
     "cviebrock/eloquent-taggable": "^11.0",

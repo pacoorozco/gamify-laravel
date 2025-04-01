@@ -32,27 +32,27 @@ return [
     'actuators_related_with_question_events' => 'Question related events',
     'actuators_related_with_user_events' => 'User related events',
 
-    BadgeActuators::class => [
-        BadgeActuators::None => 'None, I will trigger it by my own',
+    'badge_actuators' => [
+        'none' => 'None, I will trigger it by my own',
 
-        BadgeActuators::OnQuestionAnswered => 'Question has been answered',
-        BadgeActuators::OnQuestionCorrectlyAnswered => 'Question has been answered correctly',
-        BadgeActuators::OnQuestionIncorrectlyAnswered => 'Question has been answered incorrectly',
+        'on_question_answered' => 'Question has been answered',
+        'on_question_correctly_answered' => 'Question has been answered correctly',
+        'on_question_incorrectly_answered' => 'Question has been answered incorrectly',
 
-        BadgeActuators::OnUserLoggedIn => 'User has logged in',
-        BadgeActuators::OnUserProfileUpdated => 'User has updated its profile',
-        BadgeActuators::OnUserAvatarUploaded => 'User has uploaded an avatar',
+        'on_user_login' => 'User has logged in',
+        'on_user_profile_updated' => 'User has updated its profile',
+        'on_user_avatar_uploaded' => 'User has uploaded an avatar',
     ],
 
-    QuestionActuators::class => [
-        QuestionActuators::OnQuestionAnswered => 'Always',
-        QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
-        QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
+    'question_actuators' => [
+        'on_question_answered' => 'Always',
+        'on_question_correctly_answered' => 'On question correctly answered',
+        'on_question_incorrectly_answered' => 'On question incorrectly answered',
     ],
 
-    Roles::class => [
-        Roles::Admin => 'Administrator',
-        Roles::Player => 'Player',
+    'roles' => [
+        'admin' => 'Administrator',
+        'player' => 'Player',
     ],
 
 ];

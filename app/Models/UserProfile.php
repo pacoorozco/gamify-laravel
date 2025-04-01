@@ -58,7 +58,7 @@ class UserProfile extends Model implements HasMedia
             ->singleFile()
             ->useFallbackUrl('/images/missing_profile.png')
             ->useFallbackPath(public_path('/images/missing_profile.png'))
-            ->registerMediaConversions(function () {
+            ->registerMediaConversions(function (): void {
                 $this
                     ->addMediaConversion('thumb')
                     ->width(150)
@@ -75,9 +75,12 @@ class UserProfile extends Model implements HasMedia
         'github',
     ];
 
-    protected $casts = [
-        'date_of_birth' => 'date',
-    ];
+    protected function casts() : array
+    {
+        return[
+            'date_of_birth' => 'date',
+        ];
+    }
 
     public function user(): BelongsTo
     {

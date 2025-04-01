@@ -84,7 +84,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
     {
         yield 'OnQuestionAnswered & no tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'actuators' => BadgeActuators::OnQuestionAnswered->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -95,7 +95,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionAnswered & matching tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'actuators' => BadgeActuators::OnQuestionAnswered->value,
                 'tags' => ['tag', 'foo'],
             ],
             'questionAttributes' => [
@@ -106,7 +106,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionCorrectlyAnswered & no tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -117,7 +117,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionCorrectlyAnswered & matching tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered->value,
                 'tags' => ['tag', 'foo'],
             ],
             'questionAttributes' => [
@@ -128,7 +128,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionIncorrectlyAnswered & no tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -139,7 +139,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionIncorrectlyAnswered & matching tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered->value,
                 'tags' => ['tag', 'foo'],
             ],
             'questionAttributes' => [
@@ -184,7 +184,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
     {
         yield 'different actuator' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::None,
+                'actuators' => BadgeActuators::None->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -195,7 +195,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionAnswered & non matching tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'actuators' => BadgeActuators::OnQuestionAnswered->value,
                 'tags' => ['foo'],
             ],
             'questionAttributes' => [
@@ -206,7 +206,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionAnswered & only question has tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'actuators' => BadgeActuators::OnQuestionAnswered->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -217,7 +217,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionAnswered & only badge has tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionAnswered,
+                'actuators' => BadgeActuators::OnQuestionAnswered->value,
                 'tags' => ['foo'],
             ],
             'questionAttributes' => [
@@ -228,7 +228,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionCorrectlyAnswered & answer is not correct' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -239,7 +239,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionCorrectlyAnswered & non matching tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionCorrectlyAnswered->value,
                 'tags' => ['foo'],
             ],
             'questionAttributes' => [
@@ -250,7 +250,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionIncorrectlyAnswered & answer is correct' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered->value,
                 'tags' => [],
             ],
             'questionAttributes' => [
@@ -261,7 +261,7 @@ final class AddBadgesOnQuestionAnsweredTest extends TestCase
 
         yield 'OnQuestionIncorrectlyAnswered & non matching tags' => [
             'badgeAttributes' => [
-                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered,
+                'actuators' => BadgeActuators::OnQuestionIncorrectlyAnswered->value,
                 'tags' => ['foo'],
             ],
             'questionAttributes' => [

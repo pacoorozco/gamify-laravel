@@ -37,7 +37,7 @@ class QuestionFactory extends Factory
     public function configure(): self
     {
         /** @phpstan-ignore-next-line */
-        return $this->afterCreating(function (Question $question) {
+        return $this->afterCreating(function (Question $question): void {
             if ($question->isPublished() || $question->isScheduled()) {
                 QuestionChoice::factory()
                     ->for($question)

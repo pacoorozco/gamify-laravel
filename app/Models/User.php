@@ -80,20 +80,23 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         'remember_token',
     ];
 
-    protected $casts = [
-        'level' => Level::class,
-        'role' => Roles::class,
-        'email_verified_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'level' => Level::class,
+            'role' => Roles::class,
+            'email_verified_at' => 'datetime',
+        ];
+    }
 
     public function isAdmin(): bool
     {
-        return $this->role->is(Roles::Admin);
+        return $this->role === Roles::ADMIN;
     }
 
     public function scopePlayer(Builder $query): Builder
     {
-        return $query->where('role', Roles::Player);
+        return $query->where('role', Roles::PLAYER);
     }
 
     public function profile(): HasOne
@@ -124,7 +127,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
 
         $completion = min(($this->experience / $nextLevel->required_points) * 100, 100);
 
-        return (int) $completion;
+        return (int)$completion;
     }
 
     public function nextLevel(): Level
@@ -148,7 +151,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
         return Question::query()
             ->published()
             ->whereNotIn('id', $answeredQuestions)
-            ->when($filterHiddenQuestions, fn ($query) => $query->public())
+            ->when($filterHiddenQuestions, fn($query) => $query->public())
             ->inRandomOrder()
             ->simplePaginate($perPageLimit);
     }
@@ -246,7 +249,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     protected function username(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower($value),
+            set: fn($value) => strtolower($value),
         );
     }
 
@@ -256,14 +259,14 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => Hash::make($value),
+            set: fn($value) => Hash::make($value),
         );
     }
 
     protected function level(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Level::findByExperience($this->experience)
+            get: fn($value) => Level::findByExperience($this->experience)
                 ->name,
         );
     }
@@ -271,7 +274,7 @@ final class User extends Authenticatable implements MustVerifyEmail, CanPresent
     protected function experience(): Attribute
     {
         return Attribute::make(
-            get: fn () => Cache::remember('user_experience_'.$this->id, 600, function () {
+            get: fn() => Cache::remember('user_experience_' . $this->id, 600, function () {
                 return $this->points()->sum('points');
             })
         );

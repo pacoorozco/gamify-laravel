@@ -53,7 +53,7 @@ class AdminBadgeDataTablesController extends AdminController
                 return $badge->present()->status;
             })
             ->editColumn('actuators', function (Badge $badge) {
-                return $badge->actuators->description;
+                return $badge->actuators->label();
             })
             ->addColumn('tags', function (Badge $badge) {
                 return BadgeActuators::canBeTagged($badge->actuators)

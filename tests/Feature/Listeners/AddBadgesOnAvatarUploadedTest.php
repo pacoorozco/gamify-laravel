@@ -55,7 +55,7 @@ final class AddBadgesOnAvatarUploadedTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::OnUserAvatarUploaded,
+            'actuators' => BadgeActuators::OnUserAvatarUploaded->value,
         ]);
 
         /** @var AvatarUploaded $event */
@@ -76,7 +76,7 @@ final class AddBadgesOnAvatarUploadedTest extends TestCase
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create([
-            'actuators' => BadgeActuators::None,
+            'actuators' => BadgeActuators::None->value,
         ]);
 
         /** @var AvatarUploaded $event */

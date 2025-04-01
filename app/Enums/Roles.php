@@ -25,16 +25,25 @@
 
 namespace Gamify\Enums;
 
-use BenSampo\Enum\Contracts\LocalizedEnum;
-use BenSampo\Enum\Enum;
-
-/**
- * @method static static Admin()
- * @method static static Player()
- */
-final class Roles extends Enum implements LocalizedEnum
+enum Roles: string
 {
-    const Admin = 'administrator';
+    case ADMIN = 'administrator';
+    case PLAYER = 'user';
 
-    const Player = 'user';
+    // Get a user-friendly label
+    public function label(): string
+    {
+        return match ($this) {
+            self::ADMIN => __('enums.roles.admin'),
+            self::PLAYER => __('enums.roles.player'),
+        };
+    }
+
+    // Static helper for forms
+    public static function options(): array
+    {
+        return collect(self::cases())->mapWithKeys(
+            fn(self $status) => [$status->value => $status->label()]
+        )->all();
+    }
 }

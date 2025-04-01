@@ -40,9 +40,9 @@ class AddBadgesOnUserLoggedIn
         $user = $event->user;
 
         Badge::query()
-            ->whereActuators(BadgeActuators::OnUserLoggedIn)
+            ->whereActuators(BadgeActuators::OnUserLoggedIn->value)
             ->get()
-            ->each(function ($badge) use ($user) {
+            ->each(function ($badge) use ($user): void {
                 Game::incrementBadgeCount($user, $badge);
             });
     }

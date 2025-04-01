@@ -84,11 +84,6 @@ class BadgePresenter extends Presenter
             ->toHtmlString();
     }
 
-    public function actuators(): array
-    {
-        return $this->model->actuators->getFlags();
-    }
-
     public function unlockedAt(): string
     {
         /** @phpstan-ignore-next-line */

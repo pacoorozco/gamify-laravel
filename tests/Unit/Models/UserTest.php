@@ -85,7 +85,7 @@ final class UserTest extends TestCase
     ): void {
         $m = new User();
 
-        $m->role = Roles::fromValue($role);
+        $m->role = Roles::from($role);
 
         $this->assertEquals($shouldBeAdmin, $m->isAdmin());
     }
@@ -93,12 +93,12 @@ final class UserTest extends TestCase
     public static function provideDataToTestAdminMembership(): Generator
     {
         yield 'Administrator' => [
-            'role' => Roles::Admin,
+            'role' => Roles::ADMIN->value,
             'shouldBeAdmin' => true,
         ];
 
         yield 'Player' => [
-            'role' => Roles::Player,
+            'role' => Roles::PLAYER->value,
             'shouldBeAdmin' => false,
         ];
     }

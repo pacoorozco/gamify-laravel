@@ -25,20 +25,28 @@
 
 namespace Gamify\Enums;
 
-use BenSampo\Enum\Contracts\LocalizedEnum;
-use BenSampo\Enum\Enum;
-
-/**
- * @method static static OnQuestionAnswered()
- * @method static static OnQuestionCorrectlyAnswered()
- * @method static static OnQuestionIncorrectlyAnswered()
- */
-final class QuestionActuators extends Enum implements LocalizedEnum
+enum QuestionActuators : int
 {
     /** Actuators based on question's events */
-    const OnQuestionAnswered = 1;
+    case OnQuestionAnswered = 1;
+    case OnQuestionCorrectlyAnswered = 2;
+    case OnQuestionIncorrectlyAnswered = 3;
 
-    const OnQuestionCorrectlyAnswered = 2;
+    // Get a user-friendly label
+    public function label(): string
+    {
+        return match ($this) {
+            self::OnQuestionAnswered => __('enums.question_actuators.on_question_answered'),
+            self::OnQuestionCorrectlyAnswered => __('enums.question_actuators.on_question_correctly_answered'),
+            self::OnQuestionIncorrectlyAnswered => __('enums.question_actuators.on_question_incorrectly_answered'),
+        };
+    }
 
-    const OnQuestionIncorrectlyAnswered = 3;
+    // Static helper for forms
+    public static function options(): array
+    {
+        return collect(self::cases())->mapWithKeys(
+            fn(self $status) => [$status->value => $status->label()]
+        )->all();
+    }
 }

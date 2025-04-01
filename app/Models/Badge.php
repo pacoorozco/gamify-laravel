@@ -25,7 +25,6 @@
 
 namespace Gamify\Models;
 
-use BenSampo\Enum\Traits\QueriesFlaggedEnums;
 use Coderflex\LaravelPresenter\Concerns\CanPresent;
 use Coderflex\LaravelPresenter\Concerns\UsesPresenters;
 use Cviebrock\EloquentTaggable\Taggable;
@@ -57,7 +56,6 @@ class Badge extends Model implements HasMedia, CanPresent
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
-    use QueriesFlaggedEnums;
     use Taggable;
     use UsesPresenters;
 
@@ -68,7 +66,7 @@ class Badge extends Model implements HasMedia, CanPresent
             ->singleFile()
             ->useFallbackUrl('/images/missing_badge.png')
             ->useFallbackPath(public_path('/images/missing_badge.png'))
-            ->registerMediaConversions(function () {
+            ->registerMediaConversions(function (): void {
                 $this
                     ->addMediaConversion('thumb')
                     ->width(150)
@@ -93,19 +91,22 @@ class Badge extends Model implements HasMedia, CanPresent
         'actuators',
     ];
 
-    protected $casts = [
-        'active' => 'boolean',
-        'actuators' => BadgeActuators::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+            'actuators' => BadgeActuators::class,
+        ];
+    }
 
     public static function triggeredByQuestionsWithTagsIn(array $tags): Collection
     {
         return self::query()
             ->active()
-            ->hasAnyFlags('actuators', BadgeActuators::triggeredByQuestions())
-            ->when($tags, function ($query) use ($tags) {
+            ->whereIn('actuators', BadgeActuators::triggeredByQuestions())
+            ->when($tags, function ($query) use ($tags): void {
                 $query->withAnyTags($tags);
-            }, function ($query) {
+            }, function ($query): void {
                 $query->isNotTagged();
             })
             ->get();
@@ -121,7 +122,7 @@ class Badge extends Model implements HasMedia, CanPresent
         /** @phpstan-ignore-next-line */
         return $query
             ->active()
-            ->hasAnyFlags('actuators', $actuators);
+            ->whereIn('actuators', $actuators);
     }
 
     public function slug(): string
@@ -132,7 +133,7 @@ class Badge extends Model implements HasMedia, CanPresent
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->getFirstMediaUrl('image', 'detail')
+            get: fn($value) => $this->getFirstMediaUrl('image', 'detail')
         );
     }
 }

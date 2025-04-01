@@ -59,7 +59,7 @@ final class AdminBadgeControllerTest extends TestCase
     #[Test]
     public function admins_should_see_the_index_view(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $this
             ->actingAs($this->user)
@@ -80,7 +80,7 @@ final class AdminBadgeControllerTest extends TestCase
     #[Test]
     public function admins_should_see_the_new_badge_form(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $this
             ->actingAs($this->user)
@@ -102,7 +102,7 @@ final class AdminBadgeControllerTest extends TestCase
                 'description' => $want->description,
                 'required_repetitions' => $want->required_repetitions,
                 'active' => $want->active,
-                'actuators' => $want->actuators,
+                'actuators' => $want->actuators->value,
             ])
             ->assertForbidden();
 
@@ -114,7 +114,7 @@ final class AdminBadgeControllerTest extends TestCase
     #[Test]
     public function admins_should_create_badges(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         /** @var Badge $want */
         $want = Badge::factory()->make();
@@ -156,7 +156,7 @@ final class AdminBadgeControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         // Badge to validate unique rules...
         Badge::factory()->create([
@@ -272,7 +272,7 @@ final class AdminBadgeControllerTest extends TestCase
     #[Test]
     public function admins_should_see_any_badge(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $badge = Badge::factory()->create();
 
@@ -298,7 +298,7 @@ final class AdminBadgeControllerTest extends TestCase
     #[Test]
     public function admins_should_see_the_edit_badge_form(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $badge = Badge::factory()->create();
 
@@ -329,7 +329,7 @@ final class AdminBadgeControllerTest extends TestCase
     public function admins_should_update_badges(
         array $wantData,
     ): void {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         /** @var Badge $badge */
         $badge = Badge::factory()->create();
@@ -383,7 +383,7 @@ final class AdminBadgeControllerTest extends TestCase
         array $data,
         array $errors
     ): void {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         // Badge to validate unique rules...
         Badge::factory()->create([
@@ -499,7 +499,7 @@ final class AdminBadgeControllerTest extends TestCase
     #[Test]
     public function admins_should_delete_badges(): void
     {
-        $this->user->role = Roles::Admin();
+        $this->user->role = Roles::ADMIN;
 
         $badge = Badge::factory()->create();
 
