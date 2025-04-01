@@ -102,7 +102,7 @@ final class AdminBadgeControllerTest extends TestCase
                 'description' => $want->description,
                 'required_repetitions' => $want->required_repetitions,
                 'active' => $want->active,
-                'actuators' => $want->actuators,
+                'actuators' => $want->actuators->value,
             ])
             ->assertForbidden();
 

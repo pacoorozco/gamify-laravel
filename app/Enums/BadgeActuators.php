@@ -25,56 +25,51 @@
 
 namespace Gamify\Enums;
 
-use BenSampo\Enum\Contracts\LocalizedEnum;
-use BenSampo\Enum\FlaggedEnum;
 use Illuminate\Support\Arr;
 
-/**
- * @method static static OnQuestionAnswered()
- * @method static static OnQuestionCorrectlyAnswered()
- * @method static static OnQuestionIncorrectlyAnswered()
- * @method static static OnUserLoggedIn()
- * @method static static OnUserProfileUpdated()
- * @method static static OnUserAvatarUploaded()
- * @method static static None()
- */
-final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
+enum BadgeActuators: int
 {
     /** Actuators based on question's events */
-    const OnQuestionAnswered = 1 << 0;
-
-    const OnQuestionCorrectlyAnswered = 1 << 1;
-
-    const OnQuestionIncorrectlyAnswered = 1 << 2;
-
+    case None = 0;
+    case OnQuestionAnswered = 1 << 0;
+    case OnQuestionCorrectlyAnswered = 1 << 1;
+    case OnQuestionIncorrectlyAnswered = 1 << 2;
     /** Actuators based on user's events */
-    const OnUserLoggedIn = 1 << 3;
+    case OnUserLoggedIn = 1 << 3;
+    case OnUserProfileUpdated = 1 << 4;
+    case OnUserAvatarUploaded = 1 << 5;
 
-    const OnUserProfileUpdated = 1 << 4;
-
-    const OnUserAvatarUploaded = 1 << 5;
-
-    /**
-     * Returns an array of values to be used on <select> with <optgroups> and filtered options.
-     *
-     * @return array<int|string, array<int, string>|string>
-     */
-    public static function toSelectArray(): array
+    // Get a user-friendly label
+    public function label(): string
     {
-        $questionEventsKey = (string) __('enums.actuators_related_with_question_events');
-        $userEventsKey = (string) __('enums.actuators_related_with_user_events');
+        return match ($this) {
+            self::None => __('enums.badge_actuators.none'),
+            self::OnQuestionAnswered => __('enums.badge_actuators.on_question_answered'),
+            self::OnQuestionCorrectlyAnswered => __('enums.badge_actuators.on_question_correctly_answered'),
+            self::OnQuestionIncorrectlyAnswered => __('enums.badge_actuators.on_question_incorrectly_answered'),
+            self::OnUserLoggedIn => __('enums.badge_actuators.on_user_login'),
+            self::OnUserProfileUpdated => __('enums.badge_actuators.on_user_profile_updated'),
+            self::OnUserAvatarUploaded => __('enums.badge_actuators.on_user_avatar_uploaded'),
+        };
+    }
+
+    // Static helper for forms
+    public static function options(): array
+    {
+        $questionEventsKey = (string)__('enums.actuators_related_with_question_events');
+        $userEventsKey = (string)__('enums.actuators_related_with_user_events');
 
         return [
-            self::None => self::None()->description,
+            self::None->value => self::None->label(),
             $questionEventsKey => [
-                self::OnQuestionAnswered => self::OnQuestionAnswered()->description,
-                self::OnQuestionCorrectlyAnswered => self::OnQuestionCorrectlyAnswered()->description,
-                self::OnQuestionIncorrectlyAnswered => self::OnQuestionIncorrectlyAnswered()->description,
+                self::OnQuestionAnswered->value => self::OnQuestionAnswered->label(),
+                self::OnQuestionCorrectlyAnswered->value => self::OnQuestionCorrectlyAnswered->label(),
+                self::OnQuestionIncorrectlyAnswered->value => self::OnQuestionIncorrectlyAnswered->label(),
             ],
             $userEventsKey => [
-                self::OnUserLoggedIn => self::OnUserLoggedIn()->description,
-                self::OnUserProfileUpdated => self::OnUserProfileUpdated()->description,
-                self::OnUserAvatarUploaded => self::OnUserAvatarUploaded()->description,
+                self::OnUserLoggedIn->value => self::OnUserLoggedIn->label(),
+                self::OnUserProfileUpdated->value => self::OnUserProfileUpdated->label(),
+                self::OnUserAvatarUploaded->value => self::OnUserAvatarUploaded->label(),
             ],
         ];
     }
@@ -87,9 +82,9 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
     public static function triggeredByQuestions(): array
     {
         return [
-            self::OnQuestionAnswered,
-            self::OnQuestionCorrectlyAnswered,
-            self::OnQuestionIncorrectlyAnswered,
+            self::OnQuestionAnswered->value,
+            self::OnQuestionCorrectlyAnswered->value,
+            self::OnQuestionIncorrectlyAnswered->value,
         ];
     }
 
@@ -99,6 +94,6 @@ final class BadgeActuators extends FlaggedEnum implements LocalizedEnum
      */
     public static function canBeTagged(BadgeActuators $actuator): bool
     {
-        return $actuator->in(self::triggeredByQuestions());
+        return in_array($actuator, self::triggeredByQuestions());
     }
 }

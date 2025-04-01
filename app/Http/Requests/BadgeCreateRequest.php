@@ -53,7 +53,7 @@ class BadgeCreateRequest extends Request
             ],
             'actuators' => [
                 'required',
-                new EnumValue(BadgeActuators::class),
+                Rule::enum(BadgeActuators::class),
             ],
 
             // Tags
@@ -91,9 +91,9 @@ class BadgeCreateRequest extends Request
         return $this->input('active');
     }
 
-    public function actuators(): string
+    public function actuators(): BadgeActuators
     {
-        return $this->input('actuators');
+        return $this->enum('actuators', BadgeActuators::class) ?? BadgeActuators::None;
     }
 
     public function tags(): array

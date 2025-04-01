@@ -41,10 +41,10 @@ class AddBadgesOnQuestionAnswered
 
         Badge::query()
             ->whereIn('actuators', [
-                BadgeActuators::OnQuestionAnswered,
+                BadgeActuators::OnQuestionAnswered->value,
                 ($event->correctness)
-                    ? BadgeActuators::OnQuestionCorrectlyAnswered
-                    : BadgeActuators::OnQuestionIncorrectlyAnswered,
+                    ? BadgeActuators::OnQuestionCorrectlyAnswered->value
+                    : BadgeActuators::OnQuestionIncorrectlyAnswered->value,
             ])
             ->when($event->question->tagArrayNormalized, function ($query) use ($event): void {
                 $query->withAnyTags($event->question->tagArrayNormalized);

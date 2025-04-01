@@ -82,7 +82,7 @@
                             {{ __('admin/badge/model.actuators') }}
                         </dt>
                         <dd>
-                            {{ $badge->actuators->description }}
+                            {{ $badge->actuators->label() }}
                         </dd>
                     </dl>
                     <!-- ./ actuators -->

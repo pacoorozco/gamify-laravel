@@ -74,7 +74,7 @@
                             <x-forms.select name='actuators'
                                             :label="__('admin/badge/model.actuators')"
                                             :help="__('admin/badge/model.actuators_help')"
-                                            :options="\Gamify\Enums\BadgeActuators::toSelectArray()"
+                                            :options="\Gamify\Enums\BadgeActuators::options()"
                                             selectedKey="{{ $badge->actuators->value }}"
                                             class="tags-actuators"
                                             :required="true"/>
