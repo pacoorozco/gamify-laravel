@@ -44,10 +44,10 @@ return [
         BadgeActuators::OnUserAvatarUploaded => 'User has uploaded an avatar',
     ],
 
-    QuestionActuators::class => [
-        QuestionActuators::OnQuestionAnswered => 'Always',
-        QuestionActuators::OnQuestionCorrectlyAnswered => 'On question correctly answered',
-        QuestionActuators::OnQuestionIncorrectlyAnswered => 'On question incorrectly answered',
+    'question_actuators' => [
+        'on_question_answered' => 'Always',
+        'on_question_correctly_answered' => 'On question correctly answered',
+        'on_question_incorrectly_answered' => 'On question incorrectly answered',
     ],
 
     'roles' => [

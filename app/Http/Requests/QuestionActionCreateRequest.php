@@ -40,7 +40,7 @@ class QuestionActionCreateRequest extends Request
     {
         return [
             'badge_id' => ['required', Rule::exists('badges', 'id')],
-            'when' => ['required', new EnumValue(QuestionActuators::class, false)],
+            'when' => ['required', Rule::enum(QuestionActuators::class)],
         ];
     }
 }
