@@ -8,15 +8,11 @@
     "production": "mix --production"
   },
   "devDependencies": {
-    "admin-lte": "^3.2.0",
+    "admin-lte": "^2.4.8",
     "jasny-bootstrap": "^3.1.3",
     "jquery-datetimepicker": "^2.5.21",
     "laravel-mix": "^6.0.49",
-    "repeatable-fields": "^1.5.0"
-  },
-  "overrides": {
-    "admin-lte": {
-      "summernote": "0.9.1"
-    }
+    "repeatable-fields": "^1.5.0",
+    "summernote": "^0.9.1"
   }
 }
