@@ -24,25 +24,13 @@
 
 let mix = require('laravel-mix');
 
-// AdminLTE template with plugins
+// AdminLTE theme with plugins
 mix.copyDirectory('node_modules/admin-lte/dist', 'public/vendor/AdminLTE');
 mix.copyDirectory('node_modules/admin-lte/plugins', 'public/vendor/AdminLTE/plugins');
-mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap/dist', 'public/vendor/AdminLTE/bootstrap');
-mix.copyDirectory('node_modules/admin-lte/bower_components/jquery/dist', 'public/vendor/AdminLTE/jquery');
-mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net/js', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/js', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/css', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/select2/dist', 'public/vendor/AdminLTE/plugins/select2');
 
 // Jasny file uploader
 mix.copyDirectory('node_modules/jasny-bootstrap/dist', 'public/vendor/jasny-bootstrap');
 mix.copyDirectory('node_modules/jquery-datetimepicker/build', 'public/vendor/jquery-datetimepicker');
-
-// summernote - dist folder contains a ZIP file that we don't want to copy
-mix.copy('node_modules/summernote/dist/!(*.zip)', 'public/vendor/summernote');
-mix.copyDirectory('node_modules/summernote/dist/font', 'public/vendor/summernote/font');
-mix.copyDirectory('node_modules/summernote/dist/lang', 'public/vendor/summernote/lang');
-mix.copyDirectory('node_modules/summernote/dist/plugin', 'public/vendor/summernote/plugin');
 
 // Repeatable fields plugin
 mix.copy('node_modules/repeatable-fields/repeatable-fields.js', 'public/vendor/repeatable-fields/')
