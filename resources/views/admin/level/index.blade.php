@@ -3,7 +3,9 @@
 {{-- Styles --}}
 @push('styles')
     <link rel="stylesheet" type="text/css"
-          href="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+          href="{{ asset('vendor/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('vendor/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') }}">
 @endpush
 
 {{-- Web site Title --}}
@@ -69,10 +71,10 @@
 
 {{-- Scripts --}}
 @push('scripts')
-    <script type="text/javascript"
-            src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 
     <script>
         $(function () {

@@ -24,30 +24,38 @@
 
 let mix = require('laravel-mix');
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+// AdminLTE v3 and all the useful plugins
+mix.copy('node_modules/admin-lte/dist/js/adminlte.*', 'public/vendor/AdminLTE/js');
+mix.copy('node_modules/admin-lte/dist/css', 'public/vendor/AdminLTE/css');
 
-mix.copyDirectory('node_modules/admin-lte/dist', 'public/vendor/AdminLTE');
-mix.copyDirectory('node_modules/admin-lte/plugins', 'public/vendor/AdminLTE/plugins');
-mix.copyDirectory('node_modules/admin-lte/bower_components/bootstrap/dist', 'public/vendor/AdminLTE/bootstrap');
-mix.copyDirectory('node_modules/admin-lte/bower_components/jquery/dist', 'public/vendor/AdminLTE/jquery');
-mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net/js', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/js', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/datatables.net-bs/css', 'public/vendor/AdminLTE/plugins/datatables');
-mix.copyDirectory('node_modules/admin-lte/bower_components/select2/dist', 'public/vendor/AdminLTE/plugins/select2');
+// Bootstrap 4 & JQuery
+mix.copyDirectory('node_modules/admin-lte/plugins/bootstrap', 'public/vendor/AdminLTE/bootstrap');
+mix.copyDirectory('node_modules/admin-lte/plugins/jquery', 'public/vendor/AdminLTE/jquery');
+
+// summernote
+mix.copy('node_modules/admin-lte/plugins/summernote/*.css', 'public/vendor/AdminLTE/plugins/summernote');
+mix.copy('node_modules/admin-lte/plugins/summernote/*.js', 'public/vendor/AdminLTE/plugins/summernote');
+mix.copyDirectory('node_modules/admin-lte/plugins/summernote/font', 'public/vendor/AdminLTE/plugins/summernote/font');
+mix.copyDirectory('node_modules/admin-lte/plugins/summernote/lang', 'public/vendor/AdminLTE/plugins/summernote/lang');
+
+// Select2
+mix.copyDirectory('node_modules/admin-lte/plugins/select2', 'public/vendor/AdminLTE/plugins/select2');
+mix.copy('node_modules/admin-lte/plugins/select2-bootstrap4-theme/*.css', 'public/vendor/AdminLTE/plugins/select2');
+
+// Datatables
+mix.copyDirectory('node_modules/admin-lte/plugins/datatables', 'public/vendor/AdminLTE/plugins/datatables');
+mix.copyDirectory('node_modules/admin-lte/plugins/datatables-bs4', 'public/vendor/AdminLTE/plugins/datatables-bs4');
+mix.copyDirectory('node_modules/admin-lte/plugins/datatables-responsive', 'public/vendor/AdminLTE/plugins/datatables-responsive');
+
+// Date Range Picker
+mix.copy('node_modules/admin-lte/plugins/daterangepicker/daterangepicker.*', 'public/vendor/AdminLTE/plugins/daterangepicker');
+
+// Jasny Bootstrap - File uploads
 mix.copyDirectory('node_modules/jasny-bootstrap/dist', 'public/vendor/jasny-bootstrap');
-mix.copyDirectory('node_modules/jquery-datetimepicker/build', 'public/vendor/jquery-datetimepicker');
-mix.copy('node_modules/repeatable-fields/repeatable-fields.js', 'public/vendor/repeatable-fields/')
+
+// Repeatable Fields
+mix.copy('node_modules/repeatable-fields/repeatable-fields.js', 'public/vendor/repeatable-fields')
     .minify('public/vendor/repeatable-fields/repeatable-fields.js');
+
+// App JS
 mix.js('resources/js/app.js', 'public/js');
-
-
-
