@@ -240,7 +240,7 @@
 @push('styles')
     <!-- Date Picker -->
     <link rel="stylesheet"
-          href="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+          href="{{ asset('vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- File Input -->
     <link rel="stylesheet" href="{{ asset('vendor/jasny-bootstrap/css/jasny-bootstrap.min.css') }}">
 @endpush
@@ -249,7 +249,7 @@
 @push('scripts')
     <!-- Date Picker -->
     <script type="text/javascript"
-            src="{{ asset('vendor/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+            src="{{ asset('vendor/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- File Input -->
     <script type="text/javascript"
             src="{{ asset('vendor/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
