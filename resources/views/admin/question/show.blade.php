@@ -10,7 +10,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
@@ -46,7 +46,7 @@
 
                     <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                        class="btn btn-link pull-right" target="_blank">
-                        {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                        {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
                     </a>
                 </div>
                 <div class="box-body">
@@ -176,7 +176,7 @@
                     <h3 class="box-title">{{ __('admin/question/title.other_section') }}</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                            <i class="bi bi-dash"></i>
                         </button>
                     </div>
                 </div>

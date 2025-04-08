@@ -4,7 +4,7 @@
             <strong>
                 {{ __('notifications.badge_unlocked_title') }}
                 <small class="pull-right time">
-                    <i class="fa fa-clock-o"></i>
+                    <i class="bi bi-clock-fill-o"></i>
                     {{ $notification->created_at->diffForHumans() }}
                 </small>
             </strong>

@@ -12,7 +12,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
@@ -113,15 +113,15 @@
 
                                 <span class="btn btn-default btn-file">
                                     <span class="fileinput-new">
-                                        <i class="fa fa-picture-o"></i> {{ __('button.pick_image') }}
+                                        <i class="bi bi-image"></i> {{ __('button.pick_image') }}
                                     </span>
                                     <span class="fileinput-exists">
-                                        <i class="fa fa-picture-o"></i> {{ __('button.upload_image') }}
+                                        <i class="bi bi-image"></i> {{ __('button.upload_image') }}
                                     </span>
                                     <input type="file" name="image">
                                 </span>
                                         <a href="#" class="fileinput-exists btn btn-default" data-dismiss="fileinput">
-                                            <i class="fa fa-times"></i> {{ __('button.delete_image') }}
+                                            <i class="bi bi-trash"></i> {{ __('button.delete_image') }}
                                         </a>
 
                                     </p>

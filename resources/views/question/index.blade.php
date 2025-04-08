@@ -10,27 +10,27 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
+            {{ __('site.home') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('site.play') }}
     </li>
 @endsection
 
 {{-- Content --}}
 @section('content')
-    <div class="box box-default">
-        <div class="box-body">
+    <div class="card">
+        <div class="card-body">
 
             <!-- user metrics -->
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col">
                     @include('question/_answered_questions_box')
                 </div>
-                <div class="col-md-6">
+                <div class="col">
                     @include('question/_next_level_box')
                 </div>
             </div>
@@ -53,7 +53,7 @@
         <!-- ./box-body -->
 
         <!-- pagination-links -->
-        <div class="box-footer clearfix">
+        <div class="card-footer">
             {{ $questions->links('partials.simple-pager') }}
         </div>
         <!-- ./pagination-links -->

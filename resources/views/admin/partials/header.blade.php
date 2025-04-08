@@ -3,7 +3,7 @@
     <!-- start: LOGO -->
     <a href="{{ route('admin.home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><strong><i class="fa fa-fw fa-home"></i></strong></span>
+        <span class="logo-mini"><strong><i class="bi bi-house-fill fa-home"></i></strong></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><strong>{{ config('app.name', 'gamify') }}</strong></span>
     </a>

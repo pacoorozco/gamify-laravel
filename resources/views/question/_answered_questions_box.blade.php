@@ -1,5 +1,5 @@
 <div class="info-box bg-green">
-    <span class="info-box-icon"><i class="fa fa-question"></i></span>
+    <span class="info-box-icon"><i class="bi bi-question-octagon-fill"></i></span>
     <div class="info-box-content">
         <span class="info-box-text">Questions</span>
         <span class="info-box-number">{{ $answered_questions }}</span>

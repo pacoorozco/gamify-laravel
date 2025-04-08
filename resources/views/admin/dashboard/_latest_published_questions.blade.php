@@ -1,10 +1,10 @@
 <div class="box">
     <div class="box-header">
-        <i class="fa fa-comments"></i>
+        <i class="bi bi-question-octagon-fill"></i>
         <h3 class="box-title">Recently published questions</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
+                <i class="bi bi-dash"></i>
             </button>
         </div>
     </div>
@@ -32,7 +32,7 @@
                     <td>
                         <a href="{{ route('admin.questions.edit', $question) }}">
                             <button type="button" class="btn btn-xs btn-primary" title="{{ __('general.edit') }}">
-                                <i class="fa fa-edit"></i>
+                                <i class="bi bi-pencil-square"></i>
                             </button>
                         </a>
                     </td>

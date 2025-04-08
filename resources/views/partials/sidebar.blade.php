@@ -1,8 +1,8 @@
-<ul class="nav navbar-nav">
+<ul class="navbar-nav">
 
     @auth
-    <li class="{{ request()->is('/') ? 'active' : '' }}">
-        <a href="{{ route('home') }}">
+    <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+        <a href="{{ route('home') }}" class="nav-link">
             {{ __('site.home') }}
             @if( request()->is('/'))
                 <span class="sr-only">(current)</span>
@@ -10,8 +10,8 @@
         </a>
     </li>
 
-    <li class="{{ request()->is('questions*') ? 'active' : '' }}">
-        <a href="{{ route('questions.index') }}">
+    <li class="nav-item {{ request()->is('questions*') ? 'active' : '' }}">
+        <a href="{{ route('questions.index') }}" class="nav-link">
             {{ __('site.play') }}
             @if( request()->is('questions*'))
                 <span class="sr-only">(current)</span>
@@ -20,8 +20,8 @@
     </li>
     @endauth
 
-    <li class="{{ request()->is('leaderboard') ? 'active' : '' }}">
-        <a href="{{ route('leaderboard') }}">
+    <li class="nav-item {{ request()->is('leaderboard') ? 'active' : '' }}">
+        <a href="{{ route('leaderboard') }}" class="nav-link">
             {{ __('site.leaderboard') }}
             @if( request()->is('leaderboard'))
                 <span class="sr-only">(current)</span>

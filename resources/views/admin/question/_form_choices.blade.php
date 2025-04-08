@@ -44,7 +44,7 @@
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default remove"
                                         title="{{ __('button.remove_choice') }}">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </span>
                         </div>
@@ -77,7 +77,7 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default remove"
                                     title="{{ __('button.remove_choice') }}">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="bi bi-trash"></i>
                             </button>
                     </span>
                     </div>
@@ -87,7 +87,7 @@
 
         <div class="form-row">
             <button type="button" class="btn btn-default pull-right add">
-                <i class="fa fa-plus"></i> {{ __('button.add_new_choice') }}
+                <i class="bi bi-plus"></i> {{ __('button.add_new_choice') }}
             </button>
         </div>
     </div>

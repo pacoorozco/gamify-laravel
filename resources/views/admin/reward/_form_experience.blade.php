@@ -2,7 +2,7 @@
 
     <div class="box box-solid">
         <div class="box-header">
-            <i class="fa fa-certificate"></i>
+            <i class="bi bi-arrow-up-circle-fill"></i>
             <h3 class="box-title">{{ __('admin/reward/messages.give_experience') }}</h3>
         </div>
         <div class="box-body">

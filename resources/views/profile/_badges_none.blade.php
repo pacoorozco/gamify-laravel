@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="col">
     <p>
         {{ __('user/profile.no_badges_yet') }}
     </p>

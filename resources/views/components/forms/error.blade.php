@@ -1,4 +1,8 @@
 @props(['name'])
+
 @error($name)
-<span {{ $attributes->class(['help-block']) }}>{{ $message }}</span>
+<span id="validation{{ \Illuminate\Support\Str::studly($name) }}Feedback"
+      {{ $attributes->class(['error invalid-feedback']) }}>
+    {{ $message }}
+</span>
 @enderror

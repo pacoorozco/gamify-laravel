@@ -2,7 +2,7 @@
 
 <div class="box box-solid">
     <div class="box-header">
-        <i class="fa fa-gift"></i>
+        <i class="bi bi-award"></i>
         <h3 class="box-title">{{ __('admin/reward/messages.give_badge') }}</h3>
     </div>
     <div class="box-body">

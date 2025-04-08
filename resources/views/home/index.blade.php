@@ -8,24 +8,16 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li class="active">
-        <i class="fa fa-dashboard"></i> {{ __('site.home') }}
-    </li>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <!-- Carousel -->
-        @include('home._carousel')
-        <!-- ./carousel -->
-
             <!-- Welcome -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-rocket"></i> Welcome to <strong>gamify</strong> v3</h3>
-                </div>
-                <div class="box-body">
+            <div class="card">
+                <h4 class="card-header"><i class="bi bi-rocket"></i> Welcome to <strong>gamify</strong> v3</h4>
+
+                <div class="card-body">
                     <p>Mauris pulvinar sollicitudin ligula, eu auctor mi iaculis vel. Mauris a nulla eleifend,
                         imperdiet
                         mi at, molestie augue. Cras vulputate dui eget justo tristique imperdiet.</p>
@@ -51,11 +43,10 @@
             <!-- ./welcome -->
 
             <!-- Pending questions -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-gamepad"></i> Play with us</h3>
-                </div>
-                <div class="box-body">
+            <div class="card">
+                <h4 class="card-header"><i class="bi bi-controller"></i> Play with us </h4>
+
+                <div class="card-body">
                     @include('home._questions')
                 </div>
             </div>
@@ -67,11 +58,10 @@
         <div class="col-md-6">
 
             <!-- Ranking -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-trophy"></i> Ranking</h3>
-                </div>
-                <div class="box-body">
+            <div class="card">
+                <h4 class="card-header"><i class="bi bi-trophy"></i> Ranking </h4>
+
+                <div class="card-body">
                     @include('home._ranking')
                 </div>
             </div>

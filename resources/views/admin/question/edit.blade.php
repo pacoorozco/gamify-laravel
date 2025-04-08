@@ -12,7 +12,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
@@ -48,7 +48,7 @@
 
                         <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                            class="btn btn-link pull-right" target="_blank">
-                            {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                            {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
                         </a>
                     </div>
                     <div class="box-body">
@@ -73,7 +73,7 @@
                                     <b>{{ __('admin/question/model.permanent_link') }}</b>: {{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}
                                     <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                                        class="btn btn-default btn-xs" target="_blank">
-                                        {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                                        {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
                                     </a>
                                 </p>
                             </div>
@@ -256,7 +256,7 @@
                                 <div class="controls hidden" id="publicationDateControls">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
+                                            <i class="bi bi-calendar-fill"></i>
                                         </div>
                                         <input name="publication_date"
                                                id="publication_date"
@@ -302,7 +302,7 @@
                         <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
+                                <i class="bi bi-dash"></i>
                             </button>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                         <h3 class="box-title">{{ __('admin/question/title.other_section') }}</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-plus"></i>
+                                <i class="bi bi-plus"></i>
                             </button>
                         </div>
                     </div>

@@ -21,7 +21,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
@@ -38,7 +38,7 @@
 
     <!-- actions -->
     <a href="{{ route('admin.badges.create') }}" class="btn btn-success margin-bottom" role="button">
-        <i class="fa fa-plus"></i> {{ __('admin/badge/title.create_a_new_badge') }}
+        <i class="bi bi-plus"></i> {{ __('admin/badge/title.create_a_new_badge') }}
     </a>
     <!-- /.actions -->
     <div class="box">

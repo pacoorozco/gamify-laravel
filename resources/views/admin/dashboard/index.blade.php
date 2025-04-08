@@ -9,7 +9,7 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
     <li class="active">
-        <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+        <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
     </li>
 @endsection
 

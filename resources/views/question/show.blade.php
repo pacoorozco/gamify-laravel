@@ -14,7 +14,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('site.home') }}
+            <i class="bi bi-house-fill"></i> {{ __('site.home') }}
         </a>
     </li>
     <li>

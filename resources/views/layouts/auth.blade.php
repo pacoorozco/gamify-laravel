@@ -7,7 +7,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- start: META -->
-    <meta content="gamify: A Gamification Platform - Administration" name="description">
+    <meta content="gamify: A Gamification Platform - Login" name="description">
     <meta content="Paco Orozco" name="author">
     @yield('meta')
     <!-- end: META -->
@@ -23,55 +23,28 @@
 </head>
 <!-- end: HEAD -->
 <!-- start: BODY -->
-<body class="skin-blue sidebar-mini">
-<!-- start: MAIN CONTAINER -->
-<div class="wrapper">
+<body class="login-page">
+<!-- start: LOGIN BOX -->
+<div class="login-box">
+    <!-- start: NOTIFICATIONS -->
+    @include('partials.notifications')
+    <!-- end: NOTIFICATIONS -->
 
-    <!-- start: HEADER -->
-    @include('admin.partials.header')
-    <!-- end: HEADER -->
-
-    <!-- start: SIDEBAR -->
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            @include('admin.partials.sidebar')
-        </section>
-    </aside>
-    <!-- end: SIDEBAR -->
-
-    <!-- start: PAGE -->
-    <div class="content-wrapper">
-        <!-- start: PAGE HEADER -->
-        <section class="content-header">
-            <!-- start: PAGE TITLE & BREADCRUMB -->
-            <h1>
-                @yield('header', 'Title <small>page description</small>')
-            </h1>
-            <ol class="breadcrumb">
-                @yield('breadcrumbs')
-            </ol>
-            <!-- end: PAGE TITLE & BREADCRUMB -->
-        </section>
-        <!-- end: PAGE HEADER -->
-
-        <!-- start: PAGE CONTENT -->
-        <section class="content">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <p class="h1"><strong>{{ config('app.name', 'gamify') }}</strong></p>
+        </div>
+        <div class="card-body">
             @yield('content')
-        </section>
-        <!-- end: PAGE CONTENT-->
+        </div>
     </div>
-    <!-- end: PAGE -->
-
-    <!-- start: FOOTER -->
-    @include('admin.partials.footer')
-    <!-- end: FOOTER -->
 </div>
-<!-- end: MAIN CONTAINER -->
+<!-- end: LOGIN BOX -->
+
 <!-- start: GLOBAL JAVASCRIPT -->
 <script src="{{ asset('vendor/AdminLTE/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js?v=3.2.0') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
 <!-- end: GLOBAL JAVASCRIPT -->
 <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 @stack('scripts')
@@ -79,4 +52,3 @@
 </body>
 <!-- end: BODY -->
 </html>
-

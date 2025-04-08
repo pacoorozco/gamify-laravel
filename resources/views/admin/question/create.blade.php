@@ -13,7 +13,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li>
@@ -121,7 +121,7 @@
                             <!-- save draft and preview -->
                             <div class="form-group">
                                 <x-forms.submit type="primary" :value="__('button.save')" id="submitDraftBtn">
-                                    {{ __('button.save_as_draft') }} <i class="fa fa-floppy-o"></i>
+                                    {{ __('button.save_as_draft') }} <i class="bi bi-floppy-fill"></i>
                                 </x-forms.submit>
                             </div>
                             <!-- ./ save draft and preview -->
@@ -179,7 +179,7 @@
                                 <div class="controls hidden" id="publicationDateControls">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
+                                            <i class="bi bi-calendar-fill"></i>
                                         </div>
                                         <input name="publication_date"
                                                id="publication_date"
@@ -204,10 +204,10 @@
                     </div>
                     <div class="box-footer">
                         <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
-                            <i class="fa fa-arrow-left"></i> {{ __('button.back') }}
+                            <i class="bi bi-arrow-left-circle-fill"></i> {{ __('button.back') }}
                         </a>
                         <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
-                            <i class="fa fa-paper-plane-o"></i> {{ __('button.publish') }}
+                            <i class="bi bi-send-fill"></i> {{ __('button.publish') }}
                         </button>
                     </div>
 

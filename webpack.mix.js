@@ -50,6 +50,9 @@ mix.copyDirectory('node_modules/admin-lte/plugins/datatables-responsive', 'publi
 // Date Range Picker
 mix.copy('node_modules/admin-lte/plugins/daterangepicker/daterangepicker.*', 'public/vendor/AdminLTE/plugins/daterangepicker');
 
+// Bootstrap Icons
+mix.copyDirectory('node_modules/bootstrap-icons/font', 'public/vendor/bootstrap-icons');
+
 // Jasny Bootstrap - File uploads
 mix.copyDirectory('node_modules/jasny-bootstrap/dist', 'public/vendor/jasny-bootstrap');
 

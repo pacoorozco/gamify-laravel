@@ -1,11 +1,9 @@
-@extends('layouts.login')
+@extends('layouts.auth')
 
 {{-- Web site Title --}}
-@section('title'){{ __('auth.login') }}@endsection
-
-@push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
-@endpush
+@section('title')
+    {{ __('auth.login') }}
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -15,71 +13,77 @@
     @include('auth._social_login')
 
     <a href="#" class="btn btn-block btn-flat btn-default" role="button" id="email-login-btn">
-        <i class="fa fa-envelope"></i> {{ __('social_login.e-mail') }}
+        <i class="bi bi-envelope-fill"></i> {{ __('social_login.e-mail') }}
     </a>
 
-    <div id="email-login" class="hidden">
+    <div id="email-login" class="d-none">
 
         <x-forms.form method="post" :action="route('login')">
 
-        <div class="form-group has-feedback">
-            <input id="email" name="email"
-                   type="email"
-                   placeholder="{{ __('auth.email') }}"
-                   class="form-control"
-                   value="{{ old('email') }}"
-                   autofocus="autofocus"
-                   required
-                   autocomplete="username"
-            />
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <input id="password" name="password"
-                   type="password"
-                   placeholder="{{ __('auth.password') }}"
-                   class="form-control"
-                   required
-                   autocomplete="password"
-            />
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
+            <div class="form-group mb-3">
+                <div class="input-group">
+                    <input id="email" name="email"
+                           type="email"
+                           placeholder="{{ __('auth.email') }}"
+                           class="form-control @error('email') is-invalid @enderror"
+                           value="{{ old('email') }}"
+                           autofocus="autofocus"
+                           required
+                           autocomplete="username"
+                           aria-describedby="validationEmailFeedback"
+                    />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="bi bi-envelope-fill"></span>
+                        </div>
+                    </div>
+                    @error('email')
+                    <span id="validationEmailFeedback" class="error invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
 
-        @if(Route::has('password.request'))
+            <div class="form-group mb-3">
+                <div class="input-group">
+                    <input id="password" name="password"
+                           type="password"
+                           placeholder="{{ __('auth.password') }}"
+                           class="form-control"
+                           required
+                           autocomplete="password"
+                    />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="bi bi-lock-fill"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <p class="text-right">
                 <a href="{{ route('password.request') }}">{{ __('auth.forgot_password') }}</a>
             </p>
-        @endif
 
-            <x-forms.checkbox name="remember" :label="__('auth.remember_me')" value="1" :checked="false" class="icheck"/>
+            <x-forms.checkbox name="remember" :label="__('auth.remember_me')" value="1" :checked="false"/>
 
             <x-forms.submit type="primary" :value="__('auth.login')" class="btn-block btn-flat" id="loginButton"/>
 
         </x-forms.form>
     </div>
 
-    <p></p>
-    @if(Route::has('register'))
-        <p class="text-center">
-            {{ __('auth.dont_have_account') }} <a href="{{ route('register') }}">{{ __('auth.create_account') }}</a>
-        </p>
-    @endif
+    <p class="text-center mt-3">
+        {{ __('auth.dont_have_account') }} <a href="{{ route('register') }}">{{ __('auth.create_account') }}</a>
+    </p>
 
     <!-- end: LOGIN BOX -->
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
     <script>
         $(function () {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                increaseArea: '20%'
-            });
-
             $('#email-login-btn').click(function () {
-                $("#email-login").removeClass("hidden");
-                $("#email-login-btn").addClass("hidden");
+                $("#email-login").removeClass("d-none");
+                $("#email-login-btn").addClass("d-none");
             });
         });
     </script>

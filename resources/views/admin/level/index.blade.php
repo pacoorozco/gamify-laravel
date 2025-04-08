@@ -21,7 +21,7 @@
 @section('breadcrumbs')
     <li>
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
         </a>
     </li>
     <li class="active">
@@ -39,7 +39,7 @@
     <!-- actions -->
     <a href="{{ route('admin.levels.create') }}">
         <button type="button" class="btn btn-success margin-bottom">
-            <i class="fa fa-plus"></i> {{ __('admin/level/title.create_a_new_level') }}
+            <i class="bi bi-plus"></i> {{ __('admin/level/title.create_a_new_level') }}
         </button>
     </a>
     <!-- /.actions -->
