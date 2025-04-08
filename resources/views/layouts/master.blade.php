@@ -12,7 +12,6 @@
     @yield('meta')
     <!-- end: META -->
     <!-- start: GLOBAL CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/css/adminlte.min.css?v=3.2.0') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
     <!-- end: GLOBAL CSS -->
