@@ -29,9 +29,11 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'update' => 'Update',
+    'create' => 'Create',
     'save' => 'Save data',
     'save_as_draft' => 'Save as Draft',
     'back' => 'Back',
+    'cancel' => 'Cancel',
     'actions' => 'Actions',
     'submit' => 'Submit',
 

@@ -8,22 +8,22 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/user/title.create_a_new_user') }}
-    <small>add a new user</small>
+    <small class="text-muted">add a new user</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.users.index') }}">
             {{ __('admin/site.users') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/user/title.create_a_new_user') }}
     </li>
 @endsection
@@ -39,11 +39,11 @@
     {{-- Create / Edit User Form --}}
     <x-forms.form method="post" :action="route('admin.users.store')">
 
-        <div class="box box-solid">
-            <div class="box-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row">
 
-                    <!-- right column -->
+                    <!-- left column -->
                     <div class="col-md-6">
                         <!-- username -->
                         <x-forms.input name="username" :label="__('admin/user/model.username')" :required="true"/>
@@ -56,7 +56,6 @@
                         <!-- Email -->
                         <x-forms.input name="email" type="email" :label="__('admin/user/model.email')" :required="true"/>
                         <!-- ./ email -->
-
                     </div>
                     <!-- ./left column -->
 
@@ -77,12 +76,12 @@
                 </div>
             </div>
 
-            <div class="box-footer">
+            <div class="card-footer">
                 <!-- form actions -->
-                <x-forms.submit class="btn btn-success" :value="__('button.save')" />
+                <x-forms.submit type="primary" :value="__('general.create')" />
 
                 <a href="{{ route('admin.users.index') }}" class="btn btn-link" role="button">
-                    {{ __('general.back') }}
+                    {{ __('general.cancel') }}
                 </a>
                 <!-- ./ form actions -->
             </div>

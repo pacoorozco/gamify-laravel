@@ -9,16 +9,15 @@
      aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ $action }}" method="post">
-                @csrf
-                @method('DELETE')
+            <x-forms.form action="{{ $action }}" method="delete">
+
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                     <h4 class="modal-title" id="confirmationModalLabel">
                         {{ $title }}
                     </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     {{ $slot }}
@@ -33,7 +32,8 @@
                         {{ $buttonText }}
                     </button>
                 </div>
-            </form>
+
+            </x-forms.form>
         </div>
     </div>
 </div>

@@ -14,20 +14,18 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/user/title.user_management') }}
-    <small>{{ __('admin/user/title.user_management_desc') }}</small>
+    <small class="text-muted">{{ __('admin/user/title.user_management_desc') }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li class="active">
-        <a href="{{ route('admin.users.index') }}">
-            {{ __('admin/site.users') }}
-        </a>
+    <li class="breadcrumb-item active">
+        {{ __('admin/site.users') }}
     </li>
 @endsection
 
@@ -39,15 +37,17 @@
     <!-- ./ notifications -->
 
     <!-- actions -->
-    <a href="{{ route('admin.users.create') }}">
-        <button type="button" class="btn btn-success margin-bottom">
-            <i class="bi bi-plus"></i> {{ __('admin/user/title.create_a_new_user') }}
-        </button>
-    </a>
+    <div class="mb-3">
+        <a href="{{ route('admin.users.create') }}">
+            <button type="button" class="btn btn-success margin-bottom">
+                <i class="bi bi-plus-circle"></i> {{ __('admin/user/title.create_a_new_user') }}
+            </button>
+        </a>
+    </div>
     <!-- /.actions -->
 
-    <div class="box">
-        <div class="box-body">
+    <div class="card">
+        <div class="card-body">
             <table id="users" class="table table-striped table-bordered">
                 <thead>
                 <tr>

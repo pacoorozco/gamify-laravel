@@ -10,17 +10,17 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.users.index') }}">
             {{ __('admin/site.users') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/user/title.user_show') }}
     </li>
 @endsection
@@ -32,13 +32,13 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    <div class="box">
-        <div class="box-header with-border">
-            <h2 class="box-title">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">
                 {{ $user->username }} {{ $user->present()->adminLabel() }}
             </h2>
         </div>
-        <div class="box-body">
+        <div class="card-body">
             <div class="row">
 
                 <!-- left column -->
@@ -94,45 +94,49 @@
                 <!-- right column -->
                 <div class="col-md-6">
 
-                    <dl class="dl-horizontal">
-
-                        <!-- level -->
-                        <dt>{{ __('user/profile.level') }}:</dt>
-                        <dd>{{$user->level}}</dd>
-                        <!-- ./ level -->
-
-                        <!-- badges -->
-                        <dt>{{ __('user/profile.badges') }}:</dt>
-                        <dd>{{ $user->unlockedBadgesCount() }}</dd>
-                        <!-- ./ badges -->
-
-                        <!-- experience -->
-                        <dt>{{ __('user/profile.experience') }}:</dt>
-                        <dd>{{ $user->experience }}</dd>
-                        <!-- ./ experience -->
-
-                        <!-- created_at -->
-                        <dt>{{ __('user/profile.user_since') }}:</dt>
-                        <dd>{{ $user->present()->createdAt }}</dd>
-                        <!-- ./ created_at -->
-
+                    <!-- level -->
+                    <dl class="row">
+                        <dt class="col col-md-2">{{ __('user/profile.level') }}:</dt>
+                        <dd class="col">{{$user->level}}</dd>
                     </dl>
+                    <!-- ./ level -->
+
+                    <!-- badges -->
+                    <dl class="row">
+                        <dt class="col col-md-2">{{ __('user/profile.badges') }}:</dt>
+                        <dd class="col">{{ $user->unlockedBadgesCount() }}</dd>
+                    </dl>
+                    <!-- ./ badges -->
+
+                    <!-- experience -->
+                    <dl class="row">
+                        <dt class="col col-md-2">{{ __('user/profile.experience') }}:</dt>
+                        <dd class="col">{{ $user->experience }}</dd>
+                    </dl>
+                    <!-- ./ experience -->
+
+                    <!-- created_at -->
+                    <dl class="row">
+                        <dt class="col col-md-2">{{ __('user/profile.user_since') }}:</dt>
+                        <dd class="col">{{ $user->present()->createdAt }}</dd>
+                    </dl>
+                    <!-- ./ created_at -->
 
                     <!-- danger zone -->
                     @can('delete-user', $user)
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <strong>@lang('admin/user/messages.danger_zone_section')</strong>
+                        <div class="card">
+                            <div class="card-header bg-danger">
+                                <strong> {{ __('admin/user/messages.danger_zone_section') }}</strong>
                             </div>
-                            <div class="panel-body">
-                                <p><strong>@lang('admin/user/messages.delete_button')</strong></p>
-                                <p>@lang('admin/user/messages.delete_help')</p>
+                            <div class="card-body">
+                                <p><strong>{{ __('admin/user/messages.delete_button') }}</strong></p>
+                                <p>{{ __('admin/user/messages.delete_help') }}</p>
 
                                 <div class="text-center">
                                     <button type="button" class="btn btn-danger"
                                             data-toggle="modal"
                                             data-target="#confirmationModal">
-                                        @lang('admin/user/messages.delete_button')
+                                        {{ __('admin/user/messages.delete_button') }}
                                     </button>
                                 </div>
                             </div>
@@ -146,15 +150,13 @@
             </div>
         </div>
 
-        <div class="box-footer">
-            <a href="{{ route('admin.users.edit', $user) }}">
-                <button type="button" class="btn btn-primary">
+        <div class="card-footer">
+            <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary" role="button">
                     {{ __('general.edit') }}
-                </button>
             </a>
 
             <a href="{{ route('admin.users.index') }}" class="btn btn-link" role="button">
-                {{ __('general.back') }}
+                {{ __('general.cancel') }}
             </a>
         </div>
     </div>
@@ -162,12 +164,12 @@
     @can('delete-user', $user)
         <!-- confirmation modal -->
         <x-modals.confirmation
-            action="{{ route('admin.users.destroy', $user) }}"
-            confirmationText="{{ $user->username }}"
-            buttonText="{{ __('admin/user/messages.delete_confirmation_button') }}">
+            :action="route('admin.users.destroy', $user)"
+            :confirmationText="$user->username"
+            :buttonText="__('admin/user/messages.delete_confirmation_button')">
 
             <div class="alert alert-warning" role="alert">
-                @lang('admin/user/messages.delete_confirmation_warning', ['name' => $user->username])
+                {!! __('admin/user/messages.delete_confirmation_warning', ['name' => $user->username]) !!}
             </div>
         </x-modals.confirmation>
         <!-- ./ confirmation modal -->

@@ -42,6 +42,8 @@ return [
     'none' => 'None',
     'never' => 'Never',
     'view' => 'View',
+    'cancel' => 'Cancel',
+    'create' => 'Create',
 
     'validation_error' => 'Validation error',
     'error' => 'Error',
