@@ -23,7 +23,7 @@
 </head>
 <!-- end: HEAD -->
 <!-- start: BODY -->
-<body class="skin-blue sidebar-mini">
+<body class="sidebar-mini layout-fixed">
 <!-- start: MAIN CONTAINER -->
 <div class="wrapper">
 
@@ -32,31 +32,49 @@
     <!-- end: HEADER -->
 
     <!-- start: SIDEBAR -->
-    <aside class="main-sidebar">
-        <section class="sidebar">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- start: LOGO -->
+        <a href="{{ route('admin.home') }}" class="brand-link">
+            {{--                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">--}}
+            <span class="brand-text font-weight-light">{{ config('app.name', 'gamify') }}</span>
+        </a>
+        <!-- end: LOGO -->
+
+        <div class="sidebar">
             @include('admin.partials.sidebar')
-        </section>
+        </div>
     </aside>
     <!-- end: SIDEBAR -->
 
     <!-- start: PAGE -->
     <div class="content-wrapper">
         <!-- start: PAGE HEADER -->
-        <section class="content-header">
-            <!-- start: PAGE TITLE & BREADCRUMB -->
-            <h1>
-                @yield('header', 'Title <small>page description</small>')
-            </h1>
-            <ol class="breadcrumb">
-                @yield('breadcrumbs')
-            </ol>
-            <!-- end: PAGE TITLE & BREADCRUMB -->
-        </section>
+        <div class="content-header">
+            <div class="container-fluid">
+
+                <!-- start: PAGE TITLE & BREADCRUMB -->
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">
+                            @yield('header', 'Title <small>page description</small>')
+                        </h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            @yield('breadcrumbs')
+                        </ol>
+                    </div>
+                </div>
+                <!-- end: PAGE TITLE & BREADCRUMB -->
+            </div>
+        </div>
         <!-- end: PAGE HEADER -->
 
         <!-- start: PAGE CONTENT -->
         <section class="content">
-            @yield('content')
+            <div class="container-fluid">
+                @yield('content')
+            </div>
         </section>
         <!-- end: PAGE CONTENT-->
     </div>

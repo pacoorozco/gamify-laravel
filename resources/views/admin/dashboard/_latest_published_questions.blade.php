@@ -1,15 +1,16 @@
-<div class="box">
-    <div class="box-header">
-        <i class="bi bi-question-octagon-fill"></i>
-        <h3 class="box-title">Recently published questions</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="bi bi-dash"></i>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="bi bi-question-octagon-fill"></i>
+            Recently published questions
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="bi bi-caret-up-fill"></i>
             </button>
         </div>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="card-body">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -44,5 +45,4 @@
             @endforelse
         </table>
     </div>
-    <!-- /.box-body -->
 </div>
