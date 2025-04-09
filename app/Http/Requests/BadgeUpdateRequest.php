@@ -68,6 +68,7 @@ class BadgeUpdateRequest extends Request
                 'alpha_dash',
             ],
             'image' => [
+                'nullable',
                 'image',
             ],
         ];

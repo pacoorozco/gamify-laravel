@@ -44,6 +44,7 @@ return [
     'view' => 'View',
     'cancel' => 'Cancel',
     'create' => 'Create',
+    'update' => 'Update',
 
     'validation_error' => 'Validation error',
     'error' => 'Error',
@@ -51,4 +52,8 @@ return [
     'success' => 'Success',
 
     'disabled' => 'off',
+
+    'pick_image' => 'Select image',
+    'delete_image' => 'Remove',
+    'upload_image' => 'Change',
 ];

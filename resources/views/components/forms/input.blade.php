@@ -30,7 +30,7 @@
         @enderror
     />
     @if($help)
-        <p class="text-muted">{{ $help }}</p>
+        <small class="form-text text-muted">{{ $help }}</small>
     @endif
     <x-forms.error name="{{ $name }}"></x-forms.error>
 </div>

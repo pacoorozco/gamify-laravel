@@ -30,7 +30,7 @@ return [
     'active' => 'Active',
 
     'required_repetitions' => 'Repetitions',
-    'required_repetitions_help' => 'Then number of times that the badge should be triggered to complete it as an achievement.',
+    'required_repetitions_help' => 'The number of times that the badge should be triggered to complete it as an achievement.',
 
     'image_help' => 'Image will be used as 220px, 128px and 64px squared sizes.',
 
