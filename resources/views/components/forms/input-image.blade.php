@@ -14,9 +14,11 @@
     @endif
 
     <div class="fileinput fileinput-new mt-2" data-provides="fileinput">
-        <div class="fileinput-new img-thumbnail">
-            <img src="{{ $value }}" alt="default image" style="width: 150px; height: 150px;">
-        </div>
+        @if($value)
+            <div class="fileinput-new img-thumbnail">
+                <img src="{{ $value }}" alt="default image" style="width: 150px; height: 150px;">
+            </div>
+        @endif
         <div class="fileinput-preview fileinput-exists img-thumbnail"
              style="max-width: 150px; max-height: 150px;"></div>
 
@@ -28,6 +30,10 @@
             <input type="file"
                    name="image"
                    id="{{ \Illuminate\Support\Str::camel($name) }}"
+                   @class([
+                'form-control',
+                'is-invalid' => $errors->has($name),
+            ])
                    @error($name)
                    aria-describedby="validation{{ \Illuminate\Support\Str::studly($name) }}Feedback"
                    @enderror
