@@ -47,8 +47,9 @@ mix.copyDirectory('node_modules/admin-lte/plugins/datatables', 'public/vendor/Ad
 mix.copyDirectory('node_modules/admin-lte/plugins/datatables-bs4', 'public/vendor/AdminLTE/plugins/datatables-bs4');
 mix.copyDirectory('node_modules/admin-lte/plugins/datatables-responsive', 'public/vendor/AdminLTE/plugins/datatables-responsive');
 
-// Date Range Picker
-mix.copy('node_modules/admin-lte/plugins/daterangepicker/daterangepicker.*', 'public/vendor/AdminLTE/plugins/daterangepicker');
+// Tempus Dominus & Popper.js
+mix.copyDirectory('node_modules/@popperjs/core/dist', 'public/vendor/popper-js');
+mix.copyDirectory('node_modules/@eonasdan/tempus-dominus/dist', 'public/vendor/tempus-dominus');
 
 // Bootstrap Icons
 mix.copyDirectory('node_modules/bootstrap-icons/font', 'public/vendor/bootstrap-icons');

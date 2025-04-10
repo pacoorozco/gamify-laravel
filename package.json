@@ -8,6 +8,8 @@
     "production": "mix --production"
   },
   "devDependencies": {
+    "@eonasdan/tempus-dominus": "^6.10.2",
+    "@popperjs/core": "^2.11.8",
     "admin-lte": "^3.2.0",
     "bootstrap-icons": "^1.11.3",
     "jasny-bootstrap": "^3.1.3",
