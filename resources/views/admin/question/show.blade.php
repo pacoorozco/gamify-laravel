@@ -8,17 +8,17 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.questions.index') }}">
             {{ __('admin/site.questions') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/question/title.question_show') }}
     </li>
 @endsection
@@ -36,20 +36,20 @@
         <div class="col-md-8">
 
             <!-- general section -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h2 class="box-title">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
                         {{ $question->name }}
                     </h2>
                     {{ $question->present()->visibilityBadge() }}
                     {{ $question->present()->statusBadge() }}
 
                     <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
-                       class="btn btn-link pull-right" target="_blank">
+                       class="btn btn-link float-right" target="_blank">
                         {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
                     </a>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                     <h3>{{ __('admin/question/title.general_section') }}</h3>
 
                     <dl>
@@ -111,12 +111,12 @@
                     </dl>
                 </div>
 
-                <div class="box-footer">
+                <div class="card-footer">
                     <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary" role="button">
                         {{ __('general.edit') }}
                     </a>
                     <a href="{{ route('admin.questions.index') }}" class="btn btn-link" role="button">
-                        {{ __('general.back') }}
+                        {{ __('general.cancel') }}
                     </a>
                 </div>
 
@@ -129,11 +129,11 @@
         <!-- right column -->
         <div class="col-md-4">
 
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ __('admin/question/title.badges_section') }}</h3>
                 </div>
-                    <div class="box-body">
+                    <div class="card-body">
 
                     <dl>
                         <!-- tags -->
@@ -171,16 +171,16 @@
             </div>
 
             <!-- other information section -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ __('admin/question/title.other_section') }}</h3>
-                    <div class="box-tools pull-right">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ __('admin/question/title.other_section') }}</h3>
+                    <div class="card-tools float-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="bi bi-dash"></i>
                         </button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
 
                     <dl class="dl-horizontal">
 
@@ -214,19 +214,19 @@
 
 
             <!-- danger zone -->
-            <div class="box box-solid box-danger">
-                <div class="box-header">
-                    <strong>@lang('admin/question/messages.danger_zone_section')</strong>
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <strong>{{ __('admin/question/messages.danger_zone_section') }}</strong>
                 </div>
-                <div class="box-body">
-                    <p><strong>@lang('admin/question/messages.delete_button')</strong></p>
-                    <p>@lang('admin/question/messages.delete_help')</p>
+                <div class="card-body">
+                    <p><strong>{{ __('admin/question/messages.delete_button') }}</strong></p>
+                    <p>{!! __('admin/question/messages.delete_help') !!}</p>
 
                     <div class="text-center">
                         <button type="button" class="btn btn-danger"
                                 data-toggle="modal"
                                 data-target="#confirmationModal">
-                            @lang('admin/question/messages.delete_button')
+                            {{ __('admin/question/messages.delete_button') }}
                         </button>
                     </div>
                 </div>
@@ -238,12 +238,12 @@
 
     <!-- confirmation modal -->
     <x-modals.confirmation
-        action="{{ route('admin.questions.destroy', $question) }}"
-        confirmationText="{{ $question->name }}"
-        buttonText="{{ __('admin/question/messages.delete_confirmation_button') }}">
+        :action="route('admin.questions.destroy', $question)"
+        :confirmationText="$question->name"
+        :buttonText="__('admin/question/messages.delete_confirmation_button')">
 
         <div class="alert alert-warning" role="alert">
-            @lang('admin/question/messages.delete_confirmation_warning', ['name' => $question->name])
+            {!! __('admin/question/messages.delete_confirmation_warning', ['name' => $question->name]) !!}
         </div>
     </x-modals.confirmation>
     <!-- ./ confirmation modal -->

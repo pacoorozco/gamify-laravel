@@ -45,6 +45,7 @@ return [
     'cancel' => 'Cancel',
     'create' => 'Create',
     'update' => 'Update',
+    'save_as_draft' => 'Save as Draft',
 
     'validation_error' => 'Validation error',
     'error' => 'Error',

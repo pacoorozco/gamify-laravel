@@ -16,17 +16,17 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/question/title.question_management') }}
-    <small>create and edit questions</small>
+    <small class="text-muted">create and edit questions</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         <a href="{{ route('admin.questions.index') }}">
             {{ __('admin/site.questions') }}
         </a>
@@ -41,14 +41,16 @@
     <!-- /.notifications -->
 
     <!-- actions -->
+    <div class="mb-3">
     <a href="{{ route('admin.questions.create') }}">
         <button type="button" class="btn btn-success margin-bottom">
-            <i class="bi bi-plus"></i> {{ __('admin/question/title.create_a_new_question') }}
+            <i class="bi bi-plus-circle"></i> {{ __('admin/question/title.create_a_new_question') }}
         </button>
     </a>
+    </div>
     <!-- /.actions -->
-    <div class="box">
-        <div class="box-body">
+    <div class="card">
+        <div class="card-body">
             <table id="questions" class="table table-bordered table-striped">
                 <thead>
                 <tr>

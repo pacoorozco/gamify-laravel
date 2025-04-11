@@ -4,7 +4,7 @@
 ])
 
 <label
-    {{ $attributes->class(['control-label']) }}
+    {{ $attributes->only(['class']) }}
     for="{{ $for }}"
 >
     {{ $value ?? $slot }}

@@ -6,22 +6,22 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/question/title.create_a_new_question') }}
-    <small>create a new question</small>
+    <small class="text-muted">create a new question</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.questions.index') }}">
             {{ __('admin/site.questions') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/question/title.create_a_new_question') }}
     </li>
 @endsection
@@ -39,13 +39,13 @@
             <div class="col-md-8">
 
                 <!-- general section -->
-                <div class="box box-solid">
-                    <div class="box-body">
+                <div class="card">
+                    <div class="card-body">
 
                         <fieldset>
-                            <legend>
+                            <x-forms.legend>
                                 {{ __('admin/question/title.general_section') }}
-                            </legend>
+                            </x-forms.legend>
 
                             <!-- name -->
                             <x-forms.input
@@ -77,9 +77,9 @@
                         <!-- ./ options -->
 
                         <fieldset>
-                            <legend>
+                            <x-forms.legend>
                                 {{ __('admin/question/title.optional_section') }}
-                            </legend>
+                            </x-forms.legend>
 
                             <!-- solution -->
                             <x-forms.textarea
@@ -97,7 +97,6 @@
                                                  :help="__('admin/badge/model.tags_help')"
                                                  :placeholder="__('admin/question/model.tags_help')"
                                                  :selected-tags="old('tags', [])"
-                                                 class="form-control"
                             />
                             <!-- ./ tags -->
 
@@ -110,46 +109,44 @@
             <div class="col-md-4">
 
                 <!-- publish section -->
-                <div class="box box-solid">
-                    <div class="box-body">
+                <div class="card">
+                    <div class="card-body">
 
                         <fieldset>
-                            <legend>
+                            <x-forms.legend>
                                 {{ __('admin/question/title.publish_section') }}
-                            </legend>
+                            </x-forms.legend>
 
                             <!-- save draft and preview -->
                             <div class="form-group">
-                                <x-forms.submit type="primary" :value="__('button.save')" id="submitDraftBtn">
-                                    {{ __('button.save_as_draft') }} <i class="bi bi-floppy-fill"></i>
-                                </x-forms.submit>
+                                <x-forms.submit type="secondary" :value="__('general.save_as_draft')"
+                                                id="submitDraftBtn"/>
                             </div>
                             <!-- ./ save draft and preview -->
 
                             <!-- status -->
-                            <div class="form-group">
-                                <x-forms.label for="status">{{ __('admin/question/model.status') }}</x-forms.label>
+                            <div class="form-group row">
+                                <x-forms.label for="status"
+                                               class="col-2 col-form-label">{{ __('admin/question/model.status') }}</x-forms.label>
                                 <span
-                                    class="form-control-static">{{ __('admin/question/model.status_list.draft') }}</span>
-                                <x-forms.input-hidden name="status" value="draft" />
+                                    class="col form-control-plaintext">{{ __('admin/question/model.status_list.draft') }}</span>
+                                <x-forms.input-hidden name="status" value="draft"/>
                             </div>
                             <!-- ./ status -->
 
                             <!-- visibility -->
-                            <div class="form-group @error('hidden') has-error @enderror">
+                            <div class="form-group">
                                 <x-forms.label for="hidden">{{ __('admin/question/model.hidden') }}</x-forms.label>
                                 <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
-                                <div id="visibilityStatus">
-                            <span class="form-control-static">
-                                {{ old('hidden') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
-                            </span>
+                                <div id="visibilityStatus" class="form-control-plaintext">
+                                    {{ old('hidden') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
                                 </div>
-                                <div class="controls hidden" id="visibilityControls">
+                                <div id="visibilityControls" class="d-none">
                                     <x-forms.radio
                                         name="hidden"
                                         :label="__('admin/question/model.hidden_no')"
                                         value="0"
-                                        :checked="true"
+                                        :checked="old('hidden', '0') == '0'"
                                         id="visibilityPublic"/>
 
                                     <x-forms.radio
@@ -157,57 +154,46 @@
                                         :label="__('admin/question/model.hidden_yes')"
                                         :help="__('admin/question/model.hidden_yes_help')"
                                         value="1"
+                                        :checked="old('hidden', '0') == '1'"
                                         id="visibilityPrivate"/>
                                 </div>
-                                <x-forms.error name="hidden"></x-forms.error>
                             </div>
                             <!-- ./ visibility -->
 
                             <!-- publication date -->
-                            <div class="form-group @error('publication_date') has-error @enderror">
-                                <x-forms.label for="publication_date">{{ __('admin/question/model.publication_date') }}</x-forms.label>
+                            <div class="form-group">
+                                <x-forms.label for="publication_date">
+                                    {{ __('admin/question/model.publication_date') }}
+                                </x-forms.label>
                                 <a href="#" id="enablePublicationDateControls">{{ __('general.edit') }}</a>
-                                <div id="publicationDateStatus">
-                            <span class="form-control-static">
-                            @if (empty(old('publication_date')))
-                                    {{ __('admin/question/model.publish_immediately') }}
-                                @else
-                                    {{ __('admin/question/model.publish_on', ['datetime' => old('publication_date')]) }}
-                                @endif
-                            </span>
+
+                                <div id="publicationDateStatus" class="form-control-plaintext">
+                                    {{ empty(old('publication_date')) ? __('admin/question/model.publish_immediately') : __('admin/question/model.publish_on', ['datetime' => old('publication_date')]) }}
                                 </div>
-                                <div class="controls hidden" id="publicationDateControls">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="bi bi-calendar-fill"></i>
-                                        </div>
-                                        <input name="publication_date"
-                                               id="publication_date"
-                                               type="text"
-                                               class="form-control"
-                                               autocomplete="off"
-                                               placeholder="{{ __('admin/question/model.publication_date_placeholder') }}"
-                                               value="{{ old('publication_date') }}"
-                                        />
-                                        <span class="input-group-btn">
-                                    <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
-                                        {{ __('admin/question/model.publish_immediately') }}
-                                    </button>
-                                </span>
-                                    </div>
+
+                                <div id="publicationDateControls" class="d-none">
+                                    <x-forms.date-time-picker
+                                        name="publication_date"
+                                        id="publication_date"
+                                        :label="__('admin/question/model.publication_date')"
+                                        :placeholder="__('admin/question/model.publication_date_placeholder')"/>
+                                    <small class="text-muted">
+                                        {{ __('admin/question/model.publication_date_help') }}
+                                    </small>
                                 </div>
-                                <x-forms.error name="publication_date"></x-forms.error>
+
+                                <x-forms.error name="publication_date"/>
                             </div>
                             <!-- ./ publication date -->
                         </fieldset>
 
                     </div>
-                    <div class="box-footer">
-                        <a href="{{ route('admin.questions.index') }}" class="btn btn-default">
-                            <i class="bi bi-arrow-left-circle-fill"></i> {{ __('button.back') }}
+                    <div class="card-footer text-right">
+                        <a href="{{ route('admin.questions.index') }}" class="btn btn-link">
+                            {{ __('general.cancel') }}
                         </a>
-                        <button type="submit" class="btn btn-success pull-right" id="submitPublishBtn">
-                            <i class="bi bi-send-fill"></i> {{ __('button.publish') }}
+                        <button type="submit" class="btn btn-primary" id="submitPublishBtn">
+                            <i class="bi bi-send-fill"></i> {{ __('admin/question/model.publish') }}
                         </button>
                     </div>
 
@@ -222,18 +208,12 @@
 
 {{-- Styles --}}
 @push('styles')
-    <link rel="stylesheet"
-          href="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('vendor/summernote/summernote.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/plugins/summernote/summernote-bs4.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-    <script
-        src="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.full.min.js') }}"></script>
-
-    <script src="{{ asset('vendor/summernote/summernote.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <script>
         $(function () {
@@ -250,28 +230,15 @@
             });
 
             $("#enableVisibilityControls").click(function () {
-                $("#visibilityStatus").addClass("hidden");
-                $("#visibilityControls").removeClass("hidden");
-                $("#enableVisibilityControls").addClass("hidden");
-            });
-
-            $.datetimepicker.setLocale("{{ __('site.dateTimePickerLang') }}");
-            $("#publication_date").datetimepicker({
-                minDate: 0,
-                format: "Y-m-d H:i",
-                defaultTime: '09:00',
+                $("#visibilityStatus").addClass("d-none");
+                $("#visibilityControls").removeClass("d-none");
+                $("#enableVisibilityControls").addClass("d-none");
             });
 
             $("#enablePublicationDateControls").click(function () {
-                $("#publicationDateStatus").addClass("hidden");
-                $("#publicationDateControls").removeClass("hidden");
-                $("#enablePublicationDateControls").addClass("hidden");
-                $("#publication_date").datetimepicker("show");
-            });
-
-            $("#resetPublicationDateBtn").click(function () {
-                $("#publication_date").val("");
-                $("#publication_date").change();
+                $("#publicationDateStatus").addClass("d-none");
+                $("#publicationDateControls").removeClass("d-none");
+                $("#enablePublicationDateControls").addClass("d-none");
             });
         });
     </script>

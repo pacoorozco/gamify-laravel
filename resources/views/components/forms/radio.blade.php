@@ -12,20 +12,27 @@
     $id = $id ?? \Illuminate\Support\Str::camel($name.$value);
 @endphp
 
-<div {{ $attributes->class(['radio', 'disabled' => $disabled]) }}>
-        <input type="radio"
-               name="{{ $name }}"
-               id="{{ $id }}"
-               value="{{ $value }}"
-            @checked($checked)
-            @if($help) aria-describedby="{{ $id . '_help' }}" @endif
-        />
-    <label for="{{ $id }}">
+<div {{ $attributes->class(['form-check']) }}>
+    <input type="radio"
+           name="{{ $name }}"
+           id="{{ $id }}"
+           value="{{ $value }}"
+           @class([
+    'form-check-input',
+    'is-invalid' => $errors->has($name),
+])
+           @checked($checked)
+           @disabled($disabled)
+           @error($name)
+           aria-describedby="{{ 'validation' . $name . 'Feedback' }}"
+        @enderror
+    />
+    <label for="{{ $id }}" class="form-check-label">
         {{ $label }}
         @if($help)
-            <span id="{{ $id . '_help' }}" class="text-muted">
+            <small class="text-muted">
                 {{ $help }}
-            </span>
+            </small>
         @endif
     </label>
     <x-forms.error name="{{ $name }}"></x-forms.error>
