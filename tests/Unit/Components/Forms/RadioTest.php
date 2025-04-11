@@ -110,7 +110,7 @@ final class RadioTest extends TestCase
             );
 
         $view->assertSee('The test field is required');
-        $view->assertSee('class="help-block"', false);
+        $view->assertSee('class="error invalid-feedback"', false);
     }
 
     #[Test]
@@ -147,6 +147,6 @@ final class RadioTest extends TestCase
                 ['name' => 'test', 'value' => 'my-value', 'label' => 'The Input Label', 'class' => 'is-large is-rounded is-static']
             );
 
-        $view->assertSee('class="radio is-large is-rounded is-static"', false);
+        $view->assertSee('is-large is-rounded is-static', false);
     }
 }

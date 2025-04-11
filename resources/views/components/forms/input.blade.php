@@ -18,10 +18,10 @@
            @if($type == 'number')
                {{ $attributes->only(['min', 'max']) }}
            @endif
-           @class([
-                'form-control',
-                'is-invalid' => $errors->has($name),
-            ])
+           {{ $attributes->class([
+            'form-control',
+            'is-invalid' => $errors->has($name),
+        ]) }}
            @required($required)
            @readonly($readonly)
            @disabled($disabled)

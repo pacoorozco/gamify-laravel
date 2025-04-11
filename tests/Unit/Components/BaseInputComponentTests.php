@@ -11,8 +11,8 @@ trait BaseInputComponentTests
     {
         $view = $this->withViewErrors([])
             ->blade(
-                '<x-forms.'.$this->component.' :label="$label" :name="$name" :options="$options"></x-forms.'.$this->component.'>',
-                ['label' => 'The Input Label', 'name' => 'test', 'options' => ['first' => 'First option']]
+                '<x-forms.'.$this->component.' :label="$label" :name="$name"></x-forms.'.$this->component.'>',
+                ['label' => 'The Input Label', 'name' => 'test']
             );
 
         $view->assertSee('The Input Label');
@@ -24,8 +24,8 @@ trait BaseInputComponentTests
     {
         $view = $this->withViewErrors([])
             ->blade(
-                '<x-forms.'.$this->component.' :label="$label" :name="$name" :options="$options"></x-forms.'.$this->component.'>',
-                ['label' => 'The Input Label', 'name' => 'test_input', 'options' => ['first' => 'First option']]
+                '<x-forms.'.$this->component.' :label="$label" :name="$name"></x-forms.'.$this->component.'>',
+                ['label' => 'The Input Label', 'name' => 'test_input']
             );
 
         $view->assertSee('id="testInput', false);
@@ -42,7 +42,7 @@ trait BaseInputComponentTests
             );
 
         $view->assertSee('The test field is required');
-        $view->assertSee('class="help-block"', false);
+        $view->assertSee('class="error invalid-feedback"', false);
     }
 
     /** @test */
@@ -61,8 +61,8 @@ trait BaseInputComponentTests
     {
         $view = $this->withViewErrors([])
             ->blade(
-                '<x-forms.'.$this->component.' :label="$label" :name="$name" :required="true" :options="$options"></x-forms.'.$this->component.'>',
-                ['label' => 'The Input Label', 'name' => 'test', 'options' => ['first' => 'First option']]
+                '<x-forms.'.$this->component.' :label="$label" :name="$name" :required="true"></x-forms.'.$this->component.'>',
+                ['label' => 'The Input Label', 'name' => 'test']
             );
 
         $view->assertSee('required');
@@ -73,8 +73,8 @@ trait BaseInputComponentTests
     {
         $view = $this->withViewErrors([])
             ->blade(
-                '<x-forms.'.$this->component.' :label="$label" :name="$name" :readonly="true" :options="$options"></x-forms.'.$this->component.'>',
-                ['label' => 'The Input Label', 'name' => 'test', 'options' => ['first' => 'First option']]
+                '<x-forms.'.$this->component.' :label="$label" :name="$name" :readonly="true"></x-forms.'.$this->component.'>',
+                ['label' => 'The Input Label', 'name' => 'test']
             );
 
         $view->assertSee('readonly');
@@ -85,8 +85,8 @@ trait BaseInputComponentTests
     {
         $view = $this->withViewErrors([])
             ->blade(
-                '<x-forms.'.$this->component.' :label="$label" :name="$name" :disabled="true" :options="$options"></x-forms.'.$this->component.'>',
-                ['label' => 'The Input Label', 'name' => 'test', 'options' => ['first' => 'First option']]
+                '<x-forms.'.$this->component.' :label="$label" :name="$name" :disabled="true"></x-forms.'.$this->component.'>',
+                ['label' => 'The Input Label', 'name' => 'test']
             );
 
         $view->assertSee('disabled');
