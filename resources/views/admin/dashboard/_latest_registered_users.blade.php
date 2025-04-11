@@ -1,15 +1,16 @@
-<div class="box">
-    <div class="box-header with-border">
-        <i class="fa fa-users"></i>
-        <h3 class="box-title">Latest registered users</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="bi bi-people-fill"></i>
+            Latest registered users
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="bi bi-caret-up-fill"></i>
             </button>
         </div>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="card-body p-0">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -21,7 +22,12 @@
             </thead>
             @foreach($latest_users as $user)
                 <tr>
-                    <td>{{ $user->username }}</td>
+                    <td>
+                        <a href="{{ route('admin.users.show', $user) }}">
+                            {{ $user->username }}
+                            {{ $user->present()->adminLabel() }}
+                        </a>
+                    </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
@@ -29,5 +35,4 @@
             @endforeach
         </table>
     </div>
-    <!-- /.box-body -->
 </div>

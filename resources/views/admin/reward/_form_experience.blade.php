@@ -1,15 +1,18 @@
 <x-forms.form method="post" :action="route('admin.rewards.experience')">
 
-    <div class="box box-solid">
-        <div class="box-header">
-            <i class="fa fa-certificate"></i>
-            <h3 class="box-title">{{ __('admin/reward/messages.give_experience') }}</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="bi bi-person-up"></i>
+                {{ __('admin/reward/messages.give_experience') }}
+            </h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
 
             <!-- username -->
             <x-forms.select name='username'
                             :label="__('admin/reward/messages.username')"
+                            :placeholder="__('admin/reward/messages.pick_user')"
                             :options="$users"
                             class="username-input"
                             :required="true"/>
@@ -18,6 +21,7 @@
             <!-- points -->
             <x-forms.select name='points'
                             :label="__('admin/reward/messages.points')"
+                            :placeholder="__('admin/reward/messages.pick_badge')"
                             :options="[
                 '5' => __('admin/reward/messages.points_value', ['points' => '5']),
                 '10' => __('admin/reward/messages.points_value', ['points' => '10']),
@@ -33,8 +37,8 @@
                               :required="true"/>
             <!-- ./ message -->
         </div>
-        <div class="box-footer">
-            <x-forms.submit type="success" :value="__('admin/reward/messages.give_experience')"/>
+        <div class="card-footer">
+            <x-forms.submit type="primary" :value="__('admin/reward/messages.give_experience')"/>
         </div>
     </div>
 

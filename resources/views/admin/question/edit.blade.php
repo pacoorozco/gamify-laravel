@@ -10,17 +10,17 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.questions.index') }}">
             {{ __('admin/site.questions') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/question/title.question_edit') }}
     </li>
 @endsection
@@ -38,44 +38,44 @@
             <div class="col-md-8">
 
                 <!-- general section -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <h2 class="box-title">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
                             {{ $question->name }}
                         </h2>
                         {{ $question->present()->visibilityBadge() }}
                         {{ $question->present()->statusBadge() }}
 
                         <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
-                           class="btn btn-link pull-right" target="_blank">
-                            {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                           class="btn btn-link float-right" target="_blank">
+                            {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
                         </a>
                     </div>
-                    <div class="box-body">
+                    <div class="card-body">
 
                         <fieldset>
-                            <legend>
+                            <x-forms.legend>
                                 {{ __('admin/question/title.general_section') }}
-                            </legend>
+                            </x-forms.legend>
 
                             <!-- name -->
                             <x-forms.input
                                 name="name"
                                 :label="__('admin/question/model.name')"
                                 :help="__('admin/question/model.name_help')"
-                                value="{{ $question->name }}"
+                                :value="$question->name"
                                 :required="true"/>
                             <!-- ./ name -->
 
                             <!-- link -->
                             <div class="form-group">
-                                <p class="text-muted">
+                                <small class="text-muted">
                                     <b>{{ __('admin/question/model.permanent_link') }}</b>: {{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}
                                     <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                                        class="btn btn-default btn-xs" target="_blank">
-                                        {{ __('general.view') }} <i class="fa fa-external-link"></i>
+                                        {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
                                     </a>
-                                </p>
+                                </small>
                             </div>
                             <!-- ./link -->
 
@@ -93,7 +93,7 @@
                             <x-forms.select name='type'
                                             :label="__('admin/question/model.type')"
                                             :options="__('admin/question/model.type_list')"
-                                            selectedKey="{{ $question->type }}"
+                                            :selectedKey="$question->type"
                                             :required="true"/>
                             <!-- ./ type -->
                         </fieldset>
@@ -103,9 +103,9 @@
                         <!-- ./ options -->
 
                         <fieldset>
-                            <legend>
+                            <x-forms.legend>
                                 {{ __('admin/question/title.optional_section') }}
-                            </legend>
+                            </x-forms.legend>
 
                             <!-- solution -->
                             <x-forms.textarea
@@ -123,9 +123,7 @@
                                                  :label="__('admin/question/model.tags')"
                                                  :help="__('admin/badge/model.tags_help')"
                                                  :placeholder="__('admin/question/model.tags_help')"
-                                                 :selected-tags="old('tags', $question->tagArrayNormalized)"
-                                                 class="form-control"
-                            />
+                                                 :selected-tags="old('tags', $question->tagArrayNormalized)"/>
                             <!-- ./ tags -->
 
                         </fieldset>
@@ -137,21 +135,21 @@
             <div class="col-md-4">
 
                 <!-- publish section -->
-                <div class="box box-solid">
-                    <div class="box-body">
+                <div class="card">
+                    <div class="card-body">
 
                         <fieldset>
-                            <legend>
+                            <x-forms.legend>
                                 {{ __('admin/question/title.publish_section') }}
-                            </legend>
+                            </x-forms.legend>
 
                             <!-- save draft and preview -->
                             <div class="form-group">
                                 @if ($question->isPublished())
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#saveAsDraftConfirmationModal">
-                                        {{ __('button.save_as_draft') }}
-                                    </button>
+                                    <x-forms.submit type="secondary"
+                                                    :value="__('general.save_as_draft')"
+                                                    data-toggle="modal"
+                                                    data-target="#saveAsDraftConfirmationModal"/>
                                     <!-- modal: saveAsDraftConfirmationModal -->
                                     <div class="modal fade" id="saveAsDraftConfirmationModal" tabindex="-1"
                                          role="dialog"
@@ -183,32 +181,31 @@
                                         <!-- ./ modal: saveAsDraftConfirmationModal -->
                                     </div>
                                 @else
-                                    <button type="button" class="btn btn-primary" id="submitDraftBtn">
-                                        {{ __('button.save_as_draft') }}
-                                    </button>
+                                    <x-forms.submit type="secondary" :value="__('general.save_as_draft')"
+                                                    id="submitDraftBtn"/>
                                 @endif
                             </div>
                             <!-- ./ save draft and preview -->
 
                             <!-- status -->
-                            <div class="form-group">
-                                <x-forms.label for="status">{{ __('admin/question/model.status') }}</x-forms.label>
+                            <div class="form-group row">
+                                <x-forms.label for="status" class="col-2 col-form-label">
+                                    {{ __('admin/question/model.status') }}
+                                </x-forms.label>
                                 <span
-                                    class="form-control-static">{{ __('admin/question/model.status_list.' . $question->status) }}</span>
+                                    class="col form-control-plaintext">{{ __('admin/question/model.status_list.' . $question->status) }}</span>
                                 <x-forms.input-hidden name="status" value="{{ $question->status }}"/>
                             </div>
                             <!-- ./ status -->
 
                             <!-- visibility -->
-                            <div class="form-group @error('hidden') has-error @enderror">
+                            <div class="form-group">
                                 <x-forms.label for="hidden">{{ __('admin/question/model.hidden') }}</x-forms.label>
                                 <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
-                                <div id="visibilityStatus">
-                            <span class="form-control-static">
-                                {{ old('hidden', $question->hidden ? '1' : '0') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
-                            </span>
+                                <div id="visibilityStatus" class="form-control-plaintext">
+                                    {{ old('hidden', $question->hidden ? '1' : '0') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
                                 </div>
-                                <div class="controls hidden" id="visibilityControls">
+                                <div id="visibilityControls" class="d-none">
                                     <x-forms.radio
                                         name="hidden"
                                         :label="__('admin/question/model.hidden_no')"
@@ -224,89 +221,76 @@
                                         :checked="old('hidden', $question->hidden ? '1' : '0') == '0'"
                                         id="visibilityPrivate"/>
                                 </div>
-                                <x-forms.error name="hidden"></x-forms.error>
                             </div>
                             <!-- ./ visibility -->
 
                             <!-- publication date -->
-                            <div class="form-group {{ $errors->has('publication_date') ? 'has-error' : '' }}">
-                                <x-forms.label for="publication_date">{{ __('admin/question/model.publication_date') }}</x-forms.label>
+                            <div class="form-group">
+                                <x-forms.label for="publication_date">
+                                    {{ __('admin/question/model.publication_date') }}
+                                </x-forms.label>
                                 @unless($question->isPublished())
                                     <a href="#" id="enablePublicationDateControls">{{ __('general.edit') }}</a>
                                 @endunless
-                                <div id="publicationDateStatus">
-                            <span class="form-control-static">
-                            @switch($question->status)
-                                    @case(\Gamify\Models\Question::DRAFT_STATUS)
-                                        @if (empty(old('publication_date')))
-                                            {{ __('admin/question/model.publish_immediately') }}
-                                        @else
-                                            {{ __('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
-                                        @endif
-                                        @break
-                                    @case(\Gamify\Models\Question::PUBLISH_STATUS)
-                                        {{ __('admin/question/model.published_on', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
-                                        @break
-                                    @case(\Gamify\Models\Question::FUTURE_STATUS)
-                                        {{ __('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
-                                        @break
-                                @endswitch
-                            </span>
+                                <div id="publicationDateStatus" class="form-control-plaintext">
+                                    @switch($question->status)
+                                        @case(\Gamify\Models\Question::DRAFT_STATUS)
+                                            {{ empty(old('publication_date')) ? __('admin/question/model.publish_immediately') : __('admin/question/model.publish_on', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
+                                            @break
+                                        @case(\Gamify\Models\Question::PUBLISH_STATUS)
+                                            {{ __('admin/question/model.published_on', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
+                                            @break
+                                        @case(\Gamify\Models\Question::FUTURE_STATUS)
+                                            {{ __('admin/question/model.scheduled_for', ['datetime' => old('publication_date', $question->present()->publicationDate())]) }}
+                                            @break
+                                    @endswitch
                                 </div>
-                                <div class="controls hidden" id="publicationDateControls">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input name="publication_date"
-                                               id="publication_date"
-                                               type="text"
-                                               class="form-control"
-                                               autocomplete="off"
-                                               placeholder="{{ __('admin/question/model.publication_date_placeholder') }}"
-                                               value="{{ old('publication_date', $question->present()->publicationDate()) }}"
-                                        />
-                                        <span class="input-group-btn">
-                                    <button type="button" class="btn btn-flat" id="resetPublicationDateBtn">
-                                        {{ __('admin/question/model.publish_immediately') }}
-                                    </button>
-                                </span>
-                                    </div>
+
+                                <div id="publicationDateControls" class="d-none">
+                                    <x-forms.date-time-picker
+                                        name="publication_date"
+                                        id="publication_date"
+                                        :value="$question->present()->publicationDate()"
+                                        :label="__('admin/question/model.publication_date')"
+                                        :placeholder="__('admin/question/model.publication_date_placeholder')"/>
+                                    <small class="text-muted">
+                                        {{ __('admin/question/model.publication_date_help') }}
+                                    </small>
                                 </div>
-                                <x-forms.error name="publication_date"></x-forms.error>
+                                <x-forms.error name="publication_date"/>
                             </div>
                             <!-- ./ publication date -->
                         </fieldset>
 
                     </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-success" id="submitPublishBtn">
+                    <div class="card-footer text-right">
+                        <a href="{{ route('admin.questions.index') }}" class="btn btn-link">
+                            {{ __('general.cancel') }}
+                        </a>
+
+                        <button type="submit" class="btn btn-primary" id="submitPublishBtn">
                             @if ($question->isPublished() || $question->isScheduled())
-                                {{ __('button.update') }}
+                                {{ __('general.update') }}
                             @else
-                                {{ __('button.publish') }}
+                                <i class="bi bi-send-fill"></i> {{ __('admin/question/model.publish') }}
                             @endif
                         </button>
-
-                        <a href="{{ route('admin.questions.index') }}" class="btn btn-link">
-                            {{ __('button.back') }}
-                        </a>
                     </div>
 
                 </div>
                 <!-- ./ publish section -->
 
                 <!-- badges section -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ __('admin/question/title.badges_section') }}</h3>
-                        <div class="box-tools pull-right">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ __('admin/question/title.badges_section') }}</h3>
+                        <div class="card-tools float-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
+                                <i class="bi bi-dash"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="card-body">
 
                         <dl>
                             <dt>{{ __('admin/question/model.tags') }}</dt>
@@ -343,16 +327,16 @@
 
 
                 <!-- other information section -->
-                <div class="box box-solid collapsed-box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ __('admin/question/title.other_section') }}</h3>
-                        <div class="box-tools pull-right">
+                <div class="card collapsed-box">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ __('admin/question/title.other_section') }}</h3>
+                        <div class="card-tools float-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-plus"></i>
+                                <i class="bi bi-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="card-body">
                         @if($question->isPublished())
                             <p>
                                 {{ __('admin/question/model.published_on', ['datetime' => $question->present()->publicationDate()]) }}
@@ -369,13 +353,13 @@
                 <!-- ./ other information section -->
 
                 <!-- danger zone -->
-                <div class="box box-solid box-danger">
-                    <div class="box-header">
+                <div class="card">
+                    <div class="card-header bg-danger">
                         <strong>{{ __('admin/question/messages.danger_zone_section') }}</strong>
                     </div>
-                    <div class="box-body">
+                    <div class="card-body">
                         <p><strong>{{ __('admin/question/messages.delete_button') }}</strong></p>
-                        <p>{{ __('admin/question/messages.delete_help') }}</p>
+                        <p>{!! __('admin/question/messages.delete_help') !!}</p>
 
                         <div class="text-center">
                             <button type="button" class="btn btn-danger"
@@ -395,9 +379,9 @@
 
     <!-- confirmation modal -->
     <x-modals.confirmation
-        action="{{ route('admin.questions.destroy', $question) }}"
-        confirmationText="{{ $question->name }}"
-        buttonText="{{ __('admin/question/messages.delete_confirmation_button') }}">
+        :action="route('admin.questions.destroy', $question)"
+        :confirmationText="$question->name"
+        :buttonText="__('admin/question/messages.delete_confirmation_button')">
 
         <div class="alert alert-warning" role="alert">
             {{ __('admin/question/messages.delete_confirmation_warning', ['name' => $question->name]) }}
@@ -408,18 +392,12 @@
 
 {{-- Styles --}}
 @push('styles')
-    <link rel="stylesheet"
-          href="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('vendor/summernote/summernote.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/plugins/summernote/summernote-bs4.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
-    <script
-        src="{{ asset('vendor/jquery-datetimepicker/jquery.datetimepicker.full.min.js') }}"></script>
-
-    <script src="{{ asset('vendor/summernote/summernote.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <script>
         $(function () {
@@ -436,28 +414,15 @@
             });
 
             $("#enableVisibilityControls").click(function () {
-                $("#visibilityStatus").addClass("hidden");
-                $("#visibilityControls").removeClass("hidden");
-                $("#enableVisibilityControls").addClass("hidden");
-            });
-
-            $.datetimepicker.setLocale("{{ __('site.dateTimePickerLang') }}");
-            $("#publication_date").datetimepicker({
-                minDate: 0,
-                format: "Y-m-d H:i",
-                defaultTime: '09:00',
+                $("#visibilityStatus").addClass("d-none");
+                $("#visibilityControls").removeClass("d-none");
+                $("#enableVisibilityControls").addClass("d-none");
             });
 
             $("#enablePublicationDateControls").click(function () {
-                $("#publicationDateStatus").addClass("hidden");
-                $("#publicationDateControls").removeClass("hidden");
-                $("#enablePublicationDateControls").addClass("hidden");
-                $("#publication_date").datetimepicker("show");
-            });
-
-            $("#resetPublicationDateBtn").click(function () {
-                $("#publication_date").val("");
-                $("#publication_date").change();
+                $("#publicationDateStatus").addClass("d-none");
+                $("#publicationDateControls").removeClass("d-none");
+                $("#enablePublicationDateControls").addClass("d-none");
             });
         });
     </script>

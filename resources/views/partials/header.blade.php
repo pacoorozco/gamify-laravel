@@ -1,63 +1,61 @@
-<header class="main-header">
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top">
-        <!-- start: CONTAINER -->
-        <div class="container">
-            <div class="navbar-header">
-                <!-- start: LOGO -->
-                <strong><a href="{{ route('home') }}" class="navbar-brand">{{ config('app.name', 'gamify') }}</a></strong>
-                <!-- end: LOGO -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#navbar-collapse">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </div>
+<!-- Header Navbar -->
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <!-- start: CONTAINER -->
+    <div class="container">
 
-            <!-- start: TOP LEFT NAVIGATION MENU -->
-            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-                @include('partials.sidebar')
-            </div>
-            <!-- end: TOP LEFT NAVIGATION MENU -->
+        <!-- start: LOGO -->
+        <a href="{{ route('home') }}" class="navbar-brand">
+            <span class="brand-text font-weight-bolder">{{ config('app.name', 'gamify') }}</span>
+        </a>
+        <!-- end: LOGO -->
 
-            <!-- start: TOP RIGHT NAVIGATION MENU -->
-            <div class="navbar-custom-menu">
-                <!-- start: TOP NAVIGATION MENU -->
-                <ul class="nav navbar-nav">
+        <button type="button" class="navbar-toggler order-1" data-toggle="collapse"
+                data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    @can('access-dashboard')
-                        <li>
-                            <a href="{{ route('admin.home') }}" title="{{ __('site.admin_area') }}">
-                                <i class="fa fa-gears"></i>
-                            </a>
-                        </li>
-                    @endcan
-
-                    {{--
-                    <!-- start: NOTIFICATION DROPDOWN -->
-                    <!-- end: NOTIFICATION DROPDOWN -->
-                    --}}
-
-                    @auth
-                        <!-- start: USER DROPDOWN -->
-                        @include('partials.user_dropdown')
-                        <!-- end: USER DROPDOWN -->
-                    @endauth
-
-                    @guest
-                        <li>
-                            <a href="{{ route('login') }}" title="{{ __('auth.login') }}">
-                                {{ __('auth.login') }}
-                            </a>
-                        </li>
-                    @endguest
-
-
-                </ul>
-                <!-- end: TOP RIGHT NAVIGATION MENU -->
-            </div>
-
-
+        <!-- start: TOP LEFT NAVIGATION MENU -->
+        <div class="collapse navbar-collapse order-3" id="navbar-collapse">
+            @include('partials.sidebar')
         </div>
-        <!-- end: CONTAINER -->
-    </nav>
-</header>
+        <!-- end: TOP LEFT NAVIGATION MENU -->
+
+        <!-- start: TOP RIGHT NAVIGATION MENU -->
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+
+            @can('access-dashboard')
+                <li class="nav-item">
+                    <a href="{{ route('admin.home') }}" title="{{ __('site.admin_area') }}" class="nav-link">
+                        <i class="bi bi-house-gear-fill"></i>
+                    </a>
+                </li>
+            @endcan
+
+            {{--
+            <!-- start: NOTIFICATION DROPDOWN -->
+            <!-- end: NOTIFICATION DROPDOWN -->
+            --}}
+
+            @auth
+                <!-- start: USER DROPDOWN -->
+                @include('partials.user_dropdown')
+                <!-- end: USER DROPDOWN -->
+            @endauth
+
+            @guest
+                <li class="nav-item">
+                    <a href="{{ route('login') }}" title="{{ __('auth.login') }}" class="nav-link">
+                        {{ __('auth.login') }}
+                    </a>
+                </li>
+            @endguest
+
+
+        </ul>
+        <!-- end: TOP RIGHT NAVIGATION MENU -->
+
+    </div>
+    <!-- end: CONTAINER -->
+</nav>
+

@@ -1,11 +1,13 @@
 <x-forms.form method="post" :action="route('admin.rewards.badge')">
 
-<div class="box box-solid">
-    <div class="box-header">
-        <i class="fa fa-gift"></i>
-        <h3 class="box-title">{{ __('admin/reward/messages.give_badge') }}</h3>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="bi bi-award"></i>
+            {{ __('admin/reward/messages.give_badge') }}
+        </h3>
     </div>
-    <div class="box-body">
+    <div class="card-body">
         <!-- username -->
         <x-forms.select name='badge_username'
                         :label="__('admin/reward/messages.username')"
@@ -22,8 +24,8 @@
                         :required="true"/>
         <!-- ./ badges -->
     </div>
-    <div class="box-footer">
-        <x-forms.submit type="success" :value="__('admin/reward/messages.give_badge')"/>
+    <div class="card-footer">
+        <x-forms.submit type="primary" :value="__('admin/reward/messages.give_badge')"/>
     </div>
 </div>
 

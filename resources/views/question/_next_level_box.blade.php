@@ -1,5 +1,5 @@
 <div class="info-box bg-yellow">
-    <span class="info-box-icon"><i class="fa fa-level-up"></i></span>
+    <span class="info-box-icon"><i class="bi bi-person-fill-up"></i></span>
     <div class="info-box-content">
         <span class="info-box-text">Next level</span>
         <span class="info-box-number">{{ $next_level_name }}</span>

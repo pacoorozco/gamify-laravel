@@ -8,8 +8,8 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li class="active">
-        <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+    <li class="breadcrumb-item active">
+        {{ __('admin/site.dashboard') }}
     </li>
 @endsection
 
@@ -21,7 +21,7 @@
     <!-- ./info boxes -->
 
     <div class="row">
-        <section class="col-md-6 connectedSortable ui-sortable">
+        <section class="col-md-6 connectedSortable">
 
                 @include('admin.dashboard._latest_published_questions')
 
@@ -29,7 +29,7 @@
 
         </section>
 
-        <section class="col-md-6 connectedSortable ui-sortable">
+        <section class="col-md-6 connectedSortable">
 
             @include('admin.dashboard._latest_registered_users')
 

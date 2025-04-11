@@ -45,12 +45,14 @@ return [
     'shuffle_choices_help' => 'If enabled, the order of the answers is randomly shuffled for each attempt.',
 
     'publication_date' => 'Publication date',
-    'publication_date_placeholder' => 'Leave it empty to publish immediately.',
-    'publish_immediately' => 'Publish immediately',
+    'publication_date_placeholder' => 'Not scheduled (publishes immediately)',
+    'publication_date_help' => 'Choose when to publish this question. Leave empty to publish immediately.',
+    'publish_immediately' => 'Not scheduled (publishes immediately)',
     'publish_on' => 'Publish on :datetime.',
     'published_on' => 'Published on :datetime.',
     'scheduled_for' => 'Scheduled for :datetime.',
     'published_not_yet' => 'Not published.',
+    'publish' => 'Publish',
 
     'hidden' => 'Visibility',
     'hidden_yes' => 'Private',

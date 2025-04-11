@@ -10,17 +10,17 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.badges.index') }}">
             {{ __('admin/site.badges') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/badge/title.badge_show') }}
     </li>
 @endsection
@@ -32,13 +32,13 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    <div class="box box-solid">
-        <div class="box-header with-border">
-            <h2 class="box-title">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">
                 {{ $badge->present()->nameWithStatusBadge }}
             </h2>
         </div>
-        <div class="box-body">
+        <div class="card-body">
 
             <div class="row">
                 <div class="col-md-6">
@@ -124,19 +124,19 @@
                     <!-- ./ image -->
 
                     <!-- danger zone -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <strong>@lang('admin/badge/messages.danger_zone_section')</strong>
+                    <div class="card">
+                        <div class="card-header bg-danger">
+                            <strong>{{ __('admin/badge/messages.danger_zone_section') }}</strong>
                         </div>
-                        <div class="panel-body">
-                            <p><strong>@lang('admin/badge/messages.delete_button')</strong></p>
-                            <p>@lang('admin/badge/messages.delete_help')</p>
+                        <div class="card-body">
+                            <p><strong>{{ __('admin/badge/messages.delete_button') }}</strong></p>
+                            <p>{!! __('admin/badge/messages.delete_help') !!}</p>
 
                             <div class="text-center">
                                 <button type="button" class="btn btn-danger"
                                         data-toggle="modal"
                                         data-target="#confirmationModal">
-                                    @lang('admin/badge/messages.delete_button')
+                                    {{ __('admin/badge/messages.delete_button') }}
                                 </button>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
             </div>
 
         </div>
-        <div class="box-footer">
+        <div class="card-footer">
             <a href="{{ route('admin.badges.edit', $badge) }}">
                 <button type="button" class="btn btn-primary">
                     {{ __('general.edit') }}
@@ -155,19 +155,19 @@
             </a>
 
             <a href="{{ route('admin.badges.index') }}" class="btn btn-link" role="button">
-                {{ __('general.back') }}
+                {{ __('general.cancel') }}
             </a>
         </div>
     </div>
 
     <!-- confirmation modal -->
     <x-modals.confirmation
-        action="{{ route('admin.badges.destroy', $badge) }}"
-        confirmationText="{{ $badge->name }}"
-        buttonText="{{ __('admin/badge/messages.delete_confirmation_button') }}">
+        :action="route('admin.badges.destroy', $badge)"
+        :confirmationText="$badge->name"
+        :buttonText="__('admin/badge/messages.delete_confirmation_button')">
 
         <div class="alert alert-warning" role="alert">
-            @lang('admin/badge/messages.delete_confirmation_warning', ['name' => $badge->name])
+            {!! __('admin/badge/messages.delete_confirmation_warning', ['name' => $badge->name]) !!}
         </div>
     </x-modals.confirmation>
     <!-- ./ confirmation modal -->

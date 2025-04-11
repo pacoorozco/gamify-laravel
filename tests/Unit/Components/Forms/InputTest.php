@@ -81,8 +81,8 @@ final class InputTest extends TestCase
     {
         $view = $this->withViewErrors([])
             ->blade(
-                '<x-forms.input :label="$label" :name="$name" :options="$options" :class="$class"></x-forms.input>',
-                ['label' => 'The Input Label', 'name' => 'test', 'options' => ['first' => 'First option'], 'class' => 'is-large is-rounded is-static']
+                '<x-forms.input :label="$label" :name="$name" :class="$class"></x-forms.input>',
+                ['label' => 'The Input Label', 'name' => 'test', 'class' => 'is-large is-rounded is-static']
             );
 
         $view->assertSee('class="form-control is-large is-rounded is-static"', false);

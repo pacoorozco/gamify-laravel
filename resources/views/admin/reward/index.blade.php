@@ -8,17 +8,17 @@
 {{-- Content Header --}}
 @section('header')
     {{ __('admin/reward/messages.title') }}
-    <small>{{ __('admin/reward/messages.header') }}</small>
+    <small class="text-muted">{{ __('admin/reward/messages.header') }}</small>
 @endsection
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('admin.home') }}">
-            <i class="fa fa-dashboard"></i> {{ __('admin/site.dashboard') }}
+            {{ __('admin/site.dashboard') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ __('admin/site.rewards') }}
     </li>
 @endsection
@@ -43,19 +43,22 @@
 {{-- Styles --}}
 @push('styles')
     <!-- Select2 -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/plugins/select2/select2-bootstrap4.min.css') }}">
 @endpush
 
 {{-- Scripts --}}
 @push('scripts')
     <!-- Select2 -->
-    <script type="text/javascript" src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('vendor/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {
             $(".username-input").select2({
+                theme: 'bootstrap4',
                 placeholder: "{{ __('admin/reward/messages.pick_user') }}",
             });
             $(".badge-input").select2({
+                theme: 'bootstrap4',
                 placeholder: "{{ __('admin/reward/messages.pick_badge') }}",
             });
         });

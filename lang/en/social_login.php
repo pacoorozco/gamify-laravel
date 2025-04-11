@@ -39,6 +39,7 @@ return [
     'okta' => 'Sign in using Okta',
     'github' => 'Sign in using Github',
     'facebook' => 'Sign in using Facebook',
+    'x-twitter' => 'Sign in using X',
     'e-mail' => 'Sign in using e-mail',
 
 ];

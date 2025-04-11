@@ -1,48 +1,48 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title">{{ __('user/profile.about_me') }}</h3>
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">{{ __('user/profile.about_me') }}</h3>
     </div>
     <!-- /.box-header -->
-    <div class="box-body">
+    <div class="card-body">
         <div class="text-center">
             @if ($user->profile->facebook)
                 <a class="btn btn-social-icon btn-facebook" href="{{ $user->profile->facebook }}"
                    rel="nofollow">
-                    <i class="fa fa-facebook"></i>
+                    <i class="bi bi-facebook"></i>
                 </a>
             @else
                 <button type="button" class="btn btn-social-icon btn-facebook disabled">
-                    <i class="fa fa-facebook"></i>
+                    <i class="bi bi-facebook"></i>
                 </button>
             @endif
             @if ($user->profile->twitter)
                 <a class="btn btn-social-icon btn-twitter" href="{{ $user->profile->twitter }}"
                    rel="nofollow">
-                    <i class="fa fa-twitter"></i>
+                    <i class="bi bi-twitter-x"></i>
                 </a>
             @else
                 <button type="button" class="btn btn-social-icon btn-twitter disabled">
-                    <i class="fa fa-twitter"></i>
+                    <i class="bi bi-twitter-x"></i>
                 </button>
             @endif
             @if ($user->profile->linkedin)
                 <a class="btn btn-social-icon btn-linkedin" href="{{ $user->profile->linkedin }}"
                    rel="nofollow">
-                    <i class="fa fa-linkedin"></i>
+                    <i class="bi bi-linkedin"></i>
                 </a>
             @else
                 <button type="button" class="btn btn-social-icon btn-linkedin disabled">
-                    <i class="fa fa-linkedin"></i>
+                    <i class="bi bi-linkedin"></i>
                 </button>
             @endif
             @if ($user->profile->github)
                 <a class="btn btn-social-icon btn-github" href="{{ $user->profile->github }}"
                    rel="nofollow">
-                    <i class="fa fa-github"></i>
+                    <i class="bi bi-github"></i>
                 </a>
             @else
                 <button type="button" class="btn btn-social-icon btn-github disabled">
-                    <i class="fa fa-github"></i>
+                    <i class="bi bi-github"></i>
                 </button>
             @endif
         </div>

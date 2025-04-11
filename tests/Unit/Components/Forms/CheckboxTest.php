@@ -110,7 +110,7 @@ final class CheckboxTest extends TestCase
             );
 
         $view->assertSee('The test field is required');
-        $view->assertSee('class="help-block"', false);
+        $view->assertSee('class="error invalid-feedback"', false);
     }
 
     #[Test]

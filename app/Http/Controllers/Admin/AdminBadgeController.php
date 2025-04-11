@@ -50,7 +50,7 @@ class AdminBadgeController extends AdminController
 
         $badge->tag($request->tags());
 
-        if ($request->has('image')) {
+        if ($request->filled('image')) {
             $badge->addMediaFromRequest('image')
                 ->toMediaCollection('image');
         }
@@ -88,7 +88,7 @@ class AdminBadgeController extends AdminController
 
         $badge->retag($request->tags());
 
-        if ($request->has('image')) {
+        if ($request->filled('image')) {
             $badge->addMediaFromRequest('image')
                 ->toMediaCollection('image');
         }

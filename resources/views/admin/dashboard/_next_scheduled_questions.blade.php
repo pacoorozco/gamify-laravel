@@ -1,15 +1,16 @@
-<div class="box">
-    <div class="box-header">
-        <i class="fa fa-clock-o"></i>
-        <h3 class="box-title">Next scheduled questions</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="bi bi-clock-fill"></i>
+            Next scheduled questions
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="bi bi-caret-up-fill"></i>
             </button>
         </div>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="card-body">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -32,7 +33,7 @@
                     <td>
                         <a href="{{ route('admin.questions.edit', $question) }}">
                             <button type="button" class="btn btn-xs btn-primary" title="{{ __('general.edit') }}">
-                                <i class="fa fa-edit"></i>
+                                <i class="bi bi-pencil-square"></i>
                             </button>
                         </a>
                     </td>

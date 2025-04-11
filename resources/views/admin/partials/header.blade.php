@@ -1,34 +1,26 @@
-<header class="main-header">
-
-    <!-- start: LOGO -->
-    <a href="{{ route('admin.home') }}" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><strong><i class="fa fa-fw fa-home"></i></strong></span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><strong>{{ config('app.name', 'gamify') }}</strong></span>
-    </a>
-    <!-- end: LOGO -->
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top">
+<!-- start: TOP NAVIGATION MENU -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
         <!-- start: RESPONSIVE MENU TOGGLER -->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" role="button" href="#">
+                <i class="bi bi-list"></i>
+                <p class="sr-only">Toggle navigation</p>
+            </a>
+        </li>
         <!-- end: RESPONSIVE MENU TOGGLER -->
-        <div class="navbar-custom-menu">
-            <!-- start: TOP NAVIGATION MENU -->
-            <ul class="nav navbar-nav">
+    </ul>
 
-                <!-- start: NOTIFICATION DROPDOWN -->
-                <!-- TODO -->
-                <!-- end: NOTIFICATION DROPDOWN -->
-
-                <!-- start: USER DROPDOWN -->
-            @include('partials.user_dropdown')
-            <!-- end: USER DROPDOWN -->
-            </ul>
-            <!-- end: TOP NAVIGATION MENU -->
-        </div>
-    </nav>
-</header>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a href="{{ route('home') }}" class="nav-link">
+                <i class="bi bi-controller"></i>
+                <p class="sr-only">{{ __('admin/site.play_area') }}</p>
+            </a>
+        </li>
+        <!-- start: USER DROPDOWN -->
+        @include('partials.user_dropdown')
+        <!-- end: USER DROPDOWN -->
+    </ul>
+</nav>
+<!-- end: TOP NAVIGATION MENU -->

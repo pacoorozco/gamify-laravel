@@ -1,22 +1,24 @@
 <!-- choices -->
 <fieldset class="choices">
-    <legend>{{ __('admin/question/model.choices_section') }}</legend>
-    <p class="text-muted">
+    <x-forms.legend>
+        {{ __('admin/question/model.choices_section') }}
+    </x-forms.legend>
+    <small class="text-muted">
         {{ __('admin/question/model.choices_help') }}
         <strong>{{ __('admin/question/model.choice_score_help') }}</strong>
-    </p>
+    </small>
 
     @error('choices')
-    <div class="form-group has-error">
-        <span class="help-block">{{ $errors->first('choices', ':message') }}</span>
+    <div class="form-group">
+        <span class="error is-invalid">{{ $errors->first('choices', ':message') }}</span>
     </div>
     @enderror
 
     <div class="choices-wrapper">
         <div class="choices-container">
             @foreach(old('choices', (isset($question) ? $question->choices->toArray() : [])) as $choice)
-                <div class="row choices-row">
-                    <div class="col-sm-9 form-group @error('choices.'. $loop->index .'.*') has-error @enderror">
+                <div class="form-row choices-row">
+                    <div class="col-sm-9 form-group">
                         <label for="{{ 'choices['. $loop->index .'][text]' }}" class="control-label">
                             {{ __('admin/question/model.choice_text') }}
                         </label>
@@ -24,13 +26,16 @@
                                name="{{ 'choices['. $loop->index .'][text]' }}"
                                type="text"
                                placeholder="{{ __('admin/question/model.choice_text_help') }}"
-                               class="form-control"
+                               @class([
+    'form-control',
+    'is-invalid' => $errors->has('choices.'. $loop->index .'.*'),
+])
                                value="{{ old('choices['. $loop->index .'][score]', $choice['text']) }}"
                         />
                         <x-forms.error name="{{ 'choices.'. $loop->index .'.*' }}"></x-forms.error>
                     </div>
                     <div
-                        class="col-sm-3 form-group {{ $errors->has('choices.'. $loop->index .'.*') ? 'has-error' : '' }}">
+                        class="col-sm-3 form-group">
                         <label for="{{ 'choices['. $loop->index .'][score]' }}" class="control-label">
                             {{ __('admin/question/model.choice_score') }}
                         </label>
@@ -38,13 +43,16 @@
                             <input id="{{ 'choices['. $loop->index .'][score]' }}"
                                    name="{{ 'choices['. $loop->index .'][score]' }}"
                                    type="number"
-                                   class="form-control"
+                                   @class([
+    'form-control',
+    'is-invalid' => $errors->has('choices.'. $loop->index .'.*'),
+])
                                    value="{{ old('choices['. $loop->index .'][score]', $choice['score']) }}"
                             />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default remove"
                                         title="{{ __('button.remove_choice') }}">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </span>
                         </div>
@@ -52,7 +60,7 @@
                 </div>
             @endforeach
 
-            <div class="row form-group choices-template choices-row">
+            <div class="form-row form-group choices-template choices-row">
                 <div class="col-sm-9">
                     <label for="choices[%%choice-count-placeholder%%][text]" class="control-label">
                         {{ __('admin/question/model.choice_text') }}
@@ -77,7 +85,7 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default remove"
                                     title="{{ __('button.remove_choice') }}">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="bi bi-trash"></i>
                             </button>
                     </span>
                     </div>
@@ -86,9 +94,11 @@
         </div>
 
         <div class="form-row">
-            <button type="button" class="btn btn-default pull-right add">
-                <i class="fa fa-plus"></i> {{ __('button.add_new_choice') }}
-            </button>
+            <div class="col">
+                <button type="button" class="btn btn-default float-right add">
+                    <i class="bi bi-plus"></i> {{ __('button.add_new_choice') }}
+                </button>
+            </div>
         </div>
     </div>
 </fieldset>

@@ -42,6 +42,10 @@ return [
     'none' => 'None',
     'never' => 'Never',
     'view' => 'View',
+    'cancel' => 'Cancel',
+    'create' => 'Create',
+    'update' => 'Update',
+    'save_as_draft' => 'Save as Draft',
 
     'validation_error' => 'Validation error',
     'error' => 'Error',
@@ -49,4 +53,8 @@ return [
     'success' => 'Success',
 
     'disabled' => 'off',
+
+    'pick_image' => 'Select image',
+    'delete_image' => 'Remove',
+    'upload_image' => 'Change',
 ];
