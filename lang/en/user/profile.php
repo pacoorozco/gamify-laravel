@@ -53,6 +53,7 @@ return [
     'email' => 'Email',
     'date_of_birth' => 'Birthdate',
     'image' => 'Avatar',
+    'image_help' => 'This image will be visible to all users. Please upload an appropriate profile picture. Recommended dimensions: 150x150 pixels.',
     'user_since' => 'Member since',
     'roles' => 'Role',
     'bio' => 'Tell us about you',
