@@ -87,4 +87,29 @@ final class InputTest extends TestCase
 
         $view->assertSee('class="form-control is-large is-rounded is-static"', false);
     }
+
+    #[Test]
+    public function it_should_prepend_text_to_input(): void
+    {
+        $view = $this->withViewErrors([])
+            ->blade(
+                '<x-forms.input :label="$label" :name="$name" prepend="this text is prepended"></x-forms.input>',
+                ['label' => 'The Input Label', 'name' => 'test']
+            );
+
+        $view->assertSee('this text is prepended', false);
+    }
+
+    #[Test]
+    public function it_should_append_text_to_input(): void
+    {
+        $view = $this->withViewErrors([])
+            ->blade(
+                '<x-forms.input :label="$label" :name="$name" append="this text is appended"></x-forms.input>',
+                ['label' => 'The Input Label', 'name' => 'test']
+            );
+
+        $view->assertSee('this text is appended', false);
+    }
+
 }
