@@ -62,4 +62,5 @@ mix.copy('node_modules/repeatable-fields/repeatable-fields.js', 'public/vendor/r
     .minify('public/vendor/repeatable-fields/repeatable-fields.js');
 
 // App JS
-mix.js('resources/js/app.js', 'public/js');
+mix.js('resources/js/app.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css');

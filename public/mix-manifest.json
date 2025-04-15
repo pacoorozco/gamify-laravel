@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
     "/vendor/AdminLTE/js/adminlte.js": "/vendor/AdminLTE/js/adminlte.js",
     "/vendor/AdminLTE/js/adminlte.js.map": "/vendor/AdminLTE/js/adminlte.js.map",
     "/vendor/AdminLTE/js/adminlte.min.js": "/vendor/AdminLTE/js/adminlte.min.js",

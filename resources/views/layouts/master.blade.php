@@ -14,6 +14,7 @@
     <!-- start: GLOBAL CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/css/adminlte.min.css?v=3.2.0') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- end: GLOBAL CSS -->
     <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
     @stack('styles')
@@ -63,21 +64,21 @@
             </div>
         </div>
     </div>
-        <!-- end: PAGE -->
+    <!-- end: PAGE -->
 
-        <!-- start: FOOTER -->
-        @include('partials.footer')
-        <!-- end: FOOTER -->
-    </div>
-    <!-- end: MAIN CONTAINER -->
-    <!-- start: GLOBAL JAVASCRIPT -->
-    <script src="{{ asset('vendor/AdminLTE/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js?v=3.2.0') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <!-- end: GLOBAL JAVASCRIPT -->
-    <!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
-    @stack('scripts')
+    <!-- start: FOOTER -->
+    @include('partials.footer')
+    <!-- end: FOOTER -->
+</div>
+<!-- end: MAIN CONTAINER -->
+<!-- start: GLOBAL JAVASCRIPT -->
+<script src="{{ asset('vendor/AdminLTE/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/AdminLTE/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('vendor/AdminLTE/js/adminlte.min.js?v=3.2.0') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<!-- end: GLOBAL JAVASCRIPT -->
+<!-- start: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
+@stack('scripts')
     <!-- end: JAVASCRIPT REQUIRED FOR THIS PAGE ONLY -->
 </body>
 <!-- end: BODY -->

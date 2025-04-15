@@ -271,7 +271,6 @@
     _proto.toggle = function toggle() {
       if (this._parent.hasClass(CLASS_NAME_COLLAPSED$1)) {
         this.expand();
-
         return;
       }
 

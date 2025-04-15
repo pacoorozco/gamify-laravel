@@ -14,6 +14,7 @@
     <!-- start: GLOBAL CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/AdminLTE/css/adminlte.min.css?v=3.2.0') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- end: GLOBAL CSS -->
     <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
     @stack('styles')
