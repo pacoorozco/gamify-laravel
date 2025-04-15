@@ -3,6 +3,7 @@
     'id',
     'placeholder',
     'value' => '',
+    'isDisabledTimepicker' => false,
     ])
 
 <div class="input-group date" id="{{ $id }}" data-target-input="nearest">
@@ -55,8 +56,17 @@
                     clear: true,
                     close: true
                 },
+                components: {
+                    clock: {{ $isDisabledTimepicker ? 'false' : 'true' }},
+                    hours: {{ $isDisabledTimepicker ? 'false' : 'true' }},
+                    minutes: {{ $isDisabledTimepicker ? 'false' : 'true' }},
+                },
                 theme: 'light',
-            }
+            },
+            useCurrent: false,
+            localization: {
+                format: 'L',
+            },
         });
     </script>
 @endpush
