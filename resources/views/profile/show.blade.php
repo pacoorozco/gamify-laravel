@@ -25,7 +25,7 @@
 
             <!-- Profile Image -->
             <div class="card card-widget widget-user">
-                <div class="widget-user-header bg-aqua-active">
+                <div class="widget-user-header bg-info">
                     <h3 class="widget-user-username">{{ $user->name }}</h3>
                     <h5 class="widget-user-desc">{{ $user->level }}</h5>
                 </div>
