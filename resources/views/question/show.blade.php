@@ -12,17 +12,17 @@
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('home') }}">
-            <i class="bi bi-house-fill"></i> {{ __('site.home') }}
+            {{ __('site.home') }}
         </a>
     </li>
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ route('questions.index') }}">
             {{ __('site.play') }}
         </a>
     </li>
-    <li class="active">
+    <li class="breadcrumb-item active">
         {{ $question->name }}
     </li>
 @endsection
@@ -30,7 +30,9 @@
 {{-- Content --}}
 @section('content')
 
+    <!-- notifications -->
     @include('partials.notifications')
+    <!-- /.notifications -->
 
     @includeUnless(is_null($response), 'question._show_question_answer')
 
