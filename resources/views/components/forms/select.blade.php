@@ -34,6 +34,6 @@
     @endif
     @if($help)
         <small class="form-text text-muted">{{ $help }}</small>
-    @endif
+    @endifw
     <x-forms.error name="{{ $name }}"></x-forms.error>
 </div>

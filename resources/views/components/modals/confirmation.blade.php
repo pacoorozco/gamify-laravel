@@ -22,7 +22,7 @@
                 <div class="modal-body">
                     {{ $slot }}
                     <p>
-                        @lang('components/modals/confirmation.help', ['confirmationText' => $confirmationText])
+                        {{ __('components/modals/confirmation.help', ['confirmationText' => $confirmationText]) }}
                     </p>
                     <input id="confirmationInput" type="text" class="form-control" autocomplete="off">
                 </div>
@@ -40,7 +40,7 @@
 
 @push('scripts')
     <script>
-        $('#confirmationInput').keyup(function (e) {
+        $('#confirmationInput').keyup(function () {
             if ($('#confirmationInput').val().trim() === '{{ $confirmationText }}') {
                 $('#confirmationButton').removeAttr('disabled');
             } else {

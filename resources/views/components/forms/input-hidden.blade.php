@@ -1,7 +1,11 @@
 @props([
-    'id' => '',
+    'id',
     'name',
      'value'
      ])
 
-<input id="{{ $id ?? $name }}" name="{{ $name }}" type="hidden" value="{{ $value }}">
+@php
+    $id = $id ?? \Illuminate\Support\Str::camel($name);
+@endphp
+
+<input id="{{ $id }}" name="{{ $name }}" type="hidden" value="{{ $value }}">
