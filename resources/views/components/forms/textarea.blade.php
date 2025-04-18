@@ -1,11 +1,12 @@
 @props([
     'label',
     'id',
-    'name' => '',
+    'name',
     'value' => '',
     'help' => '',
     'required' => false,
-    'readonly' => false
+    'readonly' => false,
+    'disabled' => false
     ])
 
 @php
@@ -20,6 +21,7 @@
               {{ $attributes->merge(['class' => 'form-control', 'rows' => '3', 'cols' => '50'])->only(['class', 'placeholder', 'rows', 'cols']) }}
                   @required($required)
                   @readonly($readonly)
+                  @disabled($disabled)
         >{{ old($name, $value) }}</textarea>
     @if($help)
         <small class="form-text text-muted">{{ $help }}</small>

@@ -6,8 +6,7 @@
 
 <optgroup label="{{ $label }}">
     @foreach($options as $key => $option)
-        <option value="{{ $key }}" @selected($key == $selectedKey)>
-            {{ $option }}
-        </option>
+        <x-forms.select-option :key="$key" :label="$option"
+            :selectedKey="$selectedKey"/>
     @endforeach
 </optgroup>

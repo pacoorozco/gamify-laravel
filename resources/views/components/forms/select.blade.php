@@ -1,6 +1,7 @@
 @props([
     'label',
-    'name' => '',
+    'name',
+    'id',
     'options' => [],
     'selectedKey' => '',
     'help' => '',
@@ -9,10 +10,14 @@
     'hidePlaceholderFromSelection' => false
     ])
 
+@php
+    $id = $id ?? \Illuminate\Support\Str::camel($name);
+@endphp
+
 <div class="form-group @error($name) has-error @enderror">
-    <x-forms.label for="{{ \Illuminate\Support\Str::camel($name) }}">{{ $label }}</x-forms.label>
+    <x-forms.label for="{{ $id }}">{{ $label }}</x-forms.label>
     <select name="{{ $name }}"
-            id="{{ \Illuminate\Support\Str::camel($name) }}"
+            id="{{ $id }}"
         {{ $attributes->merge(['class' => 'form-control'])->only(['class']) }}
         @required($required)
         @disabled($disabled)
@@ -23,9 +28,11 @@
         @endif
         @foreach($options as $key => $option)
             @if(is_array($option))
-                <x-forms.select-optgroup label="{{ $key }}" :options="$option" selectedKey="{{ old($name, $selectedKey) }}"/>
+                <x-forms.select-optgroup label="{{ $key }}" :options="$option"
+                                         selectedKey="{{ old($name, $selectedKey) }}"/>
             @else
-                <x-forms.select-option key="{{ $key }}" label="{{ $option }}" selectedKey="{{ old($name, $selectedKey) }}"/>
+                <x-forms.select-option key="{{ $key }}" label="{{ $option }}"
+                                       selectedKey="{{ old($name, $selectedKey) }}"/>
             @endif
         @endforeach
     </select>
@@ -34,6 +41,6 @@
     @endif
     @if($help)
         <small class="form-text text-muted">{{ $help }}</small>
-    @endifw
-    <x-forms.error name="{{ $name }}"></x-forms.error>
+    @endif
+    <x-forms.error :name="$name" :id="$id"/>
 </div>
