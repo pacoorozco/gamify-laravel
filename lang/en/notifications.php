@@ -35,9 +35,6 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
-    'mark_as_read' => 'Mark as read',
-
     'badge_unlocked_title' => 'Badge unlocked',
     'badge_unlocked_message' => 'Congrats! You unlocked the badge \'<strong>:name</strong>\'. Visit <a href=":url">your profile</a> to check it.',
 

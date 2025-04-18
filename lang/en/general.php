@@ -48,9 +48,18 @@ return [
     'save_as_draft' => 'Save as Draft',
 
     'validation_error' => 'Validation error',
-    'error' => 'Error',
-    'warning' => 'Warning',
-    'success' => 'Success',
+
+    // Alert types
+    'danger' => 'Error!',
+    'warning' => 'Warning!',
+    'success' => 'Success!',
+    'info' => 'Info!',
+
+    // Notifications
+    'notifications' => [
+        'title' => 'Notification',
+        'mark_as_read' => 'Mark as read',
+    ],
 
     'disabled' => 'off',
 

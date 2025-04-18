@@ -29,6 +29,7 @@ class BadgeUnlocked extends Notification
     public function toArray(mixed $notifiable): array
     {
         return [
+            'type' => 'badge',
             'title' => __('notifications.badge_unlocked_title'),
             'message' => __('notifications.badge_unlocked_message', ['name' => $this->badge->name, 'url' => route('account.index')]),
         ];

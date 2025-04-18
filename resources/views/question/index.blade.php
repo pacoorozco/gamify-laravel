@@ -39,9 +39,9 @@
             <!-- available-questions -->
             <div class="list-group">
                 @forelse($questions as $question)
-                    <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{ $question->name }}</h4>
-                        <p class="list-group-item-text"></p>
+                    <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
+                       class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">{{ $question->name }}</h5>
                     </a>
                 @empty
                     @include('question/_empty-list')

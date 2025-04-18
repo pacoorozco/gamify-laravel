@@ -32,7 +32,7 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    <x-forms.form method="put" :action="route('admin.questions.update', $question)" id="formEditQuestion">
+    <x-forms.form method="put" :action="route('admin.questions.update', $question)" id="formEditQuestion" hasFiles>
 
         <div class="row">
             <div class="col-md-8">
@@ -41,20 +41,19 @@
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title">
-                            {{ $question->name }}
+                            {{ $question->name }} {{ $question->present()->visibilityBadge() }} {{ $question->present()->statusBadge() }}
                         </h2>
-                        {{ $question->present()->visibilityBadge() }}
-                        {{ $question->present()->statusBadge() }}
-
-                        <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
-                           class="btn btn-link float-right" target="_blank">
-                            {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
-                        </a>
+                        <div class="card-tools">
+                            <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
+                               class="btn btn-tool" target="_blank">
+                                {{ __('general.view') }} <i class="bi bi-box-arrow-up-right"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body">
 
                         <fieldset>
-                            <x-forms.legend>
+                            <x-forms.legend class="mb-4">
                                 {{ __('admin/question/title.general_section') }}
                             </x-forms.legend>
 
@@ -73,7 +72,7 @@
                                     <b>{{ __('admin/question/model.permanent_link') }}</b>: {{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}
                                     <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
                                        class="btn btn-default btn-xs" target="_blank">
-                                        {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
+                                        {{ __('general.view') }} <i class="bi bi-box-arrow-up-right"></i>
                                     </a>
                                 </small>
                             </div>
@@ -85,6 +84,7 @@
                                 :label="__('admin/question/model.question')"
                                 :help="__('admin/question/model.question_help')"
                                 value="{!! $question->question !!}"
+                                class="editor"
                                 style="width: 100%"
                                 :required="true"/>
                             <!-- ./ question text-->
@@ -92,6 +92,7 @@
                             <!-- type -->
                             <x-forms.select name='type'
                                             :label="__('admin/question/model.type')"
+                                            :help="__('admin/question/model.type_help')"
                                             :options="__('admin/question/model.type_list')"
                                             :selectedKey="$question->type"
                                             :required="true"/>
@@ -103,7 +104,8 @@
                         <!-- ./ options -->
 
                         <fieldset>
-                            <x-forms.legend>
+                            <x-forms.legend class="mb-4">
+                                {{ __('admin/question/title.answer_section') }}
                                 {{ __('admin/question/title.optional_section') }}
                             </x-forms.legend>
 
@@ -146,31 +148,32 @@
                             <!-- save draft and preview -->
                             <div class="form-group">
                                 @if ($question->isPublished())
-                                    <x-forms.submit type="secondary"
-                                                    :value="__('general.save_as_draft')"
-                                                    data-toggle="modal"
-                                                    data-target="#saveAsDraftConfirmationModal"/>
+                                    <button type="button"
+                                            class="btn btn-secondary"
+                                            data-toggle="modal"
+                                            data-target="#saveAsDraftConfirmationModal">
+                                        {{ __('general.save_as_draft') }}
+                                    </button>
                                     <!-- modal: saveAsDraftConfirmationModal -->
-                                    <div class="modal fade" id="saveAsDraftConfirmationModal" tabindex="-1"
-                                         role="dialog"
+                                    <div class="modal" id="saveAsDraftConfirmationModal" tabindex="-1"
                                          aria-labelledby="saveAsDraftConfirmationModalLabel">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
+                                                    <h4 class="modal-title" id="saveAsDraftConfirmationModalLabel">
+                                                        {{ __('admin/question/title.un-publish_confirmation') }}
+                                                    </h4>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
-                                                    <h4 class="modal-title" id="saveAsDraftConfirmationModalLabel">
-                                                        {{ __('admin/question/title.un-publish_confirmation') }}
-                                                    </h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     {{ __('admin/question/messages.un-publish_confirmation_notice') }}
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        {{ __('general.close') }}
+                                                    <button type="button" class="btn btn-link" data-dismiss="modal">
+                                                        {{ __('general.cancel') }}
                                                     </button>
                                                     <button type="button" class="btn btn-primary" id="submitDraftBtn">
                                                         {{ __('admin/question/messages.un-publish_confirmation_button') }}
@@ -181,8 +184,11 @@
                                         <!-- ./ modal: saveAsDraftConfirmationModal -->
                                     </div>
                                 @else
-                                    <x-forms.submit type="secondary" :value="__('general.save_as_draft')"
-                                                    id="submitDraftBtn"/>
+                                    <button type="button"
+                                            id="submitDraftBtn"
+                                            class="btn btn-secondary">
+                                        {{ __('general.save_as_draft') }}
+                                    </button>
                                 @endif
                             </div>
                             <!-- ./ save draft and preview -->
@@ -194,34 +200,14 @@
                                 </x-forms.label>
                                 <span
                                     class="col form-control-plaintext">{{ __('admin/question/model.status_list.' . $question->status) }}</span>
-                                <x-forms.input-hidden name="status" value="{{ $question->status }}"/>
+                                <x-forms.input-hidden id="status" name="status" value="{{ $question->status }}"/>
                             </div>
                             <!-- ./ status -->
 
                             <!-- visibility -->
-                            <div class="form-group">
-                                <x-forms.label for="hidden">{{ __('admin/question/model.hidden') }}</x-forms.label>
-                                <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
-                                <div id="visibilityStatus" class="form-control-plaintext">
-                                    {{ old('hidden', $question->hidden ? '1' : '0') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
-                                </div>
-                                <div id="visibilityControls" class="d-none">
-                                    <x-forms.radio
-                                        name="hidden"
-                                        :label="__('admin/question/model.hidden_no')"
-                                        value="0"
-                                        :checked="old('hidden', $question->hidden ? '1' : '0') == '0'"
-                                        id="visibilityPublic"/>
-
-                                    <x-forms.radio
-                                        name="hidden"
-                                        :label="__('admin/question/model.hidden_yes')"
-                                        :help="__('admin/question/model.hidden_yes_help')"
-                                        value="1"
-                                        :checked="old('hidden', $question->hidden ? '1' : '0') == '0'"
-                                        id="visibilityPrivate"/>
-                                </div>
-                            </div>
+                            <x-forms.visibility
+                                name="hidden"
+                                :value="$question->hidden"/>
                             <!-- ./ visibility -->
 
                             <!-- publication date -->
@@ -268,11 +254,11 @@
                             {{ __('general.cancel') }}
                         </a>
 
-                        <button type="submit" class="btn btn-primary" id="submitPublishBtn">
+                        <button type="button" class="btn btn-primary" id="submitPublishBtn">
                             @if ($question->isPublished() || $question->isScheduled())
                                 {{ __('general.update') }}
                             @else
-                                <i class="bi bi-send-fill"></i> {{ __('admin/question/model.publish') }}
+                                {{ __('admin/question/model.publish') }}
                             @endif
                         </button>
                     </div>
@@ -312,7 +298,7 @@
                             @foreach($relatedBadges as $badge)
                                 <tr>
                                     <td>{{ $badge->name }}</td>
-                                    <td>{{ $badge->actuators->description }}</td>
+                                    <td>{{ $badge->actuators->label() }}</td>
                                     <td>
                                         {{ $badge->present()->tagsIn($question->tagArrayNormalized) }}
                                     </td>
@@ -384,7 +370,7 @@
         :buttonText="__('admin/question/messages.delete_confirmation_button')">
 
         <div class="alert alert-warning" role="alert">
-            {{ __('admin/question/messages.delete_confirmation_warning', ['name' => $question->name]) }}
+            {!! __('admin/question/messages.delete_confirmation_warning', ['name' => $question->name]) !!}
         </div>
     </x-modals.confirmation>
     <!-- ./ confirmation modal -->
@@ -413,16 +399,9 @@
                 $("#formEditQuestion").submit();
             });
 
-            $("#enableVisibilityControls").click(function () {
-                $("#visibilityStatus").addClass("d-none");
-                $("#visibilityControls").removeClass("d-none");
-                $("#enableVisibilityControls").addClass("d-none");
-            });
-
             $("#enablePublicationDateControls").click(function () {
                 $("#publicationDateStatus").addClass("d-none");
                 $("#publicationDateControls").removeClass("d-none");
-                $("#enablePublicationDateControls").addClass("d-none");
             });
         });
     </script>

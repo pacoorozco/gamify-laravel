@@ -5,46 +5,25 @@
     <!-- /.box-header -->
     <div class="card-body">
         <div class="text-center">
-            @if ($user->profile->facebook)
-                <a class="btn btn-social-icon btn-facebook" href="{{ $user->profile->facebook }}"
-                   rel="nofollow">
-                    <i class="bi bi-facebook"></i>
-                </a>
-            @else
-                <button type="button" class="btn btn-social-icon btn-facebook disabled">
-                    <i class="bi bi-facebook"></i>
-                </button>
-            @endif
-            @if ($user->profile->twitter)
-                <a class="btn btn-social-icon btn-twitter" href="{{ $user->profile->twitter }}"
-                   rel="nofollow">
-                    <i class="bi bi-twitter-x"></i>
-                </a>
-            @else
-                <button type="button" class="btn btn-social-icon btn-twitter disabled">
-                    <i class="bi bi-twitter-x"></i>
-                </button>
-            @endif
-            @if ($user->profile->linkedin)
-                <a class="btn btn-social-icon btn-linkedin" href="{{ $user->profile->linkedin }}"
-                   rel="nofollow">
-                    <i class="bi bi-linkedin"></i>
-                </a>
-            @else
-                <button type="button" class="btn btn-social-icon btn-linkedin disabled">
-                    <i class="bi bi-linkedin"></i>
-                </button>
-            @endif
-            @if ($user->profile->github)
-                <a class="btn btn-social-icon btn-github" href="{{ $user->profile->github }}"
-                   rel="nofollow">
-                    <i class="bi bi-github"></i>
-                </a>
-            @else
-                <button type="button" class="btn btn-social-icon btn-github disabled">
-                    <i class="bi bi-github"></i>
-                </button>
-            @endif
+            <a class="btn @empty($user->profile->facebook) disabled @endempty" href="{{ $user->profile->facebook }}"
+               rel="nofollow" target="_blank">
+                <i class="bi bi-facebook"></i>
+            </a>
+
+            <a class="btn @empty($user->profile->twitter) disabled @endempty" href="{{ $user->profile->twitter }}"
+               rel="nofollow" target="_blank">
+                <i class="bi bi-twitter-x"></i>
+            </a>
+
+            <a class="btn @empty($user->profile->linkedin) disabled @endempty" href="{{ $user->profile->linkedin }}"
+               rel="nofollow" target="_blank">
+                <i class="bi bi-linkedin"></i>
+            </a>
+
+            <a class="btn @empty($user->profile->github) disabled @endempty" href="{{ $user->profile->github }}"
+               rel="nofollow" target="_blank">
+                <i class="bi bi-github"></i>
+            </a>
         </div>
         <hr>
         <table class="table table-condensed table-hover">

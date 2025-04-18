@@ -1,3 +1,3 @@
-<legend {{ $attributes->class(['border-bottom mb-4 mt-4']) }}>
+<legend {{ $attributes->merge(['class' => 'border-bottom']) }}>
     {{ $slot }}
 </legend>

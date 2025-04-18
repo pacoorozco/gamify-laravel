@@ -36,7 +36,7 @@ return [
     |
     */
 
-    'previous' => '&larr; Previous',
-    'next' => 'Next &rarr;',
+    'previous' => 'Previous',
+    'next' => 'Next',
 
 ];

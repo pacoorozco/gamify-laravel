@@ -27,6 +27,7 @@ namespace Gamify\Presenters;
 
 use Coderflex\LaravelPresenter\Presenter;
 use Gamify\Models\Question;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -41,7 +42,7 @@ class QuestionPresenter extends Presenter
      */
     public function statusBadge(): HtmlString
     {
-        $badge = sprintf('<span class="label %s">%s</span>',
+        $badge = sprintf('<span class="badge %s">%s</span>',
             $this->mapStatusToLabel($this->model->status),
             trans('admin/question/model.status_list.'.$this->model->status)
         );
@@ -53,15 +54,17 @@ class QuestionPresenter extends Presenter
     /**
      * Map a Question status to a color label.
      *
+     * @param string $status
+     * @param string $default
      * @return string
      */
-    protected function mapStatusToLabel(string $status, string $default = 'label-default')
+    protected function mapStatusToLabel(string $status, string $default = 'badge-secondary'): string
     {
         $LabelToColorDict = [
-            Question::DRAFT_STATUS => 'label-default',
-            Question::PUBLISH_STATUS => 'label-success',
-            Question::FUTURE_STATUS => 'label-info',
-            Question::PENDING_STATUS => 'label-warning',
+            Question::DRAFT_STATUS => 'badge badge-secondary',
+            Question::PUBLISH_STATUS => 'badge badge-success',
+            Question::FUTURE_STATUS => 'badge badge-info',
+            Question::PENDING_STATUS => 'badge badge-warning',
         ];
 
         return $LabelToColorDict[$status] ?? $default;
@@ -74,7 +77,7 @@ class QuestionPresenter extends Presenter
     public function visibilityBadge(): HtmlString
     {
         $badge = $this->model->hidden
-            ? '<span class="label label-default">'.trans('admin/question/model.hidden_yes').'</span>'
+            ? '<span class="badge badge-secondary">' . trans('admin/question/model.hidden_yes') . '</span>'
             : '';
 
         return Str::of($badge)
@@ -155,7 +158,7 @@ class QuestionPresenter extends Presenter
     public function tags(): HtmlString
     {
         return Str::of(collect($this->model->tagArrayNormalized)
-            ->map(fn ($value) => '<span class="label label-primary">'.$value.'</span>')
+            ->map(fn($value) => '<span class="badge badge-pill badge-primary">' . $value . '</span>')
             ->implode(' '))
             ->toHtmlString();
     }

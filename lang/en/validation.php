@@ -157,6 +157,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'hidden' => [
+            'boolean' => 'The Visibility field must be Public or Private.',
+        ],
     ],
 
     /*
