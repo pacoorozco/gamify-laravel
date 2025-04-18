@@ -3,14 +3,16 @@
     <x-forms.legend>
         {{ __('admin/question/model.choices_section') }}
     </x-forms.legend>
-    <small class="text-muted">
-        {{ __('admin/question/model.choices_help') }}
-        <strong>{{ __('admin/question/model.choice_score_help') }}</strong>
-    </small>
+    <p>
+        <small class="text-muted">
+            {{ __('admin/question/model.choices_help') }}
+            <strong>{{ __('admin/question/model.choice_score_help') }}</strong>
+        </small>
+    </p>
 
     @error('choices')
     <div class="form-group">
-        <span class="error is-invalid">{{ $errors->first('choices', ':message') }}</span>
+        <span class="text-danger">{{ $errors->first('choices', ':message') }}</span>
     </div>
     @enderror
 

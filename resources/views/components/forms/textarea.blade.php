@@ -2,6 +2,7 @@
     'label',
     'name' => '',
     'value' => '',
+    'help' => '',
     'required' => false,
     'readonly' => false
     ])
@@ -15,5 +16,8 @@
                   @required($required)
                   @readonly($readonly)
         >{{ old($name, $value) }}</textarea>
+    @if($help)
+        <small class="form-text text-muted">{{ $help }}</small>
+    @endif
     <x-forms.error name="{{ $name }}"></x-forms.error>
 </div>

@@ -3,6 +3,7 @@
     'name' => '',
     'options' => [],
     'selectedKey' => '',
+    'help' => '',
     'required' => false,
     'disabled' => false,
     'hidePlaceholderFromSelection' => false
@@ -30,6 +31,9 @@
     </select>
     @if($disabled)
         <x-forms.input-hidden name="{{ $name }}" value="{{ $selectedKey }}"/>
+    @endif
+    @if($help)
+        <small class="form-text text-muted">{{ $help }}</small>
     @endif
     <x-forms.error name="{{ $name }}"></x-forms.error>
 </div>

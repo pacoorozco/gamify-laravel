@@ -33,7 +33,7 @@
     @include('partials.notifications')
     <!-- ./ notifications -->
 
-    <x-forms.form method="post" :action="route('admin.questions.store')" id="formCreateQuestion">
+    <x-forms.form method="post" :action="route('admin.questions.store')" id="formCreateQuestion" hasFiles>
 
         <div class="row">
             <div class="col-md-8">
@@ -60,6 +60,7 @@
                                 name="question"
                                 :label="__('admin/question/model.question')"
                                 :help="__('admin/question/model.question_help')"
+                                class="editor"
                                 style="width: 100%"
                                 :required="true"/>
                             <!-- ./ question text -->
@@ -67,6 +68,7 @@
                             <!-- type -->
                             <x-forms.select name='type'
                                             :label="__('admin/question/model.type')"
+                                            :help="__('admin/question/model.type_help')"
                                             :options="__('admin/question/model.type_list')"
                                             :required="true"/>
                             <!-- ./ type -->
@@ -94,8 +96,8 @@
                             <!-- tags -->
                             <x-forms.select-tags name="tags"
                                                  :label="__('admin/question/model.tags')"
-                                                 :help="__('admin/badge/model.tags_help')"
-                                                 :placeholder="__('admin/question/model.tags_help')"
+                                                 :help="__('admin/question/model.tags_help')"
+                                                 :placeholder="__('admin/question/model.tags_placeholder')"
                                                  :selected-tags="old('tags', [])"
                             />
                             <!-- ./ tags -->
@@ -119,8 +121,11 @@
 
                             <!-- save draft and preview -->
                             <div class="form-group">
-                                <x-forms.submit type="secondary" :value="__('general.save_as_draft')"
-                                                id="submitDraftBtn"/>
+                                <button type="button"
+                                        id="submitDraftBtn"
+                                        class="btn btn-secondary">
+                                    {{ __('general.save_as_draft') }}
+                                </button>
                             </div>
                             <!-- ./ save draft and preview -->
 
@@ -130,60 +135,19 @@
                                                class="col-2 col-form-label">{{ __('admin/question/model.status') }}</x-forms.label>
                                 <span
                                     class="col form-control-plaintext">{{ __('admin/question/model.status_list.draft') }}</span>
-                                <x-forms.input-hidden name="status" value="draft"/>
+                                <x-forms.input-hidden id="status" name="status" value="draft"/>
                             </div>
                             <!-- ./ status -->
 
                             <!-- visibility -->
-                            <div class="form-group">
-                                <x-forms.label for="hidden">{{ __('admin/question/model.hidden') }}</x-forms.label>
-                                <a href="#" id="enableVisibilityControls">{{ __('general.edit') }}</a>
-                                <div id="visibilityStatus" class="form-control-plaintext">
-                                    {{ old('hidden') == '1' ? __('admin/question/model.hidden_yes') : __('admin/question/model.hidden_no') }}
-                                </div>
-                                <div id="visibilityControls" class="d-none">
-                                    <x-forms.radio
-                                        name="hidden"
-                                        :label="__('admin/question/model.hidden_no')"
-                                        value="0"
-                                        :checked="old('hidden', '0') == '0'"
-                                        id="visibilityPublic"/>
-
-                                    <x-forms.radio
-                                        name="hidden"
-                                        :label="__('admin/question/model.hidden_yes')"
-                                        :help="__('admin/question/model.hidden_yes_help')"
-                                        value="1"
-                                        :checked="old('hidden', '0') == '1'"
-                                        id="visibilityPrivate"/>
-                                </div>
-                            </div>
+                            <x-forms.visibility
+                                name="hidden"
+                                :value="0"/>
                             <!-- ./ visibility -->
 
                             <!-- publication date -->
-                            <div class="form-group">
-                                <x-forms.label for="publication_date">
-                                    {{ __('admin/question/model.publication_date') }}
-                                </x-forms.label>
-                                <a href="#" id="enablePublicationDateControls">{{ __('general.edit') }}</a>
-
-                                <div id="publicationDateStatus" class="form-control-plaintext">
-                                    {{ empty(old('publication_date')) ? __('admin/question/model.publish_immediately') : __('admin/question/model.publish_on', ['datetime' => old('publication_date')]) }}
-                                </div>
-
-                                <div id="publicationDateControls" class="d-none">
-                                    <x-forms.date-time-picker
-                                        name="publication_date"
-                                        id="publication_date"
-                                        :label="__('admin/question/model.publication_date')"
-                                        :placeholder="__('admin/question/model.publication_date_placeholder')"/>
-                                    <small class="text-muted">
-                                        {{ __('admin/question/model.publication_date_help') }}
-                                    </small>
-                                </div>
-
-                                <x-forms.error name="publication_date"/>
-                            </div>
+                            <x-forms.publication-date
+                                name="publication_date"/>
                             <!-- ./ publication date -->
                         </fieldset>
 
@@ -192,8 +156,8 @@
                         <a href="{{ route('admin.questions.index') }}" class="btn btn-link">
                             {{ __('general.cancel') }}
                         </a>
-                        <button type="submit" class="btn btn-primary" id="submitPublishBtn">
-                            <i class="bi bi-send-fill"></i> {{ __('admin/question/model.publish') }}
+                        <button type="button" class="btn btn-primary" id="submitPublishBtn">
+                            {{ __('admin/question/model.publish') }}
                         </button>
                     </div>
 
@@ -227,18 +191,6 @@
             $("#submitPublishBtn").click(function () {
                 $("#status").val("publish");
                 $("#formCreateQuestion").submit();
-            });
-
-            $("#enableVisibilityControls").click(function () {
-                $("#visibilityStatus").addClass("d-none");
-                $("#visibilityControls").removeClass("d-none");
-                $("#enableVisibilityControls").addClass("d-none");
-            });
-
-            $("#enablePublicationDateControls").click(function () {
-                $("#publicationDateStatus").addClass("d-none");
-                $("#publicationDateControls").removeClass("d-none");
-                $("#enablePublicationDateControls").addClass("d-none");
             });
         });
     </script>

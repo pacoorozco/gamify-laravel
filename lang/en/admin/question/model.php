@@ -30,16 +30,17 @@ return [
     // General
     'short_name' => 'Short name',
     'permanent_link' => 'Permanent link',
-    'name' => 'Question name',
-    'name_help' => 'This is public, do not leak any information about the solution.',
-    'question' => 'Statement of the question',
-    'question_help' => 'User\'s will see this text as the statement of the question to be answered.',
-    'solution' => 'Explanation',
-    'solution_help' => 'Explanation is shown to the user after they have completed the question. You can use to give users a fully worked answer and perhaps a link to more information.',
-    'type' => 'Type',
+    'name' => 'Question title',
+    'name_help' => 'A brief, descriptive title that identifies this question in listings. This will be visible to players and used to generate the question\'s URL.',
+    'question' => 'Question content',
+    'question_help' => 'The full text of your question including any necessary context or scenario. This is what players will read before answering.',
+    'solution' => 'Solution explanation',
+    'solution_help' => 'Additional information revealed after answering that explains the correct solution and provides educational context. Use this to help players learn from both correct and incorrect answers.',
+    'type' => 'Answer format',
+    'type_help' => 'Choose how players can respond to this question.',
     'type_list' => [
-        Question::SINGLE_RESPONSE_TYPE => 'Single choice question',
-        Question::MULTI_RESPONSE_TYPE => 'Multiple choice question',
+        Question::SINGLE_RESPONSE_TYPE => 'Single choice',
+        Question::MULTI_RESPONSE_TYPE => 'Multiple choice',
     ],
     'shuffle_choices' => 'Shuffle the choices?',
     'shuffle_choices_help' => 'If enabled, the order of the answers is randomly shuffled for each attempt.',
@@ -69,16 +70,17 @@ return [
 
     // Tags
     'tags' => 'Tags',
-    'tags_help' => 'Enter tags separated by commas',
+    'tags_help' => 'Add relevant keywords to categorize this question. Tags help organize questions and can be used to award specialized badges when players master specific topics.',
+    'tags_placeholder' => 'Enter tags separated by commas.',
     'tags_none' => 'None',
 
     // Answers
     'choices_section' => 'Answers options',
-    'choices_help' => 'These are the answers from which the participant can choose.',
-    'choice_text' => 'Answer option text',
-    'choice_text_help' => 'Put here the text of this answer option.',
-    'choice_score' => 'Score',
-    'choice_score_help' => 'Note that positive scores will mark answer as correct.',
+    'choices_help' => 'Define the possible answers players can select.',
+    'choice_text' => 'Option text',
+    'choice_text_help' => 'The answer choice text shown to players.',
+    'choice_score' => 'Points',
+    'choice_score_help' => 'Use positive values for correct answers and negative values for incorrect ones.',
 
     // Created / last saved
     'created_by' => 'Created by :who on :when.',

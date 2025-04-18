@@ -39,15 +39,14 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">
-                        {{ $question->name }}
+                        {{ $question->name }} {{ $question->present()->visibilityBadge() }} {{ $question->present()->statusBadge() }}
                     </h2>
-                    {{ $question->present()->visibilityBadge() }}
-                    {{ $question->present()->statusBadge() }}
-
+                    <div class="card-tools">
                     <a href="{{ route('questions.show', ['q_hash' => $question->hash, 'slug' => $question->slug]) }}"
-                       class="btn btn-link float-right" target="_blank">
-                        {{ __('general.view') }} <i class="bi bi-box-arrow-right-up"></i>
+                       class="btn btn-tool float-right" target="_blank">
+                        {{ __('general.view') }} <i class="bi bi-box-arrow-up-right"></i>
                     </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <h3>{{ __('admin/question/title.general_section') }}</h3>
@@ -111,13 +110,14 @@
                     </dl>
                 </div>
 
-                <div class="card-footer">
-                    <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary" role="button">
-                        {{ __('general.edit') }}
-                    </a>
+                <div class="card-footer text-right">
                     <a href="{{ route('admin.questions.index') }}" class="btn btn-link" role="button">
                         {{ __('general.cancel') }}
                     </a>
+                    <a href="{{ route('admin.questions.edit', $question) }}" class="btn btn-primary" role="button">
+                        {{ __('general.edit') }}
+                    </a>
+
                 </div>
 
             </div>
@@ -158,7 +158,7 @@
                                 @foreach($relatedBadges as $badge)
                                     <tr>
                                         <td>{{ $badge->name }}</td>
-                                        <td>{{ $badge->actuators->description }}</td>
+                                        <td>{{ $badge->actuators->label() }}</td>
                                         <td>
                                             {{ $badge->present()->tagsIn($question->tagArrayNormalized) }}
                                         </td>
