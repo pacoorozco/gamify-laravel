@@ -28,7 +28,7 @@
 # ----------------------------------------------------------------------
 # Program name and version
 PN=$(basename "$0")
-VER='0.4'
+VER='0.5'
 # Root directory where files reside in
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
@@ -77,7 +77,7 @@ print_finish_release_note() {
   # Get last commit messages
   #
   local _last_commits
-  _last_commits=$(git log "v${current_version}..HEAD" --pretty=format:'* %B' --no-merges --reverse | cat)
+  _last_commits=$(git log "v${current_version}..HEAD" --pretty=format:'* %B' --no-merges --reverse | grep -v "Signed-off-by" | cat)
 
   cat <<-EndFinishReleaseNote
     Remember to:
