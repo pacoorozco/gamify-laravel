@@ -8,15 +8,15 @@
 
 ## Presentation
 
-**Game of Work**, _aka GoW!_, was a gamification platform created by **Emilio Ampudia** (eampudia _at_ gmail.com) and **Paco Orozco** (paco _at_ pacoorozco.info). 
+**Game of Work**, _aka GoW!_, was a gamification platform created by **Emilio Ampudia** (eampudia _at_ gmail.com) and *
+*Paco Orozco** (paco _at_ pacoorozco.info).
 
-We wanted to teach, learn and share some fun with our colleagues, so we created a game based on questions about our organization (process, services, teams...). This was the birth of **gamify**, a platform implementing a levels & badge game at [UPCnet](https://www.upcnet.es).
+We wanted to teach, learn and share some fun with our colleagues, so we created a game based on questions about our
+organization (process, services, teams...). This was the birth of **gamify**, a platform implementing a levels & badge
+game at [UPCnet](https://www.upcnet.es).
 
-As much as possible, I've tried to keep a clean code to work everywhere out of the box. You are not obliged to use my tools and you are free to change the code in order to use it at your own feeling.
-
-## Disclaimer - It's ready for production, but no doc
-
-> It's fully working and you can play with it, but it lacks of some documentation. I'm working in order to improve it, in my personal free time, so be patient or contact me in order to give me your help.
+As much as possible, I've tried to keep a clean code to work everywhere out of the box. You are not obliged to use my
+tools and you are free to change the code in order to use it at your own feeling.
 
 ## Changelog
 
@@ -25,7 +25,8 @@ See [CHANGELOG](CHANGELOG.md) file in order to know what changes are implemented
 ## How to run gamify
 
 [Laravel Sail](https://laravel.com/docs/10.x/sail) is a light-weight command-line interface for interacting with
-Laravel's default Docker development environment. This will create several containers to implement the application needs. An
+Laravel's default Docker development environment. This will create several containers to implement the application
+needs. An
 application server and a database server.
 
 Prior to this installation, you **need to have installed** this software:
@@ -53,7 +54,7 @@ Prior to this installation, you **need to have installed** this software:
     -u "$(id -u):$(id -g)" \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
-    laravelsail/php80-composer:latest \
+    laravelsail/php82-composer:latest \
     composer install --ignore-platform-reqs
     ```
 
@@ -84,7 +85,8 @@ Prior to this installation, you **need to have installed** this software:
 
 ## Reporting issues
 
-If you have issues with **gamify**, you can report them with the [GitHub issues module](https://github.com/pacoorozco/gamify-laravel/issues).
+If you have issues with **gamify**, you can report them with
+the [GitHub issues module](https://github.com/pacoorozco/gamify-laravel/issues).
 
 ## Contributing
 
@@ -96,7 +98,9 @@ Please see [CONTRIBUTE](CONTRIBUTE.md) for details.
 
 ## Authors
 
-**gamify** was originally developed by Emilio Ampudia and [Paco Orozco](https://pacoorozco.info) as part of a game in UPCnet. Later, the [original version](https://github.com/pacoorozco/gamify) was migrated to Laravel.
+**gamify** was originally developed by Emilio Ampudia and [Paco Orozco](https://pacoorozco.info) as part of a game in
+UPCnet. Later, the [original version](https://github.com/pacoorozco/gamify) was migrated to Laravel.
 
-See [contributor list](https://github.com/pacoorozco/gamify-laravel/graphs/contributors) for a complete list of contributors.
+See [contributor list](https://github.com/pacoorozco/gamify-laravel/graphs/contributors) for a complete list of
+contributors.
 
