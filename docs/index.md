@@ -1,15 +1,13 @@
-## Documentation Structure
+## 1. Introduction
 
-### 1. Introduction
-
-- Overview of the application
+### 1.1. Overview of the application
 
 - **gamify** is a gamification platform designed to track experience points (XP), monitor progress through badges, and
   suggest questions to earn XP and badges. The concept of a question is flexible, allowing you to embed links to tasks
   such as reading documentation, completing onboarding guides, or performing periodic tasks—limited only by your
   imagination.
 
-- Key features
+### 1.2. Key features
 
 - **Experience Points (XP) Tracking**: Monitor user progress by assigning XP for completing tasks or challenges.
 - **Badges System**: Reward users with badges for achieving specific milestones or completing predefined goals.
@@ -24,7 +22,7 @@
 - **Gamification Analytics**: Track user engagement and performance through detailed analytics and reports.
 - **Mobile-Friendly Design**: Ensure accessibility and usability across devices with a responsive design.
 
-- Requirements
+### 1.3. Requirements
 
 - **PHP**: Version 8.2 or higher is required to run the application.
 - **Composer**: Dependency manager for PHP to install required packages.
@@ -35,7 +33,7 @@
 - **Node.js and npm**: (Optional) Required for managing JavaScript dependencies and building frontend assets.
 - **Docker**: (Optional) For containerized development and deployment using Laravel Sail.
 
-### 2. Installation
+## 2. Installation
 
 [Laravel Sail](https://laravel.com/docs/11.x/sail) is a lightweight CLI tool for managing Laravel's default Docker-based
 development environment. It sets up multiple containers, including an application server and a database server, to meet
@@ -48,7 +46,7 @@ the application's requirements.
     cd gamify
     ```
 
-2. Copy [`.env.example`](.env.example) to `.env`.
+2. Copy `.env.example` to `.env`.
 
    > **NOTE**: You don't need to touch anything from this file. It works with default settings.
 
@@ -91,7 +89,7 @@ the application's requirements.
 
    > **NOTE**: Default credentials are `admin@domain.local/admin` or `player@domain.local/player`
 
-### 3. Getting Started
+## 3. Getting Started
 
 - **Preloaded Data**: Upon installation, the platform comes with a set of default badges, users, and levels to help you
   get started quickly. These preloaded elements provide a foundation for exploring the platform's features.
@@ -103,12 +101,12 @@ the application's requirements.
 
 This setup allows you to customize the platform to suit your needs while providing a starting point for immediate use.
 
-### 4. User Management
+## 4. User Management
 
 In the context of the **gamify** platform, a **User** represents an individual who interacts with the system. Users can
 have different roles that define their permissions and access levels within the platform. The two primary roles are:
 
-#### Player
+### Player
 
 - **Description**: A player is a regular user of the platform who participates in the gamification activities.
 - **Responsibilities**:
@@ -119,7 +117,7 @@ have different roles that define their permissions and access levels within the 
     - Limited to features related to gameplay and personal progress tracking.
     - Cannot manage other users, badges, or system configurations.
 
-#### Admin
+### Admin
 
 - **Description**: An admin is a privileged user responsible for managing the platform and its content.
 - **Responsibilities**:
@@ -131,9 +129,9 @@ have different roles that define their permissions and access levels within the 
     - Full access to the **Admin Dashboard** and all management features.
     - Permissions to modify system configurations and oversee the platform's operation.
 
-### 5. Gamification Features
+## 5. Gamification Features
 
-#### 5.1. Experience Points (XP)
+### 5.1. Experience Points (XP)
 
 - **Description**: Experience Points (XP) are numerical values awarded to users for completing tasks, challenges, or
   activities within the platform.
@@ -142,7 +140,7 @@ have different roles that define their permissions and access levels within the 
     - Earning 10 XP for completing a daily task.
     - Gaining 50 XP for finishing a training module.
 
-#### 5.2. Badges
+### 5.2. Badges
 
 - **Description**: A badge is a visual representation of an achievement or milestone that a user earns by completing
   specific tasks or meeting predefined criteria.
@@ -152,7 +150,7 @@ have different roles that define their permissions and access levels within the 
     - Reaching a certain number of repetitions for an activity.
     - Achieving a milestone, such as answering 50 questions.
 
-#### 5.3. Levels
+### 5.3. Levels
 
 - **Description**: Levels represent a user's progression within the platform, determined by the total XP they have
   accumulated.
@@ -163,7 +161,7 @@ have different roles that define their permissions and access levels within the 
     - Level 2: 101-500 XP.
     - Level 3: 501-1000 XP.
 
-#### 5.4. Questions
+### 5.4. Questions
 
 - **Description**: Questions are challenges or tasks that users must complete to earn **Experience Points (XP)** and
   unlock **badges**. They are highly flexible and can represent a wide range of activities, from answering a quiz to
@@ -198,13 +196,13 @@ have different roles that define their permissions and access levels within the 
     - Completing certain questions may unlock unique badges, such as "Explorer" for completing exploration-based tasks
       or "Quiz Master" for answering a series of questions correctly.
 
-### 6. Customization
+## 6. Customization
 
 **gamify** provides extensive customization options to tailor the platform to your specific needs. From managing
 gamification elements like badges, levels, and questions to modifying the application's appearance, you have full
 control over the platform.
 
-#### 6.1. Managing Badges, Levels, and Questions
+### 6.1. Managing Badges, Levels, and Questions
 
 - The **Admin Dashboard** allows you to manage key gamification elements:
     - **Badges**: Create, edit, and delete badges to reward users for specific achievements.
@@ -214,7 +212,7 @@ control over the platform.
 These features can be accessed and configured directly through the **Admin Dashboard**, providing a user-friendly
 interface for customization.
 
-#### 6.2. Customizing Application Pages
+### 6.2. Customizing Application Pages
 
 - The visual appearance of the application can be customized by modifying Blade templates located in the
   `resources/views/custom` folder.
