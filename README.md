@@ -18,9 +18,9 @@ game at [UPCnet](https://www.upcnet.es).
 As much as possible, I've tried to keep a clean code to work everywhere out of the box. You are not obliged to use my
 tools and you are free to change the code in order to use it at your own feeling.
 
-## Changelog
+## Documentation
 
-See [CHANGELOG](CHANGELOG.md) file in order to know what changes are implemented in every version.
+The documentation is accessible [here](https://pacoorozco.info/gamify-laravel/).
 
 ## How to run gamify
 
