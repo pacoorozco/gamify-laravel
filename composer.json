@@ -32,7 +32,7 @@
     "hashids/hashids": "^5.0.2",
     "laravel/framework": "^11.44.2",
     "laravel/socialite": "^5.11.0",
-    "predis/predis": "^2.2.2",
+    "predis/predis": "^3.0.1",
     "richan-fongdasen/eloquent-blameable": "^1.9.0",
     "socialiteproviders/okta": "^4.4.0",
     "spatie/laravel-medialibrary": "^11.0.3",
