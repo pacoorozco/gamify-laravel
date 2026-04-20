@@ -49,7 +49,9 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, dom, fileinfo, mysql
           coverage: xdebug
-          tools: composer:v2
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v4
 
       - name: Prepare the application
         run: |
