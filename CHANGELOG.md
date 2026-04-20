@@ -7,6 +7,15 @@ to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
 
+> **Note**: This release introduces **breaking changes**.
+
+### Changed
+
+- **Breaking**: Minimum PHP version raised from 8.2 to 8.4.
+- **Breaking**: Upgraded Laravel Framework from v11 to v12.
+- Updated Laravel dependencies to be compatible with Laravel 12.
+- [CI] Updated GitHub Actions dependencies to their latest versions.
+
 ## 5.0.0 - 2025-04-19
 
 > **Note**: This release introduces **non-backwards compatible** changes.
