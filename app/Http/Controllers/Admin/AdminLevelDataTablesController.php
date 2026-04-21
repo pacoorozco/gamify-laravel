@@ -31,7 +31,7 @@ use Yajra\DataTables\DataTables;
 
 class AdminLevelDataTablesController extends AdminController
 {
-    public function __invoke(Datatables $dataTable): JsonResponse
+    public function __invoke(DataTables $dataTable): JsonResponse
     {
         $levels = Level::query()
             ->select([
