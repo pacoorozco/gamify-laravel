@@ -41,7 +41,7 @@ final class PublishScheduledQuestionsTest extends TestCase
                 'publication_date' => now()->addWeek(),
             ]);
 
-        /* @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $this->artisan('gamify:publish')
             ->expectsOutput('No scheduled questions were ready for publication!')
             ->assertSuccessful();
@@ -62,7 +62,7 @@ final class PublishScheduledQuestionsTest extends TestCase
         $question->status = Question::FUTURE_STATUS;
         $question->save();
 
-        /* @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $this->artisan('gamify:publish')
             ->expectsOutput("Scheduled question '{$question->name}' can not be published, reason: Question does not meet the publication requirements")
             ->assertFailed();
@@ -82,7 +82,7 @@ final class PublishScheduledQuestionsTest extends TestCase
                 'publication_date' => now()->subWeek(),
             ]);
 
-        /* @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $this->artisan('gamify:publish')
             ->expectsOutput('2 of 2 scheduled questions were sent to publication successfully!')
             ->assertSuccessful();

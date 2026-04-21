@@ -31,7 +31,7 @@ final class SocialAuthenticationTest extends TestCase
     protected function mockSocialLogin(): void
     {
         $abstractUser = Mockery::mock(\Laravel\Socialite\Two\User::class);
-        /* @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $abstractUser
             ->shouldReceive('getId')
             ->andReturn('u-123456')
@@ -43,7 +43,7 @@ final class SocialAuthenticationTest extends TestCase
             ->andReturn('foo@domain.com');
 
         $mockedProvider = Mockery::mock(\Laravel\Socialite\Contracts\Provider::class);
-        /* @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $mockedProvider
             ->shouldReceive('user')
             ->andReturn($abstractUser);
