@@ -40,7 +40,7 @@
   },
   "require-dev": {
     "brianium/paratest": "^7.8.5",
-    "larastan/larastan": "^3.7.2",
+    "larastan/larastan": "^3.9.6",
     "laravel/pint": "^1.25.1",
     "laravel/sail": "^1.57.0",
     "mockery/mockery": "^1.6.12",
