@@ -37,13 +37,12 @@ class MarkNotificationAsReadController extends Controller
         /** @var User $user */
         $user = User::findOrFail(Auth::id());
 
-        // @phpstan-ignore-next-line
         $user
             ->unreadNotifications
             ->when($request->input('id'), function ($query) use ($request) {
                 return $query->where('id', $request->input('id'));
             })
-            ->markAsRead();
+            ->markAsRead(); // @phpstan-ignore-line
 
         return response()
             ->noContent();
