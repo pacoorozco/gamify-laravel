@@ -59,7 +59,7 @@ final class UserResponseTest extends TestCase
             )
         );
 
-        /** @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $response = $user->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()
@@ -107,7 +107,7 @@ final class UserResponseTest extends TestCase
             )
         );
 
-        /** @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $response = $user->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()
@@ -137,7 +137,7 @@ final class UserResponseTest extends TestCase
             )
         );
 
-        /** @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         $response = $user->answeredQuestions()
             ->where('question_id', $question->id)
             ->first()

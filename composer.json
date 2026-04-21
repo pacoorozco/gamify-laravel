@@ -24,29 +24,29 @@
     "issues": "https://github.com/pacoorozco/gamify-laravel/issues"
   },
   "require": {
-    "php": "^8.2.0",
-    "coderflexx/laravel-presenter": "^2.0.0",
-    "cviebrock/eloquent-sluggable": "^11.0",
-    "cviebrock/eloquent-taggable": "^11.0",
-    "fakerphp/faker": "^1.23.0",
+    "php": "^8.4.0",
+    "coderflexx/laravel-presenter": "^2.1.0",
+    "cviebrock/eloquent-sluggable": "^12.0",
+    "cviebrock/eloquent-taggable": "^12.0",
+    "fakerphp/faker": "^1.24.1",
     "hashids/hashids": "^5.0.2",
-    "laravel/framework": "^11.44.2",
-    "laravel/socialite": "^5.11.0",
+    "laravel/framework": "^12.56.0",
+    "laravel/socialite": "^5.23.1",
     "predis/predis": "^3.2.0",
-    "richan-fongdasen/eloquent-blameable": "^1.9.0",
-    "socialiteproviders/okta": "^4.4.0",
-    "spatie/laravel-medialibrary": "^11.0.3",
-    "yajra/laravel-datatables-oracle": "^11.0"
+    "richan-fongdasen/eloquent-blameable": "^1.11.0",
+    "socialiteproviders/okta": "^4.5.0",
+    "spatie/laravel-medialibrary": "^11.21.0",
+    "yajra/laravel-datatables-oracle": "^12.7.0"
   },
   "require-dev": {
-    "brianium/paratest": "^7.3.1",
-    "larastan/larastan": "^3.2.0",
-    "laravel/pint": "^1.13.7",
-    "laravel/sail": "^1.26.3",
-    "mockery/mockery": "^1.6.7",
-    "nunomaduro/collision": "^8.1",
-    "phpunit/phpunit": "^10.4.0",
-    "spatie/laravel-ignition": "^2.3.1"
+    "brianium/paratest": "^7.8.5",
+    "larastan/larastan": "^3.9.6",
+    "laravel/pint": "^1.25.1",
+    "laravel/sail": "^1.57.0",
+    "mockery/mockery": "^1.6.12",
+    "nunomaduro/collision": "^8.9.3",
+    "phpunit/phpunit": "^11.5.55",
+    "spatie/laravel-ignition": "^2.9.1"
   },
   "autoload": {
     "psr-4": {

@@ -31,7 +31,7 @@ use Yajra\DataTables\DataTables;
 
 class AdminUserDataTablesController extends AdminController
 {
-    public function __invoke(Datatables $dataTable): JsonResponse
+    public function __invoke(DataTables $dataTable): JsonResponse
     {
         $users = User::select([
             'id',

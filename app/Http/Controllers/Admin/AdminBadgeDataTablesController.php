@@ -32,7 +32,7 @@ use Yajra\DataTables\DataTables;
 
 class AdminBadgeDataTablesController extends AdminController
 {
-    public function __invoke(Datatables $dataTable): JsonResponse
+    public function __invoke(DataTables $dataTable): JsonResponse
     {
         $badges = Badge::select([
             'id',
