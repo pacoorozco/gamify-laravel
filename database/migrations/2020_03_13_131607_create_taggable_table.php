@@ -45,10 +45,13 @@ return new class extends Migration
 
         if (! Schema::connection($connection)->hasTable($taggableTagsTable)) {
             Schema::connection($connection)->create($taggableTagsTable,
-                static function (Blueprint $table) use ($collation) {
+                static function (Blueprint $table) use ($collation, $driver) {
                     $table->bigIncrements('tag_id');
                     $table->string('name');
-                    $table->string('normalized')->unique()->collation($collation);
+                    $col = $table->string('normalized')->unique();
+                    if ($driver === 'mysql' || $driver === 'mariadb') {
+                        $col->collation($collation);
+                    }
                     $table->timestamps();
 
                     $table->index('normalized');
